@@ -9,7 +9,7 @@ import java.util.*;
 
 public class PoolGameState {
     public static final double TABLE_W = 900.0;
-    public static final double TABLE_H = 470.0;
+    public static final double TABLE_H = 490.0;
     public static final double BALL_R = 12.0;
     public static final double POCKET_R = 28.0;
 
@@ -125,7 +125,9 @@ public class PoolGameState {
             cue.y = TABLE_H / 2.0;
         }
         double p = Math.max(0.0, Math.min(1.0, power));
-        double speed = 7.5 + p * 16.0;
+        // Full power is about eight blocks per second on the 5-block table;
+        // soft shots still remain useful for close positional play.
+        double speed = 8.0 + p * 72.0;
         cue.vx = Math.cos(angle) * speed;
         cue.vy = Math.sin(angle) * speed;
         shotInProgress = true;
@@ -217,19 +219,33 @@ public class PoolGameState {
     public boolean tickPhysics() {
         if (!areBallsMoving() && !shotInProgress) return false;
 
+        double fastest = 0;
+        for (PoolBall ball : balls) {
+            if (!ball.pocketed) fastest = Math.max(fastest, Math.hypot(ball.vx, ball.vy));
+        }
+        // Keep each movement below a ball radius at high shot powers, so balls
+        // do not pass through one another between collision checks.
+        int steps = Math.max(3, Math.min(12, (int) Math.ceil(fastest / (BALL_R * 0.85))));
         boolean changed = false;
-        for (int step = 0; step < 3; step++) {
-            moveBalls(1.0 / 3.0);
+        for (int step = 0; step < steps; step++) {
+            moveBalls(1.0 / steps);
             resolveCollisions();
             changed = true;
         }
 
         for (PoolBall b : balls) {
             if (!b.pocketed) {
-                b.vx *= 0.985;
-                b.vy *= 0.985;
-                if (Math.abs(b.vx) < 0.018) b.vx = 0;
-                if (Math.abs(b.vy) < 0.018) b.vy = 0;
+                double speed = Math.hypot(b.vx, b.vy);
+                if (speed <= 1.15) {
+                    b.vx = 0;
+                    b.vy = 0;
+                } else {
+                    // Approximately constant rolling resistance: a stronger
+                    // strike both starts faster and travels farther.
+                    double scale = (speed - 0.95) / speed;
+                    b.vx *= scale;
+                    b.vy *= scale;
+                }
             }
         }
 

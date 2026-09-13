@@ -40,16 +40,16 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
         matrices.translate(0.5, 0.0, 0.5);
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(rotationFor(facing)));
 
-        // Игровое сукно занимает X [-1.25; 1.25], Z [-0.25; 1.25].
-        // Эти координаты должны повторять oversized-модель блока.
+        // Playing cloth is centred on the main block: 4.4 x 2.4 blocks.
+        // Coordinates match the split Blockbench model's felt surface.
         // Важно: для EAST/WEST вращение в BER идёт в противоположную сторону относительно blockstate y,
         // поэтому rotationFor ниже использует зеркальные значения для боковых направлений.
         for (PoolBall ball : be.getGame().balls) {
             if (ball.pocketed) continue;
-            float localX = (float) (-1.25 + (ball.x / PoolGameState.TABLE_W) * 2.50);
-            float localZ = (float) (-0.25 + (ball.y / PoolGameState.TABLE_H) * 1.50);
-            float radius = ball.id == 0 ? 0.044f : 0.048f;
-            float y = 0.4875f + radius;
+            float localX = (float) (-2.2 + ((ball.x + ball.vx * tickDelta) / PoolGameState.TABLE_W) * 4.4);
+            float localZ = (float) (-1.2 + ((ball.y + ball.vy * tickDelta) / PoolGameState.TABLE_H) * 2.4);
+            float radius = ball.id == 0 ? 0.052f : 0.055f;
+            float y = 8.35f / 16.0f + radius;
             drawBall(matrices, vertices, localX, y, localZ, radius, ball.id, light);
         }
 
@@ -68,18 +68,18 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
             if (id.equals(turn) && !game.gameOver) {
                 PoolBall cueBall = game.getBall(0);
                 if (cueBall != null && !cueBall.pocketed) {
-                    float bx = (float) (-1.25 + (cueBall.x / PoolGameState.TABLE_W) * 2.50);
-                    float bz = (float) (-0.25 + (cueBall.y / PoolGameState.TABLE_H) * 1.50);
+                    float bx = (float) (-2.2 + (cueBall.x / PoolGameState.TABLE_W) * 4.4);
+                    float bz = (float) (-1.2 + (cueBall.y / PoolGameState.TABLE_H) * 2.4);
                     float pull = (float) Math.sin(time * 2.2f) * 0.045f;
                     // Косметический замах: кий лежит за битком и слегка ходит вперёд-назад.
-                    drawCue(matrices, vertices, bx - 0.33f - pull, 0.66f, bz + 0.18f, 62.0f, 0.86f, 0.026f, light);
+                    drawCue(matrices, vertices, bx - 0.33f - pull, 0.71f, bz + 0.18f, 62.0f, 0.86f, 0.026f, light);
                 }
             } else {
                 // Ожидающие игроки: кий стоит/лежит у края стола, показывая занятое место.
                 float[][] spots = new float[][]{
-                        {-1.36f, 0.65f, 0.10f, 16.0f},
-                        {1.36f, 0.65f, 0.90f, -16.0f},
-                        {0.00f, 0.65f, 1.38f, 90.0f}
+                        {-2.36f, 0.71f, 0.10f, 16.0f},
+                        {2.36f, 0.71f, 0.90f, -16.0f},
+                        {0.00f, 0.71f, 1.38f, 90.0f}
                 };
                 float[] s = spots[Math.min(i, spots.length - 1)];
                 drawCue(matrices, vertices, s[0], s[1], s[2], s[3], 0.95f, 0.024f, light);

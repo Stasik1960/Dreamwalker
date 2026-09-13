@@ -1,0 +1,447 @@
+{
+  "ambientocclusion": true,
+  "textures": {
+    "wood": "poolbilliards:block/pool_wood",
+    "rail": "poolbilliards:block/pool_rail_top",
+    "felt": "poolbilliards:block/pool_felt",
+    "leg": "poolbilliards:block/pool_leg",
+    "pocket": "poolbilliards:block/pool_black",
+    "brass": "poolbilliards:block/pool_brass",
+    "net": "poolbilliards:block/pool_net",
+    "particle": "poolbilliards:block/pool_felt"
+  },
+  "elements": [
+    {
+      "name": "cabinet",
+      "from": [
+        0,
+        3.3,
+        0
+      ],
+      "to": [
+        16,
+        7.8,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#wood",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#wood",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#wood",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "lower moulding",
+      "from": [
+        0,
+        3,
+        0
+      ],
+      "to": [
+        16,
+        3.55,
+        15
+      ],
+      "faces": {
+        "up": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper trim",
+      "from": [
+        0,
+        7.15,
+        0
+      ],
+      "to": [
+        16,
+        7.8,
+        15.2
+      ],
+      "faces": {
+        "up": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "back inset",
+      "from": [
+        0,
+        4.15,
+        15.16
+      ],
+      "to": [
+        16,
+        6.8,
+        15.32
+      ],
+      "faces": {
+        "up": {
+          "texture": "#leg",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#leg",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#leg",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#leg",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "slate",
+      "from": [
+        0,
+        7.8,
+        0
+      ],
+      "to": [
+        16,
+        8.12,
+        13
+      ],
+      "faces": {
+        "up": {
+          "texture": "#pocket",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#pocket",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#pocket",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "green cloth",
+      "from": [
+        0,
+        8.12,
+        0
+      ],
+      "to": [
+        16,
+        8.35,
+        11.5
+      ],
+      "faces": {
+        "up": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "long rail",
+      "from": [
+        0,
+        8.1,
+        12
+      ],
+      "to": [
+        16,
+        10,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#rail",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "long cushion",
+      "from": [
+        0,
+        8.15,
+        11.45
+      ],
+      "to": [
+        16,
+        9.15,
+        12.35
+      ],
+      "faces": {
+        "up": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#felt",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "rail sight",
+      "from": [
+        7,
+        10.01,
+        14.9
+      ],
+      "to": [
+        7.55,
+        10.07,
+        15.45
+      ],
+      "faces": {
+        "up": {
+          "texture": "#brass",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#brass",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#brass",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#brass",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#brass",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#brass",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

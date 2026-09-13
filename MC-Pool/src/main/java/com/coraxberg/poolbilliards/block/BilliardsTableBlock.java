@@ -28,9 +28,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class BilliardsTableBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    // Визуальная зона примерно 3x2 блока. Основной блок хранит BlockEntity,
-    // а невидимые части вокруг него дают нормальную коллизию по всему столу.
-    public static final int[][] FOOTPRINT = new int[][]{{-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+    // The main block is the centre of the 5 x 3 table; the other 14 cells
+    // carry their own baked visual segment and collision shape.
+    public static final int[][] FOOTPRINT = new int[][]{
+            {-2,-1}, {-1,-1}, {0,-1}, {1,-1}, {2,-1},
+            {-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0},
+            {-2, 1}, {-1, 1}, {0, 1}, {1, 1}, {2, 1}
+    };
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 13, 16);
 
     public BilliardsTableBlock(Settings settings) {
@@ -46,7 +50,15 @@ public class BilliardsTableBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        Direction facing = ctx.getHorizontalPlayerFacing().getOpposite();
+        BlockPos origin = ctx.getBlockPos();
+        for (int[] cell : FOOTPRINT) {
+            if (cell[0] == 0 && cell[1] == 0) continue;
+            if (!ctx.getWorld().getBlockState(origin.add(rotateOffset(cell[0], cell[1], facing))).isAir()) {
+                return null;
+            }
+        }
+        return getDefaultState().with(FACING, facing);
     }
 
     @Override

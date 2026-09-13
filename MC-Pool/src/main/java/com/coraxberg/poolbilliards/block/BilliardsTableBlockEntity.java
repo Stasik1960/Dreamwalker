@@ -78,7 +78,7 @@ public class BilliardsTableBlockEntity extends BlockEntity {
             boolean settled = !be.game.areBallsMoving();
             be.syncCooldown--;
             if (settled || be.syncCooldown <= 0) {
-                be.syncCooldown = settled ? 0 : 2;
+                be.syncCooldown = settled ? 0 : 1;
                 be.syncWorld();
                 PoolPackets.broadcastState((ServerWorld) world, pos, be.game);
             }

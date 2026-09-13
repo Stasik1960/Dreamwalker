@@ -1,8 +1,20 @@
 {
   "variants": {
-    "facing=north": { "model": "poolbilliards:block/billiards_table" },
-    "facing=south": { "model": "poolbilliards:block/billiards_table", "y": 180 },
-    "facing=west": { "model": "poolbilliards:block/billiards_table", "y": 270 },
-    "facing=east": { "model": "poolbilliards:block/billiards_table", "y": 90 }
+    "facing=north": {
+      "model": "poolbilliards:block/billiards_table_part_7",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "poolbilliards:block/billiards_table_part_7",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "poolbilliards:block/billiards_table_part_7",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "poolbilliards:block/billiards_table_part_7",
+      "y": 270
+    }
   }
 }

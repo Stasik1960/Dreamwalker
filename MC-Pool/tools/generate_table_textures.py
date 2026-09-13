@@ -57,4 +57,8 @@ def leather(x, y, rng):
 
 
 save("pool_black.png", leather)
-print("Generated five 64x64 table textures")
+save("pool_brass.png", lambda x, y, rng: grain(x, y, rng, (181, 145, 71), 5.0))
+save("pool_net.png", lambda x, y, rng: (168 + (x + y) % 4 * 4,
+                                       164 + (x + y) % 4 * 4,
+                                       145 + (x + y) % 4 * 4))
+print("Generated seven 64x64 table textures")

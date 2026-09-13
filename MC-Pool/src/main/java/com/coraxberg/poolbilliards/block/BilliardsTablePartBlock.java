@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class BilliardsTablePartBlock extends Block {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-    public static final IntProperty PART = IntProperty.of("part", 0, 5);
+    public static final IntProperty PART = IntProperty.of("part", 0, 14);
     private static final VoxelShape COLLISION = Block.createCuboidShape(0, 0, 0, 16, 13, 16);
 
     public BilliardsTablePartBlock(Settings settings) {
@@ -37,7 +37,7 @@ public class BilliardsTablePartBlock extends Block {
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.INVISIBLE;
+        return BlockRenderType.MODEL;
     }
 
     @Override
