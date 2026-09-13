@@ -17,7 +17,7 @@ def box(name, bounds, material, group):
 
 # Six legs, inset wooden apron, open rail gaps and simple hanging nets follow
 # the silhouette of the supplied reference. Cubes stay intentionally sparse.
-box("cabinet", (-30, 3.3, -14, 46, 7.8, 30), "wood", "Cabinet")
+box("cabinet", (-30, 3.3, -14, 46, 7.7, 30), "wood", "Cabinet")
 box("lower moulding", (-31, 3, -15, 47, 3.55, 31), "rail", "Cabinet")
 box("upper trim", (-31.2, 7.15, -15.2, 47.2, 7.8, 31.2), "rail", "Cabinet")
 for name, bounds in (
@@ -31,42 +31,60 @@ for x in (-28.8, 6.8, 42.4):
         box("brass foot", (x, 0, z, x+3.6, .55, z+3.6), "brass", "Legs")
         box("leg base", (x+.2, .55, z+.2, x+3.4, 1.25, z+3.4), "leg", "Legs")
         box("leg shaft", (x+.55, 1.25, z+.55, x+3.05, 3.15, z+3.05), "leg", "Legs")
-        box("leg collar", (x, 2.75, z, x+3.6, 3.35, z+3.6), "rail", "Legs")
+        box("leg collar", (x, 2.75, z, x+3.6, 3.28, z+3.6), "rail", "Legs")
 box("slate", (-29, 7.8, -13, 45, 8.12, 29), "pocket", "Playfield")
 box("green cloth", (-27.5, 8.12, -11.5, 43.5, 8.35, 27.5), "felt", "Playfield")
 for z0, z1 in ((-16, -12), (28, 32)):
     for x0, x1 in ((-27, 5), (11, 43)):
         box("long rail", (x0, 8.1, z0, x1, 10, z1), "rail", "Rails")
         a, b = (-12.35, -11.45) if z0 < 0 else (27.45, 28.35)
-        box("long cushion", (x0, 8.15, a, x1, 9.15, b), "felt", "Rails")
+        box("long cushion", (x0+.02, 8.15, a, x1-.02, 9.15, b), "felt", "Rails")
 for x0, x1 in ((-32, -28), (44, 48)):
     box("end rail", (x0, 8.1, -11, x1, 10, 27), "rail", "Rails")
     a, b = (-28.35, -27.45) if x0 < 0 else (43.45, 44.35)
-    box("end cushion", (a, 8.15, -11, b, 9.15, 27), "felt", "Rails")
+    box("end cushion", (a, 8.15, -10.98, b, 9.15, 26.98), "felt", "Rails")
 for x0, x1 in ((-32, -27), (43, 48)):
     for z0, z1 in ((-16, -11), (27, 32)):
-        box("corner pocket", (x0, 8.36, z0, x1, 8.65, z1), "pocket", "Pockets")
-        box("corner net", (x0+.7, 5.1, z0+.7, x1-.7, 7.6, z1-.7), "net", "Pockets")
         # Two outside lips frame the mouth without covering its dark interior.
         lip_x0, lip_x1 = (x0, x0+1) if x0 < 0 else (x1-1, x1)
         lip_z0, lip_z1 = (z0, z0+1) if z0 < 0 else (z1-1, z1)
+        inner_x0, inner_x1 = (lip_x1, x1) if x0 < 0 else (x0, lip_x0)
+        inner_z0, inner_z1 = (lip_z1, z1) if z0 < 0 else (z0, lip_z0)
+        box("corner pocket", (inner_x0, 8.36, inner_z0, inner_x1, 8.65, inner_z1), "pocket", "Pockets")
+        box("corner net", (x0+.7, 5.1, z0+.7, x1-.7, 7.6, z1-.7), "net", "Pockets")
         box("corner outer lip", (lip_x0, 8.35, z0, lip_x1, 9.8, z1), "rail", "Pockets")
-        box("corner side lip", (x0, 8.35, lip_z0, x1, 9.8, lip_z1), "rail", "Pockets")
+        box("corner side lip", (inner_x0, 8.35, lip_z0, inner_x1, 9.8, lip_z1), "rail", "Pockets")
 for z0, z1 in ((-16, -11.5), (27.5, 32)):
-    box("side pocket", (5, 8.36, z0, 11, 8.65, z1), "pocket", "Pockets")
-    box("side net", (6, 5.2, z0+.7, 10, 7.6, z1-.7), "net", "Pockets")
     # A continuous outside rim and two short jaws create a U-shaped border.
     rim_z0, rim_z1 = (z0, z0+1) if z0 < 0 else (z1-1, z1)
     jaw_z0, jaw_z1 = (z0+1, z1) if z0 < 0 else (z0, z1-1)
-    box("side pocket rim", (4.7, 8.35, rim_z0, 11.3, 9.8, rim_z1), "rail", "Pockets")
-    box("left pocket jaw", (4.7, 8.35, jaw_z0, 5.4, 9.8, jaw_z1), "rail", "Pockets")
-    box("right pocket jaw", (10.6, 8.35, jaw_z0, 11.3, 9.8, jaw_z1), "rail", "Pockets")
+    box("side pocket", (5.4, 8.36, jaw_z0, 10.6, 8.65, jaw_z1), "pocket", "Pockets")
+    box("side net", (6, 5.2, z0+.7, 10, 7.6, z1-.7), "net", "Pockets")
+    box("side pocket rim", (5, 8.35, rim_z0, 11, 9.8, rim_z1), "rail", "Pockets")
+    box("left pocket jaw", (5, 8.35, jaw_z0, 5.4, 9.8, jaw_z1), "rail", "Pockets")
+    box("right pocket jaw", (10.6, 8.35, jaw_z0, 11, 9.8, jaw_z1), "rail", "Pockets")
 for x in (-20, -9, 0, 16, 25, 36):
     for z in (-14.2, 30.9):
         box("rail sight", (x, 10.01, z, x+.55, 10.07, z+.55), "brass", "Details")
 for x in (-30.5, 46.5):
     for z in (-4, 8, 20):
         box("end sight", (x, 10.01, z, x+.55, 10.07, z+.55), "brass", "Details")
+
+# Same-facing coplanar faces cause depth flicker. Catch them before export.
+axes = ((0, 3), (1, 4), (2, 5))
+for index, (name, first, _, _) in enumerate(boxes):
+    for other_name, second, _, _ in boxes[index+1:]:
+        for axis, (minimum, maximum) in enumerate(axes):
+            projected = [d for d in range(3) if d != axis]
+            for face in (minimum, maximum):
+                if first[face] != second[face]:
+                    continue
+                overlap = 1.0
+                for dimension in projected:
+                    lo, hi = axes[dimension]
+                    overlap *= max(0, min(first[hi], second[hi]) - max(first[lo], second[lo]))
+                if overlap > 0.01:
+                    raise ValueError(f"Coplanar faces: {name} / {other_name}")
 
 def faces(material, boundary=None):
     return {side: {"texture": "#"+material, "uv": [0, 0, 16, 16]}

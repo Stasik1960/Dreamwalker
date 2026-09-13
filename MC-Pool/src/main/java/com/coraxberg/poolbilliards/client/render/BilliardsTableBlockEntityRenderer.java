@@ -3,6 +3,7 @@ package com.coraxberg.poolbilliards.client.render;
 import com.coraxberg.poolbilliards.PoolBilliardsMod;
 import com.coraxberg.poolbilliards.block.BilliardsTableBlock;
 import com.coraxberg.poolbilliards.block.BilliardsTableBlockEntity;
+import com.coraxberg.poolbilliards.client.PoolBallVisuals;
 import com.coraxberg.poolbilliards.game.PoolBall;
 import com.coraxberg.poolbilliards.game.PoolGameState;
 import net.minecraft.client.render.OverlayTexture;
@@ -19,10 +20,13 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<BilliardsTableBlockEntity> {
     private static final Identifier WHITE_TEXTURE = PoolBilliardsMod.id("textures/entity/white.png");
+    private final Map<BilliardsTableBlockEntity, PoolBallVisuals> ballVisuals = new WeakHashMap<>();
 
     public BilliardsTableBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
     }
@@ -44,10 +48,13 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
         // Coordinates match the split Blockbench model's felt surface.
         // Важно: для EAST/WEST вращение в BER идёт в противоположную сторону относительно blockstate y,
         // поэтому rotationFor ниже использует зеркальные значения для боковых направлений.
+        PoolBallVisuals motion = ballVisuals.computeIfAbsent(be, ignored -> new PoolBallVisuals());
+        motion.beginFrame();
         for (PoolBall ball : be.getGame().balls) {
             if (ball.pocketed) continue;
-            float localX = (float) (-2.2 + ((ball.x + ball.vx * tickDelta) / PoolGameState.TABLE_W) * 4.4);
-            float localZ = (float) (-1.2 + ((ball.y + ball.vy * tickDelta) / PoolGameState.TABLE_H) * 2.4);
+            PoolBallVisuals.Position visual = motion.sample(ball);
+            float localX = (float) (-2.2 + (visual.x() / PoolGameState.TABLE_W) * 4.4);
+            float localZ = (float) (-1.2 + (visual.y() / PoolGameState.TABLE_H) * 2.4);
             float radius = ball.id == 0 ? 0.052f : 0.055f;
             float y = 8.35f / 16.0f + radius;
             drawBall(matrices, vertices, localX, y, localZ, radius, ball.id, light);

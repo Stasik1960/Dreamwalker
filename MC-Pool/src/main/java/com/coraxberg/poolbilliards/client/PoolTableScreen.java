@@ -5,7 +5,6 @@ import com.coraxberg.poolbilliards.game.PoolGameState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.glfw.GLFW;
@@ -13,8 +12,15 @@ import org.lwjgl.glfw.GLFW;
 import java.util.UUID;
 
 public class PoolTableScreen extends Screen {
+    private static final int DARK_WOOD = 0xFF28180F;
+    private static final int WOOD = 0xFF603B24;
+    private static final int WOOD_LIGHT = 0xFF875735;
+    private static final int BRASS = 0xFFD4AD68;
+    private static final int PARCHMENT = 0xFFE5D3A9;
+    private static final int MUTED = 0xFFBFAE8A;
     private final BlockPos tablePos;
     private PoolGameState state = new PoolGameState();
+    private final PoolBallVisuals ballVisuals = new PoolBallVisuals();
     private int panelX;
     private int panelY;
     private int panelW;
@@ -23,7 +29,8 @@ public class PoolTableScreen extends Screen {
     private int tableY;
     private int tableW;
     private int tableH;
-    private ButtonWidget resetButton;
+    private int resetX;
+    private int resetY;
     private boolean dragging = false;
     private double dragStartX;
     private double dragStartY;
@@ -46,10 +53,6 @@ public class PoolTableScreen extends Screen {
     @Override
     protected void init() {
         rebuildLayout();
-        resetButton = ButtonWidget.builder(Text.literal("Начать заново"), button -> PoolBilliardsClient.sendReset(tablePos))
-                .dimensions(panelX + panelW - 150, panelY + panelH - 28, 132, 20)
-                .build();
-        addDrawableChild(resetButton);
     }
 
     private void rebuildLayout() {
@@ -67,6 +70,8 @@ public class PoolTableScreen extends Screen {
             tableH = maxH;
             tableW = (int) Math.round(tableH * (PoolGameState.TABLE_W / PoolGameState.TABLE_H));
         }
+        resetX = panelX + panelW - 196;
+        resetY = panelY + panelH - 52;
     }
 
     @Override
@@ -80,6 +85,7 @@ public class PoolTableScreen extends Screen {
         currentMouseX = mouseX;
         currentMouseY = mouseY;
         renderBackground(context);
+        ballVisuals.beginFrame();
         drawPanel(context);
         drawTable(context, mouseX, mouseY);
         drawSideBar(context);
@@ -87,18 +93,34 @@ public class PoolTableScreen extends Screen {
     }
 
     private void drawPanel(DrawContext context) {
-        fill(context, panelX, panelY, panelX + panelW, panelY + panelH, 0xEE15191D);
-        fill(context, panelX, panelY, panelX + panelW, panelY + 36, 0xFF202A30);
-        fill(context, panelX, panelY + 36, panelX + panelW, panelY + 37, 0xFF3E575D);
-        context.drawTextWithShadow(textRenderer, "Пул: восьмёрка", panelX + 16, panelY + 12, 0xDFFAFF);
-        context.drawTextWithShadow(textRenderer, state.status, panelX + 150, panelY + 12, 0xA9F0D0);
+        fill(context, panelX + 5, panelY + 7, panelX + panelW + 5, panelY + panelH + 7, 0xAA000000);
+        fill(context, panelX, panelY, panelX + panelW, panelY + panelH, DARK_WOOD);
+        fill(context, panelX + 3, panelY + 3, panelX + panelW - 3, panelY + panelH - 3, WOOD);
+        fill(context, panelX + 7, panelY + 7, panelX + panelW - 7, panelY + panelH - 7, DARK_WOOD);
+        fill(context, panelX + 7, panelY + 7, panelX + panelW - 7, panelY + 40, WOOD_LIGHT);
+        fill(context, panelX + 7, panelY + 39, panelX + panelW - 7, panelY + 41, BRASS);
+        context.drawTextWithShadow(textRenderer, "БИЛЬЯРД · ВОСЬМЁРКА", panelX + 20, panelY + 18, PARCHMENT);
+        context.drawTextWithShadow(textRenderer, state.status, panelX + 200, panelY + 18, 0xFFF3DEAA);
     }
 
     private void drawTable(DrawContext context, int mouseX, int mouseY) {
-        fill(context, tableX - 20, tableY - 20, tableX + tableW + 20, tableY + tableH + 20, 0xFF4A2A15);
-        fill(context, tableX - 10, tableY - 10, tableX + tableW + 10, tableY + tableH + 10, 0xFF6B3A1D);
-        fill(context, tableX, tableY, tableX + tableW, tableY + tableH, 0xFF0C6E49);
-        fill(context, tableX + 6, tableY + 6, tableX + tableW - 6, tableY + tableH - 6, 0xFF138357);
+        fill(context, tableX - 23, tableY - 23, tableX + tableW + 23, tableY + tableH + 23, 0xFF170E09);
+        fill(context, tableX - 20, tableY - 20, tableX + tableW + 20, tableY + tableH + 20, WOOD);
+        fill(context, tableX - 17, tableY - 17, tableX + tableW + 17, tableY + tableH + 17, WOOD_LIGHT);
+        fill(context, tableX - 12, tableY - 12, tableX + tableW + 12, tableY + tableH + 12, DARK_WOOD);
+        fill(context, tableX - 2, tableY - 2, tableX + tableW + 2, tableY + tableH + 2, 0xFF073C2D);
+        fill(context, tableX, tableY, tableX + tableW, tableY + tableH, 0xFF0B6248);
+        fill(context, tableX + 5, tableY + 5, tableX + tableW - 5, tableY + tableH - 5, 0xFF0E6A4C);
+        for (int i = 1; i <= 6; i++) {
+            int markX = tableX + tableW * i / 7;
+            fill(context, markX - 2, tableY - 17, markX + 2, tableY - 14, BRASS);
+            fill(context, markX - 2, tableY + tableH + 14, markX + 2, tableY + tableH + 17, BRASS);
+        }
+        for (int i = 1; i <= 3; i++) {
+            int markY = tableY + tableH * i / 4;
+            fill(context, tableX - 17, markY - 2, tableX - 14, markY + 2, BRASS);
+            fill(context, tableX + tableW + 14, markY - 2, tableX + tableW + 17, markY + 2, BRASS);
+        }
 
         drawPocket(context, tableX, tableY);
         drawPocket(context, tableX + tableW / 2, tableY);
@@ -120,7 +142,9 @@ public class PoolTableScreen extends Screen {
             drawLine(context, cx, cy, (int)(cx - dx / len * 90), (int)(cy - dy / len * 90), lineColor);
             if (dragging) {
                 int power = (int)(Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / 180.0) * 100);
-                context.drawTextWithShadow(textRenderer, "Сила: " + power + "%", tableX, tableY + tableH + 28, 0xFFFFFF);
+                fill(context, tableX, tableY + tableH + 27, tableX + 124, tableY + tableH + 34, 0xFF1A120C);
+                fill(context, tableX + 2, tableY + tableH + 29, tableX + 2 + power * 120 / 100, tableY + tableH + 32, BRASS);
+                context.drawTextWithShadow(textRenderer, "Сила удара: " + power + "%", tableX + 132, tableY + tableH + 26, PARCHMENT);
             }
         }
     }
@@ -132,8 +156,9 @@ public class PoolTableScreen extends Screen {
 
     private void drawBall(DrawContext context, PoolBall b) {
         if (b.pocketed) return;
-        int x = sx(b.x);
-        int y = sy(b.y);
+        PoolBallVisuals.Position visual = ballVisuals.sample(b);
+        int x = sx(visual.x());
+        int y = sy(visual.y());
         int r = Math.max(6, (int)Math.round(PoolGameState.BALL_R * tableW / PoolGameState.TABLE_W));
         int color = ballColor(b.id);
 
@@ -174,32 +199,52 @@ public class PoolTableScreen extends Screen {
     private void drawSideBar(DrawContext context) {
         int x = panelX + panelW - 210;
         int y = panelY + 54;
-        fill(context, x, y, x + 188, y + panelH - 96, 0x66283236);
-        context.drawTextWithShadow(textRenderer, "Участники", x + 12, y + 12, 0xDFFAFF);
-        int yy = y + 32;
+        int bottom = panelY + panelH - 22;
+        fill(context, x, y, x + 188, bottom, WOOD_LIGHT);
+        fill(context, x + 3, y + 3, x + 185, bottom - 3, DARK_WOOD);
+        fill(context, x + 7, y + 7, x + 181, bottom - 7, 0xFF3B2819);
+        fill(context, x + 7, y + 7, x + 181, y + 31, WOOD);
+        fill(context, x + 9, y + 31, x + 179, y + 32, BRASS);
+        context.drawTextWithShadow(textRenderer, "ИГРОКИ ЗА СТОЛОМ", x + 14, y + 15, PARCHMENT);
+        int yy = y + 44;
         UUID turn = state.getCurrentPlayerId();
         for (UUID id : state.activePlayers) {
             String name = state.playerNames.getOrDefault(id, "Игрок");
             int score = state.scores.getOrDefault(id, 0);
             boolean vote = state.resetVotes.contains(id);
-            String mark = id.equals(turn) ? "▶ " : "  ";
-            context.drawTextWithShadow(textRenderer, mark + name, x + 12, yy, id.equals(turn) ? 0xFFE9A8 : 0xFFFFFF);
-            context.drawTextWithShadow(textRenderer, "шары: " + score + (vote ? "  сброс ✓" : ""), x + 24, yy + 12, 0xB6C8C8);
-            yy += 31;
+            fill(context, x + 12, yy - 4, x + 176, yy + 26, id.equals(turn) ? 0xFF63432A : 0xFF4B3321);
+            fill(context, x + 12, yy - 4, x + 14, yy + 26, id.equals(turn) ? BRASS : WOOD_LIGHT);
+            context.drawTextWithShadow(textRenderer, (id.equals(turn) ? "▶ " : "  ") + name, x + 20, yy,
+                    id.equals(turn) ? 0xFFFFE4A8 : PARCHMENT);
+            context.drawTextWithShadow(textRenderer, "Забито: " + score + (vote ? " · сброс ✓" : ""), x + 26, yy + 13, MUTED);
+            yy += 35;
         }
         if (state.activePlayers.isEmpty()) {
-            context.drawTextWithShadow(textRenderer, "ПКМ по столу, чтобы войти", x + 12, yy, 0xB6C8C8);
+            context.drawTextWithShadow(textRenderer, "ПКМ по столу: войти", x + 14, yy, MUTED);
         } else if (state.activePlayers.size() == 1) {
-            context.drawTextWithShadow(textRenderer, "Можно играть одному", x + 12, yy, 0xB6C8C8);
+            context.drawTextWithShadow(textRenderer, "Можно играть одному", x + 14, yy, MUTED);
         } else {
-            context.drawTextWithShadow(textRenderer, "За столом: " + state.activePlayers.size() + "/3", x + 12, yy, 0xB6C8C8);
+            context.drawTextWithShadow(textRenderer, "За столом: " + state.activePlayers.size() + "/3", x + 14, yy, MUTED);
         }
-        yy += 18;
-        context.drawTextWithShadow(textRenderer, "Управление", x + 12, yy + 10, 0xDFFAFF);
-        context.drawTextWithShadow(textRenderer, "ЛКМ: зажать и отпустить", x + 12, yy + 28, 0xB6C8C8);
-        context.drawTextWithShadow(textRenderer, "Мышь: направление кия", x + 12, yy + 40, 0xB6C8C8);
-        context.drawTextWithShadow(textRenderer, "ESC: выйти из стола", x + 12, yy + 52, 0xB6C8C8);
-        if (state.gameOver) context.drawTextWithShadow(textRenderer, "Партия завершена", x + 12, yy + 76, 0xFFB0B0);
+        int controlsY = Math.max(y + 175, yy + 28);
+        fill(context, x + 12, controlsY - 9, x + 176, controlsY - 8, BRASS);
+        context.drawTextWithShadow(textRenderer, "КАК ИГРАТЬ", x + 14, controlsY, PARCHMENT);
+        context.drawTextWithShadow(textRenderer, "ЛКМ · удержать и отпустить", x + 14, controlsY + 18, MUTED);
+        if (resetY - controlsY >= 75) {
+            context.drawTextWithShadow(textRenderer, "Мышь · прицеливание", x + 14, controlsY + 32, MUTED);
+            context.drawTextWithShadow(textRenderer, "ESC · покинуть стол", x + 14, controlsY + 46, MUTED);
+        }
+        if (state.gameOver && resetY - controlsY >= 95) {
+            context.drawTextWithShadow(textRenderer, "Партия завершена", x + 14, controlsY + 65, 0xFFFFB49B);
+        }
+
+        boolean hover = currentMouseX >= resetX && currentMouseX < resetX + 168
+                && currentMouseY >= resetY && currentMouseY < resetY + 24;
+        fill(context, resetX, resetY, resetX + 168, resetY + 24, BRASS);
+        fill(context, resetX + 2, resetY + 2, resetX + 166, resetY + 22, hover ? WOOD_LIGHT : WOOD);
+        String buttonText = "НОВАЯ ПАРТИЯ";
+        context.drawTextWithShadow(textRenderer, buttonText,
+                resetX + (168 - textRenderer.getWidth(buttonText)) / 2, resetY + 8, PARCHMENT);
     }
 
     private boolean canLocalShoot() {
@@ -226,6 +271,11 @@ public class PoolTableScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && mouseX >= resetX && mouseX < resetX + 168
+                && mouseY >= resetY && mouseY < resetY + 24) {
+            PoolBilliardsClient.sendReset(tablePos);
+            return true;
+        }
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && isInsideTable(mouseX, mouseY) && canLocalShoot()) {
             dragging = true;
             dragStartX = mouseX;

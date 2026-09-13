@@ -125,9 +125,9 @@ public class PoolGameState {
             cue.y = TABLE_H / 2.0;
         }
         double p = Math.max(0.0, Math.min(1.0, power));
-        // Full power is about six blocks per second on the 5-block table;
+        // Full power is about 10% gentler than the previous version.
         // soft shots still remain useful for close positional play.
-        double speed = 8.0 + p * 57.0;
+        double speed = 8.0 + p * 50.5;
         cue.vx = Math.cos(angle) * speed;
         cue.vy = Math.sin(angle) * speed;
         shotInProgress = true;
@@ -239,10 +239,16 @@ public class PoolGameState {
                 // leave a dense collision with a modest speed. Constant drag
                 // stopped those balls almost immediately and made only the
                 // outside balls of a rack disperse.
-                b.vx *= 0.985;
-                b.vy *= 0.985;
-                if (Math.abs(b.vx) < 0.018) b.vx = 0;
-                if (Math.abs(b.vy) < 0.018) b.vy = 0;
+                b.vx *= 0.97;
+                b.vy *= 0.97;
+                if (Math.hypot(b.vx, b.vy) < 1.5) {
+                    b.vx *= 0.85;
+                    b.vy *= 0.85;
+                }
+                if (Math.hypot(b.vx, b.vy) < 0.15) {
+                    b.vx = 0;
+                    b.vy = 0;
+                }
             }
         }
 
