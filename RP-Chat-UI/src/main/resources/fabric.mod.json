@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "rpchatui",
+  "version": "${version}",
+  "name": "RP Chat UI",
+  "description": "Movable tabbed chat window and RP chat UI/server utilities.",
+  "authors": [
+    "Coraxberg + ChatGPT"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.coraxberg.rpchatui.RpChatUiMod"
+    ],
+    "client": [
+      "com.coraxberg.rpchatui.client.RpChatUiClient"
+    ]
+  },
+  "mixins": [
+    "rpchatui.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}

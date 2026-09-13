@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "rpchat",
+  "version": "${version}",
+  "name": "RP Chat",
+  "description": "Distance-based roleplay chat with OOC, GM chat, private messages, config and logging.",
+  "authors": [
+    "Coraxberg + ChatGPT"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.coraxberg.rpchat.RpChatMod"
+    ],
+    "client": [
+      "com.coraxberg.rpchat.client.RpChatClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "mixins": [
+    "rpchat.mixins.json"
+  ]
+}
