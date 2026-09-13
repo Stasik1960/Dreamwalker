@@ -198,8 +198,10 @@ public class PoolGameState {
                 double x = startX + row * dx;
                 double y = startY + (col - row / 2.0) * dy;
                 int ballId = id;
-                if (row == 2 && col == 1) ballId = 8;
-                else if (id == 8) ballId = 9;
+                // Swap 5 and 8 so the black eight sits in the centre without
+                // duplicating a numbered ball (the old swap produced two 9s).
+                if (id == 5) ballId = 8;
+                else if (id == 8) ballId = 5;
                 balls.add(new PoolBall(ballId, x, y));
                 id++;
             }
@@ -425,6 +427,7 @@ public class PoolGameState {
             b.fromNbt(ballList.getCompound(i));
             balls.add(b);
         }
+        repairLegacyBallIds();
         players.clear();
         NbtList playerList = n.getList("players", 8);
         for (int i = 0; i < playerList.size(); i++) players.add(UUID.fromString(playerList.getString(i)));
@@ -449,6 +452,17 @@ public class PoolGameState {
         winner = n.containsUuid("winner") ? n.getUuid("winner") : null;
         if (balls.isEmpty()) rackBalls();
         normalizeTurn();
+    }
+
+    private void repairLegacyBallIds() {
+        if (getBall(5) != null) return;
+        int nines = 0;
+        for (PoolBall ball : balls) if (ball.id == 9) nines++;
+        if (nines == 2) {
+            // Version 0.1.9 saved two nines and no five. The first nine was
+            // the former eight ball, so restore its intended unique number.
+            getBall(9).id = 5;
+        }
     }
 
     public void write(PacketByteBuf buf) {

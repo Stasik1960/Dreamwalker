@@ -56,7 +56,7 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
             float localX = (float) (-2.2 + (visual.x() / PoolGameState.TABLE_W) * 4.4);
             float localZ = (float) (-1.2 + (visual.y() / PoolGameState.TABLE_H) * 2.4);
             float radius = ball.id == 0 ? 0.052f : 0.055f;
-            float y = 8.35f / 16.0f + radius;
+            float y = 11.55f / 16.0f + radius;
             drawBall(matrices, vertices, localX, y, localZ, radius, ball.id, light);
         }
 

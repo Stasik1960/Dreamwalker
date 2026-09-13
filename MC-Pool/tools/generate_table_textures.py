@@ -37,9 +37,9 @@ def grain(x, y, rng, base, strength):
     return tuple(channel + value * factor for channel, factor in zip(base, (1, 0.68, 0.42)))
 
 
-save("pool_wood.png", lambda x, y, rng: grain(x, y, rng, (104, 54, 32), 7.0))
-save("pool_rail_top.png", lambda x, y, rng: grain(x, y, rng, (137, 76, 43), 6.0))
-save("pool_leg.png", lambda x, y, rng: grain(x, y, rng, (65, 38, 28), 4.5))
+save("pool_wood.png", lambda x, y, rng: grain(x, y, rng, (73, 39, 28), 6.0))
+save("pool_rail_top.png", lambda x, y, rng: grain(x, y, rng, (105, 58, 37), 5.5))
+save("pool_leg.png", lambda x, y, rng: grain(x, y, rng, (50, 29, 23), 4.0))
 
 
 def felt(x, y, rng):

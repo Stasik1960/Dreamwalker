@@ -35,7 +35,7 @@ public class BilliardsTableBlock extends BlockWithEntity {
             {-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0},
             {-2, 1}, {-1, 1}, {0, 1}, {1, 1}, {2, 1}
     };
-    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 13, 16);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 15, 16);
 
     public BilliardsTableBlock(Settings settings) {
         super(settings);

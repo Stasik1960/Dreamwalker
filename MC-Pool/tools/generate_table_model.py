@@ -70,6 +70,23 @@ for x in (-30.5, 46.5):
     for z in (-4, 8, 20):
         box("end sight", (x, 10.01, z, x+.55, 10.07, z+.55), "brass", "Details")
 
+# Thin framing on the inset apron panels makes the cabinet read as joinery
+# instead of one dark slab. The ornaments sit just outside the inset faces.
+for z0, z1 in ((-15.55, -15.38), (31.38, 31.55)):
+    for y0, y1 in ((4.0, 4.18), (6.58, 6.76)):
+        box("long panel trim", (-28, y0, z0, 44, y1, z1), "rail", "Details")
+    for x in (-8, 16):
+        box("long panel divider", (x, 4.18, z0, x+.55, 6.58, z1), "wood", "Details")
+for x0, x1 in ((-31.55, -31.38), (47.38, 47.55)):
+    for y0, y1 in ((4.0, 4.18), (6.58, 6.76)):
+        box("end panel trim", (x0, y0, -12, x1, y1, 28), "rail", "Details")
+
+# Raise the playing bed and grow the legs without increasing the footprint.
+# The 3D cue-ball height and block collision shape use the same new scale.
+boxes = [(name, (a, b*1.9, c, d, e*1.9, f) if group == "Legs"
+          else (a, b+3.2, c, d, e+3.2, f), material, group)
+         for name, (a,b,c,d,e,f), material, group in boxes]
+
 # Same-facing coplanar faces cause depth flicker. Catch them before export.
 axes = ((0, 3), (1, 4), (2, 5))
 for index, (name, first, _, _) in enumerate(boxes):

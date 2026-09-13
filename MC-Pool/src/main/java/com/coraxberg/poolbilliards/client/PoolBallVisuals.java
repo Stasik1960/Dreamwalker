@@ -12,6 +12,7 @@ public final class PoolBallVisuals {
     private static final class Track {
         PoolBall snapshot;
         long snapshotNanos;
+        long sampledFrameNanos;
         double x;
         double y;
 
@@ -35,6 +36,9 @@ public final class PoolBallVisuals {
 
     public Position sample(PoolBall ball) {
         Track track = tracks.computeIfAbsent(ball.id, id -> new Track(ball, frameNanos));
+        if (track.sampledFrameNanos == frameNanos && track.snapshot == ball) {
+            return new Position(track.x, track.y);
+        }
         if (track.snapshot != ball) {
             track.snapshot = ball;
             track.snapshotNanos = frameNanos;
@@ -52,6 +56,7 @@ public final class PoolBallVisuals {
             track.x += (targetX - track.x) * blend;
             track.y += (targetY - track.y) * blend;
         }
+        track.sampledFrameNanos = frameNanos;
         return new Position(track.x, track.y);
     }
 }
