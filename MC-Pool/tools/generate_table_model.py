@@ -47,9 +47,20 @@ for x0, x1 in ((-32, -27), (43, 48)):
     for z0, z1 in ((-16, -11), (27, 32)):
         box("corner pocket", (x0, 8.36, z0, x1, 8.65, z1), "pocket", "Pockets")
         box("corner net", (x0+.7, 5.1, z0+.7, x1-.7, 7.6, z1-.7), "net", "Pockets")
+        # Two outside lips frame the mouth without covering its dark interior.
+        lip_x0, lip_x1 = (x0, x0+1) if x0 < 0 else (x1-1, x1)
+        lip_z0, lip_z1 = (z0, z0+1) if z0 < 0 else (z1-1, z1)
+        box("corner outer lip", (lip_x0, 8.35, z0, lip_x1, 9.8, z1), "rail", "Pockets")
+        box("corner side lip", (x0, 8.35, lip_z0, x1, 9.8, lip_z1), "rail", "Pockets")
 for z0, z1 in ((-16, -11.5), (27.5, 32)):
     box("side pocket", (5, 8.36, z0, 11, 8.65, z1), "pocket", "Pockets")
     box("side net", (6, 5.2, z0+.7, 10, 7.6, z1-.7), "net", "Pockets")
+    # A continuous outside rim and two short jaws create a U-shaped border.
+    rim_z0, rim_z1 = (z0, z0+1) if z0 < 0 else (z1-1, z1)
+    jaw_z0, jaw_z1 = (z0+1, z1) if z0 < 0 else (z0, z1-1)
+    box("side pocket rim", (4.7, 8.35, rim_z0, 11.3, 9.8, rim_z1), "rail", "Pockets")
+    box("left pocket jaw", (4.7, 8.35, jaw_z0, 5.4, 9.8, jaw_z1), "rail", "Pockets")
+    box("right pocket jaw", (10.6, 8.35, jaw_z0, 11.3, 9.8, jaw_z1), "rail", "Pockets")
 for x in (-20, -9, 0, 16, 25, 36):
     for z in (-14.2, 30.9):
         box("rail sight", (x, 10.01, z, x+.55, 10.07, z+.55), "brass", "Details")

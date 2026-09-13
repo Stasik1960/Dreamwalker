@@ -125,9 +125,9 @@ public class PoolGameState {
             cue.y = TABLE_H / 2.0;
         }
         double p = Math.max(0.0, Math.min(1.0, power));
-        // Full power is about eight blocks per second on the 5-block table;
+        // Full power is about six blocks per second on the 5-block table;
         // soft shots still remain useful for close positional play.
-        double speed = 8.0 + p * 72.0;
+        double speed = 8.0 + p * 57.0;
         cue.vx = Math.cos(angle) * speed;
         cue.vy = Math.sin(angle) * speed;
         shotInProgress = true;
@@ -235,17 +235,14 @@ public class PoolGameState {
 
         for (PoolBall b : balls) {
             if (!b.pocketed) {
-                double speed = Math.hypot(b.vx, b.vy);
-                if (speed <= 1.15) {
-                    b.vx = 0;
-                    b.vy = 0;
-                } else {
-                    // Approximately constant rolling resistance: a stronger
-                    // strike both starts faster and travels farther.
-                    double scale = (speed - 0.95) / speed;
-                    b.vx *= scale;
-                    b.vy *= scale;
-                }
+                // Multiplicative damping preserves the momentum of balls that
+                // leave a dense collision with a modest speed. Constant drag
+                // stopped those balls almost immediately and made only the
+                // outside balls of a rack disperse.
+                b.vx *= 0.985;
+                b.vy *= 0.985;
+                if (Math.abs(b.vx) < 0.018) b.vx = 0;
+                if (Math.abs(b.vy) < 0.018) b.vy = 0;
             }
         }
 
