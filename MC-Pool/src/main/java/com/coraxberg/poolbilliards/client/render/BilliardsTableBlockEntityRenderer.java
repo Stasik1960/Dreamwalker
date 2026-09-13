@@ -48,9 +48,9 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
             if (ball.pocketed) continue;
             float localX = (float) (-1.25 + (ball.x / PoolGameState.TABLE_W) * 2.50);
             float localZ = (float) (-0.25 + (ball.y / PoolGameState.TABLE_H) * 1.50);
-            float size = ball.id == 0 ? 0.075f : 0.082f;
-            float y = 0.485f + size / 2.0f;
-            drawCube(matrices, vertices, localX, y, localZ, size, ballColor(ball.id), light);
+            float radius = ball.id == 0 ? 0.044f : 0.048f;
+            float y = 0.4875f + radius;
+            drawBall(matrices, vertices, localX, y, localZ, radius, ball.id, light);
         }
 
         drawPlayerCues(be, tickDelta, matrices, vertices, light);
@@ -123,9 +123,41 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
         matrices.pop();
     }
 
-    private static void drawCube(MatrixStack matrices, VertexConsumer vertices, float cx, float cy, float cz, float size, int color, int light) {
-        float h = size / 2.0f;
-        drawCuboid(matrices, vertices, cx - h, cy - h, cz - h, cx + h, cy + h, cz + h, color, light);
+    private static void drawBall(MatrixStack matrices, VertexConsumer vertices, float cx, float cy, float cz,
+                                 float radius, int id, int light) {
+        // Each quad has spherical normals at its corners. Ball positions still
+        // come directly from the latest synchronized game state on every frame.
+        final int rings = 10;
+        final int slices = 16;
+        matrices.push();
+        matrices.translate(cx, cy, cz);
+        MatrixStack.Entry entry = matrices.peek();
+        Matrix4f matrix = entry.getPositionMatrix();
+        Matrix3f normal = entry.getNormalMatrix();
+        for (int ring = 0; ring < rings; ring++) {
+            double top = Math.PI * ring / rings;
+            double bottom = Math.PI * (ring + 1) / rings;
+            for (int slice = 0; slice < slices; slice++) {
+                double left = Math.PI * 2 * slice / slices;
+                double right = Math.PI * 2 * (slice + 1) / slices;
+                int color = id >= 9 && (ring < 3 || ring >= 7) ? 0xFFF7F4EC : ballColor(id);
+                ballVertex(vertices, matrix, normal, radius, top, left, color, light);
+                ballVertex(vertices, matrix, normal, radius, top, right, color, light);
+                ballVertex(vertices, matrix, normal, radius, bottom, right, color, light);
+                ballVertex(vertices, matrix, normal, radius, bottom, left, color, light);
+            }
+        }
+        matrices.pop();
+    }
+
+    private static void ballVertex(VertexConsumer vertices, Matrix4f matrix, Matrix3f normal,
+                                   float radius, double latitude, double longitude, int color, int light) {
+        float nx = (float) (Math.sin(latitude) * Math.cos(longitude));
+        float ny = (float) Math.cos(latitude);
+        float nz = (float) (Math.sin(latitude) * Math.sin(longitude));
+        vertex(vertices, matrix, normal, radius * nx, radius * ny, radius * nz,
+                0.5f, 0.5f, nx, ny, nz,
+                (color >>> 16) & 255, (color >>> 8) & 255, color & 255, 255, light);
     }
 
     private static void drawCuboid(MatrixStack matrices, VertexConsumer vertices, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, int color, int light) {
