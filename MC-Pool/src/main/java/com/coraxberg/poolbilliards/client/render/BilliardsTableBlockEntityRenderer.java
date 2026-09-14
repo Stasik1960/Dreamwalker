@@ -57,7 +57,7 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
             float localZ = (float) (-1.2 + (visual.y() / PoolGameState.TABLE_H) * 2.4);
             float radius = ball.id == 0 ? 0.052f : 0.055f;
             float y = 11.55f / 16.0f + radius;
-            drawBall(matrices, vertices, localX, y, localZ, radius, ball.id, light);
+            drawBall(matrices, vertices, localX, y, localZ, radius, ball.id, be.getGame().monochromeBalls, light);
         }
 
         drawPlayerCues(be, tickDelta, matrices, vertices, light);
@@ -131,7 +131,7 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
     }
 
     private static void drawBall(MatrixStack matrices, VertexConsumer vertices, float cx, float cy, float cz,
-                                 float radius, int id, int light) {
+                                 float radius, int id, boolean monochrome, int light) {
         // Each quad has spherical normals at its corners. Ball positions still
         // come directly from the latest synchronized game state on every frame.
         final int rings = 10;
@@ -147,7 +147,8 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
             for (int slice = 0; slice < slices; slice++) {
                 double left = Math.PI * 2 * slice / slices;
                 double right = Math.PI * 2 * (slice + 1) / slices;
-                int color = id >= 9 && (ring < 3 || ring >= 7) ? 0xFFF7F4EC : ballColor(id);
+                int color = monochrome ? (id == 0 ? 0xFFFFD680 : 0xFFF7F4EC)
+                        : id >= 9 && (ring < 3 || ring >= 7) ? 0xFFF7F4EC : ballColor(id);
                 ballVertex(vertices, matrix, normal, radius, top, left, color, light);
                 ballVertex(vertices, matrix, normal, radius, top, right, color, light);
                 ballVertex(vertices, matrix, normal, radius, bottom, right, color, light);

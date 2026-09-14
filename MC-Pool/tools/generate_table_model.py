@@ -12,6 +12,7 @@ TEXTURES = {"wood": "pool_wood", "rail": "pool_rail_top", "felt": "pool_felt",
             "leg": "pool_leg", "pocket": "pool_black", "brass": "pool_brass", "net": "pool_net"}
 FOOTPRINT = [(x, z) for z in range(-1, 2) for x in range(-2, 3)]
 boxes = []
+pockets = []
 
 def box(name, bounds, material, group):
     boxes.append((name, bounds, material, group))
@@ -59,6 +60,9 @@ for outer_x in (-32, 48):
 
         # Pocket centre lies beside the physical playing-field corner.
         centre, radius = 4.6, 3.2
+        pockets.append({"x": outer_x + (centre if outer_x < 0 else -centre),
+                        "z": outer_z + (centre if outer_z < 0 else -centre),
+                        "radius": radius, "innerZ": None})
         for row in range(16):
             v0, v1 = row*.5, (row+1)*.5
             v = (v0+v1)/2
@@ -77,13 +81,18 @@ for z0, z1 in ((-16, -11.5), (27.5, 32)):
         box(name, (x0, y0, az, x1, y1, bz), material, "Pockets")
 
     # Rounded back of the well, flared mouth towards the playing field.
+    pockets.append({"x": 8, "z": z0 + 3.3 if z0 < 0 else z1 - 3.3,
+                    "radius": 3.3, "innerZ": z0 + 6 if z0 < 0 else z1 - 6})
     for row in range(12):
         d0, d1 = row*.5, (row+1)*.5
         half = math.sqrt(max(0, 3.3**2-((d0+d1)/2-3.3)**2))
         side_box("round side well", 8-half, 8+half, d0, d1, 8.36, 8.65, "pocket")
-        if d1 <= 4:
+        if d1 <= 4.5:
             side_box("curved side left jaw", 4, 8-half, d0, d1, 8.35, 10, "rail")
             side_box("curved side right jaw", 8+half, 12, d0, d1, 8.35, 10, "rail")
+        else:
+            side_box("side left cushion jaw", 4, 8-half, d0, d1, 8.351, 9.15, "felt")
+            side_box("side right cushion jaw", 8+half, 12, d0, d1, 8.351, 9.15, "felt")
     box("side net", (5, 5.2, z0+.6, 11, 7.6, z1-.6), "net", "Pockets")
 for x in (-20, -9, 0, 16, 25, 36):
     for z in (-14.2, 30.9):
@@ -138,6 +147,14 @@ def model(elements):
 
 def write(path, value):
     path.write_text(json.dumps(value, indent=2, ensure_ascii=False)+"\n", encoding="utf-8")
+
+# Export the same rail rectangles and well arcs for server physics. Model
+# coordinates map through the exact transform used by the ball renderer.
+write(ASSETS / "table_geometry.json", {
+    "pockets": pockets,
+    "rails": [[a, c, d, f] for name, (a,b,c,d,e,f), material, group in boxes
+              if group in ("Rails", "Pockets") and material in ("rail", "felt")]
+})
 
 # Split on cell borders, omitting the newly created internal faces.
 for index, (cx, cz) in enumerate(FOOTPRINT):

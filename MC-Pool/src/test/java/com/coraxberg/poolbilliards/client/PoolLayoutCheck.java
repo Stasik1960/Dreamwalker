@@ -24,6 +24,9 @@ public final class PoolLayoutCheck {
             require(Math.round(l.tableWidth() * 38.0 / 900) <= l.rail(), "pockets escape reserved rail " + label);
             require(l.resetX() >= l.x() && l.resetX() + l.resetWidth() <= l.x() + l.width()
                     && l.resetY() + 20 <= l.y() + l.height(), "reset not accessible " + label);
+            int styleWidth = Math.min(160, l.resetX() - (l.x() + 10) - 8);
+            require(styleWidth >= 100 && l.x() + 10 + styleWidth < l.resetX(),
+                    "ball style selector overlaps reset or is too small " + label);
             if (l.sidebar()) {
                 require(l.tableX() + l.tableWidth() + l.rail() < l.sidebarX(),
                         "table overlaps sidebar " + label);

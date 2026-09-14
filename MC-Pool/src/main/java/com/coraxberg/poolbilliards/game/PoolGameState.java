@@ -47,6 +47,8 @@ public class PoolGameState {
     public int currentTurn = 0;
     public boolean started = false;
     public boolean gameOver = false;
+    public boolean monochromeBalls = false;
+    public boolean appearanceLocked = false;
     public String status = "Ожидание игроков";
     public UUID winner = null;
     private boolean shotInProgress = false;
@@ -138,7 +140,7 @@ public class PoolGameState {
     }
 
     public boolean shoot(UUID uuid, double angle, double power) {
-        if (!canShoot(uuid)) return false;
+        if (!canShoot(uuid) || !Double.isFinite(angle) || !Double.isFinite(power)) return false;
         PoolBall cue = getBall(0);
         if (cue == null) return false;
         if (cue.pocketed) {
@@ -153,6 +155,7 @@ public class PoolGameState {
         cue.vx = Math.cos(angle) * speed;
         cue.vy = Math.sin(angle) * speed;
         shotInProgress = true;
+        appearanceLocked = true;
         pocketedThisShot.clear();
         resetVotes.clear();
         status = "Удар: " + getCurrentPlayerName();
@@ -161,6 +164,17 @@ public class PoolGameState {
 
     public void removeResetVote(UUID uuid) {
         resetVotes.remove(uuid);
+    }
+
+    public boolean canChangeBallStyle(UUID uuid) {
+        return !appearanceLocked && !gameOver && !areBallsMoving()
+                && players.contains(uuid) && activePlayers.contains(uuid);
+    }
+
+    public boolean setBallStyle(UUID uuid, boolean monochrome) {
+        if (!canChangeBallStyle(uuid)) return false;
+        monochromeBalls = monochrome;
+        return true;
     }
 
     public void voteReset(UUID uuid, Collection<UUID> activeUiPlayers) {
@@ -202,6 +216,7 @@ public class PoolGameState {
         gameOver = false;
         winner = null;
         shotInProgress = false;
+        appearanceLocked = false;
         pocketedThisShot.clear();
         physicsSounds.clear();
         status = "Ожидание игроков";
@@ -304,38 +319,8 @@ public class PoolGameState {
                 continue;
             }
 
-            if (b.x < BALL_R) {
-                b.x = BALL_R;
-                if (b.vx < 0) {
-                    soundCushion(b, -b.vx);
-                    b.vx = -b.vx * CUSHION_RESTITUTION;
-                    b.vy *= CUSHION_TANGENT_RETENTION;
-                }
-            }
-            if (b.x > TABLE_W - BALL_R) {
-                b.x = TABLE_W - BALL_R;
-                if (b.vx > 0) {
-                    soundCushion(b, b.vx);
-                    b.vx = -b.vx * CUSHION_RESTITUTION;
-                    b.vy *= CUSHION_TANGENT_RETENTION;
-                }
-            }
-            if (b.y < BALL_R) {
-                b.y = BALL_R;
-                if (b.vy < 0) {
-                    soundCushion(b, -b.vy);
-                    b.vy = -b.vy * CUSHION_RESTITUTION;
-                    b.vx *= CUSHION_TANGENT_RETENTION;
-                }
-            }
-            if (b.y > TABLE_H - BALL_R) {
-                b.y = TABLE_H - BALL_R;
-                if (b.vy > 0) {
-                    soundCushion(b, b.vy);
-                    b.vy = -b.vy * CUSHION_RESTITUTION;
-                    b.vx *= CUSHION_TANGENT_RETENTION;
-                }
-            }
+            collideRails(b);
+
         }
     }
 
@@ -344,13 +329,51 @@ public class PoolGameState {
     }
 
     private boolean isInPocket(double x, double y) {
-        double[][] pockets = {{0,0},{TABLE_W/2,0},{TABLE_W,0},{0,TABLE_H},{TABLE_W/2,TABLE_H},{TABLE_W,TABLE_H}};
-        for (double[] p : pockets) {
-            double dx = x - p[0];
-            double dy = y - p[1];
-            if (dx * dx + dy * dy <= POCKET_R * POCKET_R) return true;
+        for (PoolTableGeometry.Pocket pocket : PoolTableGeometry.POCKETS) {
+            if (pocket.captures(x, y)) return true;
         }
         return false;
+    }
+
+    private void collideRails(PoolBall ball) {
+        // Circle versus the exact baked rail/jaw rectangles. Selecting the
+        // deepest contact avoids pushing against internal strip boundaries.
+        for (int pass = 0; pass < 3; pass++) {
+            double deepest = 0, normalX = 0, normalY = 0;
+            for (PoolTableGeometry.Rail rail : PoolTableGeometry.RAILS) {
+                if (ball.x < rail.x0() - BALL_R || ball.x > rail.x1() + BALL_R
+                        || ball.y < rail.y0() - BALL_R || ball.y > rail.y1() + BALL_R) continue;
+                double nearX = Math.max(rail.x0(), Math.min(rail.x1(), ball.x));
+                double nearY = Math.max(rail.y0(), Math.min(rail.y1(), ball.y));
+                double dx = ball.x - nearX, dy = ball.y - nearY;
+                double distance = Math.hypot(dx, dy);
+                double depth, nx, ny;
+                if (distance > 1e-9) {
+                    depth = BALL_R - distance;
+                    nx = dx / distance;
+                    ny = dy / distance;
+                } else {
+                    double left = ball.x - rail.x0(), right = rail.x1() - ball.x;
+                    double top = ball.y - rail.y0(), bottom = rail.y1() - ball.y;
+                    double nearest = Math.min(Math.min(left, right), Math.min(top, bottom));
+                    depth = BALL_R + nearest;
+                    nx = nearest == left ? -1 : nearest == right ? 1 : 0;
+                    ny = nx != 0 ? 0 : nearest == top ? -1 : 1;
+                }
+                if (depth > deepest) { deepest = depth; normalX = nx; normalY = ny; }
+            }
+            if (deepest <= 0) break;
+            ball.x += normalX * (deepest + 1e-6);
+            ball.y += normalY * (deepest + 1e-6);
+            double normalSpeed = ball.vx * normalX + ball.vy * normalY;
+            if (normalSpeed < 0) {
+                soundCushion(ball, -normalSpeed);
+                double tangentX = ball.vx - normalSpeed * normalX;
+                double tangentY = ball.vy - normalSpeed * normalY;
+                ball.vx = tangentX * CUSHION_TANGENT_RETENTION - normalSpeed * CUSHION_RESTITUTION * normalX;
+                ball.vy = tangentY * CUSHION_TANGENT_RETENTION - normalSpeed * CUSHION_RESTITUTION * normalY;
+            }
+        }
     }
 
     private void resolveCollisions(boolean reverse) {
@@ -478,6 +501,8 @@ public class PoolGameState {
         n.putInt("turn", currentTurn);
         n.putBoolean("started", started);
         n.putBoolean("over", gameOver);
+        n.putBoolean("monochromeBalls", monochromeBalls);
+        n.putBoolean("appearanceLocked", appearanceLocked);
         n.putString("status", status);
         if (winner != null) n.putUuid("winner", winner);
         return n;
@@ -521,6 +546,10 @@ public class PoolGameState {
         currentTurn = n.getInt("turn");
         started = n.getBoolean("started");
         gameOver = n.getBoolean("over");
+        monochromeBalls = n.getBoolean("monochromeBalls");
+        // Older saves cannot prove that no shot has been played. A new game
+        // unlocks the appearance selector for those tables as well.
+        appearanceLocked = n.contains("appearanceLocked") ? n.getBoolean("appearanceLocked") : started;
         status = n.getString("status");
         winner = n.containsUuid("winner") ? n.getUuid("winner") : null;
         if (balls.isEmpty()) rackBalls();
@@ -563,6 +592,8 @@ public class PoolGameState {
         buf.writeString(status);
         buf.writeBoolean(winner != null);
         if (winner != null) buf.writeUuid(winner);
+        buf.writeBoolean(monochromeBalls);
+        buf.writeBoolean(appearanceLocked);
     }
 
     public static PoolGameState read(PacketByteBuf buf) {
@@ -596,6 +627,8 @@ public class PoolGameState {
         g.gameOver = buf.readBoolean();
         g.status = buf.readString(32767);
         g.winner = buf.readBoolean() ? buf.readUuid() : null;
+        g.monochromeBalls = buf.readableBytes() >= 2 && buf.readBoolean();
+        g.appearanceLocked = buf.isReadable() ? buf.readBoolean() : g.started;
         g.normalizeTurn();
         return g;
     }

@@ -92,6 +92,51 @@ public final class PoolPhysicsCheck {
         int ticks = 0;
         while (rolling.areBallsMoving() && ticks++ < 200) rolling.tickPhysics();
         check(!rolling.areBallsMoving(), "slow ball should stop in bounded time");
+        checkModelPockets();
         System.out.println("Physics checks passed: center, glance, cushion, pocket, symmetry, rack, sound cap, stop");
+    }
+
+    private static void checkModelPockets() {
+        check(PoolTableGeometry.POCKETS.size() == 6, "model must have six pockets");
+        for (var pocket : PoolTableGeometry.POCKETS) {
+            for (double speed : new double[]{8, 30, 58.5}) {
+                double dx = 450 - pocket.x(), dy = 245 - pocket.y();
+                double length = Math.hypot(dx, dy);
+                dx /= length; dy /= length;
+                PoolBall ball = new PoolBall(1, pocket.x() + dx * 100, pocket.y() + dy * 100);
+                ball.vx = -dx * speed; ball.vy = -dy * speed;
+                var game = emptyGame(ball);
+                for (int tick = 0; tick < 30 && !ball.pocketed; tick++) game.tickPhysics();
+                check(ball.pocketed, "visual pocket must accept centre shot at " + speed + ": " + pocket);
+            }
+        }
+        // A ball still supported by the inner edge of a middle pocket should
+        // remain visible; the previous radius-38 circle removed it here.
+        var side = PoolTableGeometry.POCKETS.stream().filter(p -> !Double.isNaN(p.innerY()) && p.y() < 0).findFirst().orElseThrow();
+        check(!side.captures(450, 25), "do not pocket balls still on the felt");
+        PoolBall miss = new PoolBall(1, 505, 65);
+        miss.vy = -30;
+        var game = emptyGame(miss);
+        for (int tick = 0; tick < 5; tick++) game.tickPhysics();
+        check(!miss.pocketed && miss.vy > 0, "shot beside middle mouth must rebound");
+        // Sweep angles across a middle mouth and ensure no ball tunnels out,
+        // gets stuck in the rail, or gains energy on the stepped curved jaws.
+        for (int offset = -70; offset <= 70; offset += 7) {
+            for (int horizontal = -25; horizontal <= 25; horizontal += 25) {
+                PoolBall ball = new PoolBall(1, 450 + offset, 70);
+                ball.vx = horizontal; ball.vy = -45;
+                var sweep = emptyGame(ball);
+                double energy = kineticEnergy(sweep);
+                for (int tick = 0; tick < 200 && !ball.pocketed && sweep.areBallsMoving(); tick++) {
+                    sweep.tickPhysics();
+                    double next = kineticEnergy(sweep);
+                    check(next <= energy + 1e-6, "jaw must not add energy");
+                    energy = next;
+                    check(ball.pocketed || (ball.x > -65 && ball.x < 965 && ball.y > -65 && ball.y < 555),
+                            "ball escaped model: " + ball.x + ", " + ball.y);
+                }
+            }
+        }
+        System.out.println("Model pocket checks passed: 18 centre shots, near miss, early capture, 63 jaw trajectories.");
     }
 }

@@ -18,8 +18,18 @@ public class PoolPackets {
     public static final Identifier SHOT = PoolBilliardsMod.id("shot");
     public static final Identifier RESET = PoolBilliardsMod.id("reset");
     public static final Identifier CLOSE = PoolBilliardsMod.id("close");
+    public static final Identifier BALL_STYLE = PoolBilliardsMod.id("ball_style");
 
     public static void registerServerReceivers() {
+        ServerPlayNetworking.registerGlobalReceiver(BALL_STYLE, (server, player, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            boolean monochrome = buf.readBoolean();
+            server.execute(() -> {
+                if (player.getWorld().getBlockEntity(pos) instanceof BilliardsTableBlockEntity be) {
+                    be.setBallStyle(player, monochrome);
+                }
+            });
+        });
         ServerPlayNetworking.registerGlobalReceiver(JOIN, (server, player, handler, buf, responseSender) -> {
             BlockPos pos = buf.readBlockPos();
             server.execute(() -> {

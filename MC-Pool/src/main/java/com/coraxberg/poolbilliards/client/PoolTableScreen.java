@@ -193,7 +193,7 @@ public class PoolTableScreen extends Screen {
         fillCircle(context, x, y, r, 0xFF111111);
         fillCircle(context, x, y, r - 1, color);
 
-        if (b.id >= 9 && b.id != 0) {
+        if (b.id >= 9 && !state.monochromeBalls) {
             int stripeH = Math.max(1, r / 2);
             fillCircleStripe(context, x, y, Math.max(1, r - 1), stripeH, 0xFFFFFFFF);
         }
@@ -202,13 +202,13 @@ public class PoolTableScreen extends Screen {
         String label = b.id == 0 ? "" : String.valueOf(b.id);
         if (!label.isEmpty()) {
             int labelR = Math.max(2, r / 2);
-            fillCircle(context, x, y, labelR, b.id == 8 ? 0xFF111111 : 0xEFFFFFFF);
+            fillCircle(context, x, y, labelR, b.id == 8 && !state.monochromeBalls ? 0xFF111111 : 0xEFFFFFFF);
             int lw = textRenderer.getWidth(label);
             float scale = Math.min(3.0f, Math.min(labelR * 1.8f / Math.max(1, lw), labelR * 1.8f / 9.0f));
             context.getMatrices().push();
             context.getMatrices().translate(x, y, 0);
             context.getMatrices().scale(scale, scale, 1);
-            context.drawText(textRenderer, label, -lw / 2, -4, b.id == 8 ? 0xFFFFFF : 0x111111, false);
+            context.drawText(textRenderer, label, -lw / 2, -4, b.id == 8 && !state.monochromeBalls ? 0xFFFFFF : 0x111111, false);
             context.getMatrices().pop();
         }
         context.getMatrices().pop();
@@ -219,6 +219,7 @@ public class PoolTableScreen extends Screen {
     }
 
     private int ballColor(int id) {
+        if (state.monochromeBalls) return id == 0 ? 0xFFFFD680 : 0xFFF7F4EC;
         return switch (id) {
             case 0 -> 0xFFEFEFEF;
             case 1, 9 -> 0xFFFFD84D;
@@ -289,9 +290,25 @@ public class PoolTableScreen extends Screen {
             int barW = Math.min(available, 160);
             fill(context, x, resetY + 13, x + barW, resetY + 17, WOOD);
             fill(context, x, resetY + 13, x + barW * power / 100, resetY + 17, BRASS);
+        } else if (!state.appearanceLocked && !state.gameOver) {
+            int w = styleButtonWidth();
+            boolean enabled = canLocalChangeStyle();
+            boolean over = currentMouseX >= x && currentMouseX < x + w
+                    && currentMouseY >= resetY && currentMouseY < resetY + 20;
+            fill(context, x, resetY, x + w, resetY + 20, enabled ? BRASS : DARK_WOOD);
+            fill(context, x + 1, resetY + 1, x + w - 1, resetY + 19, enabled && over ? WOOD_LIGHT : WOOD);
+            drawFitted(context, state.monochromeBalls ? "Шары: белые" : "Шары: цветные", x + 6, resetY + 6, w - 12, enabled ? PARCHMENT : MUTED);
         } else {
             drawFitted(context, "ЛКМ: удержать и отпустить", x, resetY + 6, available, MUTED);
         }
+    }
+
+    private int styleButtonWidth() {
+        return Math.min(160, resetX - (panelX + 10) - 8);
+    }
+
+    private boolean canLocalChangeStyle() {
+        return client != null && client.player != null && state.canChangeBallStyle(client.player.getUuid());
     }
 
     private void drawFitted(DrawContext context, String text, int x, int y, int maxWidth, int color) {
@@ -326,6 +343,12 @@ public class PoolTableScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && !dragging && canLocalChangeStyle()
+                && mouseX >= panelX + 10 && mouseX < panelX + 10 + styleButtonWidth()
+                && mouseY >= resetY && mouseY < resetY + 20) {
+            PoolBilliardsClient.sendBallStyle(tablePos, !state.monochromeBalls);
+            return true;
+        }
         if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && mouseX >= resetX && mouseX < resetX + layout.resetWidth()
                 && mouseY >= resetY && mouseY < resetY + 20) {
             PoolBilliardsClient.sendReset(tablePos);

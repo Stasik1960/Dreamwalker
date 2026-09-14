@@ -68,6 +68,15 @@ public class BilliardsTableBlockEntity extends BlockEntity {
         PoolPackets.broadcastState(player.getServerWorld(), pos, game);
     }
 
+    public void setBallStyle(ServerPlayerEntity player, boolean monochrome) {
+        if (!openPlayers.contains(player.getUuid())
+                || player.squaredDistanceTo(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) > 64) return;
+        if (game.setBallStyle(player.getUuid(), monochrome)) {
+            syncWorld();
+            PoolPackets.broadcastState(player.getServerWorld(), pos, game);
+        }
+    }
+
     public static void tick(World world, BlockPos pos, BlockState state, BilliardsTableBlockEntity be) {
         if (world.isClient) return;
         if (world instanceof ServerWorld serverWorld) {

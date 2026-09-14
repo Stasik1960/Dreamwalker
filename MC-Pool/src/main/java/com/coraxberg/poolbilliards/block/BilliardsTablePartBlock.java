@@ -51,6 +51,39 @@ public class BilliardsTablePartBlock extends Block {
     }
 
     @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        // Only the main block has loot. Remove it before the ordinary part break
+        // so survival drops one table and creative drops none.
+        if (!world.isClient) {
+            BlockPos mainPos = getMainPos(pos, state);
+            if (hasMatchingMain(world, mainPos, state)) {
+                world.breakBlock(mainPos, !player.isCreative(), player);
+            }
+        }
+        super.onBreak(world, pos, state, player);
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!world.isClient && !state.isOf(newState.getBlock())) {
+            BlockPos mainPos = getMainPos(pos, state);
+            if (hasMatchingMain(world, mainPos, state)) {
+                // Covers explosions and replacement as well as player breaks.
+                // The main is already air when its cleanup removes the other
+                // parts, so their callbacks cannot recurse or produce loot.
+                world.breakBlock(mainPos, true);
+            }
+        }
+        super.onStateReplaced(state, world, pos, newState, moved);
+    }
+
+    private static boolean hasMatchingMain(World world, BlockPos mainPos, BlockState partState) {
+        BlockState mainState = world.getBlockState(mainPos);
+        return mainState.isOf(PoolBilliardsMod.BILLIARDS_TABLE)
+                && mainState.get(BilliardsTableBlock.FACING) == partState.get(FACING);
+    }
+
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) return ActionResult.SUCCESS;
         BlockPos mainPos = getMainPos(pos, state);
@@ -66,8 +99,6 @@ public class BilliardsTablePartBlock extends Block {
     public static BlockPos getMainPos(BlockPos partPos, BlockState state) {
         Direction facing = state.get(FACING);
         int part = state.get(PART);
-        int[] local = BilliardsTableBlock.FOOTPRINT[part];
-        BlockPos offset = BilliardsTableBlock.rotateOffset(local[0], local[1], facing);
-        return partPos.add(-offset.getX(), -offset.getY(), -offset.getZ());
+        return BilliardsTableBlock.Layout.mainPos(partPos, facing, part);
     }
 }

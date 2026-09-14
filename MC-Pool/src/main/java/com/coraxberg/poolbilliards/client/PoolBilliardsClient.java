@@ -58,6 +58,13 @@ public class PoolBilliardsClient implements ClientModInitializer {
         ClientPlayNetworking.send(PoolPackets.RESET, buf);
     }
 
+    public static void sendBallStyle(BlockPos pos, boolean monochrome) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeBlockPos(pos);
+        buf.writeBoolean(monochrome);
+        ClientPlayNetworking.send(PoolPackets.BALL_STYLE, buf);
+    }
+
     public static void sendClose(BlockPos pos) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeBlockPos(pos);

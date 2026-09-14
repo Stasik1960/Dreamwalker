@@ -30,11 +30,34 @@ public class BilliardsTableBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
     // The main block is the centre of the 5 x 3 table; the other 14 cells
     // carry their own baked visual segment and collision shape.
-    public static final int[][] FOOTPRINT = new int[][]{
+    public static final int[][] FOOTPRINT = Layout.FOOTPRINT;
+
+    /** Coordinate/ownership rules independent of world and registry initialization. */
+    public static final class Layout {
+        public static final int[][] FOOTPRINT = new int[][]{
             {-2,-1}, {-1,-1}, {0,-1}, {1,-1}, {2,-1},
             {-2, 0}, {-1, 0}, {0, 0}, {1, 0}, {2, 0},
             {-2, 1}, {-1, 1}, {0, 1}, {1, 1}, {2, 1}
     };
+        public static BlockPos offset(int localX, int localZ, Direction facing) {
+            return switch (facing) {
+                case SOUTH -> new BlockPos(-localX, 0, -localZ);
+                case EAST -> new BlockPos(-localZ, 0, localX);
+                case WEST -> new BlockPos(localZ, 0, -localX);
+                default -> new BlockPos(localX, 0, localZ);
+            };
+        }
+
+        public static BlockPos mainPos(BlockPos position, Direction facing, int part) {
+            int[] cell = FOOTPRINT[part];
+            BlockPos offset = offset(cell[0], cell[1], facing);
+            return position.add(-offset.getX(), 0, -offset.getZ());
+        }
+
+        public static boolean matches(Direction actualFacing, int actualPart, Direction facing, int part) {
+            return actualFacing == facing && actualPart == part;
+        }
+    }
     private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 15, 16);
 
     public BilliardsTableBlock(Settings settings) {
@@ -110,7 +133,7 @@ public class BilliardsTableBlock extends BlockWithEntity {
                 if (lx == 0 && lz == 0) continue;
                 BlockPos partPos = pos.add(rotateOffset(lx, lz, facing));
                 BlockState partState = world.getBlockState(partPos);
-                if (partState.isOf(PoolBilliardsMod.BILLIARDS_TABLE_PART)) {
+                if (isMatchingPart(partState, facing, i)) {
                     world.setBlockState(partPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
                 }
             }
@@ -118,13 +141,14 @@ public class BilliardsTableBlock extends BlockWithEntity {
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 
+    public static boolean isMatchingPart(BlockState state, Direction facing, int part) {
+        return state.isOf(PoolBilliardsMod.BILLIARDS_TABLE_PART)
+                && Layout.matches(state.get(BilliardsTablePartBlock.FACING),
+                state.get(BilliardsTablePartBlock.PART), facing, part);
+    }
+
     public static BlockPos rotateOffset(int localX, int localZ, Direction facing) {
-        return switch (facing) {
-            case SOUTH -> new BlockPos(-localX, 0, -localZ);
-            case EAST -> new BlockPos(-localZ, 0, localX);
-            case WEST -> new BlockPos(localZ, 0, -localX);
-            default -> new BlockPos(localX, 0, localZ);
-        };
+        return Layout.offset(localX, localZ, facing);
     }
 
     @Override

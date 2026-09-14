@@ -47,6 +47,20 @@ tasks.register('physicsCheck', JavaExec) {
 tasks.named('check') {
     dependsOn 'physicsCheck'
     dependsOn 'layoutCheck'
+    dependsOn 'structureCheck'
+    dependsOn 'ballStyleCheck'
+}
+
+tasks.register('structureCheck', JavaExec) {
+    dependsOn 'testClasses'
+    classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.main.compileClasspath
+    mainClass = 'com.coraxberg.poolbilliards.block.TableStructureCheck'
+}
+
+tasks.register('ballStyleCheck', JavaExec) {
+    dependsOn 'testClasses'
+    classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.main.compileClasspath
+    mainClass = 'com.coraxberg.poolbilliards.game.PoolBallStyleCheck'
 }
 
 tasks.register('layoutCheck', JavaExec) {
