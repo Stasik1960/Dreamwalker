@@ -1,6 +1,7 @@
 """Editable Blockbench source and static 5x3-block runtime models."""
 import base64
 import json
+import math
 import uuid
 from pathlib import Path
 
@@ -35,34 +36,55 @@ for x in (-28.8, 6.8, 42.4):
 box("slate", (-29, 7.8, -13, 45, 8.12, 29), "pocket", "Playfield")
 box("green cloth", (-27.5, 8.12, -11.5, 43.5, 8.35, 27.5), "felt", "Playfield")
 for z0, z1 in ((-16, -12), (28, 32)):
-    for x0, x1 in ((-27, 5), (11, 43)):
+    for x0, x1 in ((-24, 4), (12, 40)):
         box("long rail", (x0, 8.1, z0, x1, 10, z1), "rail", "Rails")
         a, b = (-12.35, -11.45) if z0 < 0 else (27.45, 28.35)
         box("long cushion", (x0+.02, 8.15, a, x1-.02, 9.15, b), "felt", "Rails")
 for x0, x1 in ((-32, -28), (44, 48)):
-    box("end rail", (x0, 8.1, -11, x1, 10, 27), "rail", "Rails")
+    box("end rail", (x0, 8.1, -8, x1, 10, 24), "rail", "Rails")
     a, b = (-28.35, -27.45) if x0 < 0 else (43.45, 44.35)
-    box("end cushion", (a, 8.15, -10.98, b, 9.15, 26.98), "felt", "Rails")
-for x0, x1 in ((-32, -27), (43, 48)):
-    for z0, z1 in ((-16, -11), (27, 32)):
-        # Two outside lips frame the mouth without covering its dark interior.
-        lip_x0, lip_x1 = (x0, x0+1) if x0 < 0 else (x1-1, x1)
-        lip_z0, lip_z1 = (z0, z0+1) if z0 < 0 else (z1-1, z1)
-        inner_x0, inner_x1 = (lip_x1, x1) if x0 < 0 else (x0, lip_x0)
-        inner_z0, inner_z1 = (lip_z1, z1) if z0 < 0 else (z0, lip_z0)
-        box("corner pocket", (inner_x0, 8.36, inner_z0, inner_x1, 8.65, inner_z1), "pocket", "Pockets")
-        box("corner net", (x0+.7, 5.1, z0+.7, x1-.7, 7.6, z1-.7), "net", "Pockets")
-        box("corner outer lip", (lip_x0, 8.35, z0, lip_x1, 9.8, z1), "rail", "Pockets")
-        box("corner side lip", (inner_x0, 8.35, lip_z0, inner_x1, 9.8, lip_z1), "rail", "Pockets")
+    box("end cushion", (a, 8.15, -7.98, b, 9.15, 23.98), "felt", "Rails")
+
+# Static strips follow circular arcs (12 samples), with an open inner mouth.
+# All adjacent strips share exact boundaries: no overlapping top faces.
+# They bake with the rest of the table; no per-frame pocket tessellation.
+for outer_x in (-32, 48):
+    for outer_z in (-16, 32):
+        def corner_box(name, u0, u1, v0, v1, y0, y1, material):
+            if u1-u0 < .001 or v1-v0 < .001:
+                return
+            ax, bx = (outer_x+u0, outer_x+u1) if outer_x < 0 else (outer_x-u1, outer_x-u0)
+            az, bz = (outer_z+v0, outer_z+v1) if outer_z < 0 else (outer_z-v1, outer_z-v0)
+            box(name, (ax, y0, az, bx, y1, bz), material, "Pockets")
+
+        # Pocket centre lies beside the physical playing-field corner.
+        centre, radius = 4.6, 3.2
+        for row in range(16):
+            v0, v1 = row*.5, (row+1)*.5
+            v = (v0+v1)/2
+            half = math.sqrt(max(0, radius*radius-(v-centre)**2))
+            left, right = centre-half, centre+half
+            if half > 0:
+                corner_box("round corner well", left, right, v0, v1, 8.36, 8.65, "pocket")
+            # On the inner half the rim tapers into a broad diagonal mouth.
+            corner_box("curved corner outer rim", 0, left if half > 0 else 8, v0, v1, 8.35, 10, "rail")
+            if half > 0 and v < centre:
+                corner_box("curved corner inner rim", right, 8, v0, v1, 8.35, 10, "rail")
+        corner_box("corner net", 1.4, 7.8, 1.4, 7.8, 5.1, 7.6, "net")
 for z0, z1 in ((-16, -11.5), (27.5, 32)):
-    # A continuous outside rim and two short jaws create a U-shaped border.
-    rim_z0, rim_z1 = (z0, z0+1) if z0 < 0 else (z1-1, z1)
-    jaw_z0, jaw_z1 = (z0+1, z1) if z0 < 0 else (z0, z1-1)
-    box("side pocket", (5.4, 8.36, jaw_z0, 10.6, 8.65, jaw_z1), "pocket", "Pockets")
-    box("side net", (6, 5.2, z0+.7, 10, 7.6, z1-.7), "net", "Pockets")
-    box("side pocket rim", (5, 8.35, rim_z0, 11, 9.8, rim_z1), "rail", "Pockets")
-    box("left pocket jaw", (5, 8.35, jaw_z0, 5.4, 9.8, jaw_z1), "rail", "Pockets")
-    box("right pocket jaw", (10.6, 8.35, jaw_z0, 11, 9.8, jaw_z1), "rail", "Pockets")
+    def side_box(name, x0, x1, depth0, depth1, y0, y1, material):
+        az, bz = (z0+depth0, z0+depth1) if z0 < 0 else (z1-depth1, z1-depth0)
+        box(name, (x0, y0, az, x1, y1, bz), material, "Pockets")
+
+    # Rounded back of the well, flared mouth towards the playing field.
+    for row in range(12):
+        d0, d1 = row*.5, (row+1)*.5
+        half = math.sqrt(max(0, 3.3**2-((d0+d1)/2-3.3)**2))
+        side_box("round side well", 8-half, 8+half, d0, d1, 8.36, 8.65, "pocket")
+        if d1 <= 4:
+            side_box("curved side left jaw", 4, 8-half, d0, d1, 8.35, 10, "rail")
+            side_box("curved side right jaw", 8+half, 12, d0, d1, 8.35, 10, "rail")
+    box("side net", (5, 5.2, z0+.6, 11, 7.6, z1-.6), "net", "Pockets")
 for x in (-20, -9, 0, 16, 25, 36):
     for z in (-14.2, 30.9):
         box("rail sight", (x, 10.01, z, x+.55, 10.07, z+.55), "brass", "Details")

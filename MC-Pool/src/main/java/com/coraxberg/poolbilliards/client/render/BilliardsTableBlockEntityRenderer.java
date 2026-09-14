@@ -79,14 +79,14 @@ public class BilliardsTableBlockEntityRenderer implements BlockEntityRenderer<Bi
                     float bz = (float) (-1.2 + (cueBall.y / PoolGameState.TABLE_H) * 2.4);
                     float pull = (float) Math.sin(time * 2.2f) * 0.045f;
                     // Косметический замах: кий лежит за битком и слегка ходит вперёд-назад.
-                    drawCue(matrices, vertices, bx - 0.33f - pull, 0.71f, bz + 0.18f, 62.0f, 0.86f, 0.026f, light);
+                    drawCue(matrices, vertices, bx - 0.33f - pull, 0.85f, bz + 0.18f, 62.0f, 0.86f, 0.026f, light);
                 }
             } else {
                 // Ожидающие игроки: кий стоит/лежит у края стола, показывая занятое место.
                 float[][] spots = new float[][]{
-                        {-2.36f, 0.71f, 0.10f, 16.0f},
-                        {2.36f, 0.71f, 0.90f, -16.0f},
-                        {0.00f, 0.71f, 1.38f, 90.0f}
+                        {-2.36f, 0.85f, 0.10f, 16.0f},
+                        {2.36f, 0.85f, 0.90f, -16.0f},
+                        {0.00f, 0.85f, 1.38f, 90.0f}
                 };
                 float[] s = spots[Math.min(i, spots.length - 1)];
                 drawCue(matrices, vertices, s[0], s[1], s[2], s[3], 0.95f, 0.024f, light);

@@ -37,6 +37,17 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+// Deterministic physics scenarios without an extra test framework dependency.
+tasks.register('physicsCheck', JavaExec) {
+    dependsOn 'testClasses'
+    classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.main.compileClasspath
+    mainClass = 'com.coraxberg.poolbilliards.game.PoolPhysicsCheck'
+}
+
+tasks.named('check') {
+    dependsOn 'physicsCheck'
+}
+
 jar {
     from("LICENSE") {
         rename { "${it}_${project.base.archivesName.get()}" }

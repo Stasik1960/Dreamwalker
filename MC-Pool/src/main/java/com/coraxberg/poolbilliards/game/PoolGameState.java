@@ -11,7 +11,29 @@ public class PoolGameState {
     public static final double TABLE_W = 900.0;
     public static final double TABLE_H = 490.0;
     public static final double BALL_R = 12.0;
-    public static final double POCKET_R = 28.0;
+    public static final double POCKET_R = 38.0;
+    private static final double BALL_RESTITUTION = 0.96;
+    private static final double CUSHION_RESTITUTION = 0.84;
+    private static final double CUSHION_TANGENT_RETENTION = 0.985;
+
+    public enum SoundType { BALL, CUSHION, POCKET }
+    public record PhysicsSound(SoundType type, double x, double y, double strength) {}
+    // The loudest event of each kind is enough during a busy break. Sounds are
+    // transient and deliberately never saved or sent with the game state.
+    private final EnumMap<SoundType, PhysicsSound> physicsSounds = new EnumMap<>(SoundType.class);
+
+    public List<PhysicsSound> drainPhysicsSounds() {
+        List<PhysicsSound> sounds = List.copyOf(physicsSounds.values());
+        physicsSounds.clear();
+        return sounds;
+    }
+
+    private void sound(SoundType type, double x, double y, double strength) {
+        PhysicsSound previous = physicsSounds.get(type);
+        if (previous == null || strength > previous.strength()) {
+            physicsSounds.put(type, new PhysicsSound(type, x, y, strength));
+        }
+    }
 
     public final ArrayList<PoolBall> balls = new ArrayList<>();
     /** Все игроки, которые участвовали в текущей партии. Счёт этих игроков хранится до сброса стола. */
@@ -181,6 +203,7 @@ public class PoolGameState {
         winner = null;
         shotInProgress = false;
         pocketedThisShot.clear();
+        physicsSounds.clear();
         status = "Ожидание игроков";
         rackBalls();
     }
@@ -221,6 +244,8 @@ public class PoolGameState {
     public boolean tickPhysics() {
         if (!areBallsMoving() && !shotInProgress) return false;
 
+        physicsSounds.clear();
+
         double fastest = 0;
         for (PoolBall ball : balls) {
             if (!ball.pocketed) fastest = Math.max(fastest, Math.hypot(ball.vx, ball.vy));
@@ -231,7 +256,10 @@ public class PoolGameState {
         boolean changed = false;
         for (int step = 0; step < steps; step++) {
             moveBalls(1.0 / steps);
-            resolveCollisions();
+            // Two passes in opposite order let an impact travel through a
+            // tightly packed rack without favouring low-numbered balls.
+            resolveCollisions(false);
+            resolveCollisions(true);
             changed = true;
         }
 
@@ -268,6 +296,7 @@ public class PoolGameState {
             b.y += b.vy * dt;
 
             if (isInPocket(b.x, b.y)) {
+                sound(SoundType.POCKET, b.x, b.y, Math.hypot(b.vx, b.vy));
                 b.pocketed = true;
                 b.vx = 0;
                 b.vy = 0;
@@ -275,11 +304,43 @@ public class PoolGameState {
                 continue;
             }
 
-            if (b.x < BALL_R) { b.x = BALL_R; b.vx = Math.abs(b.vx) * 0.88; }
-            if (b.x > TABLE_W - BALL_R) { b.x = TABLE_W - BALL_R; b.vx = -Math.abs(b.vx) * 0.88; }
-            if (b.y < BALL_R) { b.y = BALL_R; b.vy = Math.abs(b.vy) * 0.88; }
-            if (b.y > TABLE_H - BALL_R) { b.y = TABLE_H - BALL_R; b.vy = -Math.abs(b.vy) * 0.88; }
+            if (b.x < BALL_R) {
+                b.x = BALL_R;
+                if (b.vx < 0) {
+                    soundCushion(b, -b.vx);
+                    b.vx = -b.vx * CUSHION_RESTITUTION;
+                    b.vy *= CUSHION_TANGENT_RETENTION;
+                }
+            }
+            if (b.x > TABLE_W - BALL_R) {
+                b.x = TABLE_W - BALL_R;
+                if (b.vx > 0) {
+                    soundCushion(b, b.vx);
+                    b.vx = -b.vx * CUSHION_RESTITUTION;
+                    b.vy *= CUSHION_TANGENT_RETENTION;
+                }
+            }
+            if (b.y < BALL_R) {
+                b.y = BALL_R;
+                if (b.vy < 0) {
+                    soundCushion(b, -b.vy);
+                    b.vy = -b.vy * CUSHION_RESTITUTION;
+                    b.vx *= CUSHION_TANGENT_RETENTION;
+                }
+            }
+            if (b.y > TABLE_H - BALL_R) {
+                b.y = TABLE_H - BALL_R;
+                if (b.vy > 0) {
+                    soundCushion(b, b.vy);
+                    b.vy = -b.vy * CUSHION_RESTITUTION;
+                    b.vx *= CUSHION_TANGENT_RETENTION;
+                }
+            }
         }
+    }
+
+    private void soundCushion(PoolBall ball, double normalSpeed) {
+        if (normalSpeed > 2.0) sound(SoundType.CUSHION, ball.x, ball.y, normalSpeed);
     }
 
     private boolean isInPocket(double x, double y) {
@@ -292,36 +353,47 @@ public class PoolGameState {
         return false;
     }
 
-    private void resolveCollisions() {
-        for (int i = 0; i < balls.size(); i++) {
+    private void resolveCollisions(boolean reverse) {
+        for (int index = 0; index < balls.size(); index++) {
+            int i = reverse ? balls.size() - 1 - index : index;
             PoolBall a = balls.get(i);
             if (a.pocketed) continue;
-            for (int j = i + 1; j < balls.size(); j++) {
+            for (int other = 0; other < balls.size(); other++) {
+                int j = reverse ? balls.size() - 1 - other : other;
+                if (j <= i) continue;
                 PoolBall b = balls.get(j);
                 if (b.pocketed) continue;
                 double dx = b.x - a.x;
                 double dy = b.y - a.y;
                 double dist2 = dx * dx + dy * dy;
                 double min = BALL_R * 2.0;
-                if (dist2 > 0 && dist2 < min * min) {
+                if (dist2 < min * min) {
                     double dist = Math.sqrt(dist2);
-                    double nx = dx / dist;
-                    double ny = dy / dist;
+                    // Coincident centres can occur in edited/legacy saves.
+                    double nx = dist > 1e-9 ? dx / dist : 1.0;
+                    double ny = dist > 1e-9 ? dy / dist : 0.0;
                     double overlap = min - dist;
-                    a.x -= nx * overlap * 0.5;
-                    a.y -= ny * overlap * 0.5;
-                    b.x += nx * overlap * 0.5;
-                    b.y += ny * overlap * 0.5;
+                    double correction = Math.max(0.0, overlap - 0.01) * 0.5;
+                    a.x -= nx * correction;
+                    a.y -= ny * correction;
+                    b.x += nx * correction;
+                    b.y += ny * correction;
 
                     double dvx = b.vx - a.vx;
                     double dvy = b.vy - a.vy;
-                    double impact = dvx * nx + dvy * ny;
-                    if (impact < 0) {
-                        double impulse = impact * 0.96;
-                        a.vx += impulse * nx;
-                        a.vy += impulse * ny;
-                        b.vx -= impulse * nx;
-                        b.vy -= impulse * ny;
+                    double closingSpeed = -(dvx * nx + dvy * ny);
+                    if (closingSpeed > 0) {
+                        // Equal-mass impulse conserves momentum. Low-speed
+                        // contacts lose a little more energy to prevent chatter.
+                        double restitution = closingSpeed < 0.75 ? 0.55 : BALL_RESTITUTION;
+                        double impulse = (1.0 + restitution) * closingSpeed * 0.5;
+                        a.vx -= impulse * nx;
+                        a.vy -= impulse * ny;
+                        b.vx += impulse * nx;
+                        b.vy += impulse * ny;
+                        if (closingSpeed > 1.5) {
+                            sound(SoundType.BALL, (a.x + b.x) * 0.5, (a.y + b.y) * 0.5, closingSpeed);
+                        }
                     }
                 }
             }
@@ -420,6 +492,7 @@ public class PoolGameState {
     }
 
     public void fromNbt(NbtCompound n) {
+        physicsSounds.clear();
         balls.clear();
         NbtList ballList = n.getList("balls", 10);
         for (int i = 0; i < ballList.size(); i++) {

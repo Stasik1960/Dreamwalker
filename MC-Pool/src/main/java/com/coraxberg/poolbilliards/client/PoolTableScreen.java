@@ -94,6 +94,14 @@ public class PoolTableScreen extends Screen {
         drawTable(context, mouseX, mouseY);
         drawSideBar(context);
         super.render(context, mouseX, mouseY, delta);
+        // The cue may extend beyond the felt; render it above the sidebar and
+        // every other screen element so the butt never disappears underneath.
+        PoolBall aimingBall = state.getBall(0);
+        if (dragging && aimingBall != null && !aimingBall.pocketed && canLocalShoot()) {
+            PoolBallVisuals.Position visual = ballVisuals.sample(aimingBall);
+            double pull = Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / 180.0);
+            drawAimingCue(context, sx(visual.x()), sy(visual.y()), mouseX, mouseY, pull);
+        }
     }
 
     private void drawPanel(DrawContext context) {
@@ -133,14 +141,6 @@ public class PoolTableScreen extends Screen {
         drawPocket(context, tableX + tableW / 2, tableY + tableH);
         drawPocket(context, tableX + tableW, tableY + tableH);
 
-        PoolBall aimingBall = state.getBall(0);
-        if (dragging && aimingBall != null && !aimingBall.pocketed && canLocalShoot()) {
-            PoolBallVisuals.Position visual = ballVisuals.sample(aimingBall);
-            int cx = sx(visual.x());
-            int cy = sy(visual.y());
-            double pull = Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / 180.0);
-            drawAimingCue(context, cx, cy, mouseX, mouseY, pull);
-        }
         for (PoolBall b : state.balls) drawBall(context, b);
 
         PoolBall cue = state.getBall(0);
@@ -171,7 +171,7 @@ public class PoolTableScreen extends Screen {
         int ballRadius = Math.max(6, (int) Math.round(PoolGameState.BALL_R * tableW / PoolGameState.TABLE_W));
         int pullBack = (int) Math.round(power * 15);
         context.getMatrices().push();
-        context.getMatrices().translate(ballX, ballY, 0);
+        context.getMatrices().translate(ballX, ballY, 300);
         context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotation((float) angle));
         context.drawTexture(CUE_TEXTURE, ballRadius + 3 + pullBack, -8, 0, 0, 128, 16, 128, 16);
         context.getMatrices().pop();
