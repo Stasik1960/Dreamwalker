@@ -33,11 +33,9 @@ public final class ChatUiState {
     private static final Pattern BRACKET_PREFIX = Pattern.compile("^\\[([^\\[\\]]{2,28})\\]");
 
     private static final int MIN_W = 260;
-    private static final int MIN_H = 120;
-    private static final int TAB_H = 24;
-    private static final int INPUT_H = 24;
+    private static final int MIN_H = 170;
     private static final int PAD = 6;
-    private static final int RESIZE_EDGE = 7;
+    private static final int RESIZE_EDGE = 3;
     private static final int SIDE_W = 34;
     private static final int MAX_MESSAGES = 1000;
     private static final int DEFAULT_MAX_CHAT_LENGTH = 512;
@@ -46,6 +44,33 @@ public final class ChatUiState {
     private static final long HUD_FADE_MS = 1_500L;
 
     private static ChatUiConfig config = ChatUiConfig.defaults();
+    // Saved user geometry is separate from the temporary fit at a larger GUI scale.
+    private static PreferredGeometry preferredGeometry;
+    private static int layoutScreenWidth = -1;
+    private static int layoutScreenHeight = -1;
+
+    private record PreferredGeometry(ChatLayout.Rect main, ChatLayout.Rect tab, ChatLayout.Rect chat) {
+        static PreferredGeometry capture() {
+            return new PreferredGeometry(new ChatLayout.Rect(config.x, config.y, config.width, config.height),
+                    new ChatLayout.Rect(config.settingsX, config.settingsY, config.settingsW, config.settingsH),
+                    new ChatLayout.Rect(config.chatSettingsX, config.chatSettingsY, config.chatSettingsW, config.chatSettingsH));
+        }
+
+        void apply() {
+            applyMain(main); applyTab(tab); applyChat(chat);
+        }
+    }
+
+    private static void applyMain(ChatLayout.Rect r) {
+        config.x = r.x(); config.y = r.y(); config.width = r.width(); config.height = r.height();
+    }
+    private static void applyTab(ChatLayout.Rect r) {
+        config.settingsX = r.x(); config.settingsY = r.y(); config.settingsW = r.width(); config.settingsH = r.height();
+    }
+    private static void applyChat(ChatLayout.Rect r) {
+        config.chatSettingsX = r.x(); config.chatSettingsY = r.y(); config.chatSettingsW = r.width(); config.chatSettingsH = r.height();
+    }
+
     private static final List<ChatEntry> entries = new ArrayList<>();
     private static String lastPlain = "";
     private static long lastMessageMs = 0L;
@@ -101,6 +126,8 @@ public final class ChatUiState {
     private static int resizeStartMouseY;
 
     private static int draggingTabIndex = -1;
+    private static int firstVisibleTab = 0;
+    private static int categoryScroll = 0;
 
     private static boolean tabSettingsOpen = false;
     private static boolean draggingTabSettings = false;
@@ -172,6 +199,7 @@ public final class ChatUiState {
     }
 
     public static void loadConfig() {
+        preferredGeometry = null;
         try {
             Files.createDirectories(CONFIG_PATH.getParent());
             if (!Files.exists(CONFIG_PATH)) {
@@ -192,7 +220,9 @@ public final class ChatUiState {
     }
 
     public static void saveConfig() {
+        PreferredGeometry visible = PreferredGeometry.capture();
         try {
+            if (preferredGeometry != null) preferredGeometry.apply();
             config.normalize();
             Files.createDirectories(CONFIG_PATH.getParent());
             Files.writeString(CONFIG_PATH, GSON.toJson(config), StandardCharsets.UTF_8,
@@ -200,6 +230,8 @@ public final class ChatUiState {
                     java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException ex) {
             System.err.println("[RPChatUI] Could not save config: " + ex.getMessage());
+        } finally {
+            visible.apply();
         }
     }
 
@@ -239,7 +271,24 @@ public final class ChatUiState {
         if (client == null || client.textRenderer == null || client.getWindow() == null) return;
 
         config.normalize();
+        int screenWidth = client.getWindow().getScaledWidth();
+        int screenHeight = client.getWindow().getScaledHeight();
+        if (screenWidth != layoutScreenWidth || screenHeight != layoutScreenHeight) {
+            // Mouse offsets are in GUI pixels and become invalid when the viewport changes.
+            draggingWindow = resizing = draggingTabSettings = resizingTabSettings = false;
+            draggingChatSettings = resizingChatSettings = draggingMessageScrollbar = false;
+            draggingTabIndex = -1;
+            resizeMask = tabSettingsResizeMask = chatSettingsResizeMask = 0;
+            layoutScreenWidth = screenWidth;
+            layoutScreenHeight = screenHeight;
+        }
+        if (preferredGeometry == null) preferredGeometry = PreferredGeometry.capture();
+        if (!draggingWindow && !resizing) applyMain(preferredGeometry.main());
+        if (!draggingTabSettings && !resizingTabSettings) applyTab(preferredGeometry.tab());
+        if (!draggingChatSettings && !resizingChatSettings) applyChat(preferredGeometry.chat());
         clampToScreen(client.getWindow().getScaledWidth(), client.getWindow().getScaledHeight());
+        clampTabSettingsToScreen();
+        clampChatSettingsToScreen();
 
         boolean chatOpen = isChatUiOpen();
         boolean panelVisible = chatOpen || config.alwaysShowWindow || draggingWindow || resizing;
@@ -254,6 +303,16 @@ public final class ChatUiState {
             drawChatInput(context);
         }
 
+        if (chatOpen && config.searchOpen) {
+            drawSearchPanel(context, mouseX, mouseY);
+        }
+
+        if (!chatOpen || (!tabSettingsOpen && !chatSettingsOpen && !copyPopupOpen)) return;
+        // Flush queued text before overlays and give their backgrounds a real
+        // depth above the main window. Paint order alone mixes GUI/font batches.
+        context.draw();
+        context.getMatrices().push();
+        context.getMatrices().translate(0, 0, 100);
         if (chatOpen && tabSettingsOpen) {
             drawTabSettingsWindow(context, mouseX, mouseY);
         }
@@ -261,14 +320,13 @@ public final class ChatUiState {
         if (chatOpen && chatSettingsOpen) {
             drawChatSettingsWindow(context, mouseX, mouseY);
         }
-
-        if (chatOpen && config.searchOpen) {
-            drawSearchPanel(context, mouseX, mouseY);
-        }
+        context.draw();
+        context.getMatrices().translate(0, 0, 100);
 
         if (chatOpen && copyPopupOpen) {
             drawCopyPopup(context, mouseX, mouseY);
         }
+        context.getMatrices().pop();
     }
 
     private static void drawWindow(DrawContext context, int mouseX, int mouseY) {
@@ -282,12 +340,12 @@ public final class ChatUiState {
 
         context.fill(x + 4, y + 5, x + w + 4, y + h + 5, 0x66000000);
         context.fill(x, y, x + w, y + h, panel);
-        context.fill(x, y, x + w, y + TAB_H, header);
+        context.fill(x, y, x + w, y + headerHeight(), header);
         context.fill(x, y, x + w, y + 2, 0xAA000000);
         context.fill(x, y + h - 2, x + w, y + h, 0xAA000000);
         context.fill(x, y, x + 2, y + h, 0xAA000000);
         context.fill(x + w - 2, y, x + w, y + h, 0xAA000000);
-        context.fill(x + 2, y + TAB_H, x + w - 2, y + TAB_H + 1, 0xAA7580A0);
+        context.fill(x + 2, y + headerHeight(), x + w - 2, y + headerHeight() + 1, 0xAA7580A0);
 
         drawTabs(context, mouseX, mouseY);
         drawSideButtons(context, mouseX, mouseY);
@@ -302,13 +360,18 @@ public final class ChatUiState {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
         int x = config.x + 5;
         int y = config.y + 4;
+        ensureSelectedTabVisible();
 
         drawButton(context, x, y, 28, 17, "[↔]", isMouseIn(mouseX, mouseY, x, y, 28, 17), false);
-        x += 34;
+        drawButton(context, config.x + 39, y, 20, 17, "‹", isMouseIn(mouseX, mouseY, config.x + 39, y, 20, 17), false);
+        drawButton(context, config.x + ChatLayout.tabsEnd(config.width) + 3, y, 20, 17, "›",
+                isMouseIn(mouseX, mouseY, config.x + ChatLayout.tabsEnd(config.width) + 3, y, 20, 17), false);
+        x = config.x + 63;
 
-        for (int i = 0; i < config.tabs.size(); i++) {
+        for (int i = firstVisibleTab; i < config.tabs.size(); i++) {
             ChatTab tab = config.tabs.get(i);
-            int tw = tabWidth(tab);
+            int tw = ChatLayout.tabWidth(config.width, tabWidth(tab));
+            if (x + tw > config.x + ChatLayout.tabsEnd(config.width)) break;
             boolean selected = i == config.selectedTab;
             boolean hover = isMouseIn(mouseX, mouseY, x, y, tw, 17);
 
@@ -328,12 +391,10 @@ public final class ChatUiState {
             }
 
             x += tw + 4;
-            if (x > config.x + config.width - 174) {
-                break;
-            }
         }
 
-        int plusX = config.x + config.width - 168;
+        int plusX = config.x + ChatLayout.toolbarX(config.width);
+        y = config.y + ChatLayout.toolbarY(config.width);
         drawButton(context, plusX, y, 24, 17, "+", isMouseIn(mouseX, mouseY, plusX, y, 24, 17), false);
 
         int gearX = plusX + 28;
@@ -351,7 +412,7 @@ public final class ChatUiState {
 
     private static void drawSideButtons(DrawContext context, int mouseX, int mouseY) {
         int x = config.x + config.width + 5;
-        int y = config.y + TAB_H + 6;
+        int y = config.y + headerHeight() + 6;
 
         drawButton(context, x, y, 24, 20, "+", isMouseIn(mouseX, mouseY, x, y, 24, 20), false);
         drawButton(context, x, y + 24, 24, 20, "−", isMouseIn(mouseX, mouseY, x, y + 24, 24, 20), false);
@@ -368,7 +429,7 @@ public final class ChatUiState {
         context.fill(x, y, x + 1, y + h, 0x663A4058);
         context.fill(x + w - 1, y, x + w, y + h, 0xDD000000);
         context.fill(x, y + h - 1, x + w, y + h, 0xDD000000);
-        context.drawCenteredTextWithShadow(tr, text, x + w / 2, y + (h - 8) / 2, 0xFFFFFFFF);
+        context.drawCenteredTextWithShadow(tr, fit(text, Math.max(1, w - 8)), x + w / 2, y + (h - 8) / 2, 0xFFFFFFFF);
     }
 
     private static void drawMessages(DrawContext context, boolean panelVisible, boolean chatOpen) {
@@ -379,7 +440,7 @@ public final class ChatUiState {
         favoriteHitBoxes.clear();
 
         int x = config.x + PAD;
-        int yTop = config.y + TAB_H + PAD;
+        int yTop = config.y + headerHeight() + PAD;
         int yBottom = config.y + config.height - (chatOpen ? getInputAreaHeight() : PAD);
         int maxWidth = Math.max(20, (int) ((config.width - PAD * 2 - 8) / config.textScale));
         int lineHeight = Math.max(8, (int) Math.ceil(10 * config.textScale));
@@ -488,7 +549,7 @@ public final class ChatUiState {
     }
 
     private static boolean startMessageScrollbarDrag(int mx, int my) {
-        int yTop = config.y + TAB_H + PAD;
+        int yTop = config.y + headerHeight() + PAD;
         int yBottom = config.y + config.height - getInputAreaHeight();
         if (maxScrollLines <= 0) return false;
         int x = config.x + config.width - 8;
@@ -505,7 +566,7 @@ public final class ChatUiState {
     }
 
     private static void updateMessageScrollbarDrag(int my) {
-        int yTop = config.y + TAB_H + PAD;
+        int yTop = config.y + headerHeight() + PAD;
         int yBottom = config.y + config.height - getInputAreaHeight();
         int trackH = Math.max(1, yBottom - yTop);
         int handleH = Math.max(18, trackH * Math.max(1, trackH - maxScrollLines) / Math.max(trackH, trackH + maxScrollLines));
@@ -664,12 +725,18 @@ public final class ChatUiState {
         else searchHit = Math.floorMod(searchHit + delta, hits.size());
     }
 
+    private static int inputTextWidth() {
+        TextRenderer tr = MinecraftClient.getInstance().textRenderer;
+        int counterWidth = tr.getWidth(getMaxChatLength() + "/" + getMaxChatLength());
+        return Math.max(20, config.width - PAD * 2 - counterWidth - 14);
+    }
+
     private static int getInputAreaHeight() {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
-        int maxWidth = Math.max(20, config.width - PAD * 2 - 42);
+        int maxWidth = inputTextWidth();
         int lines = Math.max(1, wrapPlain(chatInput.isEmpty() ? " " : chatInput, tr, maxWidth).size());
-        lines = Math.min(5, lines);
-        return 10 + lines * 12 + 8;
+        lines = ChatLayout.inputLines(config.height, headerHeight(), lines);
+        return 18 + lines * 12;
     }
 
     private static void drawChatInput(DrawContext context) {
@@ -682,15 +749,21 @@ public final class ChatUiState {
 
         drawTextBox(context, x, y, w, boxH, focus == Focus.CHAT_INPUT);
 
-        List<String> lines = wrapPlain(chatInput.isEmpty() ? " " : chatInput, tr, Math.max(20, w - 42));
+        List<String> lines = wrapPlain(chatInput.isEmpty() ? " " : chatInput, tr, inputTextWidth());
         int yy = y + 5;
         int remainingCursor = chatCursor;
         int remainingAnchor = chatSelectionAnchor;
         int remainingSelectionCursor = chatSelectionCursor;
         int consumed = 0;
 
-        for (String line : lines) {
+        int visible = (areaH - 18) / 12;
+        int firstLine = ChatLayout.firstInputLine(lines.stream().mapToInt(String::length).toArray(), chatCursor, visible);
+        context.enableScissor(x + 2, y + 2, x + w - 2, y + boxH - 1);
+        for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {
+            String line = lines.get(lineIndex);
             int lineLen = line.length();
+            if (lineIndex < firstLine) { consumed += lineLen; continue; }
+            if (lineIndex >= firstLine + visible) break;
             int localCursor = Math.max(0, Math.min(lineLen, remainingCursor - consumed));
             int localAnchor = Math.max(0, Math.min(lineLen, remainingAnchor - consumed));
             int localSelCursor = Math.max(0, Math.min(lineLen, remainingSelectionCursor - consumed));
@@ -703,6 +776,7 @@ public final class ChatUiState {
             consumed += lineLen;
         }
 
+        context.disableScissor();
         String count = chatInput.length() + "/" + getMaxChatLength();
         context.drawTextWithShadow(tr, count, x + w - tr.getWidth(count) - 4, y + boxH - 12, chatInput.length() >= getMaxChatLength() ? 0xFFFF9090 : 0xFF9AA4BD);
     }
@@ -724,20 +798,25 @@ public final class ChatUiState {
 
         context.drawTextWithShadow(tr, "Название", x + 12, y + 34, 0xFFD9D9E6);
         drawTextBox(context, x + 12, y + 46, w - 24, 18, focus == Focus.SETTINGS_NAME);
-        drawSelectableText(context, tr, settingsName, settingsNameCursor, settingsNameSelectionAnchor, settingsNameSelectionCursor,
+        drawSingleLineText(context, tr, w - 34, settingsName, settingsNameCursor, settingsNameSelectionAnchor, settingsNameSelectionCursor,
                 x + 17, y + 51, focus == Focus.SETTINGS_NAME, 0xFFFFFFFF);
 
         context.drawTextWithShadow(tr, "Типы сообщений", x + 12, y + 74, 0xFFD9D9E6);
 
         int cy = y + 88;
         List<String> cats = knownCategories();
-        for (String cat : cats) {
-            if (cy > y + h - 60) break;
+        categoryScroll = Math.max(0, Math.min(categoryScroll, Math.max(0, cats.size() - ChatLayout.categoryRows(h))));
+        for (int ci = categoryScroll; ci < Math.min(cats.size(), categoryScroll + ChatLayout.categoryRows(h)); ci++) {
+            String cat = cats.get(ci);
             boolean selected = settingsCategories.contains(cat);
             drawButton(context, x + 12, cy, w - 24, 18, (selected ? "✓ " : "— ") + displayName(cat),
                     isMouseIn(mouseX, mouseY, x + 12, cy, w - 24, 18), selected);
             cy += 22;
         }
+
+        drawButton(context, x + 12, y + h - 54, 24, 18, "‹", isMouseIn(mouseX, mouseY, x + 12, y + h - 54, 24, 18), false);
+        drawButton(context, x + w - 36, y + h - 54, 24, 18, "›", isMouseIn(mouseX, mouseY, x + w - 36, y + h - 54, 24, 18), false);
+        context.drawCenteredTextWithShadow(tr, (Math.min(cats.size(), categoryScroll + 1)) + "–" + Math.min(cats.size(), categoryScroll + ChatLayout.categoryRows(h)) + "/" + cats.size(), x + w / 2, y + h - 49, 0xFFD9D9E6);
 
         drawButton(context, x + 12, y + h - 28, 96, 20, "Сохранить", isMouseIn(mouseX, mouseY, x + 12, y + h - 28, 96, 20), false);
         drawButton(context, x + w - 108, y + h - 28, 96, 20, "Отмена", isMouseIn(mouseX, mouseY, x + w - 108, y + h - 28, 96, 20), false);
@@ -753,20 +832,20 @@ public final class ChatUiState {
 
         drawPanelShell(context, x, y, w, h, "Настройки чата", mouseX, mouseY);
 
-        int cy = y + 36;
+        int cy = y + 30;
         context.drawTextWithShadow(tr, "Оттенок", x + 12, cy, 0xFFD9D9E6);
-        drawButton(context, x + 12, cy + 14, 96, 20, "<", isMouseIn(mouseX, mouseY, x + 12, cy + 14, 96, 20), false);
-        drawButton(context, x + 114, cy + 14, w - 228, 20, tintName(config.tint), false, true);
-        drawButton(context, x + w - 108, cy + 14, 96, 20, ">", isMouseIn(mouseX, mouseY, x + w - 108, cy + 14, 96, 20), false);
+        drawButton(context, x + 12, cy + 14, 30, 20, "<", isMouseIn(mouseX, mouseY, x + 12, cy + 14, 30, 20), false);
+        drawButton(context, x + 48, cy + 14, w - 96, 20, tintName(config.tint), false, true);
+        drawButton(context, x + w - 42, cy + 14, 30, 20, ">", isMouseIn(mouseX, mouseY, x + w - 42, cy + 14, 30, 20), false);
 
-        cy += 52;
+        cy += 42;
         context.drawTextWithShadow(tr, "Прозрачность: " + config.opacity, x + 12, cy, 0xFFD9D9E6);
-        drawButton(context, x + 12, cy + 14, 96, 20, "−", isMouseIn(mouseX, mouseY, x + 12, cy + 14, 96, 20), false);
-        drawButton(context, x + w - 108, cy + 14, 96, 20, "+", isMouseIn(mouseX, mouseY, x + w - 108, cy + 14, 96, 20), false);
+        drawButton(context, x + 12, cy + 14, 30, 20, "−", isMouseIn(mouseX, mouseY, x + 12, cy + 14, 30, 20), false);
+        drawButton(context, x + w - 42, cy + 14, 30, 20, "+", isMouseIn(mouseX, mouseY, x + w - 42, cy + 14, 30, 20), false);
 
-        cy += 52;
+        cy += 42;
         drawButton(context, x + 12, cy, w - 24, 20,
-                (config.alwaysShowWindow ? "✓ " : "— ") + "Не скрывать окно при закрытом чате",
+                (config.alwaysShowWindow ? "✓ " : "— ") + "Всегда показывать окно",
                 isMouseIn(mouseX, mouseY, x + 12, cy, w - 24, 20), config.alwaysShowWindow);
 
         drawButton(context, x + 12, y + h - 28, 96, 20, "Закрыть", isMouseIn(mouseX, mouseY, x + 12, y + h - 28, 96, 20), false);
@@ -776,8 +855,8 @@ public final class ChatUiState {
     private static void drawPanelShell(DrawContext context, int x, int y, int w, int h, String title, int mouseX, int mouseY) {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
         context.fill(x + 4, y + 5, x + w + 4, y + h + 5, 0x66000000);
-        context.fill(x, y, x + w, y + h, withAlpha(config.tintColor(), Math.min(235, config.opacity + 25)));
-        context.fill(x, y, x + w, y + 24, withAlpha(lighten(config.tintColor(), 0x22), Math.min(245, config.opacity + 45)));
+        context.fill(x, y, x + w, y + h, withAlpha(config.tintColor(), 255));
+        context.fill(x, y, x + w, y + 24, withAlpha(lighten(config.tintColor(), 0x22), 255));
         context.fill(x, y + 24, x + w, y + 25, 0xFF7580A0);
         context.fill(x, y, x + w, y + 2, 0xAA000000);
         context.fill(x, y + h - 2, x + w, y + h, 0xAA000000);
@@ -798,7 +877,7 @@ public final class ChatUiState {
     private static void drawSearchPanel(DrawContext context, int mouseX, int mouseY) {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
         int x = config.x;
-        int y = Math.max(0, config.y - 30);
+        int y = config.y + ChatLayout.baseHeader(config.width) + 10;
         int w = Math.min(config.width, 430);
 
         context.fill(x + 4, y + 4, x + w + 4, y + 27, 0x66000000);
@@ -807,7 +886,7 @@ public final class ChatUiState {
 
         context.drawTextWithShadow(tr, "⌕", x + 7, y + 8, 0xFFFFFFFF);
         drawTextBox(context, x + 24, y + 3, w - 96, 18, focus == Focus.SEARCH_INPUT);
-        drawSelectableText(context, tr, searchInput, searchCursor, searchSelectionAnchor, searchSelectionCursor,
+        drawSingleLineText(context, tr, w - 106, searchInput, searchCursor, searchSelectionAnchor, searchSelectionCursor,
                 x + 29, y + 8, focus == Focus.SEARCH_INPUT, 0xFFFFFFFF);
 
         drawButton(context, x + w - 66, y + 3, 18, 18, "‹", isMouseIn(mouseX, mouseY, x + w - 66, y + 3, 18, 18), false);
@@ -898,14 +977,13 @@ public final class ChatUiState {
         int mx = (int) mouseX;
         int my = (int) mouseY;
         if (handleCopyPopupClick(mx, my)) return true;
+        if (tabSettingsOpen && handleTabSettingsClick(mx, my)) return true;
+        if (chatSettingsOpen && handleChatSettingsClick(mx, my)) return true;
+        if (config.searchOpen && handleSearchClick(mx, my)) return true;
         if (clickFavorite(mx, my)) return true;
         if (clickLink(mx, my)) return true;
         if (clickMessage(mx, my)) return true;
         if (startMessageScrollbarDrag(mx, my)) return true;
-
-        if (tabSettingsOpen && handleTabSettingsClick(mx, my)) return true;
-        if (chatSettingsOpen && handleChatSettingsClick(mx, my)) return true;
-        if (config.searchOpen && handleSearchClick(mx, my)) return true;
 
         if (!isInsideWhole(mx, my)) {
             focus = Focus.CHAT_INPUT;
@@ -927,8 +1005,11 @@ public final class ChatUiState {
 
         if (handleSideClick(mx, my)) return true;
 
-        int plusX = config.x + config.width - 168;
-        int tabY = config.y + 4;
+        if (isMouseIn(mx, my, config.x + 39, config.y + 4, 20, 17)) { cycleTab(-1); return true; }
+        if (isMouseIn(mx, my, config.x + ChatLayout.tabsEnd(config.width) + 3, config.y + 4, 20, 17)) { cycleTab(1); return true; }
+
+        int plusX = config.x + ChatLayout.toolbarX(config.width);
+        int tabY = config.y + ChatLayout.toolbarY(config.width);
         if (isMouseIn(mx, my, plusX, tabY, 24, 17)) {
             createCustomTab();
             return true;
@@ -952,7 +1033,7 @@ public final class ChatUiState {
             return true;
         }
 
-        if (isMouseIn(mx, my, config.x + PAD, config.y + config.height - INPUT_H, config.width - PAD * 2, 18)) {
+        if (isMouseIn(mx, my, config.x + PAD, config.y + config.height - getInputAreaHeight() + 5, config.width - PAD * 2, getInputAreaHeight() - 10)) {
             focus = Focus.CHAT_INPUT;
             chatCursor = chatInput.length();
             setChatSelection(chatCursor, chatCursor);
@@ -980,7 +1061,7 @@ public final class ChatUiState {
             return true;
         }
 
-        if (my >= config.y && my <= config.y + TAB_H) {
+        if (my >= config.y && my <= config.y + headerHeight()) {
             draggingWindow = true;
             dragOffsetX = mx - config.x;
             dragOffsetY = my - config.y;
@@ -1025,10 +1106,14 @@ public final class ChatUiState {
             return true;
         }
 
+        if (isMouseIn(mx, my, x + 12, y + h - 54, 24, 18)) { categoryScroll = Math.max(0, categoryScroll - ChatLayout.categoryRows(h)); return true; }
+        if (isMouseIn(mx, my, x + w - 36, y + h - 54, 24, 18)) { categoryScroll = Math.min(Math.max(0, knownCategories().size() - ChatLayout.categoryRows(h)), categoryScroll + ChatLayout.categoryRows(h)); return true; }
+
         int cy = y + 88;
         List<String> cats = knownCategories();
-        for (String cat : cats) {
-            if (cy > y + h - 60) break;
+        categoryScroll = Math.max(0, Math.min(categoryScroll, Math.max(0, cats.size() - ChatLayout.categoryRows(h))));
+        for (int ci = categoryScroll; ci < Math.min(cats.size(), categoryScroll + ChatLayout.categoryRows(h)); ci++) {
+            String cat = cats.get(ci);
             if (isMouseIn(mx, my, x + 12, cy, w - 24, 18)) {
                 if (settingsCategories.contains(cat)) settingsCategories.remove(cat);
                 else settingsCategories.add(cat);
@@ -1089,31 +1174,31 @@ public final class ChatUiState {
             return true;
         }
 
-        int cy = y + 36;
-        if (isMouseIn(mx, my, x + 12, cy + 14, 96, 20)) {
+        int cy = y + 30;
+        if (isMouseIn(mx, my, x + 12, cy + 14, 30, 20)) {
             cycleTint(-1);
             saveConfig();
             return true;
         }
-        if (isMouseIn(mx, my, x + w - 108, cy + 14, 96, 20)) {
+        if (isMouseIn(mx, my, x + w - 42, cy + 14, 30, 20)) {
             cycleTint(1);
             saveConfig();
             return true;
         }
 
-        cy += 52;
-        if (isMouseIn(mx, my, x + 12, cy + 14, 96, 20)) {
+        cy += 42;
+        if (isMouseIn(mx, my, x + 12, cy + 14, 30, 20)) {
             config.opacity = Math.max(40, config.opacity - 15);
             saveConfig();
             return true;
         }
-        if (isMouseIn(mx, my, x + w - 108, cy + 14, 96, 20)) {
+        if (isMouseIn(mx, my, x + w - 42, cy + 14, 30, 20)) {
             config.opacity = Math.min(245, config.opacity + 15);
             saveConfig();
             return true;
         }
 
-        cy += 52;
+        cy += 42;
         if (isMouseIn(mx, my, x + 12, cy, w - 24, 20)) {
             config.alwaysShowWindow = !config.alwaysShowWindow;
             saveConfig();
@@ -1132,7 +1217,7 @@ public final class ChatUiState {
 
     private static boolean handleSearchClick(int mx, int my) {
         int x = config.x;
-        int y = Math.max(0, config.y - 30);
+        int y = config.y + ChatLayout.baseHeader(config.width) + 10;
         int w = Math.min(config.width, 430);
 
         if (!isMouseIn(mx, my, x, y, w, 24) && !isMouseIn(mx, my, x, y - 12, 100, 12)) return false;
@@ -1290,6 +1375,12 @@ public final class ChatUiState {
         if (button != 0) return false;
 
         boolean handled = draggingWindow || resizing || draggingTabIndex >= 0 || draggingTabSettings || resizingTabSettings || draggingChatSettings || resizingChatSettings || draggingMessageScrollbar;
+        PreferredGeometry visible = PreferredGeometry.capture();
+        if (preferredGeometry == null) preferredGeometry = visible;
+        preferredGeometry = new PreferredGeometry(
+                draggingWindow || resizing ? visible.main() : preferredGeometry.main(),
+                draggingTabSettings || resizingTabSettings ? visible.tab() : preferredGeometry.tab(),
+                draggingChatSettings || resizingChatSettings ? visible.chat() : preferredGeometry.chat());
         draggingMessageScrollbar = false;
         draggingWindow = false;
         resizing = false;
@@ -1312,6 +1403,12 @@ public final class ChatUiState {
     public static boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         int mx = (int) mouseX;
         int my = (int) mouseY;
+        if (tabSettingsOpen && isMouseIn(mx, my, config.settingsX, config.settingsY, config.settingsW, config.settingsH)) {
+            categoryScroll = Math.max(0, Math.min(Math.max(0, knownCategories().size() - ChatLayout.categoryRows(config.settingsH)), categoryScroll - (int) Math.signum(amount)));
+            return true;
+        }
+        if (chatSettingsOpen && isMouseIn(mx, my, config.chatSettingsX, config.chatSettingsY, config.chatSettingsW, config.chatSettingsH)) return true;
+        if (isMouseIn(mx, my, config.x, config.y, config.width, 24)) { cycleTab(amount > 0 ? -1 : 1); return true; }
         if (isInsideWhole(mx, my)) {
             messageScrollLines = Math.max(0, Math.min(maxScrollLines, messageScrollLines + (int) (amount * 3)));
             return true;
@@ -1958,7 +2055,7 @@ public final class ChatUiState {
 
     private static boolean handleSideClick(int mx, int my) {
         int x = config.x + config.width + 5;
-        int y = config.y + TAB_H + 6;
+        int y = config.y + headerHeight() + 6;
 
         if (isMouseIn(mx, my, x, y, 24, 20)) {
             config.textScale = Math.min(2.5F, config.textScale + 0.1F);
@@ -2000,11 +2097,13 @@ public final class ChatUiState {
     }
 
     private static TabHit hitTab(int mx, int my) {
-        int x = config.x + 5 + 34;
+        ensureSelectedTabVisible();
+        int x = config.x + 63;
         int y = config.y + 4;
-        for (int i = 0; i < config.tabs.size(); i++) {
+        for (int i = firstVisibleTab; i < config.tabs.size(); i++) {
             ChatTab tab = config.tabs.get(i);
-            int tw = tabWidth(tab);
+            int tw = ChatLayout.tabWidth(config.width, tabWidth(tab));
+            if (x + tw > config.x + ChatLayout.tabsEnd(config.width)) break;
 
             if (isMouseIn(mx, my, x, y, tw, 17)) {
                 boolean close = tab.closable && mx >= x + tw - 18;
@@ -2012,9 +2111,33 @@ public final class ChatUiState {
             }
 
             x += tw + 4;
-            if (x > config.x + config.width - 174) break;
         }
         return null;
+    }
+
+    private static int headerHeight() {
+        return ChatLayout.header(config.width, config.searchOpen && isChatUiOpen());
+    }
+
+    private static void cycleTab(int delta) {
+        config.selectedTab = Math.floorMod(config.selectedTab + delta, config.tabs.size());
+        messageScrollLines = 0;
+        ensureSelectedTabVisible();
+        saveConfig();
+    }
+
+    private static void ensureSelectedTabVisible() {
+        int[] widths = config.tabs.stream().mapToInt(ChatUiState::tabWidth).toArray();
+        firstVisibleTab = ChatLayout.firstTab(firstVisibleTab, config.selectedTab, config.width, widths);
+    }
+
+    private static void drawSingleLineText(DrawContext context, TextRenderer tr, int width, String text,
+                                           int cursor, int anchor, int selectionCursor, int x, int y, boolean focused, int color) {
+        int caret = tr.getWidth(text.substring(0, Math.min(cursor, text.length())));
+        int offset = Math.max(0, caret - width + 2);
+        context.enableScissor(x, y - 2, x + width, y + 11);
+        drawSelectableText(context, tr, text, cursor, anchor, selectionCursor, x - offset, y, focused, color);
+        context.disableScissor();
     }
 
     private static int tabWidth(ChatTab tab) {
@@ -2050,20 +2173,27 @@ public final class ChatUiState {
         settingsNameCursor = settingsName.length();
         setSettingsNameSelection(settingsNameCursor, settingsNameCursor);
         settingsCategories = new LinkedHashSet<>(tab.categories);
+        categoryScroll = 0;
+        chatSettingsOpen = false;
         focus = Focus.SETTINGS_NAME;
 
-        if (config.settingsX <= 0 && config.settingsY <= 0) {
-            config.settingsX = config.x + config.width + SIDE_W + 8;
-            config.settingsY = config.y;
+        if (preferredGeometry != null && preferredGeometry.tab().x() <= 0 && preferredGeometry.tab().y() <= 0) {
+            ChatLayout.Rect r = preferredGeometry.tab();
+            preferredGeometry = new PreferredGeometry(preferredGeometry.main(),
+                    new ChatLayout.Rect(config.x + config.width + SIDE_W + 8, config.y, r.width(), r.height()), preferredGeometry.chat());
+            applyTab(preferredGeometry.tab());
         }
         clampTabSettingsToScreen();
     }
 
     private static void openChatSettings() {
         chatSettingsOpen = true;
-        if (config.chatSettingsX <= 0 && config.chatSettingsY <= 0) {
-            config.chatSettingsX = config.x + config.width + SIDE_W + 8;
-            config.chatSettingsY = config.y + 30;
+        tabSettingsOpen = false;
+        if (preferredGeometry != null && preferredGeometry.chat().x() <= 0 && preferredGeometry.chat().y() <= 0) {
+            ChatLayout.Rect r = preferredGeometry.chat();
+            preferredGeometry = new PreferredGeometry(preferredGeometry.main(), preferredGeometry.tab(),
+                    new ChatLayout.Rect(config.x + config.width + SIDE_W + 8, config.y + 30, r.width(), r.height()));
+            applyChat(preferredGeometry.chat());
         }
         clampChatSettingsToScreen();
     }
@@ -2233,10 +2363,9 @@ public final class ChatUiState {
     }
 
     private static void clampToScreen(int screenW, int screenH) {
-        config.width = Math.max(MIN_W, Math.min(config.width, Math.max(MIN_W, screenW - 20)));
-        config.height = Math.max(MIN_H, Math.min(config.height, Math.max(MIN_H, screenH - 20)));
-        config.x = Math.max(0, Math.min(config.x, screenW - config.width - SIDE_W));
-        config.y = Math.max(0, Math.min(config.y, screenH - config.height));
+        ChatLayout.Rect r = ChatLayout.fit(config.x, config.y, config.width, config.height, MIN_W, MIN_H,
+                screenW, screenH, SIDE_W);
+        config.x = r.x(); config.y = r.y(); config.width = r.width(); config.height = r.height();
     }
 
     private static void clampTabSettingsToScreen() {
@@ -2245,10 +2374,9 @@ public final class ChatUiState {
         int sw = client.getWindow().getScaledWidth();
         int sh = client.getWindow().getScaledHeight();
 
-        config.settingsW = Math.max(260, Math.min(config.settingsW, Math.max(260, sw - 20)));
-        config.settingsH = Math.max(170, Math.min(config.settingsH, Math.max(170, sh - 20)));
-        config.settingsX = Math.max(0, Math.min(config.settingsX, sw - config.settingsW));
-        config.settingsY = Math.max(0, Math.min(config.settingsY, sh - config.settingsH));
+        ChatLayout.Rect r = ChatLayout.fit(config.settingsX, config.settingsY, config.settingsW, config.settingsH,
+                260, 200, sw, sh, 0);
+        config.settingsX = r.x(); config.settingsY = r.y(); config.settingsW = r.width(); config.settingsH = r.height();
     }
 
     private static void clampChatSettingsToScreen() {
@@ -2257,10 +2385,9 @@ public final class ChatUiState {
         int sw = client.getWindow().getScaledWidth();
         int sh = client.getWindow().getScaledHeight();
 
-        config.chatSettingsW = Math.max(280, Math.min(config.chatSettingsW, Math.max(280, sw - 20)));
-        config.chatSettingsH = Math.max(180, Math.min(config.chatSettingsH, Math.max(180, sh - 20)));
-        config.chatSettingsX = Math.max(0, Math.min(config.chatSettingsX, sw - config.chatSettingsW));
-        config.chatSettingsY = Math.max(0, Math.min(config.chatSettingsY, sh - config.chatSettingsH));
+        ChatLayout.Rect r = ChatLayout.fit(config.chatSettingsX, config.chatSettingsY, config.chatSettingsW, config.chatSettingsH,
+                280, 200, sw, sh, 0);
+        config.chatSettingsX = r.x(); config.chatSettingsY = r.y(); config.chatSettingsW = r.width(); config.chatSettingsH = r.height();
     }
 
     private static boolean isInsideWhole(int mx, int my) {

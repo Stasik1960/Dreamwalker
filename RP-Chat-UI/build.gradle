@@ -37,3 +37,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+tasks.register('layoutCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.coraxberg.rpchatui.client.ChatLayoutCheck'
+}
+check.dependsOn layoutCheck

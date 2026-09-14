@@ -46,6 +46,13 @@ tasks.register('physicsCheck', JavaExec) {
 
 tasks.named('check') {
     dependsOn 'physicsCheck'
+    dependsOn 'layoutCheck'
+}
+
+tasks.register('layoutCheck', JavaExec) {
+    dependsOn 'testClasses'
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.coraxberg.poolbilliards.client.PoolLayoutCheck'
 }
 
 jar {

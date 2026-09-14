@@ -33,6 +33,7 @@ public class PoolTableScreen extends Screen {
     private int tableY;
     private int tableW;
     private int tableH;
+    private PoolScreenLayout layout;
     private int resetX;
     private int resetY;
     private boolean dragging = false;
@@ -60,22 +61,18 @@ public class PoolTableScreen extends Screen {
     }
 
     private void rebuildLayout() {
-        panelW = Math.min(width - 30, 1040);
-        panelH = Math.min(height - 30, 680);
-        panelX = (width - panelW) / 2;
-        panelY = (height - panelH) / 2;
-        int sideW = 210;
-        tableX = panelX + 24;
-        tableY = panelY + 54;
-        tableW = panelW - sideW - 56;
-        tableH = (int) Math.round(tableW * (PoolGameState.TABLE_H / PoolGameState.TABLE_W));
-        int maxH = panelH - 110;
-        if (tableH > maxH) {
-            tableH = maxH;
-            tableW = (int) Math.round(tableH * (PoolGameState.TABLE_W / PoolGameState.TABLE_H));
-        }
-        resetX = panelX + panelW - 196;
-        resetY = panelY + panelH - 52;
+        layout = PoolScreenLayout.fit(width, height);
+        panelX = layout.x();
+        panelY = layout.y();
+        panelW = layout.width();
+        panelH = layout.height();
+        tableX = layout.tableX();
+        tableY = layout.tableY();
+        tableW = layout.tableWidth();
+        tableH = layout.tableHeight();
+        resetX = layout.resetX();
+        resetY = layout.resetY();
+        dragging = false;
     }
 
     @Override
@@ -92,14 +89,16 @@ public class PoolTableScreen extends Screen {
         ballVisuals.beginFrame();
         drawPanel(context);
         drawTable(context, mouseX, mouseY);
-        drawSideBar(context);
+        if (layout.sidebar()) drawSideBar(context);
+        else drawCompactPlayers(context);
+        drawFooter(context);
         super.render(context, mouseX, mouseY, delta);
         // The cue may extend beyond the felt; render it above the sidebar and
         // every other screen element so the butt never disappears underneath.
         PoolBall aimingBall = state.getBall(0);
         if (dragging && aimingBall != null && !aimingBall.pocketed && canLocalShoot()) {
             PoolBallVisuals.Position visual = ballVisuals.sample(aimingBall);
-            double pull = Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / 180.0);
+            double pull = Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / layout.pullDistance());
             drawAimingCue(context, sx(visual.x()), sy(visual.y()), mouseX, mouseY, pull);
         }
     }
@@ -109,29 +108,28 @@ public class PoolTableScreen extends Screen {
         fill(context, panelX, panelY, panelX + panelW, panelY + panelH, DARK_WOOD);
         fill(context, panelX + 3, panelY + 3, panelX + panelW - 3, panelY + panelH - 3, WOOD);
         fill(context, panelX + 7, panelY + 7, panelX + panelW - 7, panelY + panelH - 7, DARK_WOOD);
-        fill(context, panelX + 7, panelY + 7, panelX + panelW - 7, panelY + 40, WOOD_LIGHT);
-        fill(context, panelX + 7, panelY + 39, panelX + panelW - 7, panelY + 41, BRASS);
-        context.drawTextWithShadow(textRenderer, "БИЛЬЯРД · ВОСЬМЁРКА", panelX + 20, panelY + 18, PARCHMENT);
-        context.drawTextWithShadow(textRenderer, state.status, panelX + 200, panelY + 18, 0xFFF3DEAA);
+        fill(context, panelX + 7, panelY + 7, panelX + panelW - 7, panelY + 29, WOOD_LIGHT);
+        fill(context, panelX + 7, panelY + 29, panelX + panelW - 7, panelY + 30, BRASS);
+        drawFitted(context, "БИЛЬЯРД · ВОСЬМЁРКА", panelX + 12, panelY + 9, panelW - 24, PARCHMENT);
+        drawFitted(context, state.status, panelX + 12, panelY + 20, panelW - 24, 0xFFF3DEAA);
     }
 
     private void drawTable(DrawContext context, int mouseX, int mouseY) {
-        fill(context, tableX - 23, tableY - 23, tableX + tableW + 23, tableY + tableH + 23, 0xFF170E09);
-        fill(context, tableX - 20, tableY - 20, tableX + tableW + 20, tableY + tableH + 20, WOOD);
-        fill(context, tableX - 17, tableY - 17, tableX + tableW + 17, tableY + tableH + 17, WOOD_LIGHT);
-        fill(context, tableX - 12, tableY - 12, tableX + tableW + 12, tableY + tableH + 12, DARK_WOOD);
-        fill(context, tableX - 2, tableY - 2, tableX + tableW + 2, tableY + tableH + 2, 0xFF073C2D);
-        fill(context, tableX, tableY, tableX + tableW, tableY + tableH, 0xFF0B6248);
-        fill(context, tableX + 5, tableY + 5, tableX + tableW - 5, tableY + tableH - 5, 0xFF0E6A4C);
+        int rail = layout.rail();
+        fill(context, tableX - rail, tableY - rail, tableX + tableW + rail, tableY + tableH + rail, DARK_WOOD);
+        fill(context, tableX - rail + 2, tableY - rail + 2, tableX + tableW + rail - 2, tableY + tableH + rail - 2, WOOD_LIGHT);
+        fill(context, tableX - 3, tableY - 3, tableX + tableW + 3, tableY + tableH + 3, 0xFF073C2D);
+        fill(context, tableX, tableY, tableX + tableW, tableY + tableH, 0xFF0E6A4C);
+
         for (int i = 1; i <= 6; i++) {
             int markX = tableX + tableW * i / 7;
-            fill(context, markX - 2, tableY - 17, markX + 2, tableY - 14, BRASS);
-            fill(context, markX - 2, tableY + tableH + 14, markX + 2, tableY + tableH + 17, BRASS);
+            fill(context, markX - 2, tableY - rail + 3, markX + 2, tableY - rail + 5, BRASS);
+            fill(context, markX - 2, tableY + tableH + rail - 5, markX + 2, tableY + tableH + rail - 3, BRASS);
         }
         for (int i = 1; i <= 3; i++) {
             int markY = tableY + tableH * i / 4;
-            fill(context, tableX - 17, markY - 2, tableX - 14, markY + 2, BRASS);
-            fill(context, tableX + tableW + 14, markY - 2, tableX + tableW + 17, markY + 2, BRASS);
+            fill(context, tableX - rail + 3, markY - 2, tableX - rail + 5, markY + 2, BRASS);
+            fill(context, tableX + tableW + rail - 5, markY - 2, tableX + tableW + rail - 3, markY + 2, BRASS);
         }
 
         drawPocket(context, tableX, tableY);
@@ -151,38 +149,44 @@ public class PoolTableScreen extends Screen {
             double dy = mouseY - cy;
             double len = Math.max(1, Math.sqrt(dx * dx + dy * dy));
             int lineColor = dragging ? 0xFFFFE9A8 : 0x99FFFFFF;
-            drawLine(context, cx, cy, (int)(cx - dx / len * 90), (int)(cy - dy / len * 90), lineColor);
-            if (dragging) {
-                int power = (int)(Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / 180.0) * 100);
-                fill(context, tableX, tableY + tableH + 27, tableX + 124, tableY + tableH + 34, 0xFF1A120C);
-                fill(context, tableX + 2, tableY + tableH + 29, tableX + 2 + power * 120 / 100, tableY + tableH + 32, BRASS);
-                context.drawTextWithShadow(textRenderer, "Сила удара: " + power + "%", tableX + 132, tableY + tableH + 26, PARCHMENT);
-            }
+            double aimLength = Math.min(90, tableW * 0.20);
+            context.enableScissor(tableX, tableY, tableX + tableW, tableY + tableH);
+            drawLine(context, cx, cy, (int)(cx - dx / len * aimLength), (int)(cy - dy / len * aimLength), lineColor);
+            context.disableScissor();
         }
     }
 
     private void drawPocket(DrawContext context, int x, int y) {
-        fillCircle(context, x, y, 18, 0xFF050505);
-        fillCircle(context, x, y, 12, 0xFF000000);
+        int radius = Math.max(4, (int) Math.round(PoolGameState.POCKET_R * tableW / PoolGameState.TABLE_W));
+        fillCircle(context, x, y, radius, 0xFF050505);
+        fillCircle(context, x, y, Math.max(2, radius - 2), 0xFF000000);
     }
 
     private void drawAimingCue(DrawContext context, int ballX, int ballY, int mouseX, int mouseY, double power) {
         double angle = Math.atan2(mouseY - ballY, mouseX - ballX);
-        int ballRadius = Math.max(6, (int) Math.round(PoolGameState.BALL_R * tableW / PoolGameState.TABLE_W));
+        int ballRadius = ballRadius();
         int pullBack = (int) Math.round(power * 15);
         context.getMatrices().push();
         context.getMatrices().translate(ballX, ballY, 300);
         context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotation((float) angle));
-        context.drawTexture(CUE_TEXTURE, ballRadius + 3 + pullBack, -8, 0, 0, 128, 16, 128, 16);
+        context.getMatrices().translate(ballRadius + 3 + pullBack, 0, 0);
+        float cueScale = Math.max(0.35f, Math.min(1.0f, tableW / 650.0f));
+        context.getMatrices().scale(cueScale, cueScale, 1);
+        context.drawTexture(CUE_TEXTURE, 0, -8, 0, 0, 128, 16, 128, 16);
         context.getMatrices().pop();
     }
 
     private void drawBall(DrawContext context, PoolBall b) {
         if (b.pocketed) return;
         PoolBallVisuals.Position visual = ballVisuals.sample(b);
-        int x = sx(visual.x());
-        int y = sy(visual.y());
-        int r = Math.max(6, (int)Math.round(PoolGameState.BALL_R * tableW / PoolGameState.TABLE_W));
+        // Draw at subpixel precision so small balls keep their coloured rim
+        // instead of the white number badge covering the entire ball.
+        context.getMatrices().push();
+        context.getMatrices().translate(sx(visual.x()), sy(visual.y()), 0);
+        context.getMatrices().scale(1.0f / 3, 1.0f / 3, 1);
+        int x = 0;
+        int y = 0;
+        int r = Math.max(6, (int) Math.round(PoolGameState.BALL_R * tableW / PoolGameState.TABLE_W * 3));
         int color = ballColor(b.id);
 
         fillCircle(context, x + 1, y + 1, r, 0xAA000000);
@@ -190,18 +194,28 @@ public class PoolTableScreen extends Screen {
         fillCircle(context, x, y, r - 1, color);
 
         if (b.id >= 9 && b.id != 0) {
-            int stripeH = Math.max(3, r / 2);
-            fillCircleStripe(context, x, y, r - 2, stripeH, 0xFFFFFFFF);
+            int stripeH = Math.max(1, r / 2);
+            fillCircleStripe(context, x, y, Math.max(1, r - 1), stripeH, 0xFFFFFFFF);
         }
-        if (b.id == 0) fillCircle(context, x - r / 3, y - r / 3, Math.max(2, r / 4), 0xAAFFFFFF);
+        if (b.id == 0) fillCircle(context, x - r / 3, y - r / 3, Math.max(1, r / 4), 0xAAFFFFFF);
 
         String label = b.id == 0 ? "" : String.valueOf(b.id);
         if (!label.isEmpty()) {
-            int labelR = Math.max(5, r / 2);
+            int labelR = Math.max(2, r / 2);
             fillCircle(context, x, y, labelR, b.id == 8 ? 0xFF111111 : 0xEFFFFFFF);
             int lw = textRenderer.getWidth(label);
-            context.drawText(textRenderer, label, x - lw / 2, y - 4, b.id == 8 ? 0xFFFFFF : 0x111111, false);
+            float scale = Math.min(3.0f, Math.min(labelR * 1.8f / Math.max(1, lw), labelR * 1.8f / 9.0f));
+            context.getMatrices().push();
+            context.getMatrices().translate(x, y, 0);
+            context.getMatrices().scale(scale, scale, 1);
+            context.drawText(textRenderer, label, -lw / 2, -4, b.id == 8 ? 0xFFFFFF : 0x111111, false);
+            context.getMatrices().pop();
         }
+        context.getMatrices().pop();
+    }
+
+    private int ballRadius() {
+        return Math.max(2, (int) Math.round(PoolGameState.BALL_R * tableW / PoolGameState.TABLE_W));
     }
 
     private int ballColor(int id) {
@@ -220,54 +234,72 @@ public class PoolTableScreen extends Screen {
     }
 
     private void drawSideBar(DrawContext context) {
-        int x = panelX + panelW - 210;
-        int y = panelY + 54;
-        int bottom = panelY + panelH - 22;
+        int x = layout.sidebarX();
+        int y = panelY + 34;
+        int bottom = resetY - 6;
         fill(context, x, y, x + 188, bottom, WOOD_LIGHT);
-        fill(context, x + 3, y + 3, x + 185, bottom - 3, DARK_WOOD);
-        fill(context, x + 7, y + 7, x + 181, bottom - 7, 0xFF3B2819);
-        fill(context, x + 7, y + 7, x + 181, y + 31, WOOD);
-        fill(context, x + 9, y + 31, x + 179, y + 32, BRASS);
-        context.drawTextWithShadow(textRenderer, "ИГРОКИ ЗА СТОЛОМ", x + 14, y + 15, PARCHMENT);
-        int yy = y + 44;
+        fill(context, x + 2, y + 2, x + 186, bottom - 2, DARK_WOOD);
+        context.drawTextWithShadow(textRenderer, "ИГРОКИ ЗА СТОЛОМ", x + 10, y + 10, PARCHMENT);
+        int yy = y + 30;
         UUID turn = state.getCurrentPlayerId();
         for (UUID id : state.activePlayers) {
-            String name = state.playerNames.getOrDefault(id, "Игрок");
-            int score = state.scores.getOrDefault(id, 0);
-            boolean vote = state.resetVotes.contains(id);
-            fill(context, x + 12, yy - 4, x + 176, yy + 26, id.equals(turn) ? 0xFF63432A : 0xFF4B3321);
-            fill(context, x + 12, yy - 4, x + 14, yy + 26, id.equals(turn) ? BRASS : WOOD_LIGHT);
-            context.drawTextWithShadow(textRenderer, (id.equals(turn) ? "▶ " : "  ") + name, x + 20, yy,
-                    id.equals(turn) ? 0xFFFFE4A8 : PARCHMENT);
-            context.drawTextWithShadow(textRenderer, "Забито: " + score + (vote ? " · сброс ✓" : ""), x + 26, yy + 13, MUTED);
+            if (yy + 31 > bottom) break;
+            fill(context, x + 7, yy, x + 181, yy + 31, id.equals(turn) ? WOOD : 0xFF3B2819);
+            drawFitted(context, (id.equals(turn) ? "▶ " : "") + state.playerNames.getOrDefault(id, "Игрок"), x + 12, yy + 4, 164, PARCHMENT);
+            drawFitted(context, "Забито: " + state.scores.getOrDefault(id, 0) + (state.resetVotes.contains(id) ? " · сброс ✓" : ""), x + 12, yy + 17, 164, MUTED);
             yy += 35;
         }
-        if (state.activePlayers.isEmpty()) {
-            context.drawTextWithShadow(textRenderer, "ПКМ по столу: войти", x + 14, yy, MUTED);
-        } else if (state.activePlayers.size() == 1) {
-            context.drawTextWithShadow(textRenderer, "Можно играть одному", x + 14, yy, MUTED);
-        } else {
-            context.drawTextWithShadow(textRenderer, "За столом: " + state.activePlayers.size() + "/3", x + 14, yy, MUTED);
+        yy += 10;
+        String[] help = {"КАК ИГРАТЬ", "ЛКМ · удержать и отпустить", "Мышь · прицеливание", "ESC · покинуть стол"};
+        for (String line : help) {
+            if (yy + 10 > bottom - 6) break;
+            drawFitted(context, line, x + 10, yy, 168, MUTED);
+            yy += 15;
         }
-        int controlsY = Math.max(y + 175, yy + 28);
-        fill(context, x + 12, controlsY - 9, x + 176, controlsY - 8, BRASS);
-        context.drawTextWithShadow(textRenderer, "КАК ИГРАТЬ", x + 14, controlsY, PARCHMENT);
-        context.drawTextWithShadow(textRenderer, "ЛКМ · удержать и отпустить", x + 14, controlsY + 18, MUTED);
-        if (resetY - controlsY >= 75) {
-            context.drawTextWithShadow(textRenderer, "Мышь · прицеливание", x + 14, controlsY + 32, MUTED);
-            context.drawTextWithShadow(textRenderer, "ESC · покинуть стол", x + 14, controlsY + 46, MUTED);
-        }
-        if (state.gameOver && resetY - controlsY >= 95) {
-            context.drawTextWithShadow(textRenderer, "Партия завершена", x + 14, controlsY + 65, 0xFFFFB49B);
-        }
+    }
 
-        boolean hover = currentMouseX >= resetX && currentMouseX < resetX + 168
-                && currentMouseY >= resetY && currentMouseY < resetY + 24;
-        fill(context, resetX, resetY, resetX + 168, resetY + 24, BRASS);
-        fill(context, resetX + 2, resetY + 2, resetX + 166, resetY + 22, hover ? WOOD_LIGHT : WOOD);
-        String buttonText = "НОВАЯ ПАРТИЯ";
-        context.drawTextWithShadow(textRenderer, buttonText,
-                resetX + (168 - textRenderer.getWidth(buttonText)) / 2, resetY + 8, PARCHMENT);
+    private void drawCompactPlayers(DrawContext context) {
+        int count = Math.max(1, state.activePlayers.size());
+        int slotW = (panelW - 16) / count;
+        int x = panelX + 8;
+        int y = layout.footerY();
+        for (UUID id : state.activePlayers) {
+            boolean current = id.equals(state.getCurrentPlayerId());
+            fill(context, x, y, x + slotW - 3, y + 16, current ? WOOD : 0xFF3B2819);
+            String score = " " + state.scores.getOrDefault(id, 0) + (state.resetVotes.contains(id) ? " ✓" : "");
+            int scoreW = textRenderer.getWidth(score);
+            drawFitted(context, (current ? "▶ " : "") + state.playerNames.getOrDefault(id, "Игрок"), x + 3, y + 4, slotW - scoreW - 10, PARCHMENT);
+            context.drawTextWithShadow(textRenderer, score, x + slotW - scoreW - 6, y + 4, BRASS);
+            x += slotW;
+        }
+    }
+
+    private void drawFooter(DrawContext context) {
+        int resetW = layout.resetWidth();
+        boolean hover = currentMouseX >= resetX && currentMouseX < resetX + resetW
+                && currentMouseY >= resetY && currentMouseY < resetY + 20;
+        fill(context, resetX, resetY, resetX + resetW, resetY + 20, BRASS);
+        fill(context, resetX + 1, resetY + 1, resetX + resetW - 1, resetY + 19, hover ? WOOD_LIGHT : WOOD);
+        context.drawCenteredTextWithShadow(textRenderer, "НОВАЯ ПАРТИЯ", resetX + resetW / 2, resetY + 6, PARCHMENT);
+        int x = panelX + 10;
+        int available = resetX - x - 8;
+        if (dragging) {
+            int power = (int) (Math.min(1, Math.hypot(currentMouseX - dragStartX, currentMouseY - dragStartY) / layout.pullDistance()) * 100);
+            drawFitted(context, "Сила: " + power + "%", x, resetY + 1, available, PARCHMENT);
+            int barW = Math.min(available, 160);
+            fill(context, x, resetY + 13, x + barW, resetY + 17, WOOD);
+            fill(context, x, resetY + 13, x + barW * power / 100, resetY + 17, BRASS);
+        } else {
+            drawFitted(context, "ЛКМ: удержать и отпустить", x, resetY + 6, available, MUTED);
+        }
+    }
+
+    private void drawFitted(DrawContext context, String text, int x, int y, int maxWidth, int color) {
+        if (maxWidth <= 0) return;
+        if (textRenderer.getWidth(text) > maxWidth) {
+            text = textRenderer.trimToWidth(text, Math.max(0, maxWidth - textRenderer.getWidth("…"))) + "…";
+        }
+        context.drawTextWithShadow(textRenderer, text, x, y, color);
     }
 
     private boolean canLocalShoot() {
@@ -294,8 +326,8 @@ public class PoolTableScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && mouseX >= resetX && mouseX < resetX + 168
-                && mouseY >= resetY && mouseY < resetY + 24) {
+        if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT && mouseX >= resetX && mouseX < resetX + layout.resetWidth()
+                && mouseY >= resetY && mouseY < resetY + 20) {
             PoolBilliardsClient.sendReset(tablePos);
             return true;
         }
@@ -317,7 +349,7 @@ public class PoolTableScreen extends Screen {
                 double cx = sx(cue.x);
                 double cy = sy(cue.y);
                 double angle = Math.atan2(mouseY - cy, mouseX - cx) + Math.PI;
-                double power = Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / 180.0);
+                double power = Math.min(1.0, Math.hypot(mouseX - dragStartX, mouseY - dragStartY) / layout.pullDistance());
                 PoolBilliardsClient.sendShot(tablePos, angle, power);
             }
             return true;
