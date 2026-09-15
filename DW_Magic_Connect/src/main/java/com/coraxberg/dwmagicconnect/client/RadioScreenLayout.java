@@ -9,5 +9,5 @@ public record RadioScreenLayout(int diameter, int radius, int centerY, int contr
     }
     public int offset() { return radius + 10; }
     public int top() { return centerY - radius - 46; }
-    public int footer() { return centerY + radius + 10; }
+    public int footer() { return centerY + radius + 18; }
 }

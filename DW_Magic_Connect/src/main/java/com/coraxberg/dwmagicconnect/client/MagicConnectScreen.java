@@ -94,6 +94,19 @@ public final class MagicConnectScreen extends Screen {
         centered(c, label("moon"), cx - layout.offset(), layout.centerY() - layout.radius() - 12, 0xA1BECC);
         centered(c, label("sun"), cx + layout.offset(), layout.centerY() - layout.radius() - 12, 0xC6AC7C);
         super.render(c, mouseX, mouseY, delta);
+        Frequency frequency = channels.get(selected);
+        for (int clock = 0; clock < 2; clock++) {
+            int clockX = cx + (clock == 0 ? -1 : 1) * layout.offset();
+            int timeY = layout.centerY() + layout.radius() + 5;
+            String time = "--:--";
+            if (frequency.configured()) {
+                int hour = frequency.hand(clock * 2);
+                time = String.format(java.util.Locale.ROOT, "%02d:%02d",
+                        hour == 0 ? 12 : hour, frequency.hand(clock * 2 + 1));
+            }
+            c.fill(clockX - 21, timeY - 1, clockX + 21, timeY + 10, 0xF014232F);
+            centered(c, Text.literal(time), clockX, timeY, clock == 0 ? 0xA1BECC : 0xC6AC7C);
+        }
         for (ClockDialWidget clock : clocks) if (clock.isMouseOver(mouseX, mouseY) && !clock.isDraggingHand()) {
             c.drawTooltip(textRenderer, label("drag_hint"), mouseX, mouseY); break;
         }
