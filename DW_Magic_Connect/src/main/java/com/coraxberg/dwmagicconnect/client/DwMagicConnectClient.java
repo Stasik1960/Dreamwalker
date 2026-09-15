@@ -27,8 +27,7 @@ public final class DwMagicConnectClient implements ClientModInitializer {
                     try {
                         for (int index = 0; index < MagicConnectData.CHANNEL_COUNT; index++) {
                             channels.add(new MagicConnectData.Frequency(
-                                    buffer.readString(MagicConnectData.MAX_CHANNEL_LENGTH),
-                                    buffer.readString(MagicConnectData.MAX_CHANNEL_LENGTH)
+                                    buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readInt()
                             ));
                         }
                     } catch (IllegalArgumentException exception) {
@@ -65,8 +64,7 @@ public final class DwMagicConnectClient implements ClientModInitializer {
         buffer.writeBoolean(enabled);
         buffer.writeVarInt(transmitIndex);
         for (MagicConnectData.Frequency frequency : channels) {
-            buffer.writeString(frequency.a());
-            buffer.writeString(frequency.b());
+            for (int h = 0; h < 4; h++) buffer.writeInt(frequency.hand(h));
         }
         ClientPlayNetworking.send(DwMagicConnectNetworking.SAVE_SETTINGS, buffer);
     }
