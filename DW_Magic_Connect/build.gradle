@@ -40,3 +40,14 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+// Fast executable contract checks for the radio model and responsive screen layout.
+tasks.register('radioContractCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.coraxberg.dwmagicconnect.item.RadioContractCheck'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('radioContractCheck')
+}

@@ -28,7 +28,7 @@ public final class MagicRelayService {
         MinecraftServer server = sender.getServer();
         if (server == null) return;
 
-        Set<MagicConnectData.Frequency> transmittedFrequencies = activeHeldFrequencies(sender);
+        Set<MagicConnectData.Frequency> transmittedFrequencies = transmittedHeldFrequencies(sender);
         if (transmittedFrequencies.isEmpty()) return;
 
         List<ServerPlayerEntity> onlinePlayers = server.getPlayerManager().getPlayerList();
@@ -69,16 +69,23 @@ public final class MagicRelayService {
             ServerPlayerEntity player,
             Set<MagicConnectData.Frequency> transmittedFrequencies
     ) {
-        for (MagicConnectData.Frequency frequency : activeHeldFrequencies(player)) {
+        for (MagicConnectData.Frequency frequency : listeningHeldFrequencies(player)) {
             if (transmittedFrequencies.contains(frequency)) return true;
         }
         return false;
     }
 
-    private static Set<MagicConnectData.Frequency> activeHeldFrequencies(ServerPlayerEntity player) {
+    private static Set<MagicConnectData.Frequency> transmittedHeldFrequencies(ServerPlayerEntity player) {
         Set<MagicConnectData.Frequency> frequencies = new LinkedHashSet<>();
-        MagicConnectData.activeFrequency(player.getStackInHand(Hand.MAIN_HAND)).ifPresent(frequencies::add);
-        MagicConnectData.activeFrequency(player.getStackInHand(Hand.OFF_HAND)).ifPresent(frequencies::add);
+        MagicConnectData.transmitFrequency(player.getStackInHand(Hand.MAIN_HAND)).ifPresent(frequencies::add);
+        MagicConnectData.transmitFrequency(player.getStackInHand(Hand.OFF_HAND)).ifPresent(frequencies::add);
+        return frequencies;
+    }
+
+    private static Set<MagicConnectData.Frequency> listeningHeldFrequencies(ServerPlayerEntity player) {
+        Set<MagicConnectData.Frequency> frequencies = new LinkedHashSet<>();
+        frequencies.addAll(MagicConnectData.listeningFrequencies(player.getStackInHand(Hand.MAIN_HAND)));
+        frequencies.addAll(MagicConnectData.listeningFrequencies(player.getStackInHand(Hand.OFF_HAND)));
         return frequencies;
     }
 }
