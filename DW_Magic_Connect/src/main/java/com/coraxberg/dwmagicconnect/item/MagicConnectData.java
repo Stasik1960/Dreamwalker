@@ -13,7 +13,7 @@ public final class MagicConnectData {
     public static final String ROOT_KEY = "DWMagicConnect";
     public static final int DEFAULT_RADIUS = 10;
     public static final int MIN_RADIUS = 1;
-    public static final int MAX_RADIUS = 10;
+    public static final int MAX_RADIUS = 18;
 
     private static final int FORMAT = 4;
     private static final int MULTI_CHANNEL_FORMAT = 3;

@@ -15,6 +15,9 @@ public final class RelayContractCheck {
         check(MagicRelayService.captures(speaker, false, false, true, 9), "speaker captures at edge");
         check(!MagicRelayService.captures(speaker, false, false, true, 9.01), "speaker radius enforced");
         check(!MagicRelayService.captures(speaker, false, false, false, 0), "speaker world enforced");
+        var wide = new MagicConnectData.RadioState(true, frequency, true, 18, UUID.randomUUID());
+        check(MagicRelayService.captures(wide, false, false, true, 324), "18-block boundary");
+        check(!MagicRelayService.captures(wide, false, false, true, 324.01), "outside 18 blocks");
         check(MagicRelayService.frequencyLabel(frequency).equals("[12:10 - 12:40] "), "holder label");
         check(MagicRelayService.preferHolderFrequency(null, frequency).equals(frequency), "holder label wins dedup");
         check(MagicRelayService.preferHolderFrequency(frequency, null).equals(frequency), "holder label stays on dedup");

@@ -44,10 +44,10 @@ public final class RadioContractCheck {
         MagicConnectData.saveTag(tag, true, frequency, true, 1);
         var minimum = MagicConnectData.readTag(tag.copy(), id);
         check(minimum.equals(new MagicConnectData.RadioState(true, frequency, true, 1, id)), "v4 roundtrip minimum");
-        MagicConnectData.saveTag(tag, false, Frequency.empty(), false, 10);
-        check(MagicConnectData.readTag(tag.copy(), id).radius() == 10, "v4 maximum radius");
+        MagicConnectData.saveTag(tag, false, Frequency.empty(), true, 18);
+        check(MagicConnectData.readTag(tag.copy(), id).radius() == 18, "v4 maximum radius");
         expectInvalid(() -> MagicConnectData.saveTag(tag, true, frequency, true, 0));
-        expectInvalid(() -> MagicConnectData.saveTag(tag, true, frequency, true, 11));
+        expectInvalid(() -> MagicConnectData.saveTag(tag, true, frequency, true, 19));
     }
 
     private static void checkV3Migration() {

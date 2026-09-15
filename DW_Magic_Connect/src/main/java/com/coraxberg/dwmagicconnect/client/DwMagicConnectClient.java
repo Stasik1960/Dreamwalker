@@ -21,7 +21,7 @@ public final class DwMagicConnectClient implements ClientModInitializer {
                         Frequency frequency = new Frequency(buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readInt());
                         boolean speaker = buffer.readBoolean();
                         int radius = buffer.readVarInt();
-                        if (hand < 0 || hand >= Hand.values().length || radius < 1 || radius > 10) return;
+                        if (hand < 0 || hand >= Hand.values().length || radius < 1 || radius > com.coraxberg.dwmagicconnect.item.MagicConnectData.MAX_RADIUS) return;
                         client.execute(() -> {
                             if (client.player != null) client.setScreen(new MagicConnectScreen(token, hand, enabled, frequency, speaker, radius));
                         });
