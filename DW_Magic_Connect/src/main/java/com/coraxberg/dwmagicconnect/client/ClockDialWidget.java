@@ -2,6 +2,9 @@ package com.coraxberg.dwmagicconnect.client;
 
 import com.coraxberg.dwmagicconnect.item.MagicConnectData.Frequency;
 import net.minecraft.client.MinecraftClient;
+import com.coraxberg.dwmagicconnect.DwMagicConnectMod;
+import net.minecraft.util.Identifier;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -14,6 +17,7 @@ import java.util.function.BiConsumer;
 
 /** Independently draggable, discrete clock hands. No texture contains interactive marks or hands. */
 public final class ClockDialWidget extends ClickableWidget {
+    private static final Identifier CONTROLS = DwMagicConnectMod.id("textures/gui/arcane_controls.png");
     private final boolean sun;
     private final int radius;
     private final Supplier<Frequency> frequency;
@@ -87,7 +91,16 @@ public final class ClockDialWidget extends ClickableWidget {
         disk(c, x, y, radius + 1, brass);
         disk(c, x, y, radius - 1, 0xFF171E2A);
         disk(c, x, y, radius - 4, sun ? 0xFF171322 : 0xFF051B2C);
-        ring(c, x, y, radius - 5, 0xFF665840);
+        ring(c, x, y, radius - 2, 0xFFFFDF9C);
+        ring(c, x, y, radius - 5, 0xFF9D642B);
+        for (int cardinal = 0; cardinal < 4; cardinal++) {
+            double angle = cardinal * Math.PI / 2;
+            double px = x + Math.sin(angle) * (radius + 1), py = y - Math.cos(angle) * (radius + 1);
+            line(c, px - 3, py, px, py - 4, 1.5f, 0xFFFFDEA0);
+            line(c, px, py - 4, px + 3, py, 1.5f, 0xFFD49A42);
+            line(c, px + 3, py, px, py + 4, 1.5f, 0xFF996026);
+            line(c, px, py + 4, px - 3, py, 1.5f, 0xFFFFDEA0);
+        }
         ring(c, x, y, radius * .64, sun ? 0xFF65513C : 0xFF3B5668);
         line(c, x - radius * .62, y, x + radius * .62, y, 1, 0x403F6575);
         line(c, x, y - radius * .62, x, y + radius * .62, 1, 0x403F6575);
@@ -97,36 +110,25 @@ public final class ClockDialWidget extends ClickableWidget {
                     x + ClockMath.x(i, 60, outer), y + ClockMath.y(i, 60, outer), 1,
                     i % 5 == 0 ? accent : 0xFF535865);
         }
-        // Small celestial emblem above the pivot, leaving the hands unobstructed.
-        int emblemY = y - (int) (radius * .31), er = Math.max(4, radius / 10);
-        disk(c, x, emblemY, er, accent);
-        if (!sun) disk(c, x + 3, emblemY - 2, er, 0xFF051B2C);
-        else for (int i = 0; i < 8; i++) {
-            line(c, x + ClockMath.x(i, 8, er + 2), emblemY + ClockMath.y(i, 8, er + 2),
-                    x + ClockMath.x(i, 8, er + 4), emblemY + ClockMath.y(i, 8, er + 4), 1, accent);
-        }
         int hot = dragging || isFocused() ? selectedHand : pick(mouseX, mouseY);
         drawHand(c, 0, hot == 0, frequency.get().configured());
         drawHand(c, 1, hot == 1, frequency.get().configured());
-        disk(c, x, y, 5, 0xFF9B8057); disk(c, x, y, 3, sun ? 0xFFB67D47 : 0xFF537D9F);
+
         if (isFocused()) ring(c, x, y, radius + 4, accent);
 
     }
     private void drawHand(DrawContext c, int hand, boolean hot, boolean configured) {
         int steps = hand == 0 ? 12 : 60;
-        double length = radius * (hand == 0 ? .48 : .78);
-        double ex = cx() + ClockMath.x(position(hand), steps, length);
-        double ey = cy() + ClockMath.y(position(hand), steps, length);
-        int color = !configured ? 0xFF747578 : hot ? 0xFFD8CEAC : hand == 0 ? 0xFFE6BC71 : sun ? 0xFFFFD98C : 0xFF91E7FF;
-        line(c, cx() + 1, cy() + 1, ex + 1, ey + 1, hand == 0 ? 5 : 3, 0xB0000000);
-        line(c, cx(), cy(), ex, ey, hand == 0 ? 3 : 1.5f, color);
-        // Distinct draggable handles at different radii, also visible at 12:00.
+        // Atlas pivots and gemstone centres preserve the existing grab points.
+        float scale = (float) (radius * (hand == 0 ? .48 : .78) / (hand == 0 ? 274 : 428));
         c.getMatrices().push();
-        c.getMatrices().translate(ex, ey, 0);
-        c.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(45));
-        int s = hand == 0 ? 3 : 2;
-        c.fill(-s, -s, s + 1, s + 1, color);
-        c.fill(-1, -1, 2, 2, sun ? 0xFF614632 : 0xFF304D64);
+        c.getMatrices().translate(cx(), cy(), 0);
+        c.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(position(hand) * 360f / steps));
+        c.getMatrices().scale(scale, scale, 1);
+        RenderSystem.enableBlend(); RenderSystem.defaultBlendFunc();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        c.drawTexture(CONTROLS, -314, -542, 627, 627, hand == 0 ? 627 : 0, 0, 627, 627, 1254, 1254);
+        RenderSystem.disableBlend();
         c.getMatrices().pop();
     }
     static void disk(DrawContext c, int x, int y, int radius, int color) {

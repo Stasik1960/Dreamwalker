@@ -3,6 +3,7 @@ package com.coraxberg.dwmagicconnect.client;
 import com.coraxberg.dwmagicconnect.DwMagicConnectMod;
 import com.coraxberg.dwmagicconnect.item.MagicConnectData.Frequency;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,6 +18,7 @@ import java.util.UUID;
 /** The instrument itself is the control surface: crystal, side rocker, and clock hands. */
 public final class MagicConnectScreen extends Screen {
     private static final Identifier DIAL = DwMagicConnectMod.id("textures/gui/arcane_dial.png");
+    private static final Identifier CONTROLS = DwMagicConnectMod.id("textures/gui/arcane_controls.png");
     private final UUID token;
     private final int handOrdinal;
     private Frequency frequency;
@@ -48,9 +50,9 @@ public final class MagicConnectScreen extends Screen {
         }
         // Coordinates correspond to the existing lower jewel and side metalwork.
         controls[0] = control(0, .500, .867, .078, .095);
-        controls[1] = control(1, .910, .566, .043, .086);
-        controls[2] = control(2, .087, .542, .043, .043);
-        controls[3] = control(3, .087, .585, .043, .043);
+        controls[1] = control(1, .910, .577, .048, .092);
+        controls[2] = control(2, .087, .548, .048, .040);
+        controls[3] = control(3, .087, .599, .048, .040);
     }
     private InstrumentControl control(int kind, double u, double v, double w, double h) {
         int bw = Math.max(7, (int) (w * layout.diameter())), bh = Math.max(10, (int) (h * layout.diameter()));
@@ -93,25 +95,15 @@ public final class MagicConnectScreen extends Screen {
         int size = layout.diameter();
         RenderSystem.enableBlend();
         // Use the original saturated artwork instead of the old gray-blue dimming multiplier.
-        RenderSystem.setShaderColor(enabled ? 1f : .60f, enabled ? .96f : .63f, enabled ? 1f : .70f, 1);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         c.drawTexture(DIAL, (width - size) / 2, (height - size) / 2, size, size, 0, 0, 1254, 1254, 1254, 1254);
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        if (enabled) {
-            double phase = System.nanoTime() / 1_000_000_000.0;
-            int alpha = (int) (58 + 13 * Math.sin(phase * 1.6));
-            // Every gemstone in the static artwork has its own softly breathing aura.
-            double[][] jewels = {{.500,.065,.038},{.500,.867,.048},{.087,.615,.030},
-                    {.910,.615,.030},{.107,.360,.021},{.890,.360,.021},
-                    {.210,.805,.023},{.790,.805,.023},{.392,.203,.014},{.606,.203,.014}};
-            for (int i = 0; i < jewels.length; i++) {
-                double[] jewel = jewels[i];
-                mist(c, jewel[0], jewel[1], jewel[2], alpha, phase + i * .73);
-            }
-            halo(c, layout.x(width,.090), layout.y(height,.463), size * .070, 0x80DFFF, 48);
-            halo(c, layout.x(width,.909), layout.y(height,.463), size * .070, 0xFFD580, 46);
-            halo(c, layout.x(width,.500), layout.y(height,.210), size * .085, 0xFFE0A0, 25);
-            sparkle(c, .384, .350, phase, 0);
-            sparkle(c, .634, .334, phase, 1.8);
+        // Static panel art stays identical in both power states.
+        for (int side = 0; side < 2; side++) {
+            int pw = Math.max(20, (int)(size * .084)), ph = Math.max(36, (int)(size * .165));
+            int px = layout.x(width, side == 0 ? .087 : .910) - pw / 2;
+            int py = layout.y(height, .502);
+            c.drawTexture(CONTROLS, px, py, pw, ph, side == 0 ? 200 : 827, 630, 228, 595, 1254, 1254);
         }
         RenderSystem.disableBlend();
         for (int i = 0; i < 2; i++) {
@@ -121,9 +113,7 @@ public final class MagicConnectScreen extends Screen {
         super.render(c, mouseX, mouseY, delta);
         for (int clock = 0; clock < 2; clock++) {
             int x = width / 2 + (clock == 0 ? -1 : 1) * layout.offset();
-            if (!enabled) {
-                ClockDialWidget.disk(c, x, layout.centerY(), layout.radius(), 0x55000000);
-            } else {
+            if (enabled) {
                 halo(c, x, layout.centerY(), layout.radius() * .12, 0x7BDCFF, 55);
                 for (int hand = 0; hand < 2; hand++) {
                     int position = Math.max(0, frequency.hand(clock * 2 + hand));
@@ -141,6 +131,23 @@ public final class MagicConnectScreen extends Screen {
             String time = frequency.configured() ? String.format(java.util.Locale.ROOT, "%02d:%02d",
                     frequency.hand(i * 2) == 0 ? 12 : frequency.hand(i * 2), frequency.hand(i * 2 + 1)) : "--:--";
             centered(c, Text.literal(time), x, layout.footer(), i == 0 ? 0x95E8FF : 0xFFE09A);
+        }
+        if (enabled) {
+            double phase = System.nanoTime() / 1_000_000_000.0;
+            int alpha = (int) (96 + 20 * Math.sin(phase * 1.6));
+            // Every gemstone in the static artwork has its own softly breathing aura.
+            double[][] jewels = {{.500,.065,.038},{.500,.867,.048},{.087,.635,.030},
+                    {.910,.635,.030},{.107,.360,.021},{.890,.360,.021},
+                    {.210,.805,.023},{.790,.805,.023},{.392,.203,.014},{.606,.203,.014}};
+            for (int i = 0; i < jewels.length; i++) {
+                double[] jewel = jewels[i];
+                mist(c, jewel[0], jewel[1], jewel[2], alpha, phase + i * .73);
+            }
+            halo(c, layout.x(width,.090), layout.y(height,.463), layout.diameter() * .070, 0x80DFFF, 48);
+            halo(c, layout.x(width,.909), layout.y(height,.463), layout.diameter() * .070, 0xFFD580, 46);
+            halo(c, layout.x(width,.500), layout.y(height,.210), layout.diameter() * .085, 0xFFE0A0, 25);
+            sparkle(c, .384, .350, phase, 0);
+            sparkle(c, .634, .334, phase, 1.8);
         }
         if (draggedClock == null) {
             for (InstrumentControl control : controls) if (control.isMouseOver(mouseX, mouseY)) {
@@ -164,12 +171,15 @@ public final class MagicConnectScreen extends Screen {
         for (int i = 0; i < 3; i++) {
             double a = phase * .35 + i * 2.094;
             halo(c, x + Math.cos(a) * r * .7, y + Math.sin(a * .8) * r * .45,
-                    r * 1.05, 0x74CFFF, alpha / 5);
+                    r * 1.05, 0x74CFFF, alpha / 3);
         }
     }
     private static void halo(DrawContext c, double x, double y, double radius, int rgb, int alpha) {
         c.draw();
-        RenderSystem.enableBlend(); RenderSystem.defaultBlendFunc();
+        RenderSystem.disableDepthTest(); RenderSystem.depthMask(false); RenderSystem.disableCull();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShader(GameRenderer::getPositionColorProgram);
         var matrix = c.getMatrices().peek().getPositionMatrix();
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
@@ -182,6 +192,8 @@ public final class MagicConnectScreen extends Screen {
                     .color(red, green, blue, 0).next();
         }
         BufferRenderer.drawWithGlobalProgram(buffer.end());
+        RenderSystem.defaultBlendFunc(); RenderSystem.disableBlend();
+        RenderSystem.depthMask(true); RenderSystem.enableDepthTest(); RenderSystem.enableCull();
     }
     private void sparkle(DrawContext c, double u, double v, double phase, double offset) {
         int alpha = (int) (25 + 35 * (1 + Math.sin(phase + offset)) / 2);
@@ -250,15 +262,8 @@ public final class MagicConnectScreen extends Screen {
                 return;
             }
             int x = getX(), y = getY(), w = getWidth(), h = getHeight();
-            int gold = hot ? 0xFFFFDA84 : 0xFFD1A14F;
-            // A pointed brass bezel nests directly in the pendant beneath each celestial seal.
-            c.fill(x - 2, y + 2, x + w + 2, y + h - 2, 0xFF4C3018);
-            c.fill(x - 1, y + 1, x + w + 1, y + h - 1, gold);
-            c.fill(x + 1, y + 2, x + w - 1, y + h - 2, 0xFF071320);
-            ClockDialWidget.line(c, x - 2, y + 4, x + w/2.0, y - 3, 1, gold);
-            ClockDialWidget.line(c, x + w/2.0, y - 3, x + w + 2, y + 4, 1, gold);
-            ClockDialWidget.line(c, x - 2, y + h - 4, x + w/2.0, y + h + 3, 1, gold);
-            ClockDialWidget.line(c, x + w/2.0, y + h + 3, x + w + 2, y + h - 4, 1, gold);
+            // Interaction symbols sit inside the illustrated common gold frame.
+            if (hot) c.fill(x + 2, y + 2, x + w - 2, y + h - 2, 0x193CCBEA);
             c.getMatrices().push();
             c.getMatrices().translate((kind == 1 ? -1 : 1) * depression * 1.5, depression, 0);
             int cx = x + w/2, cy = y + h/2, ink = enabled && pressed ? 0xFF90EAFF : 0xFFEBCB80;
