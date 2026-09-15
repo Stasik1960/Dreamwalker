@@ -21,12 +21,7 @@ public class ChatHudMixin {
         ci.cancel();
     }
 
-    @Inject(method = "addMessage(Lnet/minecraft/text/Text;)V", at = @At("HEAD"), require = 0)
-    private void rpchatui$addSimpleMessage(Text message, CallbackInfo ci) {
-        ChatUiState.addMessage(message);
-    }
-
-    @Inject(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V", at = @At("HEAD"), require = 0)
+    @Inject(method = "addMessage(Lnet/minecraft/text/Text;Lnet/minecraft/network/message/MessageSignatureData;Lnet/minecraft/client/gui/hud/MessageIndicator;)V", at = @At("HEAD"), require = 1)
     private void rpchatui$addDecoratedMessage(Text message, MessageSignatureData signatureData, MessageIndicator indicator, CallbackInfo ci) {
         ChatUiState.addMessage(message);
     }

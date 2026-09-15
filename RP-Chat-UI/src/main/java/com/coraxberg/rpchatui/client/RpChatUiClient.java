@@ -12,6 +12,7 @@ public class RpChatUiClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ChatUiState.loadConfig();
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ChatUiState.resetConnection());
 
         ClientPlayNetworking.registerGlobalReceiver(RpChatUiConstants.MAX_LENGTH_PACKET, (client, handler, buf, responseSender) -> {
             int maxLength = buf.readVarInt();

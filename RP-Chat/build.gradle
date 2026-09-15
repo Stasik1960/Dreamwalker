@@ -37,3 +37,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
 }
+
+tasks.register('serverLogicCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.coraxberg.rpchat.RpChatServerLogicCheck'
+}
+check.dependsOn serverLogicCheck

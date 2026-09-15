@@ -40,7 +40,19 @@ java {
 
 tasks.register('layoutCheck', JavaExec) {
     dependsOn testClasses
-    classpath = sourceSets.test.runtimeClasspath
+    classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.main.compileClasspath
     mainClass = 'com.coraxberg.rpchatui.client.ChatLayoutCheck'
 }
 check.dependsOn layoutCheck
+
+tasks.register('contentCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.main.compileClasspath
+    mainClass = 'com.coraxberg.rpchatui.client.ChatContentCheck'
+}
+check.dependsOn contentCheck
+
+// These checks use data/text classes only; no native graphics runtime is needed.
+tasks.named('test') {
+    classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.main.compileClasspath
+}

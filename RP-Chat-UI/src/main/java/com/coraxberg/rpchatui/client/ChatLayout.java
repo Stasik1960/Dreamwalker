@@ -33,14 +33,13 @@ final class ChatLayout {
         return first;
     }
 
-    static int firstInputLine(int[] lengths, int cursor, int visible) {
-        int line = 0, offset = 0;
-        while (line < lengths.length - 1 && offset + lengths[line] < cursor) offset += lengths[line++];
-        return Math.max(0, line - visible + 1);
-    }
-
     static int inputLines(int height, int header, int wrappedLines) {
-        return Math.max(1, Math.min(wrappedLines, Math.min(5, (height - header - 42) / 12)));
+        return Math.max(1, Math.min(wrappedLines, Math.min(5, (height - header - 62) / 12)));
+    }
+    static int hudLineWidth(int x, int width, int screenW, int lineY, int lineHeight, int hudTop) {
+        int left = screenW / 2 - 123, right = screenW / 2 + 123;
+        if (lineY + lineHeight <= hudTop || x >= right || x + width <= left) return width;
+        return Math.max(0, left - x - 4);
     }
     static int categoryRows(int height) { return Math.max(1, (height - 146) / 22); }
 }

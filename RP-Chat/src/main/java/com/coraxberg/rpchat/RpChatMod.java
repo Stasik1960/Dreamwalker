@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.network.message.MessageType;
@@ -21,17 +22,18 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.math.Vec3d;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -39,14 +41,20 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class RpChatMod implements ModInitializer {
     public static final String MOD_ID = "rpchat";
+    public static final Identifier SUBMIT_TEXT_PACKET = new Identifier(MOD_ID, "submit_text");
 
     private static final int MAX_PREFIX_COUNT = 3;
+    private static final int FALLBACK_MAX_MESSAGE_LENGTH = 512;
+    private static final int ABSOLUTE_MAX_MESSAGE_LENGTH = 4096;
+    private static final double CUSTOM_MESSAGE_BURST = 10.0;
+    private static final double CUSTOM_MESSAGE_REFILL_PER_SECOND = 2.0;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("rpchat.json");
 
@@ -64,20 +72,112 @@ public class RpChatMod implements ModInitializer {
     private static final Map<UUID, Boolean> persistentGm = new ConcurrentHashMap<>();
     private static final Map<UUID, ListenSetting> listenSettings = new ConcurrentHashMap<>();
     private static final Map<UUID, UUID> lastPrivateContact = new ConcurrentHashMap<>();
+    private static final RpChatSubmissionLimiter submissionLimiter =
+            new RpChatSubmissionLimiter(CUSTOM_MESSAGE_BURST, CUSTOM_MESSAGE_REFILL_PER_SECOND);
 
     private static final DateTimeFormatter LOG_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static volatile Method uiMaxLengthMethod;
+    private static volatile boolean uiMaxLengthLookupDone;
 
     @Override
     public void onInitialize() {
         ServerLifecycleEvents.SERVER_STARTING.register(server -> loadConfig(server));
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> applyNickname(handler.player));
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> submissionLimiter.remove(handler.player.getUuid()));
+        registerTextSubmissionPacket();
         registerChatInterceptor();
         registerCommands();
+    }
+
+    private void registerTextSubmissionPacket() {
+        ServerPlayNetworking.registerGlobalReceiver(SUBMIT_TEXT_PACKET, (server, player, handler, buf, responseSender) -> {
+            String raw = buf.readString(ABSOLUTE_MAX_MESSAGE_LENGTH);
+            server.execute(() -> handleSubmittedText(player, raw));
+        });
+    }
+
+    private static void handleSubmittedText(ServerPlayerEntity sender, String raw) {
+        if (raw == null) return;
+
+        if (!submissionLimiter.tryAcquire(sender.getUuid(), System.nanoTime())) {
+            sender.sendMessage(Text.literal("Слишком много сообщений. Подожди немного.")
+                    .formatted(Formatting.RED), false);
+            return;
+        }
+
+        if (RpChatSyntax.containsControlCharacters(raw)) {
+            sender.sendMessage(Text.literal("Сообщение содержит недопустимые управляющие символы.")
+                    .formatted(Formatting.RED), false);
+            return;
+        }
+
+        if (raw.isBlank()) return;
+
+        int max = effectiveMaxMessageLength(sender);
+        if (raw.length() > max) {
+            sender.sendMessage(Text.literal("Сообщение слишком длинное: " + raw.length() + "/" + max + " символов.")
+                    .formatted(Formatting.RED), false);
+            return;
+        }
+
+        if (raw.startsWith("/")) {
+            String command = raw.substring(1);
+            if (!RpChatSyntax.isAllowedCustomCommand(raw)) {
+                sender.sendMessage(Text.literal("Эта команда должна быть отправлена обычным способом.")
+                        .formatted(Formatting.RED), false);
+                return;
+            }
+            MinecraftServer server = sender.getServer();
+            if (server != null) {
+                server.getCommandManager().executeWithPrefix(sender.getCommandSource(), command);
+            }
+            return;
+        }
+
+        handleChatMessage(sender, raw);
+    }
+
+
+    private static int effectiveMaxMessageLength(ServerPlayerEntity player) {
+        Method method = findUiMaxLengthMethod();
+        if (method != null) {
+            try {
+                Object value = method.invoke(null, player.getGameProfile().getName());
+                if (value instanceof Integer length) {
+                    return Math.max(1, Math.min(ABSOLUTE_MAX_MESSAGE_LENGTH, length));
+                }
+            } catch (ReflectiveOperationException ignored) {
+                // Fall back when RP Chat UI is absent or its optional integration is unavailable.
+            }
+        }
+        return FALLBACK_MAX_MESSAGE_LENGTH;
+    }
+
+    private static Method findUiMaxLengthMethod() {
+        if (uiMaxLengthLookupDone) return uiMaxLengthMethod;
+        synchronized (RpChatMod.class) {
+            if (!uiMaxLengthLookupDone) {
+                try {
+                    Class<?> uiMod = Class.forName("com.coraxberg.rpchatui.RpChatUiMod");
+                    uiMaxLengthMethod = uiMod.getMethod("getEffectiveMaxLength", String.class);
+                } catch (ClassNotFoundException | NoSuchMethodException ignored) {
+                    uiMaxLengthMethod = null;
+                }
+                uiMaxLengthLookupDone = true;
+            }
+        }
+        return uiMaxLengthMethod;
     }
 
     private void registerChatInterceptor() {
         ServerMessageEvents.ALLOW_CHAT_MESSAGE.register((SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params) -> {
             String raw = message.getContent().getString();
+            int max = effectiveMaxMessageLength(sender);
+            if (raw.length() > max) {
+                sender.sendMessage(Text.literal("Сообщение слишком длинное: " + raw.length() + "/" + max + " символов.")
+                        .formatted(Formatting.RED), false);
+                return false;
+            }
             handleChatMessage(sender, raw);
             return false;
         });
@@ -101,7 +201,15 @@ public class RpChatMod implements ModInitializer {
 
             dispatcher.register(literal("r")
                     .then(argument("message", StringArgumentType.greedyString())
-                            .executes(ctx -> replyPrivateMessage(ctx.getSource(), StringArgumentType.getString(ctx, "message")))));
+                            .executes(ctx -> replyOrRoll(ctx.getSource(), StringArgumentType.getString(ctx, "message")))));
+
+            dispatcher.register(literal("roll")
+                    .then(argument("dice", StringArgumentType.greedyString())
+                            .executes(ctx -> rollCommand(ctx.getSource(), StringArgumentType.getString(ctx, "dice")))));
+
+            dispatcher.register(literal("me")
+                    .then(argument("action", StringArgumentType.greedyString())
+                            .executes(ctx -> actionCommand(ctx.getSource(), StringArgumentType.getString(ctx, "action")))));
 
 
             dispatcher.register(literal("rename")
@@ -152,12 +260,36 @@ public class RpChatMod implements ModInitializer {
 
         if (handleModeSwitch(sender, raw)) return;
 
-        if (raw.startsWith("-") && raw.length() > 1) {
-            String gmText = raw.substring(1).strip();
-            if (!gmText.isEmpty()) {
-                sendGmChat(sender, gmText);
-            }
+        RpChatSyntax.ClassifiedMessage initial = RpChatSyntax.classify(raw);
+        if (initial.kind() == RpChatSyntax.MessageKind.GM) {
+            if (!initial.body().isEmpty()) sendGmChat(sender, initial.body());
             return;
+        }
+
+        ParsedChat parsed = parseChat(sender, raw);
+        if (parsed.message().isBlank()) return;
+
+        String message = parsed.message();
+        RpChatSyntax.ClassifiedMessage classified = RpChatSyntax.classify(message);
+        switch (classified.kind()) {
+            case ACTION -> {
+                if (!classified.body().isEmpty()) {
+                    sendLocalAction(sender, classified.body(), parsed.radius(), parsed.volumeLabel());
+                }
+                return;
+            }
+            case NARRATION -> {
+                if (!classified.body().isEmpty()) {
+                    sendLocalNarration(sender, classified.body(), parsed.radius(), parsed.volumeLabel());
+                }
+                return;
+            }
+            case DICE -> {
+                sendLocalRoll(sender, classified.dice(), parsed.radius(), parsed.volumeLabel());
+                return;
+            }
+            default -> {
+            }
         }
 
         if (persistentGm.getOrDefault(sender.getUuid(), false)) {
@@ -165,10 +297,7 @@ public class RpChatMod implements ModInitializer {
             return;
         }
 
-        ParsedChat parsed = parseChat(sender, raw);
-        if (parsed.message().isBlank()) return;
-
-        sendLocalChat(sender, parsed.message(), parsed.radius(), parsed.ooc(), parsed.volumeLabel());
+        sendLocalChat(sender, message, parsed.radius(), parsed.ooc(), parsed.volumeLabel());
     }
 
     private static boolean handleModeSwitch(ServerPlayerEntity player, String raw) {
@@ -207,8 +336,9 @@ public class RpChatMod implements ModInitializer {
         int radius = persistentRadius.getOrDefault(player.getUuid(), config.defaultRadius());
         boolean ooc = persistentOoc.getOrDefault(player.getUuid(), false);
 
+        int prefixLength = RpChatSyntax.leadingModifierLength(raw);
         int index = 0;
-        while (index < raw.length()) {
+        while (index < prefixLength) {
             char c = raw.charAt(index);
             if (c == '=' || c == '!') {
                 int start = index;
@@ -229,7 +359,7 @@ public class RpChatMod implements ModInitializer {
             break;
         }
 
-        String message = raw.substring(index).strip();
+        String message = raw.substring(prefixLength).strip();
         return new ParsedChat(radius, ooc, message, volumeLabel(radius));
     }
 
@@ -308,12 +438,75 @@ public class RpChatMod implements ModInitializer {
         }
 
         if (ooc) {
-            result.append(Text.literal("((" + message + "))").formatted(Formatting.LIGHT_PURPLE));
+            result.append(Text.literal("((").formatted(Formatting.LIGHT_PURPLE));
+            result.append(RpChatTextParser.parse(message, Formatting.LIGHT_PURPLE, false));
+            result.append(Text.literal("))").formatted(Formatting.LIGHT_PURPLE));
         } else {
-            result.append(Text.literal(message).formatted(Formatting.WHITE));
+            result.append(RpChatTextParser.parse(message, Formatting.WHITE, false));
         }
 
-        return result;
+        return withBodyInsertion(result, message);
+    }
+
+    private static void sendLocalAction(ServerPlayerEntity sender, String action, int radius, String volumeLabel) {
+        MutableText text = Text.literal("*").formatted(Formatting.GRAY)
+                .append(displayNameText(sender));
+        if (volumeLabel != null && !volumeLabel.isBlank()) {
+            text.append(Text.literal(" (" + volumeLabel + ")").formatted(Formatting.GRAY));
+        }
+        text.append(Text.literal(" ").formatted(Formatting.GRAY))
+                .append(Text.literal(plainVisibleBody(action)).formatted(Formatting.GRAY))
+                .append(Text.literal("*").formatted(Formatting.GRAY));
+        deliverLocal(sender, withBodyInsertion(text, action), radius);
+        log(sender.getServer(), "[ACTION] [radius=" + radius + "] " + sender.getGameProfile().getName()
+                + ": " + action);
+    }
+
+    private static void sendLocalNarration(ServerPlayerEntity sender, String narration, int radius, String volumeLabel) {
+        MutableText text = Text.empty();
+        if (volumeLabel != null && !volumeLabel.isBlank()) {
+            text.append(Text.literal("(" + volumeLabel + ") ").formatted(Formatting.GRAY));
+        }
+        text.append(Text.literal("***").formatted(Formatting.YELLOW))
+                .append(Text.literal(plainVisibleBody(narration)).formatted(Formatting.YELLOW))
+                .append(Text.literal("***").formatted(Formatting.YELLOW));
+        deliverLocal(sender, withBodyInsertion(text, narration), radius);
+        log(sender.getServer(), "[NARRATION] [radius=" + radius + "] " + sender.getGameProfile().getName()
+                + ": " + narration);
+    }
+
+    private static void sendLocalRoll(ServerPlayerEntity sender, RpChatSyntax.DiceExpression dice,
+                                      int radius, String volumeLabel) {
+        RpChatSyntax.RollResult roll = RpChatSyntax.roll(dice,
+                sides -> ThreadLocalRandom.current().nextInt(1, sides + 1));
+        String resultText = RpChatSyntax.formatRoll(dice, roll);
+
+        MutableText text = displayNameText(sender).append(Text.literal(" ").formatted(Formatting.YELLOW));
+        if (volumeLabel != null && !volumeLabel.isBlank()) {
+            text.append(Text.literal("(" + volumeLabel + ") ").formatted(Formatting.GRAY));
+        }
+        text.append(Text.literal(resultText).formatted(Formatting.YELLOW));
+        deliverLocal(sender, withBodyInsertion(text, resultText), radius);
+        log(sender.getServer(), "[ROLL] [radius=" + radius + "] " + sender.getGameProfile().getName()
+                + ": " + resultText);
+    }
+
+    private static void deliverLocal(ServerPlayerEntity sender, Text text, int radius) {
+        MinecraftServer server = sender.getServer();
+        if (server == null) return;
+        for (ServerPlayerEntity target : server.getPlayerManager().getPlayerList()) {
+            if (shouldReceiveLocal(sender, target, radius)) {
+                target.sendMessage(text, false);
+            }
+        }
+    }
+
+    private static MutableText withBodyInsertion(MutableText text, String rawBody) {
+        return text.setStyle(text.getStyle().withInsertion("rpchat:body:" + plainVisibleBody(rawBody)));
+    }
+
+    private static String plainVisibleBody(String rawBody) {
+        return RpChatTextParser.plain(rawBody);
     }
 
     private static boolean shouldReceiveLocal(ServerPlayerEntity sender, ServerPlayerEntity target, int messageRadius) {
@@ -345,7 +538,9 @@ public class RpChatMod implements ModInitializer {
 
         MutableText text = Text.literal("[GM] ").formatted(Formatting.GOLD)
                 .append(displayNameText(sender))
-                .append(Text.literal(": " + message).formatted(Formatting.GOLD));
+                .append(Text.literal(": ").formatted(Formatting.GOLD))
+                .append(RpChatTextParser.parse(message, Formatting.GOLD, false));
+        withBodyInsertion(text, message);
 
         int recipients = 0;
         for (ServerPlayerEntity target : server.getPlayerManager().getPlayerList()) {
@@ -365,12 +560,16 @@ public class RpChatMod implements ModInitializer {
         String clean = message == null ? "" : message.strip();
         if (clean.isEmpty()) return 0;
 
-        Text toTarget = Text.literal("[ЛС от ").formatted(Formatting.AQUA)
+        MutableText toTarget = Text.literal("[ЛС от ").formatted(Formatting.AQUA)
                 .append(displayNameText(sender))
-                .append(Text.literal("] " + clean).formatted(Formatting.AQUA));
-        Text toSender = Text.literal("[ЛС к ").formatted(Formatting.GRAY)
+                .append(Text.literal("] ").formatted(Formatting.AQUA))
+                .append(RpChatTextParser.parse(clean, Formatting.AQUA, false));
+        MutableText toSender = Text.literal("[ЛС к ").formatted(Formatting.GRAY)
                 .append(displayNameText(target))
-                .append(Text.literal("] " + clean).formatted(Formatting.GRAY));
+                .append(Text.literal("] ").formatted(Formatting.GRAY))
+                .append(RpChatTextParser.parse(clean, Formatting.GRAY, false));
+        withBodyInsertion(toTarget, clean);
+        withBodyInsertion(toSender, clean);
 
         target.sendMessage(toTarget, false);
         sender.sendMessage(toSender, false);
@@ -399,6 +598,44 @@ public class RpChatMod implements ModInitializer {
         }
 
         return privateMessage(source, target, message);
+    }
+
+    private static int replyOrRoll(ServerCommandSource source, String message) {
+        RpChatSyntax.DiceExpression dice = RpChatSyntax.parseDice(message == null ? "" : message.strip());
+        if (dice == null) return replyPrivateMessage(source, message);
+
+        ServerPlayerEntity player = source.getPlayer();
+        if (player == null) return 0;
+        sendLocalRoll(player, dice,
+                persistentRadius.getOrDefault(player.getUuid(), config.defaultRadius()),
+                volumeLabel(persistentRadius.getOrDefault(player.getUuid(), config.defaultRadius())));
+        return 1;
+    }
+
+    private static int rollCommand(ServerCommandSource source, String expression) {
+        ServerPlayerEntity player = source.getPlayer();
+        if (player == null) return 0;
+
+        RpChatSyntax.DiceExpression dice = RpChatSyntax.parseDice(expression == null ? "" : expression.strip());
+        if (dice == null) {
+            source.sendError(Text.literal("Формат броска: d20 или 5d20+3; куб d2..d100, максимум 100 кубов."));
+            return 0;
+        }
+
+        int radius = persistentRadius.getOrDefault(player.getUuid(), config.defaultRadius());
+        sendLocalRoll(player, dice, radius, volumeLabel(radius));
+        return 1;
+    }
+
+    private static int actionCommand(ServerCommandSource source, String actionRaw) {
+        ServerPlayerEntity player = source.getPlayer();
+        if (player == null) return 0;
+        String action = actionRaw == null ? "" : actionRaw.strip();
+        if (action.isEmpty()) return 0;
+
+        int radius = persistentRadius.getOrDefault(player.getUuid(), config.defaultRadius());
+        sendLocalAction(player, action, radius, volumeLabel(radius));
+        return 1;
     }
 
     private static int toggleListenAll(ServerCommandSource source) {
@@ -449,6 +686,9 @@ public class RpChatMod implements ModInitializer {
         sendHelp(source, "=, ==, ===, !, !!, !!! отдельным сообщением: переключить постоянный радиус", Formatting.WHITE);
         sendHelp(source, "_текст: OOC. _ отдельным сообщением: включить/выключить OOC", Formatting.LIGHT_PURPLE);
         sendHelp(source, "-текст: GM-чат. - отдельным сообщением: включить/выключить GM-чат", Formatting.GOLD);
+        sendHelp(source, "*действие* или /me действие: локальное действие персонажа", Formatting.GRAY);
+        sendHelp(source, "#текст или №текст: локальная RP-ремарка", Formatting.YELLOW);
+        sendHelp(source, "d20, 5d20+3, /roll d20 или /r d20: локальный бросок", Formatting.YELLOW);
         sendHelp(source, "/m игрок сообщение: личное сообщение", Formatting.AQUA);
         sendHelp(source, "/r сообщение: ответ на последнее ЛС", Formatting.AQUA);
         sendHelp(source, "/listen: GM/Admin слышит весь чат; повтор /listen выключает", Formatting.GREEN);
@@ -595,171 +835,11 @@ public class RpChatMod implements ModInitializer {
             raw = player.getGameProfile().getName();
         }
 
-        return parseLegacyText(raw, defaultNameColor(player), includeLegacyCodes);
+        return RpChatTextParser.parse(raw, defaultNameColor(player), includeLegacyCodes);
     }
 
     private static Formatting defaultNameColor(ServerPlayerEntity player) {
         return isGameMasterOrAdmin(player) ? Formatting.RED : Formatting.GREEN;
-    }
-
-    private static MutableText parseLegacyText(String raw, Formatting defaultColor, boolean includeLegacyCodes) {
-        MutableText result = null;
-        StringBuilder segment = new StringBuilder();
-
-        Formatting currentColor = defaultColor;
-        boolean obfuscated = false;
-        boolean bold = false;
-        boolean strikethrough = false;
-        boolean underline = false;
-        boolean italic = false;
-
-        for (int i = 0; i < raw.length(); i++) {
-            char c = raw.charAt(i);
-            if ((c == '&' || c == '§') && i + 1 < raw.length()) {
-                Formatting formatting = legacyFormatting(raw.charAt(i + 1));
-                if (formatting != null) {
-                    result = appendStyledSegment(result, segment, currentColor, obfuscated, bold, strikethrough, underline, italic, includeLegacyCodes);
-
-                    if (formatting == Formatting.RESET) {
-                        currentColor = defaultColor;
-                        obfuscated = false;
-                        bold = false;
-                        strikethrough = false;
-                        underline = false;
-                        italic = false;
-                    } else if (formatting.isColor()) {
-                        currentColor = formatting;
-                        // Vanilla color codes reset active decorations.
-                        obfuscated = false;
-                        bold = false;
-                        strikethrough = false;
-                        underline = false;
-                        italic = false;
-                    } else {
-                        switch (formatting) {
-                            case OBFUSCATED -> obfuscated = true;
-                            case BOLD -> bold = true;
-                            case STRIKETHROUGH -> strikethrough = true;
-                            case UNDERLINE -> underline = true;
-                            case ITALIC -> italic = true;
-                            default -> {
-                            }
-                        }
-                    }
-
-                    i++;
-                    continue;
-                }
-            }
-
-            segment.append(c);
-        }
-
-        result = appendStyledSegment(result, segment, currentColor, obfuscated, bold, strikethrough, underline, italic, includeLegacyCodes);
-        if (result == null) {
-            result = Text.literal(legacyCodes(defaultColor, false, false, false, false, false))
-                    .formatted(defaultColor);
-        }
-
-        // Compatibility mode: some client chat UI mods render Text via getString() and lose JSON styles.
-        // Keeping legacy § codes inside the literal text lets such UIs preserve color too.
-        if (includeLegacyCodes) {
-            result.append(Text.literal("§r").formatted(Formatting.RESET));
-        }
-        return result;
-    }
-
-    private static MutableText appendStyledSegment(MutableText result, StringBuilder segment, Formatting color,
-                                                   boolean obfuscated, boolean bold, boolean strikethrough,
-                                                   boolean underline, boolean italic, boolean includeLegacyCodes) {
-        if (segment.isEmpty()) return result;
-
-        ArrayList<Formatting> formatting = new ArrayList<>();
-        if (color != null) formatting.add(color);
-        if (obfuscated) formatting.add(Formatting.OBFUSCATED);
-        if (bold) formatting.add(Formatting.BOLD);
-        if (strikethrough) formatting.add(Formatting.STRIKETHROUGH);
-        if (underline) formatting.add(Formatting.UNDERLINE);
-        if (italic) formatting.add(Formatting.ITALIC);
-
-        String legacyPrefix = includeLegacyCodes ? legacyCodes(color, obfuscated, bold, strikethrough, underline, italic) : "";
-        MutableText part = Text.literal(legacyPrefix + segment)
-                .formatted(formatting.toArray(new Formatting[0]));
-
-        segment.setLength(0);
-
-        if (result == null) return part;
-        result.append(part);
-        return result;
-    }
-
-    private static String legacyCodes(Formatting color, boolean obfuscated, boolean bold, boolean strikethrough,
-                                      boolean underline, boolean italic) {
-        StringBuilder codes = new StringBuilder();
-        Character colorCode = legacyCode(color);
-        if (colorCode != null) codes.append('§').append(colorCode);
-        if (obfuscated) codes.append("§k");
-        if (bold) codes.append("§l");
-        if (strikethrough) codes.append("§m");
-        if (underline) codes.append("§n");
-        if (italic) codes.append("§o");
-        return codes.toString();
-    }
-
-    private static Formatting legacyFormatting(char code) {
-        return switch (Character.toLowerCase(code)) {
-            case '0' -> Formatting.BLACK;
-            case '1' -> Formatting.DARK_BLUE;
-            case '2' -> Formatting.DARK_GREEN;
-            case '3' -> Formatting.DARK_AQUA;
-            case '4' -> Formatting.DARK_RED;
-            case '5' -> Formatting.DARK_PURPLE;
-            case '6' -> Formatting.GOLD;
-            case '7' -> Formatting.GRAY;
-            case '8' -> Formatting.DARK_GRAY;
-            case '9' -> Formatting.BLUE;
-            case 'a' -> Formatting.GREEN;
-            case 'b' -> Formatting.AQUA;
-            case 'c' -> Formatting.RED;
-            case 'd' -> Formatting.LIGHT_PURPLE;
-            case 'e' -> Formatting.YELLOW;
-            case 'f' -> Formatting.WHITE;
-            case 'k' -> Formatting.OBFUSCATED;
-            case 'l' -> Formatting.BOLD;
-            case 'm' -> Formatting.STRIKETHROUGH;
-            case 'n' -> Formatting.UNDERLINE;
-            case 'o' -> Formatting.ITALIC;
-            case 'r' -> Formatting.RESET;
-            default -> null;
-        };
-    }
-
-    private static Character legacyCode(Formatting formatting) {
-        if (formatting == null) return null;
-        return switch (formatting) {
-            case BLACK -> '0';
-            case DARK_BLUE -> '1';
-            case DARK_GREEN -> '2';
-            case DARK_AQUA -> '3';
-            case DARK_RED -> '4';
-            case DARK_PURPLE -> '5';
-            case GOLD -> '6';
-            case GRAY -> '7';
-            case DARK_GRAY -> '8';
-            case BLUE -> '9';
-            case GREEN -> 'a';
-            case AQUA -> 'b';
-            case RED -> 'c';
-            case LIGHT_PURPLE -> 'd';
-            case YELLOW -> 'e';
-            case WHITE -> 'f';
-            case OBFUSCATED -> 'k';
-            case BOLD -> 'l';
-            case STRIKETHROUGH -> 'm';
-            case UNDERLINE -> 'n';
-            case ITALIC -> 'o';
-            case RESET -> 'r';
-        };
     }
 
     private static boolean isGameMasterOrAdmin(ServerPlayerEntity player) {
@@ -838,6 +918,7 @@ public class RpChatMod implements ModInitializer {
             return new ListenSetting(false, Math.max(1, radius));
         }
     }
+
 
     private static class RpChatConfig {
         private int defaultRadius = 18;

@@ -200,7 +200,7 @@ public class RpChatUiMod implements ModInitializer {
         ServerPlayNetworking.send(player, RpChatUiConstants.MAX_LENGTH_PACKET, buf);
     }
 
-    private static int getEffectiveMaxLength(String playerName) {
+    public static int getEffectiveMaxLength(String playerName) {
         Integer individual = config.playerMaxLengths.get(normalizeName(playerName));
         return clampLength(individual == null ? config.globalMaxLength : individual);
     }

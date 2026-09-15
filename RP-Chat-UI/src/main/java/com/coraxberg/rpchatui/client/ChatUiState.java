@@ -9,6 +9,11 @@ import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
+import net.minecraft.text.OrderedText;
+import net.minecraft.text.Style;
+import net.minecraft.util.Identifier;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.util.Util;
 import org.lwjgl.glfw.GLFW;
 
@@ -72,11 +77,10 @@ public final class ChatUiState {
     }
 
     private static final List<ChatEntry> entries = new ArrayList<>();
-    private static String lastPlain = "";
-    private static long lastMessageMs = 0L;
 
     private static String chatInput = "";
     private static int chatCursor = 0;
+    private static boolean selectingChatInput = false;
     private static int chatSelectionAnchor = 0;
     private static int chatSelectionCursor = 0;
 
@@ -93,12 +97,14 @@ public final class ChatUiState {
 
     private static final List<LinkHitBox> linkHitBoxes = new ArrayList<>();
     private static final List<MessageHitBox> messageHitBoxes = new ArrayList<>();
-    private static final List<FavoriteHitBox> favoriteHitBoxes = new ArrayList<>();
 
     private static boolean copyPopupOpen = false;
     private static int copyPopupX = 0;
     private static int copyPopupY = 0;
     private static String copyPopupText = "";
+    private static String copyPopupBody = "";
+    private static boolean colorPaletteOpen = false;
+    private static final Identifier SUBMIT_TEXT = new Identifier("rpchat", "submit_text");
     private static final List<String> tabCompletions = new ArrayList<>();
     private static String tabCompletionPrefix = "";
     private static int tabCompletionIndex = -1;
@@ -182,7 +188,19 @@ public final class ChatUiState {
     }
 
     private static int getMaxChatLength() {
-        return Math.max(1, serverMaxChatLength);
+        return supportsExtendedChat() ? Math.max(1, serverMaxChatLength) : Math.min(256, Math.max(1, serverMaxChatLength));
+    }
+
+    private static boolean supportsExtendedChat() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        return client != null && client.getNetworkHandler() != null && ClientPlayNetworking.canSend(SUBMIT_TEXT);
+    }
+
+    public static void resetConnection() {
+        serverMaxChatLength = DEFAULT_MAX_CHAT_LENGTH;
+        entries.clear();
+        messageHitBoxes.clear(); linkHitBoxes.clear(); copyPopupOpen = false;
+        messageScrollLines = 0;
     }
 
     public static void captureInitialVanillaChatText(String initialText) {
@@ -246,17 +264,12 @@ public final class ChatUiState {
         String plain = text.getString();
         long now = System.currentTimeMillis();
 
-        if (plain.equals(lastPlain) && now - lastMessageMs < 80L) {
-            return;
-        }
-        lastPlain = plain;
-        lastMessageMs = now;
 
         String category = detectCategory(plain);
         rememberCategory(category);
         maybeCreateAutoTab(category);
 
-        entries.add(new ChatEntry(text, plain, category, now));
+        entries.add(new ChatEntry(text.copy(), plain, category, now, new HashMap<>()));
         if (!isChatUiOpen()) {
             messageScrollLines = 0;
         }
@@ -275,6 +288,7 @@ public final class ChatUiState {
         int screenHeight = client.getWindow().getScaledHeight();
         if (screenWidth != layoutScreenWidth || screenHeight != layoutScreenHeight) {
             // Mouse offsets are in GUI pixels and become invalid when the viewport changes.
+            selectingChatInput = false;
             draggingWindow = resizing = draggingTabSettings = resizingTabSettings = false;
             draggingChatSettings = resizingChatSettings = draggingMessageScrollbar = false;
             draggingTabIndex = -1;
@@ -300,14 +314,14 @@ public final class ChatUiState {
         drawMessages(context, panelVisible, chatOpen);
 
         if (chatOpen) {
-            drawChatInput(context);
+            drawChatInput(context, mouseX, mouseY);
         }
 
         if (chatOpen && config.searchOpen) {
             drawSearchPanel(context, mouseX, mouseY);
         }
 
-        if (!chatOpen || (!tabSettingsOpen && !chatSettingsOpen && !copyPopupOpen)) return;
+        if (!chatOpen || (!tabSettingsOpen && !chatSettingsOpen && !copyPopupOpen && !colorPaletteOpen)) return;
         // Flush queued text before overlays and give their backgrounds a real
         // depth above the main window. Paint order alone mixes GUI/font batches.
         context.draw();
@@ -323,9 +337,8 @@ public final class ChatUiState {
         context.draw();
         context.getMatrices().translate(0, 0, 100);
 
-        if (chatOpen && copyPopupOpen) {
-            drawCopyPopup(context, mouseX, mouseY);
-        }
+        if (chatOpen && copyPopupOpen) drawCopyPopup(context, mouseX, mouseY);
+        if (chatOpen && colorPaletteOpen) drawColorPalette(context, mouseX, mouseY);
         context.getMatrices().pop();
     }
 
@@ -347,6 +360,7 @@ public final class ChatUiState {
         context.fill(x + w - 2, y, x + w, y + h, 0xAA000000);
         context.fill(x + 2, y + headerHeight(), x + w - 2, y + headerHeight() + 1, 0xAA7580A0);
 
+        drawWoodFrame(context, x, y, w, h);
         drawTabs(context, mouseX, mouseY);
         drawSideButtons(context, mouseX, mouseY);
 
@@ -423,13 +437,35 @@ public final class ChatUiState {
 
     private static void drawButton(DrawContext context, int x, int y, int w, int h, String text, boolean hover, boolean activeGlow) {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
-        int bg = activeGlow ? withAlpha(lighten(config.tintColor(), 0x33), 220) : (hover ? 0xDD3F4A69 : 0xCC202638);
+        int bg = activeGlow ? withAlpha(lighten(config.tintColor(), 0x33), 220)
+                : woodTheme() ? withAlpha(lighten(config.tintColor(), hover ? 0x24 : 0x0A), 230) : (hover ? 0xDD3F4A69 : 0xCC202638);
         context.fill(x, y, x + w, y + h, bg);
-        context.fill(x, y, x + w, y + 1, hover ? 0xFFDCE2FF : 0xFF657089);
+        context.fill(x, y, x + w, y + 1, woodTheme() ? 0xFFD6B678 : hover ? 0xFFDCE2FF : 0xFF657089);
         context.fill(x, y, x + 1, y + h, 0x663A4058);
         context.fill(x + w - 1, y, x + w, y + h, 0xDD000000);
         context.fill(x, y + h - 1, x + w, y + h, 0xDD000000);
         context.drawCenteredTextWithShadow(tr, fit(text, Math.max(1, w - 8)), x + w / 2, y + (h - 8) / 2, 0xFFFFFFFF);
+    }
+
+    private static boolean woodTheme() {
+        return config.tint.equals("oak") || config.tint.equals("walnut") || config.tint.equals("elven");
+    }
+
+    private static void drawWoodFrame(DrawContext context, int x, int y, int w, int h) {
+        if (!woodTheme()) return;
+        int trim = config.tint.equals("elven") ? 0xFF9CBD91 : config.tint.equals("walnut") ? 0xFFA6865D : 0xFFC4A265;
+        context.drawBorder(x + 1, y + 1, w - 2, h - 2, trim);
+        // Static grain is restricted to the header and frame, leaving text clear.
+        for (int i = 0; i < 5; i++) {
+            int yy = y + 3 + i * 4;
+            context.fill(x + 5, yy, x + w - 5, yy + 1, 0x22301908);
+        }
+        for (int xx : new int[]{x + 3, x + w - 7}) {
+            for (int yy : new int[]{y + 3, y + h - 7}) {
+                context.fill(xx, yy, xx + 4, yy + 4, trim);
+                context.fill(xx + 1, yy + 1, xx + 3, yy + 3, 0xFF352817);
+            }
+        }
     }
 
     private static void drawMessages(DrawContext context, boolean panelVisible, boolean chatOpen) {
@@ -437,13 +473,24 @@ public final class ChatUiState {
         TextRenderer tr = client.textRenderer;
         linkHitBoxes.clear();
         messageHitBoxes.clear();
-        favoriteHitBoxes.clear();
 
         int x = config.x + PAD;
         int yTop = config.y + headerHeight() + PAD;
         int yBottom = config.y + config.height - (chatOpen ? getInputAreaHeight() : PAD);
-        int maxWidth = Math.max(20, (int) ((config.width - PAD * 2 - 8) / config.textScale));
+        int screenW = client.getWindow().getScaledWidth();
+        int hudTop = client.getWindow().getScaledHeight() - 66;
+        if (client.player != null) {
+            int healthRows = (int) Math.ceil((client.player.getMaxHealth() + client.player.getAbsorptionAmount()) / 20.0);
+            hudTop -= Math.max(0, healthRows - 1) * 10;
+        }
+        int screenTextWidth = config.width - PAD * 2 - 8;
+        if (!chatOpen && ChatLayout.hudLineWidth(x, screenTextWidth, screenW, yBottom - 12, 12, hudTop)
+                < Math.min(screenTextWidth, (int) (100 * config.textScale))) {
+            yBottom = Math.min(yBottom, hudTop);
+        }
+        int maxWidth = Math.max(20, (int) (screenTextWidth / config.textScale));
         int lineHeight = Math.max(8, (int) Math.ceil(10 * config.textScale));
+        if (!chatOpen) yTop = Math.min(yTop, Math.max(4, yBottom - 3 * lineHeight));
         int visibleLines = Math.max(1, (yBottom - yTop) / lineHeight);
         ChatTab tab = selectedTab();
         long now = System.currentTimeMillis();
@@ -454,9 +501,12 @@ public final class ChatUiState {
         if (isFavoritesTab(tab)) {
             for (int i = config.favoriteMessages.size() - 1; i >= 0; i--) {
                 FavoriteMessage favorite = config.favoriteMessages.get(i);
-                List<String> wrapped = wrapPlain(displayText(favorite.text), tr, maxWidth);
+                int wrapWidth = chatOpen ? maxWidth : Math.max(20, (int) (ChatLayout.hudLineWidth(x, screenTextWidth,
+                        screenW, yBottom - (allLines.size() + 1) * lineHeight, lineHeight, hudTop) / config.textScale));
+                List<OrderedText> wrapped = tr.wrapLines(Text.literal(favorite.text), wrapWidth);
                 for (int j = wrapped.size() - 1; j >= 0; j--) {
-                    allLines.add(new DisplayLine(wrapped.get(j), CAT_FAVORITES, 255, -1, i, favorite.text));
+                    allLines.add(new DisplayLine(wrapped.get(j), orderedPlain(wrapped.get(j)), CAT_FAVORITES, 255, -1, i,
+                            favorite.text, favorite.body == null ? favorite.text : favorite.body));
                 }
             }
         } else {
@@ -475,9 +525,13 @@ public final class ChatUiState {
 
                 if (!tabAccepts(tab, entry.category)) continue;
 
-                List<String> wrapped = wrapPlain(displayText(entry.plain), tr, maxWidth);
+                int wrapWidth = chatOpen ? maxWidth : Math.max(20, (int) (ChatLayout.hudLineWidth(x, screenTextWidth,
+                        screenW, yBottom - (allLines.size() + 1) * lineHeight, lineHeight, hudTop) / config.textScale));
+                if (entry.wrapped.size() > 4) entry.wrapped.clear();
+                List<OrderedText> wrapped = entry.wrapped.computeIfAbsent(wrapWidth, w -> tr.wrapLines(entry.text, w));
+                String body = ChatMessageContent.body(entry.text);
                 for (int j = wrapped.size() - 1; j >= 0; j--) {
-                    allLines.add(new DisplayLine(wrapped.get(j), entry.category, alpha, i, -1, entry.plain));
+                    allLines.add(new DisplayLine(wrapped.get(j), orderedPlain(wrapped.get(j)), entry.category, alpha, i, -1, entry.plain, body));
                 }
             }
         }
@@ -500,6 +554,7 @@ public final class ChatUiState {
         }
 
         int drawY = yBottom - lineHeight;
+        context.enableScissor(x, yTop, config.x + config.width - 8, Math.max(yTop, yBottom));
         context.getMatrices().push();
         context.getMatrices().scale(config.textScale, config.textScale, 1.0F);
 
@@ -511,22 +566,23 @@ public final class ChatUiState {
             int sy = (int) (drawY / config.textScale);
             int color = withAlpha(categoryColor(line.category), line.alpha);
             context.drawTextWithShadow(tr, line.text, sx, sy, color);
-            drawLinksForLine(context, tr, line.text, sx, sy, line.alpha);
+            // Original OrderedText retains link styles and all player formatting.
 
             int screenY = (int) (sy * config.textScale);
             int screenX = (int) (sx * config.textScale);
             int screenLineH = Math.max(10, (int) (11 * config.textScale));
-            messageHitBoxes.add(new MessageHitBox(config.x + PAD, screenY - 2, config.x + config.width - 8, screenY + screenLineH, line.fullText));
+            collectMessageWords(tr, line, sx, sy);
 
             if (!query.isBlank() && line.entryIndex == currentSearchEntryIndex()) {
-                drawSearchHighlights(context, tr, line.text, query, sx, sy);
+                drawSearchHighlights(context, tr, line.plain, query, sx, sy);
             }
-            collectLinksForLine(tr, line.text, sx, sy, config.textScale);
+            collectLinksForLine(tr, line.plain, sx, sy, config.textScale);
 
             drawY -= lineHeight;
         }
 
         context.getMatrices().pop();
+        context.disableScissor();
 
         if (panelVisible && entries.isEmpty()) {
             context.drawTextWithShadow(tr, "Сообщений пока нет", x, yTop + 4, 0xFFB8B8C8);
@@ -535,6 +591,27 @@ public final class ChatUiState {
         if (chatOpen && maxScrollLines > 0) {
             drawMessageScrollbar(context, yTop, yBottom);
         }
+    }
+
+    private static String orderedPlain(OrderedText text) {
+        StringBuilder plain = new StringBuilder();
+        text.accept((index, style, codePoint) -> { plain.appendCodePoint(codePoint); return true; });
+        return plain.toString();
+    }
+
+    private static void collectMessageWords(TextRenderer tr, DisplayLine line, int sx, int sy) {
+        if (!isChatUiOpen()) return;
+        int[] advance = {0};
+        line.text.accept((index, style, cp) -> {
+            int w = tr.getWidth(Text.literal(new String(Character.toChars(cp))).setStyle(style));
+            if (!Character.isWhitespace(cp) && w > 0) {
+                messageHitBoxes.add(new MessageHitBox((int) ((sx + advance[0]) * config.textScale),
+                        (int) (sy * config.textScale), (int) Math.ceil((sx + advance[0] + w) * config.textScale),
+                        (int) Math.ceil((sy + 9) * config.textScale), line.fullText, line.copyText));
+            }
+            advance[0] += w;
+            return true;
+        });
     }
 
     private static void drawMessageScrollbar(DrawContext context, int yTop, int yBottom) {
@@ -577,22 +654,6 @@ public final class ChatUiState {
 
     private static final Pattern URL_PATTERN = Pattern.compile("(https?://[^\\s]+|www\\.[^\\s]+)");
 
-    private static void drawLinksForLine(DrawContext context, TextRenderer tr, String line, int sx, int sy, int alpha) {
-        Matcher matcher = URL_PATTERN.matcher(line);
-        int linkColor = withAlpha(0x55AAFF, alpha);
-
-        while (matcher.find()) {
-            String before = line.substring(0, matcher.start());
-            String link = line.substring(matcher.start(), matcher.end());
-
-            int x0 = sx + tr.getWidth(before);
-            int x1 = x0 + tr.getWidth(link);
-
-            context.drawTextWithShadow(tr, link, x0, sy, linkColor);
-            context.fill(x0, sy + 10, x1, sy + 11, linkColor);
-        }
-    }
-
     private static void collectLinksForLine(TextRenderer tr, String line, int scaledX, int scaledY, float scale) {
         if (!isChatUiOpen()) return;
         Matcher matcher = URL_PATTERN.matcher(line);
@@ -624,37 +685,6 @@ public final class ChatUiState {
         return false;
     }
 
-    private static String displayText(String text) {
-        return text == null ? "" : text;
-    }
-
-    private static List<String> wrapPlain(String text, TextRenderer tr, int maxWidth) {
-        List<String> out = new ArrayList<>();
-        if (text == null || text.isEmpty()) {
-            out.add("");
-            return out;
-        }
-
-        String remaining = text;
-        while (!remaining.isEmpty()) {
-            int best = 1;
-            for (int i = 1; i <= remaining.length(); i++) {
-                if (tr.getWidth(remaining.substring(0, i)) > maxWidth) break;
-                best = i;
-            }
-
-            if (best < remaining.length()) {
-                int space = remaining.lastIndexOf(' ', best);
-                if (space > 8) best = space;
-            }
-
-            out.add(remaining.substring(0, best).stripLeading());
-            remaining = remaining.substring(best).stripLeading();
-        }
-
-        return out;
-    }
-
     private static void drawSearchHighlights(DrawContext context, TextRenderer tr, String line, String query, int sx, int sy) {
         String lower = line.toLowerCase(Locale.ROOT);
         String q = query.toLowerCase(Locale.ROOT);
@@ -672,15 +702,6 @@ public final class ChatUiState {
 
             idx = lower.indexOf(q, idx + Math.max(1, q.length()));
         }
-    }
-
-    private static int getSearchAnchorEndIndex(ChatTab tab) {
-        if (!config.searchOpen || searchInput.strip().isEmpty()) return -1;
-        List<Integer> hits = searchHits(tab);
-        if (hits.isEmpty()) return -1;
-        searchHit = Math.max(0, Math.min(searchHit, hits.size() - 1));
-        int hitEntry = hits.get(searchHit);
-        return Math.min(entries.size() - 1, hitEntry + 5);
     }
 
     private static int currentSearchEntryIndex() {
@@ -731,54 +752,108 @@ public final class ChatUiState {
         return Math.max(20, config.width - PAD * 2 - counterWidth - 14);
     }
 
-    private static int getInputAreaHeight() {
+    private static List<ChatInputLayout.Line> inputLines() {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
-        int maxWidth = inputTextWidth();
-        int lines = Math.max(1, wrapPlain(chatInput.isEmpty() ? " " : chatInput, tr, maxWidth).size());
-        lines = ChatLayout.inputLines(config.height, headerHeight(), lines);
-        return 18 + lines * 12;
+        return ChatInputLayout.wrap(chatInput, inputTextWidth(), tr::getWidth);
     }
 
-    private static void drawChatInput(DrawContext context) {
+    private static int getInputAreaHeight() {
+        int lines = ChatLayout.inputLines(config.height, headerHeight(), inputLines().size());
+        return 38 + lines * 12;
+    }
+
+    private static void drawChatInput(DrawContext context, int mouseX, int mouseY) {
         TextRenderer tr = MinecraftClient.getInstance().textRenderer;
         int x = config.x + PAD;
         int areaH = getInputAreaHeight();
-        int y = config.y + config.height - areaH + 5;
-        int w = config.width - PAD * 2;
-        int boxH = areaH - 10;
-
-        drawTextBox(context, x, y, w, boxH, focus == Focus.CHAT_INPUT);
-
-        List<String> lines = wrapPlain(chatInput.isEmpty() ? " " : chatInput, tr, inputTextWidth());
-        int yy = y + 5;
-        int remainingCursor = chatCursor;
-        int remainingAnchor = chatSelectionAnchor;
-        int remainingSelectionCursor = chatSelectionCursor;
-        int consumed = 0;
-
-        int visible = (areaH - 18) / 12;
-        int firstLine = ChatLayout.firstInputLine(lines.stream().mapToInt(String::length).toArray(), chatCursor, visible);
-        context.enableScissor(x + 2, y + 2, x + w - 2, y + boxH - 1);
-        for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {
-            String line = lines.get(lineIndex);
-            int lineLen = line.length();
-            if (lineIndex < firstLine) { consumed += lineLen; continue; }
-            if (lineIndex >= firstLine + visible) break;
-            int localCursor = Math.max(0, Math.min(lineLen, remainingCursor - consumed));
-            int localAnchor = Math.max(0, Math.min(lineLen, remainingAnchor - consumed));
-            int localSelCursor = Math.max(0, Math.min(lineLen, remainingSelectionCursor - consumed));
-
-            drawSelectableText(context, tr, line, localCursor, localAnchor, localSelCursor,
-                    x + 5, yy, focus == Focus.CHAT_INPUT && remainingCursor >= consumed && remainingCursor <= consumed + lineLen,
-                    0xFFFFFFFF);
-
-            yy += 12;
-            consumed += lineLen;
+        int toolbarY = config.y + config.height - areaH + 3;
+        String[] labels = {"B", "I", "U", "S", "Цвет", "Сброс"};
+        for (int i = 0, bx = x; i < labels.length; i++) {
+            int bw = i < 4 ? 22 : 44;
+            drawButton(context, bx, toolbarY, bw, 17, labels[i], isMouseIn(mouseX, mouseY, bx, toolbarY, bw, 17), false);
+            bx += bw + 3;
         }
-
+        int y = toolbarY + 22;
+        int w = config.width - PAD * 2;
+        int boxH = areaH - 30;
+        drawTextBox(context, x, y, w, boxH, focus == Focus.CHAT_INPUT);
+        List<ChatInputLayout.Line> lines = inputLines();
+        int visible = Math.max(1, (areaH - 38) / 12);
+        int cursorLine = ChatInputLayout.cursorLine(lines, chatCursor);
+        int firstLine = Math.max(0, cursorLine - visible + 1);
+        int yy = y + 5;
+        context.enableScissor(x + 2, y + 2, x + 5 + inputTextWidth(), y + boxH - 1);
+        for (int i = firstLine; i < Math.min(lines.size(), firstLine + visible); i++) {
+            ChatInputLayout.Line line = lines.get(i);
+            int length = line.text().length();
+            int anchor = Math.max(0, Math.min(length, chatSelectionAnchor - line.start()));
+            int selection = Math.max(0, Math.min(length, chatSelectionCursor - line.start()));
+            // Draw selection on every affected line, cursor on its own line only.
+            if (focus == Focus.CHAT_INPUT && anchor != selection) {
+                int a = Math.min(anchor, selection), b = Math.max(anchor, selection);
+                context.fill(x + 5 + tr.getWidth(line.text().substring(0, a)), yy - 1,
+                        x + 5 + tr.getWidth(line.text().substring(0, b)), yy + 10, 0xAA3F4A69);
+            }
+            context.drawTextWithShadow(tr, Text.literal(line.text()), x + 5, yy, 0xFFFFFFFF);
+            if (focus == Focus.CHAT_INPUT && i == cursorLine && blink()) {
+                int caret = Math.max(0, Math.min(length, chatCursor - line.start()));
+                int cx = x + 5 + tr.getWidth(line.text().substring(0, caret));
+                context.fill(cx, yy - 1, cx + 1, yy + 10, 0xFFFFFFFF);
+            }
+            yy += 12;
+        }
+        context.draw();
         context.disableScissor();
         String count = chatInput.length() + "/" + getMaxChatLength();
-        context.drawTextWithShadow(tr, count, x + w - tr.getWidth(count) - 4, y + boxH - 12, chatInput.length() >= getMaxChatLength() ? 0xFFFF9090 : 0xFF9AA4BD);
+        context.drawTextWithShadow(tr, count, x + w - tr.getWidth(count) - 4, y + boxH - 12,
+                chatInput.length() >= getMaxChatLength() ? 0xFFFF9090 : 0xFF9AA4BD);
+    }
+
+    private static boolean handleFormatClick(int mx, int my) {
+        int x = config.x + PAD, y = config.y + config.height - getInputAreaHeight() + 3;
+        String[] codes = {"&l", "&o", "&n", "&m", "", "&r"};
+        for (int i = 0; i < codes.length; i++) {
+            int w = i < 4 ? 22 : 44;
+            if (isMouseIn(mx, my, x, y, w, 17)) {
+                if (i == 4) colorPaletteOpen = !colorPaletteOpen;
+                else applyFormatting(codes[i]);
+                return true;
+            }
+            x += w + 3;
+        }
+        return false;
+    }
+
+    private static void applyFormatting(String code) {
+        int a = Math.min(chatSelectionAnchor, chatSelectionCursor), b = Math.max(chatSelectionAnchor, chatSelectionCursor);
+        String replacement = code + chatInput.substring(a, b) + (a == b ? "" : "&r");
+        if (chatInput.length() - (b - a) + replacement.length() > getMaxChatLength()) return;
+        insertChat(replacement);
+        focus = Focus.CHAT_INPUT;
+        colorPaletteOpen = false;
+    }
+
+    private static final int[] FORMAT_COLORS = {0x000000,0x0000AA,0x00AA00,0x00AAAA,0xAA0000,0xAA00AA,0xFFAA00,0xAAAAAA,
+            0x555555,0x5555FF,0x55FF55,0x55FFFF,0xFF5555,0xFF55FF,0xFFFF55,0xFFFFFF};
+    private static void drawColorPalette(DrawContext context, int mx, int my) {
+        int x = config.x + PAD, y = config.y + config.height - getInputAreaHeight() - 41;
+        context.fill(x, y, x + 180, y + 40, 0xFF171A22);
+        for (int i = 0; i < 16; i++) {
+            int px = x + 3 + (i % 8) * 22, py = y + 3 + (i / 8) * 18;
+            context.fill(px, py, px + 18, py + 14, 0xFF000000 | FORMAT_COLORS[i]);
+            if (isMouseIn(mx, my, px, py, 18, 14)) context.drawBorder(px - 1, py - 1, 20, 16, 0xFFFFFFFF);
+        }
+    }
+    private static boolean handleColorClick(int mx, int my) {
+        if (!colorPaletteOpen) return false;
+        int x = config.x + PAD, y = config.y + config.height - getInputAreaHeight() - 41;
+        for (int i = 0; i < 16; i++) {
+            if (isMouseIn(mx, my, x + 3 + (i % 8) * 22, y + 3 + (i / 8) * 18, 18, 14)) {
+                applyFormatting("&" + "0123456789abcdef".charAt(i)); return true;
+            }
+        }
+        colorPaletteOpen = false;
+        return true;
     }
 
     private static void drawTabSettingsWindow(DrawContext context, int mouseX, int mouseY) {
@@ -833,20 +908,24 @@ public final class ChatUiState {
         drawPanelShell(context, x, y, w, h, "Настройки чата", mouseX, mouseY);
 
         int cy = y + 30;
-        context.drawTextWithShadow(tr, "Оттенок", x + 12, cy, 0xFFD9D9E6);
+        context.drawTextWithShadow(tr, "Оформление", x + 12, cy, 0xFFD9D9E6);
         drawButton(context, x + 12, cy + 14, 30, 20, "<", isMouseIn(mouseX, mouseY, x + 12, cy + 14, 30, 20), false);
         drawButton(context, x + 48, cy + 14, w - 96, 20, tintName(config.tint), false, true);
         drawButton(context, x + w - 42, cy + 14, 30, 20, ">", isMouseIn(mouseX, mouseY, x + w - 42, cy + 14, 30, 20), false);
 
-        cy += 42;
+        cy += 36;
         context.drawTextWithShadow(tr, "Прозрачность: " + config.opacity, x + 12, cy, 0xFFD9D9E6);
         drawButton(context, x + 12, cy + 14, 30, 20, "−", isMouseIn(mouseX, mouseY, x + 12, cy + 14, 30, 20), false);
         drawButton(context, x + w - 42, cy + 14, 30, 20, "+", isMouseIn(mouseX, mouseY, x + w - 42, cy + 14, 30, 20), false);
 
-        cy += 42;
+        cy += 36;
         drawButton(context, x + 12, cy, w - 24, 20,
                 (config.alwaysShowWindow ? "✓ " : "— ") + "Всегда показывать окно",
                 isMouseIn(mouseX, mouseY, x + 12, cy, w - 24, 20), config.alwaysShowWindow);
+
+        drawButton(context, x + 12, cy + 24, w - 24, 20,
+                (config.closeAfterSend ? "✓ " : "— ") + "Закрывать после отправки",
+                isMouseIn(mouseX, mouseY, x + 12, cy + 24, w - 24, 20), config.closeAfterSend);
 
         drawButton(context, x + 12, y + h - 28, 96, 20, "Закрыть", isMouseIn(mouseX, mouseY, x + 12, y + h - 28, 96, 20), false);
         drawResizeCorner(context, x, y, w, h);
@@ -863,6 +942,7 @@ public final class ChatUiState {
         context.fill(x, y, x + 2, y + h, 0xAA000000);
         context.fill(x + w - 2, y, x + w, y + h, 0xAA000000);
 
+        drawWoodFrame(context, x, y, w, h);
         context.drawTextWithShadow(tr, title, x + 10, y + 8, 0xFFFFFFFF);
         drawButton(context, x + w - 24, y + 4, 18, 16, "×", isMouseIn(mouseX, mouseY, x + w - 24, y + 4, 18, 16), false);
     }
@@ -970,17 +1050,22 @@ public final class ChatUiState {
     }
 
     public static boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 1 && isChatUiOpen() && !tabSettingsOpen && !chatSettingsOpen) {
+            copyPopupOpen = false;
+            return clickMessage((int) mouseX, (int) mouseY);
+        }
         if (button != 0) return false;
         MinecraftClient client = MinecraftClient.getInstance();
         if (!isChatUiOpen()) return false;
 
         int mx = (int) mouseX;
         int my = (int) mouseY;
+        if (handleColorClick(mx, my)) return true;
         if (handleCopyPopupClick(mx, my)) return true;
         if (tabSettingsOpen && handleTabSettingsClick(mx, my)) return true;
         if (chatSettingsOpen && handleChatSettingsClick(mx, my)) return true;
         if (config.searchOpen && handleSearchClick(mx, my)) return true;
-        if (clickFavorite(mx, my)) return true;
+        if (handleFormatClick(mx, my)) return true;
         if (clickLink(mx, my)) return true;
         if (clickMessage(mx, my)) return true;
         if (startMessageScrollbarDrag(mx, my)) return true;
@@ -1033,9 +1118,10 @@ public final class ChatUiState {
             return true;
         }
 
-        if (isMouseIn(mx, my, config.x + PAD, config.y + config.height - getInputAreaHeight() + 5, config.width - PAD * 2, getInputAreaHeight() - 10)) {
+        if (isMouseIn(mx, my, config.x + PAD, config.y + config.height - getInputAreaHeight() + 25, config.width - PAD * 2, getInputAreaHeight() - 30)) {
             focus = Focus.CHAT_INPUT;
-            chatCursor = chatInput.length();
+            chatCursor = chatCursorAt(mx, my);
+            selectingChatInput = true;
             setChatSelection(chatCursor, chatCursor);
             return true;
         }
@@ -1070,6 +1156,17 @@ public final class ChatUiState {
 
         focus = Focus.CHAT_INPUT;
         return true;
+    }
+
+    private static int chatCursorAt(int mx, int my) {
+        List<ChatInputLayout.Line> lines = inputLines();
+        int visible = Math.max(1, (getInputAreaHeight() - 38) / 12);
+        int first = Math.max(0, ChatInputLayout.cursorLine(lines, chatCursor) - visible + 1);
+        int row = first + Math.max(0, (my - (config.y + config.height - getInputAreaHeight() + 30)) / 12);
+        ChatInputLayout.Line line = lines.get(Math.min(row, lines.size() - 1));
+        int local = 0, relX = mx - (config.x + PAD + 5);
+        while (local < line.text().length() && MinecraftClient.getInstance().textRenderer.getWidth(line.text().substring(0, local + 1)) <= relX) local++;
+        return line.start() + local;
     }
 
     private static boolean handleTabSettingsClick(int mx, int my) {
@@ -1186,7 +1283,7 @@ public final class ChatUiState {
             return true;
         }
 
-        cy += 42;
+        cy += 36;
         if (isMouseIn(mx, my, x + 12, cy + 14, 30, 20)) {
             config.opacity = Math.max(40, config.opacity - 15);
             saveConfig();
@@ -1198,9 +1295,15 @@ public final class ChatUiState {
             return true;
         }
 
-        cy += 42;
+        cy += 36;
         if (isMouseIn(mx, my, x + 12, cy, w - 24, 20)) {
             config.alwaysShowWindow = !config.alwaysShowWindow;
+            saveConfig();
+            return true;
+        }
+
+        if (isMouseIn(mx, my, x + 12, cy + 24, w - 24, 20)) {
+            config.closeAfterSend = !config.closeAfterSend;
             saveConfig();
             return true;
         }
@@ -1257,6 +1360,12 @@ public final class ChatUiState {
         if (button != 0) return false;
         int mx = (int) mouseX;
         int my = (int) mouseY;
+
+        if (selectingChatInput) {
+            chatCursor = chatCursorAt(mx, my);
+            setChatSelection(chatSelectionAnchor, chatCursor);
+            return true;
+        }
 
         if (draggingMessageScrollbar) {
             updateMessageScrollbarDrag(my);
@@ -1374,6 +1483,7 @@ public final class ChatUiState {
     public static boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (button != 0) return false;
 
+        if (selectingChatInput) { selectingChatInput = false; return true; }
         boolean handled = draggingWindow || resizing || draggingTabIndex >= 0 || draggingTabSettings || resizingTabSettings || draggingChatSettings || resizingChatSettings || draggingMessageScrollbar;
         PreferredGeometry visible = PreferredGeometry.capture();
         if (preferredGeometry == null) preferredGeometry = visible;
@@ -1440,6 +1550,8 @@ public final class ChatUiState {
         boolean shift = (modifiers & GLFW.GLFW_MOD_SHIFT) != 0;
 
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            if (colorPaletteOpen) { colorPaletteOpen = false; return true; }
+            if (copyPopupOpen) { copyPopupOpen = false; return true; }
             if (tabSettingsOpen) {
                 tabSettingsOpen = false;
                 focus = Focus.CHAT_INPUT;
@@ -1465,6 +1577,10 @@ public final class ChatUiState {
             return true;
         }
 
+        if (ctrl && focus == Focus.CHAT_INPUT && (keyCode == GLFW.GLFW_KEY_B || keyCode == GLFW.GLFW_KEY_I || keyCode == GLFW.GLFW_KEY_U)) {
+            applyFormatting(keyCode == GLFW.GLFW_KEY_B ? "&l" : keyCode == GLFW.GLFW_KEY_I ? "&o" : "&n");
+            return true;
+        }
         if (ctrl && keyCode == GLFW.GLFW_KEY_Z && focus == Focus.CHAT_INPUT) {
             undoChatInput();
             return true;
@@ -1552,18 +1668,28 @@ public final class ChatUiState {
     private static void sendChatInput() {
         MinecraftClient client = MinecraftClient.getInstance();
         String msg = chatInput.strip();
-        if (msg.isEmpty()) {
-            client.setScreen(null);
+        if (msg.isEmpty()) return;
+
+        if (client.player == null || client.player.networkHandler == null) return;
+        if (msg.length() > getMaxChatLength()) {
+            addMessage(Text.literal("Сообщение превышает лимит " + getMaxChatLength()).formatted(net.minecraft.util.Formatting.RED));
             return;
         }
-
-        if (client.player != null && client.player.networkHandler != null) {
-            if (msg.startsWith("/")) {
-                client.player.networkHandler.sendChatCommand(msg.substring(1));
-            } else {
-                client.player.networkHandler.sendChatMessage(msg);
-            }
-        }
+        if (supportsExtendedChat() && !msg.startsWith("/")) {
+            var payload = PacketByteBufs.create();
+            payload.writeString(msg, 4096);
+            ClientPlayNetworking.send(SUBMIT_TEXT, payload);
+        } else if (msg.startsWith("/")) {
+            if (msg.length() > 256) {
+                if (supportsExtendedChat() && msg.matches("(?is)^/(?:m|me|r|roll|rename) .+")) {
+                    var payload = PacketByteBufs.create(); payload.writeString(msg, 4096);
+                    ClientPlayNetworking.send(SUBMIT_TEXT, payload);
+                } else {
+                    addMessage(Text.literal("Эта команда ограничена 256 символами.").formatted(net.minecraft.util.Formatting.RED));
+                    return;
+                }
+            } else client.player.networkHandler.sendChatCommand(msg.substring(1));
+        } else client.player.networkHandler.sendChatMessage(msg);
 
         if (sentHistory.isEmpty() || !sentHistory.get(sentHistory.size() - 1).equals(msg)) {
             sentHistory.add(msg);
@@ -1576,6 +1702,7 @@ public final class ChatUiState {
         setChatSelection(0, 0);
         resetTabCompletion();
         focus = Focus.CHAT_INPUT;
+        if (config.closeAfterSend) client.setScreen(null);
     }
 
     private static void completeCommand() {
@@ -1978,7 +2105,7 @@ public final class ChatUiState {
         int h = 46;
 
         if (isMouseIn(mx, my, copyPopupX + 4, copyPopupY + 4, w - 8, 18)) {
-            MinecraftClient.getInstance().keyboard.setClipboard(copyPopupText == null ? "" : copyPopupText);
+            MinecraftClient.getInstance().keyboard.setClipboard(copyPopupBody == null ? "" : copyPopupBody);
             copyPopupOpen = false;
             return true;
         }
@@ -2004,17 +2131,8 @@ public final class ChatUiState {
                 copyPopupX = mx + 8;
                 copyPopupY = box.y0 - 50;
                 copyPopupText = box.text;
+                copyPopupBody = box.body;
                 clampCopyPopupToScreen(132, 46);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean clickFavorite(int mx, int my) {
-        for (FavoriteHitBox box : favoriteHitBoxes) {
-            if (mx >= box.x0 && mx <= box.x1 && my >= box.y0 && my <= box.y1) {
-                toggleFavorite(box.text, box.favoriteIndex);
                 return true;
             }
         }
@@ -2040,6 +2158,7 @@ public final class ChatUiState {
 
         FavoriteMessage favorite = new FavoriteMessage();
         favorite.text = text;
+        favorite.body = Objects.equals(text, copyPopupText) ? copyPopupBody : text;
         favorite.timeMs = System.currentTimeMillis();
         config.favoriteMessages.add(favorite);
         openFavoritesTab();
@@ -2343,7 +2462,7 @@ public final class ChatUiState {
     }
 
     private static void cycleTint(int delta) {
-        String[] tints = {"blue", "purple", "green", "red", "gray"};
+        String[] tints = {"blue", "purple", "green", "red", "gray", "oak", "walnut", "elven"};
         int idx = 0;
         for (int i = 0; i < tints.length; i++) {
             if (Objects.equals(config.tint, tints[i])) idx = i;
@@ -2358,6 +2477,9 @@ public final class ChatUiState {
             case "green" -> "зелёный";
             case "red" -> "красный";
             case "gray" -> "серый";
+            case "oak" -> "Дуб и латунь";
+            case "walnut" -> "Тёмный орех";
+            case "elven" -> "Эльфийское дерево";
             default -> "синий";
         };
     }
@@ -2447,25 +2569,24 @@ public final class ChatUiState {
     private record InputSnapshot(String text, int cursor, int selectionAnchor, int selectionCursor) {
     }
 
-    private record ChatEntry(Text text, String plain, String category, long timeMs) {
+    private record ChatEntry(Text text, String plain, String category, long timeMs, Map<Integer, List<OrderedText>> wrapped) {
     }
 
-    private record DisplayLine(String text, String category, int alpha, int entryIndex, int favoriteIndex, String fullText) {
+    private record DisplayLine(OrderedText text, String plain, String category, int alpha, int entryIndex, int favoriteIndex, String fullText, String copyText) {
     }
 
     private record LinkHitBox(int x0, int y0, int x1, int y1, String url) {
     }
 
-    private record MessageHitBox(int x0, int y0, int x1, int y1, String text) {
+    private record MessageHitBox(int x0, int y0, int x1, int y1, String text, String body) {
     }
 
-    private record FavoriteHitBox(int x0, int y0, int x1, int y1, String text, int favoriteIndex) {
-    }
 
     private record TabHit(int index, boolean close) {
     }
     public static class FavoriteMessage {
         public String text = "";
+        public String body = null;
         public long timeMs = 0L;
     }
 
@@ -2486,6 +2607,7 @@ public final class ChatUiState {
         public boolean autoCreateTabs = true;
         public boolean searchOpen = false;
         public boolean alwaysShowWindow = false;
+        public boolean closeAfterSend = false;
         public String tint = "blue";
         public int opacity = 181;
         public int selectedTab = 0;
@@ -2505,6 +2627,9 @@ public final class ChatUiState {
                 case "green" -> 0x1F3028;
                 case "red" -> 0x382020;
                 case "gray" -> 0x252832;
+                case "oak" -> 0x493018;
+                case "walnut" -> 0x291A16;
+                case "elven" -> 0x24342B;
                 default -> 0x1B2030;
             };
         }

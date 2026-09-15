@@ -20,7 +20,7 @@ public final class ChatLayoutCheck {
                         int header = ChatLayout.header(r.width(), search);
                         int lines = ChatLayout.inputLines(r.height(), header, 100);
                         check(lines >= 1 && lines <= 5, "Invalid input height");
-                        check(r.height() - header - (18 + 12 * lines) >= 24, "Input hides messages");
+                        check(r.height() - header - (38 + 12 * lines) >= 24, "Input hides messages");
                         check(header + 78 <= r.height(), "Side buttons below window");
                         if (search) check(ChatLayout.baseHeader(r.width()) + 10 + 24 <= header, "Search overlaps messages");
                     }
@@ -45,11 +45,27 @@ public final class ChatLayoutCheck {
                 }
             }
         }
-        int[] longInput = new int[40];
-        java.util.Arrays.fill(longInput, 30);
-        check(ChatLayout.firstInputLine(longInput, 1200, 3) == 37, "End of pasted input is hidden");
-        check(ChatLayout.firstInputLine(longInput, 0, 3) == 0, "Home does not reveal beginning");
-        check(ChatLayout.firstInputLine(longInput, 600, 3) == 17, "Caret in middle is hidden");
+        for (String input : new String[]{"a".repeat(512), "  one  two   three   ", "слова ёжик ".repeat(80), "A😀B".repeat(100)}) {
+            for (int width : new int[]{20, 60, 120}) {
+                var lines = ChatInputLayout.wrap(input, width, text -> text.codePointCount(0, text.length()) * 6);
+                check(lines.stream().map(ChatInputLayout.Line::text).collect(java.util.stream.Collectors.joining()).equals(input),
+                        "Wrapping changed typed characters/spaces");
+                for (var line : lines) {
+                    check(input.substring(line.start(), line.end()).equals(line.text()), "Invalid cursor offsets");
+                    check(line.text().codePointCount(0, line.text().length()) * 6 <= width, "Editor line overflows field");
+                }
+                for (int cursor = 0; cursor <= input.length(); cursor++) {
+                    int row = ChatInputLayout.cursorLine(lines, cursor);
+                    check(cursor >= lines.get(row).start() && cursor <= lines.get(row).end(), "Caret escaped visible line");
+                }
+            }
+        }
+        for (int sw : new int[]{320,427,640,960}) {
+            int available = ChatLayout.hudLineWidth(10, sw - 20, sw, 220, 10, 200);
+            check(available <= sw / 2 - 123 - 10, "Closed chat overlaps hotbar");
+            check(ChatLayout.hudLineWidth(10, sw - 20, sw, 180, 10, 200) == sw - 20,
+                    "Chat above HUD should retain full width");
+        }
         // GUI scale must project the saved geometry, not replace it with the fitted result.
         ChatLayout.Rect preferred = new ChatLayout.Rect(110, 100, 600, 320);
         for (int reserve : new int[] {0, 34}) {
