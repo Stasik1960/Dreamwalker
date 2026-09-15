@@ -1,5 +1,6 @@
 package com.coraxberg.rpchat;
 
+import com.coraxberg.rpchat.api.RpChatEvents;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -290,6 +291,11 @@ public class RpChatMod implements ModInitializer {
 
         String mode = ooc ? "OOC" : "IC";
         log(server, "[" + mode + "] [radius=" + radius + "] " + sender.getGameProfile().getName() + ": " + message + " | recipients=" + recipients);
+
+        if (!ooc) {
+            RpChatEvents.LOCAL_IC_MESSAGE.invoker().onLocalIcMessage(
+                    new RpChatEvents.LocalIcMessage(sender, message, radius, volumeLabel));
+        }
     }
 
     private static Text formatLocalMessage(ServerPlayerEntity sender, String message, boolean ooc, String volumeLabel) {

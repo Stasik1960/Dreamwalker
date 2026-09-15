@@ -1,4 +1,4 @@
-# RP Chat Fabric 1.20.1
+# RP Chat Fabric 1.20.1 (v0.1.13)
 
 Серверно-клиентский мод для ролевого чата.
 
@@ -181,6 +181,8 @@ world/rpchat/logs/YYYY-MM-DD.log
 ```
 
 ## Сборка
+
+Версия 0.1.13 публикует `RpChatEvents.LOCAL_IC_MESSAGE` для интеграции с DW Magic Connect. Событие вызывается после доставки обычного IC-сообщения и не вызывается для OOC, GM, личных сообщений, команд или системных сообщений.
 
 ```powershell
 cd "C:\Minecraft projects\rp-chat-fabric-1.20.1-v12\rp-chat-fabric-1.20.1-v12"
