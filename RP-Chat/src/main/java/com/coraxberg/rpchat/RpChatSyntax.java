@@ -13,7 +13,7 @@ final class RpChatSyntax {
     static final int MAX_DIE_SIDES = 100;
     static final int MAX_DICE_MODIFIER = 100_000;
 
-    private static final Pattern DICE_PATTERN = Pattern.compile("(?i)^(\\d{0,3})d(\\d{1,3})([+-]\\d{1,6})?$");
+    private static final Pattern DICE_PATTERN = Pattern.compile("(?i)^(\\d{0,3})[dдД](\\d{1,3})([+-]\\d{1,6})?$");
 
     private RpChatSyntax() {
     }
@@ -107,7 +107,7 @@ final class RpChatSyntax {
     static String formatRoll(DiceExpression dice, RollResult roll) {
         String list = roll.rolls().toString();
         StringBuilder result = new StringBuilder("бросает ")
-                .append(dice.notation().replace('d', 'д'))
+                .append(dice.notation())
                 .append(", выпадает: ")
                 .append('(')
                 .append(list, 1, list.length() - 1)

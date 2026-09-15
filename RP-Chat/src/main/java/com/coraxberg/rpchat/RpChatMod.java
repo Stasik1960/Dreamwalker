@@ -414,7 +414,7 @@ public class RpChatMod implements ModInitializer {
 
         for (ServerPlayerEntity target : server.getPlayerManager().getPlayerList()) {
             if (shouldReceiveLocal(sender, target, radius)) {
-                target.sendMessage(text, false);
+                target.sendMessage(formatForListener(sender, target, text), false);
                 recipients++;
             }
         }
@@ -496,7 +496,7 @@ public class RpChatMod implements ModInitializer {
         if (server == null) return;
         for (ServerPlayerEntity target : server.getPlayerManager().getPlayerList()) {
             if (shouldReceiveLocal(sender, target, radius)) {
-                target.sendMessage(text, false);
+                target.sendMessage(formatForListener(sender, target, text), false);
             }
         }
     }
@@ -512,14 +512,19 @@ public class RpChatMod implements ModInitializer {
     private static boolean shouldReceiveLocal(ServerPlayerEntity sender, ServerPlayerEntity target, int messageRadius) {
         if (sender.getUuid().equals(target.getUuid())) return true;
 
-        if (sameWorldAndInRadius(sender, target, messageRadius)) return true;
+        ListenSetting listen = isGameMasterOrAdmin(target) ? listenSettings.get(target.getUuid()) : null;
+        return RpChatListening.receives(sender.getWorld() == target.getWorld(),
+                sender.squaredDistanceTo(target), messageRadius,
+                listen != null, listen != null && listen.listensAll(), listen == null ? 0 : listen.radius());
+    }
 
-        ListenSetting listen = listenSettings.get(target.getUuid());
-        if (listen == null || !isGameMasterOrAdmin(target)) return false;
-
-        if (listen.listensAll()) return true;
-
-        return sameWorldAndInRadius(sender, target, listen.radius());
+    private static Text formatForListener(ServerPlayerEntity sender, ServerPlayerEntity target, Text text) {
+        if (sender == target || !isGameMasterOrAdmin(target) || !listenSettings.containsKey(target.getUuid())) return text;
+        boolean sameWorld = sender.getWorld() == target.getWorld();
+        double distance = sender.getPos().distanceTo(target.getPos());
+        if (sameWorld && distance <= config.defaultRadius()) return text;
+        return RpChatListening.distant(text, displayNameText(sender),
+                sameWorld ? String.format(Locale.ROOT, "%.1f блоков", distance) : "другое измерение");
     }
 
     private static boolean sameWorldAndInRadius(ServerPlayerEntity a, ServerPlayerEntity b, int radius) {

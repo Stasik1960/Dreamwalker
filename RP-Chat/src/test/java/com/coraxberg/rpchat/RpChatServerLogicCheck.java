@@ -14,7 +14,26 @@ public final class RpChatServerLogicCheck {
     public static void main(String[] args) {
         checkClassification();
         checkDice();
+        require(RpChatSyntax.parseDice("5д20+3").equals(RpChatSyntax.parseDice("5d20+3")), "Russian alias");
+        require(RpChatSyntax.parseDice("Д20") != null, "uppercase Russian alias");
+        require(!RpChatListening.receives(true, 16, 18, true, false, 3), "listen limits normal speech");
+        require(RpChatListening.receives(true, 9, 18, true, false, 3), "inclusive boundary");
+        require(RpChatListening.receives(true, 10000, 3, true, false, 100), "listen expands whisper");
+        require(!RpChatListening.receives(true, 10201, 500, true, false, 100), "listen limits shout");
+        require(!RpChatListening.receives(false, 1, 18, true, false, 100), "dimension boundary");
+
         checkFormattingIsolation();
+        var distant = RpChatListening.distant(
+                net.minecraft.text.Text.literal("Nick").formatted(Formatting.GREEN)
+                    .append(net.minecraft.text.Text.literal(": hello").formatted(Formatting.RED)),
+                net.minecraft.text.Text.literal("Nick").formatted(Formatting.GREEN), "20.0 блоков");
+        require(distant.getString().equals("Nick (20.0 блоков): hello"), "distance follows nickname");
+        distant.visit((style, part) -> {
+            if (part.contains("h")) require(style.getColor().equals(TextColor.fromFormatting(Formatting.DARK_GRAY)), "distant body dark gray");
+            if (part.equals("N")) require(style.getColor().equals(TextColor.fromFormatting(Formatting.GREEN)), "nickname color retained");
+            return java.util.Optional.empty();
+        }, net.minecraft.text.Style.EMPTY);
+
         checkSubmissionGuard();
         System.out.println("RP Chat server logic checks passed.");
     }
@@ -55,7 +74,7 @@ public final class RpChatServerLogicCheck {
         require(result.rolls().toString().equals("[5, 20, 1, 13, 7]"), "individual roll list");
         require(result.total() == 49, "5d20+3 deterministic total");
         require(RpChatSyntax.formatRoll(dice, result).equals(
-                "бросает 5д20+3, выпадает: (5, 20, 1, 13, 7) + 3 = 49"), "exact roll output");
+                "бросает 5d20+3, выпадает: (5, 20, 1, 13, 7) + 3 = 49"), "exact roll output");
     }
 
     private static void checkFormattingIsolation() {
