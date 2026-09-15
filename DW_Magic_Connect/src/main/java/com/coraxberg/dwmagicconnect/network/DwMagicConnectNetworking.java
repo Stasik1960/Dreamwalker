@@ -20,12 +20,11 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class DwMagicConnectNetworking {
-    // Versioned IDs prevent a pre-channel client from decoding the new payload.
-    public static final Identifier OPEN_SCREEN = DwMagicConnectMod.id("open_screen_v2");
-    public static final Identifier SAVE_SETTINGS = DwMagicConnectMod.id("save_settings_v2");
-    public static final Identifier CLOSE_SCREEN = DwMagicConnectMod.id("close_screen_v2");
+    // Versioned IDs prevent a pre-clock client from decoding the new payload.
+    public static final Identifier OPEN_SCREEN = DwMagicConnectMod.id("open_screen_v3");
+    public static final Identifier SAVE_SETTINGS = DwMagicConnectMod.id("save_settings_v3");
+    public static final Identifier CLOSE_SCREEN = DwMagicConnectMod.id("close_screen_v3");
 
-    private static final int MAX_PACKET_CHANNEL_LENGTH = 64;
     private static final long SESSION_LIFETIME_NANOS = Duration.ofMinutes(2).toNanos();
     private static final Map<UUID, EditSession> EDIT_SESSIONS = new ConcurrentHashMap<>();
 
@@ -41,8 +40,7 @@ public final class DwMagicConnectNetworking {
             List<ChannelPayload> channels = new ArrayList<>(MagicConnectData.CHANNEL_COUNT);
             for (int index = 0; index < MagicConnectData.CHANNEL_COUNT; index++) {
                 channels.add(new ChannelPayload(
-                        buf.readString(MAX_PACKET_CHANNEL_LENGTH),
-                        buf.readString(MAX_PACKET_CHANNEL_LENGTH)
+                        buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt()
                 ));
             }
             server.execute(() -> saveSettings(player, token, handOrdinal, enabled, transmitIndex, channels));
@@ -81,8 +79,7 @@ public final class DwMagicConnectNetworking {
         payload.writeBoolean(state.enabled());
         payload.writeVarInt(state.transmitIndex());
         for (MagicConnectData.Frequency frequency : state.channels()) {
-            payload.writeString(frequency.a());
-            payload.writeString(frequency.b());
+            for (int h = 0; h < 4; h++) payload.writeInt(frequency.hand(h));
         }
         ServerPlayNetworking.send(player, OPEN_SCREEN, payload);
     }
@@ -118,11 +115,11 @@ public final class DwMagicConnectNetworking {
 
         List<MagicConnectData.Frequency> channels = new ArrayList<>(MagicConnectData.CHANNEL_COUNT);
         for (ChannelPayload payload : channelPayloads) {
-            if (!MagicConnectData.isFrequencyPairValid(payload.a(), payload.b())) {
+            if (!MagicConnectData.Frequency.valid(payload.mh(), payload.mm(), payload.sh(), payload.sm())) {
                 reject(player);
                 return;
             }
-            channels.add(new MagicConnectData.Frequency(payload.a(), payload.b()));
+            channels.add(new MagicConnectData.Frequency(payload.mh(), payload.mm(), payload.sh(), payload.sm()));
         }
         if (enabled && !channels.get(transmitIndex).configured()) {
             reject(player);
@@ -158,7 +155,7 @@ public final class DwMagicConnectNetworking {
         player.sendMessage(Text.translatable("message.dw_magic_connect.invalid_session"), false);
     }
 
-    private record ChannelPayload(String a, String b) {
+    private record ChannelPayload(int mh, int mm, int sh, int sm) {
     }
 
     private record EditSession(

@@ -4,279 +4,136 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-/** Owns the namespaced NBT stored directly on an arbitrary radio ItemStack. */
+/** Four discrete hand positions identify a channel. Old code frequencies are intentionally reset. */
 public final class MagicConnectData {
     public static final String ROOT_KEY = "DWMagicConnect";
     public static final int CHANNEL_COUNT = 3;
-    public static final int MAX_CHANNEL_LENGTH = 3;
-
-    private static final String MAGIC_RADIO_KEY = "MagicRadio";
-    private static final String ENABLED_KEY = "Enabled";
-    private static final String CHANNELS_KEY = "Channels";
-    private static final String CHANNEL_A_KEY = "A";
-    private static final String CHANNEL_B_KEY = "B";
-    private static final String TRANSMIT_INDEX_KEY = "TransmitIndex";
-    private static final String DEVICE_ID_KEY = "DeviceId";
-    private static final String LEGACY_FREQUENCY_A_KEY = "FrequencyA";
-    private static final String LEGACY_FREQUENCY_B_KEY = "FrequencyB";
-    private static final String LEGACY_CONFIGURED_KEY = "Configured";
-
-    private MagicConnectData() {
-    }
+    private static final int FORMAT = 3;
+    private static final String[] HAND_KEYS = {"MoonHour", "MoonMinute", "SunHour", "SunMinute"};
+    private MagicConnectData() {}
 
     public static boolean isRadio(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) return false;
-        NbtCompound root = stack.getNbt();
-        if (root == null || !root.contains(ROOT_KEY, NbtElement.COMPOUND_TYPE)) return false;
-        return root.getCompound(ROOT_KEY).getBoolean(MAGIC_RADIO_KEY);
+        return stack != null && !stack.isEmpty() && stack.getNbt() != null
+                && stack.getNbt().contains(ROOT_KEY, NbtElement.COMPOUND_TYPE)
+                && stack.getNbt().getCompound(ROOT_KEY).getBoolean("MagicRadio");
     }
-
     public static boolean createRadio(ItemStack stack) {
         if (stack == null || stack.isEmpty() || isRadio(stack)) return false;
-        NbtCompound radio = new NbtCompound();
-        radio.putBoolean(MAGIC_RADIO_KEY, true);
-        radio.putBoolean(ENABLED_KEY, false);
-        radio.put(CHANNELS_KEY, emptyChannelsTag());
-        radio.putInt(TRANSMIT_INDEX_KEY, 0);
-        radio.putUuid(DEVICE_ID_KEY, UUID.randomUUID());
-        stack.getOrCreateNbt().put(ROOT_KEY, radio);
+        NbtCompound tag = new NbtCompound();
+        tag.putBoolean("MagicRadio", true);
+        tag.putUuid("DeviceId", UUID.randomUUID());
+        saveTag(tag, false, emptyChannels(), 0);
+        stack.getOrCreateNbt().put(ROOT_KEY, tag);
         return true;
     }
-
     public static boolean removeRadio(ItemStack stack) {
         if (!isRadio(stack)) return false;
-        NbtCompound root = stack.getNbt();
-        if (root == null) return false;
-        root.remove(ROOT_KEY);
-        if (root.isEmpty()) stack.setNbt(null);
+        stack.getNbt().remove(ROOT_KEY);
+        if (stack.getNbt().isEmpty()) stack.setNbt(null);
         return true;
     }
-
     public static UUID ensureDeviceId(ItemStack stack) {
-        if (!isRadio(stack)) throw new IllegalArgumentException("ItemStack is not a DW Magic Connect radio");
-        NbtCompound radio = stack.getOrCreateNbt().getCompound(ROOT_KEY);
-        if (!radio.containsUuid(DEVICE_ID_KEY)) radio.putUuid(DEVICE_ID_KEY, UUID.randomUUID());
-        return radio.getUuid(DEVICE_ID_KEY);
+        if (!isRadio(stack)) throw new IllegalArgumentException("Not a radio");
+        NbtCompound tag = stack.getNbt().getCompound(ROOT_KEY);
+        if (!tag.containsUuid("DeviceId")) tag.putUuid("DeviceId", UUID.randomUUID());
+        return tag.getUuid("DeviceId");
     }
-
     public static Optional<UUID> deviceId(ItemStack stack) {
-        NbtCompound radio = radioTag(stack);
-        if (radio == null || !radio.containsUuid(DEVICE_ID_KEY)) return Optional.empty();
-        return Optional.of(radio.getUuid(DEVICE_ID_KEY));
-    }
-
-    /** Reads immutable state, migrating safe legacy numeric values on first read. */
-    public static RadioState read(ItemStack stack) {
-        NbtCompound radio = radioTag(stack);
-        if (radio == null) throw new IllegalArgumentException("ItemStack is not a DW Magic Connect radio");
-        return readTag(radio, ensureDeviceId(stack));
-    }
-
-    static RadioState readTag(NbtCompound radio, UUID deviceId) {
-        if (!radio.contains(CHANNELS_KEY, NbtElement.LIST_TYPE)) {
-            RadioState migrated = readLegacy(radio, deviceId);
-            if (migrated != null) {
-                writeChannels(radio, migrated.channels());
-                radio.putInt(TRANSMIT_INDEX_KEY, migrated.transmitIndex());
-                radio.putBoolean(ENABLED_KEY, migrated.enabled());
-                return migrated;
-            }
-            // Do not truncate an out-of-range legacy value or rewrite its NBT.
-            return new RadioState(false, emptyChannels(), 0, deviceId);
-        }
-
-        return new RadioState(
-                radio.getBoolean(ENABLED_KEY),
-                readChannels(radio.getList(CHANNELS_KEY, NbtElement.COMPOUND_TYPE)),
-                validTransmitIndex(radio.getInt(TRANSMIT_INDEX_KEY)),
-                deviceId
-        );
-    }
-
-    /** Saves all three slots and the separately selected transmit slot. */
-    public static void saveSettings(ItemStack stack, boolean enabled, List<Frequency> channels, int transmitIndex) {
-        if (!isRadio(stack)) throw new IllegalArgumentException("ItemStack is not a DW Magic Connect radio");
-        ensureDeviceId(stack);
-        saveTag(stack.getOrCreateNbt().getCompound(ROOT_KEY), enabled, channels, transmitIndex);
-    }
-
-    static void saveTag(NbtCompound radio, boolean enabled, List<Frequency> channels, int transmitIndex) {
-        List<Frequency> normalized = normalizeChannels(channels);
-        if (transmitIndex < 0 || transmitIndex >= CHANNEL_COUNT) {
-            throw new IllegalArgumentException("Transmit slot is outside the allowed range");
-        }
-        if (enabled && !normalized.get(transmitIndex).configured()) {
-            throw new IllegalArgumentException("Enabled radio must transmit on a configured slot");
-        }
-        radio.putBoolean(ENABLED_KEY, enabled);
-        writeChannels(radio, normalized);
-        radio.putInt(TRANSMIT_INDEX_KEY, transmitIndex);
-        radio.remove(LEGACY_FREQUENCY_A_KEY);
-        radio.remove(LEGACY_FREQUENCY_B_KEY);
-        radio.remove(LEGACY_CONFIGURED_KEY);
-    }
-
-    public static Optional<Frequency> transmitFrequency(ItemStack stack) {
         if (!isRadio(stack)) return Optional.empty();
-        RadioState state = read(stack);
-        return state.transmitFrequency();
+        NbtCompound tag = stack.getNbt().getCompound(ROOT_KEY);
+        return tag.containsUuid("DeviceId") ? Optional.of(tag.getUuid("DeviceId")) : Optional.empty();
     }
-
-    public static List<Frequency> listeningFrequencies(ItemStack stack) {
-        if (!isRadio(stack)) return List.of();
-        RadioState state = read(stack);
-        return state.listeningFrequencies();
+    public static RadioState read(ItemStack stack) {
+        UUID id = ensureDeviceId(stack);
+        return readTag(stack.getNbt().getCompound(ROOT_KEY), id);
     }
-
-    /** A channel is either an empty slot or a complete pair of valid values. */
-    public static boolean isFrequencyPairValid(String a, String b) {
-        boolean emptyA = a == null || a.isEmpty();
-        boolean emptyB = b == null || b.isEmpty();
-        return emptyA == emptyB && (emptyA || (isChannelValid(a) && isChannelValid(b)));
-    }
-
-    public static boolean isChannelValid(String value) {
-        if (value == null || value.isEmpty() || value.length() > MAX_CHANNEL_LENGTH) return false;
-        for (int i = 0; i < value.length(); i++) {
-            char character = value.charAt(i);
-            if (!isAllowedChannelCharacter(character)) return false;
+    static RadioState readTag(NbtCompound tag, UUID id) {
+        if (tag.getInt("ClockFormat") != FORMAT) {
+            saveTag(tag, false, emptyChannels(), 0);
         }
-        return true;
+        List<Frequency> channels = new ArrayList<>();
+        NbtList list = tag.getList("Channels", NbtElement.COMPOUND_TYPE);
+        for (int i = 0; i < CHANNEL_COUNT; i++) {
+            NbtCompound channel = i < list.size() ? list.getCompound(i) : new NbtCompound();
+            int[] hands = new int[4];
+            boolean complete = true;
+            for (int h = 0; h < 4; h++) {
+                complete &= channel.contains(HAND_KEYS[h], NbtElement.INT_TYPE);
+                hands[h] = channel.getInt(HAND_KEYS[h]);
+            }
+            channels.add(complete && Frequency.valid(hands[0], hands[1], hands[2], hands[3])
+                    ? new Frequency(hands[0], hands[1], hands[2], hands[3]) : Frequency.empty());
+        }
+        int tx = tag.getInt("TransmitIndex");
+        if (tx < 0 || tx >= CHANNEL_COUNT) tx = 0;
+        return new RadioState(tag.getBoolean("Enabled") && channels.get(tx).configured(), channels, tx, id);
     }
-
+    public static void saveSettings(ItemStack stack, boolean enabled, List<Frequency> channels, int tx) {
+        ensureDeviceId(stack);
+        saveTag(stack.getNbt().getCompound(ROOT_KEY), enabled, channels, tx);
+    }
+    static void saveTag(NbtCompound tag, boolean enabled, List<Frequency> channels, int tx) {
+        if (channels == null || channels.size() != CHANNEL_COUNT || channels.stream().anyMatch(java.util.Objects::isNull)
+                || tx < 0 || tx >= CHANNEL_COUNT || (enabled && !channels.get(tx).configured())) {
+            throw new IllegalArgumentException("Invalid clock channels");
+        }
+        NbtList list = new NbtList();
+        for (Frequency frequency : channels) {
+            NbtCompound channel = new NbtCompound();
+            for (int h = 0; h < 4; h++) channel.putInt(HAND_KEYS[h], frequency.hand(h));
+            list.add(channel);
+        }
+        tag.putInt("ClockFormat", FORMAT);
+        tag.put("Channels", list);
+        tag.putBoolean("Enabled", enabled);
+        tag.putInt("TransmitIndex", tx);
+        tag.remove("FrequencyA"); tag.remove("FrequencyB"); tag.remove("Configured");
+    }
     public static List<Frequency> emptyChannels() {
-        return List.of(new Frequency("", ""), new Frequency("", ""), new Frequency("", ""));
+        return List.of(Frequency.empty(), Frequency.empty(), Frequency.empty());
     }
-
-    private static boolean isAllowedChannelCharacter(char character) {
-        return character >= '0' && character <= '9'
-                || character >= 'A' && character <= 'Z'
-                || character >= 'a' && character <= 'z'
-                || character >= '\u0410' && character <= '\u042F'
-                || character >= '\u0430' && character <= '\u044F'
-                || character == '\u0401' || character == '\u0451';
+    public static Optional<Frequency> transmitFrequency(ItemStack stack) {
+        return isRadio(stack) ? read(stack).transmitFrequency() : Optional.empty();
     }
-
-    private static String canonicalChannel(String value) {
-        if (value == null || value.isEmpty()) return "";
-        if (!isChannelValid(value)) {
-            throw new IllegalArgumentException("Channel values must contain 1-3 Latin/Cyrillic letters or digits");
-        }
-        return value.toUpperCase(Locale.ROOT);
+    public static List<Frequency> listeningFrequencies(ItemStack stack) {
+        return isRadio(stack) ? read(stack).listeningFrequencies() : List.of();
     }
-
-    private static List<Frequency> normalizeChannels(List<Frequency> channels) {
-        if (channels == null || channels.size() != CHANNEL_COUNT) {
-            throw new IllegalArgumentException("Exactly three channel slots are required");
-        }
-        List<Frequency> normalized = new ArrayList<>(CHANNEL_COUNT);
-        for (Frequency frequency : channels) {
-            if (frequency == null || !isFrequencyPairValid(frequency.a(), frequency.b())) {
-                throw new IllegalArgumentException("Each channel slot must be empty or a complete valid pair");
-            }
-            normalized.add(new Frequency(frequency.a(), frequency.b()));
-        }
-        return Collections.unmodifiableList(normalized);
-    }
-
-    private static List<Frequency> readChannels(NbtList channelsTag) {
-        List<Frequency> channels = new ArrayList<>(CHANNEL_COUNT);
-        for (int index = 0; index < CHANNEL_COUNT; index++) {
-            if (index >= channelsTag.size() || !(channelsTag.get(index) instanceof NbtCompound channelTag)) {
-                channels.add(new Frequency("", ""));
-                continue;
-            }
-            String a = channelTag.getString(CHANNEL_A_KEY);
-            String b = channelTag.getString(CHANNEL_B_KEY);
-            channels.add(isFrequencyPairValid(a, b) ? new Frequency(a, b) : new Frequency("", ""));
-        }
-        return Collections.unmodifiableList(channels);
-    }
-
-    private static RadioState readLegacy(NbtCompound radio, UUID deviceId) {
-        if (!radio.contains(LEGACY_FREQUENCY_A_KEY, NbtElement.INT_TYPE)
-                || !radio.contains(LEGACY_FREQUENCY_B_KEY, NbtElement.INT_TYPE)) {
-            return new RadioState(radio.getBoolean(ENABLED_KEY), emptyChannels(), 0, deviceId);
-        }
-        int legacyA = radio.getInt(LEGACY_FREQUENCY_A_KEY);
-        int legacyB = radio.getInt(LEGACY_FREQUENCY_B_KEY);
-        if (legacyA < 0 || legacyA > 999 || legacyB < 0 || legacyB > 999) return null;
-
-        List<Frequency> channels = new ArrayList<>(emptyChannels());
-        boolean configured = radio.getBoolean(LEGACY_CONFIGURED_KEY);
-        if (configured) channels.set(0, new Frequency(Integer.toString(legacyA), Integer.toString(legacyB)));
-        return new RadioState(radio.getBoolean(ENABLED_KEY) && configured, channels, 0, deviceId);
-    }
-
-    private static int validTransmitIndex(int index) {
-        return index >= 0 && index < CHANNEL_COUNT ? index : 0;
-    }
-
-    private static NbtList emptyChannelsTag() {
-        NbtList channels = new NbtList();
-        for (int index = 0; index < CHANNEL_COUNT; index++) {
-            NbtCompound channel = new NbtCompound();
-            channel.putString(CHANNEL_A_KEY, "");
-            channel.putString(CHANNEL_B_KEY, "");
-            channels.add(channel);
-        }
-        return channels;
-    }
-
-    private static void writeChannels(NbtCompound radio, List<Frequency> channels) {
-        NbtList channelsTag = new NbtList();
-        for (Frequency frequency : channels) {
-            NbtCompound channel = new NbtCompound();
-            channel.putString(CHANNEL_A_KEY, frequency.a());
-            channel.putString(CHANNEL_B_KEY, frequency.b());
-            channelsTag.add(channel);
-        }
-        radio.put(CHANNELS_KEY, channelsTag);
-    }
-
-    private static NbtCompound radioTag(ItemStack stack) {
-        if (!isRadio(stack)) return null;
-        return stack.getNbt().getCompound(ROOT_KEY);
-    }
-
-    public record Frequency(String a, String b) {
+    public record Frequency(int moonHour, int moonMinute, int sunHour, int sunMinute) {
         public Frequency {
-            a = canonicalChannel(a);
-            b = canonicalChannel(b);
+            if (!valid(moonHour, moonMinute, sunHour, sunMinute)) throw new IllegalArgumentException("Invalid hands");
         }
-
-        public boolean configured() {
-            return !a.isEmpty() && !b.isEmpty();
+        public static boolean valid(int mh, int mm, int sh, int sm) {
+            return (mh == -1 && mm == -1 && sh == -1 && sm == -1)
+                    || (mh >= 0 && mh < 12 && mm >= 0 && mm < 60 && sh >= 0 && sh < 12 && sm >= 0 && sm < 60);
+        }
+        public static Frequency empty() { return new Frequency(-1, -1, -1, -1); }
+        public boolean configured() { return moonHour >= 0; }
+        public int hand(int index) {
+            return switch (index) { case 0 -> moonHour; case 1 -> moonMinute; case 2 -> sunHour; case 3 -> sunMinute;
+                default -> throw new IllegalArgumentException("Invalid hand index"); };
+        }
+        public Frequency withHand(int index, int value) {
+            int[] hands = configured() ? new int[]{moonHour, moonMinute, sunHour, sunMinute} : new int[4];
+            hands[index] = value;
+            return new Frequency(hands[0], hands[1], hands[2], hands[3]);
         }
     }
-
     public record RadioState(boolean enabled, List<Frequency> channels, int transmitIndex, UUID deviceId) {
         public RadioState {
-            if (channels == null || channels.size() != CHANNEL_COUNT) {
-                throw new IllegalArgumentException("Exactly three channel slots are required");
-            }
-            channels = Collections.unmodifiableList(new ArrayList<>(channels));
+            channels = List.copyOf(channels);
+            if (channels.size() != CHANNEL_COUNT || transmitIndex < 0 || transmitIndex >= CHANNEL_COUNT)
+                throw new IllegalArgumentException("Invalid channels");
         }
-
         public Optional<Frequency> transmitFrequency() {
-            Frequency frequency = channels.get(transmitIndex);
-            return enabled && frequency.configured() ? Optional.of(frequency) : Optional.empty();
+            Frequency f = channels.get(transmitIndex);
+            return enabled && f.configured() ? Optional.of(f) : Optional.empty();
         }
-
-        public List<Frequency> listeningFrequencies() {
-            return enabled ? configuredChannels() : List.of();
-        }
-
-        public List<Frequency> configuredChannels() {
-            return channels.stream().filter(Frequency::configured).toList();
-        }
+        public List<Frequency> configuredChannels() { return channels.stream().filter(Frequency::configured).toList(); }
+        public List<Frequency> listeningFrequencies() { return enabled ? configuredChannels() : List.of(); }
     }
 }

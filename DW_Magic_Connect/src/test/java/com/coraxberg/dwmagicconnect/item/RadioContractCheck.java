@@ -1,111 +1,83 @@
 package com.coraxberg.dwmagicconnect.item;
 
+import com.coraxberg.dwmagicconnect.client.ClockMath;
 import com.coraxberg.dwmagicconnect.client.RadioScreenLayout;
-import com.coraxberg.dwmagicconnect.item.MagicConnectData;
 import com.coraxberg.dwmagicconnect.item.MagicConnectData.Frequency;
 import net.minecraft.nbt.NbtCompound;
-
+import net.minecraft.nbt.NbtList;
 import java.util.List;
 import java.util.UUID;
 
-/** Small executable contract check for the radio model; it does not launch Minecraft. */
 public final class RadioContractCheck {
-    private RadioContractCheck() {
-    }
-
     public static void main(String[] args) {
-        checkChannels();
-        checkTransmitAndListenSlots();
-        checkLegacyMigration();
-        checkLayoutSizes();
-        System.out.println("Radio checks passed: validation, channels, transmission, NBT migration and four GUI sizes.");
+        checkGeometry(); checkChannels(); checkReset(); checkLayout();
+        System.out.println("Clock checks passed: snapping, overlapping hands, channels, NBT reset, GUI bounds.");
     }
-
+    private static void checkGeometry() {
+        for (int steps : new int[]{12, 60}) for (int i = 0; i < steps; i++) {
+            check(ClockMath.snap(ClockMath.x(i, steps, 50), ClockMath.y(i, steps, 50), steps) == i, "round trip");
+        }
+        check(ClockMath.snap(-.01, -50, 60) == 0 && ClockMath.snap(.01, -50, 60) == 0, "wrap twelve");
+        for (int r : new int[]{41, 64}) for (int h = 0; h < 12; h++) for (int m = 0; m < 60; m++) {
+            check(ClockMath.pick(ClockMath.x(h, 12, r * .48), ClockMath.y(h, 12, r * .48), h, m, r) == 0, "hour grab");
+            check(ClockMath.pick(ClockMath.x(m, 60, r * .78), ClockMath.y(m, 60, r * .78), h, m, r) == 1, "minute grab");
+        }
+        check(ClockMath.pick(0, 0, 0, 0, 41) == -1, "pivot");
+        check(ClockMath.pick(100, 100, 0, 0, 41) == -1, "outside");
+    }
     private static void checkChannels() {
-        check(MagicConnectData.isChannelValid("A1Ж"), "Latin/Cyrillic channel should be valid");
-        check(!MagicConnectData.isChannelValid("A1Ж4"), "four-character channel should be rejected");
-        check(!MagicConnectData.isChannelValid("A-"), "punctuation should be rejected");
-        check(!MagicConnectData.isFrequencyPairValid("A", ""), "partial channel pair should be rejected");
-        Frequency frequency = new Frequency("aж1", "б2");
-        check(frequency.a().equals("AЖ1") && frequency.b().equals("Б2"), "channels should canonicalize to uppercase");
-        check(MagicConnectData.isFrequencyPairValid("", ""), "empty channel slot should be valid");
-    }
-
-    private static void checkTransmitAndListenSlots() {
-        NbtCompound radio = new NbtCompound();
-        List<Frequency> channels = List.of(new Frequency("a", "1"), new Frequency("b", "2"), new Frequency("", ""));
-        MagicConnectData.saveTag(radio, true, channels, 1);
-        check(MagicConnectData.readTag(radio, new UUID(0, 1)).transmitFrequency().orElseThrow().equals(new Frequency("B", "2")),
-                "selected slot should transmit");
-        check(MagicConnectData.readTag(radio, new UUID(0, 1)).listeningFrequencies().equals(List.of(new Frequency("A", "1"), new Frequency("B", "2"))),
-                "all configured slots should listen");
-
-        List<Frequency> three = List.of(new Frequency("a", "1"), new Frequency("b", "2"), new Frequency("c", "3"));
-        for (int slot = 0; slot < 3; slot++) {
-            MagicConnectData.saveTag(radio, true, three, slot);
-            var state = MagicConnectData.readTag(radio.copy(), new UUID(0, 1));
-            check(state.listeningFrequencies().size() == 3, "all three slots must listen after NBT reload");
-            check(state.transmitFrequency().orElseThrow().equals(three.get(slot)), "only selected slot transmits");
+        Frequency f = new Frequency(11, 59, 3, 17);
+        check(f.equals(new Frequency(11, 59, 3, 17)), "matching hands");
+        for (int hand = 0; hand < 4; hand++) check(!f.equals(f.withHand(hand, 0)), "every hand affects frequency");
+        check(Frequency.valid(-1, -1, -1, -1) && !Frequency.valid(-1, 0, 0, 0), "empty or complete");
+        check(!Frequency.valid(12, 0, 0, 0) && !Frequency.valid(0, 60, 0, 0), "moon bounds");
+        check(!Frequency.valid(0, 0, 12, 0) && !Frequency.valid(0, 0, 0, 60), "sun bounds");
+        check(!Frequency.valid(Integer.MAX_VALUE, 0, 0, 0), "oversized payload");
+        check(Frequency.empty().withHand(1, 5).equals(new Frequency(0, 5, 0, 0)), "activate");
+        NbtCompound tag = new NbtCompound();
+        List<Frequency> channels = List.of(f, new Frequency(0, 0, 0, 0), new Frequency(2, 4, 6, 8));
+        for (int tx = 0; tx < 3; tx++) {
+            MagicConnectData.saveTag(tag, true, channels, tx);
+            var state = MagicConnectData.readTag(tag.copy(), new UUID(0, 1));
+            check(state.channels().equals(channels), "NBT roundtrip");
+            check(state.listeningFrequencies().equals(channels), "three receivers");
+            check(state.transmitFrequency().orElseThrow().equals(channels.get(tx)), "one transmitter");
         }
-        expectIllegalArgument(() -> MagicConnectData.saveTag(radio, true, channels, 2));
-        expectIllegalArgument(() -> MagicConnectData.saveTag(radio, true, channels, 3));
-
-        MagicConnectData.saveTag(radio, false, channels, 1);
-        check(MagicConnectData.readTag(radio, new UUID(0, 1)).transmitFrequency().isEmpty(), "disabled radio should not transmit");
-        check(MagicConnectData.readTag(radio, new UUID(0, 1)).listeningFrequencies().isEmpty(), "disabled radio should not listen");
-
-        expectIllegalArgument(() -> MagicConnectData.saveTag(
-                radio, true, List.of(new Frequency("A", ""), new Frequency("", ""), new Frequency("", "")), 0));
+        MagicConnectData.saveTag(tag, false, channels, 0);
+        var off = MagicConnectData.readTag(tag, new UUID(0, 1));
+        check(off.listeningFrequencies().isEmpty() && off.transmitFrequency().isEmpty(), "off");
+        expectInvalid(() -> MagicConnectData.saveTag(tag, true, MagicConnectData.emptyChannels(), 0));
+        expectInvalid(() -> MagicConnectData.saveTag(tag, false, channels, 3));
+        tag.put("Channels", new NbtList()); tag.putBoolean("Enabled", true);
+        check(MagicConnectData.readTag(tag, new UUID(0, 1)).configuredChannels().isEmpty(), "missing hands");
     }
-
-    private static void checkLegacyMigration() {
-        NbtCompound migrated = legacyRadio(12, 345);
-        MagicConnectData.RadioState state = MagicConnectData.readTag(migrated, new UUID(0, 1));
-        check(state.enabled(), "safe legacy configuration should preserve enabled state");
-        check(state.channels().get(0).equals(new Frequency("12", "345")), "legacy values should migrate to slot zero");
-        check(migrated.contains("Channels"), "migration should write channel slots");
-
-        NbtCompound preserved = legacyRadio(1000, 1);
-        String before = preserved.toString();
-        MagicConnectData.RadioState preservedState = MagicConnectData.readTag(preserved, new UUID(0, 1));
-        NbtCompound preservedTag = preserved;
-        check(!preservedState.enabled() && preservedState.channels().stream().noneMatch(Frequency::configured),
-                "out-of-range legacy configuration should be disabled and unconfigured");
-        check(!preservedTag.contains("Channels") && preservedTag.getInt("FrequencyA") == 1000,
-                "out-of-range legacy NBT should remain untouched until save");
-        check(before.equals(preservedTag.toString()), "legacy preservation should not rewrite the original NBT");
-    }
-
-    private static NbtCompound legacyRadio(int a, int b) {
-        NbtCompound radio = new NbtCompound();
-        radio.putBoolean("MagicRadio", true);
-        radio.putBoolean("Enabled", true);
-        radio.putInt("FrequencyA", a);
-        radio.putInt("FrequencyB", b);
-        radio.putBoolean("Configured", true);
-        radio.putUuid("DeviceId", UUID.fromString("00000000-0000-0000-0000-000000000001"));
-        return radio;
-    }
-
-    private static void checkLayoutSizes() {
-        for (int[] size : new int[][]{{320, 240}, {427, 240}, {640, 360}, {960, 540}}) {
-            RadioScreenLayout layout = RadioScreenLayout.fit(size[0], size[1]);
-            check(layout.controlsWidth() >= 190, "layout controls should remain usable");
-            check(layout.top() - 17 >= 0, "layout title should remain on-screen");
-            check(layout.top() + 161 <= size[1], "layout buttons should remain on-screen");
+    private static void checkReset() {
+        for (boolean oldList : new boolean[]{false, true}) {
+            NbtCompound tag = new NbtCompound();
+            tag.putBoolean("Enabled", true); tag.putInt("FrequencyA", 123); tag.putInt("FrequencyB", 321);
+            tag.putBoolean("Configured", true);
+            UUID id = UUID.randomUUID(); tag.putUuid("DeviceId", id);
+            if (oldList) {
+                NbtList list = new NbtList(); NbtCompound codes = new NbtCompound();
+                codes.putString("A", "ABC"); codes.putString("B", "123"); list.add(codes); tag.put("Channels", list);
+            }
+            var state = MagicConnectData.readTag(tag, id);
+            check(!state.enabled() && state.configuredChannels().isEmpty(), "old codes reset");
+            check(tag.getUuid("DeviceId").equals(id), "identity preserved");
+            check(!tag.contains("FrequencyA") && tag.getInt("ClockFormat") == 3, "format updated");
         }
     }
-
-    private static void expectIllegalArgument(Runnable action) {
-        try {
-            action.run();
-        } catch (IllegalArgumentException expected) {
-            return;
+    private static void checkLayout() {
+        for (int[] size : new int[][]{{320,240},{427,240},{640,360},{960,540}}) {
+            var l = RadioScreenLayout.fit(size[0], size[1]);
+            check(l.top() >= 0 && l.footer() + 64 <= size[1], "vertical bounds");
+            check(size[0] / 2 - l.offset() - l.radius() - 5 >= 0, "left clock");
+            check(size[0] / 2 + l.offset() + l.radius() + 5 <= size[0], "right clock");
         }
-        throw new AssertionError("expected IllegalArgumentException");
     }
-
-    private static void check(boolean condition, String message) {
-        if (!condition) throw new AssertionError(message);
+    private static void expectInvalid(Runnable action) {
+        try { action.run(); } catch (IllegalArgumentException expected) { return; }
+        throw new AssertionError("Expected invalid settings");
     }
+    private static void check(boolean value, String message) { if (!value) throw new AssertionError(message); }
 }
