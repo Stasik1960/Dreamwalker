@@ -26,6 +26,7 @@ public final class ClockDialWidget extends ClickableWidget {
                 Text.translatable("screen.dw_magic_connect." + (sun ? "sun" : "moon")));
         this.radius = radius; this.sun = sun; this.frequency = frequency; this.change = change;
     }
+    public boolean isDraggingHand() { return dragging; }
     private int cx() { return getX() + radius + 5; }
     private int cy() { return getY() + radius + 5; }
     private int position(int hand) { return Math.max(0, frequency.get().hand((sun ? 2 : 0) + hand)); }

@@ -94,7 +94,7 @@ public final class MagicConnectScreen extends Screen {
         centered(c, label("moon"), cx - layout.offset(), layout.centerY() - layout.radius() - 12, 0xA1BECC);
         centered(c, label("sun"), cx + layout.offset(), layout.centerY() - layout.radius() - 12, 0xC6AC7C);
         super.render(c, mouseX, mouseY, delta);
-        for (ClockDialWidget clock : clocks) if (clock.isMouseOver(mouseX, mouseY)) {
+        for (ClockDialWidget clock : clocks) if (clock.isMouseOver(mouseX, mouseY) && !clock.isDraggingHand()) {
             c.drawTooltip(textRenderer, label("drag_hint"), mouseX, mouseY); break;
         }
     }
