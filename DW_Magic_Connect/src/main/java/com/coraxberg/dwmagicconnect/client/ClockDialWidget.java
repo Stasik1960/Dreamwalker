@@ -38,7 +38,7 @@ public final class ClockDialWidget extends ClickableWidget {
         int hand = pick(x, y);
         if (hand < 0) return false;
         selectedHand = hand; dragging = true;
-        // Activate an empty channel without shifting a hand on the initial click.
+        // Activate an unset frequency without shifting a hand on the initial click.
         change.accept((sun ? 2 : 0) + selectedHand, position(selectedHand));
         playDownSound(MinecraftClient.getInstance().getSoundManager());
         return true;
@@ -81,12 +81,12 @@ public final class ClockDialWidget extends ClickableWidget {
     }
     @Override public void renderButton(DrawContext c, int mouseX, int mouseY, float delta) {
         int x = cx(), y = cy();
-        int brass = 0xFF9B8057, accent = sun ? 0xFFD0A365 : 0xFF92B8CA;
+        int brass = 0xFFCBA458, accent = sun ? 0xFFFFD584 : 0xFF83E2FF;
         disk(c, x + 2, y + 3, radius + 4, 0x60000000);
         disk(c, x, y, radius + 3, 0xFF3A3029);
         disk(c, x, y, radius + 1, brass);
         disk(c, x, y, radius - 1, 0xFF171E2A);
-        disk(c, x, y, radius - 4, sun ? 0xFF26232A : 0xFF152332);
+        disk(c, x, y, radius - 4, sun ? 0xFF171322 : 0xFF051B2C);
         ring(c, x, y, radius - 5, 0xFF665840);
         ring(c, x, y, radius * .64, sun ? 0xFF65513C : 0xFF3B5668);
         line(c, x - radius * .62, y, x + radius * .62, y, 1, 0x403F6575);
@@ -100,7 +100,7 @@ public final class ClockDialWidget extends ClickableWidget {
         // Small celestial emblem above the pivot, leaving the hands unobstructed.
         int emblemY = y - (int) (radius * .31), er = Math.max(4, radius / 10);
         disk(c, x, emblemY, er, accent);
-        if (!sun) disk(c, x + 3, emblemY - 2, er, 0xFF152332);
+        if (!sun) disk(c, x + 3, emblemY - 2, er, 0xFF051B2C);
         else for (int i = 0; i < 8; i++) {
             line(c, x + ClockMath.x(i, 8, er + 2), emblemY + ClockMath.y(i, 8, er + 2),
                     x + ClockMath.x(i, 8, er + 4), emblemY + ClockMath.y(i, 8, er + 4), 1, accent);
@@ -117,7 +117,7 @@ public final class ClockDialWidget extends ClickableWidget {
         double length = radius * (hand == 0 ? .48 : .78);
         double ex = cx() + ClockMath.x(position(hand), steps, length);
         double ey = cy() + ClockMath.y(position(hand), steps, length);
-        int color = !configured ? 0xFF747578 : hot ? 0xFFD8CEAC : hand == 0 ? 0xFFB79665 : sun ? 0xFFC3AD83 : 0xFF9BBAC7;
+        int color = !configured ? 0xFF747578 : hot ? 0xFFD8CEAC : hand == 0 ? 0xFFE6BC71 : sun ? 0xFFFFD98C : 0xFF91E7FF;
         line(c, cx() + 1, cy() + 1, ex + 1, ey + 1, hand == 0 ? 5 : 3, 0xB0000000);
         line(c, cx(), cy(), ex, ey, hand == 0 ? 3 : 1.5f, color);
         // Distinct draggable handles at different radii, also visible at 12:00.

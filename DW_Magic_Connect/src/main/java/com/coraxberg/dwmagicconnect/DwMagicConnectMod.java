@@ -1,7 +1,6 @@
 package com.coraxberg.dwmagicconnect;
 
 import com.coraxberg.dwmagicconnect.command.MagicConnectCommands;
-import com.coraxberg.dwmagicconnect.config.DwMagicConnectConfig;
 import com.coraxberg.dwmagicconnect.item.MagicConnectData;
 import com.coraxberg.dwmagicconnect.network.DwMagicConnectNetworking;
 import com.coraxberg.dwmagicconnect.radio.MagicRelayService;
@@ -11,6 +10,7 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.item.ItemStack;
+import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -25,9 +25,9 @@ public final class DwMagicConnectMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        DwMagicConnectConfig.register();
         MagicConnectCommands.register();
         DwMagicConnectNetworking.registerServerReceivers();
+        MagicRelayService.register();
         registerRadioInteraction();
 
         RpChatEvents.LOCAL_IC_MESSAGE.register(event -> MagicRelayService.relay(event));
@@ -69,6 +69,9 @@ public final class DwMagicConnectMod implements ModInitializer {
         // when the crosshair happens to be over an entity.
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
             ItemStack stack = player.getStackInHand(hand);
+            if (entity instanceof ItemFrameEntity) {
+                return ActionResult.PASS;
+            }
             if (player.isSpectator() || !MagicConnectData.isRadio(stack)) {
                 return ActionResult.PASS;
             }

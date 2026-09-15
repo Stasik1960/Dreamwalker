@@ -16,3 +16,9 @@ DW Magic Connect 0.2.0, RP Chat 0.1.14 и RP Chat UI 0.3.7 собраны из �
 | --- | --- | --- |
 | RP Chat 0.1.14 | [rp-chat-0.1.14.jar](RP-Chat/rp-chat-0.1.14.jar) | 8A23A261AC03301A3E0D356558019828FF224AD749A31FCB8307E1F13150FC0E |
 | RP Chat UI 0.3.7 | [rp-chat-ui-0.3.7.jar](RP-Chat-UI/rp-chat-ui-0.3.7.jar) | 6F0A22474D5C8C7622F632C7DB81FA3FBC709761E37290D30A3C657AE1BC701B |
+
+## DW Magic Connect 0.4.0
+
+[dw-magic-connect-0.4.0.jar](DW_Magic_Connect/dw-magic-connect-0.4.0.jar) — SHA-256: BABE857E6F482563DCA310BB9646163886CCA6201DF934E64B47E996658A2E00
+
+Один канал, автосохранение, управление кристаллом и боковыми клавишами, громкая связь в инвентаре и рамках. Радиус 1–10 блоков. Требует RP Chat 0.1.15+; замените рацию на сервере и клиентах. [Описание](../DW_Magic_Connect/README.md).

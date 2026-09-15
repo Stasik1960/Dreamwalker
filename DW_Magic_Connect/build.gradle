@@ -48,6 +48,20 @@ tasks.register('radioContractCheck', JavaExec) {
     mainClass = 'com.coraxberg.dwmagicconnect.item.RadioContractCheck'
 }
 
+tasks.register('networkContractCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.coraxberg.dwmagicconnect.network.NetworkContractCheck'
+}
+
+tasks.register('relayContractCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.coraxberg.dwmagicconnect.radio.RelayContractCheck'
+}
+
 tasks.named('check') {
     dependsOn tasks.named('radioContractCheck')
+    dependsOn tasks.named('networkContractCheck')
+    dependsOn tasks.named('relayContractCheck')
 }

@@ -1,77 +1,44 @@
 package com.coraxberg.dwmagicconnect.client;
 
-import com.coraxberg.dwmagicconnect.item.MagicConnectData;
+import com.coraxberg.dwmagicconnect.item.MagicConnectData.Frequency;
 import com.coraxberg.dwmagicconnect.network.DwMagicConnectNetworking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Hand;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public final class DwMagicConnectClient implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(
-                DwMagicConnectNetworking.OPEN_SCREEN,
+    @Override public void onInitializeClient() {
+        ClientPlayNetworking.registerGlobalReceiver(DwMagicConnectNetworking.OPEN_SCREEN,
                 (client, handler, buffer, responseSender) -> {
                     UUID token = buffer.readUuid();
-                    int handOrdinal = buffer.readVarInt();
+                    int hand = buffer.readVarInt();
                     boolean enabled = buffer.readBoolean();
-                    int transmitIndex = buffer.readVarInt();
-                    List<MagicConnectData.Frequency> channels = new ArrayList<>(MagicConnectData.CHANNEL_COUNT);
                     try {
-                        for (int index = 0; index < MagicConnectData.CHANNEL_COUNT; index++) {
-                            channels.add(new MagicConnectData.Frequency(
-                                    buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readInt()
-                            ));
-                        }
-                    } catch (IllegalArgumentException exception) {
-                        return;
-                    }
-
-                    client.execute(() -> openScreen(client, token, handOrdinal, enabled, channels, transmitIndex));
-                }
-        );
+                        Frequency frequency = new Frequency(buffer.readInt(), buffer.readInt(), buffer.readInt(), buffer.readInt());
+                        boolean speaker = buffer.readBoolean();
+                        int radius = buffer.readVarInt();
+                        if (hand < 0 || hand >= Hand.values().length || radius < 1 || radius > 10) return;
+                        client.execute(() -> {
+                            if (client.player != null) client.setScreen(new MagicConnectScreen(token, hand, enabled, frequency, speaker, radius));
+                        });
+                    } catch (IllegalArgumentException exception) { /* Ignore invalid server state. */ }
+                });
     }
-
-    private static void openScreen(
-            MinecraftClient client,
-            UUID token,
-            int handOrdinal,
-            boolean enabled,
-            List<MagicConnectData.Frequency> channels,
-            int transmitIndex
-    ) {
-        if (client.player == null || handOrdinal < 0 || handOrdinal >= Hand.values().length) return;
-        client.setScreen(new MagicConnectScreen(token, handOrdinal, enabled, channels, transmitIndex));
-    }
-
-    static void sendSettings(
-            UUID token,
-            int handOrdinal,
-            boolean enabled,
-            List<MagicConnectData.Frequency> channels,
-            int transmitIndex
-    ) {
+    static void sendSettings(UUID token, int hand, boolean enabled, Frequency frequency, boolean speaker, int radius) {
+        if (MinecraftClient.getInstance().getNetworkHandler() == null || !ClientPlayNetworking.canSend(DwMagicConnectNetworking.SAVE_SETTINGS)) return;
         PacketByteBuf buffer = PacketByteBufs.create();
-        buffer.writeUuid(token);
-        buffer.writeVarInt(handOrdinal);
-        buffer.writeBoolean(enabled);
-        buffer.writeVarInt(transmitIndex);
-        for (MagicConnectData.Frequency frequency : channels) {
-            for (int h = 0; h < 4; h++) buffer.writeInt(frequency.hand(h));
-        }
+        buffer.writeUuid(token); buffer.writeVarInt(hand); buffer.writeBoolean(enabled);
+        for (int i = 0; i < 4; i++) buffer.writeInt(frequency.hand(i));
+        buffer.writeBoolean(speaker); buffer.writeVarInt(radius);
         ClientPlayNetworking.send(DwMagicConnectNetworking.SAVE_SETTINGS, buffer);
     }
-
     static void sendClose(UUID token) {
-        PacketByteBuf buffer = PacketByteBufs.create();
-        buffer.writeUuid(token);
+        if (MinecraftClient.getInstance().getNetworkHandler() == null || !ClientPlayNetworking.canSend(DwMagicConnectNetworking.CLOSE_SCREEN)) return;
+        PacketByteBuf buffer = PacketByteBufs.create(); buffer.writeUuid(token);
         ClientPlayNetworking.send(DwMagicConnectNetworking.CLOSE_SCREEN, buffer);
     }
 }
