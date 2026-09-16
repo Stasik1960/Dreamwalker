@@ -13,6 +13,57 @@ public final class RpChatEvents {
     private RpChatEvents() {
     }
 
+    /** Short chat controls, handled before RP mode parsing. True consumes the input. */
+    public static final Event<ChatControl> CHAT_CONTROL = EventFactory.createArrayBacked(
+            ChatControl.class, listeners -> (sender, raw) -> {
+                for (ChatControl listener : listeners) {
+                    if (listener.handle(sender, raw)) return true;
+                }
+                return false;
+            });
+
+    /** Prepare once, then resolve the visible body separately for every local/radio listener. */
+    public static final Event<IcBodyDecorator> PREPARE_IC_BODY = EventFactory.createArrayBacked(
+            IcBodyDecorator.class, listeners -> (sender, original, previous) -> {
+                RecipientBody result = previous;
+                for (IcBodyDecorator listener : listeners) {
+                    try {
+                        result = java.util.Objects.requireNonNull(listener.prepare(sender, original, result));
+                    } catch (RuntimeException ex) {
+                        LOGGER.error("Cannot prepare IC message; concealing its body", ex);
+                        return target -> "[Речь недоступна]";
+                    }
+                }
+                return result;
+            });
+
+    public static RecipientBody prepareIcBody(ServerPlayerEntity sender, String message) {
+        RecipientBody prepared = PREPARE_IC_BODY.invoker().prepare(sender, message, target -> message);
+        return target -> {
+            try {
+                return java.util.Objects.requireNonNull(prepared.forRecipient(target));
+            } catch (RuntimeException ex) {
+                LOGGER.error("Cannot resolve IC message; concealing its body", ex);
+                return "[Речь недоступна]";
+            }
+        };
+    }
+
+    @FunctionalInterface
+    public interface ChatControl {
+        boolean handle(ServerPlayerEntity sender, String raw);
+    }
+
+    @FunctionalInterface
+    public interface RecipientBody {
+        String forRecipient(ServerPlayerEntity target);
+    }
+
+    @FunctionalInterface
+    public interface IcBodyDecorator {
+        RecipientBody prepare(ServerPlayerEntity sender, String original, RecipientBody previous);
+    }
+
     /** Fired after RP Chat delivers an ordinary IC local message. */
     public static final Event<LocalIcMessageListener> LOCAL_IC_MESSAGE = EventFactory.createArrayBacked(
             LocalIcMessageListener.class,
@@ -37,7 +88,12 @@ public final class RpChatEvents {
             ServerPlayerEntity sender,
             String message,
             int localRadius,
-            String volumeLabel
+            String volumeLabel,
+            RecipientBody body
     ) {
+        /** Compatibility constructor for callers of the original RP Chat API. */
+        public LocalIcMessage(ServerPlayerEntity sender, String message, int radius, String volumeLabel) {
+            this(sender, message, radius, volumeLabel, prepareIcBody(sender, message));
+        }
     }
 }

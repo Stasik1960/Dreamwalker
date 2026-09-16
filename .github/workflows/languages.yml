@@ -1,0 +1,37 @@
+name: DW Languages build
+on:
+  push:
+    paths:
+      - 'DW_Languages/**'
+      - 'RP-Chat/**'
+      - 'DW_Magic_Connect/**'
+      - '.github/workflows/languages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Build and check RP Chat
+        run: gradle -p RP-Chat build --no-daemon
+      - name: Build and check languages
+        run: gradle -p DW_Languages build --no-daemon
+      - name: Build and check compatible radio
+        run: gradle -p DW_Magic_Connect build --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dw-languages-bundle
+          path: |
+            DW_Languages/build/libs/dw-languages-0.1.0.jar
+            RP-Chat/build/libs/rp-chat-0.1.16.jar
+            DW_Magic_Connect/build/libs/dw-magic-connect-0.4.3.jar
+          if-no-files-found: error

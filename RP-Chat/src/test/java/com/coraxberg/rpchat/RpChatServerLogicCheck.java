@@ -35,7 +35,36 @@ public final class RpChatServerLogicCheck {
         }, net.minecraft.text.Style.EMPTY);
 
         checkSubmissionGuard();
+        checkLanguageIntegration();
         System.out.println("RP Chat server logic checks passed.");
+    }
+
+    private static void checkLanguageIntegration() {
+        var unchanged = com.coraxberg.rpchat.api.RpChatEvents.prepareIcBody(null, "hello");
+        require(unchanged.forRecipient(null).equals("hello"), "no language mod preserves original");
+        var knows = new java.util.concurrent.atomic.AtomicBoolean(false);
+        var preparations = new AtomicInteger();
+        com.coraxberg.rpchat.api.RpChatEvents.PREPARE_IC_BODY.register((sender, original, previous) -> {
+            preparations.incrementAndGet();
+            return recipient -> "[Orc] " + (knows.get() ? previous.forRecipient(recipient) : "gruk");
+        });
+        var prepared = com.coraxberg.rpchat.api.RpChatEvents.prepareIcBody(null, "secret");
+        var event = new com.coraxberg.rpchat.api.RpChatEvents.LocalIcMessage(null, "secret", 18, "", prepared);
+        require(event.body().forRecipient(null).equals("[Orc] gruk"), "radio receives concealed speech");
+        knows.set(true);
+        require(event.body().forRecipient(null).equals("[Orc] secret"), "known language uses original");
+        knows.set(false);
+        require(prepared.forRecipient(null).equals("[Orc] gruk"), "listeners do not share knowledge");
+        require(preparations.get() == 1, "local and radio share one preparation");
+
+        com.coraxberg.rpchat.api.RpChatEvents.PREPARE_IC_BODY.register((sender, original, previous) -> {
+            return recipient -> { throw new IllegalStateException("intentional recipient failure"); };
+        });
+        String failed = com.coraxberg.rpchat.api.RpChatEvents.prepareIcBody(null, "secret").forRecipient(null);
+        require(!failed.contains("secret"), "failure never reveals original speech");
+        com.coraxberg.rpchat.api.RpChatEvents.CHAT_CONTROL.register((sender, raw) -> raw.equals("+orc"));
+        require(com.coraxberg.rpchat.api.RpChatEvents.CHAT_CONTROL.invoker().handle(null, "+orc"), "language control consumed");
+        require(!com.coraxberg.rpchat.api.RpChatEvents.CHAT_CONTROL.invoker().handle(null, "ordinary speech"), "ordinary chat preserved");
     }
 
     private static void checkClassification() {

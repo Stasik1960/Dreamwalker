@@ -77,7 +77,8 @@ public final class MagicRelayService {
 
         for (Map.Entry<UUID, Delivery> entry : deliveries.entrySet()) {
             ServerPlayerEntity listener = server.getPlayerManager().getPlayer(entry.getKey());
-            if (listener != null) listener.sendMessage(formatMessage(sender, message, entry.getValue()), false);
+            if (listener != null) listener.sendMessage(
+                    formatMessage(sender, event.body().forRecipient(listener), entry.getValue()), false);
         }
     }
 

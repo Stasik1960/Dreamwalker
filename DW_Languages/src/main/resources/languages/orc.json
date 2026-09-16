@@ -1,0 +1,31 @@
+{
+  "locale": "orc",
+  "name": "Оркский",
+  "enabled": true,
+  "unicode_normalization": "NFC",
+  "salt": "orc-v1",
+  "categories": {
+    "C": "kgrtdbzm",
+    "V": "aou",
+    "S": "ptk",
+    "Z": "bdg"
+  },
+  "syllables": [
+    "CVC",
+    "CV",
+    "CVCC"
+  ],
+  "max_syllables": 4,
+  "rewrite_in": {},
+  "rules": [
+    "S/Z/V_V",
+    "[sm]//_#"
+  ],
+  "orthography": {
+    "aa": "â",
+    "oo": "û"
+  },
+  "exceptions": [
+    "Minecraft"
+  ]
+}

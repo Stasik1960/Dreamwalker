@@ -1,0 +1,32 @@
+{
+  "locale": "elf",
+  "name": "Эльфийский",
+  "enabled": true,
+  "unicode_normalization": "NFC",
+  "salt": "elf-v1",
+  "categories": {
+    "C": "lmnsvthf",
+    "V": "aeiou",
+    "R": "lr",
+    "F": "ie"
+  },
+  "syllables": [
+    "CV",
+    "V",
+    "CRV"
+  ],
+  "max_syllables": 4,
+  "rewrite_in": {},
+  "rules": [
+    "i/j/_V",
+    "s//_#",
+    "nt/\\/_V"
+  ],
+  "orthography": {
+    "j": "y",
+    "ii": "í"
+  },
+  "exceptions": [
+    "Minecraft"
+  ]
+}

@@ -258,6 +258,7 @@ public class RpChatMod implements ModInitializer {
         String raw = rawMessage.strip();
         if (raw.isEmpty()) return;
 
+        if (RpChatEvents.CHAT_CONTROL.invoker().handle(sender, raw)) return;
         if (handleModeSwitch(sender, raw)) return;
 
         RpChatSyntax.ClassifiedMessage initial = RpChatSyntax.classify(raw);
@@ -409,11 +410,13 @@ public class RpChatMod implements ModInitializer {
         MinecraftServer server = sender.getServer();
         if (server == null) return;
 
-        Text text = formatLocalMessage(sender, message, ooc, volumeLabel);
+        RpChatEvents.RecipientBody body = ooc ? target -> message : RpChatEvents.prepareIcBody(sender, message);
         int recipients = 0;
 
         for (ServerPlayerEntity target : server.getPlayerManager().getPlayerList()) {
             if (shouldReceiveLocal(sender, target, radius)) {
+                // Copy/favorites metadata must contain only what this listener understands.
+                Text text = formatLocalMessage(sender, body.forRecipient(target), ooc, volumeLabel);
                 target.sendMessage(formatForListener(sender, target, text), false);
                 recipients++;
             }
@@ -424,7 +427,7 @@ public class RpChatMod implements ModInitializer {
 
         if (!ooc) {
             RpChatEvents.LOCAL_IC_MESSAGE.invoker().onLocalIcMessage(
-                    new RpChatEvents.LocalIcMessage(sender, message, radius, volumeLabel));
+                    new RpChatEvents.LocalIcMessage(sender, message, radius, volumeLabel, body));
         }
     }
 
@@ -847,7 +850,7 @@ public class RpChatMod implements ModInitializer {
         return isGameMasterOrAdmin(player) ? Formatting.RED : Formatting.GREEN;
     }
 
-    private static boolean isGameMasterOrAdmin(ServerPlayerEntity player) {
+    public static boolean isGameMasterOrAdmin(ServerPlayerEntity player) {
         return player.hasPermissionLevel(2)
                 || player.getCommandTags().contains(TAG_GM)
                 || player.getCommandTags().contains(TAG_ADMIN)
