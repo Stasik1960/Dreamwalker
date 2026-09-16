@@ -56,6 +56,11 @@ public final class RpChatServerLogicCheck {
         knows.set(false);
         require(prepared.forRecipient(null).equals("[Orc] gruk"), "listeners do not share knowledge");
         require(preparations.get() == 1, "local and radio share one preparation");
+        var rendered = RpChatTextParser.formatLocalMessage(net.minecraft.text.Text.literal("Nick"),
+                prepared.forRecipient(null), false, "шёпотом");
+        require(rendered.getString().equals("Nick: (шёпотом) [Orc] gruk"), "language and volume formatting");
+        require(rendered.getStyle().getInsertion().equals("rpchat:body:[Orc] gruk"), "copy/favorites contain concealed body");
+        require(!net.minecraft.text.Text.Serializer.toJson(rendered).contains("secret"), "client packet has no hidden original");
 
         com.coraxberg.rpchat.api.RpChatEvents.PREPARE_IC_BODY.register((sender, original, previous) -> {
             return recipient -> { throw new IllegalStateException("intentional recipient failure"); };

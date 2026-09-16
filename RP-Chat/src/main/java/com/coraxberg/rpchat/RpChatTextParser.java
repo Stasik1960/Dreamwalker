@@ -11,6 +11,26 @@ final class RpChatTextParser {
     private RpChatTextParser() {
     }
 
+    static MutableText formatLocalMessage(Text senderName, String message, boolean ooc, String volumeLabel) {
+        Formatting mainColor = ooc ? Formatting.LIGHT_PURPLE : Formatting.WHITE;
+        MutableText result = senderName.copy();
+        result.append(Text.literal(": ").formatted(mainColor));
+
+        if (volumeLabel != null && !volumeLabel.isBlank()) {
+            result.append(Text.literal("(" + volumeLabel + ") ").formatted(Formatting.GRAY));
+        }
+
+        if (ooc) {
+            result.append(Text.literal("((").formatted(Formatting.LIGHT_PURPLE));
+            result.append(parse(message, Formatting.LIGHT_PURPLE, false));
+            result.append(Text.literal("))").formatted(Formatting.LIGHT_PURPLE));
+        } else {
+            result.append(parse(message, Formatting.WHITE, false));
+        }
+
+        return result.setStyle(result.getStyle().withInsertion("rpchat:body:" + plain(message)));
+    }
+
     static MutableText parse(String raw, Formatting defaultColor, boolean includeLegacyCodes) {
         MutableText result = null;
         StringBuilder segment = new StringBuilder();

@@ -416,7 +416,7 @@ public class RpChatMod implements ModInitializer {
         for (ServerPlayerEntity target : server.getPlayerManager().getPlayerList()) {
             if (shouldReceiveLocal(sender, target, radius)) {
                 // Copy/favorites metadata must contain only what this listener understands.
-                Text text = formatLocalMessage(sender, body.forRecipient(target), ooc, volumeLabel);
+                Text text = RpChatTextParser.formatLocalMessage(displayNameText(sender), body.forRecipient(target), ooc, volumeLabel);
                 target.sendMessage(formatForListener(sender, target, text), false);
                 recipients++;
             }
@@ -429,26 +429,6 @@ public class RpChatMod implements ModInitializer {
             RpChatEvents.LOCAL_IC_MESSAGE.invoker().onLocalIcMessage(
                     new RpChatEvents.LocalIcMessage(sender, message, radius, volumeLabel, body));
         }
-    }
-
-    private static Text formatLocalMessage(ServerPlayerEntity sender, String message, boolean ooc, String volumeLabel) {
-        Formatting mainColor = ooc ? Formatting.LIGHT_PURPLE : Formatting.WHITE;
-        MutableText result = displayNameText(sender);
-        result.append(Text.literal(": ").formatted(mainColor));
-
-        if (volumeLabel != null && !volumeLabel.isBlank()) {
-            result.append(Text.literal("(" + volumeLabel + ") ").formatted(Formatting.GRAY));
-        }
-
-        if (ooc) {
-            result.append(Text.literal("((").formatted(Formatting.LIGHT_PURPLE));
-            result.append(RpChatTextParser.parse(message, Formatting.LIGHT_PURPLE, false));
-            result.append(Text.literal("))").formatted(Formatting.LIGHT_PURPLE));
-        } else {
-            result.append(RpChatTextParser.parse(message, Formatting.WHITE, false));
-        }
-
-        return withBodyInsertion(result, message);
     }
 
     private static void sendLocalAction(ServerPlayerEntity sender, String action, int radius, String volumeLabel) {
