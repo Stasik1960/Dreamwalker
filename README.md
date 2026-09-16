@@ -71,8 +71,8 @@ RP Chat управляет доставкой и содержанием сооб
 | RP Chat | [0.1.15](releases/RP-Chat/rp-chat-0.1.15.jar); исходники уже 0.1.16 |
 | RP Chat UI | [0.3.7](releases/RP-Chat-UI/rp-chat-ui-0.3.7.jar) |
 | DW Magic Connect | [0.4.2](releases/DW_Magic_Connect/dw-magic-connect-0.4.2.jar); исходники уже 0.4.3 |
-| DW Languages | Собрать из исходников или получить артефакт workflow ниже |
-| MC-Pool | Собрать из исходников: `build/libs/pool-billiards-0.1.13.jar` |
+| DW Languages | [0.1.0](releases/DW_Languages/dw-languages-0.1.0.jar) · [SHA-256](releases/DW_Languages/dw-languages-0.1.0.jar.sha256) |
+| MC-Pool | [0.1.13](releases/MC-Pool/pool-billiards-0.1.13.jar) · [SHA-256](releases/MC-Pool/pool-billiards-0.1.13.jar.sha256) |
 
 Для языков нужен комплект **RP Chat 0.1.16 + DW Languages 0.1.0**, а при использовании раций — **DW Magic Connect 0.4.3**. Старые JAR 0.1.15 / 0.4.2 из таблицы этот комплект не заменяют. Workflow [DW Languages build](.github/workflows/languages.yml) собирает три совместимых мода в артефакт `dw-languages-bundle`; его можно запустить вручную во вкладке Actions. Наличие успешного запуска нужно проверять в Actions.
 
