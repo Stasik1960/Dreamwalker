@@ -50,14 +50,23 @@ public final class PoolPhysicsCheck {
         check(rail.drainPhysicsSounds().stream().anyMatch(s -> s.type() == PoolGameState.SoundType.CUSHION),
                 "rail should emit a sound");
 
-        PoolBall sinking = new PoolBall(1, 40, 40);
-        sinking.vx = -8;
-        sinking.vy = -8;
+        var corner = PoolTableGeometry.POCKETS.get(0);
+        double inwardX = 450 - corner.x(), inwardY = 245 - corner.y();
+        double inwardLength = Math.hypot(inwardX, inwardY);
+        inwardX /= inwardLength;
+        inwardY /= inwardLength;
+        PoolBall sinking = new PoolBall(1, corner.x() + inwardX * 60, corner.y() + inwardY * 60);
+        sinking.vx = -inwardX * 20;
+        sinking.vy = -inwardY * 20;
         PoolGameState pocket = emptyGame(sinking);
-        for (int i = 0; i < 3 && !sinking.pocketed; i++) pocket.tickPhysics();
+        boolean pocketSound = false;
+        for (int i = 0; i < 12 && !sinking.pocketed; i++) {
+            pocket.tickPhysics();
+            pocketSound |= pocket.drainPhysicsSounds().stream()
+                    .anyMatch(s -> s.type() == PoolGameState.SoundType.POCKET);
+        }
         check(sinking.pocketed, "corner pocket should capture a ball");
-        check(pocket.drainPhysicsSounds().stream().anyMatch(s -> s.type() == PoolGameState.SoundType.POCKET),
-                "pocket should emit a sound");
+        check(pocketSound, "pocket should emit a sound");
 
         PoolBall symmetricCue = new PoolBall(0, 100, 245);
         PoolBall left = new PoolBall(1, 145, 231);
@@ -98,22 +107,23 @@ public final class PoolPhysicsCheck {
 
     private static void checkModelPockets() {
         check(PoolTableGeometry.POCKETS.size() == 6, "model must have six pockets");
+        int index = 0;
         for (var pocket : PoolTableGeometry.POCKETS) {
             for (double speed : new double[]{8, 30, 58.5}) {
-                double dx = 450 - pocket.x(), dy = 245 - pocket.y();
-                double length = Math.hypot(dx, dy);
-                dx /= length; dy /= length;
-                PoolBall ball = new PoolBall(1, pocket.x() + dx * 100, pocket.y() + dy * 100);
-                ball.vx = -dx * speed; ball.vy = -dy * speed;
-                var game = emptyGame(ball);
-                for (int tick = 0; tick < 30 && !ball.pocketed; tick++) game.tickPhysics();
-                check(ball.pocketed, "visual pocket must accept centre shot at " + speed + ": " + pocket);
+                checkPocketShot(pocket, speed, 0, "straight pocket " + index);
             }
+            // Approach the same opening off-axis, without clipping its jaw.
+            checkPocketShot(pocket, 30, PoolGameState.BALL_R * 0.65, "angled pocket " + index);
+            checkPocketMiss(pocket, index);
+            index++;
         }
-        // A ball still supported by the inner edge of a middle pocket should
-        // remain visible; the previous radius-38 circle removed it here.
+        // Capture begins shortly after the centre crosses the visible opening,
+        // rather than after the trailing edge of the whole ball fits through.
         var side = PoolTableGeometry.POCKETS.stream().filter(p -> !Double.isNaN(p.innerY()) && p.y() < 0).findFirst().orElseThrow();
-        check(!side.captures(450, 25), "do not pocket balls still on the felt");
+        double captureEdge = Math.min(side.innerY(),
+                side.y() + side.ry() - PoolGameState.BALL_R * 0.35);
+        check(!side.captures(side.x(), captureEdge + 0.01), "do not pocket a centre still supported by the cloth");
+        check(side.captures(side.x(), captureEdge - 0.01), "capture when support is lost inside visible edge");
         PoolBall miss = new PoolBall(1, 505, 65);
         miss.vy = -30;
         var game = emptyGame(miss);
@@ -137,6 +147,46 @@ public final class PoolPhysicsCheck {
                 }
             }
         }
-        System.out.println("Model pocket checks passed: 18 centre shots, near miss, early capture, 63 jaw trajectories.");
+        System.out.println("Model pocket checks passed: 18 straight shots, 6 angled shots, 6 lip misses, support edge, 63 jaw trajectories.");
+    }
+
+    private static void checkPocketShot(PoolTableGeometry.Pocket pocket, double speed,
+                                        double lateralOffset, String label) {
+        double ix = 450 - pocket.x(), iy = 245 - pocket.y();
+        double length = Math.hypot(ix, iy);
+        ix /= length;
+        iy /= length;
+        double px = -iy, py = ix;
+        PoolBall ball = new PoolBall(1, pocket.x() + ix * 100 + px * lateralOffset,
+                pocket.y() + iy * 100 + py * lateralOffset);
+        double tx = pocket.x() - ball.x, ty = pocket.y() - ball.y;
+        double targetLength = Math.hypot(tx, ty);
+        ball.vx = tx / targetLength * speed;
+        ball.vy = ty / targetLength * speed;
+        var game = emptyGame(ball);
+        for (int tick = 0; tick < 40 && !ball.pocketed && game.areBallsMoving(); tick++) game.tickPhysics();
+        check(ball.pocketed, label + " must be captured at " + speed + ": " + pocket);
+    }
+
+    private static void checkPocketMiss(PoolTableGeometry.Pocket pocket, int index) {
+        double ix = 450 - pocket.x(), iy = 245 - pocket.y();
+        double length = Math.hypot(ix, iy);
+        ix /= length;
+        iy /= length;
+        double px = -iy, py = ix;
+        double missOffset = Math.max(pocket.rx(), pocket.ry()) + PoolGameState.BALL_R * 0.75;
+        PoolBall ball = new PoolBall(1, pocket.x() + ix * 100 + px * missOffset,
+                pocket.y() + iy * 100 + py * missOffset);
+        ball.vx = -ix * 30;
+        ball.vy = -iy * 30;
+        var game = emptyGame(ball);
+        boolean hitCushion = false;
+        for (int tick = 0; tick < 30 && game.areBallsMoving(); tick++) {
+            game.tickPhysics();
+            hitCushion |= game.drainPhysicsSounds().stream()
+                    .anyMatch(sound -> sound.type() == PoolGameState.SoundType.CUSHION);
+        }
+        check(!ball.pocketed, "shot outside lip must not be pocketed: " + index);
+        check(hitCushion, "shot outside lip should contact a jaw/rail: " + index);
     }
 }

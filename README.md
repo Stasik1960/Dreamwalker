@@ -8,7 +8,7 @@
 
 | Проект | Версия | Возможности | Установка |
 | --- | --- | --- | --- |
-| [MC-Pool](MC-Pool/README.md) | 0.1.13 | Стол 5×3 блока, пул-восьмёрка, движущиеся шары, звуки, адаптивный деревянный интерфейс | Сервер и клиенты |
+| [MC-Pool](MC-Pool/README.md) | 0.1.14 | Стол 5×3 блока, пул-восьмёрка, движущиеся шары, звуки, адаптивный деревянный интерфейс | Сервер и клиенты |
 | [RP Chat](RP-Chat/README.md) | 0.1.16 | Локальная речь, громкость, действия, повествование, дайсы, роли, цветные ники и интеграции | Сервер и клиенты для полного набора функций |
 | [RP Chat UI](RP-Chat-UI/README.md) | 0.3.7 | Перемещаемые окна, вкладки, поиск, избранное, оформление и редактор сообщений | Интерфейс на клиенте; серверная часть для дополнительных функций |
 | [DW Magic Connect](DW_Magic_Connect/README.md) | 0.4.3 | Магические рации, частоты на часах, громкая связь, интеграция с RP Chat и языками | Сервер и клиенты; RP Chat 0.1.16+ |
@@ -72,9 +72,9 @@ RP Chat управляет доставкой и содержанием сооб
 | RP Chat UI | [0.3.7](releases/RP-Chat-UI/rp-chat-ui-0.3.7.jar) |
 | DW Magic Connect | [0.4.3](releases/DW_Magic_Connect/dw-magic-connect-0.4.3.jar) · [SHA-256](releases/DW_Magic_Connect/dw-magic-connect-0.4.3.jar.sha256) |
 | DW Languages | [0.1.0](releases/DW_Languages/dw-languages-0.1.0.jar) · [SHA-256](releases/DW_Languages/dw-languages-0.1.0.jar.sha256) |
-| MC-Pool | [0.1.13](releases/MC-Pool/pool-billiards-0.1.13.jar) · [SHA-256](releases/MC-Pool/pool-billiards-0.1.13.jar.sha256) |
+| MC-Pool | [0.1.14](releases/MC-Pool/pool-billiards-0.1.14.jar) · [SHA-256](releases/MC-Pool/pool-billiards-0.1.14.jar.sha256) |
 
-Для языков нужен комплект **RP Chat 0.1.16 + DW Languages 0.1.0**, а при использовании раций — **DW Magic Connect 0.4.3**. Все три готовых JAR доступны в таблице выше. RP Chat 0.1.16, DW Magic Connect 0.4.3, DW Languages 0.1.0 и MC-Pool 0.1.13 предоставлены пользователем и опубликованы без пересборки. Workflow [DW Languages build](.github/workflows/languages.yml) собирает три совместимых мода в артефакт `dw-languages-bundle`; его можно запустить вручную во вкладке Actions. Наличие успешного запуска нужно проверять в Actions.
+Для языков нужен комплект **RP Chat 0.1.16 + DW Languages 0.1.0**, а при использовании раций — **DW Magic Connect 0.4.3**. Все три готовых JAR доступны в таблице выше. RP Chat 0.1.16, DW Magic Connect 0.4.3, DW Languages 0.1.0 предоставлены пользователем и опубликованы без пересборки. MC-Pool 0.1.14 собран из исходников в этом репозитории: исправлены модель и коллайдеры луз, удлинён кий, уточнена линия прицела; выполнены `check build` без запуска Minecraft. Workflow [DW Languages build](.github/workflows/languages.yml) собирает три совместимых мода в артефакт `dw-languages-bundle`; его можно запустить вручную во вкладке Actions. Наличие успешного запуска нужно проверять в Actions.
 
 ## Установка и сборка
 

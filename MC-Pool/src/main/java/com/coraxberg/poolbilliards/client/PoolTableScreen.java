@@ -3,6 +3,7 @@ package com.coraxberg.poolbilliards.client;
 import com.coraxberg.poolbilliards.PoolBilliardsMod;
 import com.coraxberg.poolbilliards.game.PoolBall;
 import com.coraxberg.poolbilliards.game.PoolGameState;
+import com.coraxberg.poolbilliards.game.PoolTableGeometry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -132,12 +133,9 @@ public class PoolTableScreen extends Screen {
             fill(context, tableX + tableW + rail - 5, markY - 2, tableX + tableW + rail - 3, markY + 2, BRASS);
         }
 
-        drawPocket(context, tableX, tableY);
-        drawPocket(context, tableX + tableW / 2, tableY);
-        drawPocket(context, tableX + tableW, tableY);
-        drawPocket(context, tableX, tableY + tableH);
-        drawPocket(context, tableX + tableW / 2, tableY + tableH);
-        drawPocket(context, tableX + tableW, tableY + tableH);
+        for (PoolTableGeometry.Pocket pocket : PoolTableGeometry.POCKETS) {
+            drawPocket(context, pocket);
+        }
 
         for (PoolBall b : state.balls) drawBall(context, b);
 
@@ -148,30 +146,41 @@ public class PoolTableScreen extends Screen {
             double dx = mouseX - cx;
             double dy = mouseY - cy;
             double len = Math.max(1, Math.sqrt(dx * dx + dy * dy));
-            int lineColor = dragging ? 0xFFFFE9A8 : 0x99FFFFFF;
+            int lineColor = dragging ? 0xCCFFE9A8 : 0x80FFFFFF;
             double aimLength = Math.min(90, tableW * 0.20);
+            double start = ballRadius() + 2;
             context.enableScissor(tableX, tableY, tableX + tableW, tableY + tableH);
-            drawLine(context, cx, cy, (int)(cx - dx / len * aimLength), (int)(cy - dy / len * aimLength), lineColor);
+            drawLine(context, cx - dx / len * start, cy - dy / len * start,
+                    cx - dx / len * aimLength, cy - dy / len * aimLength, lineColor);
             context.disableScissor();
         }
     }
 
-    private void drawPocket(DrawContext context, int x, int y) {
-        int radius = Math.max(4, (int) Math.round(PoolGameState.POCKET_R * tableW / PoolGameState.TABLE_W));
-        fillCircle(context, x, y, radius, 0xFF050505);
-        fillCircle(context, x, y, Math.max(2, radius - 2), 0xFF000000);
+    private void drawPocket(DrawContext context, PoolTableGeometry.Pocket pocket) {
+        // Use the model's position and two radii, including the side-pocket
+        // setback. Subpixel geometry keeps the opening round at large GUI scale.
+        float rx = (float) (pocket.rx() * tableW / PoolGameState.TABLE_W);
+        float ry = (float) (pocket.ry() * tableH / PoolGameState.TABLE_H);
+        context.getMatrices().push();
+        context.getMatrices().translate(tableX + pocket.x() * tableW / PoolGameState.TABLE_W,
+                tableY + pocket.y() * tableH / PoolGameState.TABLE_H, 0);
+        context.getMatrices().scale(rx / 48, ry / 48, 1);
+        fillCircle(context, 0, 0, 48, 0xFF19110E);
+        fillCircle(context, 0, 0, 46, 0xFF020303);
+        context.getMatrices().pop();
     }
 
     private void drawAimingCue(DrawContext context, int ballX, int ballY, int mouseX, int mouseY, double power) {
         double angle = Math.atan2(mouseY - ballY, mouseX - ballX);
         int ballRadius = ballRadius();
-        int pullBack = (int) Math.round(power * 15);
+        double pullBack = power * tableW * 0.025;
         context.getMatrices().push();
         context.getMatrices().translate(ballX, ballY, 300);
         context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotation((float) angle));
         context.getMatrices().translate(ballRadius + 3 + pullBack, 0, 0);
-        float cueScale = Math.max(0.35f, Math.min(1.0f, tableW / 650.0f));
-        context.getMatrices().scale(cueScale, cueScale, 1);
+        // Length follows the table rather than being capped at 128 GUI pixels.
+        // Scale width independently to retain a slender shaft and tapered tip.
+        context.getMatrices().scale(tableW * 0.40f / 128, Math.max(3, ballRadius * 0.85f) / 16, 1);
         context.drawTexture(CUE_TEXTURE, 0, -8, 0, 0, 128, 16, 128, 16);
         context.getMatrices().pop();
     }
@@ -401,14 +410,19 @@ public class PoolTableScreen extends Screen {
         }
     }
 
-    private void drawLine(DrawContext context, int x1, int y1, int x2, int y2, int color) {
-        int steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1));
-        if (steps <= 0) return;
-        for (int i = 0; i <= steps; i++) {
-            int x = x1 + (x2 - x1) * i / steps;
-            int y = y1 + (y2 - y1) * i / steps;
-            fill(context, x, y, x + 1, y + 1, color);
-        }
+    private void drawLine(DrawContext context, double x1, double y1, double x2, double y2, int color) {
+        double length = Math.hypot(x2 - x1, y2 - y1);
+        if (length <= 0) return;
+        // A single thin quad replaces the staircase of whole GUI pixels. Keep
+        // at least one physical screen pixel at every Minecraft GUI scale.
+        float thickness = (float) Math.max(0.5, 1.0 / client.getWindow().getScaleFactor());
+        context.getMatrices().push();
+        context.getMatrices().translate(x1, y1, 0);
+        context.getMatrices().multiply(RotationAxis.POSITIVE_Z.rotation((float) Math.atan2(y2-y1, x2-x1)));
+        context.getMatrices().translate(0, -thickness / 2, 0);
+        context.getMatrices().scale((float) length, thickness, 1);
+        context.fill(0, 0, 1, 1, color);
+        context.getMatrices().pop();
     }
 
     private void fill(DrawContext context, int x1, int y1, int x2, int y2, int color) {

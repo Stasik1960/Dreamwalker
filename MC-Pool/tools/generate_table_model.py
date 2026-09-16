@@ -14,14 +14,71 @@ FOOTPRINT = [(x, z) for z in range(-1, 2) for x in range(-2, 3)]
 boxes = []
 pockets = []
 
+# A single cut-out definition drives the cloth, slate, cushions, wooden frame,
+# GUI and server capture volumes. Keep a solid wooden back behind every well.
+for px in (-27.4, 43.4):
+    for pz in (-11.4, 27.4):
+        pockets.append({"x": px, "z": pz, "radius": 2.1, "innerZ": None})
+for pz in (-12.0, 28.0):
+    pockets.append({"x": 8, "z": pz, "radius": 2.15,
+                    "innerZ": pz + (2.15 if pz < 0 else -2.15)})
+
+# Quarter-unit slices are baked once. Merge unchanged strips so the long,
+# straight sections stay single cuboids rather than a grid of tiny voxels.
+def cutouts(bounds):
+    x0, y0, z0, x1, y1, z1 = bounds
+    relevant = [p for p in pockets if p["x"] + p["radius"] > x0
+                and p["x"] - p["radius"] < x1
+                and p["z"] + p["radius"] > z0 and p["z"] - p["radius"] < z1]
+    cuts = sorted({z0, z1, *[i / 4 for i in range(math.ceil(z0*4), math.floor(z1*4)+1)]})
+    active, result = {}, []
+    for za, zb in zip(cuts, cuts[1:]):
+        zm = (za + zb) / 2
+        intervals = [(x0, x1)]
+        for p in relevant:
+            squared = p["radius"]**2 - (zm - p["z"])**2
+            if squared <= 0:
+                continue
+            half = math.sqrt(squared)
+            lo, hi = round(p["x"] - half, 5), round(p["x"] + half, 5)
+            remaining = []
+            for a, b in intervals:
+                if hi <= a or lo >= b:
+                    remaining.append((a, b))
+                else:
+                    if lo > a:
+                        remaining.append((a, lo))
+                    if hi < b:
+                        remaining.append((hi, b))
+            intervals = remaining
+        next_active = {}
+        for interval in intervals:
+            a, b = interval
+            start = active.pop(interval, za)
+            next_active[interval] = start
+        for (a, b), start in active.items():
+            result.append((a, y0, start, b, y1, za))
+        active = next_active
+    result.extend((a, y0, start, b, y1, z1) for (a, b), start in active.items())
+    return result
+
 def box(name, bounds, material, group):
     boxes.append((name, bounds, material, group))
+
+def perforated(name, bounds, material, group):
+    for part in cutouts(bounds):
+        box(name, part, material, group)
 
 # Six legs, inset wooden apron, open rail gaps and simple hanging nets follow
 # the silhouette of the supplied reference. Cubes stay intentionally sparse.
 box("cabinet", (-30, 3.3, -14, 46, 7.7, 30), "wood", "Cabinet")
 box("lower moulding", (-31, 3, -15, 47, 3.55, 31), "rail", "Cabinet")
-box("upper trim", (-31.2, 7.15, -15.2, 47.2, 7.8, 31.2), "rail", "Cabinet")
+# The apron moulding is a ring, not a solid board hiding the pocket liners.
+for trim in ((-31.2, 7.15, -15.2, 47.2, 7.8, -14.6),
+             (-31.2, 7.15, 30.6, 47.2, 7.8, 31.2),
+             (-31.2, 7.15, -14.6, -30.6, 7.8, 30.6),
+             (46.6, 7.15, -14.6, 47.2, 7.8, 30.6)):
+    box("upper trim", trim, "rail", "Cabinet")
 for name, bounds in (
     ("front inset", (-28, 4.15, -15.32, 44, 6.8, -15.16)),
     ("back inset", (-28, 4.15, 31.16, 44, 6.8, 31.32)),
@@ -34,66 +91,25 @@ for x in (-28.8, 6.8, 42.4):
         box("leg base", (x+.2, .55, z+.2, x+3.4, 1.25, z+3.4), "leg", "Legs")
         box("leg shaft", (x+.55, 1.25, z+.55, x+3.05, 3.15, z+3.05), "leg", "Legs")
         box("leg collar", (x, 2.75, z, x+3.6, 3.28, z+3.6), "rail", "Legs")
-box("slate", (-29, 7.8, -13, 45, 8.12, 29), "pocket", "Playfield")
-box("green cloth", (-27.5, 8.12, -11.5, 43.5, 8.35, 27.5), "felt", "Playfield")
-for z0, z1 in ((-16, -12), (28, 32)):
-    for x0, x1 in ((-24, 4), (12, 40)):
-        box("long rail", (x0, 8.1, z0, x1, 10, z1), "rail", "Rails")
-        a, b = (-12.35, -11.45) if z0 < 0 else (27.45, 28.35)
-        box("long cushion", (x0+.02, 8.15, a, x1-.02, 9.15, b), "felt", "Rails")
-for x0, x1 in ((-32, -28), (44, 48)):
-    box("end rail", (x0, 8.1, -8, x1, 10, 24), "rail", "Rails")
+perforated("slate", (-29, 7.8, -13, 45, 8.12, 29), "pocket", "Playfield")
+perforated("green cloth", (-27.45, 8.12, -11.45, 43.45, 8.35, 27.45), "felt", "Playfield")
+# Four continuous, non-overlapping frame sections; the circular cuts no longer
+# remove the outside wall. The cushions terminate at exactly the same openings.
+for z0, z1 in ((-16, -12.35), (28.35, 32)):
+    perforated("long rail", (-32, 8.12, z0, 48, 10, z1), "rail", "Rails")
+    a, b = (-12.35, -11.45) if z0 < 0 else (27.45, 28.35)
+    perforated("long cushion", (-28.35, 8.15, a, 44.35, 9.15, b), "felt", "Rails")
+for x0, x1 in ((-32, -28.35), (44.35, 48)):
+    perforated("end rail", (x0, 8.12, -12.35, x1, 10, 28.35), "rail", "Rails")
     a, b = (-28.35, -27.45) if x0 < 0 else (43.45, 44.35)
-    box("end cushion", (a, 8.15, -7.98, b, 9.15, 23.98), "felt", "Rails")
+    perforated("end cushion", (a, 8.15, -11.45, b, 9.15, 27.45), "felt", "Rails")
 
-# Static strips follow circular arcs (12 samples), with an open inner mouth.
-# All adjacent strips share exact boundaries: no overlapping top faces.
-# They bake with the rest of the table; no per-frame pocket tessellation.
-for outer_x in (-32, 48):
-    for outer_z in (-16, 32):
-        def corner_box(name, u0, u1, v0, v1, y0, y1, material):
-            if u1-u0 < .001 or v1-v0 < .001:
-                return
-            ax, bx = (outer_x+u0, outer_x+u1) if outer_x < 0 else (outer_x-u1, outer_x-u0)
-            az, bz = (outer_z+v0, outer_z+v1) if outer_z < 0 else (outer_z-v1, outer_z-v0)
-            box(name, (ax, y0, az, bx, y1, bz), material, "Pockets")
-
-        # Pocket centre lies beside the physical playing-field corner.
-        centre, radius = 4.6, 3.2
-        pockets.append({"x": outer_x + (centre if outer_x < 0 else -centre),
-                        "z": outer_z + (centre if outer_z < 0 else -centre),
-                        "radius": radius, "innerZ": None})
-        for row in range(16):
-            v0, v1 = row*.5, (row+1)*.5
-            v = (v0+v1)/2
-            half = math.sqrt(max(0, radius*radius-(v-centre)**2))
-            left, right = centre-half, centre+half
-            if half > 0:
-                corner_box("round corner well", left, right, v0, v1, 8.36, 8.65, "pocket")
-            # On the inner half the rim tapers into a broad diagonal mouth.
-            corner_box("curved corner outer rim", 0, left if half > 0 else 8, v0, v1, 8.35, 10, "rail")
-            if half > 0 and v < centre:
-                corner_box("curved corner inner rim", right, 8, v0, v1, 8.35, 10, "rail")
-        corner_box("corner net", 1.4, 7.8, 1.4, 7.8, 5.1, 7.6, "net")
-for z0, z1 in ((-16, -11.5), (27.5, 32)):
-    def side_box(name, x0, x1, depth0, depth1, y0, y1, material):
-        az, bz = (z0+depth0, z0+depth1) if z0 < 0 else (z1-depth1, z1-depth0)
-        box(name, (x0, y0, az, x1, y1, bz), material, "Pockets")
-
-    # Rounded back of the well, flared mouth towards the playing field.
-    pockets.append({"x": 8, "z": z0 + 3.3 if z0 < 0 else z1 - 3.3,
-                    "radius": 3.3, "innerZ": z0 + 6 if z0 < 0 else z1 - 6})
-    for row in range(12):
-        d0, d1 = row*.5, (row+1)*.5
-        half = math.sqrt(max(0, 3.3**2-((d0+d1)/2-3.3)**2))
-        side_box("round side well", 8-half, 8+half, d0, d1, 8.36, 8.65, "pocket")
-        if d1 <= 4.5:
-            side_box("curved side left jaw", 4, 8-half, d0, d1, 8.35, 10, "rail")
-            side_box("curved side right jaw", 8+half, 12, d0, d1, 8.35, 10, "rail")
-        else:
-            side_box("side left cushion jaw", 4, 8-half, d0, d1, 8.351, 9.15, "felt")
-            side_box("side right cushion jaw", 8+half, 12, d0, d1, 8.351, 9.15, "felt")
-    box("side net", (5, 5.2, z0+.6, 11, 7.6, z1-.6), "net", "Pockets")
+# Recessed dark liners are below the cloth, not raised black discs covering it.
+# Their rectangular backing is hidden by the perforated bed and frame.
+for p in pockets:
+    x, z, r = p["x"], p["z"], p["radius"]
+    box("recessed pocket liner", (x-r-.05, 7.71, z-r-.05, x+r+.05, 7.79, z+r+.05), "pocket", "Pockets")
+    box("pocket net", (x-r+.25, 5.2, z-r+.25, x+r-.25, 7.6, z+r-.25), "net", "Pockets")
 for x in (-20, -9, 0, 16, 25, 36):
     for z in (-14.2, 30.9):
         box("rail sight", (x, 10.01, z, x+.55, 10.07, z+.55), "brass", "Details")
@@ -118,6 +134,26 @@ boxes = [(name, (a, b*1.9, c, d, e*1.9, f) if group == "Legs"
           else (a, b+3.2, c, d, e+3.2, f), material, group)
          for name, (a,b,c,d,e,f), material, group in boxes]
 
+# Every opening must remain clear above its recessed liner. This also catches
+# hidden cabinet/trim boards that look like a wooden plug from above.
+for p in pockets:
+    for fraction in (0, .5, .85):
+        for angle in range(0, 360, 15):
+            x = p["x"] + p["radius"] * fraction * math.cos(math.radians(angle))
+            z = p["z"] + p["radius"] * fraction * math.sin(math.radians(angle))
+            for name, (a,b,c,d,e,f), _, _ in boxes:
+                if a < x < d and c < z < f and e > 11.01:
+                    raise ValueError(f"Pocket covered by {name} at {x}, {z}")
+    # The outside rail must remain intact behind the round hole.
+    x = p["x"]
+    z = -15.75 if p["z"] < 0 else 31.75
+    assert any(a <= x <= d and c <= z <= f and e >= 13.2
+               for _, (a,b,c,d,e,f), material, _ in boxes if material == "rail"), "Missing pocket back wall"
+
+assert len(boxes) <= 350, "Static model exceeded its geometry budget"
+assert all(-32 <= a < d <= 48 and 0 <= b < e <= 16 and -16 <= c < f <= 32
+           for _, (a,b,c,d,e,f), _, _ in boxes), "Invalid model bounds"
+
 # Same-facing coplanar faces cause depth flicker. Catch them before export.
 axes = ((0, 3), (1, 4), (2, 5))
 for index, (name, first, _, _) in enumerate(boxes):
@@ -134,10 +170,29 @@ for index, (name, first, _, _) in enumerate(boxes):
                 if overlap > 0.01:
                     raise ValueError(f"Coplanar faces: {name} / {other_name}")
 
-def faces(material, boundary=None):
-    return {side: {"texture": "#"+material, "uv": [0, 0, 16, 16]}
-            for side in ("up", "down", "north", "south", "west", "east")
-            if boundary is None or boundary[side]}
+def faces(material, bounds, boundary=None):
+    a, b, c, d, e, f = bounds
+    # Continuous planar mapping: cut-out strips and cell splits retain exactly
+    # the same grain instead of stretching an entire texture over every sliver.
+    u0, u1 = (a+32)/5, (d+32)/5
+    v0, v1 = (c+16)/3, (f+16)/3
+    uv = {"up": [u0, v0, u1, v1], "down": [u0, 16-v1, u1, 16-v0],
+          "north": [16-u1, 16-e, 16-u0, 16-b], "south": [u0, 16-e, u1, 16-b],
+          "west": [v0, 16-e, v1, 16-b], "east": [16-v1, 16-e, 16-v0, 16-b]}
+    outside = {"north": c == -16, "south": f == 32,
+               "west": a == -32, "east": d == 48}
+    result = {}
+    for side, coords in uv.items():
+        if boundary is not None and not boundary[side]:
+            continue
+        texture = material
+        # Continuous dark facing under the wooden rail cap and inside wells.
+        # Texture every step face alike; testing just its midpoint leaves a
+        # zebra pattern where long strips meet the circular cut-out.
+        if material == "rail" and b >= 11.3 and side in outside and not outside[side]:
+            texture = "pocket"
+        result[side] = {"texture": "#"+texture, "uv": [round(n, 5) for n in coords]}
+    return result
 
 def model(elements):
     return {"ambientocclusion": True,
@@ -168,12 +223,12 @@ for index, (cx, cz) in enumerate(FOOTPRINT):
                     "south": hi_z == f, "west": lo_x == a, "east": hi_x == d}
         elements.append({"name": name, "from": [round(lo_x-x0,4), b, round(lo_z-z0,4)],
                          "to": [round(hi_x-x0,4), e, round(hi_z-z0,4)],
-                         "faces": faces(material, boundary)})
+                         "faces": faces(material, (lo_x,b,lo_z,hi_x,e,hi_z), boundary)})
     write(MODELS / f"billiards_table_part_{index}.json", model(elements))
 
 # Miniature of the entire table for the inventory icon.
 item = [{"name": name, "from": [(a+32)/5,b,(c+16)/3],
-         "to": [(d+32)/5,e,(f+16)/3], "faces": faces(material)}
+         "to": [(d+32)/5,e,(f+16)/3], "faces": faces(material, (a,b,c,d,e,f))}
         for name, (a,b,c,d,e,f), material, _ in boxes]
 write(MODELS/"billiards_table_item.json", model(item))
 def variants(index):
@@ -203,8 +258,9 @@ for name,bounds,material,group in boxes:
     elements.append({"name": name, "type": "cube", "box_uv": False,
                      "from": list(bounds[:3]), "to": list(bounds[3:]),
                      "origin": [8,0,8], "uuid": eid,
-                     "faces": {side: {"uv": [0,0,16,16], "texture": keys.index(material)}
-                               for side in ("north","east","south","west","up","down")}})
+                     "faces": {side: {"uv": [n*4 for n in face["uv"]],
+                                      "texture": keys.index(face["texture"][1:])}
+                               for side, face in faces(material, bounds).items()}})
     groups.setdefault(group, []).append(eid)
 outliner = [{"name": name, "uuid": str(uuid.uuid5(uuid.NAMESPACE_URL,"pool/group/"+name)),
              "origin": [8,0,8], "rotation": [0,0,0], "children": children,

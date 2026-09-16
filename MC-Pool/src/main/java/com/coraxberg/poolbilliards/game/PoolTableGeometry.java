@@ -13,15 +13,28 @@ import java.util.Objects;
 /** Generated model geometry, loaded once; no world or client is required. */
 public final class PoolTableGeometry {
     public record Rail(double x0, double y0, double x1, double y1) {}
+    /**
+     * x/y and rx/ry describe the visible opening from table_geometry.json.
+     * innerY is the visible inner edge of a side-pocket mouth (NaN for corners).
+     */
     public record Pocket(double x, double y, double rx, double ry, double innerY) {
         public boolean captures(double bx, double by) {
-            double r = PoolGameState.BALL_R;
-            // Account for the whole ball and the model's half-pixel arc strips.
-            double dx = (bx - x) / (rx - r - 1.6);
-            double dy = (by - y) / (ry - r - 1.6);
+            // A sphere loses stable cloth support before its top-down disc fits
+            // wholly inside the opening. Requiring a full ball-radius clearance
+            // made a rendered ball travel visibly too far into a pocket. This
+            // smaller inset approximates the support/contact patch while the
+            // baked jaw rails still reject shots that catch either lip.
+            double supportInset = PoolGameState.BALL_R * 0.35;
+            double captureRx = rx - supportInset;
+            double captureRy = ry - supportInset;
+            if (captureRx <= 0 || captureRy <= 0) return false;
+            double dx = (bx - x) / captureRx;
+            double dy = (by - y) / captureRy;
             if (dx * dx + dy * dy > 1) return false;
+            // innerY is already the visible loss-of-support edge. Compare the
+            // centre, rather than waiting for the trailing edge of the ball.
             return Double.isNaN(innerY) || (y < PoolGameState.TABLE_H / 2
-                    ? by + r <= innerY : by - r >= innerY);
+                    ? by <= innerY : by >= innerY);
         }
     }
     public static final List<Rail> RAILS;

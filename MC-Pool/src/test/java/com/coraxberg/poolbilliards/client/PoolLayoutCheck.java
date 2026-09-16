@@ -1,5 +1,7 @@
 package com.coraxberg.poolbilliards.client;
 
+import com.coraxberg.poolbilliards.game.PoolTableGeometry;
+
 /** Checks usable geometry at real GUI sizes, including both sides of the breakpoint. */
 public final class PoolLayoutCheck {
     private static void require(boolean result, String message) {
@@ -21,7 +23,15 @@ public final class PoolLayoutCheck {
                     "table overlaps header " + label);
             require(l.tableY() + l.tableHeight() + l.rail() <= l.footerY(),
                     "table overlaps footer " + label);
-            require(Math.round(l.tableWidth() * 38.0 / 900) <= l.rail(), "pockets escape reserved rail " + label);
+            for (var p : PoolTableGeometry.POCKETS) {
+                double cx = l.tableX() + p.x() * l.tableWidth() / 900;
+                double cy = l.tableY() + p.y() * l.tableHeight() / 490;
+                double rx = p.rx() * l.tableWidth() / 900;
+                double ry = p.ry() * l.tableHeight() / 490;
+                require(cx - rx >= l.tableX() - l.rail() && cx + rx <= l.tableX() + l.tableWidth() + l.rail()
+                                && cy - ry >= l.tableY() - l.rail() && cy + ry <= l.tableY() + l.tableHeight() + l.rail(),
+                        "model pocket escapes reserved rail " + label);
+            }
             require(l.resetX() >= l.x() && l.resetX() + l.resetWidth() <= l.x() + l.width()
                     && l.resetY() + 20 <= l.y() + l.height(), "reset not accessible " + label);
             int styleWidth = Math.min(160, l.resetX() - (l.x() + 10) - 8);
