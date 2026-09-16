@@ -19,6 +19,17 @@
 
 MC-Pool устанавливается на сервер и клиенты. DW Languages нужен серверу и требует RP Chat 0.1.16+; для совместной работы с рациями используйте DW Magic Connect 0.4.3+. Обоим модам нужны Minecraft 1.20.1, Java 17 и Fabric API. [Бильярд](../MC-Pool/README.md) · [Языки](../DW_Languages/README.md).
 
+## RP Chat 0.1.16 и DW Magic Connect 0.4.3
+
+Готовые JAR предоставлены пользователем и опубликованы без пересборки. Проверены версии в `fabric.mod.json`, целостность архивов и совпадение SHA-256 с предоставленными файлами. Игра не запускалась.
+
+| Мод | JAR | Контрольная сумма |
+| --- | --- | --- |
+| RP Chat 0.1.16 | [rp-chat-0.1.16.jar](RP-Chat/rp-chat-0.1.16.jar) | [SHA-256](RP-Chat/rp-chat-0.1.16.jar.sha256) |
+| DW Magic Connect 0.4.3 | [dw-magic-connect-0.4.3.jar](DW_Magic_Connect/dw-magic-connect-0.4.3.jar) | [SHA-256](DW_Magic_Connect/dw-magic-connect-0.4.3.jar.sha256) |
+
+Minecraft 1.20.1, Java 17, Fabric Loader 0.16.10+ и Fabric API. Установите на сервер и клиенты, заменив прежние JAR. Рации требуют RP Chat 0.1.16+; этот комплект совместим с [DW Languages 0.1.0](DW_Languages/dw-languages-0.1.0.jar).
+
 ## Архив предыдущих сборок
 
 DW Magic Connect 0.2.0, RP Chat 0.1.14 и RP Chat UI 0.3.7 собраны из исходников; более ранние JAR предоставлены пользователем. Для обновления раций замените 0.1.0 на 0.2.0 на сервере и клиентах.
