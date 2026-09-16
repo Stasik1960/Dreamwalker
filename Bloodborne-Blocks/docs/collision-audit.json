@@ -1,0 +1,5032 @@
+[
+  {
+    "id": "acacia_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 18,
+    "max_boxes_per_cell": 42,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "acacia_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 7,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_log",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_sapling",
+    "behavior": "plant",
+    "collision": "none",
+    "states": 4,
+    "max_cells": 3,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 3,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "acacia_stairs",
+    "behavior": "model_door",
+    "collision": "model",
+    "states": 320,
+    "max_cells": 18,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 14,
+    "max_boxes_per_cell": 67,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "acacia_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 39,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "activator_rail",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 192,
+    "max_cells": 5,
+    "max_boxes_per_cell": 71,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "amethyst_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 55,
+    "max_boxes_per_cell": 66,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "ancient_debris",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 10,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "andesite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "andesite_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "andesite_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 9,
+    "max_boxes_per_cell": 14,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "andesite_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "bamboo_trapdoor",
+    "behavior": "trapdoor",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "beacon",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "bell",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "birch_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 3,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "birch_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 6,
+    "max_boxes_per_cell": 12,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "birch_log",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "birch_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 7,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "birch_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 7,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "birch_stairs",
+    "behavior": "model_door",
+    "collision": "model",
+    "states": 320,
+    "max_cells": 21,
+    "max_boxes_per_cell": 38,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "birch_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 5,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "birch_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 11,
+    "max_boxes_per_cell": 37,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "black_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 64,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "black_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "black_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 79,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "black_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "blackstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "blackstone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 3,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "blackstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 15,
+    "max_boxes_per_cell": 40,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "blackstone_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 32,
+    "assembled": false
+  },
+  {
+    "id": "blue_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 16,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "blue_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "blue_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "blue_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "blue_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 30,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "bone_block",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 52,
+    "max_boxes_per_cell": 40,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "brick_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "brown_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 16,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "brown_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 8,
+    "max_boxes_per_cell": 47,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "brown_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "brown_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 30,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "brown_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 25,
+    "max_boxes_per_cell": 29,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "calcite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "chain",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 12,
+    "max_cells": 1,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cherry_trapdoor",
+    "behavior": "trapdoor",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "chiseled_deepslate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "chiseled_nether_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 16,
+    "max_boxes_per_cell": 56,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "chiseled_polished_blackstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "chiseled_quartz_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 5,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "chiseled_red_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 13,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "chiseled_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "coal_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "coal_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "coarse_dirt",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobbled_deepslate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobbled_deepslate_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobbled_deepslate_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobbled_deepslate_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "cobblestone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobblestone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobblestone_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cobblestone_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "cobweb",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 12,
+    "max_boxes_per_cell": 27,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "copper_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "copper_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cracked_deepslate_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 14,
+    "max_boxes_per_cell": 46,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cracked_deepslate_tiles",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cracked_nether_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 35,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cracked_polished_blackstone_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 18,
+    "max_boxes_per_cell": 42,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_door",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 4,
+    "max_boxes_per_cell": 40,
+    "empty_visual_states": 64,
+    "assembled": true
+  },
+  {
+    "id": "crimson_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "crimson_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 23,
+    "max_boxes_per_cell": 110,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_hyphae",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 12,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "crimson_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 12,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_stem",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "crimson_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 8,
+    "max_boxes_per_cell": 46,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cut_copper_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 8,
+    "max_boxes_per_cell": 53,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cut_red_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cut_red_sandstone_slab",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cut_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cut_sandstone_slab",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 12,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cyan_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cyan_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "cyan_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cyan_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 82,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cyan_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "cyan_wool",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 11,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dandelion",
+    "behavior": "plant",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_oak_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 27,
+    "max_boxes_per_cell": 82,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_oak_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 5,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "dark_oak_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 23,
+    "max_boxes_per_cell": 110,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_oak_log",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_oak_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_oak_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 3,
+    "max_boxes_per_cell": 22,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "dark_oak_stairs",
+    "behavior": "model_door",
+    "collision": "model",
+    "states": 320,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_oak_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 18,
+    "max_boxes_per_cell": 45,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_prismarine",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dark_prismarine_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "dark_prismarine_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 6,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_brain_coral",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 15,
+    "max_boxes_per_cell": 80,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_brain_coral_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "dead_brain_coral_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 16,
+    "max_boxes_per_cell": 42,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_brain_coral_wall_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 12,
+    "max_boxes_per_cell": 31,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_bubble_coral",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_bubble_coral_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 8,
+    "max_boxes_per_cell": 80,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_bubble_coral_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 2,
+    "max_boxes_per_cell": 8,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_bubble_coral_wall_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 3,
+    "max_boxes_per_cell": 14,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_fire_coral_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 14,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_fire_coral_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 2,
+    "max_boxes_per_cell": 80,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_fire_coral_wall_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 1,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_horn_coral",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 4,
+    "max_cells": 2,
+    "max_boxes_per_cell": 14,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_horn_coral_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 8,
+    "max_boxes_per_cell": 82,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_horn_coral_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 26,
+    "max_boxes_per_cell": 50,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_horn_coral_wall_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 1,
+    "max_boxes_per_cell": 58,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_tube_coral",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 1,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_tube_coral_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 14,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_tube_coral_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 2,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dead_tube_coral_wall_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "deepslate",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_brick_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_coal_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "deepslate_copper_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_diamond_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "deepslate_emerald_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 5,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "deepslate_gold_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_iron_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "deepslate_lapis_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_tile_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 10,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_tile_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 9,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_tile_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "deepslate_tiles",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 12,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "diamond_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 10,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "diamond_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "diorite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "diorite_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "diorite_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 8,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "diorite_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 2,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "dried_kelp_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "dripstone_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "emerald_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "emerald_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 10,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "end_stone_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "end_stone_brick_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "end_stone_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "end_stone_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "exposed_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "exposed_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 26,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "exposed_cut_copper_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 26,
+    "max_boxes_per_cell": 24,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "exposed_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 6,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "flower_pot",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "gilded_blackstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 0,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 32,
+    "assembled": false
+  },
+  {
+    "id": "gold_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "gold_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 11,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "granite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "granite_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "granite_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "granite_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "gray_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 27,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "gray_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "gray_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 24,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "gray_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 7,
+    "max_boxes_per_cell": 41,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "green_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "green_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "green_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "green_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "green_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 41,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "hay_block",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 1,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "infested_cobblestone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "infested_deepslate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "infested_stone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "infested_stone_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "iron_bars",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "iron_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "iron_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "iron_trapdoor",
+    "behavior": "trapdoor",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "jungle_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 18,
+    "max_boxes_per_cell": 42,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "jungle_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 5,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "jungle_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 12,
+    "max_boxes_per_cell": 26,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "jungle_log",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 14,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "jungle_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "jungle_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 3,
+    "max_boxes_per_cell": 17,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "jungle_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 18,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "jungle_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 8,
+    "max_boxes_per_cell": 37,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "jungle_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "ladder",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 16,
+    "max_cells": 0,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 16,
+    "assembled": true
+  },
+  {
+    "id": "lantern",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lapis_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lapis_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lectern",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lever",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 1,
+    "max_boxes_per_cell": 10,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_blue_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_blue_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_blue_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_blue_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 48,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "light_blue_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 55,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_blue_wool",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_gray_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_gray_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_gray_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "light_gray_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 45,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "light_gray_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "light_weighted_pressure_plate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lightning_rod",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 2,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lime_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 21,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lime_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lime_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 6,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lime_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 22,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "lime_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 17,
+    "max_boxes_per_cell": 24,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "lime_wool",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "magenta_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "magenta_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "magenta_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "magenta_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 48,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "magenta_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 18,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "magenta_wool",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "mangrove_trapdoor",
+    "behavior": "trapdoor",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "mossy_cobblestone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "mossy_cobblestone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "mossy_cobblestone_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "mossy_cobblestone_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "mossy_stone_brick_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 7,
+    "max_boxes_per_cell": 33,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "mossy_stone_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 10,
+    "max_boxes_per_cell": 41,
+    "empty_visual_states": 4,
+    "assembled": false
+  },
+  {
+    "id": "nether_brick_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "nether_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "nether_brick_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 27,
+    "max_boxes_per_cell": 72,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "nether_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 5,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 32,
+    "assembled": false
+  },
+  {
+    "id": "nether_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "nether_gold_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "nether_quartz_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 5,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "netherite_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 29,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 13,
+    "max_boxes_per_cell": 54,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_door",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 64,
+    "assembled": true
+  },
+  {
+    "id": "oak_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "oak_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 7,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_log",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 10,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 4,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 4,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "oak_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 4,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 15,
+    "max_boxes_per_cell": 67,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oak_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "obsidian",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "orange_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "orange_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 10,
+    "max_boxes_per_cell": 27,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "orange_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 6,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "orange_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "orange_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "orange_wool",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 13,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oxidized_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "oxidized_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 13,
+    "max_boxes_per_cell": 52,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "petrified_oak_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 4,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "pink_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "pink_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 4,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "pink_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "pink_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 45,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "pink_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "pink_wool",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_andesite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_andesite_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_andesite_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_blackstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_blackstone_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 24,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_blackstone_brick_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 6,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_blackstone_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 18,
+    "max_boxes_per_cell": 8,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "polished_blackstone_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 14,
+    "max_boxes_per_cell": 50,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_blackstone_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 18,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_blackstone_slab",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_blackstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 2,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_blackstone_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 27,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "polished_deepslate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 5,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_deepslate_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 5,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_deepslate_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 7,
+    "max_boxes_per_cell": 26,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_diorite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_diorite_slab",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 24,
+    "max_cells": 0,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 24,
+    "assembled": false
+  },
+  {
+    "id": "polished_diorite_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 3,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_granite",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "polished_granite_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 24,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "polished_granite_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 18,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_acacia_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_allium",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 27,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_azalea_bush",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 59,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_azure_bluet",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 31,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_bamboo",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_birch_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 36,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_blue_orchid",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 43,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_brown_mushroom",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 24,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_cactus",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_cherry_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_cornflower",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 46,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_crimson_fungus",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 31,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_crimson_roots",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_dandelion",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 27,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_dark_oak_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 39,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_dead_bush",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 51,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_fern",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 44,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_flowering_azalea_bush",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 59,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_jungle_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 29,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_lily_of_the_valley",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 29,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_mangrove_propagule",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 53,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_oak_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 52,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_orange_tulip",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 19,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_oxeye_daisy",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 33,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_pink_tulip",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 19,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_poppy",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_red_mushroom",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_red_tulip",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 27,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_spruce_sapling",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 44,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_torchflower",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 39,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_warped_fungus",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_warped_roots",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 30,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_white_tulip",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "potted_wither_rose",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 31,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "prismarine",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "prismarine_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "prismarine_brick_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 6,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "prismarine_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "prismarine_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "prismarine_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "prismarine_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "purple_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "purple_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 8,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "purple_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "purple_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 2,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "purple_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 18,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "purpur_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "purpur_pillar",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 5,
+    "max_boxes_per_cell": 80,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "purpur_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "purpur_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 2,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "quartz_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 5,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "quartz_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 13,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "quartz_pillar",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "quartz_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 5,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "quartz_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 8,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "rail",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 40,
+    "max_cells": 6,
+    "max_boxes_per_cell": 60,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "raw_copper_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 3,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "raw_gold_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "raw_iron_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 11,
+    "max_boxes_per_cell": 24,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 4,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_nether_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "red_nether_brick_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 15,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_nether_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 36,
+    "empty_visual_states": 64,
+    "assembled": false
+  },
+  {
+    "id": "red_nether_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_sandstone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 24,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "red_sandstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 9,
+    "max_boxes_per_cell": 33,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "red_sandstone_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 0,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 324,
+    "assembled": false
+  },
+  {
+    "id": "red_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "red_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "red_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "sand",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "sandstone_slab",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 12,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "sandstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 21,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "sandstone_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 25,
+    "empty_visual_states": 4,
+    "assembled": false
+  },
+  {
+    "id": "smooth_basalt",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "smooth_quartz",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "smooth_quartz_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "smooth_quartz_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 21,
+    "max_boxes_per_cell": 77,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "smooth_red_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "smooth_red_sandstone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "smooth_red_sandstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 18,
+    "max_boxes_per_cell": 14,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "smooth_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 17,
+    "max_boxes_per_cell": 72,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "smooth_sandstone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 17,
+    "max_boxes_per_cell": 72,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "smooth_sandstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 10,
+    "max_boxes_per_cell": 8,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "smooth_stone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "snow",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "soul_lantern",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 3,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 14,
+    "max_boxes_per_cell": 10,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "spruce_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 64,
+    "max_cells": 7,
+    "max_boxes_per_cell": 26,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_log",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 17,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_sapling",
+    "behavior": "plant",
+    "collision": "none",
+    "states": 4,
+    "max_cells": 1,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 17,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "spruce_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 27,
+    "max_boxes_per_cell": 60,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 18,
+    "max_boxes_per_cell": 49,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "spruce_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 27,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stone_brick_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stone_brick_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stone_brick_wall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 324,
+    "max_cells": 1,
+    "max_boxes_per_cell": 6,
+    "empty_visual_states": 2,
+    "assembled": false
+  },
+  {
+    "id": "stone_bricks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stone_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stone_pressure_plate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 4,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stone_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stone_stairs",
+    "behavior": "stairs",
+    "collision": "model",
+    "states": 80,
+    "max_cells": 1,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stripped_acacia_log",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 9,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stripped_acacia_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_birch_log",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_birch_wood",
+    "behavior": "pillar",
+    "collision": "none",
+    "states": 6,
+    "max_cells": 14,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_crimson_hyphae",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 21,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_crimson_stem",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_dark_oak_log",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 9,
+    "max_boxes_per_cell": 33,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stripped_jungle_log",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 9,
+    "max_boxes_per_cell": 29,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "stripped_jungle_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_oak_log",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 6,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_oak_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_spruce_log",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 9,
+    "max_boxes_per_cell": 31,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_spruce_wood",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 6,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_warped_hyphae",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 52,
+    "max_boxes_per_cell": 40,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "stripped_warped_stem",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 18,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 27,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "tinted_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "tuff",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "warped_button",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 48,
+    "max_cells": 1,
+    "max_boxes_per_cell": 34,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "warped_fence",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "warped_hyphae",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "warped_planks",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 7,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "warped_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 10,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "warped_stem",
+    "behavior": "pillar",
+    "collision": "model",
+    "states": 3,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "warped_trapdoor",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 128,
+    "max_cells": 18,
+    "max_boxes_per_cell": 12,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_copper_block",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_cut_copper_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 1,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "waxed_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 8,
+    "max_boxes_per_cell": 78,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_exposed_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_exposed_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 26,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_exposed_cut_copper_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 26,
+    "max_boxes_per_cell": 24,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "waxed_exposed_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 24,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_oxidized_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_oxidized_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 51,
+    "max_boxes_per_cell": 30,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_oxidized_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 6,
+    "max_boxes_per_cell": 8,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_weathered_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_weathered_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 51,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "waxed_weathered_cut_copper_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 5,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "waxed_weathered_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 21,
+    "max_boxes_per_cell": 39,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "weathered_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 9,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "weathered_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 5,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "weathered_cut_copper_slab",
+    "behavior": "slab",
+    "collision": "model",
+    "states": 6,
+    "max_cells": 5,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "weathered_cut_copper_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 160,
+    "max_cells": 14,
+    "max_boxes_per_cell": 103,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "white_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "white_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "white_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 91,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "white_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 15,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "white_wool",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 18,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "yellow_concrete",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 63,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "yellow_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "yellow_stained_glass",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 1,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "yellow_stained_glass_pane",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 32,
+    "max_cells": 1,
+    "max_boxes_per_cell": 4,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "yellow_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 2,
+    "max_cells": 1,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "yellow_wool",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 2,
+    "max_cells": 10,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_1_spirelamp_001",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_1_wall_001",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 14,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_books_test",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 17,
+    "max_boxes_per_cell": 51,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_brich_trapdoor_top",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_brick_side",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 4,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "asset_addon_brown_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 20,
+    "max_boxes_per_cell": 26,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_chain_1",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_floor_dec_9",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_pilaster_2",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 4,
+    "max_boxes_per_cell": 29,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_slabs_8",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_spruce_fence_gate_open_1",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 21,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_tombstone_gathered_8",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 39,
+    "max_boxes_per_cell": 92,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_addon_wooden_box",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 17,
+    "max_boxes_per_cell": 106,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_birch_fence_gate",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 5,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_blue_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_crimson_hyphae",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 16,
+    "max_boxes_per_cell": 8,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_dead_bubble_coral_fan",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 2,
+    "max_boxes_per_cell": 23,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_deepslate_emerald_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 5,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_dummy_hunter_0",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 10,
+    "max_boxes_per_cell": 47,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_e",
+    "behavior": "generic",
+    "collision": "none",
+    "states": 8,
+    "max_cells": 11,
+    "max_boxes_per_cell": 0,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_hold_chimney",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 27,
+    "max_boxes_per_cell": 5,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_hold_wooden_box_x1",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 11,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_lapis_ore",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 13,
+    "max_boxes_per_cell": 15,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_light_blue_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 32,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_light_gray_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 3,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_lime_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 12,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_magenta_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 9,
+    "max_boxes_per_cell": 28,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_oak_fence_side",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_orange_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 10,
+    "max_boxes_per_cell": 27,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_polished_diorite_slab_top",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_red_nether_brick_wall_side_tall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_red_nether_brick_wall_side_tall_1",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 20,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_red_sandstone_stairs",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 4,
+    "max_cells": 1,
+    "max_boxes_per_cell": 2,
+    "empty_visual_states": 0,
+    "assembled": false
+  },
+  {
+    "id": "asset_sandstone_wall_side_tall",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_sandstone_wall_side_tall_1",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 16,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_stairs_smooth_sandstone",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 19,
+    "max_boxes_per_cell": 74,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_stripped_crimson_stem",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 18,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_stripped_warped_stem",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 16,
+    "max_boxes_per_cell": 9,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_warped_trapdoor_bottom",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 1,
+    "max_boxes_per_cell": 48,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_waxed_oxidized_cut_copper",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 15,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_white_glazed_terracotta",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 3,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_window_bottom_left",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 2,
+    "max_boxes_per_cell": 1,
+    "empty_visual_states": 0,
+    "assembled": true
+  },
+  {
+    "id": "asset_window_top_left",
+    "behavior": "generic",
+    "collision": "model",
+    "states": 8,
+    "max_cells": 10,
+    "max_boxes_per_cell": 13,
+    "empty_visual_states": 0,
+    "assembled": true
+  }
+]

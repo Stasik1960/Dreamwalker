@@ -28,15 +28,21 @@ public final class BloodborneClient implements ClientModInitializer {
    ColorProviderRegistry.ITEM.register((stack,index)->{var provider=ColorProviderRegistry.ITEM.get(block.definition.sourceBlock.asItem());return provider==null?-1:provider.getColor(new ItemStack(block.definition.sourceBlock),index);},block.asItem());
   }
   ModelLoadingPlugin.register(context->context.modifyModelAfterBake().register((model,bake)->{
-   Identifier id=bake.id();if(!(id instanceof ModelIdentifier)||!id.getNamespace().equals(BloodborneBlocks.ID))return model;
-   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get(id.getPath());if(block==null||!block.definition.emissive)return model;
-   List<EmissiveModel.Pair>pairs=new ArrayList<>();
-   for(var e:BloodborneBlocks.DATA.emissive_textures.entrySet()){
-    Sprite base=bake.textureGetter().apply(new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,new Identifier(e.getKey())));
-    Sprite glow=bake.textureGetter().apply(new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,new Identifier(e.getValue())));
-    if(!base.getContents().getId().getPath().equals("missingno")&&!glow.getContents().getId().getPath().equals("missingno"))pairs.add(new EmissiveModel.Pair(base,glow));
+   Identifier id=bake.id();if(!(id instanceof ModelIdentifier modelId)||!id.getNamespace().equals(BloodborneBlocks.ID))return model;
+   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get(id.getPath());if(block==null)return model;
+   net.minecraft.client.render.model.BakedModel result=model;
+   if(block.definition.emissive){
+    List<EmissiveModel.Pair>pairs=new ArrayList<>();
+    for(var e:BloodborneBlocks.DATA.emissive_textures.entrySet()){
+     Sprite base=bake.textureGetter().apply(new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,new Identifier(e.getKey())));
+     Sprite glow=bake.textureGetter().apply(new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,new Identifier(e.getValue())));
+     if(!base.getContents().getId().getPath().equals("missingno")&&!glow.getContents().getId().getPath().equals("missingno"))pairs.add(new EmissiveModel.Pair(base,glow));
+    }
+    result=new EmissiveModel(result,pairs);
    }
-   return new EmissiveModel(model,pairs);
+   double[] offset=GeometryRuntime.renderOffset(id.getPath(),modelId.getVariant());
+   if(offset!=null&&(offset[0]!=0||offset[1]!=0||offset[2]!=0))result=new TranslatedBakedModel(result,offset);
+   return result;
   }));
  }
 }

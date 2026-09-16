@@ -25,11 +25,10 @@ import java.util.Set;
 public final class ArchitectureBlock extends Block implements Waterloggable {
  private static final ThreadLocal<BloodborneBlocks.Definition> CONSTRUCTING=new ThreadLocal<>();
  public final BloodborneBlocks.Definition definition;
- private final Map<BlockState,int[]> geometry=new IdentityHashMap<>();
  private final Map<BlockState,BlockState> originals=new IdentityHashMap<>();
  public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
  private static Settings settings(BloodborneBlocks.Definition d){
-  Settings s=Settings.create().strength(d.hardness,d.resistance).sounds(d.sourceBlock.getSoundGroup(d.sourceBlock.getDefaultState())).mapColor(d.sourceBlock.getDefaultState().getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]);
+  Settings s=Settings.create().strength(d.hardness,d.resistance).sounds(d.sourceBlock.getSoundGroup(d.sourceBlock.getDefaultState())).mapColor(d.sourceBlock.getDefaultState().getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
   if(!d.full_cube||d.custom_geometry)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
   if(!d.offset.equals("none"))s.offset(d.offset.equals("xyz")?OffsetType.XYZ:OffsetType.XZ).dynamicBounds();
   return s;
@@ -38,31 +37,40 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   super(settings(d));definition=d;BlockState defaultState=getStateManager().getDefaultState();
   for(var e:d.defaultProperties.entrySet())defaultState=BloodborneBlocks.set(defaultState,d.propertyObjects.get(e.getKey()),e.getValue());setDefaultState(defaultState);
   for(BlockState state:getStateManager().getStates()){
-   int[]shape=d.states.get(BloodborneBlocks.key(state));if(shape==null)throw new IllegalStateException("Unmapped state "+state);geometry.put(state,shape);
+   if(!d.states.containsKey(BloodborneBlocks.key(state)))throw new IllegalStateException("Unmapped state "+state);
    BlockState original=d.sourceBlock.getDefaultState();for(var e:state.getEntries().entrySet())if(original.contains(e.getKey()))original=BloodborneBlocks.set(original,e.getKey(),BloodborneBlocks.value(e.getKey(),e.getValue()));originals.put(state,original);
   }
  }
  protected void appendProperties(StateManager.Builder<Block,BlockState> builder){for(Property<?>p:CONSTRUCTING.get().propertyObjects.values())builder.add(p);}
  public BlockState original(BlockState state){return originals.getOrDefault(state,definition.sourceBlock.getDefaultState());}
- private VoxelShape shape(BlockState state,int slot,BlockView world,BlockPos pos){int[]indexes=geometry.get(state);if(indexes==null)indexes=CONSTRUCTING.get().states.get(BloodborneBlocks.key(state));VoxelShape shape=BloodborneBlocks.SHAPES[indexes[slot]];if(state.hasModelOffset()){Vec3d v=state.getModelOffset(world,pos);return shape.offset(v.x,v.y,v.z);}return shape;}
  /** Keep selection bounds inside the physical shape. Authored render geometry can overhang
   * a block for decorative silhouettes; using it as an outline produced ghost lines in-world. */
- @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){
-  int[] indexes=geometry.get(state);
-  if(indexes==null)indexes=CONSTRUCTING.get().states.get(BloodborneBlocks.key(state));
-  return BloodborneBlocks.SELECTION_SHAPES[indexes[0]];
- }
- @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return shape(state,1,world,pos);}
+ @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,true);}
+ @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,false);}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return definition.full_cube&&!definition.custom_geometry?VoxelShapes.fullCube():VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return definition.full_cube?.2F:1F;}
  @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return !definition.full_cube;}
  @Override public long getRenderingSeed(BlockState state,BlockPos pos){return definition.sourceBlock.getRenderingSeed(original(state),pos);}
- @Override public BlockState rotate(BlockState state,BlockRotation rotation){BlockState mapped=getStateWithProperties(definition.sourceBlock.rotate(original(state),rotation));if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
- @Override public BlockState mirror(BlockState state,BlockMirror mirror){BlockState mapped=getStateWithProperties(definition.sourceBlock.mirror(original(state),mirror));if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
+ @SuppressWarnings({"rawtypes","unchecked"}) private BlockState preserveCustom(BlockState mapped,BlockState state){
+  BlockState sourceDefault=definition.sourceBlock.getDefaultState();for(var entry:state.getEntries().entrySet())if(!sourceDefault.contains(entry.getKey())&&mapped.contains(entry.getKey()))mapped=mapped.with((Property)entry.getKey(),(Comparable)entry.getValue());return mapped;
+ }
+ @Override public BlockState rotate(BlockState state,BlockRotation rotation){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.rotate(original(state),rotation)),state);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
+ @Override public BlockState mirror(BlockState state,BlockMirror mirror){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.mirror(original(state),mirror)),state);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
  @Override public BlockState getPlacementState(ItemPlacementContext ctx){
   BlockState old=ctx.getWorld().getBlockState(ctx.getBlockPos());
   if(definition.kind.equals("slab")&&old.isOf(this)&&old.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE)return old.with(Properties.SLAB_TYPE,SlabType.DOUBLE).with(Properties.WATERLOGGED,false);
-  BlockState source=definition.sourceBlock.getPlacementState(ctx);BlockState result=source==null?getDefaultState():getStateWithProperties(source);
+  boolean authored=definition.kind.equals("generic")||definition.kind.equals("model_door");
+  BlockState source=authored?null:definition.sourceBlock.getPlacementState(ctx);BlockState result=source==null?getDefaultState():getStateWithProperties(source);
+  if(authored){
+   Property<?> facing=getStateManager().getProperty("facing");if(facing!=null)result=BloodborneBlocks.set(result,facing,ctx.getHorizontalPlayerFacing().getOpposite().asString());
+   Property<?> axis=getStateManager().getProperty("axis");if(axis!=null)result=BloodborneBlocks.set(result,axis,ctx.getSide().getAxis().asString());
+  }
+  if(definition.kind.equals("model_door")){
+   if(result.contains(Properties.BLOCK_HALF))result=result.with(Properties.BLOCK_HALF,BlockHalf.BOTTOM);
+   if(result.contains(Properties.STAIR_SHAPE))result=result.with(Properties.STAIR_SHAPE,StairShape.STRAIGHT);
+   if(result.contains(Properties.OPEN))result=result.with(Properties.OPEN,false);
+  }
+  if(result.contains(BloodborneBlocks.ASSEMBLED))result=result.with(BloodborneBlocks.ASSEMBLED,true);
   if(definition.extra_facing)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
   return connections(result,ctx.getWorld(),ctx.getBlockPos());
@@ -110,13 +118,36 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   }
   return state;
  }
- @Override public void onPlaced(World world,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)&&state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER)world.setBlockState(pos.up(),state.with(Properties.DOUBLE_BLOCK_HALF,DoubleBlockHalf.UPPER),Block.NOTIFY_ALL);refreshEditedNeighbors(world,pos);}
- @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){super.onStateReplaced(state,world,pos,next,moved);if(!next.isOf(this))refreshEditedNeighbors(world,pos);}
+ boolean canPlaceConventionalDoor(World world,BlockPos pos,BlockState state){
+  if(!definition.kind.equals("door")||!state.contains(Properties.DOUBLE_BLOCK_HALF)||state.get(Properties.DOUBLE_BLOCK_HALF)!=DoubleBlockHalf.LOWER)return true;
+  BlockPos upper=pos.up();if(!world.isChunkLoaded(upper))return false;BlockState old=world.getBlockState(upper);BlockState upperState=state.with(Properties.DOUBLE_BLOCK_HALF,DoubleBlockHalf.UPPER);
+  return (old.isAir()||old.isReplaceable())&&GeometryRuntime.canPlace(world,upper,upperState);
+ }
+ @Override public void onPlaced(World world,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){
+  if(world.isClient){refreshEditedNeighbors(world,pos);return;}
+  if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)&&state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER){
+   BlockState upper=state.with(Properties.DOUBLE_BLOCK_HALF,DoubleBlockHalf.UPPER);world.setBlockState(pos.up(),upper,Block.NOTIFY_ALL);GeometryRuntime.rebuild(world,pos.up(),upper);
+  }
+  GeometryRuntime.rebuild(world,pos,state);refreshEditedNeighbors(world,pos);
+ }
+ @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
+  if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating())GeometryRuntime.removeOwnedParts(world,pos,state);
+  super.onStateReplaced(state,world,pos,next,moved);if(!next.isOf(this))refreshEditedNeighbors(world,pos);
+ }
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
-  if(!Set.of("door","trapdoor","gate").contains(definition.kind)||!state.contains(Properties.OPEN))return ActionResult.PASS;
-  if(!world.isClient){BlockState next=state.cycle(Properties.OPEN);world.setBlockState(pos,next,Block.NOTIFY_ALL);
-   if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)){BlockPos other=state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER?pos.up():pos.down();BlockState sibling=world.getBlockState(other);if(sibling.isOf(this))world.setBlockState(other,sibling.with(Properties.OPEN,next.get(Properties.OPEN)),Block.NOTIFY_ALL);}
-   world.playSound(null,pos,next.get(Properties.OPEN)?SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN:SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE,SoundCategory.BLOCKS,.7F,1F);
+  if(!Set.of("door","trapdoor","gate","model_door").contains(definition.kind)||!state.contains(Properties.OPEN))return ActionResult.PASS;
+  if(definition.kind.equals("model_door")&&state.contains(Properties.STAIR_SHAPE)&&state.get(Properties.STAIR_SHAPE)!=StairShape.STRAIGHT)return ActionResult.PASS;
+  if(!world.isClient){BlockState next=state.cycle(Properties.OPEN);BlockPos other=null;BlockState sibling=null,nextSibling=null;
+   if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)){other=state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER?pos.up():pos.down();sibling=world.getBlockState(other);if(sibling.isOf(this))nextSibling=sibling.with(Properties.OPEN,next.get(Properties.OPEN));}
+   if(!GeometryRuntime.allCellsLoaded(world,pos,state)||(nextSibling!=null&&!GeometryRuntime.allCellsLoaded(world,other,sibling))||!GeometryRuntime.canOccupy(world,pos,next,pos)||(nextSibling!=null&&!GeometryRuntime.canOccupy(world,other,nextSibling,other)))return ActionResult.FAIL;
+   GeometryRuntime.removeOwnedParts(world,pos);if(nextSibling!=null)GeometryRuntime.removeOwnedParts(world,other);
+   world.setBlockState(pos,next,Block.NOTIFY_ALL);if(nextSibling!=null)world.setBlockState(other,nextSibling,Block.NOTIFY_ALL);
+   GeometryRuntime.rebuild(world,pos,next);if(nextSibling!=null)GeometryRuntime.rebuild(world,other,nextSibling);
+   boolean opening=next.get(Properties.OPEN);net.minecraft.sound.SoundEvent sound;
+   if(definition.kind.equals("door")||definition.kind.equals("model_door"))sound=opening?SoundEvents.BLOCK_WOODEN_DOOR_OPEN:SoundEvents.BLOCK_WOODEN_DOOR_CLOSE;
+   else if(definition.kind.equals("gate"))sound=opening?SoundEvents.BLOCK_FENCE_GATE_OPEN:SoundEvents.BLOCK_FENCE_GATE_CLOSE;
+   else sound=opening?SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN:SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE;
+   world.playSound(null,pos,sound,SoundCategory.BLOCKS,.7F,1F);
   }return ActionResult.success(world.isClient);
  }
  @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){ItemStack stack=new ItemStack(this);if(!state.getEntries().isEmpty()){NbtCompound props=new NbtCompound();state.getEntries().forEach((p,v)->props.putString(p.getName(),BloodborneBlocks.value(p,v)));stack.getOrCreateNbt().put("BlockStateTag",props);}return stack;}

@@ -1,50 +1,54 @@
 # Bloodborne Architecture — Fabric 1.20.1
 
-## Исправления 1.0.3
+## Выпуск 1.1.0: геометрия, установка и двери
 
-Восстановлена исходная модель книг (32 элемента). Для 497 предметных моделей геометрия центрирована и вписана в сферу радиуса 7 модельных единиц; заданы отдельные трансформации GUI, обеих рук, рамок, земли и головы. Размеры установленных построек сохранены.
+Мод добавляет **503 архитектурных и декоративных блока** из палитры Bloodborne в отдельном пространстве имён `bloodborne_blocks`. Это строительный набор: он **не генерирует город**, не заменяет ванильные блоки и не конвертирует карту автоматически. Для готового города нужна уже конвертированная карта. Исходные имена палитры часто не соответствуют предметам: например, `birch_stairs` — большая двустворчатая дверь.
 
-Выделение использует заранее вычисленную простую рамку в пределах блока вместо обхода сложной сетки модели каждый кадр. Физические коллизии и идентификаторы сохранены. Убраны 43 неверных указания отсечения граней, восстановлены 1458 открытых граней объёмных элементов с использованием существующих текстур. Декоративная геометрия больше не скрывает соседние блоки как непрозрачный куб.
+- Физическая форма и выделение рассчитываются по фактическим моделям всех **18 968 состояний**, включая повороты, отверстия и прозрачные участки тонких плоскостей. Точность сетки — 1/16 блока. Мягкие ветви и растительный мусор выделяются, но не останавливают игрока.
+- Крупные объекты занимают связанные клетки `architecture_part`: их можно выделять, использовать и ломать по видимой части. Удаляется весь объект с одной добычей. Установка заранее проверяет занятое пространство, сущностей, границы мира и загруженность чанков.
+- Новые крупные предметы ставятся от края и основания, а не от середины модели. Геометрия переносится после запекания, без нарушения ограничений JSON-моделей Minecraft. Для установки снизу и сбоку учитывается выбранная грань.
+- `acacia_stairs`, `birch_stairs`, `dark_oak_stairs` в прямом варианте работают как двустворчатые двери. Створки открываются, каменные косяки остаются на месте; коллизия следует за створками. Поворот блокируется, если новое положение занято. Это взаимодействие по ПКМ, не новая система редстоуна.
+- Настоящие лестницы сохраняют установку и соединение ступеней. Декоративные модели, использовавшие ID дверей, заборов и калиток, больше не получают чужое поведение только из-за имени.
+- Пустые исходные заготовки скрыты из творческой вкладки; их ID и сохранённые состояния остаются доступными для совместимости карты.
+- Сохранены исправления размеров предметов, книг и открытых граней из 1.0.3. Коллизия больше не строит огромные координатные сетки при наведении.
 
-Проверки: разбор всех JSON, геометрические ограничения предметных моделей, неизменность реестра и состояний, Gradle build на Java 17. Minecraft не запускался по просьбе пользователя; FPS и внешний вид в игре требуют последующей проверки. Для восстановленных граней использованы UV противоположной стороны, поэтому рисунок на них может отличаться от первоначального авторского замысла.
+## Установка
 
-503 independent decorative blocks and their assets. Java 17; Fabric Loader >=0.16.10; Fabric API >=0.92.9+1.20.1. Namespace: `bloodborne_blocks`. The original Bloodborne resource pack must be disabled when playing the migrated city. See the Russian installation and migration reports in the release documentation.
+Готовый файл: [bloodborne-blocks-1.1.0-mc1.20.1.jar](../releases/Bloodborne-Blocks/bloodborne-blocks-1.1.0-mc1.20.1.jar).
 
-## Версия 1.0.1 и установка
+Minecraft **1.20.1**, Java **17**, Fabric Loader **0.16.10+**, Fabric API **0.92.9+1.20.1**. Мод устанавливается на сервер и все клиенты; прежний JAR этого мода нужно заменить. Для ранее использовавшейся связки Sodium 0.5.11 нужен Indium 1.0.34. Исходный Bloodborne resource pack и старый `bloodborne_transparency_fix` должны быть отключены.
 
-В репозиторий перенесены готовые исходники и ресурсы проверенного выпуска. Исправлен выбор 1 874 вариантов моделей: учитываются нижележащие ванильные варианты, которые использует Minecraft при загрузке исходного ресурспака. Все восемь Java-классов сохранены из 1.0.0 побайтно, ID и свойства блоков не менялись.
+## Уже построенная карта
 
-1. Скачайте [bloodborne-blocks-1.0.1-mc1.20.1.jar](../releases/Bloodborne-Blocks/bloodborne-blocks-1.0.1-mc1.20.1.jar) в папку `mods` Minecraft 1.20.1 Fabric на Java 17. Замените прежний JAR `bloodborne_blocks`, если он установлен.
-2. Нужны Fabric Loader **0.16.10 или новее** и Fabric API **0.92.9+1.20.1 или новее для Minecraft 1.20.1**. С Sodium 0.5.11 используйте Indium 1.0.34.
-3. Используйте уже конвертированный мир с блоками `bloodborne_blocks:*`: сам мод не заменяет ванильные блоки при открытии карты. В мультиплеере он нужен серверу и клиентам. Сохраните моды, добавляющие размещённую мебель и другие сторонние блоки.
-4. Отключите исходный Bloodborne и прежний `bloodborne_transparency_fix`. Шейдеры для прозрачности не нужны.
+Старые состояния сохраняют прежнюю точку размещения (`assembled=false`), новые предметы получают нормализованную (`assembled=true`). Замена JAR сама по себе не переставляет здания. Для коллизии выступающих частей старых объектов нужно создать связанные клетки.
 
-SHA-256 готового JAR: `8f06380f9dbf460b11983f09671b16e142e68be8cb34e1dc6601cb18f0a1bf44`.
+На **резервной копии мира**, с правами оператора, в нужной загруженной области:
 
-Результаты проверок и известные ограничения: [docs/VALIDATION-RU.md](docs/VALIDATION-RU.md).
+```mcfunction
+/bloodborne repair 16 preview
+/bloodborne repair 16 apply
+```
 
-## Build the mod
+`preview` ничего не записывает; `apply` добавляет части в свободные клетки и удаляет потерявшие владельца служебные части. Радиус 1–32 задаёт куб вокруг исполнителя по трём осям. Команда сообщает число объектов, пригодных для восстановления, конфликтов и потерянных частей. Чанки принудительно не загружаются, занятые блоки не затираются. При конфликтах объект пропускается целиком: такие места требуют правки планировки или отдельной миграции карты. Сама карта в этой работе не изменялась.
 
-Generated resources are included: rebuilding the JAR does not require re-analyzing the pack or converting the world.
+Есть два явных изменения старой палитры: 99 наборов случайных вариантов с разной физической геометрией закреплены за первым вариантом; случайное смещение растений отключено. Это нужно для совпадения серверной коллизии и клиентской модели. Список: [stabilized-variants.json](docs/stabilized-variants.json).
+
+## Проверки и ограничения
+
+[Отчёт 1.1.0](docs/COLLISION-1.1.0-RU.md), [таблица всех блоков](docs/block-audit.csv), [аудит форм](docs/collision-audit.json), [результат проверки ресурсов](docs/resource-checks.json).
+
+Minecraft, клиент, сервер и мир **не запускались** по указанию пользователя. Выполнены автономные проверки ресурсов, форм и дверных проходов, офлайн-просмотр моделей и Gradle build. Они не заменяют игровую проверку FPS, сетевой синхронизации, сохранения мира и совместимости с другими модами. Исторический отчёт `docs/VALIDATION-RU.md` относится только к старому выпуску 1.0.1.
+
+## Сборка
 
 ```sh
 ./gradlew build
 ```
 
-On Windows use `gradlew.bat build`. The project pins Loom 1.6.12, Gradle 8.8, Yarn `1.20.1+build.10`, Loader 0.16.10 and Fabric API 0.92.9+1.20.1. Dependency downloads require Internet access. Build outputs are under `build/libs`.
+Windows: `gradlew.bat build`. Закреплены Loom 1.6.12, Gradle 8.8, Yarn `1.20.1+build.10`, Java 17. JAR появляется в `build/libs`; задача `geometryCheck` входит в `check` и не запускает Minecraft.
 
-The production classes were compiled and remapped with Java 17 in the migration pipeline. Version 1.0.1 repackages those byte-identical classes with corrected resources and version metadata; it passed the real Fabric client checks described above. The JAR in `../releases/Bloodborne-Blocks/` is that exact tested artifact, preserved without recompilation during this repository import. The Gradle task itself was not executed in the migration environment; it is the conventional project build entry point and produces `build/libs/bloodborne-blocks-1.0.1.jar`.
+Готовые ресурсы включены: генераторы для обычной сборки не нужны. Инструменты `tools/catalog_geometry.py`, `generate_collision.py`, `validate_architecture.py` используют Python, NumPy, Pillow и оригинальный Minecraft client JAR только как архив ресурсов. Путь можно задать через `BLOODBORNE_VANILLA_JAR`. `prepare_architecture.py` — одноразовая миграция исходной палитры, повторно применять её к 1.1.0 нельзя.
 
-## Implementation
+## Авторство
 
-- `BloodborneBlocks`: reads generated definitions and registers all states/items.
-- `ArchitectureBlock`: geometry, preserved native state properties, decorative placement and interactions.
-- `GeneratedShape`: exact union on a coordinate grid, avoiding expensive repeated union simplification.
-- `BloodborneClient`: render layers, native tint delegation, FRAPI model wrapping.
-- `EmissiveModel`: full-bright companion pass through Fabric Renderer API. With Sodium 0.5.x keep Indium.
-
-There are no vanilla model overrides and no block-entity replacement classes. Architectural blocks intentionally do not inherit random ticking, natural copper oxidation, redstone machine logic or inventories. See the validation report for limitations of conservative collision geometry and missing-source-texture repairs, including the approximate replacements for absent `window_7` and `window_8`.
-
-## Assets
-
-See [ASSET-NOTICE.md](ASSET-NOTICE.md). The original architectural artwork and Minecraft fallback resources retain their original ownership. [docs/asset-provenance.json](docs/asset-provenance.json) records per-texture provenance and hashes extracted from the migration manifest. No recoloring was performed.
+См. [ASSET-NOTICE.md](ASSET-NOTICE.md) и [происхождение текстур](docs/asset-provenance.json). Авторство исходных моделей и текстур сохранено. Мод не добавляет ванильные переопределения, случайные тики окисления меди, работающие контейнеры или редстоун-механизмы под декоративными ID.
