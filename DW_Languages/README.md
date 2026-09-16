@@ -37,6 +37,8 @@
 
 ## Добавить язык
 
+Подробно о полях JSON, категориях, шаблонах и правилах: **[гайд по настройке языков](LANGUAGE-GUIDE.md)**.
+
 1. Скопируйте `orc.json` под новым именем в `config/dw_languages/languages/`.
 2. Задайте уникальный `locale` (например, `dwarf`), отображаемое `name` и свои категории, шаблоны, правила. Пример: [orc.json](src/main/resources/languages/orc.json).
 3. Выполните `/lang reload`, затем `/lang add Steve dwarf`.
