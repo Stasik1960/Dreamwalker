@@ -17,6 +17,6 @@ final class GeneratedShape extends ArrayVoxelShape {
   }
   return new GeneratedShape(voxels,points,boxes);
  }
- @Override public VoxelShape simplify(){return VoxelShapes.combineAndSimplify(this,VoxelShapes.empty(),net.minecraft.util.function.BooleanBiFunction.OR);}
+ @Override public VoxelShape simplify(){return this;}
  @Override public void forEachBox(VoxelShapes.BoxConsumer consumer){for(double[]b:boxes)consumer.consume(b[0],b[1],b[2],b[3],b[4],b[5]);}
 }

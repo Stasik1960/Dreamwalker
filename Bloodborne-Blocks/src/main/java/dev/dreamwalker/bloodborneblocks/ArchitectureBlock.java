@@ -30,7 +30,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
  private static Settings settings(BloodborneBlocks.Definition d){
   Settings s=Settings.create().strength(d.hardness,d.resistance).sounds(d.sourceBlock.getSoundGroup(d.sourceBlock.getDefaultState())).mapColor(d.sourceBlock.getDefaultState().getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]);
-  if(!d.full_cube)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
+  if(!d.full_cube||d.custom_geometry)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
   if(!d.offset.equals("none"))s.offset(d.offset.equals("xyz")?OffsetType.XYZ:OffsetType.XZ).dynamicBounds();
   return s;
  }
@@ -47,9 +47,13 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  private VoxelShape shape(BlockState state,int slot,BlockView world,BlockPos pos){int[]indexes=geometry.get(state);if(indexes==null)indexes=CONSTRUCTING.get().states.get(BloodborneBlocks.key(state));VoxelShape shape=BloodborneBlocks.SHAPES[indexes[slot]];if(state.hasModelOffset()){Vec3d v=state.getModelOffset(world,pos);return shape.offset(v.x,v.y,v.z);}return shape;}
  /** Keep selection bounds inside the physical shape. Authored render geometry can overhang
   * a block for decorative silhouettes; using it as an outline produced ghost lines in-world. */
- @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return shape(state,1,world,pos);}
+ @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){
+  int[] indexes=geometry.get(state);
+  if(indexes==null)indexes=CONSTRUCTING.get().states.get(BloodborneBlocks.key(state));
+  return BloodborneBlocks.SELECTION_SHAPES[indexes[0]];
+ }
  @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return shape(state,1,world,pos);}
- @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return definition.full_cube?VoxelShapes.fullCube():VoxelShapes.empty();}
+ @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return definition.full_cube&&!definition.custom_geometry?VoxelShapes.fullCube():VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return definition.full_cube?.2F:1F;}
  @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return !definition.full_cube;}
  @Override public long getRenderingSeed(BlockState state,BlockPos pos){return definition.sourceBlock.getRenderingSeed(original(state),pos);}
