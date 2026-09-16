@@ -1,0 +1,1 @@
+The architectural artwork originates from the Bloodborne resource pack supplied by the user. Original authorship and redistribution rights are retained by their respective owners. This migration does not assert ownership over the artwork. Vanilla fallback resources originate from Minecraft 1.20.1. See docs/asset-provenance.json for per-file provenance and SHA-256 hashes.
