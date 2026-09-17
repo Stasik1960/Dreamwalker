@@ -1,4 +1,6 @@
-package dev.dreamwalker.bloodborneblocks;
+package dev.dreamwalker.bloodborneblocks.mixin;
+
+import dev.dreamwalker.bloodborneblocks.FunctionalFurniture;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;

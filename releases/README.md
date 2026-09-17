@@ -2,9 +2,9 @@
 
 Актуальная сводка исходников и совместимости: [основной README](../README.md#готовые-сборки). Ниже сохранены описания прежних сборок; они не означают, что старые версии рекомендуются для текущего набора.
 
-## Bloodborne Architecture 1.2.0
+## Bloodborne Architecture 1.2.1
 
-[Скачать JAR](Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar) · [SHA-256](Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar.sha256) · [Обновление карты](../Bloodborne-Blocks/README.md).
+[Скачать JAR](Bloodborne-Blocks/bloodborne-blocks-1.2.1-mc1.20.1.jar) · [SHA-256](Bloodborne-Blocks/bloodborne-blocks-1.2.1-mc1.20.1.jar.sha256) · [Обновление карты](../Bloodborne-Blocks/README.md).
 
 Упрощены столкновения и выделение, кусты пропускают игрока, удалён каменный мусор, добавлены повороты, подъём по декоративным лестницам и сидение на лавке. Все старые ID сохранены; `/bloodborne update 32 preview|apply` заменяет 16 подтверждённых дубликатов с сохранением положения и восстанавливает части. Fabric 1.20.1 / Java 17, обновить сервер и клиенты. Автономные проверки и сборка выполнены без запуска Minecraft.
 

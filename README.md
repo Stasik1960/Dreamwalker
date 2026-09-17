@@ -53,7 +53,7 @@ RP Chat управляет доставкой и содержанием сооб
 
 Администратор управляет знаниями через `/lang add`, `/lang del`, `/lang reload`. Языки находятся в `config/dw_languages/languages/`, знания игроков — в папке мира `dw_languages/players.json`. Поддерживаются роли RP Chat и права LuckPerms; Fabric Permissions API включён в JAR. Подробности: [гайд по настройке языков](DW_Languages/LANGUAGE-GUIDE.md).
 
-### Bloodborne Architecture 1.2.0
+### Bloodborne Architecture 1.2.1
 
 Строительный набор сохраняет **503 ID** палитры Bloodborne, скрывает дубликаты и пустые заготовки. Он **не генерирует город и не конвертирует карту автоматически**.
 
@@ -67,7 +67,7 @@ RP Chat управляет доставкой и содержанием сооб
 
 | Мод | Последний JAR в папке `releases` |
 | --- | --- |
-| Bloodborne Architecture | [1.2.0](releases/Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar.sha256) |
+| Bloodborne Architecture | [1.2.1](releases/Bloodborne-Blocks/bloodborne-blocks-1.2.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-1.2.1-mc1.20.1.jar.sha256) |
 | RP Chat | [0.1.16](releases/RP-Chat/rp-chat-0.1.16.jar) · [SHA-256](releases/RP-Chat/rp-chat-0.1.16.jar.sha256) |
 | RP Chat UI | [0.3.7](releases/RP-Chat-UI/rp-chat-ui-0.3.7.jar) |
 | DW Magic Connect | [0.4.3](releases/DW_Magic_Connect/dw-magic-connect-0.4.3.jar) · [SHA-256](releases/DW_Magic_Connect/dw-magic-connect-0.4.3.jar.sha256) |

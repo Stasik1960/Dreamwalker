@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /** Exact opt-in behavior for the authored ladder and bench models. */
-final class FunctionalFurniture {
+public final class FunctionalFurniture {
  private static final String LADDER="ladder";
  private static final String LARGE_LADDER="waxed_exposed_cut_copper_stairs";
  private static final String BENCH="nether_brick_stairs";
@@ -31,7 +31,7 @@ final class FunctionalFurniture {
   BlockState root=world.getBlockState(part.rootPos());return root.isOf(part.ownerBlock())&&isLadderRoot(root);
  }
 
- static BlockPos climbablePos(LivingEntity entity){
+ public static BlockPos climbablePos(LivingEntity entity){
   Box body=entity.getBoundingBox();Box box=new Box(body.minX-.125,body.minY,body.minZ-.125,body.maxX+.125,body.minY+.6,body.maxZ+.125);
   for(BlockPos pos:BlockPos.iterate((int)Math.floor(box.minX),(int)Math.floor(box.minY),(int)Math.floor(box.minZ),(int)Math.floor(box.maxX),(int)Math.floor(box.maxY),(int)Math.floor(box.maxZ))){
    if(!isClimbable(entity.getWorld(),pos))continue;

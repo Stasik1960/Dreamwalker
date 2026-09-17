@@ -51,3 +51,5 @@ Python NumPy/Pillow: C:/Users/Admin/.cache/codex-runtimes/codex-primary-runtime/
 перезапускать. optimize_architecture.py идемпотентен; затем generate_collision.py,
 find_aliases.py, check_migration.py, validate_architecture.py. Для обычной сборки
 все ресурсы уже готовы; повторная генерация не нужна.
+
+Hotfix 1.2.1: исправлен IllegalClassLoadError при старте: DecorativeClimbMixin перенесён в отдельный пакет .mixin, FunctionalFurniture.climbablePos доступен публично. build и geometryCheck прошли; tools/check_mixin_package.py проверяет готовый JAR, изоляцию entrypoints и refmap. Minecraft не запускался.

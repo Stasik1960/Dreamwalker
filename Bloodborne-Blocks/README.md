@@ -15,7 +15,7 @@
 
 ## Установка
 
-Готовый файл: [bloodborne-blocks-1.2.0-mc1.20.1.jar](../releases/Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar).
+Готовый файл: [bloodborne-blocks-1.2.1-mc1.20.1.jar](../releases/Bloodborne-Blocks/bloodborne-blocks-1.2.1-mc1.20.1.jar).
 
 Minecraft **1.20.1**, Java **17**, Fabric Loader **0.16.10+**, Fabric API **0.92.9+1.20.1**. Мод устанавливается на сервер и все клиенты; прежний JAR этого мода нужно заменить. Для ранее использовавшейся связки Sodium 0.5.11 нужен Indium 1.0.34. Исходный Bloodborne resource pack и старый `bloodborne_transparency_fix` должны быть отключены.
 
