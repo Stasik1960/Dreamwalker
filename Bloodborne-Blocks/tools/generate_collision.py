@@ -1,7 +1,9 @@
-"""Build bounded, cell-local collision for every visual state at 1/16-block resolution.
+"""Build bounded, cell-local gameplay shapes for every visual state.
 
 Transparent pixels are sampled only on thin surfaces; glass volumes remain solid.
 Rotated elements are voxelized in their own coordinate system, not their AABB.
+Selection uses one box per cell; solid props use boxes, passages use a quarter
+block grid, vegetation has no collision. The 1/16 samples are offline inputs only.
 No giant coordinate-grid shapes are constructed at runtime.
 """
 from catalog_geometry import *
@@ -82,13 +84,24 @@ def merge_cell(points):
         boxes.append([round(float(v)/GRID,6) for v in (x,y,z,X,Y,Z)])
     return boxes
 
-def cells_from(occupied,collide):
+def cells_from(occupied,policy):
     grouped={}
     for p in occupied:
         cell=tuple(v//GRID for v in p);local=tuple(v%GRID for v in p);grouped.setdefault(cell,[]).append(local)
     cells={}
     for c,points in sorted(grouped.items()):
-        boxes=merge_cell(points);cells[','.join(map(str,c))]={'collision':boxes if collide else [],'outline':boxes}
+        lo=np.min(points,axis=0);hi=np.max(points,axis=0)+1
+        bounds=[float(v)/GRID for v in (*lo,*hi)]
+        if policy=='none':boxes=[]
+        elif policy=='box':boxes=[bounds]
+        else:
+            # Quarter-block grid removes texture-pixel teeth. Keep the exact
+            # outside bounds so thin panels do not grow into neighbouring cells.
+            coarse={tuple(v//4 for v in p) for p in points}
+            expanded={(x*4+i,y*4+j,z*4+k) for x,y,z in coarse for i in range(4) for j in range(4) for k in range(4)}
+            boxes=merge_cell(expanded)
+            boxes=[[max(box[a],bounds[a]) if a<3 else min(box[a],bounds[a]) for a in range(6)] for box in boxes]
+        cells[','.join(map(str,c))]={'collision':boxes,'outline':[bounds]}
     return cells
 
 def generate():
@@ -103,10 +116,20 @@ def generate():
         states={};maxcells=0;maxboxes=0;empty=0
         for statekey in b['states']:
             state=dict(x.split('=') for x in statekey.split(',') if x);apps=[v[0] for v in applications(bs,state)]
-            signature=tuple(json.dumps(a,sort_keys=True) for a in apps)+(POLICIES[b['id']]['collision'],)
+            policy=POLICIES[b['id']]['collision']
+            ladder=b['id']=='ladder' or b['id']=='waxed_exposed_cut_copper_stairs' and state.get('shape')=='straight'
+            placed=state.get('assembled')=='true';opened=state.get('open')=='true'
+            signature=tuple(json.dumps(a,sort_keys=True) for a in apps)+(policy,str(ladder),str(placed),str(opened))
             if signature not in intern:
                 occupied=frozenset().union(*(voxels(json.dumps(a,sort_keys=True)) for a in apps))
-                cells=cells_from(occupied,POLICIES[b['id']]['collision']!='none')
+                if placed:
+                    # Inflating zero-thickness artwork must not create phantom
+                    # cells below the floor and raise placement by a whole block.
+                    occupied=frozenset(p for p in occupied if p[1]>=0 and (opened or p[0]>=0 and p[2]>=0))
+                if ladder and occupied:
+                    lo=np.min(list(occupied),axis=0);hi=np.max(list(occupied),axis=0)+1
+                    occupied=itertools.product(*(range(lo[a],hi[a]) for a in range(3)));policy='box'
+                cells=cells_from(occupied,policy)
                 # Include click/render-only roots without invented physical cube collisions.
                 anchor=[min(int(c.split(',')[a]) for c in cells) for a in range(3)] if cells else [0,0,0]
                 render_offset=np.zeros(3)

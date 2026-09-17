@@ -36,6 +36,11 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
  }
  private record Root(BlockPos pos,BlockState state,BlockPos offset){}
 
+ @Override public boolean canReplace(BlockState state,net.minecraft.item.ItemPlacementContext context){
+  Root root=root(context.getWorld(),context.getBlockPos());
+  return root!=null&&PaletteAliases.removed(((ArchitectureBlock)root.state.getBlock()).definition.id);
+ }
+
  @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);return root==null?VoxelShapes.empty():GeometryRuntime.cellShape(root.state,root.offset,true);}
  @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);return root==null?VoxelShapes.empty():GeometryRuntime.cellShape(root.state,root.offset,false);}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
@@ -59,7 +64,7 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
 
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
   if(!next.isOf(this)&&!GeometryRuntime.isMutating()){
-   Root root=root(world,pos);if(root!=null&&!world.isClient)world.breakBlock(root.pos,true);
+   Root root=root(world,pos);if(root!=null&&!world.isClient)world.breakBlock(root.pos,!PaletteAliases.removed(((ArchitectureBlock)root.state.getBlock()).definition.id));
   }
   super.onStateReplaced(state,world,pos,next,moved);
  }

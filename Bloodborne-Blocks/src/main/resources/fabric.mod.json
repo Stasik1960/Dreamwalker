@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "bloodborne_blocks",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "Bloodborne Architecture",
   "description": "Independent architectural blocks migrated from the supplied Bloodborne resource pack. Minecraft 1.20.1 Fabric.",
   "authors": [
-    "Kirill \u2014 migration commissioned project",
-    "Codex \u2014 conversion and implementation"
+    "Kirill — migration commissioned project",
+    "Codex — conversion and implementation"
   ],
   "environment": "*",
   "entrypoints": {
@@ -17,6 +17,9 @@
       "dev.dreamwalker.bloodborneblocks.BloodborneClient"
     ]
   },
+  "mixins": [
+    "bloodborne_blocks.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.16.10",
     "minecraft": "1.20.1",

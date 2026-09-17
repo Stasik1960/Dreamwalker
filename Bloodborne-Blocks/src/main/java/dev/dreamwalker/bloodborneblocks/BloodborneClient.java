@@ -4,6 +4,8 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.render.entity.EmptyEntityRenderer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.Sprite;
@@ -16,6 +18,7 @@ import java.util.*;
 
 public final class BloodborneClient implements ClientModInitializer {
  public void onInitializeClient(){
+  EntityRendererRegistry.register(BloodborneBlocks.SEAT_ENTITY,EmptyEntityRenderer::new);
   if(BloodborneBlocks.DATA.compat_layers!=null)BloodborneBlocks.DATA.compat_layers.forEach((name,layer)->{
    var id=new Identifier(name);if(net.minecraft.registry.Registries.BLOCK.containsId(id)){
     var block=net.minecraft.registry.Registries.BLOCK.get(id);

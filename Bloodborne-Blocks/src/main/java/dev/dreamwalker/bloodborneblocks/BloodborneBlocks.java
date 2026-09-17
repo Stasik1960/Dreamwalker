@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
+import net.minecraft.entity.*;
 import net.minecraft.registry.*;
 import net.minecraft.state.property.Property;
 import net.minecraft.state.property.BooleanProperty;
@@ -23,6 +24,7 @@ public final class BloodborneBlocks implements ModInitializer {
  public static final Map<String,ArchitectureBlock> BLOCKS=new LinkedHashMap<>();
  public static final ArchitecturePartBlock PART_BLOCK=new ArchitecturePartBlock();
  public static BlockEntityType<ArchitecturePartBlockEntity> PART_BLOCK_ENTITY;
+ public static EntityType<ArchitectureSeatEntity> SEAT_ENTITY;
  public static Data DATA;
  public static final class Data {public List<Definition> blocks;public List<List<double[]>> shapes;public Map<String,String> emissive_textures;public Map<String,String> compat_layers;}
  public static final class Definition {
@@ -47,6 +49,7 @@ public final class BloodborneBlocks implements ModInitializer {
   GeometryRuntime.loadAndValidate(DATA);
   Registry.register(Registries.BLOCK,id("architecture_part"),PART_BLOCK);
   PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,PART_BLOCK).build(null));
+  SEAT_ENTITY=Registry.register(Registries.ENTITY_TYPE,id("seat"),EntityType.Builder.<ArchitectureSeatEntity>create(ArchitectureSeatEntity::new,SpawnGroup.MISC).setDimensions(.01F,.01F).maxTrackingRange(8).trackingTickInterval(20).disableSaving().disableSummon().build(ID+":seat"));
   for(Definition d:DATA.blocks){
    Identifier source=new Identifier(d.source);if(!Registries.BLOCK.containsId(source))throw new IllegalStateException("Missing source block "+source);d.sourceBlock=Registries.BLOCK.get(source);
    for(String name:d.properties.keySet()){
@@ -59,7 +62,7 @@ public final class BloodborneBlocks implements ModInitializer {
    }
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));BLOCKS.put(d.id,block);
   }
-  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("stone_bricks"))).entries((context,entries)->BLOCKS.values().stream().filter(b->!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("stone_bricks"))).entries((context,entries)->BLOCKS.values().stream().filter(b->!PaletteAliases.hidden(b.definition.id)&&!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).forEach(entries::add)).build());
   BloodborneCommands.register();
   System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" states="+BLOCKS.values().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }

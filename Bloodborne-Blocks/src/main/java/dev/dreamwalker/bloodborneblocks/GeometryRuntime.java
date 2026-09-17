@@ -24,6 +24,7 @@ import java.util.*;
 final class GeometryRuntime {
  private static final Gson GSON=new Gson();
  private static final Map<String,GeometryBlock> BLOCKS=new HashMap<>();
+ private static final Map<BlockState,GeometryState> STATES=new IdentityHashMap<>();
  private static final ThreadLocal<Boolean> MUTATING=ThreadLocal.withInitial(()->false);
 
  static final class FileData {Map<String,GeometryState> profiles;Map<String,GeometryBlock> blocks;}
@@ -52,7 +53,7 @@ final class GeometryRuntime {
    file=GSON.fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),FileData.class);
   }catch(IOException|RuntimeException e){throw new IllegalStateException("Cannot load Bloodborne cell geometry",e);}
   if(file==null||file.blocks==null)throw new IllegalStateException("Invalid geometry.json: missing blocks");
-  BLOCKS.clear();BLOCKS.putAll(file.blocks);
+  BLOCKS.clear();STATES.clear();BLOCKS.putAll(file.blocks);
   Set<GeometryState> prepared=Collections.newSetFromMap(new IdentityHashMap<>());
   for(BloodborneBlocks.Definition definition:definitions.blocks){
    GeometryBlock block=BLOCKS.get(definition.id);
@@ -105,9 +106,15 @@ final class GeometryRuntime {
  }
 
  static GeometryState state(BlockState state){
+  GeometryState cached=STATES.get(state);if(cached!=null)return cached;
   if(!(state.getBlock() instanceof ArchitectureBlock block))return null;
   GeometryBlock geometry=BLOCKS.get(block.definition.id);
   return geometry==null?null:geometry.states.get(BloodborneBlocks.key(state));
+ }
+
+ static void bind(ArchitectureBlock block){
+  GeometryBlock geometry=BLOCKS.get(block.definition.id);
+  for(BlockState state:block.getStateManager().getStates())STATES.put(state,geometry.states.get(BloodborneBlocks.key(state)));
  }
 
  static double[] renderOffset(String blockId,String stateKey){
@@ -130,6 +137,7 @@ final class GeometryRuntime {
  static VoxelShape rootShape(BlockState state,boolean outline){return cellShape(state,BlockPos.ORIGIN,outline);}
 
  static VoxelShape cellShape(BlockState rootState,BlockPos offset,boolean outline){
+  if(rootState.getBlock() instanceof ArchitectureBlock block&&PaletteAliases.removed(block.definition.id))return VoxelShapes.empty();
   GeometryState geometry=state(rootState);if(geometry==null)return VoxelShapes.empty();
   GeometryCell cell=geometry.parsedCells.get(offset);if(cell==null)return VoxelShapes.empty();
   return outline?cell.outlineShape:cell.collisionShape;
@@ -163,9 +171,10 @@ final class GeometryRuntime {
   for(BlockPos offset:geometry.parsedCells.keySet()){
    if(offset.equals(BlockPos.ORIGIN)||reservedDoorSibling(state,offset))continue;
    BlockPos target=root.add(offset);
+   if(target.equals(ownedRoot))continue;
    if(!world.isChunkLoaded(target)||!world.isInBuildLimit(target)||!world.getWorldBorder().contains(target))return target;
    BlockState there=world.getBlockState(target);
-   if(there.isAir())continue;
+   if(there.isAir()||there.isReplaceable())continue;
    if(there.isOf(BloodborneBlocks.PART_BLOCK)){
     ArchitecturePartBlockEntity part=part(world,target);
     if(part!=null&&ownedRoot!=null&&part.rootPos().equals(ownedRoot))continue;
@@ -215,12 +224,30 @@ final class GeometryRuntime {
   if(geometry==null)return;
   for(BlockPos offset:geometry.parsedCells.keySet()){
    BlockPos target=root.add(offset);if(target.equals(root)||keep.contains(target)||!world.isChunkLoaded(target))continue;
+   if(!world.getBlockState(target).isOf(BloodborneBlocks.PART_BLOCK))continue;
    ArchitecturePartBlockEntity part=part(world,target);
    if(part!=null&&part.rootPos().equals(root))world.removeBlock(target,false);
   }
  }
 
  static ArchitecturePartBlockEntity part(BlockView world,BlockPos pos){BlockEntity entity=world.getBlockEntity(pos);return entity instanceof ArchitecturePartBlockEntity part?part:null;}
+
+ static void removeHelper(World world,BlockPos pos){
+  boolean previous=MUTATING.get();MUTATING.set(true);
+  try{world.removeBlock(pos,false);}finally{MUTATING.set(previous);}
+ }
+
+ /** Called only after migration preflight. Never overwrites foreign cells. */
+ static void replaceRoot(World world,BlockPos oldRoot,BlockState oldState,BlockPos newRoot,BlockState next){
+  if(FunctionalFurniture.isBench(oldState))FunctionalFurniture.removeSeats(world,oldRoot);
+  removeOwnedParts(world,oldRoot,oldState);
+  MUTATING.set(true);
+  try{
+   if(!oldRoot.equals(newRoot)||next.isAir())world.removeBlock(oldRoot,false);
+   if(!next.isAir())world.setBlockState(newRoot,next,Block.NOTIFY_ALL);
+  }finally{MUTATING.set(false);}
+  if(!next.isAir())rebuild(world,newRoot,next);
+ }
 
  static RepairResult repair(ServerWorld world,BlockPos center,int radius,boolean apply){
   int roots=0,repaired=0,conflicts=0,orphans=0;

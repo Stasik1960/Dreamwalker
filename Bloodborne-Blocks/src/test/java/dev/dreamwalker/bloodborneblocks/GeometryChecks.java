@@ -22,9 +22,18 @@ public final class GeometryChecks {
    states++;var state=entry.getValue();if(!profiles.add(state))continue;
    for(var cell:state.parsedCells.values()){
     cells++;checkShape(cell.collisionShape);checkShape(cell.outlineShape);
+    check(cell.outline.size()<=1,"one rectangular selection per cell");
+    check(cell.collision.size()<=16,"bounded simple physics per cell");
    }
   }
   check(states>=18968,"complete state coverage");
+  for(String id:List.of("dead_fire_coral_fan","orange_wool","cyan_wool","pink_wool","potted_dead_bush","potted_azalea_bush"))
+   for(var s:blocks.get(id).states.values())for(var c:s.parsedCells.values())check(c.collisionShape.isEmpty(),"vegetation is pass-through: "+id);
+  for(var entry:blocks.get("waxed_exposed_cut_copper_stairs").states.entrySet()){
+   if(!entry.getKey().contains("shape=straight"))continue;
+   var s=entry.getValue();double[] bounds=bounds(s);int bottom=(int)Math.floor(bounds[1]),top=(int)Math.ceil(bounds[4]);
+   for(int y=bottom;y<top;y++){final int level=y;check(s.parsedCells.keySet().stream().anyMatch(p->p.getY()==level),"continuous climb cells: "+entry.getKey());}
+  }
   for(String id:List.of("acacia_stairs","birch_stairs","dark_oak_stairs")) {
    var block=blocks.get(id);Set<String> tested=new HashSet<>();
    for(var entry:block.states.entrySet()) {

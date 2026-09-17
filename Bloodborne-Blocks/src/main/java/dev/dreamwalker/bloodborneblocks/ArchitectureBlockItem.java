@@ -14,30 +14,57 @@ public final class ArchitectureBlockItem extends BlockItem {
  public ArchitectureBlockItem(ArchitectureBlock block,Settings settings){super(block,settings);}
 
  @Override public ActionResult place(ItemPlacementContext original){
+  ArchitectureBlock source=(ArchitectureBlock)getBlock();
+  if(PaletteAliases.removed(source.definition.id))return ActionResult.FAIL;
+  ArchitectureBlock canonical=PaletteAliases.canonical(source);
+  ItemStack working=new ItemStack(canonical,original.getStack().getCount());
+  if(original.getStack().hasNbt())working.setNbt(original.getStack().getNbt().copy());
+  if(canonical!=source){
+   BlockState selected=PaletteAliases.replacement(applyStateTag(source.getDefaultState(),working)).state();
+   NbtCompound props=new NbtCompound();selected.getEntries().forEach((p,v)->props.putString(p.getName(),BloodborneBlocks.value(p,v)));
+   working.getOrCreateNbt().put("BlockStateTag",props);
+  }
+  ItemPlacementContext prepared=new ItemPlacementContext(original){@Override public ItemStack getStack(){return working;}};
+  ActionResult result=((ArchitectureBlockItem)canonical.asItem()).placePrepared(prepared);
+  if(result.isAccepted())original.getStack().decrement(Math.max(0,original.getStack().getCount()-working.getCount()));
+  return result;
+ }
+
+ private ActionResult placePrepared(ItemPlacementContext original){
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
   BlockState tentative=block.getPlacementState(original);if(tentative==null)return ActionResult.FAIL;
   normalizePlacementTag(original.getStack(),block,tentative);tentative=applyStateTag(tentative,original.getStack());
-  BlockPos anchor=GeometryRuntime.anchor(tentative,original.getSide());BlockPos root=original.getBlockPos().subtract(anchor);
+  BlockPos root=original.getBlockPos().subtract(GeometryRuntime.anchor(tentative,original.getSide()));
   Vec3d delta=Vec3d.of(root.subtract(original.getBlockPos()));
-  ItemPlacementContext shifted=new ItemPlacementContext(original.getWorld(),original.getPlayer(),original.getHand(),original.getStack(),new BlockHitResult(original.getHitPos().add(delta),original.getSide(),root,original.hitsInsideBlock()));
-  // ItemPlacementContext silently offsets away from a non-replaceable hit block.
-  // Never let that move placement away from the root covered by the preflight below.
-  if(!shifted.getBlockPos().equals(root))return ActionResult.FAIL;
+  ItemPlacementContext shifted=new ItemPlacementContext(original){
+   @Override public BlockPos getBlockPos(){return root;}
+   @Override public Vec3d getHitPos(){return original.getHitPos().add(delta);}
+   @Override public ItemStack getStack(){return original.getStack();}
+   @Override public boolean canPlace(){return getWorld().getBlockState(root).canReplace(this);}
+  };
   if(!shifted.canPlace())return ActionResult.FAIL;
-  BlockState baseState=block.getPlacementState(shifted);if(baseState==null)return ActionResult.FAIL;
-  normalizePlacementTag(original.getStack(),block,baseState);BlockState finalState=applyStateTag(baseState,original.getStack());
-  if(finalState==null||!GeometryRuntime.canPlace(original.getWorld(),root,finalState)||!block.canPlaceConventionalDoor(original.getWorld(),root,finalState))return ActionResult.FAIL;
-  ActionResult result=super.place(shifted);
-  if(result.isAccepted()&&!original.getWorld().isClient){
-   BlockState placed=original.getWorld().getBlockState(root);
-   if(placed.isOf(block))GeometryRuntime.rebuild(original.getWorld(),root,placed);
-  }
-  return result;
+  BlockState base=block.getPlacementState(shifted);if(base==null)return ActionResult.FAIL;
+  normalizePlacementTag(original.getStack(),block,base);
+  BlockState finalState=applyStateTag(base,original.getStack());
+  if(!GeometryRuntime.canPlace(original.getWorld(),root,finalState)||!block.canPlaceConventionalDoor(original.getWorld(),root,finalState))return ActionResult.FAIL;
+  return super.place(shifted);
+ }
+
+ @Override protected BlockState getPlacementState(ItemPlacementContext context){
+  BlockState base=getBlock().getPlacementState(context);if(base==null)return null;
+  BlockState state=applyStateTag(base,context.getStack());return canPlace(context,state)?state:null;
  }
 
  private static void normalizePlacementTag(ItemStack stack,ArchitectureBlock block,BlockState placement){
   NbtCompound properties=stack.getOrCreateSubNbt("BlockStateTag");
   if(placement.contains(BloodborneBlocks.ASSEMBLED))properties.putString("assembled","true");
+  if(placement.contains(net.minecraft.state.property.Properties.WATERLOGGED))properties.putString("waterlogged",Boolean.toString(placement.get(net.minecraft.state.property.Properties.WATERLOGGED)));
+  if(block.definition.kind.equals("slab"))properties.putString("type",placement.get(net.minecraft.state.property.Properties.SLAB_TYPE).asString());
+  if(block.definition.kind.equals("stairs")){
+   properties.putString("facing",placement.get(net.minecraft.state.property.Properties.HORIZONTAL_FACING).asString());
+   properties.putString("half",placement.get(net.minecraft.state.property.Properties.BLOCK_HALF).asString());
+   properties.putString("shape",placement.get(net.minecraft.state.property.Properties.STAIR_SHAPE).asString());
+  }
   boolean authored=block.definition.kind.equals("generic")||block.definition.kind.equals("model_door");
   if(authored){
    Property<?> facing=block.getStateManager().getProperty("facing");if(facing!=null)properties.putString("facing",BloodborneBlocks.value((Property)facing,(Comparable)placement.get((Property)facing)));

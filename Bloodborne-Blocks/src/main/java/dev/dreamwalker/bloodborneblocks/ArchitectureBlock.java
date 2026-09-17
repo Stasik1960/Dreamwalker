@@ -40,12 +40,14 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
    if(!d.states.containsKey(BloodborneBlocks.key(state)))throw new IllegalStateException("Unmapped state "+state);
    BlockState original=d.sourceBlock.getDefaultState();for(var e:state.getEntries().entrySet())if(original.contains(e.getKey()))original=BloodborneBlocks.set(original,e.getKey(),BloodborneBlocks.value(e.getKey(),e.getValue()));originals.put(state,original);
   }
+  GeometryRuntime.bind(this);
  }
  protected void appendProperties(StateManager.Builder<Block,BlockState> builder){for(Property<?>p:CONSTRUCTING.get().propertyObjects.values())builder.add(p);}
  public BlockState original(BlockState state){return originals.getOrDefault(state,definition.sourceBlock.getDefaultState());}
  /** Keep selection bounds inside the physical shape. Authored render geometry can overhang
   * a block for decorative silhouettes; using it as an outline produced ghost lines in-world. */
  @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,true);}
+ @Override public BlockRenderType getRenderType(BlockState state){return PaletteAliases.removed(definition.id)?BlockRenderType.INVISIBLE:BlockRenderType.MODEL;}
  @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,false);}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return definition.full_cube&&!definition.custom_geometry?VoxelShapes.fullCube():VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return definition.full_cube?.2F:1F;}
@@ -75,7 +77,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
   return connections(result,ctx.getWorld(),ctx.getBlockPos());
  }
- @Override public boolean canReplace(BlockState state,ItemPlacementContext ctx){if(definition.kind.equals("slab")&&ctx.getStack().isOf(asItem())&&state.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE){boolean upper=ctx.getHitPos().y-ctx.getBlockPos().getY()>.5;return state.get(Properties.SLAB_TYPE)==SlabType.BOTTOM?(ctx.getSide()==Direction.UP||(ctx.getSide().getAxis().isHorizontal()&&upper)):(ctx.getSide()==Direction.DOWN||(ctx.getSide().getAxis().isHorizontal()&&!upper));}return false;}
+ @Override public boolean canReplace(BlockState state,ItemPlacementContext ctx){if(PaletteAliases.removed(definition.id))return true;if(definition.kind.equals("slab")&&ctx.getStack().isOf(asItem())&&state.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE){boolean upper=ctx.getHitPos().y-ctx.getBlockPos().getY()>.5;return state.get(Properties.SLAB_TYPE)==SlabType.BOTTOM?(ctx.getSide()==Direction.UP||(ctx.getSide().getAxis().isHorizontal()&&upper)):(ctx.getSide()==Direction.DOWN||(ctx.getSide().getAxis().isHorizontal()&&!upper));}return false;}
  private boolean connects(BlockState other,WorldAccess world,BlockPos pos,Direction side){
   if(other.getBlock()instanceof ArchitectureBlock b&&b.definition.kind.equals(definition.kind))return true;
   if(definition.kind.equals("pane")&&(other.getBlock()instanceof PaneBlock||other.isIn(BlockTags.WALLS)))return true;
@@ -131,10 +133,12 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   GeometryRuntime.rebuild(world,pos,state);refreshEditedNeighbors(world,pos);
  }
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
+  if(FunctionalFurniture.isBench(state)&&state!=next)FunctionalFurniture.removeSeats(world,pos);
   if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating())GeometryRuntime.removeOwnedParts(world,pos,state);
   super.onStateReplaced(state,world,pos,next,moved);if(!next.isOf(this))refreshEditedNeighbors(world,pos);
  }
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
+  if(FunctionalFurniture.isBench(state))return FunctionalFurniture.sit(world,pos,state,player);
   if(!Set.of("door","trapdoor","gate","model_door").contains(definition.kind)||!state.contains(Properties.OPEN))return ActionResult.PASS;
   if(definition.kind.equals("model_door")&&state.contains(Properties.STAIR_SHAPE)&&state.get(Properties.STAIR_SHAPE)!=StairShape.STRAIGHT)return ActionResult.PASS;
   if(!world.isClient){BlockState next=state.cycle(Properties.OPEN);BlockPos other=null;BlockState sibling=null,nextSibling=null;
@@ -150,7 +154,15 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
    world.playSound(null,pos,sound,SoundCategory.BLOCKS,.7F,1F);
   }return ActionResult.success(world.isClient);
  }
- @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){ItemStack stack=new ItemStack(this);if(!state.getEntries().isEmpty()){NbtCompound props=new NbtCompound();state.getEntries().forEach((p,v)->props.putString(p.getName(),BloodborneBlocks.value(p,v)));stack.getOrCreateNbt().put("BlockStateTag",props);}return stack;}
+ @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){
+  if(PaletteAliases.removed(definition.id))return ItemStack.EMPTY;
+  BlockState canonical=PaletteAliases.replacement(state).state();ItemStack stack=new ItemStack(canonical.getBlock());
+  if(!canonical.getEntries().isEmpty()){
+   NbtCompound props=new NbtCompound();BlockState defaults=canonical.getBlock().getDefaultState();
+   canonical.getEntries().forEach((p,v)->{if(!Set.of("facing","axis","assembled","waterlogged","open").contains(p.getName())&&!v.equals(defaults.get(p)))props.putString(p.getName(),BloodborneBlocks.value(p,v));});
+   if(!props.isEmpty())stack.getOrCreateNbt().put("BlockStateTag",props);
+  }return stack;
+ }
  @Override public FluidState getFluidState(BlockState state){return state.contains(Properties.WATERLOGGED)&&state.get(Properties.WATERLOGGED)?Fluids.WATER.getStill(false):Fluids.EMPTY.getDefaultState();}
  @Override public boolean canFillWithFluid(BlockView world,BlockPos pos,BlockState state,Fluid fluid){return state.contains(Properties.WATERLOGGED)&&Waterloggable.super.canFillWithFluid(world,pos,state,fluid);}
  @Override public boolean tryFillWithFluid(WorldAccess world,BlockPos pos,BlockState state,FluidState fluid){return state.contains(Properties.WATERLOGGED)&&Waterloggable.super.tryFillWithFluid(world,pos,state,fluid);}

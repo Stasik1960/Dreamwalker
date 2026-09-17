@@ -53,13 +53,13 @@ RP Chat управляет доставкой и содержанием сооб
 
 Администратор управляет знаниями через `/lang add`, `/lang del`, `/lang reload`. Языки находятся в `config/dw_languages/languages/`, знания игроков — в папке мира `dw_languages/players.json`. Поддерживаются роли RP Chat и права LuckPerms; Fabric Permissions API включён в JAR. Подробности: [гайд по настройке языков](DW_Languages/LANGUAGE-GUIDE.md).
 
-### Bloodborne Architecture 1.1.0
+### Bloodborne Architecture 1.2.0
 
-Архитектурный набор добавляет **503 отдельных блока**. Он **не генерирует город и не конвертирует карту автоматически**: готовому городу нужна уже подготовленная карта.
+Строительный набор сохраняет **503 ID** палитры Bloodborne, скрывает дубликаты и пустые заготовки. Он **не генерирует город и не конвертирует карту автоматически**.
 
-Коллизии и выделение построены по моделям для 18 968 состояний. Крупные предметы ставятся от основания и края, занимают связанные клетки и удаляются целиком. Три типа двустворчатых дверей открываются. Предметные модели ограничены по размеру для инвентаря и рук.
+У кустов нет столкновений, формы предметов и выделения упрощены. Декоративные объекты поворачиваются при установке; секционные лестницы работают, на лавке можно сидеть, три большие двери открываются. Крупные модели занимают связанные клетки и ломаются целиком; предметы ограничены по размеру для рук и инвентаря.
 
-Прежние точки размещения сохраняются. Для восстановления выступающих коллизий старой карты предусмотрены `/bloodborne repair 16 preview` и `/bloodborne repair 16 apply`. Сначала используйте копию мира; при пересечении с чужими блоками объект пропускается, здания не перемещаются. [Инструкция и ограничения](Bloodborne-Blocks/README.md), [отчёт проверок](Bloodborne-Blocks/docs/COLLISION-1.1.0-RU.md).
+Для старой карты: `/bloodborne update 32 preview`, затем `/bloodborne update 32 apply` на копии мира. Команда удаляет ненужный каменный мусор, заменяет 16 подтверждённых дубликатов и восстанавливает части, сохраняя видимые координаты. Конфликты пропускаются; обрабатываются только загруженные области. [Инструкция](Bloodborne-Blocks/README.md), [проверки и ограничения](Bloodborne-Blocks/docs/OPTIMIZATION-1.2.0-RU.md).
 
 ## Готовые сборки
 
@@ -67,7 +67,7 @@ RP Chat управляет доставкой и содержанием сооб
 
 | Мод | Последний JAR в папке `releases` |
 | --- | --- |
-| Bloodborne Architecture | [1.1.0](releases/Bloodborne-Blocks/bloodborne-blocks-1.1.0-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-1.1.0-mc1.20.1.jar.sha256) |
+| Bloodborne Architecture | [1.2.0](releases/Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-1.2.0-mc1.20.1.jar.sha256) |
 | RP Chat | [0.1.16](releases/RP-Chat/rp-chat-0.1.16.jar) · [SHA-256](releases/RP-Chat/rp-chat-0.1.16.jar.sha256) |
 | RP Chat UI | [0.3.7](releases/RP-Chat-UI/rp-chat-ui-0.3.7.jar) |
 | DW Magic Connect | [0.4.3](releases/DW_Magic_Connect/dw-magic-connect-0.4.3.jar) · [SHA-256](releases/DW_Magic_Connect/dw-magic-connect-0.4.3.jar.sha256) |
