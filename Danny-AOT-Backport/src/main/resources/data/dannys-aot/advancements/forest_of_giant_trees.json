@@ -1,0 +1,31 @@
+{
+  "parent": "dannys-aot:island_of_the_devils",
+  "display": {
+    "icon": {
+      "item": "minecraft:oak_log"
+    },
+    "title": "Forest of the Giant Trees",
+    "description": "Entered the Giant Forest",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "in_giant_forest": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "dimension": "dannys-aot:paradis",
+              "biomes": "dannys-aot:giant_forest"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+

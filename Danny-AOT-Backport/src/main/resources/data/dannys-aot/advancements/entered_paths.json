@@ -1,0 +1,23 @@
+{
+  "parent": "dannys-aot:root",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:path_sand"
+    },
+    "title": "Perfect place for a Walmart",
+    "description": "Entered the Paths",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "entered_paths": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "dannys-aot:paths"
+      }
+    }
+  }
+}
+

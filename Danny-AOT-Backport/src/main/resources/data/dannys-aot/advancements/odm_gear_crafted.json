@@ -1,0 +1,27 @@
+{
+  "parent": "dannys-aot:root",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:odm_gear"
+    },
+    "title": "Gear up",
+    "description": "Obtained ODM Gear",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "got_odm_gear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["dannys-aot:odm_gear"]
+          }
+        ]
+      }
+    }
+  }
+}
+

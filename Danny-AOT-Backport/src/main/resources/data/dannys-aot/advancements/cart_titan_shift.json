@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:one_of_the_nine",
+  "display": {
+    "icon": {
+      "item": "minecraft:minecart"
+    },
+    "title": "Not just a utility Titan",
+    "description": "Shifted into the Cart Titan",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "cart_titan_shift": {
+      "trigger": "dannys-aot:cart_titan_shift"
+    }
+  }
+}
+

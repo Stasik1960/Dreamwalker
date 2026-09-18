@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "dannys-aot",
+  "version": "${version}",
+  "name": "Danny's AoT (1.20.1 Backport)",
+  "description": "Unofficial Fabric 1.20.1 / Java 17 compatibility port of Danny's AoT, including GeckoLib, AAA Particles and Player Animation Library.",
+  "authors": [
+    "Danny"
+  ],
+  "contact": {},
+  "license": "ARR",
+  "icon": "assets/dannys-aot/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "preLaunch": [
+      "daot.DaotPreLaunch"
+    ],
+    "main": [
+      "daot.DannysAot"
+    ],
+    "client": [
+      "daot.DannysAotClient"
+    ],
+    "modmenu": [
+      "daot.ModMenuIntegration"
+    ],
+    "jei_mod_plugin": [
+      "daot.jei.DannysAotJeiPlugin"
+    ],
+    "journeymap": [
+      "daot.compat.journeymap.DaotJourneyMapPlugin"
+    ],
+    "jade": [
+      "daot.compat.jade.DaotJadePlugin"
+    ]
+  },
+  "mixins": [
+    "dannys-aot.mixins.json",
+    {
+      "config": "dannys-aot.client.mixins.json",
+      "environment": "client"
+    },
+    {
+      "config": "dannys-aot-xaero.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*",
+    "geckolib": ">=4.8.3",
+    "player_animation_library": ">=1.1.6-backport.1",
+    "aaa_particles": ">=2.2.3"
+  },
+  "suggests": {
+    "modmenu": "*",
+    "journeymap": "*",
+    "jade": "*"
+  },
+  "breaks": {
+    "talentcards": "*",
+    "titankilltrack": "*"
+  },
+  "contributors": [
+    "@kronart (original models)",
+    "Local compatibility port for Dreamwalker"
+  ]
+}

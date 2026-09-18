@@ -1,0 +1,91 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2022 KosmX
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package com.zigythebird.playeranim.mixin;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import com.zigythebird.playeranim.accessors.IAnimatedPlayer;
+import com.zigythebird.playeranim.animation.PlayerAnimManager;
+import com.zigythebird.playeranimcore.bones.PlayerAnimBone;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(ItemInHandLayer.class)
+public class ItemInHandLayerMixin {
+    @Unique
+    private final PlayerAnimBone playerAnimLib$rightItem = new PlayerAnimBone("right_item");
+    @Unique
+    private final PlayerAnimBone playerAnimLib$leftItem = new PlayerAnimBone("left_item");
+
+    @Inject(method = "renderArmWithItem", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V", ordinal = 0))
+    private void changeItemLocation(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext displayContext, HumanoidArm arm, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        if (livingEntity instanceof AbstractClientPlayer player && ((IAnimatedPlayer)player).playerAnimLib$getAnimProcessor() != null && ((IAnimatedPlayer)player).playerAnimLib$getAnimManager().isActive()) {
+            PlayerAnimManager anim = ((IAnimatedPlayer)player).playerAnimLib$getAnimManager();
+            if (anim == null) return;
+            PlayerAnimBone bone;
+
+            if (arm == HumanoidArm.LEFT) bone = playerAnimLib$leftItem;
+            else bone = playerAnimLib$rightItem;
+
+            bone.setToInitialPose();
+            anim.get3DTransform(bone);
+
+            poseStack.translate(bone.getPosX()/16, -bone.getPosY()/16, bone.getPosZ()/16);
+        }
+    }
+
+    @Inject(method = "renderArmWithItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemInHandRenderer;renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"))
+    private void changeItemRotationAndScale(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext displayContext, HumanoidArm arm, PoseStack poseStack, MultiBufferSource buffer, int packedLight, CallbackInfo ci) {
+        if (livingEntity instanceof AbstractClientPlayer player && ((IAnimatedPlayer)player).playerAnimLib$getAnimProcessor() != null && ((IAnimatedPlayer)player).playerAnimLib$getAnimManager().isActive()) {
+            PlayerAnimManager anim = ((IAnimatedPlayer)player).playerAnimLib$getAnimManager();
+            if (anim == null) return;
+            PlayerAnimBone bone;
+
+            if (arm == HumanoidArm.LEFT) bone = playerAnimLib$leftItem;
+            else bone = playerAnimLib$rightItem;
+
+            if (bone.getRotY() != 0)
+                poseStack.mulPose(Axis.ZP.rotation(-bone.getRotY()));
+
+            if (bone.getRotZ() != 0)
+                poseStack.mulPose(Axis.YP.rotation(-bone.getRotZ()));
+
+            if (bone.getRotX() != 0)
+                poseStack.mulPose(Axis.XP.rotation(-bone.getRotX()));
+
+            poseStack.scale(bone.getScaleX(), bone.getScaleY(), bone.getScaleZ());
+        }
+    }
+}

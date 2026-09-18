@@ -1,0 +1,2 @@
+- Backport Bezier functionality from 26.1+  
+- Fixed an issue where some MoLang queries combined with the speed modifier caused a crash.

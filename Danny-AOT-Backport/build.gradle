@@ -1,0 +1,103 @@
+plugins { id 'fabric-loom' version '1.10.5' }
+version = '2.4.3-backport.2'
+group = 'local.dreamwalker.compat'
+base { archivesName = 'dannys-aot-1.20.1' }
+repositories {
+    flatDir {
+        dirs 'libs', 'player-animation-backport/build/libs'
+        content { includeGroup 'local.bundle' }
+    }
+    mavenCentral()
+    maven { url = 'https://maven.terraformersmc.com/releases/' }
+    maven { url = 'https://maven.blamejared.com/' }
+    maven { url = 'https://api.modrinth.com/maven' }
+}
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.1'
+    mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.9+1.20.1'
+    modImplementation files('libs/geckolib-fabric-1.20.1-4.8.4.jar')
+    modImplementation files('libs/aaa_particles-fabric-1.20.1-2.2.3.jar')
+    modCompileOnly 'com.terraformersmc:modmenu:7.2.2'
+    modCompileOnly 'mezz.jei:jei-1.20.1-fabric-api:15.20.0.106'
+    modImplementation files('player-animation-backport/build/libs/PlayerAnimationLib-1.1.6-backport.1+mc.1.20.1.jar')
+    modCompileOnly files('libs/Jade-1.20-Fabric-11.13.3.jar')
+    modCompileOnly files('libs/xaerominimap-fabric-1.20.1-26.5.0.jar')
+    modCompileOnly files('libs/xaeroworldmap-fabric-1.20.1-1.46.0.jar')
+    compileOnly files('libs/journeymap-api-1.20.1-named.jar')
+    include 'local.bundle:geckolib-fabric-1.20.1:4.8.4'
+    include 'local.bundle:aaa_particles-fabric-1.20.1:2.2.3'
+    include 'local.bundle:PlayerAnimationLib:1.1.6-backport.1+mc.1.20.1'
+}
+
+sourceSets {
+    verification {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+tasks.register('verifyBackport', JavaExec) {
+    dependsOn tasks.named('verificationClasses'), 'verificationAccessAgent'
+    classpath = sourceSets.verification.runtimeClasspath
+    mainClass = 'daot.verification.BackportVerification'
+    args file('src/main/java/daot/network').absolutePath
+    jvmArgs '-javaagent:' + layout.buildDirectory.file('verification/access-agent.jar').get().asFile.absolutePath
+}
+tasks.register('verificationAccessAgent', Jar) {
+    dependsOn tasks.named('verificationClasses')
+    archiveFileName = 'access-agent.jar'
+    destinationDirectory = layout.buildDirectory.dir('verification')
+    from(sourceSets.verification.output) { include 'daot/verification/DevelopmentAccessAgent*.class' }
+    manifest { attributes 'Premain-Class': 'daot.verification.DevelopmentAccessAgent' }
+}
+tasks.named('check') { dependsOn tasks.named('verifyBackport') }
+tasks.register('verifyMixinApplication', JavaExec) {
+    dependsOn tasks.named('verificationClasses'), tasks.named('remapJar')
+    classpath = sourceSets.verification.runtimeClasspath
+    mainClass = 'daot.verification.OfflineMixinApply'
+    jvmArgs '-Ddaot.offline.mixincheck=true'
+    doFirst {
+        def named = configurations.compileClasspath.files.find { it.name.startsWith('minecraft-merged-') }
+        def mappingVersion = named.parentFile.name
+        def intermediary = new File(gradle.gradleUserHomeDir,
+            "caches/fabric-loom/minecraftMaven/net/minecraft/minecraft-merged-intermediary/${mappingVersion}/minecraft-merged-intermediary-${mappingVersion}.jar")
+        if (!intermediary.exists()) throw new GradleException('Missing intermediary Minecraft jar: ' + intermediary)
+        args tasks.remapJar.archiveFile.get().asFile.absolutePath, intermediary.absolutePath
+    }
+}
+tasks.register('auditMixinHandlers', JavaExec) {
+    dependsOn tasks.named('verificationClasses')
+    classpath = sourceSets.verification.runtimeClasspath
+    mainClass = 'daot.verification.MixinHandlerAudit'
+    doFirst {
+        def classes = sourceSets.main.output.classesDirs.singleFile.absolutePath
+        args([classes, classes] + configurations.compileClasspath.files.collect { it.absolutePath })
+    }
+}
+tasks.named('check') {
+    dependsOn tasks.named('verifyMixinApplication'), tasks.named('auditMixinHandlers')
+}
+tasks.register('auditOverrides', JavaExec) {
+    dependsOn tasks.named('verificationClasses')
+    classpath = sourceSets.verification.runtimeClasspath
+    mainClass = 'daot.verification.OverrideAudit'
+    args file('work/dannys-aot-named.jar').absolutePath,
+         file('tools/minecraft-1.21.1-named.jar').absolutePath,
+         sourceSets.main.output.classesDirs.singleFile.absolutePath,
+         configurations.compileClasspath.files.find { it.name.startsWith('minecraft-merged-') }.absolutePath
+}
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xmaxerrs', '10000']
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+tasks.named('processResources') {
+    inputs.property 'modVersion', project.version
+    filesMatching('fabric.mod.json') { expand version: project.version }
+}
+

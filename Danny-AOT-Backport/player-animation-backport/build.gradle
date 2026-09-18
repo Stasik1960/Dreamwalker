@@ -1,0 +1,51 @@
+plugins {
+    id 'fabric-loom' version '1.10.5'
+    id 'java'
+}
+
+version = "${project.mod_version}+mc.${project.minecraft_version}"
+group = project.maven_group
+
+base { archivesName = project.archives_base_name }
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.redlance.org/public' }
+}
+
+loom {
+    accessWidenerPath = file('minecraft/common/src/main/resources/player_animation_library.accesswidener')
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['core/src/main/java', 'minecraft/common/src/main/java', 'minecraft/fabric/src/main/java']
+        resources.srcDirs = ['minecraft/common/src/main/resources', 'minecraft/fabric/src/main/resources']
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    modImplementation fabricApi.module('fabric-command-api-v2', project.fabric_api_version)
+    modImplementation fabricApi.module('fabric-resource-loader-v0', project.fabric_api_version)
+    implementation include("com.zigythebird:mochafloats:${project.molang_version}")
+    implementation include("org.javassist:javassist:${project.javassist_version}")
+    compileOnly 'org.jetbrains:annotations:26.0.2'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand version: project.version }
+    exclude 'assets/player_animation_library/player_animations/*'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release.set(17)
+}
+
+java { withSourcesJar() }
+
+jar { from('LICENSE') }

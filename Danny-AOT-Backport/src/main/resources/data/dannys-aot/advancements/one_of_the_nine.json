@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:island_of_the_devils",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:syringe"
+    },
+    "title": "One of the nine",
+    "description": "Inherited one of the nine titan powers",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "inherited_power": {
+      "trigger": "dannys-aot:inherited_titan_power"
+    }
+  }
+}
+

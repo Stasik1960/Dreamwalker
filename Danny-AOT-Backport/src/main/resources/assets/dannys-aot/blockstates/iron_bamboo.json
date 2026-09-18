@@ -1,0 +1,20 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "dannys-aot:block/iron_bamboo_stalk_thin" },
+      "when": { "stage": "0" }
+    },
+    {
+      "apply": { "model": "dannys-aot:block/iron_bamboo_stalk_thick" },
+      "when": { "stage": "1" }
+    },
+    {
+      "apply": { "model": "dannys-aot:block/iron_bamboo_small_leaves" },
+      "when": { "leaves": "small" }
+    },
+    {
+      "apply": { "model": "dannys-aot:block/iron_bamboo_large_leaves" },
+      "when": { "leaves": "large" }
+    }
+  ]
+}

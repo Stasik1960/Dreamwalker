@@ -4,7 +4,7 @@
 
 ## Danny’s AoT 2.4.3-backport.2
 
-[Скачать единый JAR](Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar) · [SHA-256](Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar.sha256) · [Установка и ограничения](Danny-AOT/README.md).
+[Скачать единый JAR](Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar) · [SHA-256](Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar.sha256) · [Установка и ограничения](Danny-AOT/README.md) · [Исходники](../Danny-AOT-Backport/README.md).
 
 Неофициальный тестовый порт на Minecraft 1.20.1 / Fabric / Java 17. GeckoLib, AAA Particles, Player Animation Library и их вложенные библиотеки уже внутри; Fabric API требуется отдельно. Исправлены несовместимые обработчики камеры, моделей, рук, износа УПМ и элитр. Сборка, 812 офлайн-проверок и применение 133 mixin-вставок прошли; Minecraft не запускался. Авторство и исходная лицензия сохранены.
 

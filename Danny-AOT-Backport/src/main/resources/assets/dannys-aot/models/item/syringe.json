@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:item/generated",
+  "gui_light": "front",
+  "textures": {
+    "layer0": "dannys-aot:item/syringe"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "pulling": 0.5
+      },
+      "model": "dannys-aot:item/syringe_pulling_self"
+    },
+    {
+      "predicate": {
+        "pulling": 1
+      },
+      "model": "dannys-aot:item/syringe_pulling"
+    }
+  ]
+}

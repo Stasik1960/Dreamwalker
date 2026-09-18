@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:island_of_the_devils",
+  "display": {
+    "icon": {
+      "item": "minecraft:cobblestone_wall"
+    },
+    "title": "Home was a pen. Humanity, cattle",
+    "description": "Visited a Village on Paradis",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "entered_village": {
+      "trigger": "dannys-aot:entered_paradis_village"
+    }
+  }
+}
+

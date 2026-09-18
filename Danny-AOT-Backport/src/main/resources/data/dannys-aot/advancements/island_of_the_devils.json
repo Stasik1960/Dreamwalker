@@ -1,0 +1,23 @@
+{
+  "parent": "dannys-aot:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:grass_block"
+    },
+    "title": "Island of the Devils",
+    "description": "Visited Paradis",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "entered_paradis": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "dannys-aot:paradis"
+      }
+    }
+  }
+}
+

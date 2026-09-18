@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:one_of_the_nine",
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_ingot"
+    },
+    "title": "Jaws of Steel",
+    "description": "Shifted into the Jaw Titan",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "jaw_titan_shift": {
+      "trigger": "dannys-aot:jaw_titan_shift"
+    }
+  }
+}
+

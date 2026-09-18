@@ -1,0 +1,60 @@
+{
+  "parent": "dannys-aot:island_of_the_devils",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:blade"
+    },
+    "title": "Titan Slayer",
+    "description": "Killed a pure titan",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "killed_titan": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "dannys-aot:titan"
+        }
+      }
+    },
+    "killed_small_titan": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "dannys-aot:small_titan"
+        }
+      }
+    },
+    "killed_small_titan_2": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "dannys-aot:small_titan_2"
+        }
+      }
+    },
+    "killed_fritz_titan": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "dannys-aot:fritz_titan"
+        }
+      }
+    },
+    "killed_titan_beard": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "dannys-aot:titan_beard"
+        }
+      }
+    }
+  },
+  "requirements": [
+    ["killed_titan", "killed_small_titan", "killed_small_titan_2", "killed_fritz_titan", "killed_titan_beard"]
+  ]
+}
+

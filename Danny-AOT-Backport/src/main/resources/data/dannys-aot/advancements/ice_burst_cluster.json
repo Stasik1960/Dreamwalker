@@ -1,0 +1,27 @@
+{
+  "parent": "dannys-aot:root",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:ice_burst_cluster"
+    },
+    "title": "Don't let America find this stuff",
+    "description": "Obtained an Ice Burst Cluster",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "got_ice_burst_cluster": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["dannys-aot:ice_burst_cluster"]
+          }
+        ]
+      }
+    }
+  }
+}
+

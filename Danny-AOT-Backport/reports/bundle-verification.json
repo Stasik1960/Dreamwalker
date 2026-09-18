@@ -1,0 +1,158 @@
+{
+  "artifact": "dannys-aot-1.20.1-2.4.3-backport.2.jar",
+  "bytes": 52881326,
+  "sha256": "a8e1230b55662a80f0d2b99709d033b3bb52c7b54760b2194e3e59642a973696",
+  "classes": 2784,
+  "maximumClassMajor": 61,
+  "mods": [
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar",
+      "id": "dannys-aot",
+      "version": "2.4.3-backport.2",
+      "depends": {
+        "fabricloader": ">=0.16.10",
+        "minecraft": "~1.20.1",
+        "java": ">=17",
+        "fabric-api": "*",
+        "geckolib": ">=4.8.3",
+        "player_animation_library": ">=1.1.6-backport.1",
+        "aaa_particles": ">=2.2.3"
+      }
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/PlayerAnimationLib-1.1.6-backport.1+mc.1.20.1.jar",
+      "id": "player_animation_library",
+      "version": "1.1.6-backport.1+mc.1.20.1",
+      "depends": {
+        "fabricloader": ">=0.16.10",
+        "minecraft": "~1.20.1",
+        "fabric-resource-loader-v0": "*",
+        "fabric-command-api-v2": "*"
+      }
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/PlayerAnimationLib-1.1.6-backport.1+mc.1.20.1.jar!META-INF/jars/javassist-3.30.2-GA.jar",
+      "id": "org_javassist_javassist",
+      "version": "3.30.2-GA",
+      "depends": {}
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/PlayerAnimationLib-1.1.6-backport.1+mc.1.20.1.jar!META-INF/jars/mochafloats-4.1.0.jar",
+      "id": "com_zigythebird_mochafloats",
+      "version": "4.1.0",
+      "depends": {}
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar",
+      "id": "aaa_particles",
+      "version": "2.2.3",
+      "depends": {
+        "fabricloader": ">=0.14",
+        "fabric": "*",
+        "minecraft": "1.20.1",
+        "java": ">=17"
+      }
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar!META-INF/jars/architectury-fabric-9.2.14.jar",
+      "id": "architectury",
+      "version": "9.2.14",
+      "depends": {
+        "minecraft": "~1.20-",
+        "fabricloader": ">=0.14.0",
+        "fabric-api": ">=0.66.0"
+      }
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar!META-INF/jars/forgeconfigapiport-fabric-8.0.0.jar",
+      "id": "forgeconfigapiport",
+      "version": "8.0.0",
+      "depends": {
+        "fabricloader": ">=0.14.21",
+        "fabric-api": ">=0.83.0",
+        "minecraft": "1.20.1",
+        "java": ">=17"
+      }
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/geckolib-fabric-1.20.1-4.8.4.jar",
+      "id": "geckolib",
+      "version": "4.8.4",
+      "depends": {
+        "fabricloader": ">=0.15",
+        "fabric-api": ">=0.92.0+1.20.1",
+        "java": ">=17",
+        "minecraft": ">=1.20.1"
+      }
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/geckolib-fabric-1.20.1-4.8.4.jar!META-INF/jars/mclib-20.jar",
+      "id": "com_eliotlash_mclib_mclib",
+      "version": "20",
+      "depends": {}
+    }
+  ],
+  "mixins": [
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar",
+      "config": "dannys-aot.mixins.json",
+      "refmap": "dannys-aot-1.20.1-refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar",
+      "config": "dannys-aot.client.mixins.json",
+      "refmap": "dannys-aot-1.20.1-refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar",
+      "config": "dannys-aot-xaero.client.mixins.json",
+      "refmap": "dannys-aot-1.20.1-refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/PlayerAnimationLib-1.1.6-backport.1+mc.1.20.1.jar",
+      "config": "player_animation_library.mixins.json",
+      "refmap": "PlayerAnimationLib-refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar",
+      "config": "aaa_particles.mixins.json",
+      "refmap": "aaa_particles.refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar",
+      "config": "aaa_particles-common.mixins.json",
+      "refmap": "aaa_particles.refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar!META-INF/jars/architectury-fabric-9.2.14.jar",
+      "config": "architectury-common.mixins.json",
+      "refmap": "architectury-common-refmap.json",
+      "compatibility": "JAVA_16"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar!META-INF/jars/architectury-fabric-9.2.14.jar",
+      "config": "architectury.mixins.json",
+      "refmap": "architectury-fabric-refmap.json",
+      "compatibility": "JAVA_16"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/aaa_particles-fabric-1.20.1-2.2.3.jar!META-INF/jars/forgeconfigapiport-fabric-8.0.0.jar",
+      "config": "forgeconfigapiport.common.mixins.json",
+      "refmap": "forgeconfigapiport.refmap.json",
+      "compatibility": "JAVA_17"
+    },
+    {
+      "jar": "dannys-aot-1.20.1-2.4.3-backport.2.jar!META-INF/jars/geckolib-fabric-1.20.1-4.8.4.jar",
+      "config": "geckolib.mixins.json",
+      "refmap": "geckolib-fabric-1.20.1-refmap.json",
+      "compatibility": "JAVA_17"
+    }
+  ],
+  "errors": []
+}

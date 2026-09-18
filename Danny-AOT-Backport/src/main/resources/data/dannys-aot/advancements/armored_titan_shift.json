@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:one_of_the_nine",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:armored_titan_spawn_egg"
+    },
+    "title": "Marley's Wall",
+    "description": "Shifted into the Armored Titan",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "armored_titan_shift": {
+      "trigger": "dannys-aot:armored_titan_shift"
+    }
+  }
+}
+

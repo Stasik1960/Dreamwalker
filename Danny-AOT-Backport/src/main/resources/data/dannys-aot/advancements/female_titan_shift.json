@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:one_of_the_nine",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:female_titan_spawn_egg"
+    },
+    "title": "Maiden of War",
+    "description": "Shifted into the Female Titan",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "female_titan_shift": {
+      "trigger": "dannys-aot:female_titan_shift"
+    }
+  }
+}
+

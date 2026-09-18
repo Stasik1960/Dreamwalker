@@ -1,0 +1,156 @@
+{
+	"format_version": "1.21.110",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.apg_gun - Converted",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "pistol",
+					"pivot": [0, 8, 0],
+					"cubes": [
+						{
+							"origin": [-1, -2, -3.5],
+							"size": [2, 2, 6.8],
+							"uv": {
+								"north": {"uv": [15, 3], "uv_size": [2, 2]},
+								"east": {"uv": [4, 4], "uv_size": [7, 2]},
+								"south": {"uv": [4, 15], "uv_size": [2, 2]},
+								"west": {"uv": [4, 6], "uv_size": [7, 2]},
+								"up": {"uv": [4, 8], "uv_size": [2, 7]},
+								"down": {"uv": [6, 15], "uv_size": [2, -7]}
+							}
+						},
+						{
+							"origin": [-0.65, -0.79068, 0.21054],
+							"size": [1.3, 5.7, 2],
+							"pivot": [0, 2.05932, 1.46054],
+							"rotation": [10, 0, 0],
+							"uv": {
+								"north": {"uv": [0, 14], "uv_size": [1.5, 5.5]},
+								"east": {"uv": [8, 8], "uv_size": [2, 5.5]},
+								"south": {"uv": [2, 14], "uv_size": [1.5, 5.5]},
+								"west": {"uv": [10, 8], "uv_size": [2, 5.5]},
+								"up": {"uv": [15, 7], "uv_size": [1.5, 2]},
+								"down": {"uv": [15, 11], "uv_size": [1.5, -2]}
+							}
+						},
+						{
+							"origin": [-1.35, 4.3, -1.7],
+							"size": [2.7, 2.7, 4.2],
+							"uv": {
+								"north": {"uv": [14, 0], "uv_size": [2.5, 2.5]},
+								"east": {"uv": [15, 3], "uv_size": [-4, 2.5]},
+								"south": {"uv": [8, 14], "uv_size": [2.5, 2.5]},
+								"west": {"uv": [11, 3], "uv_size": [4, 2.5]},
+								"up": {"uv": [12, 6], "uv_size": [2.5, 4]},
+								"down": {"uv": [12, 14], "uv_size": [2.5, -4]}
+							}
+						},
+						{
+							"origin": [-0.5, 3.7, -3.4],
+							"size": [1, 1.6, 1],
+							"uv": {
+								"north": {"uv": [11, 6], "uv_size": [1, 1.5]},
+								"east": {"uv": [17, 5], "uv_size": [1, 1.5]},
+								"south": {"uv": [17, 7], "uv_size": [1, 1.5]},
+								"west": {"uv": [8, 17], "uv_size": [1, 1.5]},
+								"up": {"uv": [10, 3], "uv_size": [1, 1]},
+								"down": {"uv": [10, 18], "uv_size": [1, -1]}
+							}
+						},
+						{
+							"origin": [-0.35, 2.35, -3.05],
+							"size": [0.7, 1.6, 0.8],
+							"pivot": [0, 3.15, -2.65],
+							"rotation": [22.5, 0, 0],
+							"uv": {
+								"north": {"uv": [11, 17], "uv_size": [0.5, 1.5]},
+								"east": {"uv": [9, 17], "uv_size": [1, 1.5]},
+								"south": {"uv": [17, 11], "uv_size": [0.5, 1.5]},
+								"west": {"uv": [17, 9], "uv_size": [1, 1.5]},
+								"up": {"uv": [12, 17], "uv_size": [0.5, 1]},
+								"down": {"uv": [13, 18], "uv_size": [0.5, -1]}
+							}
+						},
+						{
+							"origin": [-0.35, -0.03603, -2.7743],
+							"size": [0.7, 2.6, 0.8],
+							"uv": {
+								"north": {"uv": [12, 0], "uv_size": [0.5, 2.5]},
+								"east": {"uv": [10, 0], "uv_size": [1, 2.5]},
+								"south": {"uv": [13, 0], "uv_size": [0.5, 2.5]},
+								"west": {"uv": [11, 0], "uv_size": [1, 2.5]},
+								"up": {"uv": [14, 17], "uv_size": [0.5, 1]},
+								"down": {"uv": [17, 15], "uv_size": [0.5, -1]}
+							}
+						}
+					]
+				},
+				{
+					"name": "thing",
+					"parent": "pistol",
+					"pivot": [0, 5.675, -3],
+					"cubes": [
+						{
+							"origin": [-1.25, 4.4, -3.5],
+							"size": [2.5, 2.55, 1],
+							"uv": {
+								"north": {"uv": [11, 14], "uv_size": [2.5, 2.5]},
+								"east": {"uv": [17, 2], "uv_size": [1, 2.5]},
+								"south": {"uv": [14, 14], "uv_size": [2.5, 2.5]},
+								"west": {"uv": [4, 17], "uv_size": [1, 2.5]},
+								"up": {"uv": [15, 13], "uv_size": [2.5, 1]},
+								"down": {"uv": [5, 18], "uv_size": [2.5, -1]}
+							}
+						}
+					]
+				},
+				{
+					"name": "canister",
+					"parent": "pistol",
+					"pivot": [0, 5.675, -6.6],
+					"cubes": [
+						{
+							"origin": [-1.05, 4.6, -11.9],
+							"size": [2.1, 2.15, 10.6],
+							"uv": {
+								"north": {"uv": [15, 5], "uv_size": [2, 2]},
+								"east": {"uv": [0, 0], "uv_size": [9.5, 2]},
+								"south": {"uv": [6, 15], "uv_size": [2, 2]},
+								"west": {"uv": [0, 2], "uv_size": [9.5, 2]},
+								"up": {"uv": [0, 4], "uv_size": [2, 9.5]},
+								"down": {"uv": [2, 13.5], "uv_size": [2, -9.5]}
+							}
+						}
+					]
+				},
+				{
+					"name": "trigger",
+					"parent": "pistol",
+					"pivot": [0, 3.675, -1.65],
+					"cubes": [
+						{
+							"origin": [0, 2.75, -2.45],
+							"size": [0, 1.85, 1.6],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [0, 2]},
+								"east": {"uv": [15, 11], "uv_size": [1.5, 2]},
+								"south": {"uv": [0, 0], "uv_size": [0, 2]},
+								"west": {"uv": [17, 0], "uv_size": [1.5, 2]},
+								"up": {"uv": [0, 0], "uv_size": [0, 1.5]},
+								"down": {"uv": [0, 1.5], "uv_size": [0, -1.5]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

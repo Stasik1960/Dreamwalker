@@ -1,0 +1,20 @@
+{
+  "parent": "dannys-aot:one_of_the_nine",
+  "display": {
+    "icon": {
+      "item": "dannys-aot:attack_titan_spawn_egg"
+    },
+    "title": "I'll kill every last one of you!",
+    "description": "Shifted into the Attack Titan",
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "attack_titan_shift": {
+      "trigger": "dannys-aot:attack_titan_shift"
+    }
+  }
+}
+

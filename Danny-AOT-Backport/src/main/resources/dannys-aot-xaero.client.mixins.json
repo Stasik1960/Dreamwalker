@@ -1,0 +1,15 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "daot.mixin.compat.xaero",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "daot.mixin.compat.xaero.XaeroMixinPlugin",
+  "client": [
+    "RadarElementReaderMixin",
+    "PlayerTrackerMinimapElementReaderMixin",
+    "PlayerTrackerMapElementReaderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
