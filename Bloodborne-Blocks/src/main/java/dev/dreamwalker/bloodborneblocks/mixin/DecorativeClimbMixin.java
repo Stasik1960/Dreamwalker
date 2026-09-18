@@ -16,9 +16,11 @@ import java.util.Optional;
 abstract class DecorativeClimbMixin {
  @Shadow private Optional<BlockPos> climbingPos;
 
- @Inject(method="isClimbing",at=@At("HEAD"),cancellable=true)
+ @Inject(method="isClimbing",at=@At("RETURN"),cancellable=true)
  private void bloodborneBlocks$decorativeLadder(CallbackInfoReturnable<Boolean> result){
   LivingEntity entity=(LivingEntity)(Object)this;
+  // Native climbable-tag modules and vanilla ladders have already succeeded.
+  if(result.getReturnValue())return;
   // Decorative climbing is a player interaction. Avoid extra world queries for every mob.
   if(!(entity instanceof net.minecraft.entity.player.PlayerEntity)||entity.isSpectator())return;
   BlockPos pos=FunctionalFurniture.climbablePos(entity);

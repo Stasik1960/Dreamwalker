@@ -14,12 +14,15 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /** Exact opt-in behavior for the authored ladder and bench models. */
 public final class FunctionalFurniture {
  private static final String LADDER="ladder";
  private static final String LARGE_LADDER="waxed_exposed_cut_copper_stairs";
  private static final String BENCH="nether_brick_stairs";
+ private static final Map<LivingEntity,ClimbCache> CLIMB_CACHE=java.util.Collections.synchronizedMap(new WeakHashMap<>());
 
  private FunctionalFurniture(){}
 
@@ -32,6 +35,12 @@ public final class FunctionalFurniture {
  }
 
  public static BlockPos climbablePos(LivingEntity entity){
+  long tick=entity.getWorld().getTime();double x=entity.getX(),y=entity.getY(),z=entity.getZ();
+  ClimbCache cached=CLIMB_CACHE.get(entity);if(cached!=null&&cached.tick==tick&&cached.x==x&&cached.y==y&&cached.z==z)return cached.result;
+  BlockPos result=findClimbablePos(entity);CLIMB_CACHE.put(entity,new ClimbCache(tick,x,y,z,result));return result;
+ }
+
+ private static BlockPos findClimbablePos(LivingEntity entity){
   Box body=entity.getBoundingBox();Box box=new Box(body.minX-.125,body.minY,body.minZ-.125,body.maxX+.125,body.minY+.6,body.maxZ+.125);
   for(BlockPos pos:BlockPos.iterate((int)Math.floor(box.minX),(int)Math.floor(box.minY),(int)Math.floor(box.minZ),(int)Math.floor(box.maxX),(int)Math.floor(box.maxY),(int)Math.floor(box.maxZ))){
    if(!isClimbable(entity.getWorld(),pos))continue;
@@ -43,6 +52,7 @@ public final class FunctionalFurniture {
 
  private static boolean isLadderRoot(BlockState state){
   if(!(state.getBlock() instanceof ArchitectureBlock block))return false;
+  if("ladder".equals(block.definition.semantic))return true;
   if(block.definition.id.equals(LADDER))return true;
   return block.definition.id.equals(LARGE_LADDER)&&state.contains(Properties.STAIR_SHAPE)&&state.get(Properties.STAIR_SHAPE)==StairShape.STRAIGHT;
  }
@@ -85,4 +95,5 @@ public final class FunctionalFurniture {
  }
 
  private record SeatPoint(double x,double y,double z){}
+ private record ClimbCache(long tick,double x,double y,double z,BlockPos result){}
 }

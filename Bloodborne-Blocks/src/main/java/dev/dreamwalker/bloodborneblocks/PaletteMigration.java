@@ -24,6 +24,8 @@ final class PaletteMigration {
     continue;
    }
    if(!(old.getBlock() instanceof ArchitectureBlock block))continue;
+   // v2 modules are single-cell blocks with no helper lifecycle or legacy alias migration.
+   if(block.definition.modular)continue;
    if(!GeometryRuntime.allCellsLoaded(world,pos,old)){conflicts++;continue;}
    if(PaletteAliases.removed(block.definition.id)){
     plan.add(new Change(pos,old,pos,Blocks.AIR.getDefaultState()));removed++;continue;

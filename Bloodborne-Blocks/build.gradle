@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '1.2.1'
+version = '2.0.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -11,7 +11,13 @@ dependencies {
 }
 tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8' }
 java { withSourcesJar() }
+// Generated art is already shipped in the runtime JAR and in the repository.
+// Remapping hundreds of thousands of resource entries in a source archive adds
+// no source information and makes the normal build unnecessarily expensive.
+tasks.named('sourcesJar') { exclude 'assets/**', 'data/**', 'bloodborne_blocks/**' }
 tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
+// The modular palette exceeds the classic ZIP entry-count limit.
+tasks.withType(Zip).configureEach { zip64 = true }
 tasks.register('geometryCheck', JavaExec) {
  dependsOn testClasses
  classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
@@ -19,4 +25,11 @@ tasks.register('geometryCheck', JavaExec) {
  javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
  maxHeapSize = '1G'
 }
-tasks.named('check') { dependsOn 'geometryCheck' }
+tasks.register('modularDataCheck', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
+ mainClass = 'dev.dreamwalker.bloodborneblocks.ModularDataChecks'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+ maxHeapSize = '2G'
+}
+tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck' }

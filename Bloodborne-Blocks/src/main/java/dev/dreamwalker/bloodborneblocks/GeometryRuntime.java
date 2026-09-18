@@ -47,13 +47,16 @@ final class GeometryRuntime {
  private GeometryRuntime() {}
 
  static void loadAndValidate(BloodborneBlocks.Data definitions) {
-  FileData file;
-  try(InputStream stream=GeometryRuntime.class.getResourceAsStream("/bloodborne_blocks/geometry.json")){
-   if(stream==null)throw new IOException("Missing generated geometry.json");
-   file=GSON.fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),FileData.class);
-  }catch(IOException|RuntimeException e){throw new IllegalStateException("Cannot load Bloodborne cell geometry",e);}
+  FileData file=readGeometry("/bloodborne_blocks/geometry.json");
   if(file==null||file.blocks==null)throw new IllegalStateException("Invalid geometry.json: missing blocks");
   BLOCKS.clear();STATES.clear();BLOCKS.putAll(file.blocks);
+  Map<String,GeometryState> profiles=new HashMap<>();if(file.profiles!=null)profiles.putAll(file.profiles);
+  if(definitions.blocks.stream().anyMatch(definition->definition.modular)){
+   FileData modular=readGeometry("/bloodborne_blocks/v2/geometry.json");
+   if(modular==null||modular.blocks==null)throw new IllegalStateException("Invalid v2 geometry.json: missing blocks");
+   for(var entry:modular.blocks.entrySet())if(BLOCKS.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Legacy/modular geometry conflict "+entry.getKey());
+   if(modular.profiles!=null)for(var entry:modular.profiles.entrySet())if(profiles.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Legacy/modular geometry profile conflict "+entry.getKey());
+  }
   Set<GeometryState> prepared=Collections.newSetFromMap(new IdentityHashMap<>());
   for(BloodborneBlocks.Definition definition:definitions.blocks){
    GeometryBlock block=BLOCKS.get(definition.id);
@@ -61,10 +64,16 @@ final class GeometryRuntime {
    for(String stateKey:definition.states.keySet()){
     GeometryState state=block.states.get(stateKey);
     if(state==null)throw new IllegalStateException("Missing geometry state "+definition.id+"["+stateKey+"]");
-    if(state.ref!=null){state=file.profiles==null?null:file.profiles.get(state.ref);if(state==null)throw new IllegalStateException("Missing geometry profile "+blockId(definition.id,stateKey,block.states.get(stateKey).ref));block.states.put(stateKey,state);}
+    if(state.ref!=null){state=profiles.get(state.ref);if(state==null)throw new IllegalStateException("Missing geometry profile "+blockId(definition.id,stateKey,block.states.get(stateKey).ref));block.states.put(stateKey,state);}
     if(prepared.add(state))prepare(definition.id,stateKey,state);
    }
   }
+ }
+
+ private static FileData readGeometry(String path){
+  try(InputStream stream=GeometryRuntime.class.getResourceAsStream(path)){
+   if(stream==null)throw new IOException("Missing generated "+path);return GSON.fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),FileData.class);
+  }catch(IOException|RuntimeException e){throw new IllegalStateException("Cannot load Bloodborne cell geometry "+path,e);}
  }
 
  private static String blockId(String id,String state,String ref){return ref+" referenced by "+id+"["+state+"]";}
@@ -191,6 +200,7 @@ final class GeometryRuntime {
  }
 
  static boolean rebuild(World world,BlockPos root,BlockState state){
+  if(state.getBlock() instanceof ArchitectureBlock block&&block.definition.modular)return true;
   if(world.isClient||MUTATING.get())return true;
   BlockPos conflict=conflict(world,root,state,root);if(conflict!=null)return false;
   MUTATING.set(true);
@@ -213,6 +223,7 @@ final class GeometryRuntime {
   removeOwnedParts(world,root,world.getBlockState(root));
  }
  static void removeOwnedParts(World world,BlockPos root,BlockState geometryState){
+  if(geometryState.getBlock() instanceof ArchitectureBlock block&&block.definition.modular)return;
   if(MUTATING.get()){removeOwnedParts(world,root,geometryState,Set.of());return;}
   MUTATING.set(true);try{removeOwnedParts(world,root,geometryState,Set.of());}finally{MUTATING.set(false);}
  }
@@ -256,7 +267,7 @@ final class GeometryRuntime {
   for(int x=center.getX()-radius;x<=center.getX()+radius;x++)for(int y=Math.max(world.getBottomY(),center.getY()-radius);y<=Math.min(world.getTopY()-1,center.getY()+radius);y++)for(int z=center.getZ()-radius;z<=center.getZ()+radius;z++){
    cursor.set(x,y,z);if(!world.isChunkLoaded(cursor))continue;
    BlockState state=world.getBlockState(cursor);
-   if(state.getBlock() instanceof ArchitectureBlock){
+   if(state.getBlock() instanceof ArchitectureBlock architecture&&!architecture.definition.modular){
     roots++;BlockPos immutable=cursor.toImmutable();boolean blocked=conflict(world,immutable,state,immutable)!=null;
     if(!blocked&&!apply){for(BlockPos target:occupiedTargets(immutable,state))if(previewReservations.containsKey(target)&&!previewReservations.get(target).equals(immutable)){blocked=true;break;}}
     if(blocked)conflicts++;else{repaired++;if(apply)rebuild(world,immutable,state);else for(BlockPos target:occupiedTargets(immutable,state))previewReservations.put(target,immutable);}

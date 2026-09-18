@@ -24,7 +24,14 @@ public final class ArchitectureBlockItem extends BlockItem {
    NbtCompound props=new NbtCompound();selected.getEntries().forEach((p,v)->props.putString(p.getName(),BloodborneBlocks.value(p,v)));
    working.getOrCreateNbt().put("BlockStateTag",props);
   }
-  ItemPlacementContext prepared=new ItemPlacementContext(original){@Override public ItemStack getStack(){return working;}};
+  ArchitectureBlock section=LegacyItemSections.target(canonical,working);if(section==null)return ActionResult.FAIL;
+  if(section!=canonical){
+   ItemStack migrated=new ItemStack(section,working.getCount());
+   if(working.hasNbt()){migrated.setNbt(working.getNbt().copy());migrated.removeSubNbt("BlockStateTag");}
+   working=migrated;canonical=section;
+  }
+  ItemStack placedStack=working;
+  ItemPlacementContext prepared=new ItemPlacementContext(original){@Override public ItemStack getStack(){return placedStack;}};
   ActionResult result=((ArchitectureBlockItem)canonical.asItem()).placePrepared(prepared);
   if(result.isAccepted())original.getStack().decrement(Math.max(0,original.getStack().getCount()-working.getCount()));
   return result;

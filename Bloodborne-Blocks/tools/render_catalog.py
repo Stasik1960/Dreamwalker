@@ -27,7 +27,7 @@ def draw_item(apps,size=112):
                     if tex in seen:break
                     seen.add(tex);tex=textures[tex[1:]]
                 uv=face.get('uv',[0,0,16,16]);u,v,U,V=uv
-                coords=np.array([[U,V],[u,V],[u,v],[U,v]],dtype=float)
+                coords=np.array([[u,V],[U,V],[U,v],[u,v]],dtype=float)
                 coords=np.roll(coords,-face.get('rotation',0)//90,axis=0)/16
                 polys.append((verts[FACE_INDEX[side]],coords,texture(tex)))
     if not polys:return Image.new('RGBA',(size,size),(32,34,40,255))

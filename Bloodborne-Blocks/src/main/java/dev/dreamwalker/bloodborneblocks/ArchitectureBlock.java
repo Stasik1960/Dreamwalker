@@ -28,11 +28,23 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  private final Map<BlockState,BlockState> originals=new IdentityHashMap<>();
  public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
  private static Settings settings(BloodborneBlocks.Definition d){
-  Settings s=Settings.create().strength(d.hardness,d.resistance).sounds(d.sourceBlock.getSoundGroup(d.sourceBlock.getDefaultState())).mapColor(d.sourceBlock.getDefaultState().getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
+  Block material=semanticMaterial(d);BlockState materialState=material.getDefaultState();
+  Settings s=Settings.create().strength(semanticHardness(d),semanticResistance(d)).sounds(material.getSoundGroup(materialState)).mapColor(materialState.getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
   if(!d.full_cube||d.custom_geometry)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
   if(!d.offset.equals("none"))s.offset(d.offset.equals("xyz")?OffsetType.XYZ:OffsetType.XZ).dynamicBounds();
   return s;
  }
+ private static Block semanticMaterial(BloodborneBlocks.Definition d){
+  if(!d.modular||d.semantic==null)return d.sourceBlock;
+  return switch(d.semantic){
+   case "wood","container","bench","ladder"->Blocks.OAK_PLANKS;
+   case "window"->Blocks.GLASS;
+   case "tree","bush","plant","floor_decoration"->Blocks.OAK_LEAVES;
+   default->Blocks.STONE;
+  };
+ }
+ private static float semanticHardness(BloodborneBlocks.Definition d){return !d.modular||d.semantic==null?d.hardness:switch(d.semantic){case "window"->.3F;case "tree","bush","plant","floor_decoration"->.2F;case "ladder"->.4F;case "wood","container","bench"->2F;default->d.hardness;};}
+ private static float semanticResistance(BloodborneBlocks.Definition d){return !d.modular||d.semantic==null?d.resistance:switch(d.semantic){case "window"->.3F;case "tree","bush","plant","floor_decoration"->.2F;case "ladder"->.4F;case "wood","container","bench"->3F;default->d.resistance;};}
  private ArchitectureBlock(BloodborneBlocks.Definition d){
   super(settings(d));definition=d;BlockState defaultState=getStateManager().getDefaultState();
   for(var e:d.defaultProperties.entrySet())defaultState=BloodborneBlocks.set(defaultState,d.propertyObjects.get(e.getKey()),e.getValue());setDefaultState(defaultState);
@@ -126,6 +138,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   return (old.isAir()||old.isReplaceable())&&GeometryRuntime.canPlace(world,upper,upperState);
  }
  @Override public void onPlaced(World world,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){
+  if(definition.modular)return;
   if(world.isClient){refreshEditedNeighbors(world,pos);return;}
   if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)&&state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER){
    BlockState upper=state.with(Properties.DOUBLE_BLOCK_HALF,DoubleBlockHalf.UPPER);world.setBlockState(pos.up(),upper,Block.NOTIFY_ALL);GeometryRuntime.rebuild(world,pos.up(),upper);
@@ -133,6 +146,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   GeometryRuntime.rebuild(world,pos,state);refreshEditedNeighbors(world,pos);
  }
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
+  if(definition.modular){super.onStateReplaced(state,world,pos,next,moved);return;}
   if(FunctionalFurniture.isBench(state)&&state!=next)FunctionalFurniture.removeSeats(world,pos);
   if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating())GeometryRuntime.removeOwnedParts(world,pos,state);
   super.onStateReplaced(state,world,pos,next,moved);if(!next.isOf(this))refreshEditedNeighbors(world,pos);

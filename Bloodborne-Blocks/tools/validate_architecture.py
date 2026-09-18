@@ -42,7 +42,9 @@ for b in DATA['blocks']:
                     for face in e.get('faces',{}).values():texture(texname(md,face['texture']))
         if state.get('assembled')=='true' and state.get('open','false')=='false':
             points=[p for choices in groups for a in choices for e in elements(a) for p in corners(e,a)]
-            if points:assert np.max(np.abs(np.min(points,axis=0)))<1e-5,(b['id'],statekey,np.min(points,axis=0))
+            # Legacy artwork has gained half a model pixel of real depth. Its
+            # original mounting plane/anchor stays fixed; allow that thin shell.
+            if points:assert np.max(np.abs(np.min(points,axis=0)))<=1/32+1e-5,(b['id'],statekey,np.min(points,axis=0))
     key=','.join(k+'='+v for k,v in sorted(b['default'].items()))
     profile=geometry['profiles'][geometry['blocks'][b['id']]['states'][key]['ref']]
     if not profile['cells']:empty_defaults.append(b['id'])
