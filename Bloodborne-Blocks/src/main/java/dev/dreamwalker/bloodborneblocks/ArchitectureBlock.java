@@ -20,6 +20,7 @@ import net.minecraft.world.*;
 import java.util.Map;
 import java.util.IdentityHashMap;
 import java.util.Set;
+import java.util.Objects;
 
 /** Decorative state machine: no random ticks, block entities, redstone machines or inventories. */
 public final class ArchitectureBlock extends Block implements Waterloggable {
@@ -68,12 +69,21 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  @SuppressWarnings({"rawtypes","unchecked"}) private BlockState preserveCustom(BlockState mapped,BlockState state){
   BlockState sourceDefault=definition.sourceBlock.getDefaultState();for(var entry:state.getEntries().entrySet())if(!sourceDefault.contains(entry.getKey())&&mapped.contains(entry.getKey()))mapped=mapped.with((Property)entry.getKey(),(Comparable)entry.getValue());return mapped;
  }
- @Override public BlockState rotate(BlockState state,BlockRotation rotation){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.rotate(original(state),rotation)),state);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
- @Override public BlockState mirror(BlockState state,BlockMirror mirror){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.mirror(original(state),mirror)),state);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
+ @Override public BlockState rotate(BlockState state,BlockRotation rotation){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.rotate(original(state),rotation)),state);if(definition.logical)return rotateLogical(mapped,state,rotation);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
+ @Override public BlockState mirror(BlockState state,BlockMirror mirror){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.mirror(original(state),mirror)),state);if(definition.logical)return mirrorLogical(mapped,state,mirror);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
+ private BlockState rotateLogical(BlockState mapped,BlockState original,BlockRotation rotation){
+  if(mapped.contains(Properties.HORIZONTAL_FACING))mapped=mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(original.get(Properties.HORIZONTAL_FACING)));
+  for(Direction direction:Direction.Type.HORIZONTAL){Property<?> from=getStateManager().getProperty(direction.asString()),to=getStateManager().getProperty(rotation.rotate(direction).asString());if(from!=null&&to!=null)mapped=copy(mapped,original,from,to);}return mapped;
+ }
+ private BlockState mirrorLogical(BlockState mapped,BlockState original,BlockMirror mirror){
+  if(mapped.contains(Properties.HORIZONTAL_FACING))mapped=mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(original.get(Properties.HORIZONTAL_FACING)));
+  for(Direction direction:Direction.Type.HORIZONTAL){Property<?> from=getStateManager().getProperty(direction.asString()),to=getStateManager().getProperty(mirror.apply(direction).asString());if(from!=null&&to!=null)mapped=copy(mapped,original,from,to);}return mapped;
+ }
+ @SuppressWarnings({"rawtypes","unchecked"}) private static BlockState copy(BlockState target,BlockState source,Property from,Property to){return target.with(to,(Comparable)source.get(from));}
  @Override public BlockState getPlacementState(ItemPlacementContext ctx){
   BlockState old=ctx.getWorld().getBlockState(ctx.getBlockPos());
   if(definition.kind.equals("slab")&&old.isOf(this)&&old.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE)return old.with(Properties.SLAB_TYPE,SlabType.DOUBLE).with(Properties.WATERLOGGED,false);
-  boolean authored=definition.kind.equals("generic")||definition.kind.equals("model_door");
+  boolean authored=definition.logical||definition.kind.equals("generic")||definition.kind.equals("model_door");
   BlockState source=authored?null:definition.sourceBlock.getPlacementState(ctx);BlockState result=source==null?getDefaultState():getStateWithProperties(source);
   if(authored){
    Property<?> facing=getStateManager().getProperty("facing");if(facing!=null)result=BloodborneBlocks.set(result,facing,ctx.getHorizontalPlayerFacing().getOpposite().asString());
@@ -86,8 +96,15 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   }
   if(result.contains(BloodborneBlocks.ASSEMBLED))result=result.with(BloodborneBlocks.ASSEMBLED,true);
   if(definition.extra_facing)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
+  if(definition.logical)result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
   return connections(result,ctx.getWorld(),ctx.getBlockPos());
+ }
+ /** Mount states reuse the same authored model; horizontal mounts point out from the clicked face. */
+ static BlockState logicalMountPlacement(BlockState state,Direction side,Direction playerFacing){
+  if(!state.contains(Properties.WALL_MOUNT_LOCATION))return state;
+  WallMountLocation face=side==Direction.UP?WallMountLocation.FLOOR:side==Direction.DOWN?WallMountLocation.CEILING:WallMountLocation.WALL;
+  return state.with(Properties.WALL_MOUNT_LOCATION,face).with(Properties.HORIZONTAL_FACING,side.getAxis().isHorizontal()?side:playerFacing.getOpposite());
  }
  @Override public boolean canReplace(BlockState state,ItemPlacementContext ctx){if(PaletteAliases.removed(definition.id))return true;if(definition.kind.equals("slab")&&ctx.getStack().isOf(asItem())&&state.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE){boolean upper=ctx.getHitPos().y-ctx.getBlockPos().getY()>.5;return state.get(Properties.SLAB_TYPE)==SlabType.BOTTOM?(ctx.getSide()==Direction.UP||(ctx.getSide().getAxis().isHorizontal()&&upper)):(ctx.getSide()==Direction.DOWN||(ctx.getSide().getAxis().isHorizontal()&&!upper));}return false;}
  private boolean connects(BlockState other,WorldAccess world,BlockPos pos,Direction side){
@@ -97,7 +114,20 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(definition.kind.equals("fence")&&(other.isIn(BlockTags.FENCES)||other.getBlock()instanceof FenceGateBlock))return true;
   return other.isSideSolidFullSquare(world,pos,side.getOpposite());
  }
+ private boolean logicalConnects(BlockState other,WorldAccess world,BlockPos pos,Direction side){
+  if(other.getBlock() instanceof ArchitectureBlock block&&block.definition.logical&&Objects.equals(block.definition.connection_family,definition.connection_family))return true;
+  return other.isSideSolidFullSquare(world,pos,side.getOpposite());
+ }
  private BlockState connections(BlockState s,WorldAccess world,BlockPos pos){
+  if(definition.logical&&"ladder".equals(definition.behavior))return s;
+  if(definition.logical&&"connected".equals(definition.behavior)){
+   if(world instanceof World loaded&&!logicalNeighborsLoaded(loaded,pos))return s;
+   for(Direction direction:Direction.values()){
+    Property<?> property=getStateManager().getProperty(direction.asString());
+    if(property!=null) s=BloodborneBlocks.set(s,property,Boolean.toString(logicalConnects(world.getBlockState(pos.offset(direction)),world,pos.offset(direction),direction)));
+   }
+   return s;
+  }
   if(definition.kind.equals("stairs"))return s.with(Properties.STAIR_SHAPE,stairShape(s,world,pos));
   if(!Set.of("fence","pane","wall").contains(definition.kind))return s;
   for(Direction d:Direction.Type.HORIZONTAL){Property<?>p=getStateManager().getProperty(d.asString());if(p==null)continue;boolean connected=connects(world.getBlockState(pos.offset(d)),world,pos.offset(d),d);s=BloodborneBlocks.set(s,p,definition.kind.equals("wall")?(connected?"low":"none"):Boolean.toString(connected));}
@@ -107,6 +137,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   }
   return s;
  }
+ private static boolean logicalNeighborsLoaded(World world,BlockPos pos){for(Direction direction:Direction.values())if(!world.isChunkLoaded(pos.offset(direction)))return false;return true;}
  private static boolean stair(BlockState s){return s.getBlock()instanceof StairsBlock||(s.getBlock()instanceof ArchitectureBlock b&&b.definition.kind.equals("stairs"));}
  private static boolean differentStair(BlockState s,WorldAccess w,BlockPos p,Direction d){BlockState n=w.getBlockState(p.offset(d));return !stair(n)||n.get(Properties.HORIZONTAL_FACING)!=s.get(Properties.HORIZONTAL_FACING)||n.get(Properties.BLOCK_HALF)!=s.get(Properties.BLOCK_HALF);}
  private static StairShape stairShape(BlockState s,WorldAccess w,BlockPos p){
@@ -120,12 +151,23 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   }return StairShape.STRAIGHT;
  }
  private void refreshEditedNeighbors(World world,BlockPos pos){
-  if(world.isClient||!Set.of("stairs","fence","pane","wall").contains(definition.kind))return;
-  for(Direction d:Direction.Type.HORIZONTAL){BlockPos p=pos.offset(d);BlockState s=world.getBlockState(p);if(s.getBlock()instanceof ArchitectureBlock b&&b.definition.kind.equals(definition.kind)){BlockState next=b.connections(s,world,p);if(next!=s)world.setBlockState(p,next,Block.NOTIFY_ALL);}}
+  if(world.isClient||(!definition.logical&&!Set.of("stairs","fence","pane","wall").contains(definition.kind)))return;
+  for(Direction d:Direction.values()){
+   BlockPos p=pos.offset(d);if(definition.logical&&!world.isChunkLoaded(p))continue;BlockState s=world.getBlockState(p);
+   if(s.getBlock() instanceof ArchitectureBlock b&&((definition.logical&&b.definition.logical&&"connected".equals(b.definition.behavior)&&Objects.equals(b.definition.connection_family,definition.connection_family))||(!definition.logical&&b.definition.kind.equals(definition.kind)))){
+    if(b.definition.logical&&!logicalNeighborsLoaded(world,p))continue;
+    BlockState next=b.connections(s,world,p);
+    if(next!=s&&(!b.definition.logical||(GeometryRuntime.allCellsLoaded(world,p,next)&&GeometryRuntime.canOccupy(world,p,next,p))))world.setBlockState(p,next,Block.NOTIFY_ALL);
+   }
+  }
  }
  @Override public BlockState getStateForNeighborUpdate(BlockState state,Direction direction,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos){
   if(state.contains(Properties.WATERLOGGED)&&state.get(Properties.WATERLOGGED))world.scheduleFluidTick(pos,Fluids.WATER,Fluids.WATER.getTickRate(world));
-  // Existing authored connections remain stable. New placement explicitly computes its own connections.
+  // Existing authored connections remain stable. Logical connections are an explicit opt-in path.
+  if(definition.logical&&"connected".equals(definition.behavior)&&world instanceof World loaded&&logicalNeighborsLoaded(loaded,pos)&&GeometryRuntime.allCellsLoaded(loaded,pos,state)){
+   BlockState next=connections(state,world,pos);
+   if(next!=state&&GeometryRuntime.allCellsLoaded(loaded,pos,next)&&GeometryRuntime.canOccupy(loaded,pos,next,pos))return next;
+  }
   if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)){
    Direction other=state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER?Direction.UP:Direction.DOWN;
    if(direction==other&&!neighbor.isOf(this))return Blocks.AIR.getDefaultState();
@@ -133,7 +175,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   return state;
  }
  boolean canPlaceConventionalDoor(World world,BlockPos pos,BlockState state){
-  if(!definition.kind.equals("door")||!state.contains(Properties.DOUBLE_BLOCK_HALF)||state.get(Properties.DOUBLE_BLOCK_HALF)!=DoubleBlockHalf.LOWER)return true;
+  if(definition.logical||!definition.kind.equals("door")||!state.contains(Properties.DOUBLE_BLOCK_HALF)||state.get(Properties.DOUBLE_BLOCK_HALF)!=DoubleBlockHalf.LOWER)return true;
   BlockPos upper=pos.up();if(!world.isChunkLoaded(upper))return false;BlockState old=world.getBlockState(upper);BlockState upperState=state.with(Properties.DOUBLE_BLOCK_HALF,DoubleBlockHalf.UPPER);
   return (old.isAir()||old.isReplaceable())&&GeometryRuntime.canPlace(world,upper,upperState);
  }
@@ -149,33 +191,52 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(definition.modular){super.onStateReplaced(state,world,pos,next,moved);return;}
   if(FunctionalFurniture.isBench(state)&&state!=next)FunctionalFurniture.removeSeats(world,pos);
   if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating())GeometryRuntime.removeOwnedParts(world,pos,state);
+  if(next.isOf(this)&&definition.logical&&!world.isClient&&!GeometryRuntime.isMutating()){
+   // Direct /setblock and editor state changes do not use the interaction preflight.
+   // Keep the old object intact unless the complete replacement can own every cell.
+   if(!canReplaceLogicalState(GeometryRuntime.allCellsLoaded(world,pos,state),GeometryRuntime.allCellsLoaded(world,pos,next),GeometryRuntime.canOccupy(world,pos,next,pos))){GeometryRuntime.restoreRoot(world,pos,state);return;}
+   GeometryRuntime.removeOwnedParts(world,pos,state);
+   if(!GeometryRuntime.rebuild(world,pos,next))GeometryRuntime.restoreRoot(world,pos,state);
+  }
   super.onStateReplaced(state,world,pos,next,moved);if(!next.isOf(this))refreshEditedNeighbors(world,pos);
  }
+ static boolean canReplaceLogicalState(boolean oldCellsLoaded,boolean nextCellsLoaded,boolean nextCanOccupy){return oldCellsLoaded&&nextCellsLoaded&&nextCanOccupy;}
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
   if(FunctionalFurniture.isBench(state))return FunctionalFurniture.sit(world,pos,state,player);
-  if(!Set.of("door","trapdoor","gate","model_door").contains(definition.kind)||!state.contains(Properties.OPEN))return ActionResult.PASS;
+  boolean interactive=definition.logical?Set.of("door","gate","shutter").contains(definition.behavior):Set.of("door","trapdoor","gate","model_door").contains(definition.kind);
+  if(!interactive||!state.contains(Properties.OPEN))return ActionResult.PASS;
   if(definition.kind.equals("model_door")&&state.contains(Properties.STAIR_SHAPE)&&state.get(Properties.STAIR_SHAPE)!=StairShape.STRAIGHT)return ActionResult.PASS;
   if(!world.isClient){BlockState next=state.cycle(Properties.OPEN);BlockPos other=null;BlockState sibling=null,nextSibling=null;
-   if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)){other=state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER?pos.up():pos.down();sibling=world.getBlockState(other);if(sibling.isOf(this))nextSibling=sibling.with(Properties.OPEN,next.get(Properties.OPEN));}
+   if(!definition.logical&&definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)){other=state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER?pos.up():pos.down();sibling=world.getBlockState(other);if(sibling.isOf(this))nextSibling=sibling.with(Properties.OPEN,next.get(Properties.OPEN));}
    if(!GeometryRuntime.allCellsLoaded(world,pos,state)||(nextSibling!=null&&!GeometryRuntime.allCellsLoaded(world,other,sibling))||!GeometryRuntime.canOccupy(world,pos,next,pos)||(nextSibling!=null&&!GeometryRuntime.canOccupy(world,other,nextSibling,other)))return ActionResult.FAIL;
    GeometryRuntime.removeOwnedParts(world,pos);if(nextSibling!=null)GeometryRuntime.removeOwnedParts(world,other);
    world.setBlockState(pos,next,Block.NOTIFY_ALL);if(nextSibling!=null)world.setBlockState(other,nextSibling,Block.NOTIFY_ALL);
    GeometryRuntime.rebuild(world,pos,next);if(nextSibling!=null)GeometryRuntime.rebuild(world,other,nextSibling);
    boolean opening=next.get(Properties.OPEN);net.minecraft.sound.SoundEvent sound;
-   if(definition.kind.equals("door")||definition.kind.equals("model_door"))sound=opening?SoundEvents.BLOCK_WOODEN_DOOR_OPEN:SoundEvents.BLOCK_WOODEN_DOOR_CLOSE;
-   else if(definition.kind.equals("gate"))sound=opening?SoundEvents.BLOCK_FENCE_GATE_OPEN:SoundEvents.BLOCK_FENCE_GATE_CLOSE;
+   if((definition.logical&&definition.behavior.equals("door"))||definition.kind.equals("door")||definition.kind.equals("model_door"))sound=opening?SoundEvents.BLOCK_WOODEN_DOOR_OPEN:SoundEvents.BLOCK_WOODEN_DOOR_CLOSE;
+   else if((definition.logical&&definition.behavior.equals("gate"))||definition.kind.equals("gate"))sound=opening?SoundEvents.BLOCK_FENCE_GATE_OPEN:SoundEvents.BLOCK_FENCE_GATE_CLOSE;
    else sound=opening?SoundEvents.BLOCK_WOODEN_TRAPDOOR_OPEN:SoundEvents.BLOCK_WOODEN_TRAPDOOR_CLOSE;
    world.playSound(null,pos,sound,SoundCategory.BLOCKS,.7F,1F);
   }return ActionResult.success(world.isClient);
  }
  @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){
   if(PaletteAliases.removed(definition.id))return ItemStack.EMPTY;
-  BlockState canonical=PaletteAliases.replacement(state).state();ItemStack stack=new ItemStack(canonical.getBlock());
-  if(!canonical.getEntries().isEmpty()){
-   NbtCompound props=new NbtCompound();BlockState defaults=canonical.getBlock().getDefaultState();
-   canonical.getEntries().forEach((p,v)->{if(!Set.of("facing","axis","assembled","waterlogged","open").contains(p.getName())&&!v.equals(defaults.get(p)))props.putString(p.getName(),BloodborneBlocks.value(p,v));});
-   if(!props.isEmpty())stack.getOrCreateNbt().put("BlockStateTag",props);
-  }return stack;
+  LogicalItemMigration.Result migrated=LogicalItemMigration.migrate(this,stackFor(state));
+  if(migrated.matched())return logicalPick(migrated.stack());
+  LogicalItemMigration.Result component=LogicalItemMigration.componentPick(this,stackFor(state));
+  if(component.matched())return logicalPick(component.stack());
+  return logicalPick(stackFor(PaletteAliases.replacement(state).state()));
+ }
+ private static ItemStack stackFor(BlockState state){
+  ItemStack stack=new ItemStack(state.getBlock());NbtCompound props=new NbtCompound();BlockState defaults=state.getBlock().getDefaultState();
+  state.getEntries().forEach((p,v)->{if(!v.equals(defaults.get(p)))props.putString(p.getName(),BloodborneBlocks.value(p,v));});
+  if(!props.isEmpty())stack.getOrCreateNbt().put("BlockStateTag",props);return stack;
+ }
+ private static ItemStack logicalPick(ItemStack stack){
+  if(!(stack.getItem() instanceof ArchitectureBlockItem item)||!((ArchitectureBlock)item.getBlock()).definition.logical)return stack;
+  NbtCompound properties=stack.getSubNbt("BlockStateTag");if(properties==null)return stack;
+  for(String name:Set.of("facing","face","axis","open","waterlogged","north","east","south","west","up","down"))properties.remove(name);
+  if(properties.isEmpty())stack.removeSubNbt("BlockStateTag");return stack;
  }
  @Override public FluidState getFluidState(BlockState state){return state.contains(Properties.WATERLOGGED)&&state.get(Properties.WATERLOGGED)?Fluids.WATER.getStill(false):Fluids.EMPTY.getDefaultState();}
  @Override public boolean canFillWithFluid(BlockView world,BlockPos pos,BlockState state,Fluid fluid){return state.contains(Properties.WATERLOGGED)&&Waterloggable.super.canFillWithFluid(world,pos,state,fluid);}

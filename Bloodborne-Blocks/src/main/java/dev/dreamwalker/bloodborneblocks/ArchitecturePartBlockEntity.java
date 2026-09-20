@@ -43,6 +43,7 @@ public final class ArchitecturePartBlockEntity extends BlockEntity {
  public void bind(BlockPos root,Identifier owner){this.root=root.toImmutable();this.owner=owner;markDirty();}
  public BlockPos rootPos(){return root;}
  public Block ownerBlock(){return Registries.BLOCK.get(owner);}
+ Identifier ownerId(){return owner;}
 
  void validateWhenRootLoads(ServerWorld world){
   long rootChunk=new ChunkPos(root).toLong();synchronized(PENDING){PENDING.computeIfAbsent(world,key->new HashMap<>()).computeIfAbsent(rootChunk,key->new HashSet<>()).add(pos.asLong());}
@@ -56,7 +57,7 @@ public final class ArchitecturePartBlockEntity extends BlockEntity {
 
  private void validateAgainst(ServerWorld world,WorldChunk rootChunk){
   BlockState rootState=rootChunk.getBlockState(root);
-  if(!(rootState.getBlock() instanceof ArchitectureBlock)||!rootState.isOf(ownerBlock()))queueRemoval(world,pos);
+  if(!GeometryRuntime.ownsHelper(rootState,root,pos,owner))queueRemoval(world,pos);
  }
 
  private static WorldChunk chunkAt(ServerWorld world,BlockPos at,WorldChunk callbackChunk){
@@ -100,7 +101,7 @@ public final class ArchitecturePartBlockEntity extends BlockEntity {
    WorldChunk rootChunk=chunkAt(world,part.root,null);
    if(rootChunk==null){part.validateWhenRootLoads(world);continue;}
    BlockState rootState=rootChunk.getBlockState(part.root);
-   if(!(rootState.getBlock() instanceof ArchitectureBlock)||!rootState.isOf(part.ownerBlock()))world.removeBlock(helper,false);
+   if(!GeometryRuntime.ownsHelper(rootState,part.root,helper,part.owner))world.removeBlock(helper,false);
   }
  }
 

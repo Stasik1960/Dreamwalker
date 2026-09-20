@@ -73,6 +73,7 @@ RP Chat управляет доставкой и содержанием сооб
 | Мод | Последний JAR в папке `releases` |
 | --- | --- |
 | Bloodborne Architecture | [2.0.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar.sha256) |
+| Bloodborne Architecture — экспериментальная нормализация | [2.1.0-alpha.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar.sha256) · [Ограничения](releases/Bloodborne-Blocks/README.md) |
 | Danny’s AoT — неофициальный порт | [2.4.3-backport.2](releases/Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar) · [SHA-256](releases/Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar.sha256) |
 | RP Chat | [0.1.16](releases/RP-Chat/rp-chat-0.1.16.jar) · [SHA-256](releases/RP-Chat/rp-chat-0.1.16.jar.sha256) |
 | RP Chat UI | [0.3.7](releases/RP-Chat-UI/rp-chat-ui-0.3.7.jar) |

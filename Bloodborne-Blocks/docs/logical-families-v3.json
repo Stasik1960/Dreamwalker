@@ -1,0 +1,5514 @@
+{
+  "schemaVersion": 1,
+  "objects": [
+    {
+      "id": "o_dead_tree_planter",
+      "name": "Сухое дерево в каменном основании",
+      "semantic": "tree",
+      "behavior": "static",
+      "states": [
+        {
+          "properties": {
+            "facing": "north"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/white_wool",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/orange_wool",
+              "y": 0,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_blocks:block/magenta_wool",
+              "y": 0,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "white_wool",
+              "match": {
+                "assembled": "false",
+                "facing": "north"
+              },
+              "members": [
+                {
+                  "id": "orange_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                },
+                {
+                  "id": "magenta_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north"
+                  },
+                  "offset": [
+                    0,
+                    6,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/white_wool",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/orange_wool",
+              "y": 90,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_blocks:block/magenta_wool",
+              "y": 90,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "white_wool",
+              "match": {
+                "assembled": "false",
+                "facing": "east"
+              },
+              "members": [
+                {
+                  "id": "orange_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                },
+                {
+                  "id": "magenta_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east"
+                  },
+                  "offset": [
+                    0,
+                    6,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/white_wool",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/orange_wool",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_blocks:block/magenta_wool",
+              "y": 180,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "white_wool",
+              "match": {
+                "assembled": "false",
+                "facing": "south"
+              },
+              "members": [
+                {
+                  "id": "orange_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                },
+                {
+                  "id": "magenta_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south"
+                  },
+                  "offset": [
+                    0,
+                    6,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/white_wool",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/orange_wool",
+              "y": 270,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_blocks:block/magenta_wool",
+              "y": 270,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "white_wool",
+              "match": {
+                "assembled": "false",
+                "facing": "west"
+              },
+              "members": [
+                {
+                  "id": "orange_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                },
+                {
+                  "id": "magenta_wool",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west"
+                  },
+                  "offset": [
+                    0,
+                    6,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "evidence": "130 exact vertical source-world triples; 3-block authored panel heights."
+    },
+    {
+      "id": "o_iron_gate",
+      "name": "Большие железные ворота",
+      "semantic": "fence",
+      "behavior": "gate",
+      "states": [
+        {
+          "properties": {
+            "facing": "north",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 0,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "stripped_jungle_log",
+              "match": {
+                "assembled": "false",
+                "axis": "z"
+              },
+              "members": [
+                {
+                  "id": "stripped_acacia_log",
+                  "match": {
+                    "assembled": "false",
+                    "axis": "z"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "north",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 0,
+              "open_double": true
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 0,
+              "offset": [
+                0,
+                3,
+                0
+              ],
+              "open_double": true
+            }
+          ],
+          "sources": []
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 90,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "stripped_jungle_log",
+              "match": {
+                "assembled": "false",
+                "axis": "x"
+              },
+              "members": [
+                {
+                  "id": "stripped_acacia_log",
+                  "match": {
+                    "assembled": "false",
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 90,
+              "open_double": true
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 90,
+              "offset": [
+                0,
+                3,
+                0
+              ],
+              "open_double": true
+            }
+          ],
+          "sources": []
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": []
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 180,
+              "open_double": true
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ],
+              "open_double": true
+            }
+          ],
+          "sources": []
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 270,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": []
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/addon/gate_bottom",
+              "y": 270,
+              "open_double": true
+            },
+            {
+              "model": "bloodborne_blocks:block/addon/gate_top",
+              "y": 270,
+              "offset": [
+                0,
+                3,
+                0
+              ],
+              "open_double": true
+            }
+          ],
+          "sources": []
+        }
+      ],
+      "evidence": "Nine exact source-world bottom/top pairs at +3; +6 repeated gates not consumed."
+    },
+    {
+      "id": "o_acacia_door",
+      "name": "Большая решётчатая дверь",
+      "semantic": "door",
+      "behavior": "door",
+      "states": [
+        {
+          "properties": {
+            "facing": "north",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/aca_door_1",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 180,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "north",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_aca_door_1_open",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 180,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/aca_door_1",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 270,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_aca_door_1_open",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 270,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/aca_door_1",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 0,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_aca_door_1_open",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 0,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/aca_door_1",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 90,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_aca_door_1_open",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/aca_door_2",
+              "y": 90,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "acacia_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "acacia_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "evidence": "Authored bounds and repeated source-world co-occurrence; exact-member migration only."
+    },
+    {
+      "id": "o_birch_door",
+      "name": "Большая резная дверь",
+      "semantic": "door",
+      "behavior": "door",
+      "states": [
+        {
+          "properties": {
+            "facing": "north",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/bir_door_1",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "north",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_bir_door_1_open",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/bir_door_1",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 270,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_bir_door_1_open",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 270,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/bir_door_1",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 0,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_bir_door_1_open",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 0,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/bir_door_1",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 90,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_bir_door_1_open",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/bir_door_2",
+              "y": 90,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "birch_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "birch_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "evidence": "Authored bounds and repeated source-world co-occurrence; exact-member migration only."
+    },
+    {
+      "id": "o_dark_oak_door",
+      "name": "Большая филёнчатая дверь",
+      "semantic": "door",
+      "behavior": "door",
+      "states": [
+        {
+          "properties": {
+            "facing": "north",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/dark_door_1",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 180,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "north",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_dark_door_1_open",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 180,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/dark_door_1",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 270,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_dark_door_1_open",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 270,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/dark_door_1",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 0,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_dark_door_1_open",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 0,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/dark_door_1",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 90,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "false"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "false"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/functional/block_dark_door_1_open",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/dark_door_2",
+              "y": 90,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "dark_oak_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight",
+                "open": "true"
+              },
+              "members": [
+                {
+                  "id": "dark_oak_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight",
+                    "open": "true"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "evidence": "Authored bounds and repeated source-world co-occurrence; exact-member migration only."
+    },
+    {
+      "id": "o_tall_arched_window",
+      "name": "Высокое арочное окно",
+      "semantic": "window",
+      "behavior": "static",
+      "states": [
+        {
+          "properties": {
+            "facing": "north"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/window_bottom_right",
+              "y": 270
+            },
+            {
+              "model": "bloodborne_blocks:block/window_top_right",
+              "y": 270,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "warped_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "north",
+                "half": "bottom",
+                "shape": "straight"
+              },
+              "members": [
+                {
+                  "id": "warped_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "north",
+                    "half": "top",
+                    "shape": "straight"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/window_bottom_right",
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/window_top_right",
+              "y": 180,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "warped_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "east",
+                "half": "bottom",
+                "shape": "straight"
+              },
+              "members": [
+                {
+                  "id": "warped_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "east",
+                    "half": "top",
+                    "shape": "straight"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/window_bottom_right",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/window_top_right",
+              "y": 90,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "warped_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "south",
+                "half": "bottom",
+                "shape": "straight"
+              },
+              "members": [
+                {
+                  "id": "warped_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "south",
+                    "half": "top",
+                    "shape": "straight"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/window_bottom_right",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/window_top_right",
+              "y": 0,
+              "offset": [
+                0,
+                2,
+                0
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "warped_stairs",
+              "match": {
+                "assembled": "false",
+                "facing": "west",
+                "half": "bottom",
+                "shape": "straight"
+              },
+              "members": [
+                {
+                  "id": "warped_stairs",
+                  "match": {
+                    "assembled": "false",
+                    "facing": "west",
+                    "half": "top",
+                    "shape": "straight"
+                  },
+                  "offset": [
+                    0,
+                    2,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "evidence": "45 exact bottom/top pairs at vertical offset +2; authored bounds join at y=1."
+    },
+    {
+      "id": "o_shuttered_window",
+      "name": "Арочное окно со ставнями",
+      "semantic": "window",
+      "behavior": "shutter",
+      "states": [
+        {
+          "properties": {
+            "facing": "north",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_bottom"
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "north",
+                "open": "false"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "north",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_open"
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "north",
+                "open": "true"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_bottom",
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "east",
+                "open": "false"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_open",
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "east",
+                "open": "true"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_bottom",
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "south",
+                "open": "false"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_open",
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "south",
+                "open": "true"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_bottom",
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "west",
+                "open": "false"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west",
+            "open": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/spruce_trapdoor_open",
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "spruce_trapdoor",
+              "match": {
+                "assembled": "false",
+                "half": "bottom",
+                "facing": "west",
+                "open": "true"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o_toothed_stone_rib",
+      "name": "Каменное ребро с зубцами",
+      "semantic": "ornament",
+      "behavior": "static",
+      "states": [
+        {
+          "properties": {
+            "facing": "north"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/coal_block",
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "coal_block",
+              "match": {
+                "assembled": "false",
+                "facing": "north"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "east"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/coal_block",
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "coal_block",
+              "match": {
+                "assembled": "false",
+                "facing": "east"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "south"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/coal_block",
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "coal_block",
+              "match": {
+                "assembled": "false",
+                "facing": "south"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "facing": "west"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/coal_block",
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "coal_block",
+              "match": {
+                "assembled": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o_iron_railing",
+      "name": "Соединяемая железная ограда",
+      "semantic": "fence",
+      "behavior": "connected",
+      "connection_family": "iron_railing",
+      "states": [
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "false",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post",
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "false",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_cap_alt",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "true",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_cap_alt",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "true",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "false",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_cap",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "false",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "true",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "true",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "false",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_cap",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "false",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "true",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "true",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "false",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "false",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "false",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "false",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "false",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "false",
+                "south": "true",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "false",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/iron_bars_post_ends",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side",
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "weight": 700,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            }
+          ],
+          "sources": [
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "iron_bars",
+              "match": {
+                "north": "true",
+                "east": "true",
+                "south": "true",
+                "west": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "o_stone_railing",
+      "name": "Соединяемое каменное ограждение",
+      "semantic": "fence",
+      "behavior": "connected",
+      "connection_family": "stone_railing",
+      "states": [
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "false",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "false",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            }
+          ],
+          "sources": []
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "false",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "false",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "true",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "true",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "true",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "false",
+            "south": "true",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "false",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "false",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "false",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "false",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "true",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "true",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "true",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "false",
+            "east": "true",
+            "south": "true",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "false",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "false",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "false",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "false",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "true",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "true",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "true",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "false",
+            "south": "true",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "false",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "false",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "false",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "false",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "false",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "none",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "none",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "false",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "none",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "none",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "none",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "none",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "true",
+            "up": "false"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "low",
+                "east": "low",
+                "south": "low",
+                "west": "low",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        },
+        {
+          "properties": {
+            "north": "true",
+            "east": "true",
+            "south": "true",
+            "west": "true",
+            "up": "true"
+          },
+          "apps": [
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_post",
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 0
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 90
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 180
+            },
+            {
+              "model": "bloodborne_blocks:block/mossy_cobblestone_wall_side_tall",
+              "uvlock": true,
+              "y": 270
+            }
+          ],
+          "sources": [
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "north"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "east"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "south"
+              }
+            },
+            {
+              "id": "mossy_cobblestone_wall",
+              "match": {
+                "north": "tall",
+                "east": "tall",
+                "south": "tall",
+                "west": "tall",
+                "up": "true",
+                "facing": "west"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -35,6 +35,7 @@ final class GeometryRuntime {
   double[] render_offset={0,0,0};
   String ref;
   transient Map<BlockPos,GeometryCell> parsedCells;
+  transient VoxelShape wholeOutline;
  }
  static final class GeometryCell {
   List<double[]> collision=List.of();
@@ -56,6 +57,12 @@ final class GeometryRuntime {
    if(modular==null||modular.blocks==null)throw new IllegalStateException("Invalid v2 geometry.json: missing blocks");
    for(var entry:modular.blocks.entrySet())if(BLOCKS.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Legacy/modular geometry conflict "+entry.getKey());
    if(modular.profiles!=null)for(var entry:modular.profiles.entrySet())if(profiles.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Legacy/modular geometry profile conflict "+entry.getKey());
+  }
+  if(definitions.blocks.stream().anyMatch(definition->definition.logical)){
+   FileData logical=readGeometry("/bloodborne_blocks/logical/geometry.json");
+   if(logical==null||logical.blocks==null)throw new IllegalStateException("Invalid logical geometry.json: missing blocks");
+   for(var entry:logical.blocks.entrySet())if(BLOCKS.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Logical geometry conflict "+entry.getKey());
+   if(logical.profiles!=null)for(var entry:logical.profiles.entrySet())if(profiles.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Logical geometry profile conflict "+entry.getKey());
   }
   Set<GeometryState> prepared=Collections.newSetFromMap(new IdentityHashMap<>());
   for(BloodborneBlocks.Definition definition:definitions.blocks){
@@ -143,7 +150,15 @@ final class GeometryRuntime {
   return new BlockPos(x,y,z);
  }
 
- static VoxelShape rootShape(BlockState state,boolean outline){return cellShape(state,BlockPos.ORIGIN,outline);}
+ static VoxelShape rootShape(BlockState state,boolean outline){
+  if(outline&&state.getBlock() instanceof ArchitectureBlock block&&block.definition.logical){
+   GeometryState geometry=state(state);if(geometry!=null&&geometry.wholeOutline!=null)return geometry.wholeOutline;
+   VoxelShape whole=VoxelShapes.empty();
+   if(geometry!=null)for(var entry:geometry.parsedCells.entrySet())whole=VoxelShapes.union(whole,entry.getValue().outlineShape.offset(entry.getKey().getX(),entry.getKey().getY(),entry.getKey().getZ()));
+   if(geometry!=null)geometry.wholeOutline=whole;return whole;
+  }
+  return cellShape(state,BlockPos.ORIGIN,outline);
+ }
 
  static VoxelShape cellShape(BlockState rootState,BlockPos offset,boolean outline){
   if(rootState.getBlock() instanceof ArchitectureBlock block&&PaletteAliases.removed(block.definition.id))return VoxelShapes.empty();
@@ -219,6 +234,13 @@ final class GeometryRuntime {
   }finally{MUTATING.set(false);}
  }
 
+ /** Restores a root after a same-block state update failed its helper preflight. */
+ static void restoreRoot(World world,BlockPos root,BlockState state){
+  boolean previous=MUTATING.get();MUTATING.set(true);
+  try{world.setBlockState(root,state,Block.NOTIFY_ALL);}finally{MUTATING.set(previous);}
+  rebuild(world,root,state);
+ }
+
  static void removeOwnedParts(World world,BlockPos root){
   removeOwnedParts(world,root,world.getBlockState(root));
  }
@@ -242,6 +264,14 @@ final class GeometryRuntime {
  }
 
  static ArchitecturePartBlockEntity part(BlockView world,BlockPos pos){BlockEntity entity=world.getBlockEntity(pos);return entity instanceof ArchitecturePartBlockEntity part?part:null;}
+
+ /** A helper belongs only to the current root state, never merely to a reused registry ID. */
+ static boolean ownsHelper(BlockState rootState,BlockPos root,BlockPos helper,Identifier owner){
+  if(!(rootState.getBlock() instanceof ArchitectureBlock)||!RegistriesHolder.id(rootState.getBlock()).equals(owner))return false;
+  GeometryState geometry=state(rootState);if(geometry==null||geometry.parsedCells==null)return false;
+  BlockPos offset=helper.subtract(root);return isCurrentHelperCell(geometry.parsedCells.keySet(),root,helper)&&!reservedDoorSibling(rootState,offset);
+ }
+ static boolean isCurrentHelperCell(Set<BlockPos> cells,BlockPos root,BlockPos helper){return !helper.equals(root)&&cells.contains(helper.subtract(root));}
 
  static void removeHelper(World world,BlockPos pos){
   boolean previous=MUTATING.get();MUTATING.set(true);
@@ -273,7 +303,7 @@ final class GeometryRuntime {
     if(blocked)conflicts++;else{repaired++;if(apply)rebuild(world,immutable,state);else for(BlockPos target:occupiedTargets(immutable,state))previewReservations.put(target,immutable);}
    }
    else if(state.isOf(BloodborneBlocks.PART_BLOCK)){
-    ArchitecturePartBlockEntity part=part(world,cursor);boolean orphan=part==null||(world.isChunkLoaded(part.rootPos())&&!world.getBlockState(part.rootPos()).isOf(part.ownerBlock()));
+    ArchitecturePartBlockEntity part=part(world,cursor);boolean orphan=part==null||(world.isChunkLoaded(part.rootPos())&&!ownsHelper(world.getBlockState(part.rootPos()),part.rootPos(),cursor,part.ownerId()));
     if(orphan){orphans++;if(apply)world.removeBlock(cursor,false);}
    }
   }

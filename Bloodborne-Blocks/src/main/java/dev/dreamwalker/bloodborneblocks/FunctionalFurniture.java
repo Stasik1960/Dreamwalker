@@ -31,7 +31,7 @@ public final class FunctionalFurniture {
   if(state.getBlock() instanceof ArchitectureBlock)return isLadderRoot(state);
   if(!state.isOf(BloodborneBlocks.PART_BLOCK))return false;
   ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);if(part==null||!world.isChunkLoaded(part.rootPos()))return false;
-  BlockState root=world.getBlockState(part.rootPos());return root.isOf(part.ownerBlock())&&isLadderRoot(root);
+  BlockState root=world.getBlockState(part.rootPos());return GeometryRuntime.ownsHelper(root,part.rootPos(),pos,part.ownerId())&&isLadderRoot(root);
  }
 
  public static BlockPos climbablePos(LivingEntity entity){

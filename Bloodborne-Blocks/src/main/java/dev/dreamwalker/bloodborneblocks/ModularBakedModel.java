@@ -35,21 +35,24 @@ final class ModularBakedModel extends BasicBakedModel {
  }
 
  static Parts bake(ModularMeshData.Mesh mesh,int clockwiseTurns,Function<SpriteIdentifier,Sprite> textures,QuadPool pool){
+  return bake(mesh,clockwiseTurns,textures,pool,true);
+ }
+ static Parts bake(ModularMeshData.Mesh mesh,int clockwiseTurns,Function<SpriteIdentifier,Sprite> textures,QuadPool pool,boolean cellLocal){
   List<BakedQuad> general=new ArrayList<>();Map<Direction,List<BakedQuad>> faces=new EnumMap<>(Direction.class);Map<String,Sprite> sprites=new HashMap<>();
   for(Direction direction:Direction.values())faces.put(direction,new ArrayList<>());
   for(ModularMeshData.Polygon polygon:mesh.polygons){
    Sprite sprite=sprites.computeIfAbsent(polygon.texture,key->textures.apply(new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE,new Identifier(key))));
-   int count=polygon.vertexCount();if(count==3)add(polygon,0,1,2,2,clockwiseTurns,sprite,general,faces,pool);
-   else if(count==4&&area(polygon,0,1,2,clockwiseTurns)>=EPSILON)add(polygon,0,1,2,3,clockwiseTurns,sprite,general,faces,pool);
-   else if(count==4){add(polygon,0,1,3,3,clockwiseTurns,sprite,general,faces,pool);add(polygon,1,2,3,3,clockwiseTurns,sprite,general,faces,pool);}
-   else for(int i=1;i+1<count;i++)add(polygon,0,i,i+1,i+1,clockwiseTurns,sprite,general,faces,pool);
+   int count=polygon.vertexCount();if(count==3)add(polygon,0,1,2,2,clockwiseTurns,sprite,general,faces,pool,cellLocal);
+   else if(count==4&&area(polygon,0,1,2,clockwiseTurns)>=EPSILON)add(polygon,0,1,2,3,clockwiseTurns,sprite,general,faces,pool,cellLocal);
+   else if(count==4){add(polygon,0,1,3,3,clockwiseTurns,sprite,general,faces,pool,cellLocal);add(polygon,1,2,3,3,clockwiseTurns,sprite,general,faces,pool,cellLocal);}
+   else for(int i=1;i+1<count;i++)add(polygon,0,i,i+1,i+1,clockwiseTurns,sprite,general,faces,pool,cellLocal);
   }
   Map<Direction,List<BakedQuad>> immutableFaces=new EnumMap<>(Direction.class);faces.forEach((direction,quads)->immutableFaces.put(direction,List.copyOf(quads)));
   return new Parts(List.copyOf(general),Collections.unmodifiableMap(immutableFaces));
  }
  static BakedModel withDelegate(Parts parts,BakedModel delegate){return new ModularBakedModel(parts,delegate);}
 
- private static void add(ModularMeshData.Polygon polygon,int i0,int i1,int i2,int i3,int turns,Sprite sprite,List<BakedQuad> general,Map<Direction,List<BakedQuad>> faces,QuadPool pool){
+ private static void add(ModularMeshData.Polygon polygon,int i0,int i1,int i2,int i3,int turns,Sprite sprite,List<BakedQuad> general,Map<Direction,List<BakedQuad>> faces,QuadPool pool,boolean cellLocal){
   float ax=x(polygon,i0,turns),ay=value(polygon,i0,1),az=z(polygon,i0,turns);
   float bx=x(polygon,i1,turns),by=value(polygon,i1,1),bz=z(polygon,i1,turns);
   float cx=x(polygon,i2,turns),cy=value(polygon,i2,1),cz=z(polygon,i2,turns);
@@ -61,7 +64,7 @@ final class ModularBakedModel extends BasicBakedModel {
    data[base]=Float.floatToRawIntBits(x(polygon,index,turns));data[base+1]=Float.floatToRawIntBits(value(polygon,index,1));data[base+2]=Float.floatToRawIntBits(z(polygon,index,turns));data[base+3]=-1;
    data[base+4]=Float.floatToRawIntBits(sprite.getFrameU(value(polygon,index,3)));data[base+5]=Float.floatToRawIntBits(sprite.getFrameV(value(polygon,index,4)));data[base+6]=0;data[base+7]=packedNormal;
   }
-  BakedQuad quad=pool.intern(data,normal,sprite);Direction cull=cullFace(polygon,i0,i1,i2,i3,turns,normal);if(cull==null)general.add(quad);else faces.get(cull).add(quad);
+  BakedQuad quad=pool.intern(data,normal,sprite);Direction cull=cellLocal?cullFace(polygon,i0,i1,i2,i3,turns,normal):null;if(cull==null)general.add(quad);else faces.get(cull).add(quad);
  }
 
  private static float area(ModularMeshData.Polygon polygon,int a,int b,int c,int turns){

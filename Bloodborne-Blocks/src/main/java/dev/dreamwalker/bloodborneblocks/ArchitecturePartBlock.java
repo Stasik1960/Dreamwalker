@@ -31,7 +31,7 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
   ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);if(part==null)return null;
   if(world instanceof World loadedWorld&&!loadedWorld.isChunkLoaded(part.rootPos()))return null;
   BlockState state=world.getBlockState(part.rootPos());
-  if(!(state.getBlock() instanceof ArchitectureBlock)||!state.isOf(part.ownerBlock()))return null;
+  if(!GeometryRuntime.ownsHelper(state,part.rootPos(),pos,part.ownerId()))return null;
   return new Root(part.rootPos(),state,pos.subtract(part.rootPos()));
  }
  private record Root(BlockPos pos,BlockState state,BlockPos offset){}
@@ -41,7 +41,7 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
   return root!=null&&PaletteAliases.removed(((ArchitectureBlock)root.state.getBlock()).definition.id);
  }
 
- @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);return root==null?VoxelShapes.empty():GeometryRuntime.cellShape(root.state,root.offset,true);}
+ @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);if(root==null)return VoxelShapes.empty();if(root.state.getBlock() instanceof ArchitectureBlock block&&block.definition.logical)return GeometryRuntime.rootShape(root.state,true).offset(-root.offset.getX(),-root.offset.getY(),-root.offset.getZ());return GeometryRuntime.cellShape(root.state,root.offset,true);}
  @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);return root==null?VoxelShapes.empty():GeometryRuntime.cellShape(root.state,root.offset,false);}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return 1.0F;}

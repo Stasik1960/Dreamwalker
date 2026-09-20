@@ -24,6 +24,8 @@ public final class ArchitectureBlockItem extends BlockItem {
    NbtCompound props=new NbtCompound();selected.getEntries().forEach((p,v)->props.putString(p.getName(),BloodborneBlocks.value(p,v)));
    working.getOrCreateNbt().put("BlockStateTag",props);
   }
+  LogicalItemMigration.Result logical=LogicalItemMigration.migrate(canonical,working);working=logical.stack();
+  if(working.getItem() instanceof ArchitectureBlockItem migratedItem)canonical=(ArchitectureBlock)migratedItem.getBlock();
   ArchitectureBlock section=LegacyItemSections.target(canonical,working);if(section==null)return ActionResult.FAIL;
   if(section!=canonical){
    ItemStack migrated=new ItemStack(section,working.getCount());
@@ -72,10 +74,17 @@ public final class ArchitectureBlockItem extends BlockItem {
    properties.putString("half",placement.get(net.minecraft.state.property.Properties.BLOCK_HALF).asString());
    properties.putString("shape",placement.get(net.minecraft.state.property.Properties.STAIR_SHAPE).asString());
   }
-  boolean authored=block.definition.kind.equals("generic")||block.definition.kind.equals("model_door");
+  boolean authored=block.definition.logical||block.definition.kind.equals("generic")||block.definition.kind.equals("model_door");
   if(authored){
    Property<?> facing=block.getStateManager().getProperty("facing");if(facing!=null)properties.putString("facing",BloodborneBlocks.value((Property)facing,(Comparable)placement.get((Property)facing)));
    Property<?> axis=block.getStateManager().getProperty("axis");if(axis!=null)properties.putString("axis",BloodborneBlocks.value((Property)axis,(Comparable)placement.get((Property)axis)));
+  }
+  if(block.definition.logical){
+   for(String name:java.util.List.of("face","north","east","south","west","up","down")){
+    Property<?> property=block.getStateManager().getProperty(name);
+    if(property!=null)properties.putString(name,BloodborneBlocks.value((Property)property,(Comparable)placement.get((Property)property)));
+   }
+   if(placement.contains(net.minecraft.state.property.Properties.OPEN))properties.putString("open","false");
   }
   if(block.definition.kind.equals("door")){
    if(placement.contains(net.minecraft.state.property.Properties.DOUBLE_BLOCK_HALF))properties.putString("half","lower");

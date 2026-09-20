@@ -20,7 +20,7 @@ final class PaletteMigration {
    BlockPos pos=cursor.toImmutable();BlockState old=world.getBlockState(pos);
    if(old.isOf(BloodborneBlocks.PART_BLOCK)){
     ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);
-    if(part==null||(world.isChunkLoaded(part.rootPos())&&!world.getBlockState(part.rootPos()).isOf(part.ownerBlock())))orphans.add(pos);
+    if(part==null||(world.isChunkLoaded(part.rootPos())&&!GeometryRuntime.ownsHelper(world.getBlockState(part.rootPos()),part.rootPos(),pos,part.ownerId())))orphans.add(pos);
     continue;
    }
    if(!(old.getBlock() instanceof ArchitectureBlock block))continue;

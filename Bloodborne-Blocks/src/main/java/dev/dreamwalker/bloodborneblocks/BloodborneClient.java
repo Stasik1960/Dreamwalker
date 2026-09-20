@@ -28,6 +28,7 @@ public final class BloodborneClient implements ClientModInitializer {
  }
  public void onInitializeClient(){
   Map<String,ModularMeshData.Mesh> modularMeshes=ModularMeshData.loadAndValidate();
+  Map<String,ModularMeshData.Mesh> logicalMeshes=BloodborneBlocks.DATA.blocks.stream().anyMatch(definition->definition.logical)?ModularMeshData.loadLogicalAndValidate():Map.of();
   EntityRendererRegistry.register(BloodborneBlocks.SEAT_ENTITY,EmptyEntityRenderer::new);
   if(BloodborneBlocks.DATA.compat_layers!=null)BloodborneBlocks.DATA.compat_layers.forEach((name,layer)->{
    var id=new Identifier(name);if(net.minecraft.registry.Registries.BLOCK.containsId(id)){
@@ -46,13 +47,29 @@ public final class BloodborneClient implements ClientModInitializer {
    ModularBakedModel.QuadPool sharedFaces=new ModularBakedModel.QuadPool();
    context.modifyModelAfterBake().register((model,bake)->{
    Identifier id=bake.id();if(!(id instanceof ModelIdentifier modelId)||!id.getNamespace().equals(BloodborneBlocks.ID))return model;
-   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get(id.getPath());if(block==null)return model;
+   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get(id.getPath());
+   // Item models parent their selected default mesh so their JSON display transform can fit a large object.
+   if(block==null&&id.getPath().startsWith("block/logical/")){
+    String meshKey=id.getPath().substring("block/logical/".length());ModularMeshData.Mesh mesh=logicalMeshes.get(meshKey);
+    if(mesh==null)return model;String cacheKey="logical-item:"+meshKey;
+    return ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),model);
+   }
+   if(block==null)return model;
    net.minecraft.client.render.model.BakedModel result=model;
    if(block.definition.modular){
     ModularMeshData.Mesh mesh=modularMeshes.get(block.definition.id);if(mesh==null)throw new IllegalStateException("Missing modular mesh "+block.definition.id);
     int turns=facingTurns(modelId.getVariant());
     String cacheKey=block.definition.id+":"+turns;
     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,turns,bake.textureGetter(),sharedFaces)),result);
+   }
+   if(block.definition.logical){
+    String meshKey=block.definition.models.get(modelId.getVariant());
+    if(meshKey==null&&modelId.getVariant().equals("inventory"))meshKey=block.definition.models.get(BloodborneBlocks.key(block.getDefaultState()));
+    if(meshKey==null)throw new IllegalStateException("Missing logical mesh state "+block.definition.id+"["+modelId.getVariant()+"]");
+    ModularMeshData.Mesh mesh=logicalMeshes.get(meshKey);if(mesh==null)throw new IllegalStateException("Missing logical mesh "+meshKey+" for "+block.definition.id);
+    // Logical meshes are generated in their complete state orientation; do not rotate them again.
+    String cacheKey="logical:"+meshKey;
+    result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),result);
    }
    if(block.definition.emissive){
     List<EmissiveModel.Pair>pairs=new ArrayList<>();

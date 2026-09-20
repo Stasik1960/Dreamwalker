@@ -1,31 +1,31 @@
 package dev.dreamwalker.bloodborneblocks;
 
-import com.google.gson.Gson;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+import net.minecraft.Bootstrap;
+import net.minecraft.SharedConstants;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 
 /** Standalone data/voxel test: no game client, world or server is started. */
 public final class GeometryChecks {
  public static void main(String[] args) throws Exception {
+  SharedConstants.createGameVersion();Bootstrap.initialize();
   long started=System.nanoTime();
-  var input=GeometryChecks.class.getResourceAsStream("/bloodborne_blocks/definitions.json");
-  var data=new Gson().fromJson(new InputStreamReader(input,StandardCharsets.UTF_8),BloodborneBlocks.Data.class);
+  var data=BloodborneBlocks.loadDefinitions();
   GeometryRuntime.loadAndValidate(data);
   var field=GeometryRuntime.class.getDeclaredField("BLOCKS");field.setAccessible(true);
   @SuppressWarnings("unchecked") var blocks=(Map<String,GeometryRuntime.GeometryBlock>)field.get(null);
-  check(blocks.size()==503,"503 palette IDs retained");
+  var legacy=data.blocks.stream().filter(definition->!definition.modular&&!definition.logical).toList();
+  check(legacy.size()==503,"503 palette IDs retained");
   int states=0,cells=0;Set<GeometryRuntime.GeometryState> profiles=Collections.newSetFromMap(new IdentityHashMap<>());
-  for(var block:blocks.values()) for(var entry:block.states.entrySet()) {
+  for(var definition:legacy){var block=blocks.get(definition.id);for(var entry:block.states.entrySet()) {
    states++;var state=entry.getValue();if(!profiles.add(state))continue;
    for(var cell:state.parsedCells.values()){
     cells++;checkShape(cell.collisionShape);checkShape(cell.outlineShape);
     check(cell.outline.size()<=1,"one rectangular selection per cell");
     check(cell.collision.size()<=16,"bounded simple physics per cell");
    }
-  }
+  }}
   check(states>=18968,"complete state coverage");
   for(String id:List.of("dead_fire_coral_fan","orange_wool","cyan_wool","pink_wool","potted_dead_bush","potted_azalea_bush"))
    for(var s:blocks.get(id).states.values())for(var c:s.parsedCells.values())check(c.collisionShape.isEmpty(),"vegetation is pass-through: "+id);

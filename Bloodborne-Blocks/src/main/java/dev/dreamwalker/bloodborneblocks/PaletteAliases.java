@@ -14,6 +14,7 @@ final class PaletteAliases {
  private static final class Target {String state;int[] offset;}
  record Replacement(BlockState state,BlockPos offset) {}
  private static final Data DATA=load();
+ private static final Set<String> LOGICAL_HIDDEN=loadLogicalHidden();
  private PaletteAliases() {}
  private static Data load(){
   var stream=PaletteAliases.class.getResourceAsStream("/bloodborne_blocks/aliases.json");
@@ -22,7 +23,13 @@ final class PaletteAliases {
   catch(java.io.IOException e){throw new IllegalStateException("Cannot read palette migration table",e);}
  }
  static boolean removed(String id){return DATA.removed.contains(id);}
- static boolean hidden(String id){return removed(id)||DATA.aliases.containsKey(id);}
+ static boolean hidden(String id){return removed(id)||DATA.aliases.containsKey(id)||LOGICAL_HIDDEN.contains(id);}
+ private static Set<String> loadLogicalHidden(){
+  var stream=PaletteAliases.class.getResourceAsStream("/bloodborne_blocks/logical/hidden-items.json");
+  if(stream==null)return Set.of();
+  try(var reader=new InputStreamReader(stream,StandardCharsets.UTF_8)){String[] ids=new Gson().fromJson(reader,String[].class);return ids==null?Set.of():Set.of(ids);}
+  catch(java.io.IOException|RuntimeException e){throw new IllegalStateException("Cannot read logical hidden items",e);}
+ }
  static ArchitectureBlock canonical(ArchitectureBlock block){Alias a=DATA.aliases.get(block.definition.id);return a==null?block:BloodborneBlocks.BLOCKS.get(a.target);}
  static Replacement replacement(BlockState state){
   if(!(state.getBlock() instanceof ArchitectureBlock block))return new Replacement(state,BlockPos.ORIGIN);

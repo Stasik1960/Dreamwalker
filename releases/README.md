@@ -8,6 +8,16 @@
 
 Неофициальный тестовый порт на Minecraft 1.20.1 / Fabric / Java 17. GeckoLib, AAA Particles, Player Animation Library и их вложенные библиотеки уже внутри; Fabric API требуется отдельно. Исправлены несовместимые обработчики камеры, моделей, рук, износа УПМ и элитр. Сборка, 812 офлайн-проверок и применение 133 mixin-вставок прошли; Minecraft не запускался. Авторство и исходная лицензия сохранены.
 
+## Bloodborne Architecture 2.1.0-alpha.1 — экспериментальный этап
+
+[Скачать alpha-JAR](Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar) · [SHA-256](Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar.sha256) · [Описание и ограничения](Bloodborne-Blocks/README.md).
+
+76 логических объектов / 388 состояний, 546 точных правил автоматической миграции.
+На копии Ether выполнено 24 375 преобразований; повторный проход не изменяет результат.
+Исходники, генератор, таблица миграции и проверки опубликованы вместе с JAR.
+Не все 23 запрошенных семейства завершены; Minecraft не запускался. Это alpha,
+а не замена прежней 2.0.1 для основной карты. Мир и приватные отчёты не публикуются.
+
 ## Bloodborne Architecture 2.0.1
 
 [Скачать JAR](Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar) · [SHA-256](Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar.sha256) · [Установка и новая карта](../Bloodborne-Blocks/README.md).

@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '2.0.1'
+version = '2.1.0-alpha.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -21,15 +21,33 @@ tasks.withType(Zip).configureEach { zip64 = true }
 tasks.register('geometryCheck', JavaExec) {
  dependsOn testClasses
  classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
- mainClass = 'dev.dreamwalker.bloodborneblocks.GeometryChecks'
+ mainClass = 'dev.dreamwalker.bloodborneblocks.BootstrapCheckLauncher'
+ args 'dev.dreamwalker.bloodborneblocks.GeometryChecks'
  javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
  maxHeapSize = '1G'
 }
 tasks.register('modularDataCheck', JavaExec) {
  dependsOn testClasses
  classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
- mainClass = 'dev.dreamwalker.bloodborneblocks.ModularDataChecks'
+ mainClass = 'dev.dreamwalker.bloodborneblocks.BootstrapCheckLauncher'
+ args 'dev.dreamwalker.bloodborneblocks.ModularDataChecks'
  javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
  maxHeapSize = '2G'
 }
-tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck' }
+tasks.register('logicalObjectCheck', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
+ mainClass = 'dev.dreamwalker.bloodborneblocks.BootstrapCheckLauncher'
+ args 'dev.dreamwalker.bloodborneblocks.LogicalObjectChecks'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+ maxHeapSize = '1G'
+}
+tasks.register('logicalRegistryCheck', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
+ mainClass = 'dev.dreamwalker.bloodborneblocks.BootstrapCheckLauncher'
+ args 'dev.dreamwalker.bloodborneblocks.LogicalRegistryChecks'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+ maxHeapSize = '1G'
+}
+tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck' }

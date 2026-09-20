@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "scope": "SUPERSEDED exploratory 166-object snapshot, retained as investigation history. Integration rejected vanilla fallback candidates; actual current counts are in logical-generation-v3.json and screenshot coverage/limitations in LOGICAL-OBJECTS-STATUS.md. Family inclusion below does NOT establish screenshot acceptance or in-game correctness.",
+  "generated": {
+    "logicalObjects": 166,
+    "curatedFamilies": 10,
+    "autoSingles": 156,
+    "states": 724,
+    "migrationRules": 938
+  },
+  "directlyCoveredFamilies": [
+    {"id":"o_acacia_door","source":"acacia_stairs bottom+top","states":8,"evidence":"curated exact-member family"},
+    {"id":"o_birch_door","source":"birch_stairs bottom+top","states":8,"evidence":"curated exact-member family"},
+    {"id":"o_dark_oak_door","source":"dark_oak_stairs bottom+top","states":8,"evidence":"curated exact-member family"},
+    {"id":"o_tall_arched_window","source":"warped_stairs bottom+top","states":4,"evidence":"45 exact pairs at +2"},
+    {"id":"o_shuttered_window","source":"spruce_trapdoor reviewed states","states":8,"evidence":"curated shutter states"},
+    {"id":"o_iron_gate","source":"stripped_jungle_log + stripped_acacia_log","states":8,"evidence":"9 exact pairs at +3; open gate is reviewed local hinge geometry"},
+    {"id":"o_iron_railing","source":"iron-bars family","states":16,"evidence":"connected, connection_family=iron_railing"},
+    {"id":"o_stone_railing","source":"stone-railing family","states":32,"evidence":"connected, connection_family=stone_railing"},
+    {"id":"o_toothed_stone_rib","source":"curated ornamental single","states":4,"evidence":"curated"},
+    {"id":"o_dead_tree_planter","source":"white_wool + orange_wool + magenta_wool","states":4,"evidence":"130 exact vertical triples"}
+  ],
+  "relevantAutoSinglesAlreadyCovered": [
+    {"sources":["lantern","soul_lantern"],"targets":["o_lantern","o_lantern_hanging","o_soul_lantern"],"note":"eight dry source states each; this is a standalone lantern, not a proven lamp-post assembly"},
+    {"source":"asset_addon_tombstone_gathered_8","target":"o_tombstone_gathered_8","note":"four dry states"},
+    {"source":"waxed_weathered_cut_copper_stairs","targets":["o_tombstone_2","o_tombstone_4","o_tombstone_6","o_tombstone_8","o_tombstone_9"],"note":"reviewed deterministic single applications only"},
+    {"source":"weathered_cut_copper_stairs","targets":["o_lanterns","o_statue"],"note":"standalone model applications; no inferred multi-block attachment"}
+  ],
+  "notLogicalByDesign": [
+    {"sources":["deepslate_tile_slab","deepslate_tile_stairs","deepslate_tile_wall","deepslate_tiles"],"models":["block/deepslate_tile_slab","block/deepslate_tile_stairs_inner","block/deepslate_tile_stairs_outer","block/deepslate_tile_wall_post","block/deepslate_tile_wall_side","block/deepslate_tile_wall_side_tall","block/deepslate_tiles"],"reason":"native connected/stateful building pieces; no finite complete assembly evidence"},
+    {"sources":["red_nether_brick_wall","sandstone_wall"],"models":["block/red_nether_brick_wall_side_tall_*","block/sandstone_wall_side_tall_*"],"reason":"1296-state wall carriers; a single logical conversion would lose connection semantics without an explicit reviewed family"}
+  ],
+  "smallestSafeAdditionalFamilies": [
+    {"candidate":"lamp-post body only","source":"asset_1_spirelamp_001","rawModel":"bloodborne_blocks:block/1_spirelamp_001","status":"not included","why":"semantic catalog calls it masonry and no exact co-occurrence proves which lantern/body state belongs to it. Converting the body alone is mechanically possible but would not cover a complete screenshot lamp-post."},
+    {"candidate":"separate lantern-statue attachment","source":"weathered_cut_copper_stairs","rawModel":"bloodborne_blocks:block/hold/lanterns","status":"partially auto-covered as o_lanterns","why":"the single model is safe; attaching it to a post requires exact relative-position evidence and must not be inferred from visual proximity."},
+    {"candidate":"grave/tombstone multi-block family","sources":["asset_addon_tombstone_gathered_8","waxed_weathered_cut_copper_stairs"],"rawModels":["block/addon/tombstone_gathered_8","block/stairs/tombstone_0..9"],"status":"singles covered; assemblies unresolved","why":"no reviewed complete finite member layout in the frozen manifest."},
+    {"candidate":"tile/curb/balustrade assembly","sources":["deepslate_tile_wall","deepslate_tile_stairs","deepslate_tile_slab"],"rawModels":["block/deepslate_tile_wall_*","block/deepslate_tile_stairs_*","block/deepslate_tile_slab*"],"status":"not included as a composite","why":"their connection/state cartesian products are native-correct; use existing o_stone_railing only for the reviewed balustrade, not as evidence for these unrelated tiles."}
+  ],
+  "excludedEvidenceRules": [
+    "No source state with waterlogged=true is migrated to a non-waterlogged logical state.",
+    "Tree-piece carriers acacia_log, jungle_log, dark_oak_log, birch_log, spruce_log and oak_log are excluded from automatic bush conversion.",
+    "Door/window/tree/lamp-post candidates require explicit curated exact-member evidence before a composite is created."
+  ]
+}

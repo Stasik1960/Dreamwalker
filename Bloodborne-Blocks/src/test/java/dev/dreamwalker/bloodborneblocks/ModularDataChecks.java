@@ -1,13 +1,13 @@
 package dev.dreamwalker.bloodborneblocks;
 
-import com.google.gson.Gson;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+import net.minecraft.Bootstrap;
+import net.minecraft.SharedConstants;
 
 /** v2 data contract test. It starts no game client, world or server. */
 public final class ModularDataChecks {
  public static void main(String[] args){
+  SharedConstants.createGameVersion();Bootstrap.initialize();
   var pool=new ModularBakedModel.QuadPool();int[] face=new int[32];
   var quad=pool.intern(face,net.minecraft.util.math.Direction.UP,null);
   check(quad==pool.intern(face.clone(),net.minecraft.util.math.Direction.UP,null),"composite faces share vertex buffers");
@@ -15,9 +15,9 @@ public final class ModularDataChecks {
   int[] shifted=face.clone();shifted[0]=Float.floatToRawIntBits(.5F);
   check(quad!=pool.intern(shifted,net.minecraft.util.math.Direction.UP,null),"different geometry stays distinct");
   check(quad!=new ModularBakedModel.QuadPool().intern(face.clone(),net.minecraft.util.math.Direction.UP,null),"resource reload does not reuse stale quads");
-  Gson gson=new Gson();BloodborneBlocks.Data all=read(gson,"/bloodborne_blocks/definitions.json");BloodborneBlocks.Data v2=read(gson,"/bloodborne_blocks/v2/definitions.json");
-  List<BloodborneBlocks.Definition> legacy=List.copyOf(all.blocks);List<BloodborneBlocks.Definition> modular=List.copyOf(v2.blocks);
-  all.blocks=new ArrayList<>(legacy);all.blocks.addAll(modular);
+  BloodborneBlocks.Data all=BloodborneBlocks.loadDefinitions();
+  List<BloodborneBlocks.Definition> legacy=all.blocks.stream().filter(definition->!definition.modular&&!definition.logical).toList();
+  List<BloodborneBlocks.Definition> modular=all.blocks.stream().filter(definition->definition.modular).toList();
   check(legacy.size()==503,"503 legacy palette IDs retained");check(!modular.isEmpty(),"modular definitions loaded");
   Set<String> ids=new HashSet<>();for(var definition:all.blocks)check(ids.add(definition.id),"definition namespace conflict: "+definition.id);
   LegacyItemSections.load();
@@ -65,10 +65,6 @@ public final class ModularDataChecks {
    }
   }catch(ReflectiveOperationException e){throw new AssertionError(e);}
   System.out.printf(Locale.ROOT,"MODULAR DATA CHECKS PASSED: %d legacy, %d modules, %d meshes%n",legacy.size(),modular.size(),meshes.size());
- }
- private static BloodborneBlocks.Data read(Gson gson,String path){
-  var input=ModularDataChecks.class.getResourceAsStream(path);check(input!=null,"resource exists: "+path);
-  return gson.fromJson(new InputStreamReader(input,StandardCharsets.UTF_8),BloodborneBlocks.Data.class);
  }
  private static void check(boolean value,String message){if(!value)throw new AssertionError(message);}
 }
