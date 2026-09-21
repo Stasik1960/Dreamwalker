@@ -193,9 +193,13 @@ The user explicitly requested publication of the **complete converted map**
 after the initial source-only request. Its separate ZIP includes player data,
 mod data and world configuration without anonymization. It is not a source pack,
 a temporary world, or a fresh conversion. Keep the map's other mods installed.
-The user subsequently also supplied and authorized the original/reference world
-and resource pack: see [reference-inputs/README.md](../reference-inputs/README.md)
-for archive hashes, provenance distinctions and the additional LFS download.
+The user subsequently corrected the supplied original world. The authoritative
+pre-Bloodborne-Blocks input is now the newly supplied `ether.zip`, stored as
+`reference-inputs/source-world.zip`; the incorrect earlier reference world has
+been replaced. See [reference-inputs/README.md](../reference-inputs/README.md)
+for current archive hashes, the original resource pack and the LFS download.
+This replacement does not rerun conversion: the ledger and released converted
+map above remain historical results from their separately recorded input hash.
 Caches, dependency extractions, intermediate worlds, diagnostic archives and
 local agent configurations remain excluded. See the release directory for the
 converted map and runtime JAR with checksums.
