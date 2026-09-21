@@ -1,5 +1,10 @@
 # Structural normalization — experimental integration
 
+> Historical alpha baseline. The ongoing rejected-result follow-up and its
+> current 23-case acceptance matrix are in [NORMALIZATION-ACCEPTANCE.md](NORMALIZATION-ACCEPTANCE.md).
+> Counts, screenshots mapping and verification results below have not been
+> refreshed for that work and must not be cited as its acceptance evidence.
+
 This is a continuation of the existing mod, not a new migration from scratch.
 The experimental version is `2.1.0-alpha.1`. Do not treat it as acceptance of all
 23 screenshot cases or as a production-world upgrade.

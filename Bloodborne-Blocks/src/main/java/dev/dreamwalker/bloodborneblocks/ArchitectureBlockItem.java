@@ -61,10 +61,11 @@ public final class ArchitectureBlockItem extends BlockItem {
 
  @Override protected BlockState getPlacementState(ItemPlacementContext context){
   BlockState base=getBlock().getPlacementState(context);if(base==null)return null;
+  normalizePlacementTag(context.getStack(),(ArchitectureBlock)getBlock(),base);
   BlockState state=applyStateTag(base,context.getStack());return canPlace(context,state)?state:null;
  }
 
- private static void normalizePlacementTag(ItemStack stack,ArchitectureBlock block,BlockState placement){
+ static void normalizePlacementTag(ItemStack stack,ArchitectureBlock block,BlockState placement){
   NbtCompound properties=stack.getOrCreateSubNbt("BlockStateTag");
   if(placement.contains(BloodborneBlocks.ASSEMBLED))properties.putString("assembled","true");
   if(placement.contains(net.minecraft.state.property.Properties.WATERLOGGED))properties.putString("waterlogged",Boolean.toString(placement.get(net.minecraft.state.property.Properties.WATERLOGGED)));
@@ -85,6 +86,7 @@ public final class ArchitectureBlockItem extends BlockItem {
     if(property!=null)properties.putString(name,BloodborneBlocks.value((Property)property,(Comparable)placement.get((Property)property)));
    }
    if(placement.contains(net.minecraft.state.property.Properties.OPEN))properties.putString("open","false");
+   if(block.definition.placement_properties!=null)block.definition.placement_properties.forEach(properties::putString);
   }
   if(block.definition.kind.equals("door")){
    if(placement.contains(net.minecraft.state.property.Properties.DOUBLE_BLOCK_HALF))properties.putString("half","lower");
@@ -97,7 +99,7 @@ public final class ArchitectureBlockItem extends BlockItem {
   }
  }
 
- @SuppressWarnings({"rawtypes","unchecked"}) private static BlockState applyStateTag(BlockState state,ItemStack stack){
+ @SuppressWarnings({"rawtypes","unchecked"}) static BlockState applyStateTag(BlockState state,ItemStack stack){
   NbtCompound properties=stack.getSubNbt("BlockStateTag");if(properties==null)return state;
   for(String name:properties.getKeys()){
    Property property=state.getBlock().getStateManager().getProperty(name);if(property==null)continue;

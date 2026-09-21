@@ -6,11 +6,12 @@ Do not infer an object's purpose from its vanilla carrier ID.
 
 ## Ornate balustrades (#6, #8)
 
-The custom straight sections use `deepslate_tile_stairs` and
-`smooth_red_sandstone_stairs`. Their `*_inner.json` and `*_outer.json` models
-inherit ordinary `inner_stairs` / `outer_stairs`; they are not authored Bloodborne
-corner evidence. Promoting those fallbacks into the family would repeat the
-false-positive classification already removed from this pass.
+The prior assignment of `deepslate_tile_stairs` and
+`smooth_red_sandstone_stairs` to this case was wrong: their authored straight
+models are windows. Their `*_inner.json` / `*_outer.json` vanilla fallbacks
+remain unsuitable for Bloodborne corners. The actual reviewed balustrades use
+`warped_trapdoor_open` and the top `cut_copper_stairs` variants. These now have
+whole connected families; see `NORMALIZATION-ACCEPTANCE.md` for unverified work.
 
 The `warped_trapdoor` carrier has several genuinely different oversized meshes:
 

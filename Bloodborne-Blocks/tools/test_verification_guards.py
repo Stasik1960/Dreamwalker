@@ -10,6 +10,42 @@ from unittest.mock import patch
 
 import check_logical_mount_transition as transition
 from check_packaged_resources import validate as validate_jar
+from check_staged_resources import prune_stale_logical_models
+
+
+class StagingPruneTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.source, self.staged = self.root / 'source', self.root / 'build'
+        self.source.mkdir()
+        self.folder = self.staged / 'assets/bloodborne_blocks/models/block/logical'
+        self.folder.mkdir(parents=True)
+        self.obsolete = self.folder / ('o_' + 'a' * 20 + '.json')
+        self.obsolete.write_text('{}')
+
+    def test_removes_only_generated_extras(self):
+        self.assertEqual(len(prune_stale_logical_models(self.source, self.staged)), 1)
+        self.assertFalse(self.obsolete.exists())
+
+    def test_foreign_extra_aborts_before_any_removal(self):
+        (self.staged / 'user.json').write_text('{}')
+        with self.assertRaisesRegex(AssertionError, 'no files pruned'):
+            prune_stale_logical_models(self.source, self.staged)
+        self.assertTrue(self.obsolete.exists())
+
+    def test_source_is_never_a_staging_target(self):
+        with self.assertRaises(AssertionError):
+            prune_stale_logical_models(self.staged, self.staged)
+        self.assertTrue(self.obsolete.exists())
+
+    def test_current_model_is_retained(self):
+        counterpart = self.source / self.obsolete.relative_to(self.staged)
+        counterpart.parent.mkdir(parents=True)
+        counterpart.write_text('{}')
+        self.assertEqual(prune_stale_logical_models(self.source, self.staged), [])
+        self.assertTrue(self.obsolete.exists())
 
 
 class JarGuardTests(unittest.TestCase):

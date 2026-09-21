@@ -16,9 +16,16 @@ registry IDs remain readable. The source world is never edited.
 
 `bloodborne_blocks/logical/definitions.json` extends the existing definition
 format with `logical: true`, `behavior` (`static`, `connected`, `door`, `gate`,
-`shutter`, `ladder`, `lantern`), optional `connection_family`, and `models`
+`shutter`, `ladder`, `lantern`, `bench`), optional `connection_family`, and `models`
 (complete state key -> mesh key). Existing properties/default/states fields
 remain the registry contract. IDs use `o_`; rotations and open/closed are states.
+
+Optional `placement_properties` fixes the state of newly placed/picked items,
+without rewriting the default of old saved blocks. This separates standalone
+shutters from their preserved wall-backed state. An `attachment_item` refers
+to a registered logical item; its owner's `lantern` property is false for new
+placement, true only after successful attachment. Conditional loot returns the
+installed item once. Attachment preflights all cells on the server.
 
 `logical/geometry.json` uses the existing per-cell geometry schema. Parts retain
 the existing `architecture_part` registry ID and `Root`/`Owner` NBT contract.
@@ -43,6 +50,15 @@ that origin. A rule may include additional legacy members in `members`, using
 the same offset/id/properties format as components, for authored multi-model
 assemblies. A missing member must never be invented by world conversion.
 
+Optional `supersedes_targets` explicitly permits a complete matched assembly
+to replace contained fallback matches. Both source and footprint containment
+are checked: the fallback source must be a strict subset, its touched cells
+a subset, the dimension identical, and complete target states different.
+Only a valid assembly surviving all unrelated overlap conflicts can suppress
+a fallback. Same-ID/different-state matches are supported for the statue.
+Both converter and independent checker index touched positions; disjoint
+objects do not incur an all-pairs scan.
+
 Conflicting/partial/ambiguous matches remain untouched and are recorded. New
 logical objects are idempotent conversion outputs. Private position ledgers and
 world copies belong under ignored `build/`, not public documentation.
@@ -62,7 +78,7 @@ Local `Ether-Bloodborne-2.0.2-positions.zip` and the `(1)` copy are byte-identic
 SHA-256 `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
 The original resource pack is available as `bloodborne.zip` in Downloads.
 
-## Status
+## Historical alpha baseline
 
 Additive logical registry, object meshes, runtime ownership and the fail-closed
 inverse converter are implemented. Offline visual integration rejected 86
@@ -72,6 +88,6 @@ palette is 76 objects / 388 states / 546 exact migration rules, not the earlier
 same-model rotation groups now use `face=floor/wall/ceiling` plus `facing` rather
 than four extra experimental IDs. Legacy and v2 registry IDs remain unchanged.
 
-See `LOGICAL-OBJECTS-STATUS.md` for screenshot-by-screenshot limitations and
+See `NORMALIZATION-ACCEPTANCE.md` for current screenshot-by-screenshot limitations and
 verification. Resource validation is not a claim that every requested family or
 in-game interaction is finished.

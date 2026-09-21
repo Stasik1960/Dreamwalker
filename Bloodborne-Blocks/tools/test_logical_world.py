@@ -11,8 +11,9 @@ from copy import deepcopy
 from pathlib import Path
 
 from check_logical_world import check, validate_ledger
-from convert_logical_world import (AIR_NAME, PART, World, block_pos_long, convert,
-                                   parse_rules, state_tag)
+from convert_logical_world import (AIR_NAME, PART, Candidate, Expected, Rule, World,
+                                   block_pos_long, convert, parse_rules, reject_overlaps,
+                                   state_tag)
 from world_io import (TAG_BYTE, TAG_COMPOUND, TAG_INT, TAG_LIST, TAG_LONG,
                       TAG_STRING, NbtFile, RegionFile, Tag, compound, write_nbt)
 
@@ -66,6 +67,12 @@ def resources(root: Path):
         {"id": "m_a", "default": {"facing": "north"}}, {"id": "m_b", "default": {"facing": "north"}},
         {"id": "m_c", "default": {"facing": "north"}}, {"id": "m_d", "default": {"facing": "north"}}, {"id": "m_other", "default": {}},
         {"id": "o_arch", "default": {"facing": "north"}}, {"id": "architecture_part", "default": {}},
+        {"id": "coal", "default": {}}, {"id": "raw_iron", "default": {}}, {"id": "raw_copper", "default": {}},
+        {"id": "o_toothed_stone_rib", "default": {}}, {"id": "o_raw_iron_block", "default": {}},
+        {"id": "o_raw_copper_block", "default": {}}, {"id": "o_toothed_spire", "default": {}},
+        {"id": "o_toothed_spire_alt", "default": {}},
+        {"id": "statue_bottom", "default": {}}, {"id": "lantern_top", "default": {}},
+        {"id": "o_body", "default": {"lantern": "false"}}, {"id": "o_attachment", "default": {}},
     ]}), encoding="utf-8")
     migration = {"schemaVersion": 1, "rules": [
         {"source": {"id": "legacy", "properties": {"facing": "north"}}, "target": {"id": "o_arch", "properties": {"facing": "east"}},
@@ -88,12 +95,30 @@ def resources(root: Path):
          "offset": [0, 0, 0], "components": [{"offset": [0, 0, 0], "id": "m_c", "properties": {"facing": "north"}}, {"offset": [1, 0, 0], "id": "m_d", "properties": {"facing": "north"}}]},
         {"source": {"id": "legacy_alias", "properties": {"facing": "west"}}, "target": {"id": "o_arch", "properties": {"facing": "west"}},
          "offset": [0, 0, 0], "components": [{"offset": [0, 0, 0], "id": "m_c", "properties": {"facing": "north"}}, {"offset": [1, 0, 0], "id": "m_d", "properties": {"facing": "north"}}]},
+        {"source": {"id": "coal"}, "target": {"id": "o_toothed_stone_rib"}, "offset": [0, 0, 0], "components": None},
+        {"source": {"id": "raw_iron"}, "target": {"id": "o_raw_iron_block"}, "offset": [0, 0, 0], "components": None},
+        {"source": {"id": "raw_copper"}, "target": {"id": "o_raw_copper_block"}, "offset": [0, 0, 0], "components": None},
+        {"source": {"id": "coal"}, "target": {"id": "o_toothed_spire"}, "offset": [0, 0, 0],
+         "members": [{"offset": [3, 0, 0], "id": "raw_iron"}, {"offset": [6, 0, 0], "id": "raw_copper"}], "components": None,
+         "supersedes_targets": ["o_toothed_stone_rib", "o_raw_iron_block", "o_raw_copper_block"]},
+        {"source": {"id": "statue_bottom"}, "target": {"id": "o_body", "properties": {"lantern": "false"}}, "offset": [0, 0, 0], "components": None},
+        {"source": {"id": "lantern_top"}, "target": {"id": "o_attachment"}, "offset": [0, 0, 0], "components": None},
+        {"source": {"id": "statue_bottom"}, "target": {"id": "o_body", "properties": {"lantern": "true"}}, "offset": [0, 0, 0],
+         "members": [{"offset": [2, 0, 0], "id": "lantern_top"}], "components": None,
+         "supersedes_targets": ["o_body", "o_attachment"]},
     ]}
     (root / "migration.json").write_text(json.dumps(migration), encoding="utf-8")
-    (root / "geometry.json").write_text(json.dumps({"blocks": {"o_arch": {"states": {
+    geometry = {"blocks": {"o_arch": {"states": {
         "facing=east": {"cells": {"0,0,0": {}, "1,0,0": {}}}, "facing=south": {"cells": {"0,0,0": {}, "1,0,0": {}}},
         "facing=west": {"cells": {"0,0,0": {}, "1,0,0": {}}},
-    }}}}), encoding="utf-8")
+    }}, "o_toothed_stone_rib": {"states": {"": {"cells": {"0,0,0": {}}}}},
+         "o_raw_iron_block": {"states": {"": {"cells": {"0,0,0": {}}}}},
+         "o_raw_copper_block": {"states": {"": {"cells": {"0,0,0": {}}}}},
+         "o_toothed_spire": {"states": {"": {"cells": {"0,0,0": {}, "3,0,0": {}, "6,0,0": {}}}}},
+         "o_toothed_spire_alt": {"states": {"": {"cells": {"0,0,0": {}, "3,0,0": {}, "6,0,0": {}}}}},
+         "o_body": {"states": {"lantern=false": {"cells": {"0,0,0": {}}}, "lantern=true": {"cells": {"0,0,0": {}, "2,0,0": {}}}}},
+         "o_attachment": {"states": {"": {"cells": {"0,0,0": {}}}}}}}
+    (root / "geometry.json").write_text(json.dumps(geometry), encoding="utf-8")
     (root.parent / "geometry.json").write_text(json.dumps({"blocks": {
         "legacy": {"states": {"facing=north": {"cells": {"0,0,0": {}, "0,0,2": {}}}}},
         "member": {"states": {"facing=north": {"cells": {"0,0,0": {}, "0,0,1": {}}}}},
@@ -132,6 +157,135 @@ def rejected_ledger(before, report, rules):
     except AssertionError:
         return
     raise AssertionError("checker accepted an incomplete or ambiguous ledger")
+
+
+def assembly_source(root, blocks, entities=()):
+    root.mkdir()
+    write_nbt(root / "level.dat", NbtFile("", Tag(TAG_COMPOUND, {"Data": Tag(TAG_COMPOUND, {})})))
+    write_chunk(root / "region/r.0.0.mca", 0, 0, blocks, entities)
+
+
+def assembly_cases(base, res):
+    """Exercise the one explicit assembly exception without broad preference."""
+    complete = {(0, 64, 0): ("bloodborne_blocks:coal", {}),
+                (3, 64, 0): ("bloodborne_blocks:raw_iron", {}),
+                (6, 64, 0): ("bloodborne_blocks:raw_copper", {})}
+    reports = base / "assembly-reports"
+    reports.mkdir()
+    source = base / "assembly-complete"
+    assembly_source(source, complete)
+    output = base / "assembly-output"
+    report = converted(source, output, res, reports / "complete.json", reports)
+    assert report["counts"]["converted"] == 1, report
+    assert sum(item["reason"] == "superseded_by_complete_assembly" for item in report["rejected"]) == 3, report
+    assert World(output, {}).get("minecraft:overworld", (0, 64, 0))[0] == "bloodborne_blocks:o_toothed_spire"
+    check(source, output, reports / "complete.json", res)
+    omitted = deepcopy(report)
+    omitted["ledger"].pop()
+    omitted["counts"]["converted"] = 0
+    rules, defaults = parse_rules(res)
+    rejected_ledger(World(source, defaults), omitted, rules)
+    second = base / "assembly-second"
+    converted(output, second, res, reports / "second.json", reports)
+    assert tree_hash(output) == tree_hash(second), "assembly conversion was not idempotent"
+
+    partial = base / "assembly-partial"
+    assembly_source(partial, {(0, 64, 0): ("bloodborne_blocks:coal", {})})
+    partial_output = base / "assembly-partial-output"
+    partial_report = converted(partial, partial_output, res, reports / "partial.json", reports)
+    assert partial_report["counts"]["converted"] == 1
+    assert World(partial_output, {}).get("minecraft:overworld", (0, 64, 0))[0] == "bloodborne_blocks:o_toothed_stone_rib"
+
+    obstructed = base / "assembly-obstructed"
+    assembly_source(obstructed, complete, [entity((6, 64, 0), "minecraft:chest")])
+    obstructed_output = base / "assembly-obstructed-output"
+    obstructed_report = converted(obstructed, obstructed_output, res, reports / "obstructed.json", reports)
+    assert obstructed_report["counts"]["converted"] == 2, obstructed_report
+    assert World(obstructed_output, {}).get("minecraft:overworld", (0, 64, 0))[0] == "bloodborne_blocks:o_toothed_stone_rib"
+
+    no_allowlist = base / "assembly-no-allowlist"
+    shutil.copytree(res, no_allowlist)
+    migration = json.loads((no_allowlist / "migration.json").read_text(encoding="utf-8"))
+    next(rule for rule in migration["rules"] if rule["target"]["id"] == "o_toothed_spire").pop("supersedes_targets")
+    (no_allowlist / "migration.json").write_text(json.dumps(migration), encoding="utf-8")
+    no_allowlist_source = base / "assembly-no-allowlist-source"
+    assembly_source(no_allowlist_source, complete)
+    no_allowlist_output = base / "assembly-no-allowlist-output"
+    no_allowlist_report = converted(no_allowlist_source, no_allowlist_output, no_allowlist, reports / "no-allowlist.json", reports)
+    assert no_allowlist_report["counts"]["converted"] == 0, no_allowlist_report
+
+    conflict_resources = base / "assembly-conflict-resources"
+    shutil.copytree(res, conflict_resources)
+    migration = json.loads((conflict_resources / "migration.json").read_text(encoding="utf-8"))
+    conflicting = deepcopy(next(rule for rule in migration["rules"] if rule["target"]["id"] == "o_toothed_spire"))
+    conflicting["target"] = {"id": "o_toothed_spire_alt"}
+    migration["rules"].append(conflicting)
+    (conflict_resources / "migration.json").write_text(json.dumps(migration), encoding="utf-8")
+    conflict_source = base / "assembly-conflict-source"
+    assembly_source(conflict_source, complete)
+    conflict_output = base / "assembly-conflict-output"
+    conflict_report = converted(conflict_source, conflict_output, conflict_resources, reports / "conflict.json", reports)
+    assert conflict_report["counts"]["converted"] == 3, conflict_report
+    assert World(conflict_output, {}).get("minecraft:overworld", (0, 64, 0))[0] == "bloodborne_blocks:o_toothed_stone_rib"
+    assert all(entry["rule"] not in (11, 15) for entry in conflict_report["ledger"])
+
+    malformed = json.loads((res / "migration.json").read_text(encoding="utf-8"))
+    for index, targets in enumerate(([], ["o_toothed_stone_rib", "o_toothed_stone_rib"], ["minecraft:stone"], ["o_unknown_target"])):
+        next(rule for rule in malformed["rules"] if rule["target"]["id"] == "o_toothed_spire")["supersedes_targets"] = targets
+        bad = base / ("assembly-invalid-" + str(index))
+        shutil.copytree(res, bad)
+        (bad / "migration.json").write_text(json.dumps(malformed), encoding="utf-8")
+        try:
+            parse_rules(bad)
+        except ValueError:
+            continue
+        raise AssertionError("invalid supersedes_targets was accepted")
+
+
+def statue_like_cases(base, res):
+    """A same-ID state change may supersede only with the attached source."""
+    reports = base / "statue-reports"
+    reports.mkdir()
+    complete = base / "statue-complete"
+    assembly_source(complete, {(0, 64, 0): ("bloodborne_blocks:statue_bottom", {}),
+                               (2, 64, 0): ("bloodborne_blocks:lantern_top", {})})
+    output = base / "statue-output"
+    report = converted(complete, output, res, reports / "complete.json", reports)
+    assert report["counts"]["converted"] == 1, report
+    assert sum(item["reason"] == "superseded_by_complete_assembly" for item in report["rejected"]) == 2, report
+    assert World(output, {}).get("minecraft:overworld", (0, 64, 0)) == ("bloodborne_blocks:o_body", (("lantern", "true"),))
+    check(complete, output, reports / "complete.json", res)
+    second = base / "statue-second"
+    converted(output, second, res, reports / "second.json", reports)
+    assert tree_hash(output) == tree_hash(second), "same-ID assembly conversion was not idempotent"
+
+    partial = base / "statue-partial"
+    assembly_source(partial, {(0, 64, 0): ("bloodborne_blocks:statue_bottom", {})})
+    partial_output = base / "statue-partial-output"
+    converted(partial, partial_output, res, reports / "partial.json", reports)
+    assert World(partial_output, {}).get("minecraft:overworld", (0, 64, 0)) == ("bloodborne_blocks:o_body", (("lantern", "false"),))
+    check(partial, partial_output, reports / "partial.json", res)
+
+    attachment = base / "statue-attachment"
+    assembly_source(attachment, {(2, 64, 0): ("bloodborne_blocks:lantern_top", {})})
+    attachment_output = base / "statue-attachment-output"
+    converted(attachment, attachment_output, res, reports / "attachment.json", reports)
+    assert World(attachment_output, {}).get("minecraft:overworld", (2, 64, 0))[0] == "bloodborne_blocks:o_attachment"
+    check(attachment, attachment_output, reports / "attachment.json", res)
+
+
+def overlap_scalability_case():
+    """Disjoint candidates must use the position index, not a global pair scan."""
+    state = ("bloodborne_blocks:o_scale", ())
+    rule = Rule(0, Expected((0, 0, 0), state), state, (0, 0, 0), (), None, frozenset({(0, 0, 0)}))
+    items = []
+    for index in range(10_000):
+        point = (index * 2, 64, 0)
+        items.append(Candidate(rule, "legacy", "minecraft:overworld", point, {point}, point, {point: state}))
+    stats = {}
+    reject_overlaps(items, stats)
+    assert stats == {"eligible": 10_000, "touchedPositions": 10_000, "pairChecks": 0}, stats
+    assert all(item.reason is None for item in items)
 
 
 def main():
@@ -331,6 +485,9 @@ def main():
         finally:
             World.save = original_save
         assert not failure_report.exists(), "failed conversion published a report"
+        assembly_cases(base, res)
+        statue_like_cases(base, res)
+        overlap_scalability_case()
         print(json.dumps({"ok": True, "converted": report["counts"]["converted"], "rejected": report["counts"]["rejected"], "dimensions": 2}))
 
 

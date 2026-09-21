@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -21,11 +22,42 @@ def inventory(root: Path) -> dict[str, Path]:
     return {path.relative_to(root).as_posix(): path for path in root.rglob("*") if path.is_file()}
 
 
+def prune_stale_logical_models(resource_root: Path, staged_root: Path) -> list[str]:
+    """Remove only obsolete hash-named meshes from an explicit build tree."""
+    for directory in (staged_root, *staged_root.parents):
+        if directory.is_symlink() or (hasattr(directory, 'is_junction') and directory.is_junction()):
+            raise AssertionError('Staging path may not traverse links')
+    source, staged = inventory(resource_root), inventory(staged_root)
+    extras = sorted(set(staged) - set(source))
+    prefix = 'assets/bloodborne_blocks/models/block/logical/'
+    folder = (staged_root / prefix).resolve()
+    if resource_root.resolve() == staged_root.resolve() or resource_root.resolve() in staged_root.resolve().parents:
+        raise AssertionError('Staging must be separate from source resources')
+    targets = []
+    for name in extras:
+        path = staged[name]
+        if (not re.fullmatch(re.escape(prefix) + r'o_[0-9a-f]{20}\.json', name)
+                or not path.is_file() or path.is_symlink() or path.resolve().parent != folder
+                or folder != (staged_root.resolve() / prefix)):
+            raise AssertionError('Unexpected staged file; no files pruned: ' + name)
+        targets.append(path)
+    # Validate the entire set before removing anything. All these files are
+    # derived output absent from source; never touch source assets or worlds.
+    for path in targets:
+        path.unlink()
+    return extras
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repair-staging", action="store_true",
                         help="Copy missing/different inputs only into build/resources/main, then verify everything")
+    parser.add_argument("--prune-stale-logical-models", action="store_true",
+                        help="Remove obsolete hash-named logical meshes only from build/resources/main, then verify")
     args = parser.parse_args()
+    if args.prune_stale_logical_models:
+        removed = prune_stale_logical_models(ROOT / 'src/main/resources', ROOT / 'build/resources/main')
+        print(json.dumps({'staleGeneratedModelsRemoved': removed}), flush=True)
     source = inventory(ROOT / "src/main/resources")
     staged = inventory(ROOT / "build/resources/main")
     extras = set(staged) - set(source)

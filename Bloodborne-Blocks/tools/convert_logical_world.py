@@ -220,6 +220,7 @@ class Rule:
     members: tuple[Expected, ...]
     components: tuple[Expected, ...] | None
     shape: frozenset[tuple[int, int, int]]
+    supersedes_targets: frozenset[str] = field(default_factory=frozenset)
 
 
 def vector(value: Any, label: str) -> tuple[int, int, int]:
@@ -262,6 +263,18 @@ def parse_rules(resources: Path) -> tuple[list[Rule], dict[str, dict[str, str]]]
         else:
             raise ValueError(f"rule {number} components must be a non-empty list or null")
         target = make_state(raw["target"], defaults)
+        raw_supersedes = raw.get("supersedes_targets")
+        if raw_supersedes is None:
+            supersedes_targets = frozenset()
+        else:
+            if (not isinstance(raw_supersedes, list) or not raw_supersedes or
+                    any(not isinstance(value, str) for value in raw_supersedes)):
+                raise ValueError(f"rule {number} supersedes_targets must be a non-empty list of logical target ids")
+            supersedes_targets = frozenset(full_id(value) for value in raw_supersedes)
+            if len(supersedes_targets) != len(raw_supersedes):
+                raise ValueError(f"rule {number} supersedes_targets must be unique")
+            if any(not value.startswith(NS + "o_") for value in supersedes_targets):
+                raise ValueError(f"rule {number} supersedes_targets must name logical targets")
         shape = geometry.get(target)
         if not shape:
             raise ValueError(f"rule {number} target has no representable geometry")
@@ -271,7 +284,11 @@ def parse_rules(resources: Path) -> tuple[list[Rule], dict[str, dict[str, str]]]
         shape = set(shape)
         shape.add((0, 0, 0))
         rules.append(Rule(number, source, target, vector(raw.get("offset"), f"rule {number} offset"),
-                          members, components, frozenset(shape)))
+                          members, components, frozenset(shape), supersedes_targets))
+    known_targets = {rule.target[0] for rule in rules}
+    for rule in rules:
+        if not rule.supersedes_targets <= known_targets:
+            raise ValueError(f"rule {rule.number} supersedes_targets names an unknown logical target")
     return rules, defaults
 
 
@@ -649,7 +666,15 @@ def unresolved_components(items: Iterable[Candidate], found: dict[tuple[str, tup
             for (dim, point), state in found.items() if state in component_states and (dim, point) not in consumed]
 
 
-def reject_overlaps(items: list[Candidate]) -> None:
+def supersedes(large: Candidate, small: Candidate) -> bool:
+    """Return true only for an explicitly declared, fully-contained fallback."""
+    return (large.dimension == small.dimension and
+            small.rule.target[0] in large.rule.supersedes_targets and
+            small.rule.target != large.rule.target and
+            small.source < large.source and small.touched <= large.touched)
+
+
+def reject_overlaps(items: list[Candidate], stats: dict[str, int] | None = None) -> None:
     # Different legacy aliases can describe the same already-converted v2
     # object.  Keep one only when every affected block and resulting write is
     # exactly identical; anything else remains an ambiguous, fail-closed
@@ -665,15 +690,39 @@ def reject_overlaps(items: list[Candidate]) -> None:
             effects.add(effect)
             unique.append(item)
     items[:] = unique
-    users: dict[tuple[str, tuple[int, int, int]], list[Candidate]] = defaultdict(list)
-    for item in items:
-        if item.reason is None:
-            for point in item.touched:
-                users[(item.dimension, point)].append(item)
-    for _, owners in users.items():
-        if len(owners) > 1:
-            for owner in owners:
-                owner.reason = "ambiguous_overlap_or_double_consumption"
+    # A declared assembly can eclipse only a strictly-contained legacy target.
+    # Every other shared write/source remains a symmetric fail-closed conflict.
+    eligible = [item for item in items if item.reason is None]
+    users: dict[tuple[str, tuple[int, int, int]], list[int]] = defaultdict(list)
+    for index, item in enumerate(eligible):
+        for point in item.touched:
+            users[(item.dimension, point)].append(index)
+    pairs: set[tuple[int, int]] = set()
+    rejected: set[int] = set()
+    dominance: set[tuple[int, int]] = set()
+    for owners in users.values():
+        for left_index, left in enumerate(owners):
+            for right in owners[left_index + 1:]:
+                pair = (left, right) if left < right else (right, left)
+                if pair in pairs:
+                    continue
+                pairs.add(pair)
+                left_item, right_item = eligible[pair[0]], eligible[pair[1]]
+                if supersedes(left_item, right_item):
+                    dominance.add(pair)
+                elif supersedes(right_item, left_item):
+                    dominance.add((pair[1], pair[0]))
+                else:
+                    rejected.update(pair)
+    if stats is not None:
+        stats.update({"eligible": len(eligible), "touchedPositions": len(users), "pairChecks": len(pairs)})
+    for index in rejected:
+        eligible[index].reason = "ambiguous_overlap_or_double_consumption"
+    # Do this only after all ordinary conflicts have rejected their candidates:
+    # an obstructed/conflicting assembly never consumes its old fallback.
+    for large, small in dominance:
+        if eligible[large].reason is None and eligible[small].reason is None:
+            eligible[small].reason = "superseded_by_complete_assembly"
 
 
 def apply(world: World, items: Iterable[Candidate]) -> list[dict[str, Any]]:

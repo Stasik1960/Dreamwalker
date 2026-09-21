@@ -20,12 +20,15 @@ import numpy as np
 
 from catalog_geometry import ASSETS, DATA, RES, ROOT, applications, corners, model, rotation
 from modular_mesh import FACE_INDEX, alpha_patch, clip, face_uv, implicit_uv, polygon, split_element, texname, tile_uv
+from logical_palette import classify_palette
 
 FACING = ("north", "east", "south", "west")
 MOUNT_FACES = {0: "floor", 90: "wall", 180: "ceiling"}
 LOGICAL = RES / "bloodborne_blocks" / "logical"
 ORIGINAL_PACK = Path.home() / "Downloads" / "bloodborne.zip"
-AUTO_CATEGORIES = {"bush", "plant", "container", "statue", "ornament", "ladder", "lamp"}
+PREVIOUS_AUTO_CATEGORIES = {"bush", "plant", "container", "statue", "ornament", "ladder", "lamp"}
+AUTO_CATEGORIES = PREVIOUS_AUTO_CATEGORIES | {
+                   "column", "trim", "roof", "floor", "floor_decoration", "bench"}
 EXCLUDED_WORDS = ("door", "window_bottom", "window_top", "tree", "dead_fire_coral_block", "dead_tube_coral_block")
 TREE_PIECES = {"acacia_log", "jungle_log", "dark_oak_log", "birch_log", "spruce_log", "oak_log"}
 # The importer turns an authored zero-width face into this exact half-unit slab.
@@ -231,6 +234,13 @@ def authored_polys(app: dict):
     selected = app.get("elements")
     if selected is not None and (not isinstance(selected, list) or not all(isinstance(value, int) and value >= 0 for value in selected)):
         raise ValueError("app.elements must be a non-negative element-index whitelist")
+    clip_x = app.get("clip_x")
+    if clip_x is not None:
+        if (not isinstance(clip_x, list) or len(clip_x) != 2
+                or not all(isinstance(value, (int, float)) for value in clip_x)
+                or not float(clip_x[0]) <= float(clip_x[1])):
+            raise ValueError("app.clip_x must be an ordered [min, max] numeric local x range")
+        clip_x = tuple(float(value) for value in clip_x)
     for index, current in enumerate(md.get("elements", [])):
         if selected is not None and index not in selected:
             continue
@@ -244,6 +254,12 @@ def authored_polys(app: dict):
                                 if side in original.get("faces", {})}
         points = corners(element, geometry_app)
         planar = any(abs(float(element["to"][a]) - float(element["from"][a])) < 1e-8 for a in range(3))
+        low, high = points.min(axis=0), points.max(axis=0)
+        if clip_x is not None:
+            low, high = low.copy(), high.copy()
+            low[0], high[0] = max(low[0], clip_x[0]), min(high[0], clip_x[1])
+            if high[0] < low[0]:
+                continue
         def world_points(value, pivot=None, angle=0):
             value = np.asarray(value, float)
             if pivot is not None:
@@ -255,8 +271,9 @@ def authored_polys(app: dict):
         if local_gate:
             # The two halves have independent hinges; use their transformed
             # element AABBs for collision instead of one giant closed-gate box.
+            clip_low, clip_high = low.copy(), high.copy()
             for high_side, pivot, angle in ((False, np.array([-1., 0., .5]), -90), (True, np.array([2., 0., .5]), 90)):
-                low, high = points.min(axis=0), points.max(axis=0)
+                low, high = clip_low.copy(), clip_high.copy()
                 if high_side: low[0] = max(low[0], .5)
                 else: high[0] = min(high[0], .5)
                 if low[0] <= high[0] + 1e-8:
@@ -264,11 +281,21 @@ def authored_polys(app: dict):
                     moved = world_points(cuboid, pivot, angle)
                     boxes.append((moved.min(axis=0), moved.max(axis=0), planar))
         else:
-            moved = world_points(points)
+            cuboid = np.array(list(itertools.product(*zip(low, high)))) if clip_x is not None else points
+            moved = world_points(cuboid)
             boxes.append((moved.min(axis=0), moved.max(axis=0), planar))
         for side, face in element.get("faces", {}).items():
             texture = texname(md, face["texture"])
             result.append(polygon(points[FACE_INDEX[side]], face_uv(face, side, element, app), texture))
+    if clip_x is not None:
+        clipped = []
+        for poly in result:
+            poly = clip(poly, 0, clip_x[0], True)[0]
+            if poly is not None:
+                poly = clip(poly, 0, clip_x[1], False)[0]
+            if poly is not None:
+                clipped.append(poly)
+        result = clipped
     if local_gate:
         opened = []
         for poly in result:
@@ -345,6 +372,33 @@ def floor_owned_boxes(boxes, semantic):
     return result
 
 
+def owned_boxes(boxes, ownership_bounds=None):
+    """Clamp authored ownership AABBs without changing their rendered faces."""
+    if ownership_bounds is None:
+        return boxes
+    if (not isinstance(ownership_bounds, list) or len(ownership_bounds) != 2
+            or not all(isinstance(point, list) and len(point) == 3 for point in ownership_bounds)
+            or not all(isinstance(value, (int, float)) and np.isfinite(value)
+                       for point in ownership_bounds for value in point)):
+        raise ValueError("ownership_bounds must be two finite three-dimensional points")
+    minimum, maximum = (np.asarray(point, dtype=float) for point in ownership_bounds)
+    if np.any(maximum <= minimum):
+        raise ValueError("ownership_bounds must be strictly ascending")
+    result = []
+    for low, high, planar in boxes:
+        low, high = np.asarray(low, dtype=float), np.asarray(high, dtype=float)
+        clipped_low, clipped_high = np.maximum(low, minimum), np.minimum(high, maximum)
+        if np.any(clipped_high < clipped_low - 1e-8):
+            continue
+        # A solid that only touches a bound owns no volume. Retain a genuinely
+        # planar authored element on its original zero-width axis.
+        if any(clipped_high[axis] - clipped_low[axis] <= 1e-8 and high[axis] - low[axis] > 1e-8
+               for axis in range(3)):
+            continue
+        result.append((clipped_low, clipped_high, planar))
+    return result
+
+
 def geometry_for(polygons, boxes, semantic):
     """Derive ownership from element volumes, not render-face boundaries."""
     cells = defaultdict(lambda: {"outline": [], "collision": []})
@@ -378,7 +432,7 @@ def geometry_for(polygons, boxes, semantic):
             # Planar decorative artwork and tree foliage must never turn into a
             # full invisible wall.  A tree's authored non-planar stone base is
             # still solid, unlike soft bushes/plants.
-            if not soft and not (planar and semantic in {"ornament", "tree"}):
+            if not soft and not (planar and semantic in {"ornament", "tree", "column", "trim", "roof"}):
                 entry["collision"].append(box)
     output = {}
     for cell, item in cells.items():
@@ -436,14 +490,23 @@ def source_rule(source_id, source_state, target_id, target_state, members, v2):
     return rule
 
 
-def make_definition(ident, semantic, behavior, properties, models, default, polygons_by_mesh, luminance=None, connection_family=None):
+def make_definition(ident, semantic, behavior, properties, models, default, polygons_by_mesh, luminance=None,
+                    connection_family=None, placement_properties=None):
     states = {state: [0, 0, int((luminance or {}).get(state, 0))] for state in models}
     return {"id": ident, "source": "minecraft:stone", "layer": layer(next(iter(polygons_by_mesh.values()), [])),
             "kind": "generic", "offset": "none", "hardness": 1.5, "resistance": 6, "slipperiness": .6,
             "velocity": 1, "jump": 1, "extra_facing": "facing" in properties, "custom_geometry": True, "full_cube": False,
             "emissive": False, "animated": False, "orphan": False, "creative": True, "logical": True, "behavior": behavior,
             "semantic": semantic, "properties": properties, "default": default, "states": states, "models": models,
-            **({"connection_family": connection_family} if connection_family else {})}
+            **({"connection_family": connection_family} if connection_family else {}),
+            **({"placement_properties": placement_properties} if placement_properties else {})}
+
+
+def require_curated_rules(curation, rules):
+    emitted = {rule['target']['id'] for rule in rules}
+    missing = sorted(item['id'] for item in curation if item['id'] not in emitted)
+    if missing:
+        raise ValueError('Curated families without migration rules: ' + ', '.join(missing))
 
 
 def curated_objects(legacy, v2):
@@ -461,7 +524,8 @@ def curated_objects(legacy, v2):
             polys, boxes = object_polys(row["apps"])
             mesh = mesh_id(item["id"], state, polys)
             meshes[mesh] = {"polygons": polys}; polygons[mesh] = polys; models[state] = mesh
-            geometry.setdefault(item["id"], {"states": {}})["states"][state] = geometry_for(polys, boxes, item["semantic"])
+            geometry.setdefault(item["id"], {"states": {}})["states"][state] = geometry_for(
+                polys, owned_boxes(boxes, item.get("ownership_bounds")), item["semantic"])
             for source in row.get("sources", []):
                 block = blocks.get(source["id"])
                 if not block:
@@ -481,23 +545,29 @@ def curated_objects(legacy, v2):
                             complete = False; break
                         members.append({"id": member["id"], "properties": exact[0], "offset": member.get("offset", [0, 0, 0])})
                     if complete:
-                        rules.append(source_rule(source["id"], source_state, item["id"], row["properties"], members, v2))
+                        rule = source_rule(source["id"], source_state, item["id"], row["properties"], members, v2)
+                        if row.get("supersedes_targets"):
+                            rule["supersedes_targets"] = row["supersedes_targets"]
+                        rules.append(rule)
                         covered.add((source["id"], key(source_state)))
                         luminance[state] = max(luminance[state], int(block["states"].get(key(source_state), [0, 0, 0])[2]))
         result.append(make_definition(item["id"], item["semantic"], item["behavior"], properties, models,
-                                      state_rows[0]["properties"], polygons, luminance, item.get("connection_family")))
+                                      item.get("default", state_rows[0]["properties"]), polygons, luminance,
+                                      item.get("connection_family"), item.get("placement_properties")))
+        if item.get("attachment_item"):
+            result[-1]["attachment_item"] = item["attachment_item"]
         names[item["id"]] = item.get("name", item["id"])
+    require_curated_rules(curation, rules)
     return result, meshes, geometry, rules, names, covered
 
 
-def auto_objects(legacy, v2, occupied, covered):
+def auto_objects(legacy, v2, occupied, covered, categories=AUTO_CATEGORIES):
     catalog, overrides = semantic_catalog()
     records, blocks = [], {block["id"]: block for block in legacy["blocks"]}
-    curated_ids = {source for source, _state in covered}
     for block in legacy["blocks"]:
         ident = block["id"]
         state_asset = ASSETS / "blockstates" / f"{ident}.json"
-        if ident in curated_ids or ident in TREE_PIECES or not state_asset.exists():
+        if ident in TREE_PIECES or not state_asset.exists():
             continue
         blockstate = read(state_asset)
         for state in source_states(block):
@@ -510,7 +580,7 @@ def auto_objects(legacy, v2, occupied, covered):
             source_model = app["model"].lower()
             evidence = overrides.get(app["model"], catalog.get(ident, {}))
             semantic = evidence.get("category", "")
-            if semantic not in AUTO_CATEGORIES:
+            if semantic not in categories:
                 continue
             if not proven_authored_artwork(app["model"], overrides):
                 continue
@@ -535,7 +605,7 @@ def auto_objects(legacy, v2, occupied, covered):
             mesh = mesh_id(ident, state, polys)
             meshes[mesh] = {"polygons": polys}; polygons[mesh] = polys; models[state] = mesh
             geometry.setdefault(ident, {"states": {}})["states"][state] = geometry_for(polys, boxes, semantic)
-        behavior = "ladder" if semantic == "ladder" else "lantern" if semantic == "lamp" else "static"
+        behavior = "ladder" if semantic == "ladder" else "lantern" if semantic == "lamp" else "bench" if semantic == "bench" else "static"
         properties = {"facing": list(FACING), **({"face": list(MOUNT_FACES.values())} if group["mount"] else {})}
         default = {"facing": "north", **({"face": "floor"} if group["mount"] else {})}
         result.append(make_definition(ident, semantic, behavior, properties, models, default, polygons))
@@ -566,7 +636,8 @@ def write_assets(blocks, meshes, names):
             dump(ASSETS / "models/block/logical" / f"{mesh}.json",
                  {"parent": "minecraft:block/block", "textures": {"particle": textures[0] if textures else "minecraft:block/stone",
                                                                     **{str(i): texture for i, texture in enumerate(textures)}}, "elements": []})
-        default_mesh = block["models"][key(block["default"])]
+        placement_state = {**block["default"], **block.get("placement_properties", {})}
+        default_mesh = block["models"][key(placement_state)]
         item = {"parent": "bloodborne_blocks:block/logical/" + default_mesh,
                 "display": {"gui": {"scale": [1, 1, 1], "translation": [0, 0, 0]}}}
         vertices = np.asarray([vertex[:3] for poly in meshes[default_mesh]["polygons"] for vertex in poly["vertices"]], float)
@@ -576,9 +647,14 @@ def write_assets(blocks, meshes, names):
                 scale = round(min(1.0, 1.35 / span), 5)
                 item["display"] = {"gui": {"scale": [scale, scale, scale], "translation": [0, 0, 0]}}
         dump(ASSETS / "models/item" / f"{ident}.json", item)
-        dump(RES / "data/bloodborne_blocks/loot_tables/blocks" / f"{ident}.json",
-             {"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "bloodborne_blocks:" + ident}],
-                                                        "conditions": [{"condition": "minecraft:survives_explosion"}]}]})
+        loot = {"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "bloodborne_blocks:" + ident}],
+                                                        "conditions": [{"condition": "minecraft:survives_explosion"}]}]}
+        if block.get("attachment_item"):
+            loot["pools"].append({"rolls": 1, "entries": [{"type": "minecraft:item", "name": "bloodborne_blocks:" + block["attachment_item"]}],
+                                  "conditions": [{"condition": "minecraft:survives_explosion"},
+                                                 {"condition": "minecraft:block_state_property", "block": "bloodborne_blocks:" + ident,
+                                                  "properties": {"lantern": "true"}}]})
+        dump(RES / "data/bloodborne_blocks/loot_tables/blocks" / f"{ident}.json", loot)
     for language in ("ru_ru", "en_us"):
         path = ASSETS / "lang" / f"{language}.json"
         data = read(path)
@@ -624,6 +700,29 @@ def safe_hidden_items(legacy, rules):
     return sorted(hidden)
 
 
+def compact_palette_classification(classification):
+    """Retain auditable outcomes without repeating every v2 component array."""
+    modules = {}
+    for ident, item in classification["modules"].items():
+        coverage = item["coverage"]
+        modules[ident] = {
+            "classification": item["classification"], "provenance": item["provenance"],
+            "replacement_logical_ids": item["replacement_logical_ids"],
+            "coverage": {"reachable": coverage["reachable"], "covered": coverage["covered"],
+                         "remaining": len(coverage["remaining"]), "uncovered_reason": coverage["uncovered_reason"]},
+            "safe_hidden": item["safe_hidden"],
+        }
+    return {"schemaVersion": classification["schemaVersion"], "modules": modules,
+            "legacy": classification["legacy"], "safe_hidden_ids": classification["safe_hidden_ids"]}
+
+
+def final_hidden_items(previous_hidden, classification, v2_definitions):
+    """Keep old proofs except where a creative module has a classifier veto."""
+    creative_modules = {block["id"] for block in v2_definitions["blocks"]
+                        if block.get("creative") is True and block["id"].startswith("m_")}
+    return sorted((set(previous_hidden) - creative_modules) | set(classification["safe_hidden_ids"]))
+
+
 def build():
     # Absence of source evidence must never silently shrink the checked-in
     # palette and delete its generated assets. Gradle uses committed output;
@@ -633,11 +732,22 @@ def build():
         raise ValueError("A valid original resource pack is required; use --original-pack PATH. No output was changed.")
     legacy = read(RES / "bloodborne_blocks/definitions.json")
     v2 = read(RES / "bloodborne_blocks/v2/migration.json")
-    occupied = {block["id"] for block in legacy["blocks"]} | {block["id"] for block in read(RES / "bloodborne_blocks/v2/definitions.json")["blocks"]}
+    v2_definitions = read(RES / "bloodborne_blocks/v2/definitions.json")
+    occupied = {block["id"] for block in legacy["blocks"]} | {block["id"] for block in v2_definitions["blocks"]}
     curated, meshes, geometry, rules, names, covered = curated_objects(legacy, v2)
     occupied.update(block["id"] for block in curated)
-    auto, auto_meshes, auto_geometry, auto_rules, auto_names = auto_objects(legacy, v2, occupied, covered)
-    blocks = curated + auto; meshes.update(auto_meshes); geometry.update(auto_geometry); rules.extend(auto_rules); names.update(auto_names)
+    # Retain the existing automatic groups first.  New categories must never
+    # take an old identifier through a same-stem collision or reorder old rules.
+    auto, auto_meshes, auto_geometry, auto_rules, auto_names = auto_objects(
+        legacy, v2, occupied, covered, PREVIOUS_AUTO_CATEGORIES)
+    occupied.update(block["id"] for block in auto)
+    extension, extension_meshes, extension_geometry, extension_rules, extension_names = auto_objects(
+        legacy, v2, occupied, covered, AUTO_CATEGORIES - PREVIOUS_AUTO_CATEGORIES)
+    blocks = curated + auto + extension
+    meshes.update(auto_meshes); meshes.update(extension_meshes)
+    geometry.update(auto_geometry); geometry.update(extension_geometry)
+    rules.extend(auto_rules); rules.extend(extension_rules)
+    names.update(auto_names); names.update(extension_names)
     # Profile dedup keeps large generated resources bounded while preserving state data.
     profiles = {}
     for block in geometry.values():
@@ -649,12 +759,20 @@ def build():
     dump(LOGICAL / "geometry.json", {"profiles": profiles, "blocks": geometry})
     dump_gzip(LOGICAL / "meshes.json.gz", meshes)
     dump(LOGICAL / "migration.json", {"schemaVersion": 1, "rules": rules})
-    hidden = safe_hidden_items(legacy, rules)
+    previous_hidden = safe_hidden_items(legacy, rules)
+    classification = classify_palette(legacy, v2_definitions, v2,
+                                      read(RES / "bloodborne_blocks/v2/sources.json"), {"rules": rules})
+    hidden = final_hidden_items(previous_hidden, classification, v2_definitions)
+    former_creative = {block["id"] for block in legacy["blocks"] + v2_definitions["blocks"]
+                       if block.get("creative") is True}
     dump(LOGICAL / "hidden-items.json", hidden)
+    dump(ROOT / "docs/logical-palette-classification-v3.json", compact_palette_classification(classification))
     removed = write_assets(blocks, meshes, names)
     report = {"schemaVersion": 1, "logicalObjects": len(blocks), "states": sum(len(block["states"]) for block in blocks),
-              "meshes": len(meshes), "migrationRules": len(rules), "curatedObjects": len(curated), "autoObjects": len(auto),
+              "meshes": len(meshes), "migrationRules": len(rules), "curatedObjects": len(curated), "autoObjects": len(auto) + len(extension),
               "hiddenLegacyItems": len([ident for ident in hidden if not ident.startswith("m_")]),
+              "hiddenCreativeItems": len(former_creative.intersection(hidden)),
+              "remainingLegacyCreativeItems": len(former_creative.difference(hidden)),
               "hiddenV2Items": len([ident for ident in hidden if ident.startswith("m_")]), "staleAssetsRemoved": removed}
     dump(ROOT / "docs/logical-generation-v3.json", report)
     return report

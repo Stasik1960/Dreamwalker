@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "build/logical-preview")
+    parser.add_argument("--ids", nargs="*", help="Optional logical IDs to inspect")
     args = parser.parse_args()
     resources = ROOT / "src/main/resources/bloodborne_blocks/logical"
     definitions = json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]
@@ -23,8 +24,11 @@ def main():
     font = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
     samples = []
     for definition in definitions:
+        if args.ids and definition['id'] not in args.ids:
+            continue
         states = definition["models"]
-        key = ",".join(f"{k}={v}" for k, v in sorted(definition["default"].items()))
+        placed = {**definition['default'], **definition.get('placement_properties', {})}
+        key = ",".join(f"{k}={v}" for k, v in sorted(placed.items()))
         samples.append((definition["id"], key, states[key]))
         for face in definition["properties"].get("face", []):
             if face == definition["default"].get("face"):
@@ -33,8 +37,12 @@ def main():
             key = ",".join(f"{k}={v}" for k, v in sorted(mounted.items()))
             samples.append((definition["id"], key, states[key]))
         if "open" in definition["properties"]:
-            opened = {**definition["default"], "open": "true"}
+            opened = {**placed, "open": "true"}
             key = ",".join(f"{k}={v}" for k, v in sorted(opened.items()))
+            samples.append((definition["id"], key, states[key]))
+        if definition.get("attachment_item"):
+            attached = {**placed, "lantern": "true"}
+            key = ",".join(f"{k}={v}" for k, v in sorted(attached.items()))
             samples.append((definition["id"], key, states[key]))
         if definition.get("behavior") == "connected":
             joined = {**definition["default"], "north": "true", "east": "true"}

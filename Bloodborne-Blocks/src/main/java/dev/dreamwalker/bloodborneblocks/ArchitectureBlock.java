@@ -98,7 +98,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(definition.extra_facing)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
   if(definition.logical)result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
-  return connections(result,ctx.getWorld(),ctx.getBlockPos());
+  return BloodborneBlocks.applyPlacementProperties(definition,connections(result,ctx.getWorld(),ctx.getBlockPos()));
  }
  /** Mount states reuse the same authored model; horizontal mounts point out from the clicked face. */
  static BlockState logicalMountPlacement(BlockState state,Direction side,Direction playerFacing){
@@ -116,6 +116,8 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  }
  private boolean logicalConnects(BlockState other,WorldAccess world,BlockPos pos,Direction side){
   if(other.getBlock() instanceof ArchitectureBlock block&&block.definition.logical&&Objects.equals(block.definition.connection_family,definition.connection_family))return true;
+  // Pavement follows adjacent pavement, not a wall placed beside its border.
+  if("floor".equals(definition.semantic))return false;
   return other.isSideSolidFullSquare(world,pos,side.getOpposite());
  }
  private BlockState connections(BlockState s,WorldAccess world,BlockPos pos){
@@ -202,6 +204,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  }
  static boolean canReplaceLogicalState(boolean oldCellsLoaded,boolean nextCellsLoaded,boolean nextCanOccupy){return oldCellsLoaded&&nextCellsLoaded&&nextCanOccupy;}
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
+  ActionResult attachment=LogicalAttachments.use(state,world,pos,player,hand);if(attachment!=null)return attachment;
   if(FunctionalFurniture.isBench(state))return FunctionalFurniture.sit(world,pos,state,player);
   boolean interactive=definition.logical?Set.of("door","gate","shutter").contains(definition.behavior):Set.of("door","trapdoor","gate","model_door").contains(definition.kind);
   if(!interactive||!state.contains(Properties.OPEN))return ActionResult.PASS;
@@ -236,6 +239,8 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(!(stack.getItem() instanceof ArchitectureBlockItem item)||!((ArchitectureBlock)item.getBlock()).definition.logical)return stack;
   NbtCompound properties=stack.getSubNbt("BlockStateTag");if(properties==null)return stack;
   for(String name:Set.of("facing","face","axis","open","waterlogged","north","east","south","west","up","down"))properties.remove(name);
+  Map<String,String> placementProperties=((ArchitectureBlock)item.getBlock()).definition.placement_properties;
+  if(placementProperties!=null)placementProperties.keySet().forEach(properties::remove);
   if(properties.isEmpty())stack.removeSubNbt("BlockStateTag");return stack;
  }
  @Override public FluidState getFluidState(BlockState state){return state.contains(Properties.WATERLOGGED)&&state.get(Properties.WATERLOGGED)?Fluids.WATER.getStill(false):Fluids.EMPTY.getDefaultState();}

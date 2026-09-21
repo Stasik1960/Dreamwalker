@@ -63,6 +63,15 @@ def effect_key(dim, source, touched, writes):
     return dim, frozenset(source), frozenset(touched), frozenset(writes.items())
 
 
+def explicitly_supersedes(large, small):
+    """Independent counterpart to the converter's narrow fallback rule."""
+    return (large["dimension"] == small["dimension"] and
+            small["rule"].target[0] in large["rule"].supersedes_targets and
+            small["rule"].target != large["rule"].target and
+            small["source"] < large["source"] and
+            small["touched"] <= large["touched"])
+
+
 def proved_helpers(before, dim, origin, root, rule, pieces, owned):
     """Adopt only helpers of matched roots inside their exact old footprints.
 
@@ -143,15 +152,40 @@ def independently_accepted_effects(before, rules, old_entities, owned):
                 valid = False
                 break
         if valid:
-            effects[effect_key(dim, source, touched, writes)] = {(dim, *point) for point in touched}
-    claimed = {}
-    conflicting = set()
-    for effect, points in effects.items():
-        for point in points:
-            previous = claimed.setdefault(point, effect)
-            if previous != effect:
-                conflicting.update((previous, effect))
-    return set(effects) - conflicting
+            key = effect_key(dim, source, touched, writes)
+            effects[key] = {"rule": rule, "dimension": dim, "source": source,
+                            "touched": touched, "key": key, "rejected": False,
+                            "superseded": False}
+    proposals = list(effects.values())
+    # Compare every pair: ordinary overlap is ambiguous, while a declared
+    # strict containment is merely eligible for later fallback suppression.
+    users = {}
+    for index, proposal in enumerate(proposals):
+        for point in proposal["touched"]:
+            users.setdefault((proposal["dimension"], point), []).append(index)
+    pairs = set()
+    rejected = set()
+    dominance = set()
+    for owners in users.values():
+        for left_index, left in enumerate(owners):
+            for right in owners[left_index + 1:]:
+                pair = (left, right) if left < right else (right, left)
+                if pair in pairs:
+                    continue
+                pairs.add(pair)
+                left_proposal, right_proposal = proposals[pair[0]], proposals[pair[1]]
+                if explicitly_supersedes(left_proposal, right_proposal):
+                    dominance.add(pair)
+                elif explicitly_supersedes(right_proposal, left_proposal):
+                    dominance.add((pair[1], pair[0]))
+                else:
+                    rejected.update(pair)
+    for index in rejected:
+        proposals[index]["rejected"] = True
+    for large, small in dominance:
+        if not proposals[large]["rejected"] and not proposals[small]["rejected"]:
+            proposals[small]["superseded"] = True
+    return {proposal["key"] for proposal in proposals if not proposal["rejected"] and not proposal["superseded"]}
 
 
 def validate_ledger(before, report, rules):

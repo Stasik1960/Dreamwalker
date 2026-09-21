@@ -55,11 +55,24 @@ def validate(resources=RES):
         actual = read(resources / 'assets/bloodborne_blocks/blockstates' / (ident + '.json'))
         assert set(actual.get('variants', {})) == expected, 'blockstate asset mismatch: ' + ident
         item = read(resources / 'assets/bloodborne_blocks/models/item' / (ident + '.json'))
-        assert item['parent'] == NS + 'block/logical/' + block['models'][key(block['default'])], 'item selects wrong mesh: ' + ident
+        placement = block.get('placement_properties', {})
+        assert all(name in block['properties'] and value in block['properties'][name]
+                   for name, value in placement.items()), 'invalid placement properties: ' + ident
+        item_state = {**block['default'], **placement}
+        assert item['parent'] == NS + 'block/logical/' + block['models'][key(item_state)], 'item selects wrong mesh: ' + ident
         assert 'gui' in item.get('display', {}), 'missing fitted inventory transform: ' + ident
         loot = read(resources / 'data/bloodborne_blocks/loot_tables/blocks' / (ident + '.json'))
         drops = [entry.get('name') for pool in loot['pools'] for entry in pool['entries']]
-        assert drops == [NS + ident], 'logical object must drop one own item: ' + ident
+        expected_drops = [NS + ident]
+        if block.get('attachment_item'):
+            attached = block['attachment_item']
+            assert attached in definitions and definitions[attached]['logical'], 'unknown attachment item'
+            assert block['placement_properties'].get('lantern') == 'false', 'attachment cannot be cloned by placement'
+            assert block['properties'].get('lantern') == ['false', 'true'], 'invalid attachment states'
+            expected_drops.append(NS + attached)
+            assert {'condition': 'minecraft:block_state_property', 'block': NS + ident,
+                    'properties': {'lantern': 'true'}} in loot['pools'][1]['conditions'], 'unconditional attachment drop'
+        assert drops == expected_drops, 'logical object must drop one own item and only its installed attachment: ' + ident
         for state in expected:
             mesh = block['models'][state]
             assert mesh in meshes, 'missing mesh ' + mesh
@@ -103,8 +116,17 @@ def validate(resources=RES):
             assert state in definition['states'], 'unknown migration state ' + ident + '[' + state + ']'
         source = (short(rule['source']['id']), key(rule['source']['properties']))
         target = (short(rule['target']['id']), key(rule['target']['properties']), tuple(rule.get('offset', (0, 0, 0))))
-        assert source not in rules or rules[source] == target, 'ambiguous source: ' + str(source)
-        rules[source] = target
+        for previous_target, previous_rule in rules.get(source, []):
+            if previous_target != target:
+                # Only explicit complete-member assemblies may override a
+                # fallback. World conversion separately proves all members,
+                # affected-cell containment and absence of competing winners.
+                def dominates(large, small):
+                    return bool(large.get('members')) and short(small['target']['id']) in large.get('supersedes_targets', [])
+                assert dominates(rule, previous_rule) or dominates(previous_rule, rule), 'ambiguous source: ' + str(source)
+        rules.setdefault(source, []).append((target, rule))
+        for superseded in rule.get('supersedes_targets', []):
+            assert superseded in definitions and definitions[superseded].get('logical'), 'unknown superseded target'
         assert short(rule['target']['id']).startswith('o_')
         assert len(rule.get('offset', [])) == 3
         components = rule.get('components')

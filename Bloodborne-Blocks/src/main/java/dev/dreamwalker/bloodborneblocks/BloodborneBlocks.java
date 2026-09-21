@@ -28,11 +28,13 @@ public final class BloodborneBlocks implements ModInitializer {
  public static Data DATA;
  public static final class Data {public List<Definition> blocks;public List<List<double[]>> shapes;public Map<String,String> emissive_textures;public Map<String,String> compat_layers;}
  public static final class Definition {
-  public String id,source,layer,kind,offset,behavior,connection_family;
+  public String id,source,layer,kind,offset,behavior,connection_family,attachment_item;
   public String semantic;
   public float hardness,resistance,slipperiness,velocity,jump;
   public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical;
   public Map<String,List<String>> properties;
+  /** State values forced only while a logical item is being placed. */
+  public Map<String,String> placement_properties;
   public Map<String,String> defaults;
   @com.google.gson.annotations.SerializedName("default") public Map<String,String> defaultProperties;
   public Map<String,int[]> states;
@@ -74,7 +76,12 @@ public final class BloodborneBlocks implements ModInitializer {
  static void prepareDefinition(Definition d){
   Identifier source=new Identifier(d.source);if(!Registries.BLOCK.containsId(source))throw new IllegalStateException("Missing source block "+source);d.sourceBlock=Registries.BLOCK.get(source);d.propertyObjects.clear();
   for(String name:d.properties.keySet()){
-   Property<?>p=d.sourceBlock.getStateManager().getProperty(name);
+   Property<?>p;
+   if(name.equals("embedded")||name.equals("lantern")){
+    List<String> values=d.properties.get(name);
+    if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
+    p=BooleanProperty.of(name);
+   }else p=d.sourceBlock.getStateManager().getProperty(name);
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
    if(p==null&&name.equals("open"))p=net.minecraft.state.property.Properties.OPEN;
@@ -84,8 +91,23 @@ public final class BloodborneBlocks implements ModInitializer {
    if(p==null)throw new IllegalStateException("Unknown property "+d.id+"."+name);
    d.propertyObjects.put(name,p);
   }
+  if(d.placement_properties!=null)for(var entry:d.placement_properties.entrySet()){
+   Property<?> property=d.propertyObjects.get(entry.getKey());
+   List<String> values=d.properties.get(entry.getKey());
+   if(!d.logical||property==null||entry.getValue()==null||values==null||!values.contains(entry.getValue())||property.parse(entry.getValue()).isEmpty())throw new IllegalStateException("Invalid placement property "+d.id+"."+entry.getKey()+"="+entry.getValue());
+  }
+ }
+ @SuppressWarnings({"rawtypes","unchecked"}) static BlockState applyPlacementProperties(Definition definition,BlockState state){
+  if(!definition.logical||definition.placement_properties==null)return state;
+  for(var entry:definition.placement_properties.entrySet())state=set(state,(Property)definition.propertyObjects.get(entry.getKey()),entry.getValue());
+  return state;
  }
  static boolean creativeVisible(Definition definition,Set<String> legacyCreative){return definition.logical||definition.modular&&definition.creative||legacyCreative.contains(definition.id);}
+ static ItemStack creativeStack(ArchitectureBlock block){
+  ItemStack stack=new ItemStack(block);
+  if(block.definition.logical&&block.definition.placement_properties!=null)block.definition.placement_properties.forEach(stack.getOrCreateSubNbt("BlockStateTag")::putString);
+  return stack;
+ }
  public void onInitialize(){
   DATA=loadDefinitions();
   GeometryRuntime.loadAndValidate(DATA);
@@ -97,10 +119,11 @@ public final class BloodborneBlocks implements ModInitializer {
    prepareDefinition(d);
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));BLOCKS.put(d.id,block);
   }
+  LogicalAttachments.validateDefinitions(DATA.blocks);
   LegacyItemSections.load();
   LogicalItemMigration.load();
   Set<String> legacyCreative=loadLegacyCreative();
-  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("stone_bricks"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition,legacyCreative)).filter(b->!PaletteAliases.hidden(b.definition.id)&&!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("stone_bricks"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition,legacyCreative)).filter(b->!PaletteAliases.hidden(b.definition.id)&&!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
   BloodborneCommands.register();
   System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" states="+BLOCKS.values().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }

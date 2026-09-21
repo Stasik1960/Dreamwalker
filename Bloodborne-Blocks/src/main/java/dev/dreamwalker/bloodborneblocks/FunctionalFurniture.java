@@ -58,7 +58,9 @@ public final class FunctionalFurniture {
  }
 
  static boolean isBench(BlockState state){
-  if(!(state.getBlock() instanceof ArchitectureBlock block)||!block.definition.id.equals(BENCH))return false;
+  if(!(state.getBlock() instanceof ArchitectureBlock block))return false;
+  if(block.definition.logical)return "bench".equals(block.definition.behavior)&&"bench".equals(block.definition.semantic);
+  if(!block.definition.id.equals(BENCH))return false;
   if(!state.contains(Properties.BLOCK_HALF)||state.get(Properties.BLOCK_HALF)!=BlockHalf.BOTTOM||!state.contains(Properties.STAIR_SHAPE))return false;
   StairShape shape=state.get(Properties.STAIR_SHAPE);return shape==StairShape.STRAIGHT||shape==StairShape.OUTER_LEFT||shape==StairShape.OUTER_RIGHT;
  }

@@ -11,6 +11,36 @@ dependencies {
 }
 tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8' }
 java { withSourcesJar() }
+sourceSets {
+ gametest {
+  compileClasspath += sourceSets.main.output
+  runtimeClasspath += sourceSets.main.output
+  compileClasspath += sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.runtimeClasspath
+ }
+}
+configurations {
+ gametestImplementation.extendsFrom implementation
+ gametestRuntimeOnly.extendsFrom runtimeOnly
+}
+loom {
+ mods {
+  bloodborne_blocks_gametest {
+   sourceSet sourceSets.gametest
+  }
+ }
+ runs {
+  gametest {
+   inherit server
+   name 'Logical GameTest Server'
+   source sourceSets.gametest
+   runDir 'build/gametest'
+   vmArg '-Xmx2G'
+   vmArg '-Dfabric-api.gametest'
+   vmArg "-Dfabric-api.gametest.report-file=${file('build/test-results/gametest/TEST-logical-gametest.xml').absolutePath}"
+  }
+ }
+}
 // Generated art is already shipped in the runtime JAR and in the repository.
 // Remapping hundreds of thousands of resource entries in a source archive adds
 // no source information and makes the normal build unnecessarily expensive.
@@ -49,5 +79,10 @@ tasks.register('logicalRegistryCheck', JavaExec) {
  args 'dev.dreamwalker.bloodborneblocks.LogicalRegistryChecks'
  javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
  maxHeapSize = '1G'
+}
+tasks.register('logicalGameTest') {
+ group = 'verification'
+ description = 'Runs server-side logical-object GameTests in build/gametest.'
+ dependsOn 'runGametest'
 }
 tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck' }

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_blocks_gametest",
+  "version": "1.0.0",
+  "name": "Bloodborne Blocks GameTests",
+  "environment": "server",
+  "entrypoints": {
+    "fabric-gametest": [
+      "dev.dreamwalker.bloodborneblocks.LogicalRuntimeGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "fabric-gametest-api-v1": "*"
+  }
+}

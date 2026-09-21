@@ -26,7 +26,7 @@ public final class LogicalObjectChecks {
   Set<String> ids=new HashSet<>(),meshKeys=new HashSet<>();
   for(BloodborneBlocks.Definition definition:logical){
    check(definition.id.startsWith("o_"),"logical ID: "+definition.id);
-   check(Set.of("static","connected","door","gate","shutter","ladder","lantern").contains(definition.behavior),"behavior: "+definition.id);
+   check(Set.of("static","connected","door","gate","shutter","ladder","lantern","bench").contains(definition.behavior),"behavior: "+definition.id);
    check(definition.properties!=null&&definition.defaultProperties!=null&&definition.states!=null&&definition.models!=null,"missing logical fields: "+definition.id);
    check(ids.add(definition.id),"duplicate logical ID: "+definition.id);
    for(String key:definition.states.keySet()){String mesh=definition.models.get(key);check(mesh!=null&&!mesh.isBlank(),"missing state mesh: "+definition.id+"["+key+"]");meshKeys.add(mesh);}
