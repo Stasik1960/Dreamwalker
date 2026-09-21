@@ -173,9 +173,13 @@ def load_kinds(resources: Path) -> dict[str, str]:
 
 
 def definition_hashes(resources: Path) -> dict[str, str | None]:
-    return {"legacy": hashlib.sha256((resources.parent / "definitions.json").read_bytes()).hexdigest() if (resources.parent / "definitions.json").is_file() else None,
+    result = {"legacy": hashlib.sha256((resources.parent / "definitions.json").read_bytes()).hexdigest() if (resources.parent / "definitions.json").is_file() else None,
             "logical": hashlib.sha256((resources / "definitions.json").read_bytes()).hexdigest() if (resources / "definitions.json").is_file() else None,
             "legacyGeometry": hashlib.sha256((resources.parent / "geometry.json").read_bytes()).hexdigest() if (resources.parent / "geometry.json").is_file() else None}
+    for name in ("contracts-v2.json", "transform-v2.json"):
+        if (resources / name).is_file():
+            result[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
+    return result
 
 
 def parse_geometry(resources: Path, defaults: dict[str, dict[str, str]]) -> dict[tuple[str, tuple[tuple[str, str], ...]], set[tuple[int, int, int]]]:
@@ -229,13 +233,27 @@ def vector(value: Any, label: str) -> tuple[int, int, int]:
     return tuple(value)  # type: ignore[return-value]
 
 
-def parse_rules(resources: Path) -> tuple[list[Rule], dict[str, dict[str, str]]]:
+def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule], dict[str, dict[str, str]]]:
+    if source_mode == "original-v2-poc":
+        from logical_contract_v2 import direct_rules
+        return direct_rules(resources)
+    if source_mode != "legacy":
+        raise ValueError("unknown source mode")
     migration = json.loads((resources / "migration.json").read_text(encoding="utf-8"))
     if migration.get("schemaVersion") != 1 or not isinstance(migration.get("rules"), list):
         raise ValueError("logical/migration.json must be schemaVersion 1 with a rules array")
     defaults = load_defaults(resources)
     kinds = load_kinds(resources)
     geometry = parse_geometry(resources, defaults)
+    # Only the five opt-in v2 families override target occupation. Historical
+    # source geometry stays unchanged, so only owned old helpers are consumed.
+    if (resources / "contracts-v2.json").is_file():
+        from logical_contract_v2 import load_contracts
+        contracts, _ = load_contracts(resources)
+        for family in contracts["families"]:
+            for key, state in family["states"].items():
+                target = make_state({"id": family["id"], "properties": dict(p.split("=", 1) for p in key.split(",") if p)}, defaults)
+                geometry[target] = {tuple(c) for c in state["interaction_footprint"]["cells"]}
     legacy_geometry = parse_geometry(resources.parent, defaults) if (resources.parent / "geometry.json").is_file() else {}
     def legacy_shape(state: tuple[str, tuple[tuple[str, str], ...]]) -> frozenset[tuple[int, int, int]]:
         shape = set(legacy_geometry.get(state, ()))
@@ -801,7 +819,7 @@ def write_report(report_path: Path, report: dict[str, Any]) -> None:
 
 def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             report_path: Path | None = None, dry_run: bool = False, progress: bool = False,
-            report_root: Path | None = None) -> dict[str, Any]:
+            report_root: Path | None = None, source_mode: str = "legacy") -> dict[str, Any]:
     def status(message: str) -> None:
         if progress:
             print(f"logical-world: {message}", file=sys.stderr, flush=True)
@@ -814,7 +832,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
     report_path = (report_path or default_report_path(output)).resolve()
     report_root = (report_root or (TOOLS.parent / "build")).resolve()
     validate_paths(source, output, resources, report_path, report_root)
-    rules, defaults = parse_rules(resources)
+    rules, defaults = parse_rules(resources, source_mode)
     definitions = definition_hashes(resources)
     status(f"rules parsed: rules={len(rules)}")
     with tempfile.TemporaryDirectory(prefix="logical-world-", dir=str(output.parent)) as temporary:
@@ -830,7 +848,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         status(f"candidates resolved: accepted={sum(item.reason is None for item in items)}, rejected={sum(item.reason is not None for item in items)}, unresolvedV2={len(unresolved)}")
         ledger = apply(world, items)
         report = {
-            "format": "bloodborne-logical-world-conversion-v1", "dryRun": dry_run,
+            "format": "bloodborne-logical-world-conversion-v1", "dryRun": dry_run, "sourceMode": source_mode,
             "source": {"path": str(source), "kind": source_kind, "hashes": source_hashes},
             "resources": {"path": str(resources), "migrationSha256": hashlib.sha256((resources / "migration.json").read_bytes()).hexdigest(),
                           "geometrySha256": hashlib.sha256((resources / "geometry.json").read_bytes()).hexdigest(), "definitionsSha256": definitions},
@@ -862,8 +880,10 @@ def main() -> None:
     parser.add_argument("--report-root", type=Path, help="permitted root for --report (defaults to this project's build directory)")
     parser.add_argument("--dry-run", action="store_true", help="scan and report without creating output")
     parser.add_argument("--progress", action="store_true", help="write conversion phases and counts to stderr")
+    parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc"), default="legacy",
+                        help="original-v2-poc matches only explicit raw vanilla patterns of the five schema-v2 families")
     args = parser.parse_args()
-    report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root)
+    report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode)
     print(json.dumps(report["counts"], ensure_ascii=False))
 
 

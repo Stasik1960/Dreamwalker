@@ -1,0 +1,5145 @@
+{
+  "format": "bloodborne-source-assemblies-v1",
+  "source": {
+    "path": "reference-inputs/source-world.zip",
+    "sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51",
+    "sha256_after": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51"
+  },
+  "sourcepack_sha256": "0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308",
+  "scan_scope": {
+    "regions": [
+      "ether/dimensions/eh_s2/yharnam/region/r.-1.-1.mca"
+    ],
+    "selection_note": "Bounded first pass in one Yharnam region. Carrier IDs are search seeds; connectivity in the original world proposes boundaries, not model names or F families. Adjacent independent props may still be grouped; user can split or mark context.",
+    "vertical_gap_carriers": [
+      "minecraft:oak_log",
+      "minecraft:birch_log",
+      "minecraft:spruce_log",
+      "minecraft:jungle_log",
+      "minecraft:acacia_log",
+      "minecraft:dark_oak_log"
+    ],
+    "carrier_groups": [
+      {
+        "label": "Дерево / растительность",
+        "ids": [
+          "minecraft:oak_log",
+          "minecraft:birch_log",
+          "minecraft:spruce_log",
+          "minecraft:jungle_log",
+          "minecraft:acacia_log",
+          "minecraft:dark_oak_log",
+          "minecraft:light_blue_wool",
+          "minecraft:lime_wool",
+          "minecraft:pink_wool",
+          "minecraft:yellow_wool",
+          "minecraft:cyan_wool"
+        ]
+      },
+      {
+        "label": "Могила / мемориал",
+        "ids": [
+          "minecraft:smooth_quartz_stairs",
+          "minecraft:waxed_weathered_cut_copper_stairs",
+          "minecraft:dark_oak_button"
+        ]
+      },
+      {
+        "label": "Книги / багаж / ёмкости",
+        "ids": [
+          "minecraft:dead_horn_coral_fan",
+          "minecraft:dead_bubble_coral_fan",
+          "minecraft:dead_bubble_coral",
+          "minecraft:oxidized_cut_copper_stairs"
+        ]
+      },
+      {
+        "label": "Статуя / фонарь",
+        "ids": [
+          "minecraft:weathered_cut_copper_stairs",
+          "minecraft:waxed_cut_copper_stairs",
+          "minecraft:dead_brain_coral_wall_fan",
+          "minecraft:emerald_ore",
+          "minecraft:flower_pot",
+          "minecraft:oak_button"
+        ]
+      }
+    ]
+  },
+  "rejected_clusters": {
+    "cell_count": 934,
+    "extent": 1,
+    "scope_edge": 2
+  },
+  "candidate_policy": "Proposals only. No automatic migration, no inherited family boundaries, no semantic approval.",
+  "candidates": [
+    {
+      "spatial_fingerprint": "e619fa11f5dac60a499d1472410c074f78ebde2580ac7b06899d179fed7c56bb",
+      "hypothesis": "Дерево / растительность: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -284,
+          46,
+          -68
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:oak_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/oak_log",
+              "y": 180,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:jungle_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/jungle_log",
+              "y": 180,
+              "offset": [
+                1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            0,
+            3,
+            0
+          ],
+          "source": {
+            "id": "minecraft:spruce_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/spruce_log",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            1,
+            3,
+            1
+          ],
+          "source": {
+            "id": "minecraft:acacia_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/acacia_log",
+              "y": 180,
+              "offset": [
+                1,
+                3,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            0,
+            6,
+            0
+          ],
+          "source": {
+            "id": "minecraft:birch_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/birch_log",
+              "y": 180,
+              "preview_alternatives": 2,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            1,
+            6,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/dark_oak_log",
+              "y": 180,
+              "offset": [
+                1,
+                6,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [],
+      "similar_count": 3,
+      "rotations": [
+        0,
+        90,
+        270
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -284,
+            46,
+            -68
+          ]
+        },
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -294,
+            48,
+            -51
+          ]
+        },
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -242,
+            89,
+            -273
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C001",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "dccaf8ac00249fbe07c8cd7f8f4bc9576517937c3c9478ec8b21e527a7534efe",
+      "hypothesis": "Могила / мемориал: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -283,
+          43,
+          -76
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "true"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/tombstone_gathered_4",
+              "y": 90,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_button",
+            "properties": {
+              "face": "floor",
+              "facing": "south",
+              "powered": "true"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/tombstone_gathered_6",
+              "y": 180,
+              "offset": [
+                1,
+                0,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:pink_stained_glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "false",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:light_gray_stained_glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "true",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "false",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "true",
+              "south": "false",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:pink_stained_glass_pane",
+            "properties": {
+              "east": "true",
+              "north": "false",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:light_gray_stained_glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "true",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "true",
+              "north": "false",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "true",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -283,
+            43,
+            -76
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C002",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "d59f9e633fee34cdb92be664bede485efe0d893bca951b64fe432ed8052d2712",
+      "hypothesis": "Книги / багаж / ёмкости: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -432,
+          60,
+          -210
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/barrel_0",
+              "weight": 500,
+              "preview_alternatives": 6,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            -4,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/books_0",
+              "weight": 100,
+              "preview_alternatives": 2,
+              "offset": [
+                -4,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            -2,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/barrel_0",
+              "weight": 500,
+              "preview_alternatives": 6,
+              "offset": [
+                -2,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            -1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                -1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            -3,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/cases_0",
+              "y": 0,
+              "offset": [
+                -3,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            -1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/barrel_0",
+              "weight": 500,
+              "preview_alternatives": 6,
+              "offset": [
+                -1,
+                0,
+                2
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -5,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -5,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -5,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -5,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -5,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -5,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -4,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -4,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -4,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -4,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -4,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -4,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -4,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:spruce_button",
+            "properties": {
+              "face": "floor",
+              "facing": "south",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -2,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:blackstone_wall",
+            "properties": {
+              "east": "none",
+              "north": "none",
+              "south": "none",
+              "up": "true",
+              "waterlogged": "false",
+              "west": "none"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:acacia_fence",
+            "properties": {
+              "east": "false",
+              "north": "false",
+              "south": "false",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:deepslate_gold_ore",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:bricks",
+            "properties": {}
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -432,
+            60,
+            -210
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C003",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "e846e2161123d75f425898e1848ef5bbd8e656f47ded8f4af7bc3c886174ac14",
+      "hypothesis": "Статуя / фонарь: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -301,
+          56,
+          -207
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/books_0",
+              "weight": 100,
+              "preview_alternatives": 2,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            -1,
+            1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_4",
+              "y": 180,
+              "offset": [
+                -1,
+                1,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            0,
+            1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue",
+              "y": 180,
+              "offset": [
+                0,
+                1,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            -1,
+            1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_3",
+              "y": 180,
+              "offset": [
+                -1,
+                1,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -2,
+            -1,
+            -2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -2,
+            0,
+            -2
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -2,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -2,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            -2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -301,
+            56,
+            -207
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C004",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "848b5764fe552148b01e05649b4051598ada759f6b47d48a2204df4c329dcd15",
+      "hypothesis": "Дерево / растительность: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -169,
+          55,
+          -40
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:oak_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/oak_log",
+              "y": 180,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            0,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:jungle_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/jungle_log",
+              "y": 180,
+              "offset": [
+                0,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            0,
+            3,
+            0
+          ],
+          "source": {
+            "id": "minecraft:spruce_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/spruce_log",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            0,
+            3,
+            1
+          ],
+          "source": {
+            "id": "minecraft:acacia_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/acacia_log",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            0,
+            6,
+            0
+          ],
+          "source": {
+            "id": "minecraft:birch_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/birch_log",
+              "y": 180,
+              "preview_alternatives": 2,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            0,
+            6,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/dark_oak_log",
+              "y": 180,
+              "offset": [
+                0,
+                6,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -169,
+            55,
+            -40
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C005",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "e11fc02134467827265897a2bd3af6f032a5e6521d04d555ba075674623bb506",
+      "hypothesis": "Могила / мемориал: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -274,
+          42,
+          -75
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_button",
+            "properties": {
+              "face": "wall",
+              "facing": "west",
+              "powered": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/acacia_button",
+              "y": 270,
+              "x": 90,
+              "uvlock": true,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "true"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/tombstone_gathered_4",
+              "y": 90,
+              "offset": [
+                1,
+                1,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:activator_rail",
+            "properties": {
+              "powered": "false",
+              "shape": "north_south",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:activator_rail",
+            "properties": {
+              "powered": "false",
+              "shape": "north_south",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            2,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:polished_diorite_slab",
+            "properties": {
+              "type": "bottom",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:polished_diorite_slab",
+            "properties": {
+              "type": "bottom",
+              "waterlogged": "false"
+            }
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -274,
+            42,
+            -75
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C006",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "b028aa838171c1a02efab6d6c396922add350daa4b5158ad821fb451b03992b4",
+      "hypothesis": "Книги / багаж / ёмкости: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -302,
+          56,
+          -196
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            2,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/books_0",
+              "weight": 100,
+              "preview_alternatives": 2,
+              "offset": [
+                2,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/cases_0",
+              "y": 90,
+              "offset": [
+                1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                1,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            2,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/books_0",
+              "weight": 100,
+              "preview_alternatives": 2,
+              "offset": [
+                2,
+                0,
+                2
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:iron_bars",
+            "properties": {
+              "east": "true",
+              "north": "false",
+              "south": "false",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "true",
+              "north": "false",
+              "south": "false",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_brain_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:iron_bars",
+            "properties": {
+              "east": "false",
+              "north": "false",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:iron_bars",
+            "properties": {
+              "east": "false",
+              "north": "true",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "false",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "true"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:glass_pane",
+            "properties": {
+              "east": "false",
+              "north": "true",
+              "south": "true",
+              "waterlogged": "false",
+              "west": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -302,
+            56,
+            -196
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C007",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "48cc0df58170269047bd816e5279658a709a6b94fde8a31308cfcefbb731878d",
+      "hypothesis": "Статуя / фонарь: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -421,
+          84,
+          -91
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_4",
+              "y": 90,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            -1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_3",
+              "y": 90,
+              "offset": [
+                -1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            -1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_4",
+              "y": 90,
+              "offset": [
+                -1,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            0,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "outer_left",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_5",
+              "y": 90,
+              "offset": [
+                0,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            -1,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_3",
+              "y": 180,
+              "offset": [
+                -1,
+                0,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            -2,
+            1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue",
+              "y": 180,
+              "offset": [
+                -2,
+                1,
+                4
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -3,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            -1,
+            5
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            4
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            0,
+            5
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            1,
+            5
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -3,
+            2,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "west",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            2,
+            1
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "west",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            2,
+            3
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "west",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -3,
+            2,
+            5
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "west",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -2,
+            -1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:chiseled_deepslate",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:spruce_button",
+            "properties": {
+              "face": "floor",
+              "facing": "west",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:spruce_button",
+            "properties": {
+              "face": "floor",
+              "facing": "west",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -421,
+            84,
+            -91
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C008",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "8a6b6b20762f963560cc29ea2485bd2f0851aea05c46bb4bed2cb66a5ca689e5",
+      "hypothesis": "Дерево / растительность: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -323,
+          -19,
+          -81
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:oak_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/oak_log",
+              "y": 270,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:jungle_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/jungle_log",
+              "y": 270,
+              "offset": [
+                1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            0,
+            3,
+            0
+          ],
+          "source": {
+            "id": "minecraft:spruce_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/spruce_log",
+              "y": 270,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            1,
+            3,
+            1
+          ],
+          "source": {
+            "id": "minecraft:acacia_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/acacia_log",
+              "y": 270,
+              "offset": [
+                1,
+                3,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            0,
+            6,
+            0
+          ],
+          "source": {
+            "id": "minecraft:birch_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/birch_log",
+              "y": 270,
+              "preview_alternatives": 2,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            1,
+            6,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/dark_oak_log",
+              "y": 270,
+              "offset": [
+                1,
+                6,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -323,
+            -19,
+            -81
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C009",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "e7935aadc197ebd2a1eff4e5085824fb9adcfaef817667440a94efc7c1922e0c",
+      "hypothesis": "Книги / багаж / ёмкости: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -307,
+          56,
+          -223
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            2,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/books_0",
+              "weight": 100,
+              "preview_alternatives": 2,
+              "offset": [
+                2,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
+              "facing": "west",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/cases_0",
+              "y": 90,
+              "offset": [
+                1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            2,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_bubble_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/bag_0",
+              "weight": 100,
+              "preview_alternatives": 4,
+              "offset": [
+                2,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            3,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_horn_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/addon/books_0",
+              "weight": 100,
+              "preview_alternatives": 2,
+              "offset": [
+                3,
+                0,
+                2
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            -1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            -1,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:dripstone_block",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            -1,
+            1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            0,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            4,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:polished_andesite",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            4,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            4,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            4,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            4,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:stone_bricks",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            4,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:activator_rail",
+            "properties": {
+              "powered": "false",
+              "shape": "north_south",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            4,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:rail",
+            "properties": {
+              "shape": "north_east",
+              "waterlogged": "false"
+            }
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -307,
+            56,
+            -223
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C010",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "698176a7344404a261768c7e2459dd4061d7007af7395e160fdb3d4fff6d086d",
+      "hypothesis": "Статуя / фонарь: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -407,
+          84,
+          -91
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_4",
+              "y": 90,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_3",
+              "y": 90,
+              "offset": [
+                1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            0,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "outer_right",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_5",
+              "y": 0,
+              "offset": [
+                0,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            1,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "south",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_4",
+              "y": 90,
+              "offset": [
+                1,
+                0,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            1,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:waxed_cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue_3",
+              "y": 0,
+              "offset": [
+                1,
+                0,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            2,
+            1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "bottom",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/hold/statue",
+              "y": 0,
+              "offset": [
+                2,
+                1,
+                4
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [
+        {
+          "relative": [
+            0,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:spruce_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:spruce_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            0,
+            -1,
+            5
+          ],
+          "source": {
+            "id": "minecraft:spruce_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            1,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:dead_fire_coral_fan",
+            "properties": {
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            2,
+            -1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:chiseled_deepslate",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            -1,
+            5
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            2
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            3
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            4
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            0,
+            5
+          ],
+          "source": {
+            "id": "minecraft:cut_copper_stairs",
+            "properties": {
+              "facing": "east",
+              "half": "top",
+              "shape": "straight",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            0
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            1
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            2
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            3
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            4
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            1,
+            5
+          ],
+          "source": {
+            "id": "minecraft:barrier",
+            "properties": {}
+          }
+        },
+        {
+          "relative": [
+            3,
+            2,
+            -1
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            2,
+            1
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            2,
+            3
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        },
+        {
+          "relative": [
+            3,
+            2,
+            5
+          ],
+          "source": {
+            "id": "minecraft:acacia_button",
+            "properties": {
+              "face": "floor",
+              "facing": "east",
+              "powered": "false"
+            }
+          }
+        }
+      ],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -407,
+            84,
+            -91
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C011",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    },
+    {
+      "spatial_fingerprint": "8dcba3044312ac3fea1b26cdcc73abba2b40b44a8eb3e9c165ce875473d183d3",
+      "hypothesis": "Дерево / растительность: конечная группа соседних source carriers; граница требует ручной проверки",
+      "boundary_method": "26-neighbor source connectivity; listed tree carriers also use horizontal radius 1 / vertical gap <=6. Excludes masonry. No F-family input. Hypothesis only.",
+      "example": {
+        "dimension": "eh_s2:yharnam",
+        "anchor": [
+          -457,
+          60,
+          -227
+        ]
+      },
+      "components": [
+        {
+          "number": 1,
+          "relative": [
+            0,
+            0,
+            0
+          ],
+          "source": {
+            "id": "minecraft:oak_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/oak_log",
+              "y": 180,
+              "offset": [
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "relative": [
+            -1,
+            0,
+            1
+          ],
+          "source": {
+            "id": "minecraft:jungle_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/jungle_log",
+              "y": 270,
+              "offset": [
+                -1,
+                0,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "relative": [
+            0,
+            3,
+            0
+          ],
+          "source": {
+            "id": "minecraft:spruce_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/spruce_log",
+              "y": 180,
+              "offset": [
+                0,
+                3,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "relative": [
+            -1,
+            3,
+            1
+          ],
+          "source": {
+            "id": "minecraft:acacia_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/acacia_log",
+              "y": 270,
+              "offset": [
+                -1,
+                3,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "relative": [
+            0,
+            6,
+            0
+          ],
+          "source": {
+            "id": "minecraft:birch_log",
+            "properties": {
+              "axis": "x"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/birch_log",
+              "y": 180,
+              "preview_alternatives": 2,
+              "offset": [
+                0,
+                6,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "relative": [
+            -1,
+            6,
+            1
+          ],
+          "source": {
+            "id": "minecraft:dark_oak_log",
+            "properties": {
+              "axis": "z"
+            }
+          },
+          "apps": [
+            {
+              "model": "minecraft:block/dark_oak_log",
+              "y": 270,
+              "offset": [
+                -1,
+                6,
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "context": [],
+      "similar_count": 1,
+      "rotations": [
+        0
+      ],
+      "count_scope": "Only explicitly listed source terrain regions; exact complete carrier cluster modulo Y rotation, not whole-world occurrence count",
+      "examples": [
+        {
+          "dimension": "eh_s2:yharnam",
+          "anchor": [
+            -457,
+            60,
+            -227
+          ]
+        }
+      ],
+      "mirror_policy": "not normalized",
+      "confidence": "PROVISIONAL_SPATIAL_CANDIDATE",
+      "context_policy": "Separate one-cell shell around carrier bounds; never automatically part of candidate",
+      "review_id": "C012",
+      "status": "UNREVIEWED",
+      "user_decision": null
+    }
+  ]
+}

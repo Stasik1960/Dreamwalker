@@ -80,9 +80,27 @@ tasks.register('logicalRegistryCheck', JavaExec) {
  javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
  maxHeapSize = '1G'
 }
+tasks.register('logicalContractV2Check', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
+ mainClass = 'dev.dreamwalker.bloodborneblocks.BootstrapCheckLauncher'
+ args 'dev.dreamwalker.bloodborneblocks.LogicalContractV2Checks'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+ maxHeapSize = '1G'
+}
 tasks.register('logicalGameTest') {
  group = 'verification'
  description = 'Runs server-side logical-object GameTests in build/gametest.'
  dependsOn 'runGametest'
 }
-tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck' }
+tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck', 'logicalContractV2Check' }
+
+// Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
+// These tests need numpy (same dependency as the existing world converter).
+['test_region_padding', 'test_contract_v2', 'test_logical_world'].each { testName ->
+ tasks.register(testName, Exec) {
+  group = 'verification'
+  commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${testName}.py"
+ }
+ tasks.named('check') { dependsOn testName }
+}

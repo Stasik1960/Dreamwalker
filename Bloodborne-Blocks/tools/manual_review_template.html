@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bloodborne · ручная курация · партия <!--BATCH--></title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,sans-serif;background:#171a20;color:#eef0f5}body{max-width:1120px;margin:0 auto;padding:24px}h1,h2{line-height:1.2}a{color:#a7ceff}nav{display:flex;flex-wrap:wrap;gap:12px}header p{overflow-wrap:anywhere;color:#adb6c4}.family{background:#202530;border:1px solid #3e4859;border-radius:12px;padding:20px;margin:28px 0}.family img{max-width:100%;height:auto;display:block;margin:16px auto}dl{display:grid;grid-template-columns:minmax(180px,1fr) 3fr;gap:6px 16px}dt{color:#a8b3c3}dd{margin:0;overflow-wrap:anywhere}details{margin:15px 0}summary{cursor:pointer;font-weight:600}table{border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}td,th{border:1px solid #475366;padding:7px;overflow-wrap:anywhere}th:first-child{width:35px}.context{font-size:11px}.member{background:#64532b}.air{background:#191c22;color:#7e899a}.environment{background:#343c49}.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;max-height:420px;overflow:auto}label{display:block;margin:12px 0}select,input,textarea,button{font:inherit;color:inherit;background:#151923;border:1px solid #63718a;border-radius:6px;padding:10px}input{width:min(650px,90%)}textarea{box-sizing:border-box;width:100%;min-height:180px}button{cursor:pointer;margin:8px 8px 8px 0}.notice{border-left:3px solid #daa64c;padding-left:16px}.review-help{padding:18px;background:#242b36}.family b{color:#e6c075}@media(max-width:650px){body{padding:12px}.family{padding:12px}dl{grid-template-columns:1fr}dd{margin-bottom:10px}.context-grid{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Ручная курация · партия <!--BATCH--></h1>
+<p><!--COUNT--> кандидатов. Это каталог существующей реализации, не утверждение границ объектов.</p>
+<p class="notice">Никакие решения на странице не меняют мод или карту. Поля — черновик для копирования в чат. Ваши подтверждённые решения сохраняются отдельно в versioned manifest и не переопределяются генератором.</p>
+<p><a href="<!--SHEET-->" target="_blank">Открыть contact sheet PNG</a> · <a href="#answers">Формат ответа</a></p>
+<nav><!--LINKS--></nav>
+<p>Дополнительные эталоны POC вне этой партии: <!--EXAMPLES--></p>
+<p>Изображения — offline textured previews, не Minecraft screenshot. Масштаб компонентов в exploded view подобран отдельно для читаемости. Количество source-world совпадений относится только к известному шаблону; candidate/ambiguous не означает подтверждённое число объектов.</p>
+<!--CARDS-->
+<section id="answers" class="review-help"><h2>Ваши решения</h2>
+<p><code>F001 OK</code><br><code>F002 MERGE: F003+F004</code><br><code>F005 SPLIT: 1+2 / 3</code><br><code>F006 CONNECTED</code><br><code>F007 STATE_VARIANTS: F008</code><br><code>F009 NOT_OBJECT</code><br><code>F010 DELETE</code><br><code>F011 NEEDS_REVIEW: пояснение</code></p>
+<p>Номера F в примерах условные. SPLIT использует номера моделей на вашей карточке; разделите все номера без повторов. Если одна модель содержит несколько смысловых частей, укажите NEEDS_REVIEW и опишите их — автоматического разрезания нет.</p>
+<button id="collect" type="button">Собрать выбранные решения</button><button id="copy" type="button">Скопировать</button>
+<label for="result">Скопируйте этот текст в чат</label><textarea id="result"></textarea><p id="message" role="status"></p>
+</section>
+<script>
+const result=document.getElementById('result'),message=document.getElementById('message');
+document.getElementById('collect').addEventListener('click',()=>{result.value=Array.from(document.querySelectorAll('[data-review]')).filter(x=>x.value).map(x=>{const note=document.querySelector(`[data-detail="${x.dataset.review}"]`).value.trim();return `${x.dataset.review} ${x.value}${note?': '+note:''}`}).join('\n');message.textContent='Черновик собран. Решения ещё не записаны в manifest.'});
+document.getElementById('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(result.value);message.textContent='Скопировано — отправьте в чат.'}catch(e){result.focus();result.select();message.textContent='Выделено — нажмите Ctrl+C.'}});
+</script></body></html>

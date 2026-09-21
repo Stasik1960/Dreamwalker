@@ -318,12 +318,58 @@ class RegionFile:
 
     SECTOR = 4096
 
-    def __init__(self, data: bytes = b""):
-        if not data:
+    def __init__(self, data: bytes | None = None):
+        if data is None:
             data = bytes(self.SECTOR * 2)
-        if len(data) < self.SECTOR * 2 or len(data) % self.SECTOR:
-            raise NbtError("region size must be a sector-aligned Anvil file")
+        self._original = bytes(data)
+        self._original_size = len(data)
+        if len(data) < self.SECTOR * 2:
+            raise NbtError("region is shorter than its two-sector header")
+        # Region files written by a crashed/interrupted process can omit only
+        # the unused tail of their final sector.  Validate every referenced
+        # byte against the real EOF before supplying that tail in memory.
+        if len(data) % self.SECTOR:
+            padded_size = math.ceil(len(data) / self.SECTOR) * self.SECTOR
+            self._validate_locations(data, padded_size)
+            data = data + bytes(padded_size - len(data))
+        else:
+            self._validate_locations(data, len(data))
         self._data = bytearray(data)
+        self._dirty = False
+
+    @classmethod
+    def _validate_locations(cls, original: bytes, padded_size: int) -> None:
+        """Reject malformed Anvil location tables without trusting padding."""
+        if len(original) < cls.SECTOR * 2:
+            raise NbtError("region is shorter than its two-sector header")
+        allocated: list[tuple[int, int, int]] = []
+        for index in range(1024):
+            value = int.from_bytes(original[index * 4:index * 4 + 4], "big")
+            sector, sectors = value >> 8, value & 0xFF
+            if (sector == 0) != (sectors == 0):
+                raise NbtError("chunk location has an unpaired offset/count")
+            if not sector:
+                continue
+            if sector < 2:
+                raise NbtError("chunk location overlaps the region header")
+            start = sector * cls.SECTOR
+            end = start + sectors * cls.SECTOR
+            if end > padded_size:
+                raise NbtError("chunk allocation lies beyond region")
+            # Both the length/compression header and declared payload must be
+            # genuinely present, not merely covered by synthetic zero padding.
+            if start + 5 > len(original):
+                raise NbtError("truncated chunk payload header")
+            length = int.from_bytes(original[start:start + 4], "big")
+            if length < 1 or length + 4 > sectors * cls.SECTOR:
+                raise NbtError("invalid chunk length")
+            if start + 4 + length > len(original):
+                raise NbtError("truncated chunk payload")
+            allocated.append((start, end, index))
+        allocated.sort()
+        for (_, end, index), (next_start, _, next_index) in zip(allocated, allocated[1:]):
+            if end > next_start:
+                raise NbtError(f"chunk allocations overlap ({index} and {next_index})")
 
     @classmethod
     def open(cls, path: str | Path) -> "RegionFile":
@@ -344,10 +390,11 @@ class RegionFile:
         if not sector or not sectors:
             return None
         start = sector * self.SECTOR
-        if start + 5 > len(self._data):
+        limit = len(self._data) if self._dirty else self._original_size
+        if start + 5 > limit:
             raise NbtError("chunk location lies beyond region")
         length = int.from_bytes(self._data[start:start + 4], "big")
-        if length < 1 or length + 4 > sectors * self.SECTOR or start + 4 + length > len(self._data):
+        if length < 1 or length + 4 > sectors * self.SECTOR or start + 4 + length > limit:
             raise NbtError("invalid chunk length")
         timestamp = int.from_bytes(self._data[self.SECTOR + index * 4:self.SECTOR + index * 4 + 4], "big")
         return RegionChunk(local_x, local_z, timestamp, self._data[start + 4], bytes(self._data[start + 5:start + 4 + length]))
@@ -389,9 +436,11 @@ class RegionFile:
         if timestamp is not None:
             off = self.SECTOR + index * 4
             self._data[off:off + 4] = timestamp.to_bytes(4, "big", signed=False)
+        self._dirty = True
 
     def to_bytes(self) -> bytes:
-        return bytes(self._data)
+        # Avoid silently normalizing a read-only truncated input on a no-op.
+        return bytes(self._data) if self._dirty else self._original
 
     def save(self, path: str | Path) -> None:
         Path(path).write_bytes(self.to_bytes())

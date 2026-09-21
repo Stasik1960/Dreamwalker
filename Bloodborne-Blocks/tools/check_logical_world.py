@@ -293,9 +293,12 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
     for name, path in (("legacy", resources.parent / "definitions.json"), ("logical", resources / "definitions.json"),
                        ("legacyGeometry", resources.parent / "geometry.json")):
         definitions_hashes[name] = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+    for name in ("contracts-v2.json", "transform-v2.json"):
+        if (resources / name).is_file():
+            definitions_hashes[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
     if definitions_hashes != report.get("resources", {}).get("definitionsSha256"):
         raise AssertionError("resource definitions changed since conversion")
-    rules, defaults = parse_rules(resources)
+    rules, defaults = parse_rules(resources, report.get("sourceMode", "legacy"))
     source = source.resolve()
     declared = report.get("source", {})
     kind, hashes = declared.get("kind"), declared.get("hashes")

@@ -1,3 +1,91 @@
+# Manual Source Assembly Review — handoff
+
+Актуальный ограниченный checkpoint, 2026-09-21. **Не переделывать массово мод до
+ручной разметки. Не запускать полный discovery, world migration или section renderer.**
+Существующий пятисемейный POC сохранён; Catalog A/Fxxx не заменён Catalog B/Cxxx.
+
+- Catalog A: 256 предварительных logical families, стабильные Fxxx,
+  `docs/manual-families.json`. Первая партия 25 + 3 дополнительных POC-эталона:
+  [portable Catalog A](docs/manual-review/families/batch-01/index.html).
+- Catalog B: **12 Cxxx**, пространственные кандидаты непосредственно из source
+  blocks/states/XYZ, не из границ Fxxx. [Открыть первую партию](docs/manual-review/source-assemblies/batch-01/index.html)
+  или [contact sheet](docs/manual-review/source-assemblies/batch-01/batch-01-contact.png).
+- Правильный read-only мир: `reference-inputs/source-world.zip`, SHA-256
+  `4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51`.
+  Нужен `git lfs pull` при новом checkout. Не использовать исторические converted worlds.
+- Read-only pack: `reference-inputs/source-resource-pack.zip`, SHA-256
+  `0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308`.
+- Manifest B: [docs/manual-source-assemblies.json](docs/manual-source-assemblies.json).
+  Область поиска и seed-carrier IDs: `docs/source-assembly-scope.json`.
+  Проверен только `ether/dimensions/eh_s2/yharnam/region/r.-1.-1.mca`.
+  Число похожих экземпляров и rotations относятся **только к этому региону**.
+
+## Фактические границы этого checkpoint
+
+Кандидаты — ограниченные connected clusters выбранных source carrier IDs по
+26-соседству. Для явно перечисленных tree carriers дополнительно проверяется
+горизонтальный радиус 1 и вертикальный разрыв до 6 ячеек. Отсеиваются одиночные
+ячейки, >24 cells, чрезмерные размеры и касание непросмотренного terrain region.
+Приоритет — несколько разных исходных носителей, а не single-model items.
+Это **гипотеза пространственной группы**, не доказательство одной вещи: соседние
+могилы/статуи/мешки могут требовать SPLIT или CONTEXT. Части за пределами seed-ID
+списка могут отсутствовать. Окружение отдельное, shell 1 cell вокруг source bounds,
+не автоматически часть prefab. Ни одного Cxxx пользователь ещё не подтвердил.
+
+Сигнатура включает source ID, полные properties и relative XYZ, нормализует четыре
+Y-поворота, включая facing/axis/rotation/connection keys. Mirrors не нормализуются.
+`similar_count` — точные полные carrier clusters modulo этих поворотов. Это не
+гарантия визуальной эквивалентности переопределённого ресурспаком vanilla axis.
+ID выдаются append-only по spatial fingerprint; регенерация не меняет существующие
+номера компонентов/решения. При изменении алгоритма старые записи не удалять:
+явно сверять и связывать replacement, не перезаписывать вручную принятые границы.
+
+Preview строится только из исходных ZIP models/textures и vanilla 1.20.1 fallback,
+с source blockstate transforms/UV. Это offline rasterizer, не section renderer и
+не Minecraft screenshot. Weighted/unweighted alternatives показаны первым
+вариантом с предупреждением: vanilla positional RNG ещё не восстановлен.
+Изображения не доказывают состояние collision/placement; runtime тут не менялся.
+
+## Команды продолжения (из Bloodborne-Blocks)
+
+Python 3 + numpy + Pillow; локальный vanilla client JAR 1.20.1 в стандартном Loom
+cache. Для rendering допустим `BLOODBORNE_VANILLA_JAR`. Не коммитить зависимости/cache.
+
+```powershell
+# Открыть уже опубликованный HTML можно вообще без Python/Minecraft.
+# Только повторный render, без сканирования мира:
+python -B -X utf8 tools/source_assembly_review.py --render-only --publish docs/manual-review/source-assemblies/batch-01
+# Повтор ограниченного region scan, сохранение стабильных ID:
+python -B -X utf8 tools/source_assembly_review.py --publish docs/manual-review/source-assemblies/batch-01
+python -B -X utf8 -m unittest discover -s tools -p 'test_source_assembly*.py'
+python -B -X utf8 -m unittest discover -s tools -p 'test_manual_review*.py'
+```
+
+Проверено: source SHA до/после совпадает; все 12 entries имеют >1 source cell;
+исходные модели/текстуры разрешаются без missing fallback; создан portable review
+package с относительными ссылками; PNG просмотрены. Узкие тесты проверяют
+rotation fingerprints, stable IDs/authority, spatial gap policy, source transforms,
+HTML/PNG/alternative warnings и инструменты Catalog A. POC ранее проверен сборкой
+и GameTest — подробности `docs/LOGICAL-CONTRACT-V2-POC.md`; в этом проходе новая
+сборка/JAR/запуск Minecraft **не выполнялись**.
+В финальном прогоне: 5 Catalog B + 19 Catalog A + 4 contract-v2 + 8 region-reader
+unit tests — OK; `tools/test_logical_world.py` — OK (6 converted, 15 rejected,
+2 synthetic dimensions). Это маленькие fixtures, не конвертация исходного города.
+
+Что НЕ сделано: полный city discovery/coverage, семантическое подтверждение Cxxx,
+автоматический parser/apply решений Catalog B, формирование runtime contracts по
+Cxxx, world conversion, section renderer, точный RNG-preview. Catalog A имеет
+отдельный `decide`; не применять его к Cxxx.
+
+Следующий шаг: дать пользователю первую партию B, получить OBJECT/SPLIT/CONTEXT и
+сохранить ответы как authoritative в **отдельном B manifest** с историей. Затем
+реализовать лишь подтверждённые конструкции и direct migration tests. Не выводить
+семантическую границу из одного соседства или названия PNG. Сборка накопительная
+после 20–30 подтверждённых и реализованных families, не после каждой разметки.
+
+Формат ответов и ограничения: [инструкция партии B](docs/manual-review/source-assemblies/batch-01/README.md).
+Ниже сохранены исторические записи; они не отменяют ограничения этого checkpoint.
+
 # Current technical snapshot — 2026-09-21
 
 Актуальная точка входа: [TECHNICAL-SNAPSHOT-2026-09-21.md](docs/TECHNICAL-SNAPSHOT-2026-09-21.md).

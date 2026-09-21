@@ -70,7 +70,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   BlockState sourceDefault=definition.sourceBlock.getDefaultState();for(var entry:state.getEntries().entrySet())if(!sourceDefault.contains(entry.getKey())&&mapped.contains(entry.getKey()))mapped=mapped.with((Property)entry.getKey(),(Comparable)entry.getValue());return mapped;
  }
  @Override public BlockState rotate(BlockState state,BlockRotation rotation){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.rotate(original(state),rotation)),state);if(definition.logical)return rotateLogical(mapped,state,rotation);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
- @Override public BlockState mirror(BlockState state,BlockMirror mirror){BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.mirror(original(state),mirror)),state);if(definition.logical)return mirrorLogical(mapped,state,mirror);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
+ @Override public BlockState mirror(BlockState state,BlockMirror mirror){if(definition.logical&&GeometryRuntime.rotateOnlyMirror(state))return mirrorLogical(state,state,mirror);BlockState mapped=preserveCustom(getStateWithProperties(definition.sourceBlock.mirror(original(state),mirror)),state);if(definition.logical)return mirrorLogical(mapped,state,mirror);if(definition.extra_facing)return mapped.with(Properties.HORIZONTAL_FACING,mirror.apply(state.get(Properties.HORIZONTAL_FACING)));return mapped;}
  private BlockState rotateLogical(BlockState mapped,BlockState original,BlockRotation rotation){
   if(mapped.contains(Properties.HORIZONTAL_FACING))mapped=mapped.with(Properties.HORIZONTAL_FACING,rotation.rotate(original.get(Properties.HORIZONTAL_FACING)));
   for(Direction direction:Direction.Type.HORIZONTAL){Property<?> from=getStateManager().getProperty(direction.asString()),to=getStateManager().getProperty(rotation.rotate(direction).asString());if(from!=null&&to!=null)mapped=copy(mapped,original,from,to);}return mapped;
@@ -96,7 +96,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   }
   if(result.contains(BloodborneBlocks.ASSEMBLED))result=result.with(BloodborneBlocks.ASSEMBLED,true);
   if(definition.extra_facing)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
-  if(definition.logical)result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());
+  if(definition.logical){result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());result=GeometryRuntime.applyPlacementPolicy(result,ctx.getSide());}
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
   return BloodborneBlocks.applyPlacementProperties(definition,connections(result,ctx.getWorld(),ctx.getBlockPos()));
  }

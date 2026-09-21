@@ -1,0 +1,654 @@
+{
+  "schemaVersion": 2,
+  "scope": "five-family POC; no full world conversion",
+  "sourceWorldSha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51",
+  "sourcePackSha256": "0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308",
+  "preservedFiles": {
+    "definitions.json": "f7bd65b649cac93b45861a39b2d205b97f42ff752d79a57f2239f5bfa0dfebc2",
+    "geometry.json": "b014ff6793d7a4a24925b1a1e21dd16981a52c392c6d5eaa62539933d9b585f6",
+    "migration.json": "93bda8cfe48ec405dd0d4c2c83fe029dcbc9965bb94a70fc4c9ae0ceb2f2d93e",
+    "meshes.json.gz": "ae4da84bfb9568c4f675b5e7999f7629ae3d0c27f0e5e455c683b773ad281fa0"
+  },
+  "packApplications": {
+    "assets/minecraft/blockstates/oxidized_cut_copper_stairs.json": {
+      "variants": {
+        "facing=east,half=bottom,shape=straight": {
+          "model": "minecraft:block/addon/cases_0",
+          "y": 270
+        },
+        "facing=north,half=bottom,shape=straight": {
+          "model": "minecraft:block/addon/cases_0",
+          "y": 180
+        },
+        "facing=south,half=bottom,shape=straight": {
+          "model": "minecraft:block/addon/cases_0",
+          "y": 0
+        },
+        "facing=west,half=bottom,shape=straight": {
+          "model": "minecraft:block/addon/cases_0",
+          "y": 90
+        },
+        "facing=east,half=bottom,shape=inner_left": {
+          "model": "minecraft:block/oxidized_cut_copper_stairs_inner",
+          "y": 270,
+          "uvlock": true
+        },
+        "facing=east,half=bottom,shape=inner_right": {
+          "model": "minecraft:block/oxidized_cut_copper_stairs_inner"
+        },
+        "facing=east,half=bottom,shape=outer_left": {
+          "model": "minecraft:block/oxidized_cut_copper_stairs_outer",
+          "y": 270,
+          "uvlock": true
+        },
+        "facing=east,half=bottom,shape=outer_right": {
+          "model": "minecraft:block/oxidized_cut_copper_stairs_outer"
+        },
+        "facing=east,half=top,shape=straight": [
+          {
+            "model": "minecraft:block/addon/gate2_1",
+            "y": 270,
+            "weight": 1000
+          }
+        ],
+        "facing=north,half=top,shape=straight": [
+          {
+            "model": "minecraft:block/addon/gate2_1",
+            "y": 0,
+            "weight": 1000
+          }
+        ],
+        "facing=south,half=top,shape=straight": [
+          {
+            "model": "minecraft:block/addon/gate2_1",
+            "y": 180,
+            "weight": 1000
+          }
+        ],
+        "facing=west,half=top,shape=straight": [
+          {
+            "model": "minecraft:block/addon/gate2_1",
+            "y": 90,
+            "weight": 1000
+          }
+        ]
+      }
+    },
+    "assets/minecraft/blockstates/dead_tube_coral_wall_fan.json": {
+      "variants": {
+        "facing=east": {
+          "model": "minecraft:block/addon/wall_deco_1",
+          "y": 90
+        },
+        "facing=north": {
+          "model": "minecraft:block/addon/wall_deco_1"
+        },
+        "facing=south": {
+          "model": "minecraft:block/addon/wall_deco_1",
+          "y": 180
+        },
+        "facing=west": {
+          "model": "minecraft:block/addon/wall_deco_1",
+          "y": 270
+        }
+      }
+    },
+    "assets/minecraft/blockstates/stripped_jungle_log.json": {
+      "variants": {
+        "axis=x": {
+          "model": "minecraft:block/addon/gate_bottom",
+          "y": 90
+        },
+        "axis=y": {
+          "model": "minecraft:block/stripped_jungle_log"
+        },
+        "axis=z": {
+          "model": "minecraft:block/addon/gate_bottom"
+        }
+      }
+    },
+    "assets/minecraft/blockstates/stripped_acacia_log.json": {
+      "variants": {
+        "axis=x": {
+          "model": "minecraft:block/addon/gate_top",
+          "y": 90
+        },
+        "axis=y": {
+          "model": "minecraft:block/stripped_acacia_log"
+        },
+        "axis=z": {
+          "model": "minecraft:block/addon/gate_top"
+        }
+      }
+    },
+    "assets/minecraft/blockstates/iron_bars.json": {
+      "multipart": [
+        {
+          "apply": {
+            "model": "minecraft:block/iron_bars_post_ends"
+          }
+        },
+        {
+          "when": {
+            "north": "false",
+            "west": "false",
+            "south": "false",
+            "east": "false"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_post"
+          }
+        },
+        {
+          "when": {
+            "north": "true",
+            "west": "false",
+            "south": "false",
+            "east": "false"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_cap"
+          }
+        },
+        {
+          "when": {
+            "north": "false",
+            "west": "false",
+            "south": "false",
+            "east": "true"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_cap",
+            "y": 90
+          }
+        },
+        {
+          "when": {
+            "north": "false",
+            "west": "false",
+            "south": "true",
+            "east": "false"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_cap_alt"
+          }
+        },
+        {
+          "when": {
+            "north": "false",
+            "west": "true",
+            "south": "false",
+            "east": "false"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_cap_alt",
+            "y": 90
+          }
+        },
+        {
+          "when": {
+            "north": "true"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_side"
+          }
+        },
+        {
+          "when": {
+            "east": "true"
+          },
+          "apply": {
+            "model": "minecraft:block/iron_bars_side",
+            "y": 90
+          }
+        },
+        {
+          "when": {
+            "south": "true"
+          },
+          "apply": [
+            {
+              "model": "minecraft:block/iron_bars_side_alt",
+              "weight": 700
+            },
+            {
+              "model": "minecraft:block/iron_bars_side_alt_1",
+              "weight": 300
+            },
+            {
+              "model": "minecraft:block/iron_bars_side_alt_2",
+              "weight": 300
+            },
+            {
+              "model": "minecraft:block/iron_bars_side_alt_3",
+              "weight": 400
+            }
+          ]
+        },
+        {
+          "when": {
+            "west": "true"
+          },
+          "apply": [
+            {
+              "model": "minecraft:block/iron_bars_side_alt",
+              "y": 90,
+              "weight": 700
+            },
+            {
+              "model": "minecraft:block/iron_bars_side_alt_1",
+              "y": 90,
+              "weight": 300
+            },
+            {
+              "model": "minecraft:block/iron_bars_side_alt_2",
+              "y": 90,
+              "weight": 300
+            },
+            {
+              "model": "minecraft:block/iron_bars_side_alt_3",
+              "y": 90,
+              "weight": 400
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "families": [
+    {
+      "id": "o_dead_tree_planter",
+      "states": [
+        {
+          "state": "facing=east",
+          "oldVisualCells": 46,
+          "newInteractionCells": 16,
+          "oldCollisionBoxes": 43,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 90,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=north",
+          "oldVisualCells": 46,
+          "newInteractionCells": 16,
+          "oldCollisionBoxes": 43,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 90,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=south",
+          "oldVisualCells": 46,
+          "newInteractionCells": 16,
+          "oldCollisionBoxes": 43,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 90,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=west",
+          "oldVisualCells": 46,
+          "newInteractionCells": 16,
+          "oldCollisionBoxes": 43,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 90,
+          "directPatterns": 0
+        }
+      ]
+    },
+    {
+      "id": "o_cases_0",
+      "states": [
+        {
+          "state": "facing=east",
+          "oldVisualCells": 12,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 53,
+          "newCollisionPrimitives": 1,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 71,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=north",
+          "oldVisualCells": 12,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 53,
+          "newCollisionPrimitives": 1,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 71,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=south",
+          "oldVisualCells": 12,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 53,
+          "newCollisionPrimitives": 1,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 71,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=west",
+          "oldVisualCells": 12,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 53,
+          "newCollisionPrimitives": 1,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 71,
+          "directPatterns": 1
+        }
+      ]
+    },
+    {
+      "id": "o_wall_deco_1",
+      "states": [
+        {
+          "state": "facing=east",
+          "oldVisualCells": 9,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 9,
+          "newCollisionPrimitives": 0,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 6,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=north",
+          "oldVisualCells": 9,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 9,
+          "newCollisionPrimitives": 0,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 6,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=south",
+          "oldVisualCells": 9,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 9,
+          "newCollisionPrimitives": 0,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 6,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=west",
+          "oldVisualCells": 9,
+          "newInteractionCells": 1,
+          "oldCollisionBoxes": 9,
+          "newCollisionPrimitives": 0,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 6,
+          "directPatterns": 1
+        }
+      ]
+    },
+    {
+      "id": "o_iron_gate",
+      "states": [
+        {
+          "state": "facing=east,open=false",
+          "oldVisualCells": 18,
+          "newInteractionCells": 18,
+          "oldCollisionBoxes": 18,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 12,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=east,open=true",
+          "oldVisualCells": 48,
+          "newInteractionCells": 49,
+          "oldCollisionBoxes": 48,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=north,open=false",
+          "oldVisualCells": 18,
+          "newInteractionCells": 18,
+          "oldCollisionBoxes": 18,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 12,
+          "directPatterns": 1
+        },
+        {
+          "state": "facing=north,open=true",
+          "oldVisualCells": 48,
+          "newInteractionCells": 49,
+          "oldCollisionBoxes": 48,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=south,open=false",
+          "oldVisualCells": 18,
+          "newInteractionCells": 18,
+          "oldCollisionBoxes": 18,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 12,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=south,open=true",
+          "oldVisualCells": 48,
+          "newInteractionCells": 49,
+          "oldCollisionBoxes": 48,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=west,open=false",
+          "oldVisualCells": 18,
+          "newInteractionCells": 18,
+          "oldCollisionBoxes": 18,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 12,
+          "directPatterns": 0
+        },
+        {
+          "state": "facing=west,open=true",
+          "oldVisualCells": 48,
+          "newInteractionCells": 49,
+          "oldCollisionBoxes": 48,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        }
+      ]
+    },
+    {
+      "id": "o_iron_railing",
+      "states": [
+        {
+          "state": "east=false,north=false,south=false,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 5,
+          "newCollisionPrimitives": 1,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 12,
+          "directPatterns": 1
+        },
+        {
+          "state": "east=false,north=false,south=false,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 7,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 16,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=false,north=false,south=true,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 7,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 16,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=false,north=false,south=true,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 8,
+          "newCollisionPrimitives": 3,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=false,north=true,south=false,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 7,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 16,
+          "directPatterns": 1
+        },
+        {
+          "state": "east=false,north=true,south=false,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 8,
+          "newCollisionPrimitives": 3,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=false,north=true,south=true,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 8,
+          "newCollisionPrimitives": 3,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=false,north=true,south=true,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 11,
+          "newCollisionPrimitives": 4,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 28,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=true,north=false,south=false,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 7,
+          "newCollisionPrimitives": 2,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 16,
+          "directPatterns": 1
+        },
+        {
+          "state": "east=true,north=false,south=false,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 8,
+          "newCollisionPrimitives": 3,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=true,north=false,south=true,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 8,
+          "newCollisionPrimitives": 3,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=true,north=false,south=true,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 11,
+          "newCollisionPrimitives": 4,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 28,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=true,north=true,south=false,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 8,
+          "newCollisionPrimitives": 3,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 20,
+          "directPatterns": 1
+        },
+        {
+          "state": "east=true,north=true,south=false,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 11,
+          "newCollisionPrimitives": 4,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 28,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=true,north=true,south=true,west=false",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 11,
+          "newCollisionPrimitives": 4,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 28,
+          "directPatterns": 0
+        },
+        {
+          "state": "east=true,north=true,south=true,west=true",
+          "oldVisualCells": 2,
+          "newInteractionCells": 2,
+          "oldCollisionBoxes": 14,
+          "newCollisionPrimitives": 5,
+          "selectionPrimitives": 1,
+          "polygonsPreserved": 36,
+          "directPatterns": 0
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No directional state exists for source wool: direct tree matching supports yaw0 only; manual supports all four.",
+    "Source gate axis distinguishes yaw0/90 only; open/south/west states are runtime states, not invented original patterns.",
+    "Source iron bars with south/west weighted arms are deliberately not matched until positional RNG reproduction.",
+    "Book models are weighted alternatives; cases_0 selected as deterministic complex-decor representative.",
+    "Source patterns are authored POC boundaries, not proof all map instances follow them. No discovery or coverage claim.",
+    "Existing master-section renderer unchanged; long meshes still have section culling/lighting limitations.",
+    "Old logical saves may retain obsolete schema1 helpers; do not deploy to existing maps until explicit old-helper migration is implemented."
+  ]
+}

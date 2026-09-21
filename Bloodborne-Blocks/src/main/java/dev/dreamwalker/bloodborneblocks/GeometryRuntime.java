@@ -34,6 +34,10 @@ final class GeometryRuntime {
   int[] anchor;
   double[] render_offset={0,0,0};
   String ref;
+  int rotation;
+  double[] globalOutline;
+  String placementPolicy;
+  String mirrorPolicy;
   transient Map<BlockPos,GeometryCell> parsedCells;
   transient VoxelShape wholeOutline;
  }
@@ -63,6 +67,7 @@ final class GeometryRuntime {
    if(logical==null||logical.blocks==null)throw new IllegalStateException("Invalid logical geometry.json: missing blocks");
    for(var entry:logical.blocks.entrySet())if(BLOCKS.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Logical geometry conflict "+entry.getKey());
    if(logical.profiles!=null)for(var entry:logical.profiles.entrySet())if(profiles.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Logical geometry profile conflict "+entry.getKey());
+   for(var entry:LogicalContractV2.load(definitions).entrySet())BLOCKS.put(entry.getKey(),entry.getValue());
   }
   Set<GeometryState> prepared=Collections.newSetFromMap(new IdentityHashMap<>());
   for(BloodborneBlocks.Definition definition:definitions.blocks){
@@ -103,7 +108,10 @@ final class GeometryRuntime {
    cell.collisionShape=shape(cell.collision);cell.outlineShape=sameBoxes(cell.collision,cell.outline)?cell.collisionShape:shape(cell.outline);
    state.parsedCells.put(offset.toImmutable(),cell);
   }
+  if(state.globalOutline!=null){validateGlobalBox(blockId,stateKey,state.globalOutline);state.wholeOutline=VoxelShapes.cuboid(state.globalOutline[0],state.globalOutline[1],state.globalOutline[2],state.globalOutline[3],state.globalOutline[4],state.globalOutline[5]);}
  }
+
+ private static void validateGlobalBox(String id,String key,double[] box){if(box==null||box.length!=6)throw new IllegalStateException("Invalid global outline "+id+"["+key+"]");for(double value:box)if(!Double.isFinite(value))throw new IllegalStateException("Invalid global outline "+id+"["+key+"]");if(box[0]>=box[3]||box[1]>=box[4]||box[2]>=box[5])throw new IllegalStateException("Empty global outline "+id+"["+key+"]");}
 
  private static void validateBoxes(String id,String key,String cell,String type,List<double[]> boxes){
   if(boxes==null)throw new IllegalStateException("Null "+type+" boxes "+id+"["+key+"] cell "+cell);
@@ -142,12 +150,20 @@ final class GeometryRuntime {
  }
  static BlockPos anchor(BlockState state,Direction side){
   GeometryState geometry=required(state);int x=geometry.anchor[0],y=geometry.anchor[1],z=geometry.anchor[2];
+  if(geometry.globalOutline!=null)return new BlockPos(x,y,z);
   if(!geometry.parsedCells.isEmpty()){
    if(side==Direction.WEST)x=geometry.parsedCells.keySet().stream().mapToInt(BlockPos::getX).max().orElse(x);
    else if(side==Direction.DOWN)y=geometry.parsedCells.keySet().stream().mapToInt(BlockPos::getY).max().orElse(y);
    else if(side==Direction.NORTH)z=geometry.parsedCells.keySet().stream().mapToInt(BlockPos::getZ).max().orElse(z);
   }
   return new BlockPos(x,y,z);
+ }
+ static boolean hasExplicitAnchor(BlockState state){GeometryState geometry=state(state);return geometry!=null&&geometry.globalOutline!=null;}
+ static int rotation(BlockState state){return required(state).rotation;}
+ static boolean rotateOnlyMirror(BlockState state){GeometryState geometry=state(state);return geometry!=null&&"ROTATE_ONLY".equals(geometry.mirrorPolicy);}
+ static BlockState applyPlacementPolicy(BlockState state,Direction side){
+  GeometryState geometry=state(state);if(geometry==null||!"WALL_ADJACENT".equals(geometry.placementPolicy)||!side.getAxis().isHorizontal()||!state.contains(Properties.HORIZONTAL_FACING))return state;
+  return state.with(Properties.HORIZONTAL_FACING,side);
  }
 
  static VoxelShape rootShape(BlockState state,boolean outline){
@@ -201,7 +217,7 @@ final class GeometryRuntime {
    if(there.isAir()||there.isReplaceable())continue;
    if(there.isOf(BloodborneBlocks.PART_BLOCK)){
     ArchitecturePartBlockEntity part=part(world,target);
-    if(part!=null&&ownedRoot!=null&&part.rootPos().equals(ownedRoot))continue;
+    if(part!=null&&ownedRoot!=null&&part.rootPos().equals(ownedRoot)&&ownsHelper(state,ownedRoot,target,part.ownerId()))continue;
    }
    return target;
   }
@@ -259,7 +275,7 @@ final class GeometryRuntime {
    BlockPos target=root.add(offset);if(target.equals(root)||keep.contains(target)||!world.isChunkLoaded(target))continue;
    if(!world.getBlockState(target).isOf(BloodborneBlocks.PART_BLOCK))continue;
    ArchitecturePartBlockEntity part=part(world,target);
-   if(part!=null&&part.rootPos().equals(root))world.removeBlock(target,false);
+   if(part!=null&&part.rootPos().equals(root)&&ownsHelper(rootState,root,target,part.ownerId()))world.removeBlock(target,false);
   }
  }
 

@@ -1,0 +1,4351 @@
+{
+  "schemaVersion": 2,
+  "transform_contract": "transform-v2.json",
+  "families": [
+    {
+      "id": "o_dead_tree_planter",
+      "canonical_anchor": {
+        "cell": [
+          0,
+          -1,
+          0
+        ],
+        "pivot": [
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      "placement_policy": "FLOOR",
+      "rotations": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "mirror_policy": "ROTATE_ONLY",
+      "states": {
+        "facing=east": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "o_3895f06bb6c8c7c35aa7",
+            "bounds": [
+              -1.0,
+              -1.0,
+              -1.0,
+              2.0,
+              8.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                8.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.25,
+                0.0,
+                0.25,
+                0.75,
+                7.0,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                -1
+              ],
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=north": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_f15e9cb18eed3c39a05a",
+            "bounds": [
+              -1.0,
+              -1.0,
+              -1.0,
+              2.0,
+              8.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                8.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.25,
+                0.0,
+                0.25,
+                0.75,
+                7.0,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                -1
+              ],
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    6,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=south": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "o_f046a13160883df41b0b",
+            "bounds": [
+              -1.0,
+              -1.0,
+              -1.0,
+              2.0,
+              8.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                8.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.25,
+                0.0,
+                0.25,
+                0.75,
+                7.0,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                -1
+              ],
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "o_3b99e0fbacad2c440a3a",
+            "bounds": [
+              -1.0,
+              -1.0,
+              -1.0,
+              2.0,
+              8.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                8.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                -1.0,
+                2.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.25,
+                0.0,
+                0.25,
+                0.75,
+                7.0,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                -1
+              ],
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        }
+      },
+      "collision_justification": "Two authored primitives: broad stone base plus narrow trunk; branches never reserve cells.",
+      "collision_policy": "TRUNK"
+    },
+    {
+      "id": "o_cases_0",
+      "canonical_anchor": {
+        "cell": [
+          0,
+          0,
+          0
+        ],
+        "pivot": [
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      "placement_policy": "FLOOR",
+      "rotations": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "mirror_policy": "ROTATE_ONLY",
+      "states": {
+        "facing=east": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "o_89be1302a9d79260947f",
+            "bounds": [
+              -0.645937,
+              0.0,
+              -0.491881,
+              1.261081,
+              1.125,
+              1.466984
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -0.75,
+                0.0,
+                -0.5,
+                1.5,
+                1.125,
+                1.5
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:oxidized_cut_copper_stairs",
+                  "properties": {
+                    "facing": "west",
+                    "half": "bottom",
+                    "shape": "straight",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=north": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_b2760c325201da7a1990",
+            "bounds": [
+              -0.491881,
+              0.0,
+              -0.261081,
+              1.466984,
+              1.125,
+              1.645937
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -0.5,
+                0.0,
+                -0.5,
+                1.5,
+                1.125,
+                1.75
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:oxidized_cut_copper_stairs",
+                  "properties": {
+                    "facing": "south",
+                    "half": "bottom",
+                    "shape": "straight",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=south": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "o_73275a30ceadf3e6dae6",
+            "bounds": [
+              -0.466984,
+              0.0,
+              -0.645937,
+              1.491881,
+              1.125,
+              1.261081
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -0.5,
+                0.0,
+                -0.75,
+                1.5,
+                1.125,
+                1.5
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:oxidized_cut_copper_stairs",
+                  "properties": {
+                    "facing": "north",
+                    "half": "bottom",
+                    "shape": "straight",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=west": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "o_b63caadb042c33321aba",
+            "bounds": [
+              -0.261081,
+              0.0,
+              -0.466984,
+              1.645937,
+              1.125,
+              1.491881
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -0.5,
+                0.0,
+                -0.5,
+                1.75,
+                1.125,
+                1.5
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:oxidized_cut_copper_stairs",
+                  "properties": {
+                    "facing": "east",
+                    "half": "bottom",
+                    "shape": "straight",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "collision_policy": "SIMPLE_BOX"
+    },
+    {
+      "id": "o_wall_deco_1",
+      "canonical_anchor": {
+        "cell": [
+          0,
+          0,
+          0
+        ],
+        "pivot": [
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      "placement_policy": "WALL_ADJACENT",
+      "rotations": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "mirror_policy": "ROTATE_ONLY",
+      "states": {
+        "facing=east": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "o_35429e0bb50101cda865",
+            "bounds": [
+              0.0,
+              -1.0,
+              -1.0,
+              0.9375,
+              2.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                -1.0,
+                -1.0,
+                0.9375,
+                2.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": []
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:dead_tube_coral_wall_fan",
+                  "properties": {
+                    "facing": "east",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=north": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_5157f2ac712421b0b3b9",
+            "bounds": [
+              -1.0,
+              -1.0,
+              0.0625,
+              2.0,
+              2.0,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                0.0625,
+                2.0,
+                2.0,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": []
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:dead_tube_coral_wall_fan",
+                  "properties": {
+                    "facing": "north",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=south": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "o_1cd91e58ceeecde4ce77",
+            "bounds": [
+              -1.0,
+              -1.0,
+              0.0,
+              2.0,
+              2.0,
+              0.9375
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -1.0,
+                0.0,
+                2.0,
+                2.0,
+                0.9375
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": []
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:dead_tube_coral_wall_fan",
+                  "properties": {
+                    "facing": "south",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=west": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "o_9baac559b6fe86ee9518",
+            "bounds": [
+              0.0625,
+              -1.0,
+              -1.0,
+              1.0,
+              2.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0625,
+                -1.0,
+                -1.0,
+                1.0,
+                2.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": []
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:dead_tube_coral_wall_fan",
+                  "properties": {
+                    "facing": "west",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "collision_policy": "NONE"
+    },
+    {
+      "id": "o_iron_gate",
+      "canonical_anchor": {
+        "cell": [
+          0,
+          -1,
+          0
+        ],
+        "pivot": [
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      "placement_policy": "FLOOR",
+      "rotations": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "mirror_policy": "ROTATE_ONLY",
+      "states": {
+        "facing=east,open=false": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "o_970a34ddaef0ba0e20c6",
+            "bounds": [
+              0.4375,
+              -0.8125,
+              -1.0,
+              0.5625,
+              5.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                -0.8125,
+                -1.0,
+                0.5625,
+                5.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                -0.8125,
+                -1.0,
+                0.5625,
+                5.0,
+                0.5
+              ],
+              [
+                0.4375,
+                -0.8125,
+                0.5,
+                0.5625,
+                5.0,
+                2.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                0,
+                -1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                -1
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                2,
+                -1
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                2,
+                1
+              ],
+              [
+                0,
+                3,
+                -1
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                3,
+                1
+              ],
+              [
+                0,
+                4,
+                -1
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                4,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:stripped_jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:stripped_acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=east,open=true": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "o_1d42646552169c4c10b7",
+            "bounds": [
+              -1.0,
+              -0.8125,
+              -1.0625,
+              0.5,
+              5.0,
+              2.0625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -0.8125,
+                -1.0625,
+                0.5,
+                5.0,
+                2.0625
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -0.8125,
+                -1.0625,
+                0.5,
+                5.0,
+                -0.9375
+              ],
+              [
+                -1.0,
+                -0.8125,
+                1.9375,
+                0.5,
+                5.0,
+                2.0625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                -2
+              ],
+              [
+                -1,
+                -1,
+                -1
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                -1,
+                -1,
+                2
+              ],
+              [
+                -1,
+                0,
+                -2
+              ],
+              [
+                -1,
+                0,
+                -1
+              ],
+              [
+                -1,
+                0,
+                1
+              ],
+              [
+                -1,
+                0,
+                2
+              ],
+              [
+                -1,
+                1,
+                -2
+              ],
+              [
+                -1,
+                1,
+                -1
+              ],
+              [
+                -1,
+                1,
+                1
+              ],
+              [
+                -1,
+                1,
+                2
+              ],
+              [
+                -1,
+                2,
+                -2
+              ],
+              [
+                -1,
+                2,
+                -1
+              ],
+              [
+                -1,
+                2,
+                1
+              ],
+              [
+                -1,
+                2,
+                2
+              ],
+              [
+                -1,
+                3,
+                -2
+              ],
+              [
+                -1,
+                3,
+                -1
+              ],
+              [
+                -1,
+                3,
+                1
+              ],
+              [
+                -1,
+                3,
+                2
+              ],
+              [
+                -1,
+                4,
+                -2
+              ],
+              [
+                -1,
+                4,
+                -1
+              ],
+              [
+                -1,
+                4,
+                1
+              ],
+              [
+                -1,
+                4,
+                2
+              ],
+              [
+                0,
+                -1,
+                -2
+              ],
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                2
+              ],
+              [
+                0,
+                0,
+                -2
+              ],
+              [
+                0,
+                0,
+                -1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                -2
+              ],
+              [
+                0,
+                1,
+                -1
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                -2
+              ],
+              [
+                0,
+                2,
+                -1
+              ],
+              [
+                0,
+                2,
+                1
+              ],
+              [
+                0,
+                2,
+                2
+              ],
+              [
+                0,
+                3,
+                -2
+              ],
+              [
+                0,
+                3,
+                -1
+              ],
+              [
+                0,
+                3,
+                1
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                0,
+                4,
+                -2
+              ],
+              [
+                0,
+                4,
+                -1
+              ],
+              [
+                0,
+                4,
+                1
+              ],
+              [
+                0,
+                4,
+                2
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=north,open=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_1408bd181e88684b246f",
+            "bounds": [
+              -1.0,
+              -0.8125,
+              0.4375,
+              2.0,
+              5.0,
+              0.5625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -0.8125,
+                0.4375,
+                2.0,
+                5.0,
+                0.5625
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -0.8125,
+                0.4375,
+                0.5,
+                5.0,
+                0.5625
+              ],
+              [
+                0.5,
+                -0.8125,
+                0.4375,
+                2.0,
+                5.0,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                -1,
+                1,
+                0
+              ],
+              [
+                -1,
+                2,
+                0
+              ],
+              [
+                -1,
+                3,
+                0
+              ],
+              [
+                -1,
+                4,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                2,
+                0
+              ],
+              [
+                1,
+                3,
+                0
+              ],
+              [
+                1,
+                4,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:stripped_jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:stripped_acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    0,
+                    3,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "facing=north,open=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_83de03f8511dbb91d5bf",
+            "bounds": [
+              -1.0625,
+              -0.8125,
+              0.5,
+              2.0625,
+              5.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0625,
+                -0.8125,
+                0.5,
+                2.0625,
+                5.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                -1.0625,
+                -0.8125,
+                0.5,
+                -0.9375,
+                5.0,
+                2.0
+              ],
+              [
+                1.9375,
+                -0.8125,
+                0.5,
+                2.0625,
+                5.0,
+                2.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -2,
+                -1,
+                0
+              ],
+              [
+                -2,
+                -1,
+                1
+              ],
+              [
+                -2,
+                0,
+                0
+              ],
+              [
+                -2,
+                0,
+                1
+              ],
+              [
+                -2,
+                1,
+                0
+              ],
+              [
+                -2,
+                1,
+                1
+              ],
+              [
+                -2,
+                2,
+                0
+              ],
+              [
+                -2,
+                2,
+                1
+              ],
+              [
+                -2,
+                3,
+                0
+              ],
+              [
+                -2,
+                3,
+                1
+              ],
+              [
+                -2,
+                4,
+                0
+              ],
+              [
+                -2,
+                4,
+                1
+              ],
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                -1,
+                1
+              ],
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ],
+              [
+                -1,
+                1,
+                0
+              ],
+              [
+                -1,
+                1,
+                1
+              ],
+              [
+                -1,
+                2,
+                0
+              ],
+              [
+                -1,
+                2,
+                1
+              ],
+              [
+                -1,
+                3,
+                0
+              ],
+              [
+                -1,
+                3,
+                1
+              ],
+              [
+                -1,
+                4,
+                0
+              ],
+              [
+                -1,
+                4,
+                1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                -1,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                2,
+                0
+              ],
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                1,
+                3,
+                0
+              ],
+              [
+                1,
+                3,
+                1
+              ],
+              [
+                1,
+                4,
+                0
+              ],
+              [
+                1,
+                4,
+                1
+              ],
+              [
+                2,
+                -1,
+                0
+              ],
+              [
+                2,
+                -1,
+                1
+              ],
+              [
+                2,
+                0,
+                0
+              ],
+              [
+                2,
+                0,
+                1
+              ],
+              [
+                2,
+                1,
+                0
+              ],
+              [
+                2,
+                1,
+                1
+              ],
+              [
+                2,
+                2,
+                0
+              ],
+              [
+                2,
+                2,
+                1
+              ],
+              [
+                2,
+                3,
+                0
+              ],
+              [
+                2,
+                3,
+                1
+              ],
+              [
+                2,
+                4,
+                0
+              ],
+              [
+                2,
+                4,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,open=false": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "o_95006809b73f7b012e91",
+            "bounds": [
+              -1.0,
+              -0.8125,
+              0.4375,
+              2.0,
+              5.0,
+              0.5625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0,
+                -0.8125,
+                0.4375,
+                2.0,
+                5.0,
+                0.5625
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.5,
+                -0.8125,
+                0.4375,
+                2.0,
+                5.0,
+                0.5625
+              ],
+              [
+                -1.0,
+                -0.8125,
+                0.4375,
+                0.5,
+                5.0,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                -1,
+                1,
+                0
+              ],
+              [
+                -1,
+                2,
+                0
+              ],
+              [
+                -1,
+                3,
+                0
+              ],
+              [
+                -1,
+                4,
+                0
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                2,
+                0
+              ],
+              [
+                1,
+                3,
+                0
+              ],
+              [
+                1,
+                4,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,open=true": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "o_ce99ca148f1d1a1d4316",
+            "bounds": [
+              -1.0625,
+              -0.8125,
+              -1.0,
+              2.0625,
+              5.0,
+              0.5
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                -1.0625,
+                -0.8125,
+                -1.0,
+                2.0625,
+                5.0,
+                0.5
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                1.9375,
+                -0.8125,
+                -1.0,
+                2.0625,
+                5.0,
+                0.5
+              ],
+              [
+                -1.0625,
+                -0.8125,
+                -1.0,
+                -0.9375,
+                5.0,
+                0.5
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                -2,
+                -1,
+                -1
+              ],
+              [
+                -2,
+                -1,
+                0
+              ],
+              [
+                -2,
+                0,
+                -1
+              ],
+              [
+                -2,
+                0,
+                0
+              ],
+              [
+                -2,
+                1,
+                -1
+              ],
+              [
+                -2,
+                1,
+                0
+              ],
+              [
+                -2,
+                2,
+                -1
+              ],
+              [
+                -2,
+                2,
+                0
+              ],
+              [
+                -2,
+                3,
+                -1
+              ],
+              [
+                -2,
+                3,
+                0
+              ],
+              [
+                -2,
+                4,
+                -1
+              ],
+              [
+                -2,
+                4,
+                0
+              ],
+              [
+                -1,
+                -1,
+                -1
+              ],
+              [
+                -1,
+                -1,
+                0
+              ],
+              [
+                -1,
+                0,
+                -1
+              ],
+              [
+                -1,
+                0,
+                0
+              ],
+              [
+                -1,
+                1,
+                -1
+              ],
+              [
+                -1,
+                1,
+                0
+              ],
+              [
+                -1,
+                2,
+                -1
+              ],
+              [
+                -1,
+                2,
+                0
+              ],
+              [
+                -1,
+                3,
+                -1
+              ],
+              [
+                -1,
+                3,
+                0
+              ],
+              [
+                -1,
+                4,
+                -1
+              ],
+              [
+                -1,
+                4,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1,
+                0
+              ],
+              [
+                1,
+                0,
+                -1
+              ],
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                1,
+                -1
+              ],
+              [
+                1,
+                1,
+                0
+              ],
+              [
+                1,
+                2,
+                -1
+              ],
+              [
+                1,
+                2,
+                0
+              ],
+              [
+                1,
+                3,
+                -1
+              ],
+              [
+                1,
+                3,
+                0
+              ],
+              [
+                1,
+                4,
+                -1
+              ],
+              [
+                1,
+                4,
+                0
+              ],
+              [
+                2,
+                -1,
+                -1
+              ],
+              [
+                2,
+                -1,
+                0
+              ],
+              [
+                2,
+                0,
+                -1
+              ],
+              [
+                2,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                -1
+              ],
+              [
+                2,
+                1,
+                0
+              ],
+              [
+                2,
+                2,
+                -1
+              ],
+              [
+                2,
+                2,
+                0
+              ],
+              [
+                2,
+                3,
+                -1
+              ],
+              [
+                2,
+                3,
+                0
+              ],
+              [
+                2,
+                4,
+                -1
+              ],
+              [
+                2,
+                4,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,open=false": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "o_2e79d6cc307e8bbb5183",
+            "bounds": [
+              0.4375,
+              -0.8125,
+              -1.0,
+              0.5625,
+              5.0,
+              2.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                -0.8125,
+                -1.0,
+                0.5625,
+                5.0,
+                2.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                -0.8125,
+                0.5,
+                0.5625,
+                5.0,
+                2.0
+              ],
+              [
+                0.4375,
+                -0.8125,
+                -1.0,
+                0.5625,
+                5.0,
+                0.5
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                0,
+                -1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                -1
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                2,
+                -1
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                2,
+                1
+              ],
+              [
+                0,
+                3,
+                -1
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                3,
+                1
+              ],
+              [
+                0,
+                4,
+                -1
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                4,
+                1
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,open=true": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "o_737d3fa81c777765736a",
+            "bounds": [
+              0.5,
+              -0.8125,
+              -1.0625,
+              2.0,
+              5.0,
+              2.0625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.5,
+                -0.8125,
+                -1.0625,
+                2.0,
+                5.0,
+                2.0625
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.5,
+                -0.8125,
+                1.9375,
+                2.0,
+                5.0,
+                2.0625
+              ],
+              [
+                0.5,
+                -0.8125,
+                -1.0625,
+                2.0,
+                5.0,
+                -0.9375
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                -1,
+                -2
+              ],
+              [
+                0,
+                -1,
+                -1
+              ],
+              [
+                0,
+                -1,
+                1
+              ],
+              [
+                0,
+                -1,
+                2
+              ],
+              [
+                0,
+                0,
+                -2
+              ],
+              [
+                0,
+                0,
+                -1
+              ],
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                -2
+              ],
+              [
+                0,
+                1,
+                -1
+              ],
+              [
+                0,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                -2
+              ],
+              [
+                0,
+                2,
+                -1
+              ],
+              [
+                0,
+                2,
+                1
+              ],
+              [
+                0,
+                2,
+                2
+              ],
+              [
+                0,
+                3,
+                -2
+              ],
+              [
+                0,
+                3,
+                -1
+              ],
+              [
+                0,
+                3,
+                1
+              ],
+              [
+                0,
+                3,
+                2
+              ],
+              [
+                0,
+                4,
+                -2
+              ],
+              [
+                0,
+                4,
+                -1
+              ],
+              [
+                0,
+                4,
+                1
+              ],
+              [
+                0,
+                4,
+                2
+              ],
+              [
+                1,
+                -1,
+                -2
+              ],
+              [
+                1,
+                -1,
+                -1
+              ],
+              [
+                1,
+                -1,
+                1
+              ],
+              [
+                1,
+                -1,
+                2
+              ],
+              [
+                1,
+                0,
+                -2
+              ],
+              [
+                1,
+                0,
+                -1
+              ],
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                2
+              ],
+              [
+                1,
+                1,
+                -2
+              ],
+              [
+                1,
+                1,
+                -1
+              ],
+              [
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                2
+              ],
+              [
+                1,
+                2,
+                -2
+              ],
+              [
+                1,
+                2,
+                -1
+              ],
+              [
+                1,
+                2,
+                1
+              ],
+              [
+                1,
+                2,
+                2
+              ],
+              [
+                1,
+                3,
+                -2
+              ],
+              [
+                1,
+                3,
+                -1
+              ],
+              [
+                1,
+                3,
+                1
+              ],
+              [
+                1,
+                3,
+                2
+              ],
+              [
+                1,
+                4,
+                -2
+              ],
+              [
+                1,
+                4,
+                -1
+              ],
+              [
+                1,
+                4,
+                1
+              ],
+              [
+                1,
+                4,
+                2
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        }
+      },
+      "collision_policy": "GATE"
+    },
+    {
+      "id": "o_iron_railing",
+      "canonical_anchor": {
+        "cell": [
+          0,
+          0,
+          0
+        ],
+        "pivot": [
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      "placement_policy": "FLOOR",
+      "rotations": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "mirror_policy": "ROTATE_ONLY",
+      "states": {
+        "east=false,north=false,south=false,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_54796847420da9f8a3c9",
+            "bounds": [
+              0.375,
+              0.0,
+              0.375,
+              0.625,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:iron_bars",
+                  "properties": {
+                    "east": "false",
+                    "north": "false",
+                    "south": "false",
+                    "west": "false",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "east=false,north=false,south=false,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_22c25a98c071692dc679",
+            "bounds": [
+              0.0,
+              0.0,
+              0.375,
+              0.5625,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=false,north=false,south=true,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_9a74b9125a154ec419ff",
+            "bounds": [
+              0.375,
+              0.0,
+              0.4375,
+              0.625,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=false,north=false,south=true,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_80430e2e5d00a9783408",
+            "bounds": [
+              0.0,
+              0.0,
+              0.375,
+              0.625,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=false,north=true,south=false,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_1512932924af78f3b43d",
+            "bounds": [
+              0.375,
+              0.0,
+              0.0,
+              0.625,
+              1.4375,
+              0.5625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:iron_bars",
+                  "properties": {
+                    "east": "false",
+                    "north": "true",
+                    "south": "false",
+                    "west": "false",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "east=false,north=true,south=false,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_7bb2b27898605c06d59d",
+            "bounds": [
+              0.0,
+              0.0,
+              0.0,
+              0.625,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=false,north=true,south=true,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_c4c81f1d618d7a1f12b8",
+            "bounds": [
+              0.375,
+              0.0,
+              0.0,
+              0.625,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=false,north=true,south=true,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_f802a9586bc7e20d9193",
+            "bounds": [
+              0.0,
+              0.0,
+              0.0,
+              0.625,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=true,north=false,south=false,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_de33f4f347e3f5face96",
+            "bounds": [
+              0.4375,
+              0.0,
+              0.375,
+              1.0,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:iron_bars",
+                  "properties": {
+                    "east": "true",
+                    "north": "false",
+                    "south": "false",
+                    "west": "false",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "east=true,north=false,south=false,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_c0ea01c85eddc83a7f06",
+            "bounds": [
+              0.0,
+              0.0,
+              0.375,
+              1.0,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=true,north=false,south=true,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_eb1c871b454449677e9d",
+            "bounds": [
+              0.375,
+              0.0,
+              0.375,
+              1.0,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=true,north=false,south=true,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_efb04a5eefa6eac4f834",
+            "bounds": [
+              0.0,
+              0.0,
+              0.375,
+              1.0,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=true,north=true,south=false,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_f995063ec0d271d1bb35",
+            "bounds": [
+              0.375,
+              0.0,
+              0.0,
+              1.0,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:iron_bars",
+                  "properties": {
+                    "east": "true",
+                    "north": "true",
+                    "south": "false",
+                    "west": "false",
+                    "waterlogged": "false"
+                  },
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "east=true,north=true,south=false,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_38d73fa2ac81d5667c1f",
+            "bounds": [
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              1.4375,
+              0.625
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=true,north=true,south=true,west=false": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_ff23d7aff3284251d352",
+            "bounds": [
+              0.375,
+              0.0,
+              0.0,
+              1.0,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "east=true,north=true,south=true,west=true": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "o_b4bc9991d7e45a15cf72",
+            "bounds": [
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              1.4375,
+              1.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.4375,
+                1.0
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.4375,
+                0.0,
+                0.4375,
+                0.5625,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.0,
+                0.5625,
+                1.4375,
+                0.5
+              ],
+              [
+                0.5,
+                0.0,
+                0.4375,
+                1.0,
+                1.4375,
+                0.5625
+              ],
+              [
+                0.4375,
+                0.0,
+                0.5,
+                0.5625,
+                1.4375,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.4375,
+                0.5,
+                1.4375,
+                0.5625
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        }
+      },
+      "collision_policy": "FENCE"
+    }
+  ]
+}

@@ -43,7 +43,10 @@ public final class ArchitectureBlockItem extends BlockItem {
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
   BlockState tentative=block.getPlacementState(original);if(tentative==null)return ActionResult.FAIL;
   normalizePlacementTag(original.getStack(),block,tentative);tentative=applyStateTag(tentative,original.getStack());
-  BlockPos root=original.getBlockPos().subtract(GeometryRuntime.anchor(tentative,original.getSide()));
+  BlockPos anchor=GeometryRuntime.anchor(tentative,original.getSide());
+  BlockPos root=GeometryRuntime.hasExplicitAnchor(tentative)
+   ?LogicalTransform.masterOrigin(original.getBlockPos(),new int[]{anchor.getX(),anchor.getY(),anchor.getZ()},GeometryRuntime.rotation(tentative))
+   :original.getBlockPos().subtract(anchor);
   Vec3d delta=Vec3d.of(root.subtract(original.getBlockPos()));
   ItemPlacementContext shifted=new ItemPlacementContext(original){
    @Override public BlockPos getBlockPos(){return root;}
