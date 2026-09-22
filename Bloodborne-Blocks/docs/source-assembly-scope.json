@@ -1,6 +1,11 @@
 {
-  "regions": ["ether/dimensions/eh_s2/yharnam/region/r.-1.-1.mca"],
-  "selection_note": "Bounded first pass in one Yharnam region. Carrier IDs are search seeds; connectivity in the original world proposes boundaries, not model names or F families. Adjacent independent props may still be grouped; user can split or mark context.",
+  "dimension": "eh_s2:yharnam",
+  "archive_terrain_prefix": "ether/dimensions/eh_s2/yharnam/region/",
+  "regions": "ALL terrain regions under archive_terrain_prefix; exclude entities/poi",
+  "carrier_universe": "Union of vanilla IDs in source mappings and vanilla blockstates with changed pack blockstate/model/parent/texture dependencies",
+  "batch_size": 18,
+  "max_category_cards": 3,
+  "selection_note": "Full inventory; bounded diverse canonical review batches. Seeds below are historical priority hints only, NOT the discovery universe. Connectivity proposes boundaries and does not authorize migration. No manual decisions applied.",
   "vertical_gap_carriers": ["minecraft:oak_log","minecraft:birch_log","minecraft:spruce_log","minecraft:jungle_log","minecraft:acacia_log","minecraft:dark_oak_log"],
   "carrier_groups": [
     {"label":"Дерево / растительность", "ids":["minecraft:oak_log","minecraft:birch_log","minecraft:spruce_log","minecraft:jungle_log","minecraft:acacia_log","minecraft:dark_oak_log","minecraft:light_blue_wool","minecraft:lime_wool","minecraft:pink_wool","minecraft:yellow_wool","minecraft:cyan_wool"]},

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Bounded Catalog B: source-state spatial candidates, never logical families.
+"""Catalog B: full Yharnam inventory, bounded canonical-family review batches.
 
-Only explicitly listed terrain regions and seed carrier IDs are inspected.
-Connectivity is a proposal for human review, not a semantic object contract.
+Legacy v1 helpers remain for historical data/tests; CLI discovery uses v2.
+Connectivity proposes boundaries, never a runtime object contract.
 """
 from __future__ import annotations
 
@@ -67,8 +67,9 @@ def clusters(cells, vertical_gap_ids=()):
     """26-neighbor connectivity of selected raw carriers; no visual/family bounds."""
     remaining = set(cells)
     steps = [p for p in itertools.product((-1, 0, 1), repeat=3) if any(p)]
-    while remaining:
-        start = min(remaining, key=lambda p: (p[1], p[2], p[0]))
+    extra_steps = [(dx, dy, dz) for dx,dz in itertools.product((-1,0,1),repeat=2) for dy in (-6,-5,-4,-3,-2,2,3,4,5,6)]
+    for start in sorted(remaining, key=lambda p: (p[1], p[2], p[0])):
+        if start not in remaining: continue
         remaining.remove(start); queue = [start]; group = []
         while queue:
             pos = queue.pop(); group.append(pos)
@@ -76,7 +77,7 @@ def clusters(cells, vertical_gap_ids=()):
             # Explicit bounded source-space tree window: split-height carriers
             # can be separated by air. This is a proposal, never mesh-AABB union.
             if cells[pos][0] in vertical_gap_ids:
-                extra = [(dx, dy, dz) for dx,dz in itertools.product((-1,0,1),repeat=2) for dy in (-6,-5,-4,-3,-2,2,3,4,5,6)]
+                extra = extra_steps
             for step in steps + extra:
                 nxt = tuple(pos[i] + step[i] for i in range(3))
                 if step in extra and nxt in cells and cells[nxt][0] not in vertical_gap_ids: continue
@@ -244,16 +245,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source',type=Path,default=ROOT/'reference-inputs/source-world.zip')
     parser.add_argument('--manifest',type=Path,default=MANIFEST)
+    parser.add_argument('--previous',type=Path,help='Explicit historical baseline (normally use current manifest)')
     parser.add_argument('--scope',type=Path,default=SCOPE)
     parser.add_argument('--output',type=Path,default=ROOT/'build/source-assembly-review')
     parser.add_argument('--publish',type=Path,help='Copy only generated Catalog B assets to a tracked documentation directory')
     parser.add_argument('--render-only',action='store_true')
+    parser.add_argument('--no-render',action='store_true',help='Generate inventory/manifests only')
+    parser.add_argument('--batch-size',type=int,default=18)
     args = parser.parse_args()
     if args.render_only: manifest = json.loads(args.manifest.read_text(encoding='utf-8'))
     else:
-        previous = json.loads(args.manifest.read_text(encoding='utf-8')) if args.manifest.exists() else None
-        manifest = generate(args.source,json.loads(args.scope.read_text(encoding='utf-8')),previous)
+        baseline = args.previous or args.manifest
+        previous = json.loads(baseline.read_text(encoding='utf-8')) if baseline.exists() else None
+        from source_assembly_pipeline import generate_v2
+        manifest = generate_v2(args.source,json.loads(args.scope.read_text(encoding='utf-8')),previous,args.batch_size)
         dump(args.manifest,manifest)
+    if args.no_render:
+        print(json.dumps(manifest.get('coverage',{}),ensure_ascii=False)); return
     from source_assembly_render import render_catalog
     render_catalog(manifest,args.output)
     if args.publish:

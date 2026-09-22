@@ -1,5 +1,10 @@
 # Ручная курация logical families
 
+**Catalog B/Cxxx теперь имеет отдельный v2 pipeline:**
+[batch-02](manual-review/source-assemblies/batch-02/index.html),
+[правила signatures/coverage](CATALOG-B-V2.md). Ниже описан Catalog A/Fxxx;
+его `decide` нельзя применять к C-карточкам. Catalog B не применяет решения к моду.
+
 Этот этап не меняет Java, runtime resources, logical contracts POC или мир.
 Все 256 существующих families — кандидаты, не подтверждённые семантические объекты.
 Пять принятых POC имеют `status: APPROVED`, `architecture_status: POC_ACCEPTED`.

@@ -1,4 +1,66 @@
-# Manual Source Assembly Review — handoff
+# Catalog B v2 — актуальный handoff, 2026-09-22
+
+Изменён **только review pipeline**. Java, runtime resources, Contract V2, JAR,
+Catalog A/Fxxx и исходный мир не менялись. Ручные решения не применялись.
+
+- [Новая партия B / batch-02](docs/manual-review/source-assemblies/batch-02/index.html):
+  **18 canonical-карточек**; мини-preview каждого точного source pattern и все
+  независимые weighted/unweighted alternatives. Primary preview — схема, не
+  результат Minecraft positional RNG. Историческая batch-01 сохранена.
+- Полностью прочитаны **33 terrain regions / 21 503 chunks** `eh_s2:yharnam` из
+  правильного `source-world.zip`; `entities` и `poi` не считаются terrain.
+  Найдено **27 119 750 carrier cells**, **2 605 observed source states**.
+- **3 349 exact patterns**: 2 605 single-cell inventory templates + 744 multi-cell
+  proposals. После geometry-dedup: **2 241 canonical candidates** (1 570 single,
+  671 multi). Ещё **7 UNRESOLVED_VISUAL** сохранены явно, не выброшены.
+- **C005 → VARIANT_OF C001**. Нумерация прежних Cxxx и история не потеряны;
+  у C001 три exact source patterns. Все Cxxx остаются гипотезами, не contracts.
+- Отклонено 601 spatial cluster: 526 oversized (>24 cells), 75 extended bounds.
+  Их source states остаются в single-cell inventory. За пределами партии:
+  2 223 canonical + 7 unresolved candidates.
+
+Основные данные: `docs/manual-source-assemblies.json`,
+`docs/source-assembly-coverage.json`, `docs/source-assembly-carrier-index.json.gz`,
+`docs/source-assembly-exact-patterns.json.gz`,
+`docs/source-assembly-single-cell-candidates.json.gz`.
+Подробная семантика счётчиков/сигнатур: [CATALOG-B-V2.md](docs/CATALOG-B-V2.md).
+SQLite index — только воспроизводимый ignored cache, **не публикуется**.
+
+```powershell
+# Из Bloodborne-Blocks; Python + numpy/Pillow, vanilla client 1.20.1 в Loom cache.
+python -B -X utf8 tools/source_assembly_review.py --no-render
+python -B -X utf8 tools/source_assembly_review.py --render-only --output build/source-assembly-review-v2-final --publish docs/manual-review/source-assemblies/batch-02
+python -B -X utf8 -m unittest discover -s tools -p 'test_source_assembly*.py'
+python -B -X utf8 -m unittest discover -s tools -p 'test_manual_review*.py'
+python -B -X utf8 tools/verify_source_assembly_catalog.py
+```
+
+Не перепубликовывать batch-01 новым генератором. `--previous` нужен только для
+явного воспроизведения исторического baseline; обычный запуск использует текущий
+manifest. Новые ID append-only; обнаруженное расщепление прежней canonical family
+или auto-merge ID с ручным решением останавливает генерацию до явного review.
+
+Проверка: 21 узкий Catalog B test + 19 Catalog A tests; повторная генерация inventory была побайтово
+идентична; исходные ZIP защищены SHA-256; preview PNG просмотрены. Сборка JAR и
+конвертация мира в этом проходе не запускались. Независимое review выполнено;
+исправлены асимметричный tolerance/pairing, пропажа unresolved и риск сокрытия решений.
+Geometry hash стабилизирует floating-point шум четверть-оборотов и включает
+совместную orientation/позицию всех alternatives, а не только их multiset.
+Повторное независимое review этих исправлений — без замечаний.
+Portable QA: 251 файл, 18 карточек, все 162 independent choice previews на месте;
+относительные ссылки и соответствие batch snapshot полному registry проверены.
+SHA-256 manifest при повторной генерации:
+`2ece1aa77299b8701038fdfe89dbb5fca898c32019e37b99b483711130ab623b`.
+
+Следующий шаг: ручная проверка batch-02, особенно `POSSIBLY_INCOMPLETE` и смешанных
+connected proposals. Не выводить семантическую границу из соседства, category hint
+или одинакового набора source models. Не применять C-карточки к runtime до
+отдельного разрешения. Сборка остаётся накопительной после 20–30 подтверждённых
+и реализованных families.
+
+---
+
+## Исторический checkpoint 2026-09-21 (ниже не текущие команды/ограничения)
 
 Актуальный ограниченный checkpoint, 2026-09-21. **Не переделывать массово мод до
 ручной разметки. Не запускать полный discovery, world migration или section renderer.**
