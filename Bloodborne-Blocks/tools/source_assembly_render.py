@@ -18,6 +18,11 @@ BACKGROUND = (27, 30, 36)
 ROOT = Path(__file__).resolve().parents[1]
 os.environ.setdefault("BLOODBORNE_VANILLA_JAR", str(Path.home() / ".gradle/caches/fabric-loom/1.20.1/minecraft-client.jar"))
 SOURCE_PACK = ROOT / "reference-inputs/source-resource-pack.zip"
+INCOMPLETE_WARNING = "⚠ Возможно, объект найден не полностью. Обязательно проверь CONTEXT: соседние элементы могут принадлежать этому же объекту."
+REVIEW_SECTIONS = (
+    ("multi-cell", "MULTI-CELL ASSEMBLIES", "Две и более исходные ячейки: проверьте, какие части принадлежат одному объекту, а какие являются окружением."),
+    ("single-model", "SINGLE-MODEL / PALETTE VARIANTS", "Одна исходная ячейка: проверяйте внешний вид предмета и варианты палитры. Здесь не требуется решать, какие соседние блоки склеивать."),
+)
 
 
 def _deps():
@@ -140,6 +145,35 @@ def _patterns(candidate):
     }]
 
 
+def _review_group(candidate):
+    return "multi-cell" if len(candidate["components"]) > 1 else "single-model"
+
+
+def _incomplete(candidate):
+    return "POSSIBLY_INCOMPLETE" in candidate.get("boundary_flags", []) or any(
+        "POSSIBLY_INCOMPLETE" in p.get("boundary_flags", []) for p in _patterns(candidate))
+
+
+def _review_summary(candidate):
+    count = len(_patterns(candidate))
+    boundary = "POSSIBLY_INCOMPLETE" if _incomplete(candidate) else "COMPLETE"
+    merged = f"<p>Объединено исходных вариантов: {count}</p>" if count > 1 else ""
+    boundary_note = "<p><small>COMPLETE: в данных нет флага неполноты; это ещё не ручное подтверждение границы объекта.</small></p>" if boundary == "COMPLETE" else ""
+    return (f"<div class='review-facts'><p>Количество source cells: {len(candidate['components'])}</p>"
+            f"<p>Найдено точных вариантов этой конструкции: {count}</p>"
+            f"<p>Граница: {boundary}</p>{boundary_note}{merged}</div>")
+
+
+def _answer_examples(candidate):
+    rid = candidate["review_id"]
+    answers = [f"{rid} NEEDS_REVIEW: описание сомнения"]
+    if not _incomplete(candidate):
+        answers.append(f"{rid} OBJECT: " + ("номера частей; номера окружения=CONTEXT" if len(candidate["components"]) > 1 else "1"))
+    if len(candidate["components"]) > 1:
+        answers += [f"{rid} SPLIT: номера первой группы / номера второй группы", f"{rid} CONNECTED"]
+    return "\n".join(answers + [f"{rid} NOT_OBJECT", f"VARIANTS: {rid}+Cyyy", f"STATE_VARIANTS: {rid}+Cyyy"])
+
+
 def _choice_images(candidate, pattern, images):
     """Render every alternative independently; never form a cartesian product."""
     result = []
@@ -173,19 +207,29 @@ def render_catalog(manifest, output: Path):
         'snapshot_scope':'Selected batch + their aliases only; full inventory: docs/manual-source-assemblies.json',
         'candidates':[r for r in manifest['candidates'] if r['review_id'] in selected or r.get('variant_of') in selected]}
     (output / f"{batch_id}-manifest.json").write_text(json.dumps(snapshot, ensure_ascii=False, indent=2)+"\n", encoding="utf8")
-    thumbs = []
-    for candidate in candidates:
-        strip = Image.open(rendered[candidate["review_id"]]["assembled"]).convert("RGB")
-        im = strip.crop((0, 34, 270, 304)).resize((240, 240))
-        title = candidate['hypothesis'][:30] + ('…' if len(candidate['hypothesis']) > 30 else '')
-        short_title = f"{candidate['review_id']} · {len(candidate['components'])} source cells"
-        thumbs.append(_caption(im, short_title))
-    _grid(thumbs, 4, "Catalog B — bounded source assemblies").save(output / f"{batch_id}-contact.png")
-    cards = []
+    contact_sections = []
+    for group, title, _description in REVIEW_SECTIONS:
+        thumbs = []
+        for candidate in candidates:
+            if _review_group(candidate) != group: continue
+            strip = Image.open(rendered[candidate["review_id"]]["assembled"]).convert("RGB")
+            im = strip.crop((0, 34, 270, 304)).resize((240, 240))
+            short_title = f"{candidate['review_id']} · {len(candidate['components'])} source cells"
+            thumbs.append(_caption(im, short_title))
+        if thumbs: contact_sections.append(_grid(thumbs, 4, title))
+    if contact_sections:
+        contact = Image.new("RGB", (max(im.width for im in contact_sections), sum(im.height for im in contact_sections)+16*(len(contact_sections)-1)), BACKGROUND)
+        top = 0
+        for section in contact_sections:
+            contact.paste(section, (0, top)); top += section.height+16
+        contact.save(output / f"{batch_id}-contact.png")
+    cards = {group: [] for group, _title, _description in REVIEW_SECTIONS}
     for candidate in candidates:
         rid, paths = candidate["review_id"], rendered[candidate["review_id"]]
         pictures = " ".join(f'<a href="{html.escape(Path(p).relative_to(output).as_posix())}"><img src="{html.escape(Path(p).relative_to(output).as_posix())}" alt="{rid}"></a>' for kind, p in paths.items() if kind != 'approximate')
-        answer = f"{rid} OBJECT: 1+2; 3=CONTEXT / SPLIT:1+2 /3+4 / CONNECTED / NOT_OBJECT / NEEDS_REVIEW"
+        answer = _answer_examples(candidate)
+        alert = f"<div class='incomplete-alert' role='alert'>{INCOMPLETE_WARNING}</div>" if _incomplete(candidate) else ""
+        summary = _review_summary(candidate)
         component_rows = ''.join(f"<tr><td>{c['number']}</td><td>{html.escape(str(c['relative']))}</td><td>{html.escape(c['source']['id'])} {html.escape(str(c['source'].get('properties', {})))}</td><td>{html.escape(str(c.get('apps', [])))}</td><td>{len(c.get('model_choices', []))} independent choice groups</td></tr>" for c in candidate['components'])
         context_rows = ''.join(f"<tr><td>{html.escape(str(c['relative']))}</td><td>{html.escape(c['source']['id'])} {html.escape(str(c['source'].get('properties', {})))}</td></tr>" for c in candidate.get('context', []))
         example = candidate.get('example', {})
@@ -197,12 +241,16 @@ def render_catalog(manifest, output: Path):
             rows=''.join(f"<tr><td>{c['number']}</td><td>{html.escape(str(c['relative']))}</td><td>{html.escape(c['source']['id'])} {html.escape(str(c['source'].get('properties', {})))}</td><td>{html.escape(str(c.get('apps', [])))}</td></tr>" for c in pattern['components'])
             flags = pattern.get('boundary_flags', candidate.get('boundary_flags', [])); flag_text = html.escape(', '.join(flags) if isinstance(flags, list) else str(flags))
             warning = '<b class="warning">POSSIBLY_INCOMPLETE</b>' if 'POSSIBLY_INCOMPLETE' in flags else ''
-            pattern_html.append(f"<section><h3>Exact pattern {html.escape(pattern['pattern_id'])} {warning}</h3><img src='{preview}'><p>signature: {html.escape(str(pattern.get('exact_source_signature')))}; example: {html.escape(str(pattern.get('example')))}; count: {pattern.get('similar_count')}; rotations: {html.escape(str(pattern.get('rotations')))}; boundary flags: {flag_text}</p><table><tr><th>№</th><th>relative</th><th>source/properties</th><th>apps</th></tr>{rows}</table></section>")
+            pattern_html.append(f"<section><h3>Exact pattern {html.escape(pattern['pattern_id'])} {warning}</h3><img src='{preview}'><p>Совпадений этой точной исходной схемы на карте: {pattern.get('similar_count', 'нет данных')}. Это число совпадений source cells, а не подтверждённых отдельных предметов.</p><details><summary>Координаты и технические данные варианта</summary><p>signature: {html.escape(str(pattern.get('exact_source_signature')))}; example: {html.escape(str(pattern.get('example')))}; rotations: {html.escape(str(pattern.get('rotations')))}; boundary flags: {flag_text}</p><table><tr><th>№</th><th>relative</th><th>source/properties</th><th>apps</th></tr>{rows}</table></details></section>")
         choices=[choice for pattern in _patterns(candidate) for choice in _choice_images(candidate, pattern, images)]
         choice_html=''.join(f"<figure style='display:inline-block'><img style='max-width:180px' src='{path.relative_to(output).as_posix()}' alt='cell {number} group {group} alternative {alt}'><figcaption>{html.escape(path.stem)}</figcaption></figure>" for number,group,alt,path in choices)
         aliases=[row['review_id'] for row in manifest.get('candidates',[]) if row.get('variant_of') == rid]
-        alias_html=f"<p>Aliases / VARIANT_OF: {html.escape(', '.join(aliases) or '—')}</p>"
-        cards.append(f"<article id='{rid}'><h2>{rid} · {html.escape(candidate['hypothesis'])}</h2><p>{html.escape(candidate.get('count_scope',''))}; coverage: {html.escape(str(manifest.get('coverage', {})))}; {facts}</p>{alias_html}{approx}{pictures}<h3>Exemplar source cells</h3><table><tr><th>№</th><th>relative XYZ</th><th>source/properties</th><th>apps/transforms</th><th>choice groups</th></tr>{component_rows}</table><h3>All independent alternatives (not cartesian assembly)</h3>{choice_html}<h3>Full context source cells</h3><table><tr><th>relative XYZ</th><th>source/properties</th></tr>{context_rows}</table>{''.join(pattern_html)}<pre>{html.escape(answer)}</pre></article>")
+        alias_html=f"<p>Прежние карточки {html.escape(', '.join(aliases))} теперь входят в {rid} (VARIANT_OF). Их исходные варианты сохранены ниже.</p>" if aliases else ""
+        occurrences = candidate.get('similar_count', sum(p.get('similar_count', 0) for p in _patterns(candidate)))
+        match_note = f"<p>Совпадений исходных схем на карте: {occurrences}. Это сумма совпадений всех точных вариантов; они могут пересекаться и не равны числу отдельных объектов.</p>"
+        cards[_review_group(candidate)].append(f"<article id='{rid}'><h2>{rid} · {html.escape(candidate['hypothesis'])}</h2>{alert}{summary}{alias_html}{approx}{pictures}<details><summary>Технические данные исходных ячеек и подсчёта</summary>{match_note}<p>{html.escape(candidate.get('count_scope',''))}; {facts}</p><table><tr><th>№</th><th>relative XYZ</th><th>source/properties</th><th>apps/transforms</th><th>choice groups</th></tr>{component_rows}</table></details><h3>CONTEXT — соседние элементы, не включённые в объект автоматически</h3><p>Контекст показан на третьем изображении выше. При неполной границе сначала проверьте его; OBJECT допустим только после этой проверки, не выбран по умолчанию.</p><details><summary>Все исходные ячейки CONTEXT</summary><table><tr><th>relative XYZ</th><th>source/properties</th></tr>{context_rows}</table></details><h3>Все независимые варианты моделей</h3>{choice_html}{''.join(pattern_html)}<h3>Примеры формата ответа — решение не выбрано</h3><pre>{html.escape(answer)}</pre></article>")
     scope = html.escape(json.dumps({"source": manifest.get("source"), "scan_scope": manifest.get("scan_scope")}, ensure_ascii=False))
-    (output / "index.html").write_text(f"<!doctype html><meta charset='utf-8'><title>Catalog B</title><style>body{{background:#1b1e24;color:#eee;font:16px sans-serif;margin:20px}}article{{border-top:1px solid #555;padding:15px 0}}img{{max-width:32%;vertical-align:top}}table,td,th{{border:1px solid #667;border-collapse:collapse;padding:4px}}.warning{{color:#ffd35a;background:#5e3c16;padding:3px}}pre{{white-space:pre-wrap;background:#292d35;padding:10px}}</style><h1>Catalog B — source assemblies</h1><p>{scope}</p>{''.join(cards)}", encoding="utf8")
+    sections = "".join(f"<section class='review-section' data-review-group='{group}'><h2 class='section-title'>{title}</h2><p>{description}</p>{''.join(cards[group])}</section>" for group,title,description in REVIEW_SECTIONS)
+    guide = "<p>Source cell — одна исходная ячейка карты. Точный вариант — одна сохранённая схема расположения и состояний этих ячеек, а не число её повторений в городе.</p><p>COMPLETE означает только отсутствие флага неполноты в текущих данных; это не подтверждение границы или предмета человеком. Любой кандидат требует проверки.</p><h2>Как связать отдельные карточки</h2><pre>VARIANTS: Cxxx+Cyyy\nSTATE_VARIANTS: Cxxx+Cyyy</pre><p><b>VARIANTS</b> — разные внешние варианты одного смыслового предмета. <b>STATE_VARIANTS</b> — состояния одного объекта, например open/closed или варианты формы. Замените Cxxx/Cyyy реальными ID; это формат ручного ответа, не автоматическое применение к моду.</p>"
+    (output / "index.html").write_text(f"<!doctype html><html lang='ru'><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Catalog B — ручная проверка</title><style>body{{background:#1b1e24;color:#eee;font:16px sans-serif;margin:20px;line-height:1.5}}article{{border-top:1px solid #555;padding:15px 0}}img{{max-width:32%;vertical-align:top}}table,td,th{{border:1px solid #667;border-collapse:collapse;padding:4px}}.warning{{color:#ffd35a;background:#5e3c16;padding:3px}}.incomplete-alert{{background:#ffda8a;color:#201500;border:4px solid #f49c16;border-radius:8px;padding:18px;margin:16px 0;font-size:20px;font-weight:800}}.review-facts{{background:#292d35;padding:8px 16px;border-left:4px solid #8db9ee}}.review-facts p{{margin:4px 0}}.section-title{{background:#334c65;padding:16px;margin-top:40px;border-top:4px solid #8db9ee}}details{{margin:14px 0;overflow:auto}}summary{{cursor:pointer;font-weight:bold}}pre{{white-space:pre-wrap;background:#292d35;padding:10px}}</style><h1>Catalog B — ручная проверка</h1>{guide}<details><summary>Область поиска и техническая статистика</summary><p>{scope}</p><pre>{html.escape(json.dumps(manifest.get('coverage', {}),ensure_ascii=False,indent=2))}</pre></details>{sections}</html>", encoding="utf8")
     return output / "index.html"

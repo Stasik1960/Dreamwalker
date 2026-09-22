@@ -1,5 +1,40 @@
 # Catalog B v2 — актуальный handoff, 2026-09-22
 
+## Последнее обновление: только интерфейс ручной проверки
+
+Portable [batch-02](docs/manual-review/source-assemblies/batch-02/index.html)
+повторно отрисован из существующего manifest, **без нового сканирования мира**.
+Все 18 карточек и их C-ID сохранены: две отдельные секции — 11
+`MULTI-CELL ASSEMBLIES` и 7 `SINGLE-MODEL / PALETTE VARIANTS`.
+На 15 карточках `POSSIBLY_INCOMPLETE` сверху заметное предупреждение проверить
+CONTEXT; в их примерах ответа нет предложения `OBJECT` по умолчанию.
+Каждая карточка объясняет число source cells, число точных source patterns и
+границу; `COMPLETE` явно не означает ручное подтверждение объекта.
+Несколько patterns отмечаются как «Объединено исходных вариантов»;
+`C005 → VARIANT_OF C001` виден непосредственно на C001.
+
+Добавлены форматы ручного ответа `VARIANTS: Cxxx+Cyyy` (внешние варианты одного
+смыслового предмета) и `STATE_VARIANTS: Cxxx+Cyyy` (состояния/формы).
+Это только инструкции человеку: никакие решения, aliases или состояния
+runtime автоматически не применяются. Discovery, signatures, candidates,
+manifest semantics, мод, Contract V2, JAR и карта **не изменены**.
+Полный manifest и portable snapshot остались побайтово прежними; snapshot SHA-256:
+`664b19334e5356a8413b2e664b306af582a16d92bab226e52a1e1d92ad539ba6`.
+
+Выполнены 22 Catalog B tests (включая проверки интерфейса и неизменности данных),
+19 Catalog A tests, portable verifier: 18 карточек, 162 choice previews,
+251 файл, все относительные ссылки и snapshot/registry соответствуют.
+Contact sheet просмотрен. Тестовые сканы используют только синтетические fixtures,
+не исходную карту. JAR не собирался.
+
+Команда этого UI-only обновления (из `Bloodborne-Blocks`):
+
+```powershell
+python -B -X utf8 tools/source_assembly_review.py --render-only --output build/source-assembly-review-ui --publish docs/manual-review/source-assemblies/batch-02
+```
+
+## Данные предыдущего полного discovery v2 (не перезапускался при UI-обновлении)
+
 Изменён **только review pipeline**. Java, runtime resources, Contract V2, JAR,
 Catalog A/Fxxx и исходный мир не менялись. Ручные решения не применялись.
 
