@@ -6,6 +6,8 @@ import unittest
 from pathlib import Path
 
 from source_assembly_pipeline import active_choices, exact_signature, choose_batch, assert_merge_authority
+from source_review_decisions import DECISIONS
+from verify_source_assembly_catalog import assert_snapshot_registry, assert_selected_package_decisions
 
 
 class PipelineTests(unittest.TestCase):
@@ -49,6 +51,23 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(len(picked),18); self.assertNotIn('C001',picked); self.assertNotIn('C002',picked)
         self.assertEqual(picked,choose_batch(list(reversed(rows)),18))
 
+    def test_snapshot_overlay_allows_later_nonselected_batch(self):
+        def row(review_id, signature):
+            return {'review_id': review_id, 'exact_source_signature': signature, 'immutable': review_id,
+                    'status': 'UNREVIEWED', 'user_decision': None, 'history': []}
+        snapshot = {'candidates': [row('C001', 'sig-1'), row('C099', 'sig-99')]}
+        current = copy.deepcopy(snapshot)
+        first, later = current['candidates']
+        first.update(status='REVIEWED', user_decision={'kind': 'OBJECT'})
+        first['history'].append({'event': 'manual_review', 'batch': 'batch-02', 'decision': first['user_decision'],
+                                 'preserved_exact_source_signature': 'sig-1'})
+        later.update(status='REVIEWED', user_decision={'kind': 'SPLIT'})
+        later['history'].append({'event': 'manual_review', 'batch': 'batch-03', 'decision': later['user_decision'],
+                                 'preserved_exact_source_signature': 'sig-99'})
+        manifest = {'candidates': current['candidates']}
+        assert_snapshot_registry(snapshot, manifest)
+        assert_selected_package_decisions(snapshot, manifest, ['C001'], {'C001': {'kind': 'OBJECT'}}, 'batch-02')
+
     def test_published_inventory_partitions_all_exact_patterns(self):
         root = Path(__file__).resolve().parents[1]
         manifest = json.loads((root/'docs/manual-source-assemblies.json').read_text(encoding='utf8'))
@@ -62,7 +81,12 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(len(canonical),len(set(canonical)))
         self.assertEqual(rows['C005']['variant_of'],'C001')
         self.assertEqual(len(manifest['batch_review_ids']),18)
-        self.assertTrue(all(rows[r]['status']=='UNREVIEWED' for r in manifest['batch_review_ids']))
+        self.assertEqual(set(manifest['batch_review_ids']),set(DECISIONS))
+        self.assertTrue(all(rows[r]['status']=='REVIEWED' for r in manifest['batch_review_ids']))
+        self.assertTrue(all(rows[r]['user_decision']==DECISIONS[r] for r in manifest['batch_review_ids']))
+        snapshot=json.loads((root/'docs/manual-review/source-assemblies/batch-02/batch-02-manifest.json').read_text(encoding='utf8'))
+        assert_snapshot_registry(snapshot,manifest)
+        assert_selected_package_decisions(snapshot, manifest, manifest['batch_review_ids'], DECISIONS, 'batch-02')
         self.assertEqual(len({rows[r]['canonical_visual_family_signature'] for r in manifest['batch_review_ids']}),18)
         self.assertLessEqual(sum(rows[r]['category']=='tree' for r in manifest['batch_review_ids']),3)
 

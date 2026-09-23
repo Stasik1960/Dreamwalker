@@ -82,6 +82,9 @@ public final class BloodborneBlocks implements ModInitializer {
     if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
+   if(p==null&&d.logical&&Set.of("variant","placement_height").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
+   if(p==null&&d.logical&&name.equals("hinge"))p=net.minecraft.state.property.Properties.DOOR_HINGE;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
    if(p==null&&name.equals("open"))p=net.minecraft.state.property.Properties.OPEN;

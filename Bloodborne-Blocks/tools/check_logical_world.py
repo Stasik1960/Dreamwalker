@@ -99,7 +99,7 @@ def independently_accepted_effects(before, rules, old_entities, owned):
     """
     starts = {}
     for rule in rules:
-        starts.setdefault(rule.source.state, []).append((rule, "legacy", (0, 0, 0)))
+        starts.setdefault(rule.source.state, []).append((rule, "legacy", rule.source.offset))
         if rule.components:
             first = rule.components[0]
             starts.setdefault(first.state, []).append((rule, "v2", first.offset))
@@ -135,6 +135,9 @@ def independently_accepted_effects(before, rules, old_entities, owned):
         source = {tuple(origin[i] + part.offset[i] for i in range(3)) for part in pieces}
         if len(source) != len(pieces) or any(before.get(dim, tuple(origin[i] + part.offset[i] for i in range(3))) != part.state for part in pieces):
             continue
+        if rule.variant_guards:
+            from source_variant_rng import guards_match
+            if not guards_match(rule.variant_guards,origin): continue
         root = tuple(origin[i] + rule.root_offset[i] for i in range(3))
         writes = {tuple(root[i] + offset[i] for i in range(3)): (PART, ()) for offset in rule.shape}
         writes[root] = rule.target
@@ -228,6 +231,10 @@ def validate_ledger(before, report, rules):
             source.add(point)
         if len(source) != len(pieces) or sorted(map(tuple, entry["source"])) != sorted(source):
             raise AssertionError("ledger source positions do not match rule")
+        if rule.variant_guards:
+            from source_variant_rng import guards_match
+            if not guards_match(rule.variant_guards,origin):
+                raise AssertionError('ledger does not preserve positional source visual')
         root = tuple(origin[i] + rule.root_offset[i] for i in range(3))
         if tuple(entry["targetRoot"]) != root:
             raise AssertionError("ledger moved the root outside its rule")

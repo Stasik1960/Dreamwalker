@@ -1,0 +1,1133 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "path": "reference-inputs/source-world.zip",
+    "sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51",
+    "readRegionMembers": [
+      "ether/dimensions/eh_s2/yharnam/region/r.-1.-1.mca",
+      "ether/dimensions/eh_s2/yharnam/region/r.-1.0.mca",
+      "ether/dimensions/eh_s2/yharnam/region/r.-2.-1.mca"
+    ]
+  },
+  "cases": [
+    {
+      "review_id": "C001",
+      "family": "o_c001_a",
+      "pattern": "A",
+      "anchor": [
+        -284,
+        46,
+        -68
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_a",
+      "rule": 12,
+      "origin": [
+        -284,
+        46,
+        -68
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            6,
+            0
+          ],
+          "weights": [
+            1,
+            1
+          ],
+          "indices": [
+            1
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C001",
+      "family": "o_c001_b",
+      "pattern": "A",
+      "anchor": [
+        -284,
+        46,
+        -68
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_b",
+      "rule": 15,
+      "origin": [
+        -283,
+        46,
+        -67
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C001",
+      "family": "o_c001_a",
+      "pattern": "B",
+      "anchor": [
+        -169,
+        55,
+        -40
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_a",
+      "rule": 11,
+      "origin": [
+        -169,
+        55,
+        -40
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            6,
+            0
+          ],
+          "weights": [
+            1,
+            1
+          ],
+          "indices": [
+            0
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C001",
+      "family": "o_c001_b",
+      "pattern": "B",
+      "anchor": [
+        -169,
+        55,
+        -40
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_b",
+      "rule": 15,
+      "origin": [
+        -169,
+        55,
+        -39
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C001",
+      "family": "o_c001_a",
+      "pattern": "C",
+      "anchor": [
+        -242,
+        89,
+        -273
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_a",
+      "rule": 13,
+      "origin": [
+        -242,
+        89,
+        -273
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            6,
+            0
+          ],
+          "weights": [
+            1,
+            1
+          ],
+          "indices": [
+            0
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C001",
+      "family": "o_c001_b",
+      "pattern": "C",
+      "anchor": [
+        -242,
+        89,
+        -273
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_b",
+      "rule": 16,
+      "origin": [
+        -243,
+        89,
+        -272
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C002",
+      "family": "o_c002",
+      "pattern": "A",
+      "anchor": [
+        -283,
+        43,
+        -76
+      ],
+      "selectedCellCount": 2,
+      "contextCellCount": 17,
+      "status": "passed",
+      "target": "o_c002",
+      "rule": 18,
+      "origin": [
+        -283,
+        43,
+        -76
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C003",
+      "family": "o_c003",
+      "pattern": "A",
+      "anchor": [
+        -432,
+        60,
+        -210
+      ],
+      "selectedCellCount": 6,
+      "contextCellCount": 47,
+      "status": "passed",
+      "target": "o_c003",
+      "rule": 20,
+      "origin": [
+        -432,
+        60,
+        -210
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "weights": [
+            500,
+            300,
+            500,
+            500,
+            500,
+            500
+          ],
+          "indices": [
+            3
+          ],
+          "multipart": false
+        },
+        {
+          "offset": [
+            -4,
+            0,
+            1
+          ],
+          "weights": [
+            100,
+            100
+          ],
+          "indices": [
+            0
+          ],
+          "multipart": false
+        },
+        {
+          "offset": [
+            -2,
+            0,
+            1
+          ],
+          "weights": [
+            500,
+            300,
+            500,
+            500,
+            500,
+            500
+          ],
+          "indices": [
+            2
+          ],
+          "multipart": false
+        },
+        {
+          "offset": [
+            -1,
+            0,
+            1
+          ],
+          "weights": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "indices": [
+            2
+          ],
+          "multipart": false
+        },
+        {
+          "offset": [
+            -1,
+            0,
+            2
+          ],
+          "weights": [
+            500,
+            300,
+            500,
+            500,
+            500,
+            500
+          ],
+          "indices": [
+            1
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C008",
+      "family": "o_c008",
+      "pattern": "A",
+      "anchor": [
+        -421,
+        84,
+        -91
+      ],
+      "selectedCellCount": 6,
+      "contextCellCount": 30,
+      "status": "passed",
+      "target": "o_c008",
+      "rule": 21,
+      "origin": [
+        -421,
+        84,
+        -91
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C009",
+      "family": "o_c009_a",
+      "pattern": "A",
+      "anchor": [
+        -323,
+        -19,
+        -81
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_a",
+      "rule": 13,
+      "origin": [
+        -323,
+        -19,
+        -81
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            6,
+            0
+          ],
+          "weights": [
+            1,
+            1
+          ],
+          "indices": [
+            0
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C009",
+      "family": "o_c009_b",
+      "pattern": "A",
+      "anchor": [
+        -323,
+        -19,
+        -81
+      ],
+      "selectedCellCount": 3,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c001_b",
+      "rule": 16,
+      "origin": [
+        -322,
+        -19,
+        -80
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": true,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C471",
+      "family": "o_c471",
+      "pattern": "A",
+      "anchor": [
+        -606,
+        75,
+        -169
+      ],
+      "selectedCellCount": 2,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c471",
+      "rule": 25,
+      "origin": [
+        -606,
+        75,
+        -169
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C046",
+      "family": "o_c046",
+      "pattern": "A",
+      "anchor": [
+        -403,
+        60,
+        -261
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 27,
+      "status": "passed",
+      "target": "o_c046",
+      "rule": 27,
+      "origin": [
+        -403,
+        60,
+        -261
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 3,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C1680",
+      "family": "o_c1680",
+      "pattern": "A",
+      "anchor": [
+        -474,
+        56,
+        -246
+      ],
+      "selectedCellCount": 2,
+      "contextCellCount": 16,
+      "status": "passed",
+      "target": "o_c1680",
+      "rule": 31,
+      "origin": [
+        -474,
+        56,
+        -246
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C474",
+      "family": "o_c474",
+      "pattern": "A",
+      "anchor": [
+        -566,
+        85,
+        -165
+      ],
+      "selectedCellCount": 16,
+      "contextCellCount": 1,
+      "status": "passed",
+      "target": "o_c474",
+      "rule": 32,
+      "origin": [
+        -566,
+        85,
+        -165
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C1962",
+      "family": "o_c1962",
+      "pattern": "A",
+      "anchor": [
+        -586,
+        83,
+        -25
+      ],
+      "selectedCellCount": 2,
+      "contextCellCount": 23,
+      "status": "passed",
+      "target": "o_c1962",
+      "rule": 34,
+      "origin": [
+        -586,
+        83,
+        -25
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "weights": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "indices": [
+            2
+          ],
+          "multipart": false
+        },
+        {
+          "offset": [
+            1,
+            0,
+            1
+          ],
+          "weights": [
+            100,
+            100,
+            100,
+            100
+          ],
+          "indices": [
+            3
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C1979",
+      "family": "o_c1979",
+      "pattern": "A",
+      "anchor": [
+        -448,
+        113,
+        45
+      ],
+      "selectedCellCount": 11,
+      "contextCellCount": 99,
+      "status": "passed",
+      "target": "o_c1979",
+      "rule": 36,
+      "origin": [
+        -447,
+        113,
+        45
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "weights": [
+            500,
+            500,
+            100
+          ],
+          "indices": [
+            0
+          ],
+          "multipart": false
+        },
+        {
+          "offset": [
+            4,
+            1,
+            0
+          ],
+          "weights": [
+            500,
+            500,
+            100
+          ],
+          "indices": [
+            1
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 2,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C028",
+      "family": "o_c028",
+      "pattern": "A",
+      "anchor": [
+        -492,
+        41,
+        -322
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 19,
+      "status": "passed",
+      "target": "o_c028",
+      "rule": 37,
+      "origin": [
+        -492,
+        41,
+        -322
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C028",
+      "family": "o_c028",
+      "pattern": "B",
+      "anchor": [
+        -442,
+        65,
+        -310
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 12,
+      "status": "passed",
+      "target": "o_c028",
+      "rule": 38,
+      "origin": [
+        -442,
+        65,
+        -310
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C028",
+      "family": "o_c028",
+      "pattern": "C",
+      "anchor": [
+        -490,
+        41,
+        -323
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 14,
+      "status": "passed",
+      "target": "o_c028",
+      "rule": 40,
+      "origin": [
+        -490,
+        41,
+        -323
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C028",
+      "family": "o_c028",
+      "pattern": "D",
+      "anchor": [
+        -374,
+        41,
+        -314
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 16,
+      "status": "passed",
+      "target": "o_c028",
+      "rule": 39,
+      "origin": [
+        -374,
+        41,
+        -314
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C282",
+      "family": "o_c282",
+      "pattern": "A",
+      "anchor": [
+        -493,
+        57,
+        -330
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 4,
+      "status": "passed",
+      "target": "o_c282",
+      "rule": 44,
+      "origin": [
+        -493,
+        57,
+        -330
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C282",
+      "family": "o_c282",
+      "pattern": "B",
+      "anchor": [
+        -485,
+        78,
+        -379
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 4,
+      "status": "passed",
+      "target": "o_c282",
+      "rule": 41,
+      "origin": [
+        -485,
+        78,
+        -379
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C282",
+      "family": "o_c282",
+      "pattern": "C",
+      "anchor": [
+        -246,
+        71,
+        -260
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 4,
+      "status": "passed",
+      "target": "o_c282",
+      "rule": 42,
+      "origin": [
+        -246,
+        71,
+        -260
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C282",
+      "family": "o_c282",
+      "pattern": "D",
+      "anchor": [
+        -512,
+        48,
+        -367
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 4,
+      "status": "passed",
+      "target": "o_c282",
+      "rule": 43,
+      "origin": [
+        -512,
+        48,
+        -367
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C561",
+      "family": "o_c561",
+      "pattern": "A",
+      "anchor": [
+        -443,
+        65,
+        -297
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 16,
+      "status": "passed",
+      "target": "o_c046",
+      "rule": 27,
+      "origin": [
+        -443,
+        65,
+        -297
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C561",
+      "family": "o_c561",
+      "pattern": "B",
+      "anchor": [
+        -451,
+        65,
+        -278
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 18,
+      "status": "passed",
+      "target": "o_c046",
+      "rule": 29,
+      "origin": [
+        -451,
+        65,
+        -278
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 1
+    },
+    {
+      "review_id": "C561",
+      "family": "o_c561",
+      "pattern": "C",
+      "anchor": [
+        -474,
+        65,
+        -292
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 11,
+      "status": "passed",
+      "target": "o_c046",
+      "rule": 30,
+      "origin": [
+        -474,
+        65,
+        -292
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C561",
+      "family": "o_c561",
+      "pattern": "D",
+      "anchor": [
+        -461,
+        65,
+        -311
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 14,
+      "status": "passed",
+      "target": "o_c046",
+      "rule": 28,
+      "origin": [
+        -461,
+        65,
+        -311
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C618",
+      "family": "o_c618",
+      "pattern": "A",
+      "anchor": [
+        -449,
+        31,
+        -323
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 2,
+      "status": "passed",
+      "target": "o_c618",
+      "rule": 47,
+      "origin": [
+        -449,
+        31,
+        -323
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "weights": [
+            100,
+            50,
+            500
+          ],
+          "indices": [
+            2
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C654",
+      "family": "o_c654",
+      "pattern": "A",
+      "anchor": [
+        -457,
+        38,
+        -323
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 7,
+      "status": "passed",
+      "target": "o_c654",
+      "rule": 49,
+      "origin": [
+        -457,
+        37,
+        -323
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C654",
+      "family": "o_c654",
+      "pattern": "B",
+      "anchor": [
+        -465,
+        38,
+        -323
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 10,
+      "status": "passed",
+      "target": "o_c654",
+      "rule": 51,
+      "origin": [
+        -465,
+        37,
+        -323
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C654",
+      "family": "o_c654",
+      "pattern": "C",
+      "anchor": [
+        -410,
+        129,
+        32
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 2,
+      "status": "passed",
+      "target": "o_c654",
+      "rule": 48,
+      "origin": [
+        -410,
+        128,
+        32
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C654",
+      "family": "o_c654",
+      "pattern": "D",
+      "anchor": [
+        -244,
+        140,
+        48
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 0,
+      "status": "passed",
+      "target": "o_c654",
+      "rule": 50,
+      "origin": [
+        -244,
+        139,
+        48
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C1319",
+      "family": "o_c1319",
+      "pattern": "A",
+      "anchor": [
+        -509,
+        4,
+        -313
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 9,
+      "status": "passed",
+      "target": "o_c1319",
+      "rule": 52,
+      "origin": [
+        -509,
+        4,
+        -313
+      ],
+      "variantGuards": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "weights": [
+            100,
+            100
+          ],
+          "indices": [
+            0
+          ],
+          "multipart": false
+        }
+      ],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    },
+    {
+      "review_id": "C1491",
+      "family": "o_c1491",
+      "pattern": "A",
+      "anchor": [
+        -289,
+        43,
+        -66
+      ],
+      "selectedCellCount": 1,
+      "contextCellCount": 4,
+      "status": "passed",
+      "target": "o_c1491",
+      "rule": 53,
+      "origin": [
+        -289,
+        43,
+        -66
+      ],
+      "variantGuards": [],
+      "protectedNumberedContext": 0,
+      "coLocatedSplitSibling": false,
+      "independentlyConvertedObjects": 0
+    }
+  ]
+}

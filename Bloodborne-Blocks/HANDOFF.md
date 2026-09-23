@@ -1,4 +1,44 @@
-# Catalog B v2 — актуальный handoff, 2026-09-22
+# Bloodborne-Blocks — актуальный handoff, 2026-09-23
+
+## Текущий checkpoint: ручные решения Catalog B batch-02 реализованы
+
+18 подтверждённых C-карточек скомпилированы в **20 новых logical families**
+(C001/C009 дают по два самостоятельных объекта). С пятью исходными POC теперь
+**25 Contract V2 families**, все 25 асимметричны и имеют `facing`; один также
+использует connection states. Это интеграционный checkpoint, **не завершение
+нормализации всего города**. Batch-03 не реализовывался, массовая конвертация
+и новый discovery не запускались. Исходные ZIP не изменялись.
+
+- Authoritative решения и история: `docs/manual-source-assemblies.json`;
+  frozen batch-02 snapshot, C-ID, source signatures и discovery сохранены.
+- Реализованы C001, C002, C003, C008, C009, C471, C046, C1680, C474, C1962,
+  C1979, C028, C282, C561, C618, C654, C1319, C1491.
+- Раздельные render/selection/collision/migration contracts; helpers только
+  из явно заданного interaction footprint, не из mesh. C046 2/3/4 и C1979 1/11
+  остаются CONTEXT. Деревья имеют TRUNK, C474 — POST, C1979 — два опорных box.
+- Orientation QA: **912 проверок PASS** (mesh с UV/текстурой, collision,
+  selection, helpers, неизменность master при четырёх yaw).
+- Проверены **43 эффективных reviewed exact rules**, идемпотентность,
+  foreign block entities/ticks, границы чанков/секций и независимый ledger checker.
+  **36/36 реальных source examples PASS**, включая co-located SPLIT и реальные
+  занятые клетки в helper destinations. Это не скан всей карты.
+- Серверные GameTests: **11/11 PASS**; накопительная `check build logicalGameTest`
+  завершена с **BUILD SUCCESSFUL**. Ресурсы/registry/geometry checks проходят.
+  Клиентская визуальная приёмка ещё нужна; автоматические тесты её не заменяют.
+- Review tooling совместим с authoritative overlay и последующими batch;
+  существующие source-drift проверки сохранены. Дополнительные 44 Catalog A/B
+  tests и portable verifier проходят; immutable snapshot не перерисовывался.
+
+Подробности, воспроизведение, ограничения миграции и чек-лист:
+[REVIEWED-BATCH-02-CHECKPOINT.md](docs/REVIEWED-BATCH-02-CHECKPOINT.md).
+Новая галерея: `build/reviewed-batch-02-gallery-ready` (100 образцов, 25 × 4 yaw).
+Ограниченный migration fixture: `build/reviewed-batch-02/migrated-copy`.
+Тестовые миры ignored и не коммитятся; генераторы сохранены.
+
+**Следующий шаг — визуальная проверка владельцем.** Не применять batch-03
+и не конвертировать город автоматически до её результатов.
+
+## История: Catalog B v2 / интерфейс ручной проверки
 
 ## Последнее обновление: только интерфейс ручной проверки
 

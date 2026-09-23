@@ -97,7 +97,7 @@ tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalOb
 
 // Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
 // These tests need numpy (same dependency as the existing world converter).
-['test_region_padding', 'test_contract_v2', 'test_logical_world'].each { testName ->
+['test_region_padding', 'test_contract_v2', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng', 'test_reviewed_migration', 'test_reviewed_source_examples', 'check_contract_orientation', 'check_logical_resources'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${testName}.py"

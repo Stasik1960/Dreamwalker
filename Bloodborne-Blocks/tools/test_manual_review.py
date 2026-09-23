@@ -2,7 +2,8 @@
 import copy
 import unittest
 
-from manual_review import apply_decisions, refresh_manifest, validate, read, MANIFEST
+from manual_review import (apply_decisions, refresh_manifest, validate, read, MANIFEST,
+                           reviewed_contract_skip_reason, existing_row_has_source_drift, ROOT)
 from manual_review import LOGICAL
 
 
@@ -24,9 +25,64 @@ class ManualReviewTests(unittest.TestCase):
         row = next(r for r in edited['families'] if r['review_id'] == 'F001')
         row['notes'] = ['user note']; row['canonical_anchor'] = {'cell': [2, 3, 4]}
         generated = refresh_manifest(edited)
-        self.assertEqual(edited, generated)
+        self.assertEqual([row['review_id'] for row in generated['families']], [row['review_id'] for row in edited['families']])
+        for before, after in zip(edited['families'], generated['families']):
+            for field in ('review_id', 'status', 'user_decision', 'decision_history', 'relationships', 'notes', 'canonical_anchor', 'components'):
+                self.assertEqual(after[field], before[field])
+        self.assertFalse(any(row['logical_id'] == 'o_c282' for row in generated['families']))
         again = refresh_manifest(generated)
         self.assertEqual(generated, again)
+
+    def test_reviewed_v2_provenance_stays_in_catalog_b(self):
+        contracts = read(LOGICAL / 'contracts-v2.json')['families']
+        c282 = next(contract for contract in contracts if contract['id'] == 'o_c282')
+        self.assertEqual(reviewed_contract_skip_reason(c282), 'covered_by_catalog_b_review_source_patterns')
+        self.assertTrue(c282['review_source_patterns'])
+
+    def test_source_drift_covers_rules_members_contract_patterns_and_railing_expansion(self):
+        definitions = {row['id']: row for row in read(LOGICAL / 'definitions.json')['blocks']}
+        rules = read(LOGICAL / 'migration.json')['rules']
+        curated = {row['id']: row for row in read(ROOT / 'docs/logical-families-v3.json')['objects']}
+        contracts = {row['id']: row for row in read(LOGICAL / 'contracts-v2.json')['families']}
+        geometry = read(LOGICAL / 'geometry.json')
+        names = read(LOGICAL.parents[1] / 'assets/bloodborne_blocks/lang/ru_ru.json')
+        planter = next(row for row in self.manifest['families'] if row['logical_id'] == 'o_dead_tree_planter')
+        planter_rules = [row for row in rules if row['target']['id'] == planter['logical_id']]
+        self.assertFalse(existing_row_has_source_drift(copy.deepcopy(planter), definitions[planter['logical_id']], planter_rules,
+                                                        curated, contracts, geometry, names))
+        changed_rules = copy.deepcopy(planter_rules)
+        changed_rules[0]['members'][0]['properties']['facing'] = 'south'
+        self.assertTrue(existing_row_has_source_drift(copy.deepcopy(planter), definitions[planter['logical_id']], changed_rules,
+                                                       curated, contracts, geometry, names))
+        changed_contracts = copy.deepcopy(contracts)
+        state = next(state for state in changed_contracts[planter['logical_id']]['states'].values()
+                     if state['migration_source_pattern'])
+        state['migration_source_pattern'][0]['exact_source_signature'] = 'changed-by-test'
+        self.assertTrue(existing_row_has_source_drift(copy.deepcopy(planter), definitions[planter['logical_id']], planter_rules,
+                                                       curated, changed_contracts, geometry, names))
+        railing = next(row for row in self.manifest['families'] if row['logical_id'] == 'o_iron_railing')
+        railing_rules = [row for row in rules if row['target']['id'] == railing['logical_id']]
+        unprimed_rules = copy.deepcopy(railing_rules)
+        unprimed_rules[0]['source']['properties']['facing'] = 'east'
+        with self.assertRaises(ValueError):
+            existing_row_has_source_drift(copy.deepcopy(railing), definitions[railing['logical_id']], unprimed_rules,
+                                           curated, contracts, geometry, names)
+        unprimed_contracts = copy.deepcopy(contracts)
+        north_pattern = next(state for key, state in unprimed_contracts[railing['logical_id']]['states'].items()
+                             if 'facing=north' in key and state['migration_source_pattern'])
+        north_pattern['migration_source_pattern'][0]['exact_source_signature'] = 'changed-before-baseline'
+        with self.assertRaises(ValueError):
+            existing_row_has_source_drift(copy.deepcopy(railing), definitions[railing['logical_id']], railing_rules,
+                                           curated, unprimed_contracts, geometry, names)
+        oriented = copy.deepcopy(railing)
+        self.assertFalse(existing_row_has_source_drift(oriented, definitions[railing['logical_id']], railing_rules,
+                                                        curated, contracts, geometry, names))
+        self.assertEqual(oriented['source_projection_version'], 'oriented-contract-provenance-v1')
+        self.assertIn('source_projection_baseline_fingerprint', oriented)
+        changed_railing_rules = copy.deepcopy(railing_rules)
+        changed_railing_rules[0]['source']['properties']['facing'] = 'east'
+        self.assertTrue(existing_row_has_source_drift(oriented, definitions[railing['logical_id']], changed_railing_rules,
+                                                       curated, contracts, geometry, names))
 
     def test_refuses_silent_overwrite_atomic(self):
         before = copy.deepcopy(self.manifest)

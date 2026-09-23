@@ -1,10 +1,11 @@
-"""Five-family POC against real contract resources and small synthetic Anvil worlds.
+"""25-family Contract V2 checks with frozen POC projections and synthetic Anvil worlds.
 
 No source city extraction or conversion. Fixtures use exact raw vanilla states;
 unrepresentable original rotations are explicitly absent, never fabricated.
 """
 from __future__ import annotations
 from copy import deepcopy
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -20,18 +21,37 @@ from world_io import NbtFile, Tag, TAG_COMPOUND, write_nbt
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT/"src/main/resources/bloodborne_blocks/logical"
 DIM = "minecraft:overworld"
+POC_IDS = {"o_dead_tree_planter", "o_cases_0", "o_wall_deco_1", "o_iron_gate", "o_iron_railing"}
+BATCH_IDS = {"o_c001_a", "o_c001_b", "o_c009_a", "o_c009_b", "o_c002", "o_c003", "o_c008", "o_c471", "o_c046", "o_c1680", "o_c474", "o_c1962", "o_c1979", "o_c028", "o_c282", "o_c561", "o_c618", "o_c654", "o_c1319", "o_c1491"}
+
+
+def canonical_digest(value):
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def railing_north_projection(definition, contract):
+    """The facing migration is explicit; frozen POC evidence is its north view."""
+    definition, contract = deepcopy(definition), deepcopy(contract)
+    definition["properties"].pop("facing"); definition["default"].pop("facing"); definition["extra_facing"] = False
+    def strip(state):
+        return ",".join(part for part in state.split(",") if part != "facing=north")
+    definition["models"] = {strip(state): mesh for state, mesh in definition["models"].items() if "facing=north" in state}
+    definition["states"] = {strip(state): value for state, value in definition["states"].items() if "facing=north" in state}
+    contract["states"] = {strip(state): value for state, value in contract["states"].items() if "facing=north" in state}
+    return definition, contract
 
 
 class ContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.data, cls.transform = load_contracts(RES)
-        cls.rules, cls.defaults = direct_rules(RES)
+        cls.rules, cls.defaults = direct_rules(RES, poc_only=True)
         cls.families = {f["id"]:f for f in cls.data["families"]}
         cls.rows = []
 
     def test_shared_vectors_and_all_family_origins(self):
-        self.assertEqual(len(self.families),5)
+        self.assertEqual(len(self.families),25)
+        self.assertEqual(set(self.families), POC_IDS | BATCH_IDS)
         for f in self.families.values():
             for rotation in (0,90,180,270):
                 # Same canonical master for all orientations when anchor point
@@ -66,15 +86,23 @@ class ContractTests(unittest.TestCase):
                 with self.assertRaises((ValueError,KeyError)):
                     load_contracts(out)
             data = deepcopy(self.data)
-            data["families"].pop()
+            data["families"] = [family for family in data["families"] if family["id"] != "o_dead_tree_planter"]
             (out/"contracts-v2.json").write_text(json.dumps(data),encoding="utf-8")
             with self.assertRaises(ValueError):
                 load_contracts(out)
 
-    def test_full_mesh_preserved(self):
-        report = json.loads((ROOT/"docs/contract-poc-v2.json").read_text(encoding="utf-8"))
-        for name, expected in report["preservedFiles"].items():
-            self.assertEqual(hashlib.sha256((RES/name).read_bytes()).hexdigest(),expected)
+    def test_frozen_poc_projection_preserved(self):
+        baseline = json.loads((ROOT/"docs/reviewed-batch-02-poc-baseline.json").read_text(encoding="utf-8"))["poc"]
+        definitions = {row["id"]: row for row in json.loads((RES/"definitions.json").read_text(encoding="utf-8"))["blocks"]}
+        contracts = {row["id"]: row for row in self.data["families"]}
+        with gzip.open(RES/"meshes.json.gz", "rt", encoding="utf-8") as stream:
+            meshes = json.load(stream)
+        for ident, expected in baseline.items():
+            definition, contract = (railing_north_projection(definitions[ident], contracts[ident])
+                                    if ident == "o_iron_railing" else (definitions[ident], contracts[ident]))
+            self.assertEqual(canonical_digest(definition), expected["definition"], ident)
+            self.assertEqual(canonical_digest(contract), expected["contract"], ident)
+            self.assertEqual({state: canonical_digest(meshes[mesh]) for state, mesh in definition["models"].items()}, expected["meshes"], ident)
 
     def test_direct_migration_fixture(self):
         root = (8,68,8)

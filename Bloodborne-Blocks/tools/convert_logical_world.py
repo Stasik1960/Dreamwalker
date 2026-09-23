@@ -225,6 +225,7 @@ class Rule:
     components: tuple[Expected, ...] | None
     shape: frozenset[tuple[int, int, int]]
     supersedes_targets: frozenset[str] = field(default_factory=frozenset)
+    variant_guards: tuple[dict, ...] = ()
 
 
 def vector(value: Any, label: str) -> tuple[int, int, int]:
@@ -234,9 +235,9 @@ def vector(value: Any, label: str) -> tuple[int, int, int]:
 
 
 def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule], dict[str, dict[str, str]]]:
-    if source_mode == "original-v2-poc":
+    if source_mode in ("original-v2-poc", "original-v2"):
         from logical_contract_v2 import direct_rules
-        return direct_rules(resources)
+        return direct_rules(resources,poc_only=source_mode == 'original-v2-poc')
     if source_mode != "legacy":
         raise ValueError("unknown source mode")
     migration = json.loads((resources / "migration.json").read_text(encoding="utf-8"))
@@ -625,6 +626,11 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         if len(actual) != len(pieces):
             item.reason = "duplicate_component_offsets"
             continue
+        if item.rule.variant_guards:
+            from source_variant_rng import guards_match
+            if not guards_match(item.rule.variant_guards,item.origin):
+                item.reason = 'different_source_weighted_visual'
+                continue
         item.source = actual
         item.target_root = add(item.origin, item.rule.root_offset)
         item.writes = {item.target_root: item.rule.target}
@@ -880,8 +886,8 @@ def main() -> None:
     parser.add_argument("--report-root", type=Path, help="permitted root for --report (defaults to this project's build directory)")
     parser.add_argument("--dry-run", action="store_true", help="scan and report without creating output")
     parser.add_argument("--progress", action="store_true", help="write conversion phases and counts to stderr")
-    parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc"), default="legacy",
-                        help="original-v2-poc matches only explicit raw vanilla patterns of the five schema-v2 families")
+    parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc", "original-v2"), default="legacy",
+                        help="original-v2 matches reviewed Contract V2 vanilla patterns; original-v2-poc restricts to original five")
     args = parser.parse_args()
     report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode)
     print(json.dumps(report["counts"], ensure_ascii=False))

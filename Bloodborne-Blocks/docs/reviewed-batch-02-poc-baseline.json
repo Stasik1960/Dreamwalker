@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "base_commit": "277c150",
+  "canonical_json": "utf8/sort_keys/separators",
+  "poc": {
+    "o_dead_tree_planter": {
+      "definition": "6a40516e158ea23f811cded36f5ddd86009611fe98efac6bc6b26943466ff12b",
+      "contract": "d706b97249d7178c3653a6ab7689ce95c74e1f065de02ee08377a0303d19f5e5",
+      "meshes": {
+        "facing=east": "f9c8f61e237fe2d05de0b750a5d3248b27ac183d3b2763251ece9a3dfa51206c",
+        "facing=north": "7b64957be0df759b5fe07ad3605d59668c6724150bd12911fd102eca0fbc8fad",
+        "facing=south": "87280a6d36886a4c48bf70081d07e9efa642f48296209de0b5201ea755d4ae6f",
+        "facing=west": "70040209fa5a94800c2cad5e1afa7d665111198bc5d1425bd395e987dc8d4589"
+      }
+    },
+    "o_cases_0": {
+      "definition": "76c38b724a6ceafd63eaf52d70873d79e42715213609acd7b2eb6f2bb31fba10",
+      "contract": "78d1f27e2557a7b7ed156c4163c602fbb769fec944894ff8783236bd7abb07ec",
+      "meshes": {
+        "facing=east": "e3841cf75e287fc8ed39a47191a3b6abac16cd46a09a9f293c3aff9d129baa56",
+        "facing=north": "56fd597586b7bb8c76bc4bd6407690b8afab179b33cf316a65fffc7e8e897cd8",
+        "facing=south": "515a3e0759766df16b755dfaa3d7adf39e327bfa38fed7fcd7967e0fb1862d2b",
+        "facing=west": "8c14f194e37f3c71dc157470dbf1b56a714f2cf34f458509dc64f64f3a62f90a"
+      }
+    },
+    "o_wall_deco_1": {
+      "definition": "824ba7837896852ab488976a8e31b35ab9c75de83924adaa484433241835dcbf",
+      "contract": "ff9f376a2b0bc80527be7f595165fe1d5d263239c6fd3245abdac8686d0bc2a6",
+      "meshes": {
+        "facing=east": "0267ba1b7baa93069b042f0bdf55b449677d6d5b4d24841febf8a6cb33c5272c",
+        "facing=north": "e25698ac9dacc7cbd2c8ba61be17f036c16c912b06a3cc04d6e7f4150fef9177",
+        "facing=south": "a76c25011eb46028781635e3112ed347c6a794fd9d8e9d8fa85618012c918b07",
+        "facing=west": "aea9e584d2ade7a58c59c2629857bcd87730dc1240ebc68b1ad9ad8d973795ed"
+      }
+    },
+    "o_iron_gate": {
+      "definition": "06a2d10888adff94f6a391b5dd01e44cb046b173984c834dc2c0feb755ca0a1a",
+      "contract": "eadacaef434720b161fb70f3a2787f17caf7ad96e019e2bc5b61a23a7c13dc3c",
+      "meshes": {
+        "facing=east,open=false": "635b672fa10746db78bfb2c36ad1f4ae495527b4d7852fe46c10913c3d13aacd",
+        "facing=east,open=true": "187d4c4360f8bedf12f41b02530a0b3eabedb7e171a998d8bc81c0917847bfa8",
+        "facing=north,open=false": "647685fdb890790c46089018f52cb4665a9d1b4fcec3f796ba47c9169e4bc2fb",
+        "facing=north,open=true": "9ac5ed723303c9205de597af1787c37c0b1bc62fff0a69e3de49427ab0e14ac3",
+        "facing=south,open=false": "f4618192fcab1d8c981a35f0ff0e1b4ee54e92caf3ab59d23823feb3b934bcdf",
+        "facing=south,open=true": "f15caf8a75c8ce3196ae829115cf4e83b7a46e7d2d26140524391feb2c6f6fb4",
+        "facing=west,open=false": "55f4ca13cbbb4a7611aa6b6cc11558fa026b23fa924c82fe1504b7605922600f",
+        "facing=west,open=true": "bba3d87d68b5289382aa2367e9692a4fd200d345b9072be9f9b51718641dbb0c"
+      }
+    },
+    "o_iron_railing": {
+      "definition": "90256d94fb02fe4941f753e67ee80e45132a133d0f95aa389aa74d0812868cde",
+      "contract": "b534d11d3b0c4c69e522f1eb4e86ab1308ffa9d9b7a3e826106899bf017188e2",
+      "meshes": {
+        "east=false,north=false,south=false,west=false": "ca2fdc2ae383e97d19be423d498aba80c16ee4cb2d1d1c6c8c960107233d949c",
+        "east=false,north=false,south=false,west=true": "9d3ebd61b492308aaccdbce23a3f9c6646f3f9c7694b05d0898fedcd7e5b2871",
+        "east=false,north=false,south=true,west=false": "1cfd9309e911120f595d4e1ac86572c82406042e1bafda3b580900fbb2a71275",
+        "east=false,north=false,south=true,west=true": "ef1d4566816792aff39b5ab8f85afb2d3101859eba4cb880f9db16a28572ab3a",
+        "east=false,north=true,south=false,west=false": "f11af18cce26e3d8137caff1a2df255c34163c883a6db11c422722690a9f8f55",
+        "east=false,north=true,south=false,west=true": "ccd2d877105793c95e04e1a6dfc04733dc60f0c5155ab1aa1534030cb7125fd6",
+        "east=false,north=true,south=true,west=false": "bc5b5ad1cc14f403d5a0f166b35d2db3220a46bc2b256b7847bf58e2b68b0f2f",
+        "east=false,north=true,south=true,west=true": "6de52894c6bb442c632cf062259d17bbcefb417eade68ea147d617713cd2051c",
+        "east=true,north=false,south=false,west=false": "37626f7880ce0c982825db375302a1553016456c6e09595a5e15b1e0ff8d5c02",
+        "east=true,north=false,south=false,west=true": "05f45e4348ce9762f314d3d12b10a1a3d6caf21555110dcfca6dfb3a82e1d5cb",
+        "east=true,north=false,south=true,west=false": "8a19c16dd28553d0b4f7a169ed016b89f79f222a2f869ffccdc7a188c1121d50",
+        "east=true,north=false,south=true,west=true": "fdd784e21040073ab5e3240503364950871c565f2b249749269a84c720ee08e3",
+        "east=true,north=true,south=false,west=false": "6d1e6953ec69af049b43f82322b4b6886984dd52cb983aae5abc8e2c7d8e977a",
+        "east=true,north=true,south=false,west=true": "d463df6f14e867bc07ea42a504881cb6eae3769310121b8094da393b845637ce",
+        "east=true,north=true,south=true,west=false": "a931a1625d756dff8befc9c4748edf73c62322a5b1ab1f9cba234c7e09a7b498",
+        "east=true,north=true,south=true,west=true": "f3f325fff0824bad1f3e2562d10b36caac6ee77a075e44c5b71e62103d9fbdf6"
+      }
+    }
+  }
+}

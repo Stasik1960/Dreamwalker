@@ -1,4 +1,18 @@
-# Bloodborne Architecture — technical snapshot 2026-09-21
+# Bloodborne Architecture — reviewed batch-02 checkpoint
+
+[Тестовый JAR batch-02](bloodborne-blocks-2.1.0-alpha.1-batch-02-20260922-mc1.20.1.jar)
+— 95 296 406 байт, SHA-256
+`51041bb4c6148206d0fdb18146fb5f05e82caa76b899a7c4c1f54194a0d8a6f2`.
+[Изменения, ограничения, команды и визуальный чек-лист](../../Bloodborne-Blocks/docs/REVIEWED-BATCH-02-CHECKPOINT.md).
+
+20 новых подтверждённых logical families + 5 POC; orientation QA 912 PASS,
+11 GameTests PASS, `check build logicalGameTest`: BUILD SUCCESSFUL.
+Это тестовый checkpoint, не новая конвертация опубликованного города.
+Внутренняя версия всё ещё `2.1.0-alpha.1`: замените предыдущий JAR, не держите
+оба одновременно. Клиентская визуальная приёмка остаётся за владельцем.
+Синтетические test worlds не публикуются; их генераторы находятся в `tools/`.
+
+## Исторический technical snapshot 2026-09-21
 
 [Техническая памятка для аудита](../../Bloodborne-Blocks/docs/TECHNICAL-SNAPSHOT-2026-09-21.md) ·
 [Исходники](../../Bloodborne-Blocks/README.md).

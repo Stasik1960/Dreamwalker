@@ -1,0 +1,12 @@
+// Optional verification optimization for the large, already-generated palette.
+// No resource filtering/expansion is configured in this project. Read identical
+// source resources directly instead of copying ~191k files into build/resources.
+// JAR and test resource contents are unchanged; nothing writes to source resources.
+gradle.projectsEvaluated {
+ rootProject.allprojects { p ->
+  if (p.plugins.hasPlugin('java')) {
+   p.sourceSets.main.output.resourcesDir = p.file('src/main/resources')
+   p.tasks.named('processResources') { enabled = false }
+  }
+ }
+}

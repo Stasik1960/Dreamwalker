@@ -31,6 +31,7 @@ import net.minecraft.world.GameMode;
 public final class LogicalRuntimeGameTests implements FabricGameTest {
  private static final BlockPos CLICK=new BlockPos(4,0,4);
  private static final BlockPos ROOT=new BlockPos(4,2,4);
+ private static final Set<String> BATCH_FAMILIES=Set.of("o_c001_a","o_c001_b","o_c009_a","o_c009_b","o_c002","o_c003","o_c008","o_c471","o_c046","o_c1680","o_c474","o_c1962","o_c1979","o_c028","o_c282","o_c561","o_c618","o_c654","o_c1319","o_c1491");
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=100, batchId="logical_placement")
  public void logicalPlacementCreatesAndBreaksOneObject(TestContext context){
@@ -176,8 +177,58 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
   try{
    BlockState closed=gate.getDefaultState().with(Properties.HORIZONTAL_FACING,Direction.NORTH).with(Properties.OPEN,false);world.setBlockState(root,closed,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,closed),"closed gate rebuild");Set<BlockPos> closedHelpers=helperOffsets(closed);context.assertTrue(!closedHelpers.isEmpty(),"closed gate has helpers");for(BlockPos cell:closedHelpers)context.assertTrue(world.getBlockState(root.add(cell)).isOf(BloodborneBlocks.PART_BLOCK),"closed gate physical helper exists");context.assertTrue(!GeometryRuntime.rootShape(closed,false).isEmpty(),"closed gate blocks centre");context.useBlock(ROOT,player);BlockState opened=world.getBlockState(root);Set<BlockPos> openedHelpers=helperOffsets(opened);context.assertTrue(opened.isOf(gate)&&opened.get(Properties.OPEN)&&!openedHelpers.isEmpty(),"gate opens without moving root and creates open helpers");context.assertTrue(GeometryRuntime.rootShape(opened,false).isEmpty(),"open gate frees centre collision independently of selection");context.assertTrue(!GeometryRuntime.rootShape(opened,true).isEmpty(),"open gate retains whole selection");for(BlockPos cell:openedHelpers)context.assertTrue(world.getBlockState(root.add(cell)).isOf(BloodborneBlocks.PART_BLOCK),"opened gate physical helper exists");for(BlockPos oldOnly:closedHelpers)if(!openedHelpers.contains(oldOnly))context.assertTrue(world.getBlockState(root.add(oldOnly)).isAir(),"gate removes old-only helper");context.useBlock(ROOT,player);context.assertTrue(world.getBlockState(root).isOf(gate)&&!world.getBlockState(root).get(Properties.OPEN),"gate closes without moving root");
    BlockPos newPhysical=openedHelpers.stream().filter(cell->!closedHelpers.contains(cell)).map(root::add).findFirst().orElseThrow(()->new AssertionError("gate open must introduce a physical cell"));world.setBlockState(newPhysical,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);ActionResult blocked=closed.onUse(world,player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(root),Direction.NORTH,root,true));context.assertTrue(blocked==ActionResult.FAIL&&world.getBlockState(root).equals(closed),"foreign new gate cell refuses open and keeps root");world.removeBlock(newPhysical,false);clear(context,gate);
-   assertConnected(context,railing,new BlockPos(1,2,5));context.complete();
+   assertConnected(context,railing,new BlockPos(1,2,5));assertConnectedFourFacings(context,railing,new BlockPos(1,2,5));context.complete();
   }finally{clear(context,gate);clear(context,railing);player.discard();}
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=400, batchId="logical_contract_v2_batch")
+ public void contractV2BatchFamiliesPlacePickBreakAndPreserveForeignCells(TestContext context){
+  floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();
+  try{
+   Set<String> families=LogicalContractV2.declaredFamilyIds();context.assertTrue(families.containsAll(BATCH_FAMILIES)&&families.size()==25,"all 25 authoritative families are declared");
+   for(String id:families){
+    ArchitectureBlock block=required(id);BlockPos canonical=null;
+    for(Direction yaw:Direction.Type.HORIZONTAL){
+     clear(context,block);moveOutside(context,player);player.setYaw(yaw.asRotation());BlockPos expectedRoot=context.getAbsolutePos(CLICK.up());Direction artworkFacing=yaw.getOpposite();BlockPos foreign=id.equals("o_c1979")?expectedRoot.offset(artworkFacing.rotateYCounterclockwise()).up():id.equals("o_c046")||id.equals("o_c474")?expectedRoot.east():context.getAbsolutePos(CLICK.up(20));world.setBlockState(foreign,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
+     context.useStackOnBlock(player,new ItemStack(block),CLICK,Direction.UP);BlockPos root=find(context,block);context.assertTrue(root!=null,"batch family places: "+id+" "+yaw);
+     if(canonical==null)canonical=root;else context.assertTrue(canonical.equals(root),"canonical master has no yaw offset: "+id+" "+yaw);
+     BlockState state=world.getBlockState(root);if(state.contains(Properties.HORIZONTAL_FACING)){Direction expectedFacing=("door".equals(block.definition.behavior)||"gate".equals(block.definition.behavior))?yaw:yaw.getOpposite();context.assertTrue(state.get(Properties.HORIZONTAL_FACING)==expectedFacing,"placement stores every yaw without a master offset: "+id+" "+yaw);}GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);context.assertTrue(!GeometryRuntime.rootShape(state,true).isEmpty(),"outline exists: "+id+" "+yaw);
+     for(GeometryRuntime.GeometryCell cell:geometry.parsedCells.values())context.assertTrue(cell.outline.size()<=1&&cell.collision.size()<=5,"simple per-cell geometry budget: "+id+" "+yaw);
+     context.assertTrue(state.getBlock().getPickStack(world,root,state).isOf(block.asItem()),"master pick is canonical: "+id+" "+yaw);
+     Set<BlockPos> helpers=helperOffsets(state);for(BlockPos offset:helpers)context.assertTrue(world.getBlockState(root.add(offset)).isOf(BloodborneBlocks.PART_BLOCK),"helper exists: "+id+" "+yaw+" "+offset);
+     if(!helpers.isEmpty()){BlockPos helper=root.add(helpers.iterator().next());BlockState helperState=world.getBlockState(helper);context.assertTrue(helperState.getBlock().getPickStack(world,helper,helperState).isOf(block.asItem()),"helper pick is canonical: "+id+" "+yaw);}
+     world.breakBlock(root,true,player);context.assertTrue(world.getBlockState(root).isAir(),"break removes master: "+id+" "+yaw);for(BlockPos offset:helpers)context.assertTrue(world.getBlockState(root.add(offset)).isAir(),"break removes helpers: "+id+" "+yaw+" "+offset);
+     context.assertTrue(world.getBlockState(foreign).isOf(Blocks.STONE),"foreign cell survives: "+id+" "+yaw);world.removeBlock(foreign,false);clearItems(world,root,block);
+    }
+   }
+   context.complete();
+  }finally{for(String id:LogicalContractV2.declaredFamilyIds())clear(context,required(id));player.discard();}
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=100, batchId="logical_contract_v2_batch")
+ public void contractV2WallLanternAndDoorStates(TestContext context){
+  floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock wall=required("o_c654"),lantern=required("o_c618"),door=required("o_c282");
+  try{
+   for(Direction side:Direction.Type.HORIZONTAL){
+    clear(context,wall);context.useStackOnBlock(player,new ItemStack(wall),CLICK,side);BlockPos root=find(context,wall);context.assertTrue(context.getAbsolutePos(CLICK.offset(side)).equals(root),"wall master is clicked-face adjacent: "+side);context.assertTrue(world.getBlockState(root).get(Properties.HORIZONTAL_FACING)==side,"wall faces clicked horizontal side: "+side);
+   }
+   clear(context,wall);BlockPos root=context.getAbsolutePos(ROOT);BlockState unlit=lantern.getDefaultState().with(Properties.HORIZONTAL_FACING,Direction.NORTH).with(Properties.LIT,false);world.setBlockState(root,unlit,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,unlit),"lantern rebuilds unlit");int unlitLight=unlit.getLuminance();context.useBlock(ROOT,player);BlockState lit=world.getBlockState(root);context.assertTrue(lit.get(Properties.LIT)&&lit.getLuminance()>unlitLight,"lantern toggles lit state and luminance");context.useBlock(ROOT,player);context.assertTrue(!world.getBlockState(root).get(Properties.LIT),"lantern toggles off");clear(context,lantern);
+   for(Direction facing:Direction.Type.HORIZONTAL){
+    clear(context,door);BlockState closed=door.getDefaultState().with(Properties.HORIZONTAL_FACING,facing).with(Properties.OPEN,false);world.setBlockState(root,closed,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,closed),"door rebuilds closed: "+facing);context.useBlock(ROOT,player);BlockState open=world.getBlockState(root);context.assertTrue(open.get(Properties.OPEN)&&open.get(Properties.HORIZONTAL_FACING)==facing&&open.contains(Properties.DOOR_HINGE),"door toggles one logical panel: "+facing);context.assertTrue(!world.getBlockState(root.up()).isOf(door),"logical door does not create conventional upper block: "+facing);
+   }
+   for(Direction facing:Direction.Type.HORIZONTAL){
+    clear(context,door);BlockState closed=BloodborneBlocks.set(door.getDefaultState(),door.getStateManager().getProperty("placement_height"),"source_height").with(Properties.HORIZONTAL_FACING,facing);
+    BlockPos left=root.offset(facing.rotateYCounterclockwise()),right=root.offset(facing.rotateYClockwise());
+    for(BlockPos frame:List.of(left,left.up(),right,right.up()))world.setBlockState(frame,Blocks.GLASS_PANE.getDefaultState(),Block.NOTIFY_ALL);
+    world.setBlockState(root,closed,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,closed),"source-height central passage avoids pane frame");
+    context.useBlock(ROOT,player);context.assertTrue(world.getBlockState(root).get(Properties.OPEN),"source-height opens without frame overwrite");
+    context.assertTrue(GeometryRuntime.rootShape(world.getBlockState(root),false).isEmpty(),"source-height open passage has no collision");
+    context.useBlock(ROOT,player);context.assertTrue(!world.getBlockState(root).get(Properties.OPEN),"source-height closes");
+    world.breakBlock(root.up(),true,player);context.assertTrue(world.getBlockState(root).isAir(),"source-height helper break removes door");
+    for(BlockPos frame:List.of(left,left.up(),right,right.up())){context.assertTrue(world.getBlockState(frame).isOf(Blocks.GLASS_PANE),"source frame preserved through open/close/helper break");world.removeBlock(frame,false);}
+   }
+   context.complete();
+  }finally{clear(context,wall);clear(context,lantern);clear(context,door);player.discard();}
  }
 
  private static void floor(TestContext context){context.setBlockState(CLICK,Blocks.STONE);}
@@ -193,6 +244,8 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
  private static long drops(ServerWorld world,BlockPos root,ArchitectureBlock block){return world.getEntitiesByClass(ItemEntity.class,new Box(root).expand(4),entity->entity.getStack().isOf(block.asItem())).stream().mapToInt(entity->entity.getStack().getCount()).sum();}
  private static void clearItems(ServerWorld world,BlockPos root,ArchitectureBlock block){world.getEntitiesByClass(ItemEntity.class,new Box(root).expand(12),entity->entity.getStack().isOf(block.asItem())).forEach(ItemEntity::discard);}
  private static void assertConnected(TestContext context,ArchitectureBlock block,BlockPos first){ServerWorld world=context.getWorld();BlockPos second=first.east();world.setBlockState(context.getAbsolutePos(first),block.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(context.getAbsolutePos(second),block.getDefaultState(),Block.NOTIFY_ALL);context.assertTrue(world.getBlockState(context.getAbsolutePos(first)).get(Properties.EAST),block.definition.id+" connects east");context.assertTrue(world.getBlockState(context.getAbsolutePos(second)).get(Properties.WEST),block.definition.id+" connects west");}
+ private static void assertConnectedFourFacings(TestContext context,ArchitectureBlock block,BlockPos first){ServerWorld world=context.getWorld();for(Direction facing:Direction.Type.HORIZONTAL){clear(context,block);BlockPos second=first.offset(facing);BlockState initial=block.getDefaultState();if(initial.contains(Properties.HORIZONTAL_FACING))initial=initial.with(Properties.HORIZONTAL_FACING,facing);world.setBlockState(context.getAbsolutePos(first),initial,Block.NOTIFY_ALL);world.setBlockState(context.getAbsolutePos(second),initial,Block.NOTIFY_ALL);BlockState a=world.getBlockState(context.getAbsolutePos(first)),b=world.getBlockState(context.getAbsolutePos(second));context.assertTrue(connected(a,facing)&&connected(b,facing.getOpposite()),block.definition.id+" connects in facing "+facing);if(a.contains(Properties.HORIZONTAL_FACING))context.assertTrue(a.get(Properties.HORIZONTAL_FACING)==facing,block.definition.id+" retains explicit facing "+facing);}}
+ private static boolean connected(BlockState state,Direction direction){var property=state.getBlock().getStateManager().getProperty(direction.asString());return property instanceof BooleanProperty value&&state.get(value);}
  private static BooleanProperty attachmentProperty(ArchitectureBlock block){var property=block.getStateManager().getProperty("lantern");if(!(property instanceof BooleanProperty result))throw new AssertionError("statue lantern property missing");return result;}
  private static void install(TestContext context,ArchitectureBlock block){ServerWorld world=context.getWorld();BlockPos root=context.getAbsolutePos(ROOT);BlockState state=block.getDefaultState().with(Properties.HORIZONTAL_FACING,Direction.NORTH);world.setBlockState(root,state,Block.NOTIFY_ALL);if(!GeometryRuntime.rebuild(world,root,state))throw new AssertionError("statue fixture cannot rebuild");}
  private static void assertAttachment(TestContext context,BooleanProperty property,boolean expected,String message){context.assertTrue(context.getWorld().getBlockState(context.getAbsolutePos(ROOT)).get(property)==expected,message);}

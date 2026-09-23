@@ -89,6 +89,8 @@ public final class ArchitectureBlockItem extends BlockItem {
     if(property!=null)properties.putString(name,BloodborneBlocks.value((Property)property,(Comparable)placement.get((Property)property)));
    }
    if(placement.contains(net.minecraft.state.property.Properties.OPEN))properties.putString("open","false");
+   if(placement.contains(net.minecraft.state.property.Properties.DOOR_HINGE))properties.putString("hinge",placement.get(net.minecraft.state.property.Properties.DOOR_HINGE).asString());
+   Property<?> lit=block.getStateManager().getProperty("lit");if(lit instanceof net.minecraft.state.property.BooleanProperty value)properties.putString("lit",Boolean.toString(placement.get(value)));
    if(block.definition.placement_properties!=null)block.definition.placement_properties.forEach(properties::putString);
   }
   if(block.definition.kind.equals("door")){

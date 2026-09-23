@@ -139,8 +139,70 @@ def proposed_record(definition, rules, curated, contracts, geometry, names):
     return result
 
 
+def reviewed_contract_skip_reason(contract):
+    """Catalog B owns user-reviewed v2 provenance; legacy auto-catalog does not guess it."""
+    if contract and contract.get('authority') == 'user' and contract.get('review_source_patterns'):
+        return 'covered_by_catalog_b_review_source_patterns'
+    return None
+
+
+def oriented_contract_projection(definition, rules, contract, geometry):
+    """Versioned provenance for an accepted POC that gained orientation states."""
+    return {'version': 'oriented-contract-provenance-v1', 'definition': definition,
+            'rules': rules, 'contract': contract,
+            'geometry': geometry['blocks'].get(definition['id'])}
+
+
+def north_contract_states(contract):
+    strip = lambda value: ','.join(part for part in value.split(',') if part != 'facing=north')
+    return {strip(state): value for state, value in contract['states'].items() if 'facing=north' in state}
+
+
+def is_accepted_orientation_expansion(row, definition, own_rules, contract):
+    """Accept only a north-preserving facing expansion as a one-time baseline."""
+    if row.get('architecture_status') != 'POC_ACCEPTED' or not contract:
+        return False
+    if definition.get('default', {}).get('facing') != 'north' or 'facing' not in definition.get('properties', {}):
+        return False
+    strip = lambda value: ','.join(part for part in value.split(',') if part != 'facing=north')
+    north_models = {strip(state): mesh for state, mesh in definition['models'].items() if 'facing=north' in state}
+    north_properties = {key: value for key, value in definition['properties'].items() if key != 'facing'}
+    return (row.get('states') == north_properties and row.get('state_models') == north_models and
+            row.get('legacy_rules') == own_rules and row.get('source_patterns_v2') == north_contract_states(contract))
+
+
+def existing_source_provenance(row, definition, rules, curated, contracts, geometry, names):
+    """Return comparable legacy provenance, or a versioned oriented-POC baseline."""
+    contract = contracts.get(definition['id'])
+    try:
+        proposed = proposed_record(definition, rules, curated, contracts, geometry, names)
+        return 'legacy-proposed-v1', digest(proposed), False
+    except ValueError:
+        if row.get('source_projection_version') == 'oriented-contract-provenance-v1':
+            return 'oriented-contract-provenance-v1', digest(oriented_contract_projection(definition, rules, contract, geometry)), False
+        if not is_accepted_orientation_expansion(row, definition, rules, contract):
+            raise
+        return 'oriented-contract-provenance-v1', digest(oriented_contract_projection(definition, rules, contract, geometry)), True
+
+
+def existing_row_has_source_drift(row, definition, rules, curated, contracts, geometry, names):
+    version, fingerprint, accepted_expansion = existing_source_provenance(
+        row, definition, rules, curated, contracts, geometry, names)
+    if accepted_expansion and row.get('source_projection_version') != version:
+        # The frozen catalog predates facings.  Record an explicit comparable
+        # baseline only after proving every north state is byte-for-byte the old
+        # catalog projection; future rule/contract changes then drift normally.
+        row['source_projection_version'] = version
+        row['source_projection_baseline_fingerprint'] = fingerprint
+        return False
+    baseline = (row.get('source_projection_baseline_fingerprint')
+                if row.get('source_projection_version') == version else row['source_fingerprint'])
+    return baseline != fingerprint
+
+
 def refresh_manifest(existing=None, *, definitions=None):
-    definitions = definitions or read(LOGICAL / 'definitions.json')['blocks']
+    if definitions is None:
+        definitions = read(LOGICAL / 'definitions.json')['blocks']
     rules = read(LOGICAL / 'migration.json')['rules']
     curated = {r['id']: r for r in read(ROOT / 'docs/logical-families-v3.json')['objects']}
     contracts = {r['id']: r for r in read(LOGICAL / 'contracts-v2.json')['families']}
@@ -161,15 +223,25 @@ def refresh_manifest(existing=None, *, definitions=None):
             old['source_drift'] = True
             old['current_source_fingerprint'] = None
     for definition in sorted(definitions, key=lambda d: (priority(d), d['id'])):
-        proposed = proposed_record(definition, [r for r in rules if r['target']['id'] == definition['id']], curated, contracts, geometry, names)
-        fingerprint = digest(proposed)
         if definition['id'] in current:
             # Never overwrite decisions, component numbering, proposed policies,
-            # relationships or notes on regeneration, even if upstream changes.
+            # relationships or notes.  In particular, do not rebuild a legacy
+            # preview from an evolved multipart/blockstate just to refresh it.
             old = current[definition['id']]
-            old['source_drift'] = old['source_fingerprint'] != fingerprint
-            old['current_source_fingerprint'] = fingerprint
+            own_rules = [rule for rule in rules if rule['target']['id'] == definition['id']]
+            drift = existing_row_has_source_drift(old, definition, own_rules, curated, contracts, geometry, names)
+            if drift:
+                old['source_drift'] = True
+                _version, fingerprint, _accepted = existing_source_provenance(
+                    old, definition, own_rules, curated, contracts, geometry, names)
+                old['current_source_fingerprint'] = fingerprint
             continue
+        if reviewed_contract_skip_reason(contracts.get(definition['id'])):
+            # The append-only user decision and reviewed source patterns live in
+            # Catalog B.  Never infer a primary multipart application for it.
+            continue
+        proposed = proposed_record(definition, [r for r in rules if r['target']['id'] == definition['id']], curated, contracts, geometry, names)
+        fingerprint = digest(proposed)
         proposed.update(review_id=f'F{next_id:03}', batch=(next_id - 1)//manifest['batch_size'] + 1,
                         source_fingerprint=fingerprint, current_source_fingerprint=fingerprint, source_drift=False)
         manifest['families'].append(proposed)
