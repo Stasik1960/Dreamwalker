@@ -29,7 +29,7 @@ final class LogicalTargetDebug {
   return rootOrOrdinary(target,targetState,"MASTER",null);
  }
 
- private static BlockHitResult raycastLoaded(ServerWorld world,ServerPlayerEntity player){
+ static BlockHitResult raycastLoaded(ServerWorld world,ServerPlayerEntity player){
   Vec3d start=player.getCameraPosVec(1.0F),end=start.add(player.getRotationVec(1.0F).multiply(RANGE));
   if(!rayChunksLoaded(world,start,end))return null;
   BlockHitResult hit=world.raycast(new RaycastContext(start,end,RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,player));

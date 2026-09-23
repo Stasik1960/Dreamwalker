@@ -71,11 +71,14 @@ def load_contracts(resources):
         raise ValueError("schema-v2 must preserve the approved POC families")
     definitions = {d["id"]: d for d in json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
     seen = set()
+    split_patterns = {}
     for family in data["families"]:
         ident = family["id"]
         if ident in seen or ident not in definitions or not definitions[ident].get("logical"):
             raise ValueError("duplicate/unknown family")
         seen.add(ident)
+        if not isinstance(family.get("migration_disabled", False), bool):
+            raise ValueError("migration_disabled must be boolean")
         if family.get('authority') not in (None,'user') or bool(family.get('review_id')) != bool(family.get('authority')):
             raise ValueError('invalid authoritative review metadata')
         cell(family["canonical_anchor"]["cell"])
@@ -121,17 +124,48 @@ def load_contracts(resources):
                         raise ValueError('invalid RNG weights')
                     if not indices or len(set(indices))!=len(indices) or any(type(i) is not int or not 0<=i<len(weights) for i in indices):
                         raise ValueError('invalid RNG choices')
+                transaction = pattern.get("split_transaction")
+                if transaction is not None:
+                    if (not isinstance(transaction, dict) or set(transaction) != {"id", "outputs"} or
+                            not isinstance(transaction["id"], str) or not transaction["id"] or len(transaction["id"]) > 128 or
+                            not isinstance(transaction["outputs"], list) or len(transaction["outputs"]) < 2 or
+                            any(not isinstance(output, dict) or set(output) != {"family", "root_offset"} or
+                                not isinstance(output["family"], str) or not output["family"] for output in transaction["outputs"])):
+                        raise ValueError("invalid split transaction")
+                    outputs = tuple((output["family"], cell(output["root_offset"])) for output in transaction["outputs"])
+                    # One rendered family may legitimately be placed more than once
+                    # (for example two identical statues at different roots).  The
+                    # declaration identity is therefore family + root, while the
+                    # shared raw pattern still has exactly one member per family.
+                    if len(set(outputs)) != len(outputs) or ident not in {output[0] for output in outputs}:
+                        raise ValueError("split transaction outputs must have unique family/root pairs and include family")
+                    signature = (tuple(sorted((cell(component["offset"]), component["id"],
+                                               tuple(sorted(component["properties"].items()))) for component in components)),
+                                 json.dumps(pattern.get("variant_guards", []), sort_keys=True, separators=(",", ":")))
+                    split_patterns.setdefault((transaction["id"], signature), []).append((ident, outputs))
+    known = {family["id"] for family in data["families"]}
+    for (_, _), members in split_patterns.items():
+        declared = members[0][1]
+        declared_ids = {output[0] for output in declared}
+        member_ids = [ident for ident, _ in members]
+        if (any(outputs != declared for _, outputs in members) or
+                len(member_ids) != len(declared_ids) or len(set(member_ids)) != len(member_ids) or
+                declared_ids != set(member_ids) or declared_ids - known):
+            raise ValueError("split transaction must declare exactly one shared source pattern per output")
     return data, transform
 
 
 def direct_rules(resources, *, poc_only=False):
     """Compile only explicit vanilla patterns into the existing safe transaction engine."""
-    from convert_logical_world import Expected, Rule, load_defaults, make_state
+    from convert_logical_world import Expected, Output, Rule, add, load_defaults, make_state
     data, transform = load_contracts(resources)
     defaults = load_defaults(resources)
     rules = []
+    split = {}
     for family in data["families"]:
         if poc_only and family['id'] not in POC_FAMILIES:
+            continue
+        if family.get("migration_disabled", False) and not poc_only:
             continue
         # QA2 explicitly retires the incomplete tree construction patterns.
         # Keep frozen POC mode for historical regression fixtures only. In the
@@ -152,10 +186,39 @@ def direct_rules(resources, *, poc_only=False):
                 # explicit-anchor transform used by item placement (zero relative shift).
                 anchor = rotate_cell(family["canonical_anchor"]["cell"], state["rotation"], transform)
                 shift = master_origin(anchor, family["canonical_anchor"]["cell"], state["rotation"], transform)
-                rules.append(Rule(len(rules), first, target, shift, tuple(pieces[1:]), None,
-                                  frozenset(cell(c) for c in state["interaction_footprint"]["cells"]),
-                                  supersedes_targets=frozenset('bloodborne_blocks:'+f['id'] for f in data['families'] if f['id']!=family['id']) if family.get('authority')=='user' else frozenset(),
-                                  variant_guards=tuple(pattern.get('variant_guards', []))))
+                shape = frozenset(cell(c) for c in state["interaction_footprint"]["cells"])
+                transaction = pattern.get("split_transaction")
+                if transaction is None:
+                    rules.append(Rule(len(rules), first, target, shift, tuple(pieces[1:]), None, shape,
+                                      supersedes_targets=frozenset('bloodborne_blocks:'+f['id'] for f in data['families'] if f['id']!=family['id']) if family.get('authority')=='user' else frozenset(),
+                                      variant_guards=tuple(pattern.get('variant_guards', []))))
+                    continue
+                signature = (tuple(sorted((piece.offset, piece.state) for piece in pieces)),
+                             json.dumps(pattern.get("variant_guards", []), sort_keys=True, separators=(",", ":")))
+                split.setdefault((transaction["id"], signature), []).append((family["id"], target, shift, shape, pieces, tuple(pattern.get("variant_guards", [])),
+                                                                               tuple((output["family"], cell(output["root_offset"])) for output in transaction["outputs"])))
+    for (transaction_id, _), members in split.items():
+        members.sort(key=lambda member: member[0])
+        first_family, target, shift, shape, pieces, guards, declarations = members[0]
+        by_family = {member[0]: member for member in members}
+        declared_families = {family for family, _ in declarations}
+        member_families = [member[0] for member in members]
+        if len(by_family) != len(member_families):
+            raise ValueError("split transaction must declare exactly one shared source pattern per output")
+        if declared_families != set(by_family):
+            # A disabled historical composite makes its declared split incomplete.
+            # Do not silently degrade to the remaining outputs.
+            continue
+        outputs = tuple(Output(by_family[family][1], add(by_family[family][2], root_offset), by_family[family][3])
+                        for family, root_offset in declarations)
+        occupied = set()
+        for output in outputs:
+            cells = {tuple(output.root_offset[i] + offset[i] for i in range(3)) for offset in output.shape}
+            if occupied & cells:
+                raise ValueError("split transaction output footprints overlap")
+            occupied.update(cells)
+        rules.append(Rule(len(rules), pieces[0], target, shift, tuple(pieces[1:]), None, shape,
+                          variant_guards=guards, transaction_id=transaction_id, outputs=outputs))
     if not poc_only:
         # A newer user-reviewed exact raw pattern is authoritative over the old
         # POC matcher. Existing POC blocks/assets remain untouched. In particular

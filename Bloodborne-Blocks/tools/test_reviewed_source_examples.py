@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from check_logical_world import check
-from convert_logical_world import AIR_NAME, World, convert, parse_rules, state_of
+from convert_logical_world import AIR_NAME, World, convert, hash_tree, parse_rules, state_of
 from reviewed_migration_fixture import write_fixture
 from source_review_decisions import DECISIONS
 from source_variant_rng import guards_match
@@ -22,6 +22,14 @@ MANIFEST = ROOT / "docs/manual-review/source-assemblies/batch-02/batch-02-manife
 EVIDENCE = ROOT / "build/test-results/reviewed-batch-02-source-examples.json"
 DIM = "minecraft:overworld"
 PROVEN_ALIASES = {"o_c009_a": "o_c001_a", "o_c009_b": "o_c001_b", "o_c561": "o_c046"}
+# These are real reviewed placements whose destination footprint contains
+# protected, non-logical world blocks.  Conversion must leave the complete
+# candidate alone; they are evidence of a safe refusal, not a migrated case.
+EXPECTED_SAFE_BLOCKED = {
+    ("C282", "A"), ("C282", "B"), ("C282", "C"), ("C282", "D"),
+    ("C654", "A"), ("C654", "B"), ("C654", "C"),
+    ("C1491", "A"),
+}
 
 
 def state_key(state): return state[0], tuple(sorted(state[1]))
@@ -126,6 +134,11 @@ class ReviewedSourceExamples(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.rules, cls.defaults = parse_rules(RES, "original-v2")
+        report_path = ROOT / "docs/nightmare-qa-report.json"
+        report = json.loads(report_path.read_text(encoding="utf8")) if report_path.is_file() else {"families": []}
+        cls.replacements = {row["old_id"]: set(row["outputs"]) for row in report["families"]}
+        if report.get("c654", {}).get("b_manual_only"):
+            cls.replacements["o_c654"] = {report["c654"]["replacement"]}
         cls.reader = SourceZip(SOURCE); cls.examples = examples(cls.reader); cls.records = []
     @classmethod
     def tearDownClass(cls): cls.reader.close()
@@ -138,25 +151,56 @@ class ReviewedSourceExamples(unittest.TestCase):
                 try:
                     rule, origin = matching_rule(self.rules, example)
                     cells = {point: (state[0], dict(state[1])) for point, state in example.selected + example.context + example.protected + example.siblings}
-                    root = add(origin, rule.root_offset)
-                    for offset in rule.shape:
-                        point=add(root,offset);actual=self.reader.state(example.dimension,point)
-                        cells.setdefault(point,(actual[0],dict(actual[1])))
+                    roots = [(add(origin, output.root_offset), output.shape) for output in rule.outputs] if rule.outputs else [(add(origin, rule.root_offset), rule.shape)]
+                    for root, shape in roots:
+                        for offset in shape:
+                            # Only the reviewed source cells/context are copied
+                            # from the original world.  Destination-only cells
+                            # must be air in this synthetic exact-pattern test.
+                            cells.setdefault(add(root,offset),("minecraft:air",{}))
+                    primary_root = roots[0][0]
                     source, output, reports = base / f"source-{index}", base / f"output-{index}", base / "reports"
                     write_fixture(source, cells, floor=False)
                     report_path = reports / f"{index}.json"
                     report = convert(source, output, resources=RES, report_path=report_path, report_root=reports, source_mode="original-v2")
+                    blocked = (example.review_id, example.pattern) in EXPECTED_SAFE_BLOCKED
+                    if blocked:
+                        self.assertEqual(0, report["counts"]["converted"], report["ledger"])
+                        self.assertFalse(report["ledger"])
+                        rejected = [entry for entry in report["rejected"] if entry["rule"] == rule.number and tuple(entry["origin"]) == origin]
+                        self.assertEqual(["target_would_overwrite_foreign_block"], [entry["reason"] for entry in rejected])
+                        world = World(output, self.defaults)
+                        conflicts = []
+                        source_points = {point for point, _state in example.selected}
+                        for output_root, _target, shape in ([(add(origin, output.root_offset), output.target, output.shape) for output in rule.outputs] if rule.outputs else [(primary_root, rule.target, rule.shape)]):
+                            for offset in shape:
+                                point = add(output_root, offset)
+                                state = world.get(DIM, point)
+                                if point not in source_points and state[0] != AIR_NAME:
+                                    conflicts.append({"position": list(point), "state": [state[0], dict(state[1])]})
+                        self.assertTrue(conflicts, "blocked reviewed placement has no foreign destination state")
+                        for point, state in example.selected + example.context + example.protected + example.siblings:
+                            self.assertEqual(world.get(DIM, point), state, point)
+                        self.assertEqual(hash_tree(source), hash_tree(output), "safe refusal changed the fixture")
+                        status, detail = "blocked", {"reason": "target_would_overwrite_foreign_block", "rule": rule.number,
+                                                     "origin": list(origin), "conflicts": conflicts}
+                        self.records.append({"review_id": example.review_id, "family": example.family, "pattern": example.pattern,
+                                             "anchor": list(example.anchor), "selectedCellCount": len(example.selected),
+                                             "contextCellCount": len(example.context), "status": status, **detail})
+                        continue
                     actual_target = target_id(rule); expected = PROVEN_ALIASES.get(example.family, example.family)
-                    if actual_target != expected or not any(e['rule']==rule.number and tuple(e['targetRoot'])==root for e in report['ledger']):
+                    old_id = next((candidate for candidate in self.replacements if expected == candidate or expected.startswith(candidate + "_")), expected)
+                    expected_targets = self.replacements.get(old_id, {expected})
+                    if actual_target not in expected_targets or not any(e['rule']==rule.number and tuple(e['targetRoot'])==primary_root for e in report['ledger']):
                         raise AssertionError(json.dumps({"expected": expected, "target": actual_target,
                                                          "counts": report["counts"],
                                                          "convertedRules": [entry["rule"] for entry in report["ledger"]],
                                                          "rejectionReasons": sorted({entry["reason"] for entry in report["rejected"]})}))
                     world = World(output, self.defaults)
-                    if world.get(DIM, root) != rule.target:
-                        raise AssertionError(json.dumps({"targetRoot": list(root), "actual": world.get(DIM, root),
+                    if any(world.get(DIM, output_root) != target for output_root, target, _shape in ([(add(origin, output.root_offset), output.target, output.shape) for output in rule.outputs] if rule.outputs else [(primary_root, rule.target, rule.shape)])):
+                        raise AssertionError(json.dumps({"targetRoot": list(primary_root), "actual": world.get(DIM, primary_root),
                                                          "convertedRules": [entry["rule"] for entry in report["ledger"]]}))
-                    target_entry=next(e for e in report['ledger'] if e['rule']==rule.number and tuple(e['targetRoot'])==root)
+                    target_entry=next(e for e in report['ledger'] if e['rule']==rule.number and tuple(e['targetRoot'])==primary_root)
                     touched={tuple(e['position']) for e in target_entry['changes']}
                     protected={point for point,_state in example.protected}
                     if any(protected & {tuple(e['position']) for e in entry['changes']} for entry in report['ledger']):raise AssertionError('numbered user CONTEXT touched')

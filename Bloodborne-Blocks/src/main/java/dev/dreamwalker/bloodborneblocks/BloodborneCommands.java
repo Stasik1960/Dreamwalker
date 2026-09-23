@@ -20,7 +20,9 @@ final class BloodborneCommands {
    .then(literal("update").then(argument("radius",IntegerArgumentType.integer(1,32))
     .then(literal("preview").executes(context->update(context.getSource(),IntegerArgumentType.getInteger(context,"radius"),false)))
     .then(literal("apply").executes(context->update(context.getSource(),IntegerArgumentType.getInteger(context,"radius"),true)))))
-   .then(literal("debug").executes(context->debug(context.getSource())).then(literal("target").executes(context->debug(context.getSource()))))));
+   .then(literal("debug").executes(context->debug(context.getSource())).then(literal("target").executes(context->debug(context.getSource()))))
+   .then(LogicalVisualCommands.command())));
+  LogicalVisualCommands.registerLifecycle();
  }
  private static int run(ServerCommandSource source,int radius,boolean apply){
   BlockPos center=BlockPos.ofFloored(source.getPosition());GeometryRuntime.RepairResult result=GeometryRuntime.repair(source.getWorld(),center,radius,apply);

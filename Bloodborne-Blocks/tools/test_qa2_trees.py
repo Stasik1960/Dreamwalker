@@ -23,6 +23,25 @@ from test_reviewed_migration import choose_rule, cells_for
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / 'src/main/resources/bloodborne_blocks/logical'
 DIM = 'minecraft:overworld'
+KNOWN_VARIANTS = {
+    'tree_a4495da92deb', 'tree_cfd3d71f521b', 'tree_9d61b4091ec5',
+    'tree_78dd02703b12', 'tree_a2813fef72f1', 'tree_254d81d6bf3e',
+}
+POSITIVE_WING_MODELS = {
+    (0, 4, 3): 'minecraft:block/oak_log',
+    (0, 7, 3): 'minecraft:block/spruce_log',
+    (0, 10, 3): 'minecraft:block/birch_log',
+}
+NEGATIVE_WING_MODELS = {
+    (0, 4, -3): 'minecraft:block/jungle_log',
+    (0, 7, -3): 'minecraft:block/acacia_log',
+    (0, 10, -3): 'minecraft:block/dark_oak_log',
+}
+RAW_BAD_POSITIVE_WING_MODELS = {
+    (0, 4, 3): 'minecraft:block/jungle_log',
+    (0, 7, 3): 'minecraft:block/acacia_log',
+    (0, 10, 3): 'minecraft:block/dark_oak_log',
+}
 
 
 class WholeTreeTests(unittest.TestCase):
@@ -58,11 +77,62 @@ class WholeTreeTests(unittest.TestCase):
             self.assertEqual(len(pattern['components']), 16)
             self.assertEqual(len({tuple(p['offset']) for p in pattern['components']}), 16)
             for selection in choices(pattern['components']):
-                mesh = source_polys([app for group in selection for app in group])[0]
+                # Keep the raw carriers/guards below untouched.  This is an
+                # independent expected rendering: only the reviewed bad +Z
+                # atlas wing is substituted before source polygons are baked.
+                apps = [copy.deepcopy(app) for group in selection for app in group]
+                if pattern['exact_source_signature'].startswith('235de5'):
+                    for app in apps:
+                        offset = tuple(app.get('offset', ()))
+                        if offset in POSITIVE_WING_MODELS and app.get('y') == 180:
+                            app['model'] = POSITIVE_WING_MODELS[offset]
+                mesh = source_polys(apps)[0]
                 expected.add(tuple(sorted(mesh_tokens(identified(mesh), 0, self.transform).items())))
         self.assertEqual(actual, expected)
-        self.assertEqual(len(actual), 6)
+        # Six source/RNG identities remain migration-visible.  Their corrected
+        # renderings intentionally collapse to four unique meshes.
+        self.assertEqual(len(actual), 4)
         self.assertEqual(len(self.tree_rules), 6)
+
+    def test_positive_wing_uses_reference_uvs_without_reauthoring_raw_patterns(self):
+        first, second = self.authored['patterns']
+        self.assertTrue(first['exact_source_signature'].startswith('816a'))
+        self.assertTrue(second['exact_source_signature'].startswith('235de5'))
+        first_apps = [copy.deepcopy(app) for group in next(choices(first['components'])) for app in group]
+        second_raw = [copy.deepcopy(app) for group in next(choices(second['components'])) for app in group]
+        by_offset = {tuple(app['offset']): app for app in first_apps}
+        raw_by_offset = {tuple(app['offset']): app for app in second_raw}
+        # The second pattern really retains jungle/acacia/dark raw carriers on
+        # +Z.  It must never be edited to make the rendering pass.
+        self.assertEqual(RAW_BAD_POSITIVE_WING_MODELS, {offset: raw_by_offset[offset]['model']
+                                                        for offset in POSITIVE_WING_MODELS})
+        self.assertEqual(NEGATIVE_WING_MODELS, {offset: raw_by_offset[offset]['model']
+                                                for offset in NEGATIVE_WING_MODELS})
+        corrected = copy.deepcopy(second_raw)
+        for app in corrected:
+            offset = tuple(app['offset'])
+            if offset in POSITIVE_WING_MODELS and app.get('y') == 180:
+                app['model'] = POSITIVE_WING_MODELS[offset]
+        corrected_by_offset = {tuple(app['offset']): app for app in corrected}
+        for offset in POSITIVE_WING_MODELS:
+            # The reference model provides both the texture and its U/V atlas
+            # coordinates; compare its source polygons rather than model names.
+            self.assertEqual(source_polys([by_offset[offset]])[0], source_polys([corrected_by_offset[offset]])[0])
+        for offset in NEGATIVE_WING_MODELS:
+            self.assertEqual(raw_by_offset[offset], corrected_by_offset[offset])
+            self.assertEqual(source_polys([raw_by_offset[offset]])[0], source_polys([corrected_by_offset[offset]])[0])
+        state_variants = {dict(item.split('=', 1) for item in key.split(','))['variant']
+                          for key in self.family['states']}
+        self.assertEqual(KNOWN_VARIANTS, state_variants)
+        self.assertEqual(6, len(self.tree_rules))
+        raw_patterns = {
+            tuple(sorted((component['id'], tuple(sorted(component['properties'].items())), tuple(component['offset']))
+                         for component in pattern['components']))
+            for pattern in self.authored['patterns']
+        }
+        for rule in self.tree_rules:
+            self.assertTrue(rule.variant_guards)
+            self.assertIn(tuple(sorted((part.state[0], part.state[1], part.offset) for part in parts(rule))), raw_patterns)
 
     def test_fixed_base_rotations_trunk_only_and_no_visual_helpers(self):
         definition = self.definitions[TREE_ID]

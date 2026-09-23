@@ -1,6 +1,52 @@
-# Bloodborne-Blocks — актуальный handoff, 2026-09-23
+# Bloodborne-Blocks — актуальный handoff, 2026-09-24
 
-## Текущий checkpoint: batch-02 QA2 — цельные деревья и debug
+## Текущий checkpoint: NightmareRunning QA + BASE/ALT
+
+Продолжение QA2 по пятнадцати скриншотам NightmareRunning. Не новый discovery
+и не batch-03. Модели/семантические границы исправлены, накоплен один новый JAR;
+визуальная приёмка владельцем ещё требуется. Оригинальная карта не изменялась,
+полная конвертация города не выполнялась.
+
+- C008 → пять статуй (#3/#6 один ID); C1491 → три могилы; C1962 → два мешка;
+  C1979 → пять групп по красным рамкам; C471 → два шпиля; C282 → две двери;
+  C654 → окна A/A и B/B. Для миграции прежнего C654 пользователь выбрал A.
+- Исправлены противоположные ветви цельного C001; полный C002 поднят без потери
+  малых могил/камней; у C028/C1680 удалены отмеченные боковые детали;
+  C618 и `o_wall_deco_1` подняты. Неизвестный забор: **NEEDS_USER_DEBUG**,
+  ничего не удалять по предположению.
+- 286 доступных logical families, 1610 BASE + 1610 ALT states; одна пара
+  `visual=base|alt` без новых registry IDs. 12 старых скрытых IDs сохранены
+  для совместимости. Runtime bake/resource-pack override, не BER/ticking.
+- Команды `/bloodborne visual get|base|alt|toggle`, `pos1`, `pos2`,
+  `region base|alt|toggle`: permission 2, загруженные клетки, максимум 32768,
+  только visual, разрешение helper→master и дедупликация.
+- Atomic raw-source split converter сохраняет контекст. **20 реальных source
+  examples преобразуются, 8 SAFE_BLOCKED** (C282 A–D, C654 A–C, C1491 A):
+  столкновения новых helpers с исходными panes/stairs/barrier/другим окружением.
+  Эти восемь не считать успешно мигрированными и не обходить защиту.
+- Новая галерея: 286 families / 1160 образцов, включая шесть BASE/ALT proof
+  specimens; нейтральные отдельные площадки и таблички. Старая галерея сохранена.
+- ALT starter kit содержит все 1610 post-fix ALT-моделей, PNG и animation
+  metadata, manifest с anchors/slots; изначально внешний вид равен BASE.
+
+Артефакты: [Nightmare-QA-ALT](../releases/Bloodborne-Blocks/Nightmare-QA-ALT/).
+Полное описание, точные ID, ограничения и команды:
+[NIGHTMARE-QA-ALT.md](docs/NIGHTMARE-QA-ALT.md).
+Проверки: [nightmare-checks](docs/nightmare-checks/).
+Финальные проверки: 77 Python unit tests, 25/25 dedicated-server GameTests,
+2960 orientation checks; `check` и `build` завершились BUILD SUCCESSFUL.
+Штатный Minecraft 1.20.1 LevelStorage распознал новую галерею. ALT kit проверен
+реальным Java resolver: все 1610 моделей и 2123 пути текстур. Подробные команды
+и границы проверки: [verification log](docs/nightmare-checks/README.md).
+Внутренняя версия JAR `2.1.0-alpha.1`: заменить прежний, не ставить оба.
+
+Следующий шаг: ручная проверка в Minecraft и debug неизвестного забора.
+Восемь `NOT_MENTIONED` остаются непроверенными визуально — см.
+[coverage](docs/nightmare-running-review-coverage.md). Не продолжать batch-03
+или конвертацию города без следующего задания. Штатный LevelStorage и серверные
+GameTests не заменяют фактический client resource reload/визуальный осмотр.
+
+## История: batch-02 QA2 — цельные деревья и debug
 
 Исправлены только три запрошенные области: деревья C001/C009, диагностика
 наведённого объекта, читаемая синтетическая галерея. Batch-03 и массовая

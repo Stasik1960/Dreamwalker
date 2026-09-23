@@ -97,7 +97,11 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
  public void statueLanternDetachWithFullSurvivalInventory(TestContext context){
   ServerWorld world=context.getWorld();ServerPlayerEntity player=createMockSurvivalServerPlayer(context);ArchitectureBlock statue=required("o_statue"),lantern=required("o_lanterns");BooleanProperty attached=attachmentProperty(statue);
   try{
-   moveOutside(context,player);install(context,statue);player.setStackInHand(Hand.MAIN_HAND,new ItemStack(lantern));context.useBlock(ROOT,player);assertAttachment(context,attached,true,"full-inventory fixture attaches lantern first");
+   // Keep this item-spawn assertion inside the template's entity-tracked chunk.
+   // moveOutside uses z=-6: far-along batches then spawn a real saved item in
+   // a non-tracked neighboring chunk, invisible to the immediate entity query.
+   BlockPos dropPosition=context.getAbsolutePos(new BlockPos(0,4,0));player.refreshPositionAndAngles(dropPosition.getX()+.5,dropPosition.getY(),dropPosition.getZ()+.5,0,0);
+   install(context,statue);player.setStackInHand(Hand.MAIN_HAND,new ItemStack(lantern));context.useBlock(ROOT,player);assertAttachment(context,attached,true,"full-inventory fixture attaches lantern first");
    BlockPos helper=ownedHelper(context,context.getAbsolutePos(ROOT),world.getBlockState(context.getAbsolutePos(ROOT)));context.assertTrue(helper!=null,"attached statue retains a helper for delegated detach");fillMainInventory(player);player.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);player.setSneaking(true);
    BlockState helperState=world.getBlockState(helper);ActionResult result=helperState.onUse(world,player,Hand.OFF_HAND,new BlockHitResult(Vec3d.ofCenter(helper),Direction.UP,helper,false));player.setSneaking(false);
    context.assertTrue(result.isAccepted(),"off-hand helper detach succeeds with full main inventory");assertAttachment(context,attached,false,"full-inventory detach clears attached state");
@@ -185,9 +189,15 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
  public void contractV2BatchFamiliesPlacePickBreakAndPreserveForeignCells(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();
   try{
-   Set<String> families=LogicalContractV2.declaredFamilyIds();context.assertTrue(families.containsAll(BATCH_FAMILIES)&&families.contains("o_c001")&&families.size()==26,"all contracts including hidden compatibility families remain declared");
+   Set<String> families=LogicalContractV2.declaredFamilyIds();Set<String> active=new HashSet<>(families);active.removeIf(PaletteAliases::hidden);
+   context.assertTrue(families.containsAll(BATCH_FAMILIES)&&families.contains("o_c001"),"all legacy and replacement contracts remain declared");
    for(String id:families){
-    if(PaletteAliases.hidden(id))continue; // compatibility item redirects have separate QA2 tests
+    ArchitectureBlock declared=required(id);String key=BloodborneBlocks.key(declared.getDefaultState());LogicalContractV2.DebugMetadata metadata=LogicalContractV2.debugMetadata(id,key);
+    context.assertTrue(metadata!=null,"every declared contract has runtime review metadata: "+id);
+    if(id.matches("o_c\\d.*"))context.assertTrue(metadata.reviewId()!=null,"reviewed contract keeps its review id: "+id);
+    if(id.equals("o_wall_deco_1"))context.assertTrue(metadata.reviewId()==null&&metadata.sourceFamily().contains("noCatalogID"),"wall remains explicitly no-catalog");
+   }
+   for(String id:active){
     ArchitectureBlock block=required(id);BlockPos canonical=null;
     for(Direction yaw:Direction.Type.HORIZONTAL){
      clear(context,block);moveOutside(context,player);player.setYaw(yaw.asRotation());BlockPos expectedRoot=context.getAbsolutePos(CLICK.up());Direction artworkFacing=yaw.getOpposite();BlockPos foreign=id.equals("o_c1979")?expectedRoot.offset(artworkFacing.rotateYCounterclockwise()).up():id.equals("o_c046")||id.equals("o_c474")?expectedRoot.east():context.getAbsolutePos(CLICK.up(20));world.setBlockState(foreign,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);

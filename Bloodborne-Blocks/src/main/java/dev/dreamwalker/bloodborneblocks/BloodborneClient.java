@@ -3,6 +3,10 @@ package dev.dreamwalker.bloodborneblocks;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.EmptyEntityRenderer;
@@ -41,7 +45,19 @@ public final class BloodborneClient implements ClientModInitializer {
    ColorProviderRegistry.BLOCK.register((state,view,pos,index)->MinecraftClient.getInstance().getBlockColors().getColor(block.original(state),view,pos,index),block);
    ColorProviderRegistry.ITEM.register((stack,index)->{var provider=ColorProviderRegistry.ITEM.get(block.definition.sourceBlock.asItem());return provider==null?-1:provider.getColor(new ItemStack(block.definition.sourceBlock),index);},block.asItem());
   }
-  ModelLoadingPlugin.register(context->{
+  PreparableModelLoadingPlugin.register((manager,executor)->CompletableFuture.supplyAsync(()->{
+   Map<String,JsonObject> resources=new HashMap<>();
+   // Read from this reload's ResourceManager, never the previous client manager.
+   LogicalVisualModels visuals=new LogicalVisualModels(path->resources.computeIfAbsent(path,name->{
+    Identifier model=new Identifier(name);Identifier file=new Identifier(model.getNamespace(),"models/"+model.getPath()+".json");
+    try(var reader=manager.getResource(file).orElseThrow(()->new IllegalArgumentException("Missing model "+file)).getReader()){
+     return JsonParser.parseReader(reader).getAsJsonObject();
+    }catch(java.io.IOException e){throw new IllegalStateException("Cannot read visual model "+file,e);}
+   }),logicalMeshes);
+   for(ArchitectureBlock block:BloodborneBlocks.BLOCKS.values())if(block.definition.visual_models!=null)
+    for(String path:new HashSet<>(block.definition.visual_models.values()))visuals.resolve(path);
+   return visuals;
+  },executor),(visuals,context)->{
    // Scoped to one model-loader generation, so a resource reload never reuses stale sprites.
    Map<String,ModularBakedModel.Parts> modularQuads=new HashMap<>();
    ModularBakedModel.QuadPool sharedFaces=new ModularBakedModel.QuadPool();
@@ -63,13 +79,20 @@ public final class BloodborneClient implements ClientModInitializer {
     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,turns,bake.textureGetter(),sharedFaces)),result);
    }
    if(block.definition.logical){
+    String inventoryKey=BloodborneBlocks.key(BloodborneBlocks.applyPlacementProperties(block.definition,block.getDefaultState()));
     String meshKey=block.definition.models.get(modelId.getVariant());
-    if(meshKey==null&&modelId.getVariant().equals("inventory"))meshKey=block.definition.models.get(BloodborneBlocks.key(block.getDefaultState()));
+    if(meshKey==null&&modelId.getVariant().equals("inventory"))meshKey=block.definition.models.get(inventoryKey);
     if(meshKey==null)throw new IllegalStateException("Missing logical mesh state "+block.definition.id+"["+modelId.getVariant()+"]");
     ModularMeshData.Mesh mesh=logicalMeshes.get(meshKey);if(mesh==null)throw new IllegalStateException("Missing logical mesh "+meshKey+" for "+block.definition.id);
     // Logical meshes are generated in their complete state orientation; do not rotate them again.
-    String cacheKey="logical:"+meshKey;
-    result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),result);
+    String visualPath=block.definition.visual_models==null?null:block.definition.visual_models.get(modelId.getVariant().equals("inventory")?inventoryKey:modelId.getVariant());
+    Optional<ModularMeshData.Mesh> appearance=visualPath==null?Optional.of(mesh):visuals.resolve(visualPath);
+    // A resource-pack model with normal elements keeps Minecraft's baked model.
+    // Only our explicit mesh/polygon JSON extension uses the static quad adapter.
+    if(appearance.isPresent()){
+     String cacheKey=visualPath==null?"logical:"+meshKey:"visual:"+visualPath;
+     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,false)),result);
+    }
    }
    if(block.definition.emissive){
     List<EmissiveModel.Pair>pairs=new ArrayList<>();

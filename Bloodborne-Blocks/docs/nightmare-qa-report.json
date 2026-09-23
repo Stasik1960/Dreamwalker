@@ -1,0 +1,1720 @@
+{
+  "baseline_commit": "9e60c5",
+  "c654": {
+    "b_manual_only": true,
+    "manual_variant": "surface",
+    "migration_variant": "source_depth",
+    "replacement": "o_c654_a"
+  },
+  "compiler_owner": "nightmare_qa",
+  "families": [
+    {
+      "old_id": "o_wall_deco_1",
+      "outputs": [
+        "o_wall_deco_1"
+      ],
+      "pattern_members": 4,
+      "recipes": [
+        {
+          "collision_box": null,
+          "name": "o_wall_deco_1",
+          "provenance": {
+            "baseline_mesh": "o_5157f2ac712421b0b3b9",
+            "lift": 1.0
+          },
+          "source_translation": [
+            0,
+            1.0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c002",
+      "outputs": [
+        "o_c002"
+      ],
+      "pattern_members": 1,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            -0.726063,
+            0.0,
+            -1.103015,
+            2.895191,
+            3.0,
+            2.310819
+          ],
+          "collision_box": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "name": "o_c002",
+          "provenance": {
+            "composition": "all source elements retained, including buried small details",
+            "required_source_element_counts": {
+              "1": 34,
+              "2": 32
+            },
+            "source_components": [
+              1,
+              2
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            3.0,
+            2.0
+          ],
+          "source_bounds": [
+            -0.726063,
+            -1.0,
+            -1.103015,
+            2.895191,
+            2.0,
+            2.310819
+          ],
+          "source_translation": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c008",
+      "outputs": [
+        "o_c008_1",
+        "o_c008_2",
+        "o_c008_3",
+        "o_c008_4",
+        "o_c008_5"
+      ],
+      "pattern_members": 20,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            -0.094271,
+            0.0,
+            -0.0625,
+            1.2125,
+            2.961614,
+            1.0625
+          ],
+          "collision_box": [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            2.0,
+            0.75
+          ],
+          "name": "o_c008_1",
+          "provenance": {
+            "equal_geometry_note": null,
+            "placement_instances": [
+              {
+                "source_component": 6,
+                "source_relative": [
+                  -2,
+                  1,
+                  4
+                ]
+              }
+            ],
+            "review_number": 1,
+            "source_components": [
+              6
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.5,
+            1.0
+          ],
+          "source_bounds": [
+            -2.094271,
+            0.0,
+            3.9375,
+            -0.7875,
+            2.961614,
+            5.0625
+          ],
+          "source_translation": [
+            2.0,
+            0.0,
+            -4.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.057408000000000015,
+            0.0,
+            0.015216000000000118,
+            1.446369,
+            2.267523,
+            1.0177990000000001
+          ],
+          "collision_box": [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            1.5,
+            0.75
+          ],
+          "name": "o_c008_2",
+          "provenance": {
+            "equal_geometry_note": "#2/#4 use statue_3 at yaws differing by 90 degrees; retained as requested semantic families",
+            "placement_instances": [
+              {
+                "source_component": 5,
+                "source_relative": [
+                  -1,
+                  0,
+                  3
+                ]
+              }
+            ],
+            "review_number": 2,
+            "source_components": [
+              5
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0,
+            1.0
+          ],
+          "source_bounds": [
+            -0.942592,
+            -0.982371,
+            3.015216,
+            0.446369,
+            1.285152,
+            4.017799
+          ],
+          "source_translation": [
+            1.0,
+            0.982371,
+            -3.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.057227999999999946,
+            0.0,
+            -0.3488309999999999,
+            0.96875,
+            1.626002,
+            1.094271
+          ],
+          "collision_box": [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            1.5,
+            0.75
+          ],
+          "name": "o_c008_3",
+          "provenance": {
+            "equal_geometry_note": null,
+            "placement_instances": [
+              {
+                "source_component": 3,
+                "source_relative": [
+                  -1,
+                  0,
+                  2
+                ]
+              },
+              {
+                "source_component": 1,
+                "source_relative": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "review_number": 3,
+            "source_components": [
+              3,
+              1
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0,
+            1.0
+          ],
+          "source_bounds": [
+            -0.942772,
+            -0.982371,
+            1.651169,
+            -0.03125,
+            0.643631,
+            3.094271
+          ],
+          "source_translation": [
+            1.0,
+            0.982371,
+            -2.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.015216000000000007,
+            0.0,
+            -0.446369,
+            1.017799,
+            2.267523,
+            0.9425920000000001
+          ],
+          "collision_box": [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            1.5,
+            0.75
+          ],
+          "name": "o_c008_4",
+          "provenance": {
+            "equal_geometry_note": "#2/#4 use statue_3 at yaws differing by 90 degrees; retained as requested semantic families",
+            "placement_instances": [
+              {
+                "source_component": 2,
+                "source_relative": [
+                  -1,
+                  0,
+                  1
+                ]
+              }
+            ],
+            "review_number": 4,
+            "source_components": [
+              2
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0,
+            1.0
+          ],
+          "source_bounds": [
+            -0.984784,
+            -0.982371,
+            0.553631,
+            0.017799,
+            1.285152,
+            1.942592
+          ],
+          "source_translation": [
+            1.0,
+            0.982371,
+            -1.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            -0.030981,
+            0.0,
+            -0.321129,
+            1.321129,
+            1.591286,
+            1.0751750000000002
+          ],
+          "collision_box": [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            1.5,
+            0.75
+          ],
+          "name": "o_c008_5",
+          "provenance": {
+            "equal_geometry_note": null,
+            "placement_instances": [
+              {
+                "source_component": 4,
+                "source_relative": [
+                  0,
+                  0,
+                  2
+                ]
+              }
+            ],
+            "review_number": 5,
+            "source_components": [
+              4
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0,
+            1.0
+          ],
+          "source_bounds": [
+            -0.030981,
+            -0.982371,
+            1.678871,
+            1.321129,
+            0.608915,
+            3.075175
+          ],
+          "source_translation": [
+            -0.0,
+            0.982371,
+            -2.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c471",
+      "outputs": [
+        "o_c471_a",
+        "o_c471_b"
+      ],
+      "pattern_members": 4,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            -0.074524,
+            0.0,
+            -0.074524,
+            1.074524,
+            3.0,
+            1.074524
+          ],
+          "collision_box": [
+            0.28,
+            0.0,
+            0.28,
+            0.72,
+            3.0,
+            0.72
+          ],
+          "name": "o_c471_a",
+          "provenance": {
+            "source_components": [
+              1
+            ]
+          },
+          "recommended_source_root_offset": [
+            0,
+            0,
+            0
+          ],
+          "selection_box": [
+            0.1,
+            0.0,
+            0.1,
+            0.9,
+            3.0,
+            0.9
+          ],
+          "source_bounds": [
+            -0.074524,
+            -1.0,
+            -0.074524,
+            1.074524,
+            2.0,
+            1.074524
+          ],
+          "source_translation": [
+            -0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            -0.07452400000000003,
+            0.0,
+            -0.07452400000000003,
+            1.074524,
+            3.0,
+            1.0745239999999998
+          ],
+          "collision_box": [
+            0.28,
+            0.0,
+            0.28,
+            0.72,
+            3.0,
+            0.72
+          ],
+          "name": "o_c471_b",
+          "provenance": {
+            "source_components": [
+              2
+            ]
+          },
+          "recommended_source_root_offset": [
+            -1,
+            0,
+            1
+          ],
+          "selection_box": [
+            0.1,
+            0.0,
+            0.1,
+            0.9,
+            3.0,
+            0.9
+          ],
+          "source_bounds": [
+            -1.074524,
+            -1.0,
+            0.925476,
+            0.074524,
+            2.0,
+            2.074524
+          ],
+          "source_translation": [
+            1.0,
+            1.0,
+            -1.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c1680",
+      "outputs": [
+        "o_c1680"
+      ],
+      "pattern_members": 1,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            -1.206473,
+            0.0,
+            -1.3125,
+            1.476616,
+            1.71875,
+            1.5471249999999999
+          ],
+          "collision_box": [
+            0.1,
+            0.0,
+            0.1,
+            0.9,
+            1.3,
+            0.9
+          ],
+          "collision_boxes": [
+            [
+              0.1,
+              0,
+              -0.9,
+              0.9,
+              1.3,
+              -0.1
+            ],
+            [
+              -0.9,
+              0,
+              0.1,
+              -0.1,
+              1.3,
+              0.9
+            ]
+          ],
+          "name": "o_c1680",
+          "provenance": {
+            "removed_source_elements": [
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                8
+              ],
+              [
+                1,
+                9
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                11
+              ],
+              [
+                2,
+                0
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                2,
+                4
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                2,
+                6
+              ],
+              [
+                2,
+                7
+              ]
+            ],
+            "retained_source_elements": {
+              "1": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24
+              ],
+              "2": [
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            }
+          },
+          "recommended_source_root_offset": [
+            0,
+            0,
+            1
+          ],
+          "selection_box": [
+            0.02,
+            0.0,
+            0.02,
+            0.98,
+            1.4,
+            0.98
+          ],
+          "source_bounds": [
+            -1.206473,
+            -0.03125,
+            -0.3125,
+            1.476616,
+            1.6875,
+            2.547125
+          ],
+          "source_translation": [
+            -0.0,
+            0.03125,
+            -1.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c1962",
+      "outputs": [
+        "o_c1962_a",
+        "o_c1962_b"
+      ],
+      "pattern_members": 4,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            0.1875,
+            0.0,
+            0.1875,
+            0.8125,
+            0.9375,
+            0.8125
+          ],
+          "collision_box": [
+            0.2,
+            0.0,
+            0.2,
+            0.8,
+            0.88,
+            0.8
+          ],
+          "name": "o_c1962_a",
+          "provenance": {
+            "source_components": [
+              1
+            ]
+          },
+          "recommended_source_root_offset": [
+            0,
+            0,
+            0
+          ],
+          "selection_box": [
+            0.14,
+            0.0,
+            0.14,
+            0.86,
+            0.9,
+            0.86
+          ],
+          "source_bounds": [
+            0.1875,
+            -0.0625,
+            0.1875,
+            0.8125,
+            0.875,
+            0.8125
+          ],
+          "source_translation": [
+            -0.0,
+            0.0625,
+            -0.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.1875,
+            0.0,
+            0.1875,
+            0.8125,
+            0.9375,
+            0.8125
+          ],
+          "collision_box": [
+            0.2,
+            0.0,
+            0.2,
+            0.8,
+            0.88,
+            0.8
+          ],
+          "name": "o_c1962_b",
+          "provenance": {
+            "source_components": [
+              2
+            ]
+          },
+          "recommended_source_root_offset": [
+            1,
+            0,
+            1
+          ],
+          "selection_box": [
+            0.14,
+            0.0,
+            0.14,
+            0.86,
+            0.9,
+            0.86
+          ],
+          "source_bounds": [
+            1.1875,
+            -0.0625,
+            1.1875,
+            1.8125,
+            0.875,
+            1.8125
+          ],
+          "source_translation": [
+            -1.0,
+            0.0625,
+            -1.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c1979",
+      "outputs": [
+        "o_c1979_1",
+        "o_c1979_2",
+        "o_c1979_3",
+        "o_c1979_4",
+        "o_c1979_5"
+      ],
+      "pattern_members": 10,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            -0.4375,
+            0.0,
+            -0.4375,
+            1.4375,
+            2.0,
+            1.4375
+          ],
+          "collision_box": [
+            0.1,
+            0,
+            0.1,
+            0.9,
+            2,
+            0.9
+          ],
+          "name": "o_c1979_1",
+          "provenance": {
+            "canonical_old_anchor": [
+              1,
+              0,
+              0
+            ],
+            "excluded_context_components": [
+              1,
+              11
+            ],
+            "source_components": [
+              2,
+              12
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            2.0,
+            3.0
+          ],
+          "source_bounds": [
+            0.5625,
+            0.0,
+            -0.4375,
+            2.4375,
+            2.0,
+            1.4375
+          ],
+          "source_translation": [
+            0,
+            -0.0,
+            0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            3.5625,
+            0.0,
+            -0.4375,
+            5.4375,
+            2.0,
+            1.4375
+          ],
+          "collision_box": [
+            0.1,
+            0,
+            0.1,
+            0.9,
+            2,
+            0.9
+          ],
+          "name": "o_c1979_2",
+          "provenance": {
+            "canonical_old_anchor": [
+              1,
+              0,
+              0
+            ],
+            "excluded_context_components": [
+              1,
+              11
+            ],
+            "source_components": [
+              6,
+              13
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            2.0,
+            3.0
+          ],
+          "source_bounds": [
+            4.5625,
+            0.0,
+            -0.4375,
+            6.4375,
+            2.0,
+            1.4375
+          ],
+          "source_translation": [
+            -4,
+            -0.0,
+            0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            1.0,
+            0.0,
+            0.0,
+            4.0,
+            1.0,
+            1.0
+          ],
+          "collision_box": [
+            0,
+            0,
+            0.25,
+            3,
+            1,
+            0.75
+          ],
+          "name": "o_c1979_3",
+          "provenance": {
+            "canonical_old_anchor": [
+              1,
+              0,
+              0
+            ],
+            "excluded_context_components": [
+              1,
+              11
+            ],
+            "source_components": [
+              3,
+              4,
+              5
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            2.0,
+            3.0
+          ],
+          "source_bounds": [
+            2.0,
+            0.0,
+            0.0,
+            5.0,
+            1.0,
+            1.0
+          ],
+          "source_translation": [
+            -1,
+            -0.0,
+            0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            -0.1875,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            3.0
+          ],
+          "collision_box": [
+            0.1,
+            0,
+            0,
+            0.9,
+            1,
+            2
+          ],
+          "name": "o_c1979_4",
+          "provenance": {
+            "canonical_old_anchor": [
+              1,
+              0,
+              0
+            ],
+            "excluded_context_components": [
+              1,
+              11
+            ],
+            "source_components": [
+              7,
+              9
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            2.0,
+            3.0
+          ],
+          "source_bounds": [
+            0.8125,
+            -0.0,
+            1.0,
+            2.0,
+            1.0,
+            3.0
+          ],
+          "source_translation": [
+            0,
+            -0.0,
+            -1
+          ]
+        },
+        {
+          "canonical_bounds": [
+            4.0,
+            0.0,
+            1.0,
+            5.1875,
+            1.0,
+            3.0
+          ],
+          "collision_box": [
+            0.1,
+            0,
+            0,
+            0.9,
+            1,
+            2
+          ],
+          "name": "o_c1979_5",
+          "provenance": {
+            "canonical_old_anchor": [
+              1,
+              0,
+              0
+            ],
+            "excluded_context_components": [
+              1,
+              11
+            ],
+            "source_components": [
+              8,
+              10
+            ]
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            2.0,
+            3.0
+          ],
+          "source_bounds": [
+            5.0,
+            -0.0,
+            1.0,
+            6.1875,
+            1.0,
+            3.0
+          ],
+          "source_translation": [
+            -4,
+            -0.0,
+            -1
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c028",
+      "outputs": [
+        "o_c028"
+      ],
+      "pattern_members": 4,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            -0.576499,
+            0.0,
+            -0.3125,
+            1.476616,
+            1.71875,
+            1.341722
+          ],
+          "collision_box": [
+            0.1,
+            0.0,
+            0.1,
+            0.9,
+            1.3,
+            0.9
+          ],
+          "name": "o_c028",
+          "provenance": {
+            "removed_source_elements": [
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                1,
+                7
+              ],
+              [
+                1,
+                8
+              ],
+              [
+                1,
+                9
+              ],
+              [
+                1,
+                10
+              ],
+              [
+                1,
+                11
+              ]
+            ],
+            "retained_source_elements": {
+              "1": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24
+              ]
+            }
+          },
+          "recommended_source_root_offset": [
+            0,
+            0,
+            0
+          ],
+          "selection_box": [
+            0.02,
+            0.0,
+            0.02,
+            0.98,
+            1.4,
+            0.98
+          ],
+          "source_bounds": [
+            -0.576499,
+            -0.03125,
+            -0.3125,
+            1.476616,
+            1.6875,
+            1.341722
+          ],
+          "source_translation": [
+            -0.0,
+            0.03125,
+            -0.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c282",
+      "outputs": [
+        "o_c282_a",
+        "o_c282_b"
+      ],
+      "pattern_members": 8,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            0.0,
+            0.0,
+            0.3125,
+            1.5,
+            3.0,
+            0.5625
+          ],
+          "collision_box": [
+            0.0,
+            0.0,
+            0.3125,
+            1.5,
+            3.0,
+            0.5625
+          ],
+          "door_pivots": {
+            "left": [
+              0.0,
+              0.4375
+            ],
+            "right": [
+              1.5,
+              0.4375
+            ]
+          },
+          "name": "o_c282_a",
+          "provenance": {
+            "canonical_x_range": [
+              -1.0,
+              0.5
+            ],
+            "semantic_boundary": "image8 vertical seam x=0.5",
+            "source_component": 1,
+            "source_element": 0
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.3125,
+            1.5,
+            3.0,
+            0.5625
+          ],
+          "source_bounds": [
+            -1.0,
+            0.0,
+            0.3125,
+            0.5,
+            3.0,
+            0.5625
+          ],
+          "source_transform": {
+            "canonical_yaw": 90,
+            "post_yaw_translation": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "pre_yaw_translation": [
+              0.0,
+              1.0,
+              0.0
+            ]
+          },
+          "source_translation": [
+            1.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.5,
+            0.0,
+            0.3125,
+            2.0,
+            3.0,
+            0.5625
+          ],
+          "collision_box": [
+            0.5,
+            0.0,
+            0.3125,
+            2.0,
+            3.0,
+            0.5625
+          ],
+          "door_pivots": {
+            "left": [
+              0.5,
+              0.4375
+            ],
+            "right": [
+              2.0,
+              0.4375
+            ]
+          },
+          "name": "o_c282_b",
+          "provenance": {
+            "canonical_x_range": [
+              0.5,
+              2.0
+            ],
+            "semantic_boundary": "image8 vertical seam x=0.5",
+            "source_component": 1,
+            "source_element": 0
+          },
+          "selection_box": [
+            0.5,
+            0.0,
+            0.3125,
+            2.0,
+            3.0,
+            0.5625
+          ],
+          "source_bounds": [
+            0.5,
+            0.0,
+            0.3125,
+            2.0,
+            3.0,
+            0.5625
+          ],
+          "source_transform": {
+            "canonical_yaw": 90,
+            "post_yaw_translation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pre_yaw_translation": [
+              0.0,
+              1.0,
+              0.0
+            ]
+          },
+          "source_translation": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c618",
+      "outputs": [
+        "o_c618"
+      ],
+      "pattern_members": 3,
+      "recipes": [
+        {
+          "collision_box": [
+            0.25,
+            0,
+            0.25,
+            0.75,
+            2,
+            0.75
+          ],
+          "name": "o_c618",
+          "provenance": {
+            "baseline_mesh": "reviewed_batch_02_c618_b0ce687d2528",
+            "lift": 0.8125
+          },
+          "source_translation": [
+            0,
+            0.8125,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c654",
+      "outputs": [
+        "o_c654_a",
+        "o_c654_b"
+      ],
+      "pattern_members": 4,
+      "recipes": [
+        {
+          "authored_depth_correction": -0.1875,
+          "canonical_bounds": [
+            -0.875,
+            0.1875,
+            0.90625,
+            1.875,
+            2.9375,
+            0.96875
+          ],
+          "canonical_yaw": 270,
+          "collision_box": [
+            -0.875,
+            0.1875,
+            0.90625,
+            1.875,
+            2.9375,
+            0.96875
+          ],
+          "name": "o_c654_a",
+          "provenance": {
+            "both_sides": "source north UV",
+            "source_component": 1,
+            "source_element": 0,
+            "source_face": "north"
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.90625,
+            1.0,
+            2.75,
+            0.96875
+          ],
+          "source_bounds": [
+            -0.875,
+            0.1875,
+            0.90625,
+            1.875,
+            2.9375,
+            0.96875
+          ],
+          "source_transform": {
+            "canonical_yaw": 270,
+            "post_yaw_translation": [
+              0.0,
+              0.0,
+              -0.1875
+            ],
+            "pre_yaw_translation": [
+              0.0,
+              1.0,
+              0.0
+            ]
+          },
+          "source_translation": [
+            0.0,
+            1.0,
+            -0.1875
+          ]
+        },
+        {
+          "authored_depth_correction": -0.1875,
+          "canonical_bounds": [
+            -0.875,
+            0.1875,
+            0.90625,
+            1.875,
+            2.9375,
+            0.96875
+          ],
+          "canonical_yaw": 270,
+          "collision_box": [
+            -0.875,
+            0.1875,
+            0.90625,
+            1.875,
+            2.9375,
+            0.96875
+          ],
+          "name": "o_c654_b",
+          "provenance": {
+            "both_sides": "source south UV",
+            "source_component": 1,
+            "source_element": 0,
+            "source_face": "south"
+          },
+          "selection_box": [
+            0.0,
+            0.0,
+            0.90625,
+            1.0,
+            2.75,
+            0.96875
+          ],
+          "source_bounds": [
+            -0.875,
+            0.1875,
+            0.90625,
+            1.875,
+            2.9375,
+            0.96875
+          ],
+          "source_transform": {
+            "canonical_yaw": 270,
+            "post_yaw_translation": [
+              0.0,
+              0.0,
+              -0.1875
+            ],
+            "pre_yaw_translation": [
+              0.0,
+              1.0,
+              0.0
+            ]
+          },
+          "source_translation": [
+            0.0,
+            1.0,
+            -0.1875
+          ]
+        }
+      ]
+    },
+    {
+      "old_id": "o_c1491",
+      "outputs": [
+        "o_c1491_a",
+        "o_c1491_b",
+        "o_c1491_c"
+      ],
+      "pattern_members": 3,
+      "recipes": [
+        {
+          "canonical_bounds": [
+            0.372074,
+            0.0,
+            0.10016800000000003,
+            1.523524,
+            2.875,
+            1.928113
+          ],
+          "collision_box": [
+            0.22,
+            0,
+            0.22,
+            0.78,
+            3,
+            0.78
+          ],
+          "name": "o_c1491_a",
+          "provenance": {
+            "source_component": 1,
+            "source_elements": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          },
+          "recommended_source_root_offset": [
+            -1,
+            0,
+            0
+          ],
+          "selection_box": [
+            0.05,
+            0.0,
+            0.05,
+            0.95,
+            3.0,
+            0.95
+          ],
+          "source_bounds": [
+            -0.627926,
+            -1.0,
+            0.100168,
+            0.523524,
+            1.875,
+            1.928113
+          ],
+          "source_translation": [
+            1.0,
+            1.0,
+            0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.06065,
+            0.0,
+            -0.500118,
+            1.585349,
+            3.0,
+            1.024581
+          ],
+          "collision_box": [
+            0.22,
+            0,
+            0.22,
+            0.78,
+            3,
+            0.78
+          ],
+          "name": "o_c1491_b",
+          "provenance": {
+            "source_component": 1,
+            "source_elements": [
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19
+            ]
+          },
+          "recommended_source_root_offset": [
+            0,
+            0,
+            0
+          ],
+          "selection_box": [
+            0.05,
+            0.0,
+            0.05,
+            0.95,
+            3.0,
+            0.95
+          ],
+          "source_bounds": [
+            0.06065,
+            -1.0,
+            -0.500118,
+            1.585349,
+            2.0,
+            1.024581
+          ],
+          "source_translation": [
+            -0.0,
+            1.0,
+            -0.0
+          ]
+        },
+        {
+          "canonical_bounds": [
+            0.31867,
+            0.0,
+            0.338881,
+            1.246747,
+            1.25,
+            1.266959
+          ],
+          "collision_box": [
+            0.22,
+            0,
+            0.22,
+            0.78,
+            1.25,
+            0.78
+          ],
+          "name": "o_c1491_c",
+          "provenance": {
+            "source_component": 1,
+            "source_elements": [
+              20,
+              21
+            ]
+          },
+          "recommended_source_root_offset": [
+            -1,
+            0,
+            1
+          ],
+          "selection_box": [
+            0.05,
+            0.0,
+            0.05,
+            0.95,
+            3.0,
+            0.95
+          ],
+          "source_bounds": [
+            -0.68133,
+            -1.0,
+            1.338881,
+            0.246747,
+            0.25,
+            2.266959
+          ],
+          "source_translation": [
+            1.0,
+            1.0,
+            -1.0
+          ]
+        }
+      ]
+    }
+  ],
+  "pending_migration": [
+    {"review_id":"C282","patterns":["A","B","C","D"],"status":"SAFE_BLOCKED","reason":"target_would_overwrite_foreign_block","evidence":"nightmare-checks/reviewed-batch-02-source-examples.json"},
+    {"review_id":"C654","patterns":["A","B","C"],"status":"SAFE_BLOCKED","reason":"target_would_overwrite_foreign_block","evidence":"nightmare-checks/reviewed-batch-02-source-examples.json"},
+    {"review_id":"C1491","patterns":["A"],"status":"SAFE_BLOCKED","reason":"target_would_overwrite_foreign_block","evidence":"nightmare-checks/reviewed-batch-02-source-examples.json"}
+  ],
+  "schemaVersion": 1
+}

@@ -70,9 +70,9 @@ def build():
     for family in data['families']:
         owner=family.get('compiler_owner')
         if owner is not None:
-            if (family['id'],owner) != ('o_c001','qa2_trees'):
+            if owner != 'nightmare_qa' and (family['id'],owner) != ('o_c001','qa2_trees'):
                 raise ValueError('unsupported compiler_owner: '+repr((family['id'],owner)))
-        if owner == 'qa2_trees':
+        if owner in ('qa2_trees','nightmare_qa') or family.get('migration_disabled'):
             # Complete-tree patterns/weighted meshes have their own bounded,
             # independently checked compiler; never re-author them as old SPLIT.
             continue

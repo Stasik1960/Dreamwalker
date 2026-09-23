@@ -35,8 +35,14 @@ public final class LogicalRegistryChecks {
    if(definition.properties.containsKey("facing"))check(block.getStateManager().getProperty("facing")!=null,"facing property: "+definition.id);
    if("connected".equals(definition.behavior))for(String name:List.of("north","east","south","west"))check(block.getStateManager().getProperty(name) instanceof BooleanProperty,"connected boolean: "+definition.id+"."+name);
    BlockState state=block.getDefaultState();if(state.contains(Properties.HORIZONTAL_FACING))check(block.rotate(state,BlockRotation.CLOCKWISE_90).get(Properties.HORIZONTAL_FACING).asString().equals("east"),"logical facing rotation: "+definition.id);
+   if(definition.properties.containsKey("visual")){
+    Property<?> visual=block.getStateManager().getProperty("visual");check(visual!=null&&"base".equals(block.getDefaultState().get(visual)),"visual default base: "+definition.id);
+    ItemStack oldNbt=new ItemStack(block);oldNbt.getOrCreateSubNbt("BlockStateTag").putString("facing","south");
+    check("base".equals(ArchitectureBlockItem.applyStateTag(block.getDefaultState(),oldNbt).get(visual)),"old NBT without visual resolves base: "+definition.id);
+   }
    if(state.contains(Properties.WALL_MOUNT_LOCATION)){
-    check(block.getStateManager().getStates().size()==12,"complete mount/yaw states: "+definition.id);
+    int expectedStateCount=1;for(List<String> values:definition.properties.values())expectedStateCount*=values.size();
+    check(block.getStateManager().getStates().size()==expectedStateCount,"complete mount/yaw/property-product states: "+definition.id);
     for(Direction side:Direction.values())for(Direction player:Direction.Type.HORIZONTAL){
      BlockState placed=ArchitectureBlock.logicalMountPlacement(state,side,player);
      WallMountLocation face=side==Direction.UP?WallMountLocation.FLOOR:side==Direction.DOWN?WallMountLocation.CEILING:WallMountLocation.WALL;

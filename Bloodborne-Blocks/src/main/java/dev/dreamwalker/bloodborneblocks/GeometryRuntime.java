@@ -294,6 +294,21 @@ final class GeometryRuntime {
   try{world.removeBlock(pos,false);}finally{MUTATING.set(previous);}
  }
 
+ /** Updates only the authored visual property without rebuilding logical helpers. */
+ static boolean setVisualState(World world,BlockPos root,BlockState next){
+  BlockState previousState=world.getBlockState(root);
+  if(previousState.getBlock()!=next.getBlock())return false;
+  boolean visualChanged=false;
+  for(var entry:previousState.getEntries().entrySet()){
+   Object nextValue=next.getEntries().get(entry.getKey());if(nextValue==null)return false;
+   if("visual".equals(entry.getKey().getName())){visualChanged|=!entry.getValue().equals(nextValue);continue;}
+   if(!entry.getValue().equals(nextValue))return false;
+  }
+  if(!visualChanged)return true;
+  boolean previous=MUTATING.get();MUTATING.set(true);
+  try{return world.setBlockState(root,next,Block.NOTIFY_LISTENERS);}finally{MUTATING.set(previous);}
+ }
+
  /** Called only after migration preflight. Never overwrites foreign cells. */
  static void replaceRoot(World world,BlockPos oldRoot,BlockState oldState,BlockPos newRoot,BlockState next){
   if(FunctionalFurniture.isBench(oldState))FunctionalFurniture.removeSeats(world,oldRoot);

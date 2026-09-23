@@ -26,6 +26,23 @@ COLLISION = [.25, 0, .25, .75, 10, .75]
 SELECTION = [0, 0, 0, 1, 10, 1]
 
 
+def corrected_tree_apps(apps):
+    """Repair the positive-Z wing in the second frozen raw layout.
+
+    Its jungle/acacia/dark-oak carriers use the negative atlas wing (U4.9375
+    ..7.9375) on BOTH Z sides. The positive wing must continue the central
+    U7.9375..10.9375 panel with U11..14, as the other frozen layout does.
+    Keep matching/RNG and variant identities based on the unmodified sources.
+    """
+    models = {'jungle_log': 'oak_log', 'acacia_log': 'spruce_log', 'dark_oak_log': 'birch_log'}
+    result = copy.deepcopy(apps)
+    for app in result:
+        name = app['model'].rsplit('/', 1)[-1]
+        if app.get('offset') in ([0, 4, 3], [0, 7, 3], [0, 10, 3]) and app.get('y') == 180 and name in models:
+            app['model'] = 'minecraft:block/' + models[name]
+    return result
+
+
 def capture_authoring(path):
     """Freeze the explicitly checked 16-cell assemblies; never silently re-author."""
     if AUTHORING.exists():
@@ -53,6 +70,7 @@ def capture_authoring(path):
 def build():
     authored = json.loads(AUTHORING.read_text(encoding='utf8'))
     definitions = json.loads((LOGICAL / 'definitions.json').read_text(encoding='utf8'))
+    had_visual_slots=any(d['id']==TREE_ID and 'visual' in d['properties'] for d in definitions['blocks'])
     contracts = json.loads((LOGICAL / 'contracts-v2.json').read_text(encoding='utf8'))
     geometry = json.loads((LOGICAL / 'geometry.json').read_text(encoding='utf8'))
     with gzip.open(LOGICAL / 'meshes.json.gz', 'rt', encoding='utf8') as stream:
@@ -67,7 +85,8 @@ def build():
             # One full geometry record per visual variant; no component renderer.
             token = hashlib.sha256(json.dumps(polygons, sort_keys=True).encode()).hexdigest()[:12]
             variant = 'tree_' + token
-            variants.setdefault(variant, polygons)
+            corrected = source_polys(corrected_tree_apps([app for group in selected for app in group]))[0]
+            variants.setdefault(variant, corrected)
             guards = []
             for part, apps in zip(parts, selected):
                 guards.extend(guards_for(part, apps, part['offset']))
@@ -102,10 +121,10 @@ def build():
         dump(RESOURCES / 'assets/bloodborne_blocks/models/block/logical' / (mesh + '.json'),
              {'parent': 'minecraft:block/block', 'textures': {'particle': textures[0],
               **{str(i): t for i, t in enumerate(textures)}}, 'elements': []})
-    definitions['blocks'] = [d for d in definitions['blocks'] if d['id'] != TREE_ID] + [block]
+    definitions['blocks'] = [block if d['id']==TREE_ID else d for d in definitions['blocks']]
     # Registry IDs and old placed-block semantics stay loadable. They are not
     # construction options; aliases redirect inventory/pick to the entire tree.
-    contracts['families'] = [f for f in contracts['families'] if f['id'] != TREE_ID] + [family]
+    contracts['families'] = [family if f['id']==TREE_ID else f for f in contracts['families']]
     geometry['blocks'][TREE_ID] = profile(family)
     hidden_path = LOGICAL / 'hidden-items.json'
     hidden = set(json.loads(hidden_path.read_text(encoding='utf8')))
@@ -140,6 +159,9 @@ def build():
           'retired_items': list(RETIRED), 'collision': COLLISION, 'selection': SELECTION,
           'helpers': [[0, y, 0] for y in range(1, 10)], 'world_scan': False}, pretty=True)
     print('QA2 trees:', len(names), 'complete variants,', len(rules), 'exact guarded rules')
+    if had_visual_slots:
+        from build_visual_slots import build as restore_visual_slots
+        restore_visual_slots()
 
 
 if __name__ == '__main__':

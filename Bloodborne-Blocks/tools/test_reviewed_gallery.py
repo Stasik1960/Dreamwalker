@@ -56,16 +56,21 @@ class ReviewedGalleryTests(unittest.TestCase):
         contracts, _ = load_contracts(gallery.RES)
         definitions = {row['id']: row for row in json.loads((gallery.RES / 'definitions.json').read_text(encoding='utf8'))['blocks']}
         families = gallery._ordered_active_families(contracts, definitions)
-        expected = {(family['id'], facing) for family in families for facing in gallery.FACING}
+        expected = {(family['id'], facing) for family in families
+                    for facing in gallery._facings(definitions[family['id']])}
         with tempfile.TemporaryDirectory() as temp:
             output = Path(temp) / 'gallery'
             gallery.build(output)
             positions = json.loads((output / 'gallery-positions.json').read_text(encoding='utf8'))
             self.assertIsInstance(positions, list)  # retain the old consumer-facing list format
-            self.assertEqual({(entry['id'], entry['facing']) for entry in positions}, expected)
-            self.assertEqual(len(positions), len(gallery._specimen_groups(families, definitions)) * len(gallery.FACING))
-            self.assertTrue(all(count == len(gallery.FACING)
-                                for count in Counter((entry['id'], entry.get('variant')) for entry in positions).values()))
+            self.assertEqual({(entry['id'], entry.get('facing')) for entry in positions}, expected)
+            self.assertEqual(len(positions), sum(
+                len(gallery._facings(definitions[family['id']]))
+                for family, _ in gallery._specimen_groups(families, definitions)))
+            self.assertTrue(all(
+                count == len(gallery._facings(definitions[ident]))
+                for (ident, _), count in Counter(
+                    (entry['id'], entry.get('variant')) for entry in positions).items()))
 
             trees = [entry for entry in positions if gallery._tree_group(entry['id'])]
             self.assertTrue(trees)
@@ -81,7 +86,7 @@ class ReviewedGalleryTests(unittest.TestCase):
             bounds = []
             by_id = {family['id']: family for family in families}
             for entry in positions:
-                key, _ = gallery._state_key(definitions[entry['id']], entry['facing'], entry.get('variant'))
+                key, _ = gallery._state_key(definitions[entry['id']], entry.get('facing'), entry.get('variant'))
                 for offset in by_id[entry['id']]['states'][key]['interaction_footprint']['cells']:
                     bounds.append(tuple(entry['position'][index] + offset[index] for index in range(3)))
             min_x, min_y, min_z = (min(point[index] for point in bounds) for index in range(3))
@@ -94,6 +99,17 @@ class ReviewedGalleryTests(unittest.TestCase):
             level = compound(read_nbt(output / 'level.dat').root)['Data'].value
             spawn = (level['SpawnX'].value, level['SpawnY'].value, level['SpawnZ'].value)
             self.assertEqual(block_at(output, (spawn[0], spawn[1] - 1, spawn[2])), platform)
+
+    def test_faceless_states_are_not_given_an_invented_facing(self):
+        asymmetric = {'id': 'o_asymmetric', 'default': {'facing': 'north'},
+                      'properties': {'facing': list(gallery.FACING)}}
+        faceless = {'id': 'o_c471_a', 'default': {'visual': 'base'},
+                    'properties': {'visual': ['base', 'alt']}}
+        self.assertEqual(gallery.FACING, gallery._facings(asymmetric))
+        self.assertEqual((None,), gallery._facings(faceless))
+        self.assertEqual(('visual=base', {'visual': 'base'}), gallery._state_key(faceless))
+        with self.assertRaises(ValueError):
+            gallery._state_key(faceless, 'north')
 
 
 if __name__ == '__main__':

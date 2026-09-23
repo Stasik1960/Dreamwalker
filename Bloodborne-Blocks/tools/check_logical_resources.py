@@ -59,7 +59,8 @@ def validate(resources=RES):
         assert all(name in block['properties'] and value in block['properties'][name]
                    for name, value in placement.items()), 'invalid placement properties: ' + ident
         item_state = {**block['default'], **placement}
-        assert item['parent'] == NS + 'block/logical/' + block['models'][key(item_state)], 'item selects wrong mesh: ' + ident
+        expected_item=block.get('visual_models',{}).get(key(item_state),NS+'block/logical/'+block['models'][key(item_state)])
+        assert item['parent'] == expected_item, 'item selects wrong mesh: ' + ident
         assert 'gui' in item.get('display', {}), 'missing fitted inventory transform: ' + ident
         loot = read(resources / 'data/bloodborne_blocks/loot_tables/blocks' / (ident + '.json'))
         drops = [entry.get('name') for pool in loot['pools'] for entry in pool['entries']]
@@ -77,9 +78,14 @@ def validate(resources=RES):
             mesh = block['models'][state]
             assert mesh in meshes, 'missing mesh ' + mesh
             application = actual['variants'][state]
-            assert application['model'] == NS + 'block/logical/' + mesh
+            expected_model=block.get('visual_models',{}).get(state,NS+'block/logical/'+mesh)
+            assert application['model'] == expected_model
             assert not application.get('x', 0) and not application.get('y', 0), 'logical mesh rotated twice'
-            model = read(resources / 'assets/bloodborne_blocks/models/block/logical' / (mesh + '.json'))
+            model = read(resources / 'assets/bloodborne_blocks/models' / (expected_model.split(':',1)[1] + '.json'))
+            if 'visual=alt' in state.split(',') and 'visual_models' in block:
+                assert model == {'parent':expected_model.replace('/alt/','/base/')}, 'ALT fallback drift: '+ident
+                model=read(resources/'assets/bloodborne_blocks/models'/(model['parent'].split(':',1)[1]+'.json'))
+            if 'visual_models' in block:assert model['bloodborne_mesh']==mesh
             declared = set(model['textures'].values())
             profile = geometry['blocks'][ident]['states'][state]
             if 'ref' in profile:
@@ -141,9 +147,11 @@ def validate(resources=RES):
         assert ident in definitions and definitions[ident]['logical'] and ident in hidden
         assert target['id'] in definitions and definitions[target['id']]['logical']
         assert target['id'] not in inventory_aliases, 'inventory alias chain/cycle'
-        assert key(target['properties']) in definitions[target['id']]['states']
+        assert key({**definitions[target['id']]['default'],**target['properties']}) in definitions[target['id']]['states']
+    contracts={f['id']:f for f in read(logical/'contracts-v2.json')['families']}
     assert all(short(ident) in definitions and
-               (not short(ident).startswith('o_') or short(ident) in inventory_aliases) for ident in hidden)
+               (not short(ident).startswith('o_') or short(ident) in inventory_aliases
+                or contracts.get(short(ident),{}).get('migration_disabled')) for ident in hidden)
     return {'ok': True, 'logicalObjects': len(new), 'states': state_count, 'meshes': len(meshes),
             'textures': len(texture_count), 'migrationRules': len(migration['rules']),
             'hiddenLegacyItems': len(hidden), 'maximumFootprintCells': maximum_cells}

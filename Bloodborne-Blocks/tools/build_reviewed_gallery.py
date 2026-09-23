@@ -60,8 +60,17 @@ def _ordered_active_families(contracts, definitions):
     return sorted(active, key=key)
 
 
-def _state_key(definition, facing, variant=None):
-    props = {**definition['default'], 'facing': facing}
+def _facings(definition):
+    """Only rotate families whose authored state schema exposes facing."""
+    return FACING if 'facing' in definition.get('properties', {}) else (None,)
+
+
+def _state_key(definition, facing=None, variant=None):
+    props = dict(definition['default'])
+    if facing is not None:
+        if 'facing' not in definition.get('properties', {}):
+            raise ValueError(f'{definition["id"]} has no facing property')
+        props['facing'] = facing
     if variant is not None:
         props['variant'] = variant
     return ','.join(f'{key}={value}' for key, value in sorted(props.items())), props
@@ -94,12 +103,13 @@ def build(output=OUTPUT):
     for number, (family, variant) in enumerate(_specimen_groups(families, definitions)):
         row, column = divmod(number, 4)
         tree_group = _tree_group(family['id'])
-        for turn, facing in enumerate(FACING):
+        for turn, facing in enumerate(_facings(definitions[family['id']])):
             key, props = _state_key(definitions[family['id']], facing, variant)
             try:
                 shape = family['states'][key]['interaction_footprint']['cells']
             except KeyError as error:
-                raise ValueError(f'Active family {family["id"]} lacks its {facing} default state') from error
+                state_name = facing if facing is not None else 'faceless'
+                raise ValueError(f'Active family {family["id"]} lacks its {state_name} default state') from error
             # 40 blocks between facings and 192 between family columns leave
             # comfortable clearance for all current visual/interaction bounds.
             origin = (64 + column * 192 + turn * 40,
@@ -118,8 +128,9 @@ def build(output=OUTPUT):
                         'Root': Tag(TAG_LONG, block_pos_long(*origin))}
                 data.update({name: Tag(TAG_INT, value) for name, value in zip(('x', 'y', 'z'), point)})
                 entities.append(Tag(TAG_COMPOUND, data))
-            entry = {'id': family['id'], 'facing': facing, 'position': origin,
-                     'give': '/give @s ' + owner}
+            entry = {'id': family['id'], 'position': origin, 'give': '/give @s ' + owner}
+            if facing is not None:
+                entry['facing'] = facing
             if variant is not None:
                 entry['variant'] = variant
                 entry['give'] += '{BlockStateTag:{variant:"' + variant + '"}}'

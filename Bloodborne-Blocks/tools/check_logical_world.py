@@ -63,6 +63,24 @@ def effect_key(dim, source, touched, writes):
     return dim, frozenset(source), frozenset(touched), frozenset(writes.items())
 
 
+def rule_outputs(rule, origin):
+    outputs = rule.outputs or ()
+    if not outputs:
+        return [(tuple(origin[i] + rule.root_offset[i] for i in range(3)), rule.target, rule.shape)]
+    return [(tuple(origin[i] + output.root_offset[i] for i in range(3)), output.target, output.shape) for output in outputs]
+
+
+def output_writes(rule, origin):
+    writes = {}
+    for root, target, shape in rule_outputs(rule, origin):
+        for offset in shape:
+            point = tuple(root[i] + offset[i] for i in range(3))
+            if point in writes:
+                raise AssertionError("rule has overlapping transaction outputs")
+            writes[point] = target if offset == (0, 0, 0) else (PART, ())
+    return writes
+
+
 def explicitly_supersedes(large, small):
     """Independent counterpart to the converter's narrow fallback rule."""
     return (large["dimension"] == small["dimension"] and
@@ -87,6 +105,17 @@ def proved_helpers(before, dim, origin, root, rule, pieces, owned):
         for point in owned.get((dim, piece.state[0], block_pos_long(*source_root)), ()):
             offset = tuple(point[i] - source_root[i] for i in range(3))
             if offset != (0, 0, 0) and offset in piece.shape and before.get(dim, point) == (PART, ()):
+                result.add(point)
+    return result
+
+
+def proved_transaction_helpers(before, dim, origin, rule, pieces, owned):
+    outputs = rule_outputs(rule, origin)
+    root, target, _shape = outputs[0]
+    result = proved_helpers(before, dim, origin, root, rule, pieces, owned)
+    for root, target, _shape in outputs[1:]:
+        for point in owned.get((dim, target[0], block_pos_long(*root)), ()):
+            if before.get(dim, point) == (PART, ()):
                 result.add(point)
     return result
 
@@ -138,10 +167,9 @@ def independently_accepted_effects(before, rules, old_entities, owned):
         if rule.variant_guards:
             from source_variant_rng import guards_match
             if not guards_match(rule.variant_guards,origin): continue
-        root = tuple(origin[i] + rule.root_offset[i] for i in range(3))
-        writes = {tuple(root[i] + offset[i] for i in range(3)): (PART, ()) for offset in rule.shape}
-        writes[root] = rule.target
-        helpers = proved_helpers(before, dim, origin, root, rule, pieces, owned)
+        root = rule_outputs(rule, origin)[0][0]
+        writes = output_writes(rule, origin)
+        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned)
         stale = helpers - set(writes)
         touched = source | stale | set(writes)
         valid = True
@@ -235,12 +263,19 @@ def validate_ledger(before, report, rules):
             from source_variant_rng import guards_match
             if not guards_match(rule.variant_guards,origin):
                 raise AssertionError('ledger does not preserve positional source visual')
-        root = tuple(origin[i] + rule.root_offset[i] for i in range(3))
+        root = rule_outputs(rule, origin)[0][0]
         if tuple(entry["targetRoot"]) != root:
             raise AssertionError("ledger moved the root outside its rule")
-        writes = {tuple(root[i] + offset[i] for i in range(3)): (PART, ()) for offset in rule.shape}
-        writes[root] = rule.target
-        helpers = proved_helpers(before, dim, origin, root, rule, pieces, owned)
+        writes = output_writes(rule, origin)
+        outputs = rule_outputs(rule, origin)
+        if rule.transaction_id:
+            expected_outputs = [{"targetRoot": list(output_root), "target": block_state_key(as_tag_state(target))}
+                                for output_root, target, _shape in outputs]
+            if entry.get("transaction") != rule.transaction_id or entry.get("outputs") != expected_outputs:
+                raise AssertionError("ledger transaction outputs do not match rule")
+        elif "transaction" in entry or "outputs" in entry:
+            raise AssertionError("non-transaction ledger entry declares outputs")
+        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned)
         stale = helpers - set(writes)
         if sorted(map(tuple, entry["staleRemoved"])) != sorted(stale):
             raise AssertionError("ledger stale-helper set is not provably owned")
@@ -278,8 +313,12 @@ def validate_ledger(before, report, rules):
             actual_changes[point] = (change["before"], change["after"])
         if actual_changes != expected_changes:
             raise AssertionError("ledger before/after changes are not authorized by its rule")
-        expected_helpers = {point: {"position": list(point), "id": PART, "Root": block_pos_long(*root), "Owner": rule.target[0]}
-                            for point in writes if point != root}
+        expected_helpers = {}
+        for output_root, target, shape in outputs:
+            for offset in shape:
+                point = tuple(output_root[i] + offset[i] for i in range(3))
+                if point != output_root:
+                    expected_helpers[point] = {"position": list(point), "id": PART, "Root": block_pos_long(*output_root), "Owner": target[0]}
         actual_helpers = {tuple(helper["position"]): helper for helper in entry["helpers"]}
         if len(actual_helpers) != len(entry["helpers"]) or actual_helpers != expected_helpers:
             raise AssertionError("ledger helper data does not match target geometry")

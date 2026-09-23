@@ -1,0 +1,54 @@
+{
+  "result": "PASS",
+  "scope": "artifact/report verification, not client visual acceptance or full-city migration",
+  "game_tests": 25,
+  "orientation_checks": 2960,
+  "source_examples": {
+    "converted": 20,
+    "safe_blocked": 8
+  },
+  "tree_checks": 18,
+  "packaged_resources": {
+    "ok": true,
+    "version": "2.1.0-alpha.1",
+    "resources": 195798,
+    "loomMixinConfigs": [
+      "bloodborne_blocks.mixins.json"
+    ],
+    "manifestSha256": "a5bf5ae8a2e7eb2af825f16f460feddbf3ea83e53d3a9a564255c73d2c91c39a",
+    "jarSha256": "ca39bacfe513d429d7ef154d4377ce3d80ac12ff67876d66fcb54245b73f008d"
+  },
+  "gallery": {
+    "visible_families": 286,
+    "master_states": 1160,
+    "helpers": 12125,
+    "visual_proofs": 6,
+    "level_metadata": "PASS",
+    "helper_ownership": "PASS",
+    "client_visual": "NOT_PERFORMED"
+  },
+  "alt_kit": {
+    "visible_families": 286,
+    "models": 1610
+  },
+  "client_bake_reload": "NOT_PERFORMED",
+  "client_visual_acceptance": "NOT_PERFORMED",
+  "full_city_conversion": false,
+  "files": {
+    "bloodborne-blocks-2.1.0-alpha.1-nightmare-qa-alt-mc1.20.1.jar": {
+      "bytes": 97366909,
+      "sha256": "ca39bacfe513d429d7ef154d4377ce3d80ac12ff67876d66fcb54245b73f008d",
+      "git_lfs_required": false
+    },
+    "nightmare-qa-alt-gallery-20260923-final.zip": {
+      "bytes": 916570,
+      "sha256": "76d780358129ae949435dd22a5c43a49c96351b806aaac9149620f6337dc44d4",
+      "git_lfs_required": false
+    },
+    "Bloodborne-Alt-Visual-Starter-Kit.zip": {
+      "bytes": 18918129,
+      "sha256": "5e36bb73b2c0b6e297e319d7c79e5ecc993e8b1c679ecdde80bfc926b0ddf296",
+      "git_lfs_required": false
+    }
+  }
+}

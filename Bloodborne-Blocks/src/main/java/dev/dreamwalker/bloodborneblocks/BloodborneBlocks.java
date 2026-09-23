@@ -40,6 +40,8 @@ public final class BloodborneBlocks implements ModInitializer {
   public Map<String,int[]> states;
   /** Complete canonical state key to an internal logical mesh key. */
   public Map<String,String> models;
+  /** Stable resource-pack paths, independent from immutable gameplay mesh IDs. */
+  public Map<String,String> visual_models;
   public transient Block sourceBlock;
   public transient Map<String,Property<?>> propertyObjects=new LinkedHashMap<>();
  }
@@ -82,7 +84,7 @@ public final class BloodborneBlocks implements ModInitializer {
     if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
-   if(p==null&&d.logical&&Set.of("variant","placement_height").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&d.logical&&Set.of("variant","placement_height","visual").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
    if(p==null&&d.logical&&name.equals("hinge"))p=net.minecraft.state.property.Properties.DOOR_HINGE;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;

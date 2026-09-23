@@ -1,4 +1,4 @@
-"""25-family Contract V2 checks with frozen POC projections and synthetic Anvil worlds.
+"""Contract V2 checks with frozen POC projections and synthetic Anvil worlds.
 
 No source city extraction or conversion. Fixtures use exact raw vanilla states;
 unrepresentable original rotations are explicitly absent, never fabricated.
@@ -23,10 +23,45 @@ RES = ROOT/"src/main/resources/bloodborne_blocks/logical"
 DIM = "minecraft:overworld"
 POC_IDS = {"o_dead_tree_planter", "o_cases_0", "o_wall_deco_1", "o_iron_gate", "o_iron_railing"}
 BATCH_IDS = {"o_c001_a", "o_c001_b", "o_c009_a", "o_c009_b", "o_c002", "o_c003", "o_c008", "o_c471", "o_c046", "o_c1680", "o_c474", "o_c1962", "o_c1979", "o_c028", "o_c282", "o_c561", "o_c618", "o_c654", "o_c1319", "o_c1491"}
+ORIGINAL_FAMILY_IDS = POC_IDS | BATCH_IDS | {"o_c001"}
+
+
+def nightmare_output_ids():
+    """Read the reviewed split outputs instead of maintaining a second ID list."""
+    report = json.loads((ROOT / "docs/nightmare-qa-report.json").read_text(encoding="utf-8"))
+    if report.get("compiler_owner") != "nightmare_qa" or not isinstance(report.get("families"), list):
+        raise ValueError("invalid NightmareRunning QA report")
+    outputs = set()
+    for row in report["families"]:
+        if not isinstance(row.get("outputs"), list) or not row["outputs"]:
+            raise ValueError("QA report family lacks outputs")
+        for ident in row["outputs"]:
+            if not isinstance(ident, str) or not ident.startswith("o_"):
+                raise ValueError("QA report output is not a logical ID")
+            outputs.add(ident)
+    return outputs
 
 
 def canonical_digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def visual_base_projection(definition, contract):
+    """Remove the additive visual dimension before comparing frozen POC data."""
+    definition, contract = deepcopy(definition), deepcopy(contract)
+    if "visual" not in definition["properties"]:
+        return definition, contract
+    definition["properties"].pop("visual")
+    definition["default"].pop("visual")
+    definition.pop("visual_models", None)
+
+    def strip(state):
+        return ",".join(part for part in state.split(",") if part != "visual=base")
+
+    definition["models"] = {strip(state): mesh for state, mesh in definition["models"].items() if "visual=base" in state}
+    definition["states"] = {strip(state): value for state, value in definition["states"].items() if "visual=base" in state}
+    contract["states"] = {strip(state): value for state, value in contract["states"].items() if "visual=base" in state}
+    return definition, contract
 
 
 def railing_north_projection(definition, contract):
@@ -50,8 +85,9 @@ class ContractTests(unittest.TestCase):
         cls.rows = []
 
     def test_shared_vectors_and_all_family_origins(self):
-        self.assertEqual(len(self.families),26)  # includes five retained, hidden tree compatibility IDs
-        self.assertEqual(set(self.families), POC_IDS | BATCH_IDS | {'o_c001'})
+        expected = ORIGINAL_FAMILY_IDS | nightmare_output_ids()
+        self.assertEqual(len(self.families),47)
+        self.assertEqual(set(self.families), expected)
         for f in self.families.values():
             for rotation in (0,90,180,270):
                 # Same canonical master for all orientations when anchor point
@@ -98,11 +134,34 @@ class ContractTests(unittest.TestCase):
         with gzip.open(RES/"meshes.json.gz", "rt", encoding="utf-8") as stream:
             meshes = json.load(stream)
         for ident, expected in baseline.items():
-            definition, contract = (railing_north_projection(definitions[ident], contracts[ident])
-                                    if ident == "o_iron_railing" else (definitions[ident], contracts[ident]))
+            if ident == "o_wall_deco_1":
+                continue  # explicit reviewed floor correction has its own evidence below
+            definition, contract = visual_base_projection(definitions[ident], contracts[ident])
+            if ident == "o_iron_railing":
+                definition, contract = railing_north_projection(definition, contract)
             self.assertEqual(canonical_digest(definition), expected["definition"], ident)
             self.assertEqual(canonical_digest(contract), expected["contract"], ident)
             self.assertEqual({state: canonical_digest(meshes[mesh]) for state, mesh in definition["models"].items()}, expected["meshes"], ident)
+
+    def test_wall_floor_correction_keeps_explicit_old_baseline_evidence(self):
+        with gzip.open(ROOT / "docs/nightmare-qa-baseline.json.gz", "rt", encoding="utf-8") as stream:
+            baseline = json.load(stream)
+        old_definition = next(row for row in baseline["definitions"] if row["id"] == "o_wall_deco_1")
+        old_contract = next(row for row in baseline["families"] if row["id"] == "o_wall_deco_1")
+        self.assertEqual(old_definition["models"]["facing=north"], "o_5157f2ac712421b0b3b9")
+        self.assertEqual(old_contract["states"]["facing=north"]["render_mesh"]["bounds"][1], -1.0)
+        self.assertEqual(old_contract["collision_policy"], "NONE")
+        wall = self.families["o_wall_deco_1"]
+        self.assertEqual(wall["collision_policy"], "NONE")
+        projected_definition, projected_wall = visual_base_projection(
+            next(row for row in json.loads((RES / "definitions.json").read_text(encoding="utf-8"))["blocks"] if row["id"] == "o_wall_deco_1"), wall)
+        self.assertEqual(projected_definition["properties"].get("visual"), None)
+        for state, current in projected_wall["states"].items():
+            previous = old_contract["states"][state]
+            self.assertEqual(previous["migration_source_pattern"][0]["components"][0]["offset"][1], 0)
+            self.assertEqual(current["migration_source_pattern"][0]["components"][0]["offset"][1], 0)
+            self.assertEqual(current["collision_footprint"]["boxes"], [])
+            self.assertEqual(current["render_mesh"]["bounds"][1], 0.0)
 
     def test_direct_migration_fixture(self):
         root = (8,68,8)

@@ -27,7 +27,7 @@ import numpy as np
 from world_io import (TAG_BYTE, TAG_COMPOUND, TAG_INT, TAG_LIST, TAG_LONG,
                       TAG_LONG_ARRAY, TAG_STRING, NbtFile, RegionFile, Tag,
                       block_state_key, compound, invalidate_chunk_lighting,
-                      pack_palette_indices, section_blocks)
+                      pack_palette_indices, read_nbt, section_blocks)
 
 NS = "bloodborne_blocks:"
 AIR_NAME = "minecraft:air"
@@ -35,6 +35,11 @@ AIR_NAMES = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
 PART = NS + "architecture_part"
 TOOLS = Path(__file__).resolve().parent
 DEFAULT_RESOURCES = TOOLS.parent / "src/main/resources/bloodborne_blocks/logical"
+VANILLA_DIMENSION_HEIGHTS = {
+    "minecraft:overworld": (-64, 320),
+    "minecraft:the_nether": (0, 256),
+    "minecraft:the_end": (0, 256),
+}
 
 
 def full_id(value: str) -> str:
@@ -226,6 +231,16 @@ class Rule:
     shape: frozenset[tuple[int, int, int]]
     supersedes_targets: frozenset[str] = field(default_factory=frozenset)
     variant_guards: tuple[dict, ...] = ()
+    transaction_id: str | None = None
+    outputs: tuple["Output", ...] = ()
+
+
+@dataclass(frozen=True)
+class Output:
+    """One logical object produced by an explicitly authored split transaction."""
+    target: tuple[str, tuple[tuple[str, str], ...]]
+    root_offset: tuple[int, int, int]
+    shape: frozenset[tuple[int, int, int]]
 
 
 def vector(value: Any, label: str) -> tuple[int, int, int]:
@@ -308,7 +323,60 @@ def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule
     for rule in rules:
         if not rule.supersedes_targets <= known_targets:
             raise ValueError(f"rule {rule.number} supersedes_targets names an unknown logical target")
+    rules.extend(parse_old_logical_c654_rules(resources, defaults, geometry, len(rules)))
     return rules, defaults
+
+
+def parse_old_logical_c654_rules(resources: Path, defaults: dict[str, dict[str, str]],
+                                 geometry: dict[tuple[str, tuple[tuple[str, str], ...]], set[tuple[int, int, int]]],
+                                 start: int) -> list[Rule]:
+    """Compile the explicit C654 compatibility table, never a generic logical alias.
+
+    Every generated row carries its frozen old helper footprint. Consequently
+    only helpers demonstrably owned by the exact old root can be removed by
+    the normal candidate preflight; the converter never depends on docs.
+    """
+    path = resources / "old-logical-migrations.json"
+    if not path.is_file():
+        return []
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if raw.get("schemaVersion") != 1 or not isinstance(raw.get("rules"), list):
+        raise ValueError("old-logical-migrations.json must be schemaVersion 1 with rules")
+    result: list[Rule] = []
+    seen: set[str] = set()
+    for index, item in enumerate(raw["rules"]):
+        if not isinstance(item, dict) or item.get("kind") != "c654_to_a" or set(item) != {"kind", "source", "target", "root_offset", "source_shape"}:
+            raise ValueError(f"old logical rule {index} must be an explicit c654_to_a mapping")
+        source, target = item["source"], item["target"]
+        if not isinstance(source, dict) or not isinstance(target, dict) or source.get("id") != "o_c654" or target.get("id") != "o_c654_a":
+            raise ValueError(f"old logical rule {index} has unsupported IDs")
+        source_props, target_props = source.get("properties"), target.get("properties")
+        if not isinstance(source_props, dict) or not isinstance(target_props, dict):
+            raise ValueError(f"old logical rule {index} needs state properties")
+        source_key = ",".join(f"{key}={value}" for key, value in sorted(source_props.items()))
+        if "visual" in source_props or set(source_props) != {"facing", "variant"} or source_key in seen:
+            raise ValueError(f"old logical rule {index} is duplicate or has an invalid old C654 state")
+        seen.add(source_key)
+        if target_props.get("facing") != source_props.get("facing") or target_props.get("variant") != source_props.get("variant") or target_props.get("visual") != "base" or set(target_props) != {"facing", "variant", "visual"}:
+            raise ValueError(f"old logical rule {index} must preserve C654 facing/variant and target visual=base")
+        if vector(item["root_offset"], f"old logical rule {index} root_offset") != (0, 0, 0):
+            raise ValueError(f"old logical rule {index} must preserve the old C654 root")
+        cells = item["source_shape"]
+        if not isinstance(cells, list) or not cells or len(cells) > 512:
+            raise ValueError(f"old logical rule {index} has invalid frozen source_shape")
+        source_shape = frozenset(vector(cell, f"old logical rule {index} source_shape") for cell in cells)
+        if (0, 0, 0) not in source_shape or len(source_shape) != len(cells):
+            raise ValueError(f"old logical rule {index} source_shape must be unique and include root")
+        source_state, target_state = make_state(source, defaults), make_state(target, defaults)
+        shape = geometry.get(target_state)
+        if not shape:
+            raise ValueError(f"old logical rule {index} target has no current geometry")
+        target_shape = frozenset(set(shape) | {(0, 0, 0)})
+        result.append(Rule(start + len(result), Expected((0, 0, 0), source_state, source_shape), target_state,
+                           (0, 0, 0), (), None, target_shape))
+    if len(seen) != 8:
+        raise ValueError("old logical C654 table must map all four facings and two variants exactly once")
+    return result
 
 
 @dataclass
@@ -429,11 +497,79 @@ class Chunk:
         root.pop("Heightmaps", None)
 
 
+def _height_from_definition(definition: dict[str, Tag] | dict[str, Any]) -> tuple[int, int] | None:
+    """Return the half-open build range only from an explicit dimension type."""
+    min_y, height = definition.get("min_y"), definition.get("height")
+    min_y = min_y.value if isinstance(min_y, Tag) else min_y
+    height = height.value if isinstance(height, Tag) else height
+    if type(min_y) is not int or type(height) is not int or height <= 0:
+        return None
+    return min_y, min_y + height
+
+
+def _datapack_dimension_height(root: Path, type_id: str) -> tuple[int, int] | None:
+    if ":" not in type_id:
+        return None
+    namespace, path = type_id.split(":", 1)
+    if not namespace or not path or any(part in ("", ".", "..") for part in path.split("/")):
+        return None
+    relative = PurePosixPath("data") / namespace / "dimension_type" / (path + ".json")
+    matches: list[dict[str, Any]] = []
+    datapacks = root / "datapacks"
+    if datapacks.is_dir():
+        for pack in datapacks.iterdir():
+            if pack.is_dir():
+                candidate = pack.joinpath(*relative.parts)
+                if candidate.is_file():
+                    try:
+                        matches.append(json.loads(candidate.read_text(encoding="utf-8")))
+                    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+                        return None
+            elif pack.suffix.lower() == ".zip":
+                try:
+                    with zipfile.ZipFile(pack) as archive:
+                        if relative.as_posix() in archive.namelist():
+                            matches.append(json.loads(archive.read(relative.as_posix()).decode("utf-8")))
+                except (OSError, zipfile.BadZipFile, UnicodeDecodeError, json.JSONDecodeError):
+                    return None
+    # Multiple packs defining the same type are an ambiguous effective
+    # registry, even when their JSON happens to agree; do not guess precedence.
+    return _height_from_definition(matches[0]) if len(matches) == 1 else None
+
+
+def dimension_build_height(root: Path, dimension: str) -> tuple[int, int]:
+    """Resolve a dimension's build range; unknown custom dimensions are unsafe."""
+    if dimension in VANILLA_DIMENSION_HEIGHTS:
+        return VANILLA_DIMENSION_HEIGHTS[dimension]
+    level = root / "level.dat"
+    if not level.is_file():
+        raise ValueError(f"unknown dimension build height: {dimension}")
+    try:
+        data = compound(compound(read_nbt(level).root)["Data"])
+        settings = compound(data["WorldGenSettings"])
+        entry = compound(compound(settings["dimensions"])[dimension])
+    except (KeyError, ValueError, OSError):
+        raise ValueError(f"unknown dimension build height: {dimension}") from None
+    type_tag = entry.get("type")
+    if type_tag is None:
+        raise ValueError(f"unknown dimension build height: {dimension}")
+    if type_tag.type == TAG_COMPOUND:
+        height = _height_from_definition(compound(type_tag))
+    elif type_tag.type == TAG_STRING:
+        height = VANILLA_DIMENSION_HEIGHTS.get(str(type_tag.value)) or _datapack_dimension_height(root, str(type_tag.value))
+    else:
+        height = None
+    if height is None:
+        raise ValueError(f"unknown dimension build height: {dimension}")
+    return height
+
+
 class World:
     def __init__(self, root: Path, defaults: dict[str, dict[str, str]]):
         self.root, self.defaults = root, defaults
         self.chunks: dict[tuple[str, int, int], Chunk] = {}
         self.by_region: dict[Path, RegionFile] = {}
+        self._dimension_heights: dict[str, tuple[int, int]] = {}
         for path in list_region_files(root):
             region = RegionFile.open(path)
             self.by_region[path] = region
@@ -449,6 +585,11 @@ class World:
                 if key in self.chunks:
                     raise ValueError(f"duplicate chunk {key}")
                 self.chunks[key] = Chunk(dimension, x, z, path, region, stored.x, stored.z, stored.timestamp, nbt)
+
+    def build_height(self, dimension: str) -> tuple[int, int]:
+        if dimension not in self._dimension_heights:
+            self._dimension_heights[dimension] = dimension_build_height(self.root, dimension)
+        return self._dimension_heights[dimension]
 
     def chunk(self, dim: str, x: int, z: int) -> Chunk | None:
         return self.chunks.get((dim, x // 16, z // 16))
@@ -538,12 +679,21 @@ class Candidate:
     source: set[tuple[int, int, int]]
     target_root: tuple[int, int, int]
     writes: dict[tuple[int, int, int], tuple[str, tuple[tuple[str, str], ...]]]
+    output_roots: tuple[tuple[tuple[int, int, int], tuple[str, tuple[tuple[str, str], ...]]], ...] = ()
     stale: set[tuple[int, int, int]] = field(default_factory=set)
     reason: str | None = None
 
     @property
     def touched(self) -> set[tuple[int, int, int]]:
         return self.source | set(self.writes) | self.stale
+
+    def owner_at(self, point: tuple[int, int, int]) -> tuple[str, tuple[int, int, int]] | None:
+        outputs = self.rule.outputs or (Output(self.rule.target, self.rule.root_offset, self.rule.shape),)
+        for output in outputs:
+            root = add(self.origin, output.root_offset)
+            if point in {add(root, offset) for offset in output.shape}:
+                return output.target[0], root
+        return None
 
 
 def add(a: tuple[int, int, int], b: tuple[int, int, int]) -> tuple[int, int, int]:
@@ -632,13 +782,32 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                 item.reason = 'different_source_weighted_visual'
                 continue
         item.source = actual
-        item.target_root = add(item.origin, item.rule.root_offset)
-        item.writes = {item.target_root: item.rule.target}
-        for offset in item.rule.shape:
-            point = add(item.target_root, offset)
-            item.writes[point] = (PART, ()) if offset != (0, 0, 0) else item.rule.target
-        if len(item.writes) != len(item.rule.shape):
+        outputs = item.rule.outputs or (Output(item.rule.target, item.rule.root_offset, item.rule.shape),)
+        item.target_root = add(item.origin, outputs[0].root_offset)
+        item.output_roots = tuple((add(item.origin, output.root_offset), output.target) for output in outputs)
+        item.writes = {}
+        for output in outputs:
+            root = add(item.origin, output.root_offset)
+            for offset in output.shape:
+                point = add(root, offset)
+                if point in item.writes:
+                    item.reason = "overlapping_transaction_outputs"
+                    break
+                item.writes[point] = (PART, ()) if offset != (0, 0, 0) else output.target
+            if item.reason:
+                break
+        if item.reason:
+            continue
+        if len(item.writes) != sum(len(output.shape) for output in outputs):
             item.reason = "duplicate_target_geometry"
+            continue
+        try:
+            min_y, max_y = world.build_height(item.dimension)
+        except ValueError:
+            item.reason = "unknown_dimension_build_height"
+            continue
+        if any(point[1] < min_y or point[1] >= max_y for point in item.touched):
+            item.reason = "target_outside_dimension_build_height"
             continue
         source_owned: set[tuple[int, int, int]] = set()
         if item.mode == "legacy":
@@ -660,7 +829,8 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         for point in item.touched:
             entity = entities.get((item.dimension, *point))
             current = world.get(item.dimension, point)
-            owned = owned_part(current, entity, item.rule.target[0], item.target_root) or point in source_owned
+            owner = item.owner_at(point)
+            owned = (owner is not None and owned_part(current, entity, owner[0], owner[1])) or point in source_owned
             if point in item.writes and point not in item.source and current is not None and current[0] not in AIR_NAMES and not owned:
                 item.reason = "target_would_overwrite_foreign_block"
                 break
@@ -670,12 +840,15 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         if item.reason:
             continue
         # Remove only provably stale parts: their Owner and packed Root match.
-        for point in owned_parts.get((item.dimension, item.rule.target[0], block_pos_long(*item.target_root)), ()):
-            if point not in item.writes:
-                if world.get(item.dimension, point) != (PART, ()):
-                    item.reason = "owned_helper_state_mismatch"
-                    break
-                item.stale.add(point)
+        for root, target in item.output_roots or ((item.target_root, item.rule.target),):
+            for point in owned_parts.get((item.dimension, target[0], block_pos_long(*root)), ()):
+                if point not in item.writes:
+                    if world.get(item.dimension, point) != (PART, ()):
+                        item.reason = "owned_helper_state_mismatch"
+                        break
+                    item.stale.add(point)
+            if item.reason:
+                break
         if item.reason:
             continue
         if world.ticks_at(item.dimension, item.touched):
@@ -764,11 +937,17 @@ def apply(world: World, items: Iterable[Candidate]) -> list[dict[str, Any]]:
         helpers = []
         for point, state in item.writes.items():
             if state[0] == PART:
-                world.add_helper(item.dimension, point, item.target_root, item.rule.target[0])
-                helpers.append({"position": list(point), "id": PART, "Root": block_pos_long(*item.target_root), "Owner": item.rule.target[0]})
+                owner = item.owner_at(point)
+                if owner is None:
+                    raise ValueError("helper has no transaction output owner")
+                world.add_helper(item.dimension, point, owner[1], owner[0])
+                helpers.append({"position": list(point), "id": PART, "Root": block_pos_long(*owner[1]), "Owner": owner[0]})
         ledger.append({
             "rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
             "origin": list(item.origin), "targetRoot": list(item.target_root),
+            **({"transaction": item.rule.transaction_id,
+                "outputs": [{"targetRoot": list(root), "target": block_state_key(as_tag_state(target))}
+                            for root, target in item.output_roots]} if item.rule.transaction_id else {}),
             "source": [list(point) for point in sorted(item.source)],
             "staleRemoved": [list(point) for point in sorted(item.stale)],
             "changes": [{"position": list(point), "before": block_state_key(as_tag_state(old[point])) if old[point] else None,
