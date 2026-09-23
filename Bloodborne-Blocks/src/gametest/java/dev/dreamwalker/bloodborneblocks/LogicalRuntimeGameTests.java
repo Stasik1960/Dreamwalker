@@ -119,7 +119,7 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=400, batchId="logical_inventory")
  public void everyLogicalCreativeItemPlacesAsOneObject(TestContext context){
-  PlayerEntity player=context.createMockSurvivalPlayer();List<ArchitectureBlock> families=new ArrayList<>();for(ArchitectureBlock block:BloodborneBlocks.BLOCKS.values())if(block.definition.logical&&block.definition.creative)families.add(block);
+  PlayerEntity player=context.createMockSurvivalPlayer();List<ArchitectureBlock> families=new ArrayList<>();for(ArchitectureBlock block:BloodborneBlocks.BLOCKS.values())if(block.definition.logical&&block.definition.creative&&!PaletteAliases.hidden(block.definition.id))families.add(block);
   context.assertTrue(!families.isEmpty(),"generated logical creative inventory is not empty");context.assertTrue(families.size()<=350,"logical creative inventory fits bounded GameTest schedule");moveOutside(context,player);
   for(int index=0;index<families.size();index++){ArchitectureBlock block=families.get(index);context.runAtTick(index+1,()->verifyFamilyPlacement(context,player,block));}
   context.runAtTick(families.size()+2,()->{player.discard();context.complete();});
@@ -150,11 +150,11 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=160, batchId="logical_contract_v2")
  public void contractV2ManualPlacementAndForeignVisualCells(TestContext context){
-  floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock tree=required("o_dead_tree_planter");
+  floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock tree=required("o_c001");
   try{
    // The visual tree reaches this foreign cell, but its interaction contract does not.
    for(Direction yaw:Direction.Type.HORIZONTAL)for(boolean breakHelper:List.of(false,true)){
-    BlockPos expected=context.getAbsolutePos(ROOT),visualOnly=expected.add(-1,3,0);world.setBlockState(visualOnly,Blocks.LIGHT.getDefaultState(),Block.NOTIFY_ALL);moveOutside(context,player);player.setYaw(yaw.asRotation());context.useStackOnBlock(player,new ItemStack(tree),CLICK,Direction.UP);
+    BlockPos expected=context.getAbsolutePos(CLICK.up()),visualOnly=expected.add(-1,3,0);world.setBlockState(visualOnly,Blocks.LIGHT.getDefaultState(),Block.NOTIFY_ALL);moveOutside(context,player);player.setYaw(yaw.asRotation());context.useStackOnBlock(player,new ItemStack(tree),CLICK,Direction.UP);
     BlockPos root=find(context,tree);context.assertTrue(expected.equals(root),"tree canonical master origin "+yaw);BlockState state=world.getBlockState(root);context.assertTrue(state.get(Properties.HORIZONTAL_FACING)==yaw.getOpposite(),"tree facing follows player yaw "+yaw);context.assertTrue(world.getBlockState(visualOnly).isOf(Blocks.LIGHT)&&!world.getBlockState(visualOnly).isOf(BloodborneBlocks.PART_BLOCK),"tree never claims visual-only cell");
     if(breakHelper){BlockPos helper=ownedHelper(context,root,state);context.assertTrue(helper!=null,"tree helper exists");world.breakBlock(helper,true,player);}else world.breakBlock(root,true,player);
     context.assertTrue(world.getBlockState(visualOnly).isOf(Blocks.LIGHT)&&!world.getBlockState(visualOnly).isOf(BloodborneBlocks.PART_BLOCK),"tree removal preserves foreign visual-only cell "+yaw);world.removeBlock(visualOnly,false);clear(context,tree);
@@ -185,8 +185,9 @@ public final class LogicalRuntimeGameTests implements FabricGameTest {
  public void contractV2BatchFamiliesPlacePickBreakAndPreserveForeignCells(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();
   try{
-   Set<String> families=LogicalContractV2.declaredFamilyIds();context.assertTrue(families.containsAll(BATCH_FAMILIES)&&families.size()==25,"all 25 authoritative families are declared");
+   Set<String> families=LogicalContractV2.declaredFamilyIds();context.assertTrue(families.containsAll(BATCH_FAMILIES)&&families.contains("o_c001")&&families.size()==26,"all contracts including hidden compatibility families remain declared");
    for(String id:families){
+    if(PaletteAliases.hidden(id))continue; // compatibility item redirects have separate QA2 tests
     ArchitectureBlock block=required(id);BlockPos canonical=null;
     for(Direction yaw:Direction.Type.HORIZONTAL){
      clear(context,block);moveOutside(context,player);player.setYaw(yaw.asRotation());BlockPos expectedRoot=context.getAbsolutePos(CLICK.up());Direction artworkFacing=yaw.getOpposite();BlockPos foreign=id.equals("o_c1979")?expectedRoot.offset(artworkFacing.rotateYCounterclockwise()).up():id.equals("o_c046")||id.equals("o_c474")?expectedRoot.east():context.getAbsolutePos(CLICK.up(20));world.setBlockState(foreign,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);

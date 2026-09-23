@@ -1,0 +1,29 @@
+// Test-only entry point. Apply with: .\\gradlew.bat -I tools/level-metadata-check.init.gradle levelMetadataCheck
+// It deliberately does not alter the mod's source sets, JAR, or normal build lifecycle.
+gradle.projectsEvaluated {
+    def project = gradle.rootProject
+    def checkSource = project.sourceSets.create('levelMetadataCheck') {
+        java.srcDir(project.file('tools/java'))
+        compileClasspath += project.configurations.testRuntimeClasspath
+        runtimeClasspath += project.configurations.testRuntimeClasspath
+    }
+
+    project.tasks.register('levelMetadataCheck', JavaExec) {
+        group = 'verification'
+        description = 'Uses vanilla 1.20.1 LevelStorage summary loading to inspect copied level.dat metadata.'
+        dependsOn project.tasks.named(checkSource.compileJavaTaskName)
+        classpath = checkSource.runtimeClasspath
+        mainClass = 'LevelMetadataCheck'
+        javaLauncher = project.javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def saves = project.providers.gradleProperty('levelMetadataSaves')
+        if (saves.isPresent()) args '--saves', saves.get()
+        def valid = project.providers.gradleProperty('levelMetadataExpectedValid')
+        if (valid.isPresent()) args '--expected-valid', valid.get()
+        def invalid = project.providers.gradleProperty('levelMetadataExpectedInvalid')
+        if (invalid.isPresent()) args '--expected-invalid', invalid.get()
+        def stable = project.providers.gradleProperty('levelMetadataExpectedStable')
+        if (stable.isPresent()) args '--expected-stable', stable.get()
+        args '--report', project.providers.gradleProperty('levelMetadataReport')
+            .getOrElse(project.layout.buildDirectory.file('reports/level-metadata-check.txt').get().asFile.absolutePath)
+    }
+}

@@ -9,20 +9,22 @@ import java.util.*;
 final class LogicalContractV2 {
  private static final Gson GSON=new Gson();
  private static final Set<String> REQUIRED_POC_FAMILIES=Set.of("o_dead_tree_planter","o_cases_0","o_wall_deco_1","o_iron_gate","o_iron_railing");
+ private static Map<String,DebugMetadata> DEBUG_METADATA=Map.of();
  static final class Data {int schemaVersion;String transform_contract;List<Family> families;}
- static final class Family {String id,placement_policy,mirror_policy,collision_policy,collision_justification,review_id,authority;Anchor canonical_anchor;List<Integer> rotations;Map<String,State> states;List<Pattern> migration_source_pattern;}
+ static final class Family {String id,placement_policy,mirror_policy,collision_policy,selection_policy,collision_justification,review_id,authority;Anchor canonical_anchor;List<Integer> rotations;Map<String,State> states;List<Pattern> migration_source_pattern,review_source_patterns;}
  static final class Anchor {int[] cell;double[] pivot;}
  static final class State {int rotation;Render render_mesh;Footprint selection_footprint,collision_footprint,interaction_footprint;List<Pattern> migration_source_pattern;}
  static final class Render {String id;double[] bounds,offset;}
  static final class Footprint {List<double[]> boxes,cells;}
- static final class Pattern {List<Component> components;}
+ static final class Pattern {String exact_source_signature;List<Component> components;}
  static final class Component {String id;Map<String,String> properties;int[] offset;}
+ record DebugMetadata(String reviewId,String canonicalAnchor,String collisionPolicy,String selectionPolicy,String sourceFamily,String sourcePatternSummary) {}
  private LogicalContractV2() {}
 
  static Map<String,GeometryRuntime.GeometryBlock> load(BloodborneBlocks.Data definitions){
   LogicalTransform.loadAndValidate();Data data=read();if(data.schemaVersion!=2||!"transform-v2.json".equals(data.transform_contract)||data.families==null)throw fail("schema");
   Map<String,BloodborneBlocks.Definition> known=new HashMap<>();for(BloodborneBlocks.Definition d:definitions.blocks)known.put(d.id,d);Set<String> meshes=ModularMeshData.loadLogicalAndValidate().keySet();
-  Map<String,GeometryRuntime.GeometryBlock> result=new HashMap<>();Set<String> ids=new HashSet<>();
+  Map<String,GeometryRuntime.GeometryBlock> result=new HashMap<>();Map<String,DebugMetadata> debug=new HashMap<>();Set<String> ids=new HashSet<>();
   for(Family family:data.families){
    if(family==null||family.id==null||!ids.add(family.id)||family.states==null||family.canonical_anchor==null||family.rotations==null)throw fail("family");
    BloodborneBlocks.Definition definition=known.get(family.id);if(definition==null||!definition.logical)throw fail("unknown family "+family.id);
@@ -37,12 +39,19 @@ final class LogicalContractV2 {
     checkRender(state.render_mesh);checkBoxes(state.selection_footprint,"selection",1);checkBoxes(state.collision_footprint,"collision",budget(family));checkCells(state.interaction_footprint);checkPattern(state.migration_source_pattern);
     for(double[] box:state.collision_footprint.boxes)if(!covered(box,state.interaction_footprint.cells))throw fail("collision cell coverage "+family.id+"["+key+"]");
     block.states.put(key,geometry(family,state));
+    debug.put(family.id+"\u0000"+key,new DebugMetadata(family.review_id,anchorText(family.canonical_anchor),family.collision_policy,family.selection_policy==null?"AUTHORED_OUTLINE":family.selection_policy,sourceFamily(family),sourcePatternSummary(family,state)));
    }
    result.put(family.id,block);
   }
   if(!result.keySet().containsAll(REQUIRED_POC_FAMILIES))throw fail("missing approved POC family");
+  DEBUG_METADATA=Collections.unmodifiableMap(debug);
   return result;
  }
+ static DebugMetadata debugMetadata(String familyId,String stateKey){return DEBUG_METADATA.get(familyId+"\u0000"+stateKey);}
+ private static String anchorText(Anchor anchor){return anchor.cell[0]+" "+anchor.cell[1]+" "+anchor.cell[2]+" (local cell; pivot 0.5 0 0.5)";}
+ private static String sourceFamily(Family family){return "catalog review "+(family.review_id==null?"noCatalogID":family.review_id)+"; placed provenance not stored";}
+ private static String sourcePatternSummary(Family family,State state){LinkedHashSet<String> signatures=new LinkedHashSet<>();if(state.migration_source_pattern!=null)for(Pattern pattern:state.migration_source_pattern)if(pattern!=null&&pattern.exact_source_signature!=null&&!pattern.exact_source_signature.isBlank())signatures.add(pattern.exact_source_signature.substring(0,Math.min(12,pattern.exact_source_signature.length())));String listed=signatures.stream().limit(3).reduce((left,right)->left+","+right).orElse("none");return "catalog only; state signatures="+listed+", total="+signatures.size()+", family patterns="+count(family.review_source_patterns)+"; placed provenance not stored";}
+ private static int count(List<Pattern> patterns){return patterns==null?0:patterns.size();}
  static Set<String> declaredFamilyIds(){Data data=read();if(data.schemaVersion!=2||data.families==null)throw fail("schema");Set<String> ids=new LinkedHashSet<>();for(Family family:data.families)if(family==null||family.id==null||!ids.add(family.id))throw fail("family");return Collections.unmodifiableSet(ids);}
  private static void checkOrientations(Family family){
   Map<String,Map<String,State>> oriented=new HashMap<>();

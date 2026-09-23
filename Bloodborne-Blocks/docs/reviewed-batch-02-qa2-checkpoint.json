@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "jar": "..\\releases\\Bloodborne-Blocks\\bloodborne-blocks-2.1.0-alpha.1-batch-02-qa2-20260923-mc1.20.1.jar",
+  "jar_bytes": 95353268,
+  "jar_sha256": "b7ef8d69d31efd10a9e857caecfc80d7abf6aab8f007659d6774e6d3abef7a13",
+  "jar_crc": "PASS",
+  "compiled_classes_present": 73,
+  "remap_jar_equal": true,
+  "critical_resources_equal": 10,
+  "registry_resource_manifest": {
+    "logical_registry_ids": 277,
+    "contract_v2_families": 26,
+    "logical_blockstates": 277,
+    "logical_mesh_models": 252
+  },
+  "tests": {
+    "orientation_checks": 1008,
+    "source_examples": 28,
+    "qa2_tree_checks": 18,
+    "gametests": 17
+  },
+  "gallery": {
+    "active_families": 21,
+    "specimens": 104,
+    "tree_variants": 6,
+    "tree_specimens": 24,
+    "floor": "minecraft:white_concrete",
+    "level_metadata": "PASS",
+    "helper_ownership": "PASS"
+  },
+  "build_proof_sha256": "e93d64537956ad24091956027322415bc0b8b399ec3587275ece087e82bcbeee",
+  "build_proof": "check + logicalGameTest + remapJar; current input/report/JAR hashes",
+  "client_visual_acceptance": "NOT_PERFORMED",
+  "full_city_conversion": false
+}

@@ -97,10 +97,24 @@ tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalOb
 
 // Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
 // These tests need numpy (same dependency as the existing world converter).
-['test_region_padding', 'test_contract_v2', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng', 'test_reviewed_migration', 'test_reviewed_source_examples', 'check_contract_orientation', 'check_logical_resources'].each { testName ->
+['test_region_padding', 'test_contract_v2', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng', 'test_reviewed_migration', 'test_reviewed_source_examples', 'test_fixture_level_metadata', 'test_reviewed_gallery', 'test_qa2_trees', 'test_qa2_checkpoint', 'check_contract_orientation', 'check_logical_resources'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${testName}.py"
  }
  tasks.named('check') { dependsOn testName }
+}
+
+// Checkpoint proof cannot be produced by merely re-reading a stale test XML.
+// No gallery is overwritten; generate a fresh gallery before this task.
+tasks.register('qa2BuildProof', Exec) {
+ dependsOn 'check', 'logicalGameTest', 'remapJar'
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/verify_qa2_checkpoint.py', '--record-build-proof'
+}
+tasks.register('qa2Checkpoint', Exec) {
+ group = 'verification'
+ dependsOn 'qa2BuildProof'
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/verify_qa2_checkpoint.py', '--report', providers.gradleProperty('qa2Report').getOrElse('build/qa2-checkpoint.json')
 }

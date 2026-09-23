@@ -133,6 +133,13 @@ def direct_rules(resources, *, poc_only=False):
     for family in data["families"]:
         if poc_only and family['id'] not in POC_FAMILIES:
             continue
+        # QA2 explicitly retires the incomplete tree construction patterns.
+        # Keep frozen POC mode for historical regression fixtures only. In the
+        # current converter an incomplete tree must never fall back to a wing
+        # or a trunk-only object when its full sixteen-cell pattern is absent.
+        if not poc_only and any(f['id'] == 'o_c001' for f in data['families']) and family['id'] in {
+                'o_c001_a', 'o_c001_b', 'o_c009_a', 'o_c009_b', 'o_dead_tree_planter'}:
+            continue
         for key, state in family["states"].items():
             properties = dict(part.split("=", 1) for part in key.split(",") if part)
             target = make_state({"id": family["id"], "properties": properties}, defaults)

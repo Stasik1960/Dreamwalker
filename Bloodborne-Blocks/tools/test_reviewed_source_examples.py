@@ -77,6 +77,10 @@ def examples(reader):
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8")); rows = {row["review_id"]: row for row in manifest["candidates"]}
     result = []
     for review_id, decision in DECISIONS.items():
+        if review_id in ('C001', 'C009'):
+            # Historical six-cell candidates contain wings of TWO neighboring
+            # trees. QA2's separate 16-cell fixtures exercise the corrected boundary.
+            continue
         row = rows[review_id]
         for pattern_index, pattern in enumerate(row["source_patterns"]):
             anchor = tuple(pattern["example"]["anchor"]); dimension = pattern["example"]["dimension"]

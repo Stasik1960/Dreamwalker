@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "version": "2.1.0-alpha.1",
+  "resources_compared": 191919,
+  "resource_manifest_sha256": "749a2652666d6e18c60a4231d01f91a96dc7fa9fdf8c67731c4d877d4efcdfad",
+  "jar_sha256": "b7ef8d69d31efd10a9e857caecfc80d7abf6aab8f007659d6774e6d3abef7a13",
+  "jar_bytes": 95353268,
+  "mixin_package_check": "PASS",
+  "gallery_zip_members_compared": 7,
+  "gallery_zip_bytes": 289999,
+  "gallery_zip_sha256": "d17b76ac2b5523d4c363f04b483bcf871455ac95da49649d1c68ce43218f11cd",
+  "commands": [
+    "python -B -X utf8 tools/check_packaged_resources.py build/libs/bloodborne-blocks-2.1.0-alpha.1.jar",
+    "python -B -X utf8 tools/check_mixin_package.py build/libs/bloodborne-blocks-2.1.0-alpha.1.jar"
+  ],
+  "note": "Every source resource compared with the remapped JAR; only pinned Loom mixin metadata normalization is allowed. Gallery ZIP members hash-compared with the fresh gallery folder. No client visual acceptance implied."
+}

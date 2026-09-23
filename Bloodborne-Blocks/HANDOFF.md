@@ -1,6 +1,54 @@
 # Bloodborne-Blocks — актуальный handoff, 2026-09-23
 
-## Текущий checkpoint: ручные решения Catalog B batch-02 реализованы
+## Текущий checkpoint: batch-02 QA2 — цельные деревья и debug
+
+Исправлены только три запрошенные области: деревья C001/C009, диагностика
+наведённого объекта, читаемая синтетическая галерея. Batch-03 и массовая
+конвертация города не запускались. Исходная карта и Catalog B discovery/C-ID
+не менялись. Предыдущее SPLIT-решение дерева теперь историческое, не текущее.
+
+- Один целый tree block/item `bloodborne_blocks:o_c001`: шесть вариантов
+  полного mesh, четыре facing, anchor в основании центрального ствола.
+  Один TRUNK box; девять внутренних helpers только по стволу, ветви свободны.
+- Старые пять tree-ID сохранены для загрузки существующих размещений, скрыты
+  из creative; их предметы/pick перенаправляются на целое дерево. Это только
+  inventory aliases: уже размещённые старые logical fragments не заменяются
+  по одному (это создало бы дубликаты деревьев).
+- Проверенная raw-source граница — 16 carriers. Старые шестиклеточные C001/C009
+  предложения захватывали крылья двух соседних деревьев. Новая разметка основана
+  на ограниченном чтении 13 chunks у четырёх сохранённых примеров: восемь деревьев,
+  две точные source-layout схемы, шесть RNG-guarded правил. Неполные сборки
+  сохраняются; недоказанные raw rotations/mirrors не угадываются.
+- `/bloodborne debug target`, alias `/bloodborne debug`: permission 2, навести
+  прицел, выполнить команду, нажать отчёт для копирования. Разрешает helper в
+  master; показывает Review/Logical ID, позицию, state, anchor и policies.
+  Source patterns — возможные patterns текущего state, не сохранённая provenance.
+- Новая галерея `build/reviewed-batch-02-gallery-qa2`: 104 образца, 21 активная
+  V2-family, все варианты дерева × четыре facing. Белый бетон выбран потому,
+  что `smooth_sandstone` является carrier. Старые миры не перезаписывались.
+  `level.dat` принят штатным Minecraft 1.20.1 LevelStorage summary loader.
+
+Брать для следующего QA:
+
+Фактическая проверка QA2: `check build logicalGameTest qa2Checkpoint` —
+**BUILD SUCCESSFUL**, **17/17 GameTests**, **1008 orientation checks**.
+Прошли 28 прежних non-tree source examples и 18 tree checks (шесть правил,
+восемь полных реальных деревьев, четыре пары соседних деревьев). Все 191 919
+ресурсов release JAR сверены с исходниками; packaged mixin check PASS.
+Полные небольшие результаты сохранены в `docs/qa2-checks/`.
+
+- [JAR QA2](../releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-batch-02-qa2-20260923-mc1.20.1.jar)
+- [ZIP новой галереи](../releases/Bloodborne-Blocks/reviewed-batch-02-gallery-qa2.zip)
+- [Архитектура, команды, проверки и ограничения](docs/REVIEWED-BATCH-02-QA2.md)
+- [Машинный отчёт checkpoint](docs/reviewed-batch-02-qa2-checkpoint.json)
+
+Внутренняя версия JAR остаётся `2.1.0-alpha.1`: заменять предыдущий файл, не
+устанавливать оба. Далее — визуальная проверка владельцем и отдельные баг-репорты
+по объектам с debug-выводом. Не продолжать автоматическую нормализацию или
+конвертацию города без следующего задания. Клиентская визуальная приёмка не
+подменяется офлайн-рендером, GameTests или проверкой списка миров.
+
+## История: ручные решения Catalog B batch-02 до QA2
 
 18 подтверждённых C-карточек скомпилированы в **20 новых logical families**
 (C001/C009 дают по два самостоятельных объекта). С пятью исходными POC теперь

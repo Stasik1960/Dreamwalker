@@ -7,6 +7,12 @@ gradle.projectsEvaluated {
   if (p.plugins.hasPlugin('java')) {
    p.sourceSets.main.output.resourcesDir = p.file('src/main/resources')
    p.tasks.named('processResources') { enabled = false }
+   // Stable archive modes also avoid ~191k Windows ACL lookups in ZipCopyAction.
+   // JAR resources/classes are data files, not filesystem executables.
+   p.tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+    fileMode = 0644
+    dirMode = 0755
+   }
   }
  }
 }

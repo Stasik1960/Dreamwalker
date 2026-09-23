@@ -19,8 +19,8 @@ ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "src/main/resources/bloodborne_blocks/logical"
 BUILD = ROOT / "build/reviewed-batch-02"
 DIM = "minecraft:overworld"
-FAMILIES = {"o_c001_a", "o_c001_b", "o_c009_a", "o_c009_b", "o_c002", "o_c003", "o_c008", "o_c471", "o_c046", "o_c1680", "o_c474", "o_c1962", "o_c1979", "o_c028", "o_c282", "o_c561", "o_c618", "o_c654", "o_c1319", "o_c1491"}
-ALIASES = {"o_c009_a": "o_c001_a", "o_c009_b": "o_c001_b", "o_c561":"o_c046"}
+FAMILIES = {"o_c001", "o_c002", "o_c003", "o_c008", "o_c471", "o_c046", "o_c1680", "o_c474", "o_c1962", "o_c1979", "o_c028", "o_c282", "o_c561", "o_c618", "o_c654", "o_c1319", "o_c1491"}
+ALIASES = {'o_c561': 'o_c046'}
 CONTEXT = {"o_c046": (1, 0, 0), "o_c1979": (-1, 1, 0)}
 
 

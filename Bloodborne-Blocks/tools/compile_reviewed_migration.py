@@ -68,6 +68,14 @@ def build():
     report={'schemaVersion':1,'method':'raw resource applications + textured geometry equivalence + integer master translation',
             'world_scan':False,'families':[],'pattern_aliases':[]}
     for family in data['families']:
+        owner=family.get('compiler_owner')
+        if owner is not None:
+            if (family['id'],owner) != ('o_c001','qa2_trees'):
+                raise ValueError('unsupported compiler_owner: '+repr((family['id'],owner)))
+        if owner == 'qa2_trees':
+            # Complete-tree patterns/weighted meshes have their own bounded,
+            # independently checked compiler; never re-author them as old SPLIT.
+            continue
         if family.get('authority')!='user': continue
         print('Proving '+family['id'],flush=True)
         row={'id':family['id'],'retained':0,'unrepresentable_source_rotations':[], 'unauthored_weighted_art':0}

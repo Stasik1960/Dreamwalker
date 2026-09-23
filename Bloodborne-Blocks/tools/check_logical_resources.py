@@ -136,7 +136,14 @@ def validate(resources=RES):
             assert len(positions) == len(set(positions)), 'two components occupy same cell'
     hidden = read(logical / 'hidden-items.json')
     assert len(hidden) == len(set(hidden))
-    assert all(short(ident) in definitions and not short(ident).startswith('o_') for ident in hidden)
+    inventory_aliases = migration.get('item_aliases', {})
+    for ident, target in inventory_aliases.items():
+        assert ident in definitions and definitions[ident]['logical'] and ident in hidden
+        assert target['id'] in definitions and definitions[target['id']]['logical']
+        assert target['id'] not in inventory_aliases, 'inventory alias chain/cycle'
+        assert key(target['properties']) in definitions[target['id']]['states']
+    assert all(short(ident) in definitions and
+               (not short(ident).startswith('o_') or short(ident) in inventory_aliases) for ident in hidden)
     return {'ok': True, 'logicalObjects': len(new), 'states': state_count, 'meshes': len(meshes),
             'textures': len(texture_count), 'migrationRules': len(migration['rules']),
             'hiddenLegacyItems': len(hidden), 'maximumFootprintCells': maximum_cells}

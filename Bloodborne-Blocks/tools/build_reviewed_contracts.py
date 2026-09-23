@@ -534,3 +534,6 @@ if __name__ == "__main__":
     build()
     from compile_reviewed_migration import build as compile_migration
     compile_migration()
+    if (ROOT / 'docs/reviewed-batch-02-qa2-trees.json').exists():
+        from build_qa2_trees import build as build_trees
+        build_trees()

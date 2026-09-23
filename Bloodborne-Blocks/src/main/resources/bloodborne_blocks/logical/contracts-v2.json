@@ -35634,6 +35634,4385 @@
           "variant_guards": []
         }
       ]
+    },
+    {
+      "id": "o_c001",
+      "review_id": "C001",
+      "review_ids": [
+        "C001",
+        "C009"
+      ],
+      "authority": "user",
+      "compiler_owner": "qa2_trees",
+      "canonical_anchor": {
+        "cell": [
+          0,
+          0,
+          0
+        ],
+        "pivot": [
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      "placement_policy": "FLOOR",
+      "rotations": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "mirror_policy": "ROTATE_ONLY",
+      "collision_policy": "TRUNK",
+      "selection_policy": "TRUNK",
+      "collision_justification": "One central vertical trunk primitive; planter rim, branches and canopy have no collision/helpers.",
+      "review_source_patterns": [
+        {
+          "exact_source_signature": "816a3e4bbde46c2dc2db466c270bdafc767543b44231450fd1c735559178c7ce",
+          "components": [
+            {
+              "id": "minecraft:white_wool",
+              "properties": {},
+              "offset": [
+                0,
+                1,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/white_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:orange_wool",
+              "properties": {},
+              "offset": [
+                0,
+                4,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/orange_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:magenta_wool",
+              "properties": {},
+              "offset": [
+                0,
+                7,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/magenta_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:light_blue_wool",
+              "properties": {},
+              "offset": [
+                0,
+                10,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/light_blue_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:oak_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                -3,
+                4,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/oak_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:spruce_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                -3,
+                7,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/spruce_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:birch_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                -3,
+                10,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/birch_log",
+                      "y": 270
+                    }
+                  ],
+                  [
+                    {
+                      "model": "minecraft:block/birch_log_1",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:jungle_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                3,
+                4,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/jungle_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:acacia_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                3,
+                7,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/acacia_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                3,
+                10,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/dark_oak_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:jungle_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                4,
+                -3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/jungle_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:acacia_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                7,
+                -3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/acacia_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                10,
+                -3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/dark_oak_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:oak_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                4,
+                3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/oak_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:spruce_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                7,
+                3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/spruce_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:birch_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                10,
+                3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/birch_log",
+                      "y": 180
+                    }
+                  ],
+                  [
+                    {
+                      "model": "minecraft:block/birch_log_1",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            }
+          ],
+          "examples": [
+            {
+              "review_id": "C001",
+              "review_pattern": "A",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -284,
+                42,
+                -71
+              ]
+            },
+            {
+              "review_id": "C001",
+              "review_pattern": "A",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -283,
+                42,
+                -64
+              ]
+            },
+            {
+              "review_id": "C001",
+              "review_pattern": "B",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -169,
+                51,
+                -43
+              ]
+            },
+            {
+              "review_id": "C001",
+              "review_pattern": "C",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -246,
+                85,
+                -272
+              ]
+            },
+            {
+              "review_id": "C001",
+              "review_pattern": "C",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -239,
+                85,
+                -273
+              ]
+            },
+            {
+              "review_id": "C009",
+              "review_pattern": "A",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -325,
+                -23,
+                -80
+              ]
+            },
+            {
+              "review_id": "C009",
+              "review_pattern": "A",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -320,
+                -23,
+                -81
+              ]
+            }
+          ]
+        },
+        {
+          "exact_source_signature": "235de5acef16a9d799e2239e9865048b4371258c5db51625a05c4edfcb68d757",
+          "components": [
+            {
+              "id": "minecraft:white_wool",
+              "properties": {},
+              "offset": [
+                0,
+                1,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/white_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:orange_wool",
+              "properties": {},
+              "offset": [
+                0,
+                4,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/orange_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:magenta_wool",
+              "properties": {},
+              "offset": [
+                0,
+                7,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/magenta_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:light_blue_wool",
+              "properties": {},
+              "offset": [
+                0,
+                10,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/light_blue_wool"
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:oak_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                -3,
+                4,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/oak_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:spruce_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                -3,
+                7,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/spruce_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:birch_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                -3,
+                10,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/birch_log",
+                      "y": 270
+                    }
+                  ],
+                  [
+                    {
+                      "model": "minecraft:block/birch_log_1",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:jungle_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                3,
+                4,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/jungle_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:acacia_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                3,
+                7,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/acacia_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "z"
+              },
+              "offset": [
+                3,
+                10,
+                0
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/dark_oak_log",
+                      "y": 270
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:jungle_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                4,
+                -3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/jungle_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:acacia_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                7,
+                -3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/acacia_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                10,
+                -3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/dark_oak_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:jungle_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                4,
+                3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/jungle_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:acacia_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                7,
+                3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/acacia_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            },
+            {
+              "id": "minecraft:dark_oak_log",
+              "properties": {
+                "axis": "x"
+              },
+              "offset": [
+                0,
+                10,
+                3
+              ],
+              "model_choices": [
+                [
+                  [
+                    {
+                      "model": "minecraft:block/dark_oak_log",
+                      "y": 180
+                    }
+                  ]
+                ]
+              ]
+            }
+          ],
+          "examples": [
+            {
+              "review_id": "C001",
+              "review_pattern": "B",
+              "dimension": "eh_s2:yharnam",
+              "master": [
+                -169,
+                51,
+                -36
+              ]
+            }
+          ]
+        }
+      ],
+      "states": {
+        "facing=north,variant=tree_254d81d6bf3e": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "qa2_complete_tree_6436f660a4bb",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:light_blue_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ]
+                }
+              ],
+              "variant_guards": [
+                {
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    1
+                  ],
+                  "multipart": false
+                }
+              ],
+              "authority": "user",
+              "review_id": "C001",
+              "exact_source_signature": "235de5acef16a9d799e2239e9865048b4371258c5db51625a05c4edfcb68d757",
+              "source_rotation": 0,
+              "matching_evidence": "exact sixteen raw cells and positional RNG; complete source mesh baked at trunk-base master"
+            }
+          ]
+        },
+        "facing=north,variant=tree_78dd02703b12": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "qa2_complete_tree_9bc0f6de09a8",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:light_blue_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ]
+                }
+              ],
+              "variant_guards": [
+                {
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    1
+                  ],
+                  "multipart": false
+                },
+                {
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    1
+                  ],
+                  "multipart": false
+                }
+              ],
+              "authority": "user",
+              "review_id": "C001",
+              "exact_source_signature": "816a3e4bbde46c2dc2db466c270bdafc767543b44231450fd1c735559178c7ce",
+              "source_rotation": 0,
+              "matching_evidence": "exact sixteen raw cells and positional RNG; complete source mesh baked at trunk-base master"
+            }
+          ]
+        },
+        "facing=north,variant=tree_9d61b4091ec5": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "qa2_complete_tree_0bc6a34e0680",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:light_blue_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ]
+                }
+              ],
+              "variant_guards": [
+                {
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    1
+                  ],
+                  "multipart": false
+                },
+                {
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    0
+                  ],
+                  "multipart": false
+                }
+              ],
+              "authority": "user",
+              "review_id": "C001",
+              "exact_source_signature": "816a3e4bbde46c2dc2db466c270bdafc767543b44231450fd1c735559178c7ce",
+              "source_rotation": 0,
+              "matching_evidence": "exact sixteen raw cells and positional RNG; complete source mesh baked at trunk-base master"
+            }
+          ]
+        },
+        "facing=north,variant=tree_a2813fef72f1": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "qa2_complete_tree_a961b16762a6",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:light_blue_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ]
+                }
+              ],
+              "variant_guards": [
+                {
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    0
+                  ],
+                  "multipart": false
+                }
+              ],
+              "authority": "user",
+              "review_id": "C001",
+              "exact_source_signature": "235de5acef16a9d799e2239e9865048b4371258c5db51625a05c4edfcb68d757",
+              "source_rotation": 0,
+              "matching_evidence": "exact sixteen raw cells and positional RNG; complete source mesh baked at trunk-base master"
+            }
+          ]
+        },
+        "facing=north,variant=tree_a4495da92deb": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "qa2_complete_tree_439df267b65b",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:light_blue_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ]
+                }
+              ],
+              "variant_guards": [
+                {
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    0
+                  ],
+                  "multipart": false
+                },
+                {
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    0
+                  ],
+                  "multipart": false
+                }
+              ],
+              "authority": "user",
+              "review_id": "C001",
+              "exact_source_signature": "816a3e4bbde46c2dc2db466c270bdafc767543b44231450fd1c735559178c7ce",
+              "source_rotation": 0,
+              "matching_evidence": "exact sixteen raw cells and positional RNG; complete source mesh baked at trunk-base master"
+            }
+          ]
+        },
+        "facing=north,variant=tree_cfd3d71f521b": {
+          "rotation": 0,
+          "render_mesh": {
+            "id": "qa2_complete_tree_5c8b73035f4d",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": [
+            {
+              "components": [
+                {
+                  "id": "minecraft:white_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    1,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:orange_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:magenta_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:light_blue_wool",
+                  "properties": {},
+                  "offset": [
+                    0,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    4,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    7,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "z"
+                  },
+                  "offset": [
+                    3,
+                    10,
+                    0
+                  ]
+                },
+                {
+                  "id": "minecraft:jungle_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:acacia_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:dark_oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    -3
+                  ]
+                },
+                {
+                  "id": "minecraft:oak_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    4,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:spruce_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    7,
+                    3
+                  ]
+                },
+                {
+                  "id": "minecraft:birch_log",
+                  "properties": {
+                    "axis": "x"
+                  },
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ]
+                }
+              ],
+              "variant_guards": [
+                {
+                  "offset": [
+                    -3,
+                    10,
+                    0
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    0
+                  ],
+                  "multipart": false
+                },
+                {
+                  "offset": [
+                    0,
+                    10,
+                    3
+                  ],
+                  "weights": [
+                    1,
+                    1
+                  ],
+                  "indices": [
+                    1
+                  ],
+                  "multipart": false
+                }
+              ],
+              "authority": "user",
+              "review_id": "C001",
+              "exact_source_signature": "816a3e4bbde46c2dc2db466c270bdafc767543b44231450fd1c735559178c7ce",
+              "source_rotation": 0,
+              "matching_evidence": "exact sixteen raw cells and positional RNG; complete source mesh baked at trunk-base master"
+            }
+          ]
+        },
+        "facing=east,variant=tree_254d81d6bf3e": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "qa2_complete_tree_12550768ecab",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=east,variant=tree_78dd02703b12": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "qa2_complete_tree_4f51870a25e7",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=east,variant=tree_9d61b4091ec5": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "qa2_complete_tree_17b80e89e18e",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=east,variant=tree_a2813fef72f1": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "qa2_complete_tree_4baf2183ba25",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=east,variant=tree_a4495da92deb": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "qa2_complete_tree_63b3652c06dd",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=east,variant=tree_cfd3d71f521b": {
+          "rotation": 90,
+          "render_mesh": {
+            "id": "qa2_complete_tree_8300183787c7",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,variant=tree_254d81d6bf3e": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "qa2_complete_tree_64b9a79992fa",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,variant=tree_78dd02703b12": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "qa2_complete_tree_092d2c9fa0c6",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,variant=tree_9d61b4091ec5": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "qa2_complete_tree_7eca1febee7c",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,variant=tree_a2813fef72f1": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "qa2_complete_tree_148cd933a07f",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,variant=tree_a4495da92deb": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "qa2_complete_tree_0d1427f3bd4d",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=south,variant=tree_cfd3d71f521b": {
+          "rotation": 180,
+          "render_mesh": {
+            "id": "qa2_complete_tree_56ac0f5a5a96",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,variant=tree_254d81d6bf3e": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "qa2_complete_tree_f2b1b45cecfa",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,variant=tree_78dd02703b12": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "qa2_complete_tree_d3300df9d87a",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,variant=tree_9d61b4091ec5": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "qa2_complete_tree_26f7282d47ac",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,variant=tree_a2813fef72f1": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "qa2_complete_tree_20ea58ae032f",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,variant=tree_a4495da92deb": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "qa2_complete_tree_8dd6667e2880",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        },
+        "facing=west,variant=tree_cfd3d71f521b": {
+          "rotation": 270,
+          "render_mesh": {
+            "id": "qa2_complete_tree_d66766698995",
+            "bounds": [
+              -4.0,
+              0.0,
+              -4.0,
+              5.0,
+              12.0,
+              5.0
+            ],
+            "offset": [
+              0,
+              0,
+              0
+            ]
+          },
+          "selection_footprint": {
+            "boxes": [
+              [
+                0,
+                0,
+                0,
+                1,
+                10,
+                1
+              ]
+            ]
+          },
+          "collision_footprint": {
+            "boxes": [
+              [
+                0.25,
+                0,
+                0.25,
+                0.75,
+                10,
+                0.75
+              ]
+            ]
+          },
+          "interaction_footprint": {
+            "cells": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                3,
+                0
+              ],
+              [
+                0,
+                4,
+                0
+              ],
+              [
+                0,
+                5,
+                0
+              ],
+              [
+                0,
+                6,
+                0
+              ],
+              [
+                0,
+                7,
+                0
+              ],
+              [
+                0,
+                8,
+                0
+              ],
+              [
+                0,
+                9,
+                0
+              ]
+            ]
+          },
+          "migration_source_pattern": []
+        }
+      }
     }
   ]
 }

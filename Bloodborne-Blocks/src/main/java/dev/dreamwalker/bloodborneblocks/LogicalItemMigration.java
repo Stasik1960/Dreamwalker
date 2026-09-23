@@ -10,7 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 
 /** Exact inventory migration for generated logical objects. Missing or ambiguous rules keep the old item. */
 final class LogicalItemMigration {
- private static final class Data {int schemaVersion;List<Rule> rules=List.of();}
+ private static final class Data {int schemaVersion;List<Rule> rules=List.of();Map<String,Target> item_aliases=Map.of();}
  private static final class Rule {Source source;Target target;List<Component> components=List.of();List<String> supersedes_targets=List.of();}
  private static final class Source {String id;Map<String,String> properties=Map.of();}
  private static final class Component {String id;Map<String,String> properties=Map.of();}
@@ -19,11 +19,12 @@ final class LogicalItemMigration {
  private record Candidate(Target target,Set<String> supersedes) {}
  private static Map<Key,List<Candidate>> rules=Map.of();
  private static Map<Key,List<Candidate>> components=Map.of();
+ private static Map<String,Target> itemAliases=Map.of();
  private LogicalItemMigration() {}
 
  static void load(){
   try(InputStream stream=LogicalItemMigration.class.getResourceAsStream("/bloodborne_blocks/logical/migration.json")){
-   if(stream==null){rules=Map.of();components=Map.of();return;}
+   if(stream==null){rules=Map.of();components=Map.of();itemAliases=Map.of();return;}
    Data data=new Gson().fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),Data.class);
    if(data==null||data.schemaVersion!=1||data.rules==null)throw new IllegalStateException("Invalid logical migration schema");
    Map<Key,List<Candidate>> loaded=new HashMap<>();Map<Key,List<Candidate>> byComponent=new HashMap<>();
@@ -40,14 +41,22 @@ final class LogicalItemMigration {
      byComponent.computeIfAbsent(key(component.id,component.properties),ignored->new ArrayList<>()).add(candidate);
     }
    }
-   rules=immutable(loaded);components=immutable(byComponent);
+   Map<String,Target> aliases=new HashMap<>();
+   for(var entry:data.item_aliases.entrySet()){
+    Target target=entry.getValue();ArchitectureBlock source=BloodborneBlocks.BLOCKS.get(entry.getKey()),block=target==null?null:BloodborneBlocks.BLOCKS.get(target.id);
+    if(source==null||block==null||!source.definition.logical||!block.definition.logical||target.properties==null||data.item_aliases.containsKey(target.id))throw new IllegalStateException("Invalid inventory-only logical alias");
+    for(var property:target.properties.entrySet())if(!block.definition.properties.containsKey(property.getKey())||!block.definition.properties.get(property.getKey()).contains(property.getValue()))throw new IllegalStateException("Invalid inventory-only alias state");
+    aliases.put(entry.getKey(),target);
+   }
+   rules=immutable(loaded);components=immutable(byComponent);itemAliases=Map.copyOf(aliases);
   }catch(java.io.IOException|RuntimeException e){throw new IllegalStateException("Cannot load logical item migration",e);}
  }
 
  static Result migrate(ArchitectureBlock source,ItemStack stack){
   Map<String,String> values=new TreeMap<>(source.definition.defaultProperties==null?Map.of():source.definition.defaultProperties);
   NbtCompound tag=stack.getSubNbt("BlockStateTag");if(tag!=null)for(String name:tag.getKeys())if(source.definition.propertyObjects.containsKey(name))values.put(name,tag.getString(name));
-  Target target=pick(rules.get(new Key(source.definition.id,canonical(values))),false);if(target==null)return componentPick(source,stack);
+  Target target=itemAliases.get(source.definition.id);
+  if(target==null)target=pick(rules.get(new Key(source.definition.id,canonical(values))),false);if(target==null)return componentPick(source,stack);
   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get(target.id);if(block==null)return new Result(stack,false);
   ItemStack migrated=new ItemStack(block,stack.getCount());if(stack.hasNbt())migrated.setNbt(stack.getNbt().copy());
   NbtCompound properties=new NbtCompound();target.properties.forEach(properties::putString);if(properties.isEmpty())migrated.removeSubNbt("BlockStateTag");else migrated.getOrCreateNbt().put("BlockStateTag",properties);

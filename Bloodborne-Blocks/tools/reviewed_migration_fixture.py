@@ -5,7 +5,8 @@ from collections import defaultdict
 from pathlib import Path
 
 from convert_logical_world import AIR_NAME, state_tag
-from world_io import (NbtFile, RegionFile, TAG_BYTE, TAG_COMPOUND, TAG_INT, TAG_LONG, TAG_FLOAT,
+from fixture_level_metadata import create_level_metadata
+from world_io import (NbtFile, RegionFile, TAG_BYTE, TAG_COMPOUND, TAG_INT, TAG_LONG,
                       TAG_LIST, TAG_LONG_ARRAY, TAG_STRING, Tag, compound,
                       pack_palette_indices, write_nbt)
 
@@ -20,7 +21,9 @@ def _point(tag):
 
 
 def write_fixture(folder: Path, cells: dict[tuple[int, int, int], tuple[str, dict[str, str]]], *,
-                  block_entities=(), fluid_ticks=(), floor=True) -> None:
+                  block_entities=(), fluid_ticks=(), floor=True,
+                  floor_block='minecraft:bedrock',
+                  level_name='Bloodborne batch-02 synthetic review') -> None:
     """Write a 1.20.1 Anvil world with all needed chunks/sections.
 
     The optional bedrock floor spans the source bounds (including chunk edges),
@@ -32,24 +35,9 @@ def write_fixture(folder: Path, cells: dict[tuple[int, int, int], tuple[str, dic
     folder.mkdir(parents=True, exist_ok=True)
     def string(value): return Tag(TAG_STRING,value)
     def obj(value): return Tag(TAG_COMPOUND,value)
-    def dimension(kind,generator): return obj({'type':string(kind),'generator':obj(generator)})
-    generator={'type':string('minecraft:flat'),'settings':obj({'biome':string('minecraft:plains'),
-        'lakes':Tag(TAG_BYTE,0),'features':Tag(TAG_BYTE,0),'structure_overrides':Tag(TAG_LIST,[],TAG_STRING),
-        'layers':Tag(TAG_LIST,[obj({'block':string('minecraft:bedrock'),'height':Tag(TAG_INT,1)})],TAG_COMPOUND)})}
     first=next(iter(cells))
-    level={'DataVersion':Tag(TAG_INT,3465),'LevelName':string('Bloodborne batch-02 synthetic review'),
-        'Version':obj({'Id':Tag(TAG_INT,3465),'Name':string('1.20.1'),'Snapshot':Tag(TAG_BYTE,0),'Series':string('main')}),
-        'GameType':Tag(TAG_INT,1),'allowCommands':Tag(TAG_BYTE,1),'initialized':Tag(TAG_BYTE,1),'hardcore':Tag(TAG_BYTE,0),
-        'Difficulty':Tag(TAG_BYTE,0),'Time':Tag(TAG_LONG,6000),'DayTime':Tag(TAG_LONG,6000),'SpawnAngle':Tag(TAG_FLOAT,0.0),
-        'SpawnX':Tag(TAG_INT,first[0]),'SpawnY':Tag(TAG_INT,first[1]+2),'SpawnZ':Tag(TAG_INT,first[2]-4),
-        'GameRules':obj({'doDaylightCycle':string('false'),'doMobSpawning':string('false'),'doWeatherCycle':string('false')}),
-        'WorldGenSettings':obj({'seed':Tag(TAG_LONG,0),'generate_features':Tag(TAG_BYTE,0),'bonus_chest':Tag(TAG_BYTE,0),
-            'dimensions':obj({'minecraft:overworld':dimension('minecraft:overworld',generator),
-                'minecraft:the_nether':dimension('minecraft:the_nether',{'type':string('minecraft:noise'),'settings':string('minecraft:nether'),
-                    'biome_source':obj({'type':string('minecraft:multi_noise'),'preset':string('minecraft:nether')})}),
-                'minecraft:the_end':dimension('minecraft:the_end',{'type':string('minecraft:noise'),'settings':string('minecraft:end'),
-                    'biome_source':obj({'type':string('minecraft:the_end')})})})})}
-    write_nbt(folder / "level.dat", NbtFile("",obj({'Data':obj(level)})))
+    metadata=create_level_metadata((first[0],first[1]+2,first[2]-4),level_name=level_name)
+    write_nbt(folder / "level.dat", metadata)
     values = dict(cells)
     if floor:
         xs, ys, zs = zip(*values)
@@ -58,7 +46,7 @@ def write_fixture(folder: Path, cells: dict[tuple[int, int, int], tuple[str, dic
             for z in range(min(zs) - 1, max(zs) + 2):
                 # Bedrock is deliberately absent from reviewed carrier
                 # patterns; ordinary stone would create false candidates.
-                values.setdefault((x, floor_y, z), ("minecraft:bedrock", {}))
+                values.setdefault((x, floor_y, z), (floor_block, {}))
     per_chunk = defaultdict(dict)
     for point, state in values.items(): per_chunk[_chunk(point)][point] = state
     entities, ticks = defaultdict(list), defaultdict(list)

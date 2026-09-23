@@ -1,0 +1,782 @@
+{
+  "schemaVersion": 1,
+  "authority": "user QA2 complete-tree correction",
+  "review_ids": [
+    "C001",
+    "C009"
+  ],
+  "logical_id": "o_c001",
+  "superseded_building_items": [
+    "o_c001_a",
+    "o_c001_b",
+    "o_c009_a",
+    "o_c009_b",
+    "o_dead_tree_planter"
+  ],
+  "source_sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51",
+  "boundary": "one white_wool planter with four central tiers and four three-tier wings at +/-3 X/Z",
+  "anchor": "white_wool carrier minus [0,1,0], bottom center of trunk/planter",
+  "history": "supersedes SPLIT for tree construction only; original catalog C-IDs/signatures/decisions remain frozen",
+  "patterns": [
+    {
+      "exact_source_signature": "816a3e4bbde46c2dc2db466c270bdafc767543b44231450fd1c735559178c7ce",
+      "components": [
+        {
+          "id": "minecraft:white_wool",
+          "properties": {},
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/white_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:orange_wool",
+          "properties": {},
+          "offset": [
+            0,
+            4,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/orange_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:magenta_wool",
+          "properties": {},
+          "offset": [
+            0,
+            7,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/magenta_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:light_blue_wool",
+          "properties": {},
+          "offset": [
+            0,
+            10,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/light_blue_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:oak_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            -3,
+            4,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/oak_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:spruce_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            -3,
+            7,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/spruce_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:birch_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            -3,
+            10,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/birch_log",
+                  "y": 270
+                }
+              ],
+              [
+                {
+                  "model": "minecraft:block/birch_log_1",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:jungle_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            3,
+            4,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/jungle_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:acacia_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            3,
+            7,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/acacia_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:dark_oak_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            3,
+            10,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/dark_oak_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:jungle_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            4,
+            -3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/jungle_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:acacia_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            7,
+            -3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/acacia_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:dark_oak_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            10,
+            -3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/dark_oak_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:oak_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            4,
+            3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/oak_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:spruce_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            7,
+            3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/spruce_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:birch_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            10,
+            3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/birch_log",
+                  "y": 180
+                }
+              ],
+              [
+                {
+                  "model": "minecraft:block/birch_log_1",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "review_id": "C001",
+          "review_pattern": "A",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -284,
+            42,
+            -71
+          ]
+        },
+        {
+          "review_id": "C001",
+          "review_pattern": "A",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -283,
+            42,
+            -64
+          ]
+        },
+        {
+          "review_id": "C001",
+          "review_pattern": "B",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -169,
+            51,
+            -43
+          ]
+        },
+        {
+          "review_id": "C001",
+          "review_pattern": "C",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -246,
+            85,
+            -272
+          ]
+        },
+        {
+          "review_id": "C001",
+          "review_pattern": "C",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -239,
+            85,
+            -273
+          ]
+        },
+        {
+          "review_id": "C009",
+          "review_pattern": "A",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -325,
+            -23,
+            -80
+          ]
+        },
+        {
+          "review_id": "C009",
+          "review_pattern": "A",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -320,
+            -23,
+            -81
+          ]
+        }
+      ]
+    },
+    {
+      "exact_source_signature": "235de5acef16a9d799e2239e9865048b4371258c5db51625a05c4edfcb68d757",
+      "components": [
+        {
+          "id": "minecraft:white_wool",
+          "properties": {},
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/white_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:orange_wool",
+          "properties": {},
+          "offset": [
+            0,
+            4,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/orange_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:magenta_wool",
+          "properties": {},
+          "offset": [
+            0,
+            7,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/magenta_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:light_blue_wool",
+          "properties": {},
+          "offset": [
+            0,
+            10,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/light_blue_wool"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:oak_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            -3,
+            4,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/oak_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:spruce_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            -3,
+            7,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/spruce_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:birch_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            -3,
+            10,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/birch_log",
+                  "y": 270
+                }
+              ],
+              [
+                {
+                  "model": "minecraft:block/birch_log_1",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:jungle_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            3,
+            4,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/jungle_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:acacia_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            3,
+            7,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/acacia_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:dark_oak_log",
+          "properties": {
+            "axis": "z"
+          },
+          "offset": [
+            3,
+            10,
+            0
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/dark_oak_log",
+                  "y": 270
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:jungle_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            4,
+            -3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/jungle_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:acacia_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            7,
+            -3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/acacia_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:dark_oak_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            10,
+            -3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/dark_oak_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:jungle_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            4,
+            3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/jungle_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:acacia_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            7,
+            3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/acacia_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "minecraft:dark_oak_log",
+          "properties": {
+            "axis": "x"
+          },
+          "offset": [
+            0,
+            10,
+            3
+          ],
+          "model_choices": [
+            [
+              [
+                {
+                  "model": "minecraft:block/dark_oak_log",
+                  "y": 180
+                }
+              ]
+            ]
+          ]
+        }
+      ],
+      "examples": [
+        {
+          "review_id": "C001",
+          "review_pattern": "B",
+          "dimension": "eh_s2:yharnam",
+          "master": [
+            -169,
+            51,
+            -36
+          ]
+        }
+      ]
+    }
+  ]
+}

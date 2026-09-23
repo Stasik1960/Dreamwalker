@@ -1,4 +1,23 @@
-# Bloodborne Architecture — reviewed batch-02 checkpoint
+# Bloodborne Architecture — batch-02 QA2 checkpoint
+
+- [Новый тестовый JAR QA2](bloodborne-blocks-2.1.0-alpha.1-batch-02-qa2-20260923-mc1.20.1.jar).
+- [Новая QA-галерея](reviewed-batch-02-gallery-qa2.zip): 104 образца на белом
+  бетоне, включая шесть вариантов целого дерева × четыре ориентации.
+- [Изменения, проверки и ограничения](../../Bloodborne-Blocks/docs/REVIEWED-BATCH-02-QA2.md).
+
+JAR: 95 353 268 байт, SHA-256
+`b7ef8d69d31efd10a9e857caecfc80d7abf6aab8f007659d6774e6d3abef7a13`.
+`check build logicalGameTest qa2Checkpoint`: **BUILD SUCCESSFUL**;
+17 GameTests, 1008 orientation checks и сверка 191 919 ресурсов — PASS.
+
+Цельное дерево `o_c001`, collision только по стволу; команда
+`/bloodborne debug target` (alias `/bloodborne debug`) с копируемой диагностикой.
+Архив содержит папку мира с `level.dat` непосредственно внутри: извлеките её
+в `saves`. Замените предыдущий JAR, не держите две версии одновременно.
+Это промежуточный QA checkpoint, не конвертация города. Ждём отдельные баг-репорты
+по объектам с выводом debug-команды. Старые файлы ниже сохранены.
+
+## Исторический reviewed batch-02 checkpoint (до QA2)
 
 [Тестовый JAR batch-02](bloodborne-blocks-2.1.0-alpha.1-batch-02-20260922-mc1.20.1.jar)
 — 95 296 406 байт, SHA-256

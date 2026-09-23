@@ -50,8 +50,8 @@ class ContractTests(unittest.TestCase):
         cls.rows = []
 
     def test_shared_vectors_and_all_family_origins(self):
-        self.assertEqual(len(self.families),25)
-        self.assertEqual(set(self.families), POC_IDS | BATCH_IDS)
+        self.assertEqual(len(self.families),26)  # includes five retained, hidden tree compatibility IDs
+        self.assertEqual(set(self.families), POC_IDS | BATCH_IDS | {'o_c001'})
         for f in self.families.values():
             for rotation in (0,90,180,270):
                 # Same canonical master for all orientations when anchor point
