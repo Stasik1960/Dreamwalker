@@ -24,6 +24,10 @@ VISUAL_PROOF_IDS = ("o_c282_a", "o_c654_a", "o_c618")
 FLOOR_Y = 63
 ROOT_Y = 64
 VOID_GAP = 12
+ALL_VISIBLE_SCOPE = "all_visible"
+CONTRACT_V2_SCOPE = "contract_v2"
+SCOPES = (ALL_VISIBLE_SCOPE, CONTRACT_V2_SCOPE)
+EPSILON = 1e-6
 
 
 def state_key(properties: dict[str, str]) -> str:
@@ -104,6 +108,25 @@ def mesh_bounds(mesh: dict[str, Any]) -> tuple[float, float, float, float, float
         max(vertex[index] for vertex in vertices) for index in range(3))
 
 
+def rendered_mesh_bounds(mesh: dict[str, Any], render: dict[str, Any]) -> tuple[float, float, float, float, float, float]:
+    """Measure immutable mesh vertices and apply the authored render offset once."""
+    raw = mesh_bounds(mesh)
+    offset = render["offset"]
+    return tuple(raw[index] + offset[index] for index in range(3)) + tuple(
+        raw[index + 3] + offset[index] for index in range(3))
+
+
+def _horizontal_extent(bounds: tuple[float, float, float, float, float, float],
+                       footprint: Iterable[tuple[int, int, int]]) -> tuple[int, int, int, int]:
+    """Return every root-relative X/Z cell touched by render, root, or helpers."""
+    cells = list(footprint)
+    min_x = min(math.floor(bounds[0]), 0, *(cell[0] for cell in cells))
+    min_z = min(math.floor(bounds[2]), 0, *(cell[2] for cell in cells))
+    max_x = max(math.ceil(bounds[3]) - 1, 0, *(cell[0] for cell in cells))
+    max_z = max(math.ceil(bounds[5]) - 1, 0, *(cell[2] for cell in cells))
+    return min_x, min_z, max_x, max_z
+
+
 def visual_proof_states(definitions: Iterable[dict[str, Any]]) -> list[tuple[dict[str, Any], str, dict[str, str], str]]:
     """Return three physical BASE/ALT pairs, distinct from ordinary specimens."""
     by_id = {row["id"]: row for row in definitions}
@@ -130,9 +153,9 @@ def plan_positions(specimens: list[dict[str, Any]], *, gap: int = VOID_GAP, colu
     cursor_z = 32
     row_depth = 0
     for number, specimen in enumerate(specimens):
-        low_x, _low_y, low_z, high_x, _high_y, high_z = specimen["bounds"]
-        width = max(1, math.ceil(high_x) - math.floor(low_x) + 1)
-        depth = max(1, math.ceil(high_z) - math.floor(low_z) + 1)
+        low_x, low_z, high_x, high_z = _horizontal_extent(specimen["bounds"], specimen["footprint"])
+        width = high_x - low_x + 1
+        depth = high_z - low_z + 1
         if number and number % columns == 0:
             cursor_x = 32
             # Each pad extends two cells on both sides of its visual bounds.
@@ -140,7 +163,7 @@ def plan_positions(specimens: list[dict[str, Any]], *, gap: int = VOID_GAP, colu
             cursor_z += row_depth + gap + 4
             row_depth = 0
         # The root stays at Y=64.  Do not compensate low visual/helper bounds.
-        origin = (cursor_x - math.floor(low_x), ROOT_Y, cursor_z - math.floor(low_z))
+        origin = (cursor_x - low_x, ROOT_Y, cursor_z - low_z)
         specimen["position"] = origin
         specimen["pad"] = (cursor_x - 2, cursor_z - 2, cursor_x + width + 1, cursor_z + depth + 1)
         cursor_x += width + gap + 4
@@ -174,27 +197,70 @@ def _load() -> tuple[list[dict], dict[str, Any], dict[str, Any], dict[str, Any]]
     return visible_definitions(definitions, hidden, aliases), geometry, meshes, contracts
 
 
-def build(output: Path = OUTPUT) -> None:
-    """Write a new world only to a nonexistent output directory."""
-    if output.exists():
-        raise FileExistsError("Nightmare gallery output must be fresh: " + str(output))
-    definitions, geometry, meshes, contracts = _load()
+def definitions_for_scope(scope: str, visible: list[dict], contracts: dict[str, dict]) -> list[dict]:
+    if scope == ALL_VISIBLE_SCOPE:
+        return visible
+    if scope != CONTRACT_V2_SCOPE:
+        raise ValueError("unknown gallery scope: " + scope)
+    all_definitions = json.loads((LOGICAL / "definitions.json").read_text(encoding="utf8"))["blocks"]
+    by_id = {definition["id"]: definition for definition in all_definitions}
+    missing = set(contracts) - set(by_id)
+    if missing:
+        raise ValueError("contract definitions missing: " + ", ".join(sorted(missing)))
+    return [by_id[ident] for ident in sorted(contracts)]
+
+
+def hidden_compatibility_ids(definitions: Iterable[dict], visible: Iterable[dict]) -> list[str]:
+    visible_ids = {definition["id"] for definition in visible}
+    return sorted(definition["id"] for definition in definitions if definition["id"] not in visible_ids)
+
+
+def level_name(scope: str) -> str:
+    return "Bloodborne NightmareRunning " + ("all-visible" if scope == ALL_VISIBLE_SCOPE else scope) + " gallery"
+
+
+def specimens_for_scope(scope: str) -> tuple[list[dict[str, Any]], list[dict], dict[str, dict]]:
+    """Build expected placements from the selected scope, never gallery metadata."""
+    visible, geometry, meshes, contracts = _load()
+    definitions = definitions_for_scope(scope, visible, contracts)
+    hidden_ids = set(hidden_compatibility_ids(definitions, visible))
     specimens: list[dict[str, Any]] = []
     for definition in definitions:
-        for state, properties, purpose in specimen_states(definition):
+        state_rows = (specimen_states(definition) if scope == ALL_VISIBLE_SCOPE else
+                      [(state, dict(part.split("=", 1) for part in state.split(",") if part), "contract_state")
+                       for state in sorted(definition["states"])])
+        for state, properties, purpose in state_rows:
             mesh_id = definition["models"].get(state)
             if mesh_id is None:
                 raise ValueError(f'{definition["id"]} lacks model for {state}')
+            footprint = geometry_cells(definition["id"], state, contracts, geometry)
+            render = contracts.get(definition["id"], {}).get("states", {}).get(state, {}).get("render_mesh")
+            bounds = rendered_mesh_bounds(meshes[mesh_id], render) if render else mesh_bounds(meshes[mesh_id])
+            if render and contracts[definition["id"]]["placement_policy"] == "FLOOR":
+                if any(cell[1] < 0 for cell in footprint):
+                    raise ValueError("FLOOR helper below root: " + definition["id"] + " " + state)
+                if bounds[1] < -EPSILON:
+                    raise ValueError("FLOOR render below support plane: " + definition["id"] + " " + state)
             specimens.append({"id": definition["id"], "review_id": _review_id(definition["id"], contracts),
                               "state": state, "properties": properties, "purpose": purpose,
-                              "bounds": mesh_bounds(meshes[mesh_id]),
-                              "footprint": geometry_cells(definition["id"], state, contracts, geometry)})
-    for definition, state, properties, purpose in visual_proof_states(definitions):
+                              "bounds": bounds, "footprint": footprint,
+                              "hidden_compatibility": definition["id"] in hidden_ids})
+    for definition, state, properties, purpose in visual_proof_states(visible):
         mesh_id = definition["models"][state]
+        render = contracts.get(definition["id"], {}).get("states", {}).get(state, {}).get("render_mesh")
         specimens.append({"id": definition["id"], "review_id": _review_id(definition["id"], contracts),
                           "state": state, "properties": properties, "purpose": purpose,
-                          "bounds": mesh_bounds(meshes[mesh_id]),
-                          "footprint": geometry_cells(definition["id"], state, contracts, geometry)})
+                          "bounds": rendered_mesh_bounds(meshes[mesh_id], render) if render else mesh_bounds(meshes[mesh_id]),
+                          "footprint": geometry_cells(definition["id"], state, contracts, geometry),
+                          "hidden_compatibility": definition["id"] in hidden_ids})
+    return specimens, definitions, contracts
+
+
+def build(output: Path = OUTPUT, *, scope: str = ALL_VISIBLE_SCOPE) -> None:
+    """Write a new world only to a nonexistent output directory."""
+    if output.exists():
+        raise FileExistsError("Nightmare gallery output must be fresh: " + str(output))
+    specimens, definitions, contracts = specimens_for_scope(scope)
     plan_positions(specimens)
     # Delayed imports keep synthetic layout tests independent of world I/O.
     from build_reviewed_gallery import platform_block
@@ -230,7 +296,7 @@ def build(output: Path = OUTPUT) -> None:
         positions.append({key: specimen[key] for key in ("id", "review_id", "state", "properties", "purpose", "bounds", "position")}
                          | {"tp": f"/tp @s {origin[0]} {origin[1] + 2} {origin[2]}", "give": f"/give @s {owner}"})
     add_light_pads(cells, specimens, floor)
-    # One readable marker per visible family.  It is deliberately outside the
+    # One readable marker per scoped family.  It is deliberately outside the
     # contract footprint on its own pad, so signs cannot disguise helper bugs.
     markers = []
     for ident in sorted({entry["id"] for entry in positions}):
@@ -241,16 +307,20 @@ def build(output: Path = OUTPUT) -> None:
         if marker is None:
             raise ValueError("gallery marker overlaps logical footprint")
         cells[marker] = ("minecraft:oak_sign", {"rotation": "8", "waterlogged": "false"})
+        marker_label = "hidden compatibility" if specimen["hidden_compatibility"] else "review " + specimen["review_id"]
         messages = [json.dumps({"text": text}, ensure_ascii=False, separators=(",", ":"))
-                    for text in (ident, "review " + specimen["review_id"], "debug map + /tp", "")]
+                    for text in (ident, marker_label, "debug map + /tp", "")]
         front = Tag(TAG_COMPOUND, {"messages": Tag(TAG_LIST, [Tag(TAG_STRING, text) for text in messages], TAG_STRING),
                                    "color": Tag(TAG_STRING, "black"), "has_glowing_text": Tag(TAG_BYTE, 0)})
         data = {"id": Tag(TAG_STRING, "minecraft:sign"), "front_text": front,
                 "back_text": front, "is_waxed": Tag(TAG_BYTE, 0)}
         data.update({axis: Tag(TAG_INT, value) for axis, value in zip(("x", "y", "z"), marker)})
         entities.append(Tag(TAG_COMPOUND, data))
-        markers.append({"id": ident, "position": marker, "text": [ident, "review " + specimen["review_id"]]})
-    write_fixture(output, cells, block_entities=entities, floor=False, level_name="Bloodborne NightmareRunning all-visible gallery")
+        markers.append({"id": ident, "position": marker, "hidden_compatibility": specimen["hidden_compatibility"],
+                        "text": [ident, marker_label]})
+    write_fixture(output, cells, block_entities=entities, floor=False, level_name=level_name(scope))
+    positions = [position | {"hidden_compatibility": specimen["hidden_compatibility"]}
+                 for position, specimen in zip(positions, specimens)]
     (output / "gallery-positions.json").write_text(json.dumps(positions, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     debug_map = {row["id"]: [entry for entry in positions if entry["id"] == row["id"]] for row in definitions}
     (output / "debug-family-map.json").write_text(json.dumps(debug_map, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
@@ -259,17 +329,24 @@ def build(output: Path = OUTPUT) -> None:
         raise ValueError("gallery must contain all visual BASE/ALT proof specimens")
     (output / "alt-proof-positions.json").write_text(json.dumps(alt_proof, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     (output / "gallery-markers.json").write_text(json.dumps(markers, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+    hidden_ids = hidden_compatibility_ids(definitions, _load()[0])
+    (output / "gallery-scope.json").write_text(json.dumps({"schema_version": 1, "scope": scope,
+        "family_ids": [definition["id"] for definition in definitions], "hidden_compatibility_family_ids": hidden_ids},
+        ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     (output / "README.txt").write_text(
-        f"Synthetic NightmareRunning gallery: {len(definitions)} visible logical families, {len(positions)} specimens.\n"
+        f"Synthetic NightmareRunning gallery ({scope}): {len(definitions)} logical families, {len(positions)} specimens.\n"
+        f"Hidden compatibility families: {len(hidden_ids)} ({', '.join(hidden_ids) if hidden_ids else 'none'}).\n"
         f"Each root is fixed at Y={ROOT_Y}; independent {floor} light pads sit at Y={FLOOR_Y}.\n"
         f"Pads are separated by at least {VOID_GAP} blocks of void, not a continuous floor; use gallery-positions.json /tp commands.\n"
-        "Oak-sign family markers name each visible family; gallery-markers.json records their readable text.\n"
+        "Oak-sign family markers name each scoped family; hidden compatibility families are explicitly labelled.\n"
         "Use debug-family-map.json with /bloodborne debug target. alt-proof-positions.json contains three physical BASE/ALT pairs.\n"
         "No city/original world data was read or changed.\n", encoding="utf8")
-    print(f"{output}: {len(definitions)} visible families, {len(positions)} specimens")
+    print(f"{output}: {scope}, {len(definitions)} families, {len(positions)} specimens")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=OUTPUT)
-    build(parser.parse_args().output)
+    parser.add_argument("--contract-only", action="store_true", help="include every Contract V2 state, including hidden compatibility families")
+    args = parser.parse_args()
+    build(args.output, scope=CONTRACT_V2_SCOPE if args.contract_only else ALL_VISIBLE_SCOPE)

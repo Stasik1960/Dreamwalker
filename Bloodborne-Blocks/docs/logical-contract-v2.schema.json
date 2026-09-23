@@ -51,7 +51,17 @@
         "matching_evidence": {"type": "string"},
         "review_source_pattern": {"$ref": "#/$defs/pattern"},
         "source_visual": {"type": "object", "required": ["translation"], "additionalProperties": false, "properties": {"translation": {"$ref": "#/$defs/point"}, "placement_height": {"enum": ["manual","source_height"]}, "pack_application_y": {"enum": [0,90,180,270]}, "canonical_yaw": {"enum": [0,90,180,270]}}},
-        "variant_guards": {"type": "array", "items": {"$ref": "#/$defs/variant_guard"}}
+        "variant_guards": {"type": "array", "items": {"$ref": "#/$defs/variant_guard"}},
+        "split_transaction": {
+          "type": "object", "additionalProperties": false, "required": ["id", "outputs"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1, "maxLength": 128},
+            "outputs": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {
+              "type": "object", "additionalProperties": false, "required": ["family", "root_offset"],
+              "properties": {"family": {"type": "string", "minLength": 1}, "root_offset": {"$ref": "#/$defs/cell"}}
+            }}
+          }
+        }
       }
     },
     "state": {
@@ -72,13 +82,27 @@
       "properties": {
         "id": {"type": "string", "pattern": "^o_[a-z0-9_]+$"},
         "review_id": {"type": "string"},
+        "review_ids": {"type": "array", "items": {"type": "string"}},
+        "compiler_owner": {"type": "string"},
+        "migration_disabled": {"type": "boolean"},
+        "selection_policy": {"type": "string"},
         "authority": {"const": "user"},
         "canonical_anchor": {"type": "object", "required": ["cell", "pivot"], "additionalProperties": false, "properties": {"cell": {"$ref": "#/$defs/cell"}, "pivot": {"const": [0.5,0,0.5]}}},
         "review_source_patterns": {"type": "array", "items": {"$ref": "#/$defs/pattern"}},
         "placement_policy": {"enum": ["FLOOR", "WALL_ADJACENT"]},
+        "support_plane": {
+          "description": "Canonical-north inward plane n dot p = distance, rotated about the canonical pivot. FLOOR must remain Y=0.",
+          "type": "object", "additionalProperties": false, "required": ["normal", "distance", "reason"],
+          "properties": {
+            "normal": {"enum": [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]},
+            "distance": {"type": "number", "minimum": -64, "maximum": 64},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        },
+        "semantic_kind": {"type": "string", "description": "Optional explicit collision simplifier hint; never inferred from an ID."},
         "rotations": {"const": [0,90,180,270]},
         "mirror_policy": {"const": "ROTATE_ONLY"},
-        "collision_policy": {"enum": ["NONE", "SIMPLE_BOX", "TWO_BOX", "TRUNK", "POST", "FENCE", "WALL", "DOOR", "GATE", "STAIRS"]},
+        "collision_policy": {"enum": ["NONE", "SIMPLE_BOX", "TWO_BOX", "THREE_BOX", "TRUNK", "POST", "FENCE", "WALL", "DOOR", "GATE", "STAIRS"]},
         "collision_justification": {"type": "string", "minLength": 1},
         "states": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/state"}}
       }

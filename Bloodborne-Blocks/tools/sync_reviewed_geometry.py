@@ -19,7 +19,9 @@ def profile(family):
                     if all(clipped[i]<clipped[i+3] for i in range(3)):boxes.append(clipped)
                 data[kind]=boxes
             cells[','.join(map(str,cell))]=data
-        result[key]={'cells':cells,'anchor':family['canonical_anchor']['cell']}
+        result[key]={'cells':cells,'anchor':family['canonical_anchor']['cell'],
+                     'render_offset':state['render_mesh']['offset'],
+                     'globalOutline':state['selection_footprint']['boxes'][0]}
     return {'states':result}
 
 

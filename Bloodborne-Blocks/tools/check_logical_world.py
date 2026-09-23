@@ -87,7 +87,7 @@ def explicitly_supersedes(large, small):
             small["rule"].target[0] in large["rule"].supersedes_targets and
             small["rule"].target != large["rule"].target and
             small["source"] < large["source"] and
-            small["touched"] <= large["touched"])
+            (small["source"] | small["existing_helpers"]) <= large["touched"])
 
 
 def proved_helpers(before, dim, origin, root, rule, pieces, owned):
@@ -185,6 +185,7 @@ def independently_accepted_effects(before, rules, old_entities, owned):
         if valid:
             key = effect_key(dim, source, touched, writes)
             effects[key] = {"rule": rule, "dimension": dim, "source": source,
+                            "existing_helpers": helpers,
                             "touched": touched, "key": key, "rejected": False,
                             "superseded": False}
     proposals = list(effects.values())

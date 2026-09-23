@@ -11,7 +11,7 @@ import json
 import math
 from pathlib import Path
 
-BUDGETS = {"NONE": 0, "SIMPLE_BOX": 1, "TWO_BOX": 2, "TRUNK": 2,
+BUDGETS = {"NONE": 0, "SIMPLE_BOX": 1, "TWO_BOX": 2, "THREE_BOX": 3, "TRUNK": 2,
            "POST": 1, "FENCE": 5, "WALL": 5, "DOOR": 2, "GATE": 2, "STAIRS": 3}
 MATRICES = {"0": [[1,0,0],[0,1,0],[0,0,1]], "90": [[0,0,-1],[0,1,0],[1,0,0]],
             "180": [[-1,0,0],[0,1,0],[0,0,-1]], "270": [[0,0,1],[0,1,0],[-1,0,0]]}
@@ -88,7 +88,7 @@ def load_contracts(resources):
             raise ValueError("unsupported placement policy")
         policy = family["collision_policy"]
         budget = BUDGETS[policy]
-        if policy in ("TRUNK", "STAIRS", "TWO_BOX") and not family.get("collision_justification"):
+        if policy in ("TRUNK", "STAIRS", "TWO_BOX", "THREE_BOX") and not family.get("collision_justification"):
             raise ValueError("multiple primitive policy needs justification")
         if set(family["states"]) != set(definitions[ident]["states"]):
             raise ValueError("contract must describe all existing family states")
@@ -106,6 +106,11 @@ def load_contracts(resources):
             cells = [cell(c) for c in state["interaction_footprint"]["cells"]]
             if len(cells) != len(set(cells)) or (0,0,0) not in cells or len(cells)>512:
                 raise ValueError("invalid explicit interaction footprint")
+            if family['placement_policy']=='FLOOR':
+                if any(c[1]<0 for c in cells):
+                    raise ValueError('GROUND_OBJECT_HAS_HELPER_BELOW_ANCHOR: '+ident)
+                if render['bounds'][1]+render['offset'][1] < -1e-6:
+                    raise ValueError('RENDER_BELOW_SUPPORT_PLANE: '+ident)
             if any(not box_cells(b) <= set(cells) for b in collision):
                 raise ValueError("collision outside explicit interaction footprint")
             for pattern in state["migration_source_pattern"]:

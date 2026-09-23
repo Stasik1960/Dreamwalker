@@ -162,6 +162,10 @@ def build():
     if had_visual_slots:
         from build_visual_slots import build as restore_visual_slots
         restore_visual_slots()
+    # The public regeneration entry point must return the same finalized data
+    # as Gradle, including canonical serialization and support/collision gates.
+    from normalize_support_contracts import run as normalize_support
+    normalize_support(LOGICAL, apply=True)
 
 
 if __name__ == '__main__':

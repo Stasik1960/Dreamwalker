@@ -3,8 +3,10 @@ from __future__ import annotations
 
 import unittest
 
-from build_nightmare_gallery import (FLOOR_Y, ROOT_Y, VISUAL_PROOF_IDS, add_light_pads,
-                                     geometry_cells, plan_positions, specimen_states,
+from build_nightmare_gallery import (ALL_VISIBLE_SCOPE, CONTRACT_V2_SCOPE, FLOOR_Y, ROOT_Y, VISUAL_PROOF_IDS,
+                                     _horizontal_extent, _load, add_light_pads, definitions_for_scope, geometry_cells,
+                                     hidden_compatibility_ids, level_name,
+                                     plan_positions, rendered_mesh_bounds, specimen_states, specimens_for_scope,
                                      visible_definitions, visual_proof_states)
 
 
@@ -43,7 +45,8 @@ class NightmareGalleryTests(unittest.TestCase):
         self.assertEqual(geometry_cells("old", "", contracts, geometry), [(0, -1, 0)])
 
     def test_sparse_layout_keeps_fixed_root_height_and_void_gap(self):
-        rows = [{"id": "a", "bounds": (-2.2, -4, -1.2, 3.1, 9, 2.2)}, {"id": "b", "bounds": (0, 0, 0, 1, 1, 1)}]
+        rows = [{"id": "a", "bounds": (-2.2, -4, -1.2, 3.1, 9, 2.2), "footprint": [(0, 0, 0), (5, 0, 0)]},
+                {"id": "b", "bounds": (0, 0, 0, 1, 1, 1), "footprint": [(0, 0, 0)]}]
         plan_positions(rows, gap=7, columns=1)
         self.assertTrue(all(row["position"][1] == ROOT_Y for row in rows))
         self.assertGreater(rows[1]["pad"][1], rows[0]["pad"][3] + 6)
@@ -51,6 +54,33 @@ class NightmareGalleryTests(unittest.TestCase):
         add_light_pads(cells, rows, "minecraft:white_concrete")
         self.assertTrue(cells)
         self.assertEqual({point[1] for point in cells}, {FLOOR_Y})
+        low_x, low_z, high_x, high_z = _horizontal_extent(rows[0]["bounds"], rows[0]["footprint"])
+        self.assertGreaterEqual(rows[0]["position"][0] + low_x, rows[0]["pad"][0])
+        self.assertLessEqual(rows[0]["position"][0] + high_x, rows[0]["pad"][2])
+
+    def test_rendered_bounds_apply_contract_offset_once(self):
+        mesh = {"polygons": [{"vertices": [[0, -1, 0], [1, 2, 1]]}]}
+        self.assertEqual(rendered_mesh_bounds(mesh, {"offset": [2, 1, -3]}), (2, 0, -3, 3, 3, -2))
+
+    def test_contract_scope_includes_every_contract_state_and_hidden_family(self):
+        specimens, definitions, contracts = specimens_for_scope(CONTRACT_V2_SCOPE)
+        self.assertEqual({row["id"] for row in definitions}, set(contracts))
+        self.assertTrue({"o_c001_a", "o_c009_b", "o_dead_tree_planter"} <= {row["id"] for row in definitions})
+        self.assertEqual(sum(len(row["states"]) for row in contracts.values()) + len(VISUAL_PROOF_IDS) * 2, len(specimens))
+        self.assertTrue(all(row["purpose"] == "contract_state" for row in specimens[:-len(VISUAL_PROOF_IDS) * 2]))
+        for specimen in specimens:
+            family = contracts.get(specimen["id"])
+            if family and family["placement_policy"] == "FLOOR":
+                self.assertTrue(all(cell[1] >= 0 for cell in specimen["footprint"]))
+                self.assertGreaterEqual(specimen["bounds"][1], -1e-6)
+        hidden = set(hidden_compatibility_ids(definitions, _load()[0]))
+        self.assertTrue(hidden)
+        self.assertTrue(all(row["hidden_compatibility"] == (row["id"] in hidden) for row in specimens))
+
+    def test_scope_selector_preserves_all_visible_default(self):
+        visible, _geometry, _meshes, contracts = _load()
+        self.assertEqual(definitions_for_scope(ALL_VISIBLE_SCOPE, visible, contracts), visible)
+        self.assertEqual(level_name(ALL_VISIBLE_SCOPE), "Bloodborne NightmareRunning all-visible gallery")
 
     def test_gallery_matches_manual_item_placement_overrides(self):
         row = {"id": "o_shuttered_window", "default": {"embedded": "true"},

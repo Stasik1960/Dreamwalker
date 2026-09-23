@@ -12,7 +12,7 @@ from pathlib import Path
 
 from check_logical_world import check, validate_ledger
 from convert_logical_world import (AIR_NAME, PART, Candidate, Expected, Rule, World,
-                                   block_pos_long, convert, parse_rules, reject_overlaps,
+                                   block_pos_long, candidates, convert, parse_rules, reject_overlaps,
                                    state_tag)
 from world_io import (TAG_BYTE, TAG_COMPOUND, TAG_INT, TAG_LIST, TAG_LONG,
                       TAG_STRING, NbtFile, RegionFile, Tag, compound, write_nbt)
@@ -288,6 +288,101 @@ def overlap_scalability_case():
     assert all(item.reason is None for item in items)
 
 
+def normalized_fallback_case():
+    """A discarded fallback's future helper is not part of the existing source."""
+    large_target, small_target = ("bloodborne_blocks:o_whole", ()), ("bloodborne_blocks:o_fragment", ())
+    root, member, future = (0,64,0), (3,64,0), (3,65,0)
+    source = Expected((0,0,0), ("minecraft:stone", ()))
+    def fixtures(declared=True, stale=False):
+        large_rule = Rule(0, source, large_target, (0,0,0), (), None, frozenset({(0,0,0)}),
+                          frozenset({small_target[0]}) if declared else frozenset())
+        small_rule = Rule(1, source, small_target, (0,0,0), (), None, frozenset({(0,0,0),(0,1,0)}))
+        large = Candidate(large_rule,"legacy","minecraft:overworld",root,{root,member},root,{root:large_target})
+        small = Candidate(small_rule,"legacy","minecraft:overworld",member,{member},member,
+                          {member:small_target,future:(PART,())},stale={future} if stale else set())
+        return large, small
+    large, small = fixtures()
+    reject_overlaps([large,small])
+    assert large.reason is None and small.reason == 'superseded_by_complete_assembly'
+    assert future not in large.touched and future not in large.writes, 'discarded helper must not be emitted'
+    for declared, stale in ((False,False),(True,True)):
+        large, small = fixtures(declared,stale)
+        reject_overlaps([large,small])
+        assert large.reason == small.reason == 'ambiguous_overlap_or_double_consumption'
+    large, small = fixtures()
+    small.existing_helpers.add(future)  # Existing helper reused by fallback, not classified as stale.
+    reject_overlaps([large,small])
+    assert large.reason == small.reason == 'ambiguous_overlap_or_double_consumption'
+    large, small = fixtures()
+    large.reason = 'target_would_overwrite_foreign_block'
+    reject_overlaps([large,small])
+    assert small.reason is None, 'rejected assembly must not suppress a valid fallback'
+    large, small = fixtures()
+    helper_only_rule = Rule(2, source, ("bloodborne_blocks:o_blocker", ()), (0,0,0), (), None,
+                            frozenset({(0,0,0)}))
+    helper_only = Candidate(helper_only_rule, "legacy", "minecraft:overworld", future, {future}, future,
+                            {future: helper_only_rule.target})
+    reject_overlaps([large, small, helper_only])
+    assert large.reason is None
+    assert small.reason == helper_only.reason == 'ambiguous_overlap_or_double_consumption'
+
+
+def existing_fallback_helper_case(base, res):
+    """An owned fallback helper outside an assembly blocks supersession."""
+    reports = base / "existing-helper-reports"
+    reports.mkdir()
+    fixture_resources = base / "existing-helper-resources"
+    shutil.copytree(res, fixture_resources)
+    geometry = json.loads((fixture_resources / "geometry.json").read_text(encoding="utf-8"))
+    geometry["blocks"]["o_raw_iron_block"]["states"][""]["cells"]["0,1,0"] = {}
+    (fixture_resources / "geometry.json").write_text(json.dumps(geometry), encoding="utf-8")
+    source = base / "existing-helper-source"
+    helper = (3, 65, 0)
+    assembly_source(source, {
+        (0, 64, 0): ("bloodborne_blocks:coal", {}),
+        (3, 64, 0): ("bloodborne_blocks:raw_iron", {}),
+        (6, 64, 0): ("bloodborne_blocks:raw_copper", {}),
+        helper: (PART, {}),
+    }, [entity(helper, PART, Owner=Tag(TAG_STRING, "bloodborne_blocks:o_raw_iron_block"),
+               Root=Tag(TAG_LONG, block_pos_long(3, 64, 0)))])
+    before = tree_hash(source)
+    rules, defaults = parse_rules(fixture_resources)
+    items, _, _ = candidates(World(source, defaults), rules)
+    iron = next(item for item in items if item.rule.target[0] == "bloodborne_blocks:o_raw_iron_block")
+    assert iron.existing_helpers == {helper}, iron
+    output = base / "existing-helper-output"
+    report = converted(source, output, fixture_resources, reports / "result.json", reports)
+    assert report["counts"]["converted"] == 2, report
+    assert any(item["reason"] == "ambiguous_overlap_or_double_consumption" and item["origin"] == [3, 64, 0]
+               for item in report["rejected"]), report
+    converted_world = World(output, defaults)
+    assert converted_world.get("minecraft:overworld", (3, 64, 0)) == ("bloodborne_blocks:raw_iron", ())
+    assert converted_world.get("minecraft:overworld", (0, 64, 0))[0] != "bloodborne_blocks:o_toothed_spire"
+    assert converted_world.get("minecraft:overworld", helper) == (PART, ())
+    assert converted_world.block_entities()[("minecraft:overworld", *helper)] == World(source, defaults).block_entities()[("minecraft:overworld", *helper)]
+    assert tree_hash(source) == before, "conversion modified its original world"
+    check(source, output, reports / "result.json", fixture_resources)
+
+
+def third_candidate_conflict_case():
+    """A conflicting third candidate prevents an assembly from suppressing its fallback."""
+    source = Expected((0, 0, 0), ("minecraft:stone", ()))
+    large_target, small_target, blocker_target = (("bloodborne_blocks:o_whole", ()),
+                                                   ("bloodborne_blocks:o_fragment", ()),
+                                                   ("bloodborne_blocks:o_blocker", ()))
+    root, member = (0, 64, 0), (3, 64, 0)
+    large_rule = Rule(0, source, large_target, (0, 0, 0), (), None, frozenset({(0, 0, 0)}),
+                      frozenset({small_target[0]}))
+    small_rule = Rule(1, source, small_target, (0, 0, 0), (), None, frozenset({(0, 0, 0)}))
+    blocker_rule = Rule(2, source, blocker_target, (0, 0, 0), (), None, frozenset({(0, 0, 0)}))
+    large = Candidate(large_rule, "legacy", "minecraft:overworld", root, {root, member}, root, {root: large_target})
+    small = Candidate(small_rule, "legacy", "minecraft:overworld", member, {member}, member, {member: small_target})
+    blocker = Candidate(blocker_rule, "legacy", "minecraft:overworld", root, {root}, root, {root: blocker_target})
+    reject_overlaps([large, small, blocker])
+    assert large.reason == blocker.reason == "ambiguous_overlap_or_double_consumption"
+    assert small.reason is None, "a rejected assembly must not suppress its fallback"
+
+
 def main():
     with tempfile.TemporaryDirectory(prefix="logical-test-") as temporary:
         base = Path(temporary)
@@ -488,6 +583,9 @@ def main():
         assembly_cases(base, res)
         statue_like_cases(base, res)
         overlap_scalability_case()
+        normalized_fallback_case()
+        existing_fallback_helper_case(base, res)
+        third_candidate_conflict_case()
         print(json.dumps({"ok": True, "converted": report["counts"]["converted"], "rejected": report["counts"]["rejected"], "dimensions": 2}))
 
 

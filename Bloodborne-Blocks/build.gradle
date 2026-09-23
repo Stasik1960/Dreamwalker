@@ -106,11 +106,23 @@ tasks.register('logicalVisualModelsCheck', JavaExec) {
 tasks.named('check') { dependsOn 'logicalVisualModelsCheck' }
 tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck', 'logicalContractV2Check' }
 
+// All present/future Contract V2 output passes the same offline support gate.
+// Runtime consumes precomputed transforms/shapes; no tick/frame mesh analysis.
+tasks.register('normalizeSupportContracts', Exec) {
+ group = 'generation'
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/normalize_support_contracts.py', '--write', '--report', 'docs/support-normalization-audit.json'
+}
+tasks.named('processResources') { dependsOn 'normalizeSupportContracts' }
+tasks.named('check') { dependsOn 'normalizeSupportContracts' }
+tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
+
 // Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
 // These tests need numpy (same dependency as the existing world converter).
-['test_region_padding', 'test_contract_v2', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng', 'test_reviewed_migration', 'test_reviewed_source_examples', 'test_fixture_level_metadata', 'test_reviewed_gallery', 'test_qa2_trees', 'test_qa2_checkpoint', 'check_contract_orientation', 'check_logical_resources', 'test_split_transactions','test_old_logical_migrations','test_build_nightmare_contracts','test_nightmare_geometry_recipes','test_nightmare_functional_recipes','test_nightmare_composition_recipes','test_visual_slots','test_export_alt_visual_starter','test_nightmare_gallery'].each { testName ->
+['test_region_padding', 'test_contract_v2', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng', 'test_reviewed_migration', 'test_reviewed_source_examples', 'test_fixture_level_metadata', 'test_reviewed_gallery', 'test_qa2_trees', 'test_qa2_checkpoint', 'check_contract_orientation', 'check_logical_resources', 'test_split_transactions','test_old_logical_migrations','test_build_nightmare_contracts','test_nightmare_geometry_recipes','test_nightmare_functional_recipes','test_nightmare_composition_recipes','test_visual_slots','test_export_alt_visual_starter','test_nightmare_gallery','test_support_collision','test_support_normalization'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
+  dependsOn 'normalizeSupportContracts'
   commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${testName}.py"
  }
  tasks.named('check') { dependsOn testName }

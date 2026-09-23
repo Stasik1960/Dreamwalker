@@ -1,0 +1,64 @@
+{
+  "result": "PASS",
+  "scope": "artifact verification, not client visual acceptance or city conversion",
+  "normalization": {
+    "ambiguous_mount_families": 4,
+    "automatically_corrected_families": 13,
+    "below_support_families": 13,
+    "fail_families": 0,
+    "families": 47,
+    "families_with_helpers_below": 0,
+    "families_with_old_helpers_below": 2,
+    "ground_families": 43,
+    "max_ordinary_collision_boxes": 2,
+    "new_collision_boxes": 1020,
+    "old_collision_boxes": 1020,
+    "states": 740
+  },
+  "game_tests": 28,
+  "orientation_checks": 2960,
+  "source_examples": {
+    "passed": 20,
+    "blocked": 8
+  },
+  "tree_checks": 18,
+  "packaged_resources": {
+    "ok": true,
+    "version": "2.1.0-alpha.1",
+    "resources": 195798,
+    "loomMixinConfigs": [
+      "bloodborne_blocks.mixins.json"
+    ],
+    "manifestSha256": "4d1c4b86348e366478563e59c1504d6ed64591bbeaa7be1a482467fa5b5d43e6",
+    "jarSha256": "57b3cdb1b2a8279f2c5e3332cbb0cf788ba7d286d7c55d1d3059cb465bb89f50"
+  },
+  "gallery": {
+    "scope": "contract_v2",
+    "legacy_scope_metadata": false,
+    "families": 47,
+    "master_states": 746,
+    "helpers": 3144,
+    "floor_specimens": 704,
+    "verified_platform_cells": 7778,
+    "floor_platform": "PASS",
+    "visual_proofs": 6,
+    "level_metadata": "PASS",
+    "helper_ownership": "PASS",
+    "client_visual": "NOT_PERFORMED"
+  },
+  "client_bake_reload": "NOT_PERFORMED",
+  "client_visual_acceptance": "NOT_PERFORMED",
+  "full_city_conversion": false,
+  "files": {
+    "bloodborne-blocks-2.1.0-alpha.1-support-normalization-mc1.20.1.jar": {
+      "bytes": 97371528,
+      "sha256": "57b3cdb1b2a8279f2c5e3332cbb0cf788ba7d286d7c55d1d3059cb465bb89f50",
+      "git_lfs_required": false
+    },
+    "support-plane-gallery-20260924.zip": {
+      "bytes": 497219,
+      "sha256": "41d1acea131ce5e428f3c3c5a64fa387c446ea7ba1056c97b06fea8a39e66479",
+      "git_lfs_required": false
+    }
+  }
+}

@@ -1,6 +1,44 @@
 # Bloodborne-Blocks — актуальный handoff, 2026-09-24
 
-## Текущий checkpoint: NightmareRunning QA + BASE/ALT
+## Текущий checkpoint: общая support-plane нормализация Contract V2
+
+Добавлен общий generation/build-time проход, без исключений по C-ID:
+`tools/normalize_support_contracts.py`. Проверяются все **47 V2 families /
+740 состояний**, включая BASE/ALT и скрытые совместимые версии. Это не
+нормализация остальных 251 non-V2 logical families и не batch-03.
+
+- 13 families имели mesh ниже пола; все 13 автоматически подняты (3 доступные,
+  10 скрытых совместимых). Master, raw mesh и migration source patterns сохранены.
+- У `o_dead_tree_planter` и `o_iron_gate` были helpers ниже опоры; новые
+  footprints их не требуют. Старые лишние helpers удаляются существующей
+  очередью проверки ownership при загрузке; неизвестные прежние блоки пола
+  автоматически не восстанавливаются.
+- Коллизии уже были простыми: **1020 → 1020** global primitives по всем
+  состояниям; обычный декор максимум **2**. Новый консервативный fallback
+  проверяет основную массу, ограничен тремя boxes и не копирует render cells.
+- Четыре wall-family без точной mount plane оставлены неизменными:
+  `o_c654`, `o_wall_deco_1`, `o_c654_a`, `o_c654_b`. Отдельное предупреждение
+  о collision/render volume у функциональной `o_c282_b`; gameplay не изменён.
+- Новый мир: `build/support-gallery-saves/support-plane-gallery-20260924` —
+  746 образцов, включая все 740 V2 states; скрытые версии подписаны отдельно.
+  Проверены 704 FLOOR specimens и 7778 цельных белых клеток опоры.
+- `check build`: **BUILD SUCCESSFUL**, 106 Python unit tests и data/Java QA.
+  Dedicated GameTests: **28/28**; orientation: **2960** checks. В готовом JAR
+  проверены все **195798** resources, классы, refmap и CRC. Новый мир принят
+  штатным LevelStorage 1.20.1; это не визуальная приёмка клиентом.
+
+Описание и ограничения: [SUPPORT-NORMALIZATION.md](docs/SUPPORT-NORMALIZATION.md).
+Полный audit: [JSON](docs/support-normalization-audit.json) /
+[Markdown](docs/support-normalization-audit.md). Данные до нормализации сохранены
+в `docs/support-normalization-baseline.json.gz` для воспроизводимой проверки.
+Новые артефакты: [Support-Normalization](../releases/Bloodborne-Blocks/Support-Normalization/).
+Команды и итог QA: [support-checks](docs/support-checks/README.md).
+
+Оригинальная карта не изменена, весь город не конвертировался. Старая галерея
+и прежний JAR сохранены. Нужна последующая визуальная приёмка нового мира
+клиентом; серверные тесты и LevelStorage её не заменяют.
+
+## История: NightmareRunning QA + BASE/ALT
 
 Продолжение QA2 по пятнадцати скриншотам NightmareRunning. Не новый discovery
 и не batch-03. Модели/семантические границы исправлены, накоплен один новый JAR;

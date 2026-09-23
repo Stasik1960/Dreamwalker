@@ -30,21 +30,12 @@ def sha256(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def expected_specimens() -> tuple[list[dict], list[dict], dict[str, dict]]:
-    definitions, geometry, _meshes, contracts = gallery._load()
-    visible = {row["id"]: row for row in definitions}
-    specimens: list[dict] = []
-    for definition in definitions:
-        for state, properties, purpose in gallery.specimen_states(definition):
-            specimens.append({"id": definition["id"], "state": state, "properties": properties,
-                              "purpose": purpose,
-                              "footprint": gallery.geometry_cells(definition["id"], state, contracts, geometry)})
-    for definition, state, properties, purpose in gallery.visual_proof_states(definitions):
-        specimens.append({"id": definition["id"], "state": state, "properties": properties,
-                          "purpose": purpose,
-                          "footprint": gallery.geometry_cells(definition["id"], state, contracts, geometry)})
-    require(len(specimens) == MASTER_STATES, f"generator expectation is {len(specimens)}, not {MASTER_STATES} master states")
-    return specimens, definitions, visible
+def expected_specimens(scope: str) -> tuple[list[dict], list[dict], dict[str, dict]]:
+    specimens, definitions, contracts = gallery.specimens_for_scope(scope)
+    if scope == gallery.ALL_VISIBLE_SCOPE:
+        require(len(specimens) == MASTER_STATES,
+                f"generator expectation is {len(specimens)}, not {MASTER_STATES} master states")
+    return specimens, definitions, contracts
 
 
 def verify(world_path: Path) -> dict:
@@ -53,28 +44,56 @@ def verify(world_path: Path) -> dict:
     forbidden = [path.relative_to(world_path).as_posix() for path in world_path.rglob("*")
                  if path.is_file() and (path.name == "session.lock" or FORBIDDEN_PARTS & set(path.relative_to(world_path).parts))]
     require(not forbidden, "gallery contains forbidden runtime data: " + ", ".join(sorted(forbidden)))
-    expected, definitions, visible = expected_specimens()
     positions_path = world_path / "gallery-positions.json"
     proof_path = world_path / "alt-proof-positions.json"
+    scope_path = world_path / "gallery-scope.json"
     require(positions_path.is_file() and proof_path.is_file(), "gallery metadata files are required")
+    legacy = not scope_path.is_file()
+    if legacy:
+        scope_metadata = {"scope": gallery.ALL_VISIBLE_SCOPE}
+    else:
+        scope_metadata = json.loads(scope_path.read_text(encoding="utf8"))
+        require(isinstance(scope_metadata, dict) and scope_metadata.get("schema_version") == 1 and
+                scope_metadata.get("scope") in gallery.SCOPES and isinstance(scope_metadata.get("family_ids"), list) and
+                isinstance(scope_metadata.get("hidden_compatibility_family_ids"), list),
+                "invalid gallery scope metadata")
+    scope = scope_metadata["scope"]
+    expected, definitions, contracts = expected_specimens(scope)
+    expected_ids = [row["id"] for row in definitions]
+    if not legacy:
+        require(scope_metadata["family_ids"] == expected_ids and
+                scope_metadata["hidden_compatibility_family_ids"] == gallery.hidden_compatibility_ids(definitions, gallery._load()[0]),
+                "gallery scope family set differs from current definitions")
     positions = json.loads(positions_path.read_text(encoding="utf8"))
-    require(isinstance(positions, list) and len(positions) == MASTER_STATES, "gallery must list every 1160 master state")
+    require(isinstance(positions, list), "gallery positions must be a list")
+    if scope == gallery.ALL_VISIBLE_SCOPE:
+        require(len(positions) == MASTER_STATES, "all-visible gallery must list every 1160 master state")
+    # Older metadata lacks only the scope/hidden label, not physical QA. Never
+    # skip world-cell/ownership checks and then report a fictitious PASS.
     require(len(expected) == len(positions), "generator and gallery master counts differ")
-    expected_keys = Counter((row["id"], row["state"], row["purpose"], tuple(sorted(row["properties"].items()))) for row in expected)
-    actual_keys = Counter((row.get("id"), row.get("state"), row.get("purpose"), tuple(sorted(row.get("properties", {}).items()))) for row in positions)
+    expected_keys = Counter((row["id"], row["state"], row["purpose"], tuple(sorted(row["properties"].items())), row["hidden_compatibility"])
+                            for row in expected)
+    actual_keys = Counter((row.get("id"), row.get("state"), row.get("purpose"), tuple(sorted(row.get("properties", {}).items())),
+                           row.get("hidden_compatibility", False if legacy else None)) for row in positions)
     require(actual_keys == expected_keys, "gallery state/purpose records differ from the current generator")
-    require({row["id"] for row in positions} == set(visible), "gallery visible-family set differs from current definitions")
+    require({row["id"] for row in positions} == set(expected_ids), "gallery family set differs from current scope")
 
     defaults = {"bloodborne_blocks:" + row["id"]: row["default"] for row in definitions}
+    floor = platform_block()  # Source/mapping audit is expensive; resolve once, not per floor cell.
     world = World(world_path, defaults)
     entities = world.block_entities()
-    helpers = 0
+    helpers = floor_specimens = platform_cells = 0
+    roots = set()
     for position, specimen in zip(positions, expected):
         require((position["id"], position["state"], position["purpose"], position["properties"]) ==
                 (specimen["id"], specimen["state"], specimen["purpose"], specimen["properties"]),
                 "gallery metadata order differs from generator")
         root = tuple(position.get("position", ()))
         require(len(root) == 3 and all(isinstance(value, int) for value in root), "invalid master position")
+        require(root[1] == gallery.ROOT_Y and root not in roots, "shifted or duplicate gallery master")
+        roots.add(root)
+        if not legacy:
+            require(tuple(position.get("bounds", ())) == tuple(specimen["bounds"]), "stale gallery render bounds")
         name, properties = world.get(DIMENSION, root) or (None, ())
         require(name == "bloodborne_blocks:" + specimen["id"] and dict(properties) == specimen["properties"],
                 f"master state mismatch at {root}")
@@ -90,6 +109,14 @@ def verify(world_path: Path) -> dict:
                     data["Owner"].value == name and data["Root"].value == block_pos_long(*root),
                     f"helper ownership mismatch at {point}")
             helpers += 1
+        if scope == gallery.CONTRACT_V2_SCOPE and contracts[specimen["id"]]["placement_policy"] == "FLOOR":
+            floor_specimens += 1
+            low_x, low_z, high_x, high_z = gallery._horizontal_extent(specimen["bounds"], specimen["footprint"])
+            for x in range(root[0] + low_x, root[0] + high_x + 1):
+                for z in range(root[2] + low_z, root[2] + high_z + 1):
+                    require((world.get(DIMENSION, (x, gallery.FLOOR_Y, z)) or (None, ()))[0] == floor,
+                            f"platform does not cover FLOOR root/helper/render extent at {(x, gallery.FLOOR_Y, z)}")
+                    platform_cells += 1
 
     proof = json.loads(proof_path.read_text(encoding="utf8"))
     proof_rows = [row for row in positions if row["purpose"].startswith("visual_proof_")]
@@ -101,14 +128,16 @@ def verify(world_path: Path) -> dict:
     metadata = read_nbt(world_path / "level.dat")
     validate_level_metadata(metadata)
     level = compound(compound(metadata.root)["Data"])
-    require(level.get("LevelName") is not None and level["LevelName"].value == "Bloodborne NightmareRunning all-visible gallery",
+    require(level.get("LevelName") is not None and level["LevelName"].value == gallery.level_name(scope),
             "unexpected gallery level metadata")
     require(all(key in level for key in ("SpawnX", "SpawnY", "SpawnZ")), "gallery spawn metadata is incomplete")
     spawn = tuple(int(level[key].value) for key in ("SpawnX", "SpawnY", "SpawnZ"))
     require(spawn == (16, 66, 6), "unexpected gallery spawn metadata")
-    require((world.get(DIMENSION, (spawn[0], gallery.FLOOR_Y, spawn[2])) or (None, ()))[0] == platform_block(),
+    require((world.get(DIMENSION, (spawn[0], gallery.FLOOR_Y, spawn[2])) or (None, ()))[0] == floor,
             "spawn pad is not safe at the known gallery floor Y")
-    return {"visible_families": len(visible), "master_states": len(positions), "helpers": helpers,
+    return {"scope": scope, "legacy_scope_metadata": legacy, "families": len(expected_ids), "master_states": len(positions), "helpers": helpers,
+            "floor_specimens": floor_specimens, "verified_platform_cells": platform_cells,
+            "floor_platform": "PASS" if scope == gallery.CONTRACT_V2_SCOPE else "NOT_CHECKED_LEGACY",
             "visual_proofs": len(proof_rows), "level_metadata": "PASS", "helper_ownership": "PASS",
             "client_visual": "NOT_PERFORMED"}
 

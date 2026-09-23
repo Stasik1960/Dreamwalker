@@ -131,12 +131,18 @@ class ContractTests(unittest.TestCase):
         baseline = json.loads((ROOT/"docs/reviewed-batch-02-poc-baseline.json").read_text(encoding="utf-8"))["poc"]
         definitions = {row["id"]: row for row in json.loads((RES/"definitions.json").read_text(encoding="utf-8"))["blocks"]}
         contracts = {row["id"]: row for row in self.data["families"]}
+        # This pass deliberately changes support transforms/interaction shapes,
+        # not original art/source identity. The all-family normalization test
+        # independently checks current == normalize(snapshot), idempotence and
+        # unchanged source identity. Keep the older POC hash as historical proof.
+        with gzip.open(ROOT/'docs/support-normalization-baseline.json.gz', 'rt', encoding='utf8') as stream:
+            pre_support = {row['id']:row for row in json.load(stream)['families']}
         with gzip.open(RES/"meshes.json.gz", "rt", encoding="utf-8") as stream:
             meshes = json.load(stream)
         for ident, expected in baseline.items():
             if ident == "o_wall_deco_1":
                 continue  # explicit reviewed floor correction has its own evidence below
-            definition, contract = visual_base_projection(definitions[ident], contracts[ident])
+            definition, contract = visual_base_projection(definitions[ident], pre_support[ident])
             if ident == "o_iron_railing":
                 definition, contract = railing_north_projection(definition, contract)
             self.assertEqual(canonical_digest(definition), expected["definition"], ident)

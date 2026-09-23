@@ -51,9 +51,13 @@ the same offset/id/properties format as components, for authored multi-model
 assemblies. A missing member must never be invented by world conversion.
 
 Optional `supersedes_targets` explicitly permits a complete matched assembly
-to replace contained fallback matches. Both source and footprint containment
-are checked: the fallback source must be a strict subset, its touched cells
-a subset, the dimension identical, and complete target states different.
+to replace contained fallback matches. The fallback source must be a strict
+subset, the dimension identical, and complete target states different. All
+existing source cells and ownership-proven helpers/debris of the fallback must
+be contained in the assembly's touched cells. Prospective writes of a discarded
+fallback are not existing object parts and do not require containment; they are
+never emitted. Existing helpers remain protected even when the fallback would
+have reused them rather than classified them as stale.
 Only a valid assembly surviving all unrelated overlap conflicts can suppress
 a fallback. Same-ID/different-state matches are supported for the statue.
 Both converter and independent checker index touched positions; disjoint

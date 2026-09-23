@@ -682,6 +682,7 @@ class Candidate:
     output_roots: tuple[tuple[tuple[int, int, int], tuple[str, tuple[tuple[str, str], ...]]], ...] = ()
     stale: set[tuple[int, int, int]] = field(default_factory=set)
     reason: str | None = None
+    existing_helpers: set[tuple[int, int, int]] = field(default_factory=set)
 
     @property
     def touched(self) -> set[tuple[int, int, int]]:
@@ -831,6 +832,8 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             current = world.get(item.dimension, point)
             owner = item.owner_at(point)
             owned = (owner is not None and owned_part(current, entity, owner[0], owner[1])) or point in source_owned
+            if owned and current == (PART, ()):
+                item.existing_helpers.add(point)
             if point in item.writes and point not in item.source and current is not None and current[0] not in AIR_NAMES and not owned:
                 item.reason = "target_would_overwrite_foreign_block"
                 break
@@ -864,11 +867,18 @@ def unresolved_components(items: Iterable[Candidate], found: dict[tuple[str, tup
 
 
 def supersedes(large: Candidate, small: Candidate) -> bool:
-    """Return true only for an explicitly declared, fully-contained fallback."""
+    """Eclipse a declared fallback whose existing source/owned debris is contained.
+
+    Its proposed future helpers need not fit: the fallback will not be placed.
+    Counting those hypothetical cells as existing parts makes a harmless shape
+    normalization disable an otherwise identical approved source assembly.
+    Existing owned stale cells remain protected by the containment requirement.
+    """
     return (large.dimension == small.dimension and
             small.rule.target[0] in large.rule.supersedes_targets and
             small.rule.target != large.rule.target and
-            small.source < large.source and small.touched <= large.touched)
+            small.source < large.source and
+            (small.source | small.stale | small.existing_helpers) <= large.touched)
 
 
 def reject_overlaps(items: list[Candidate], stats: dict[str, int] | None = None) -> None:
