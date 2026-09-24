@@ -15,26 +15,11 @@ public final class ArchitectureBlockItem extends BlockItem {
 
  @Override public ActionResult place(ItemPlacementContext original){
   ArchitectureBlock source=(ArchitectureBlock)getBlock();
-  if(PaletteAliases.removed(source.definition.id))return ActionResult.FAIL;
-  ArchitectureBlock canonical=PaletteAliases.canonical(source);
-  ItemStack working=new ItemStack(canonical,original.getStack().getCount());
+  ItemStack working=new ItemStack(source,original.getStack().getCount());
   if(original.getStack().hasNbt())working.setNbt(original.getStack().getNbt().copy());
-  if(canonical!=source){
-   BlockState selected=PaletteAliases.replacement(applyStateTag(source.getDefaultState(),working)).state();
-   NbtCompound props=new NbtCompound();selected.getEntries().forEach((p,v)->props.putString(p.getName(),BloodborneBlocks.value(p,v)));
-   working.getOrCreateNbt().put("BlockStateTag",props);
-  }
-  LogicalItemMigration.Result logical=LogicalItemMigration.migrate(canonical,working);working=logical.stack();
-  if(working.getItem() instanceof ArchitectureBlockItem migratedItem)canonical=(ArchitectureBlock)migratedItem.getBlock();
-  ArchitectureBlock section=LegacyItemSections.target(canonical,working);if(section==null)return ActionResult.FAIL;
-  if(section!=canonical){
-   ItemStack migrated=new ItemStack(section,working.getCount());
-   if(working.hasNbt()){migrated.setNbt(working.getNbt().copy());migrated.removeSubNbt("BlockStateTag");}
-   working=migrated;canonical=section;
-  }
   ItemStack placedStack=working;
   ItemPlacementContext prepared=new ItemPlacementContext(original){@Override public ItemStack getStack(){return placedStack;}};
-  ActionResult result=((ArchitectureBlockItem)canonical.asItem()).placePrepared(prepared);
+  ActionResult result=placePrepared(prepared);
   if(result.isAccepted())original.getStack().decrement(Math.max(0,original.getStack().getCount()-working.getCount()));
   return result;
  }
@@ -89,7 +74,6 @@ public final class ArchitectureBlockItem extends BlockItem {
     if(property!=null)properties.putString(name,BloodborneBlocks.value((Property)property,(Comparable)placement.get((Property)property)));
    }
    if(placement.contains(net.minecraft.state.property.Properties.OPEN))properties.putString("open","false");
-   if(placement.contains(net.minecraft.state.property.Properties.DOOR_HINGE))properties.putString("hinge",placement.get(net.minecraft.state.property.Properties.DOOR_HINGE).asString());
    Property<?> lit=block.getStateManager().getProperty("lit");if(lit instanceof net.minecraft.state.property.BooleanProperty value)properties.putString("lit",Boolean.toString(placement.get(value)));
    if(block.definition.placement_properties!=null)block.definition.placement_properties.forEach(properties::putString);
   }

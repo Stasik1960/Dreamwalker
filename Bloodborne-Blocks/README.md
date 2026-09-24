@@ -1,6 +1,24 @@
 # Bloodborne Architecture — Fabric 1.20.1
 
-## Локальный POC: logical contract v2, только этапы 1–3
+## Текущее состояние — production palette cleanup, 2026-09-24
+
+**33 logical blocks/items + internal helper**, 524 BASE/ALT states. Registry
+больше не загружает 503 старых carrier и 46 236 modular blocks. Неподтверждённые
+251 families сохранены как offline evidence, не опубликованы в production.
+Полное дерево — один предмет; C282 — одна двустворчатая дверь с внешними hinges;
+ориентационный дубликат C008 объединён без потери второго source placement.
+
+[Аудит, метрики и ограничения](docs/PRODUCTION-PALETTE.md) ·
+[Актуальный HANDOFF](HANDOFF.md) · [Проверки](docs/production-checks/README.md) ·
+[Новый JAR и компактная галерея](../releases/Bloodborne-Blocks/README.md).
+
+Полный исходный Yharnam проанализирован read-only; город не конвертировался.
+Оригинальные карта/ресурспак не изменены. Старые модифицированные миры и галереи
+**несовместимы** с очищенным registry; они требуют своих исторических JAR.
+Страницы ниже — история, их числа/команды генерации не описывают текущий runtime.
+Для текущей сборки — Java 17 и собственный wrapper Gradle 8.8, см. QA-команды выше.
+
+## История: локальный POC logical contract v2, этапы 1–3
 
 [Контракт пяти семейств, координаты, direct matcher и ограничения](docs/LOGICAL-CONTRACT-V2-POC.md).
 Render, selection, collision и migration-source patterns разделены для дерева,

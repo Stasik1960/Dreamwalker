@@ -6,12 +6,11 @@
   "environment": "server",
   "entrypoints": {
     "fabric-gametest": [
-      "dev.dreamwalker.bloodborneblocks.LogicalRuntimeGameTests",
-      "dev.dreamwalker.bloodborneblocks.LogicalTreeGameTests",
       "dev.dreamwalker.bloodborneblocks.LogicalDebugGameTests",
       "dev.dreamwalker.bloodborneblocks.LogicalVisualGameTests",
       "dev.dreamwalker.bloodborneblocks.SupportPlaneGameTests",
-      "dev.dreamwalker.bloodborneblocks.NightmareGameTests"
+      "dev.dreamwalker.bloodborneblocks.ProductionPaletteGameTests",
+      "dev.dreamwalker.bloodborneblocks.ProductionFunctionalGameTests"
     ]
   },
   "depends": {

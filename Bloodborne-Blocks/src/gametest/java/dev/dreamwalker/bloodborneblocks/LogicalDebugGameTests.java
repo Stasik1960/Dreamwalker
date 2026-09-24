@@ -37,9 +37,8 @@ public final class LogicalDebugGameTests implements FabricGameTest {
   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get("o_c001");context.assertTrue(block!=null,"logical debug fixture exists");
   BlockPos root=context.getAbsolutePos(ROOT);BlockState state=block.getDefaultState();world.setBlockState(root,state,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,state),"logical debug fixture rebuilds");
   String master=LogicalTargetDebug.inspectTarget(world,root);
-  context.assertTrue(master.contains("Logical ID: bloodborne_blocks:o_c001")&&master.contains("Target: MASTER")&&master.contains("Review ID: C001")&&master.contains("Facing: north")&&master.contains("Contract schema: v2")&&master.contains("Source family: ")&&master.contains("Source pattern: ")&&master.contains("235de5acef16")&&!master.contains("816a3e4bbde4")&&master.contains("\n")&&!master.contains(" | "),"master reports copyable, state-specific catalog metadata lines");
-  LogicalContractV2.DebugMetadata east=LogicalContractV2.debugMetadata("o_c001",BloodborneBlocks.key(state.with(Properties.HORIZONTAL_FACING,net.minecraft.util.math.Direction.EAST)));
-  context.assertTrue(east!=null&&east.sourcePatternSummary().contains("state signatures=none")&&east.sourcePatternSummary().contains("placed provenance not stored")&&!east.sourcePatternSummary().contains("816a3e4bbde4"),"east state never inherits a family signature as placed provenance");
+  BloodborneBlocks.ProductionEntry production=BloodborneBlocks.productionEntry("o_c001");
+  context.assertTrue(production!=null&&master.contains("Logical/Object ID: bloodborne_blocks:o_c001")&&master.contains("Source Review: "+String.join(", ",production.source_reviews()))&&master.contains("Semantic part: "+production.semantic_label())&&master.contains("Target: MASTER")&&master.contains("Facing: north")&&master.contains("\n")&&!master.contains(" | "),"master reports manifest-backed, copyable production metadata");
   BlockPos helper=helper(world,root,state);context.assertTrue(helper!=null,"logical debug fixture has an owned helper");
   String helperReport=LogicalTargetDebug.inspectTarget(world,helper);
   context.assertTrue(helperReport.contains("Target: HELPER")&&helperReport.contains("Helper offset: "),"helper resolves to its master");

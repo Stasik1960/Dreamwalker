@@ -1,0 +1,111 @@
+{
+  "inputs": {
+    "baseline": "docs/production-baseline.json",
+    "geometry_audit": "docs/production-geometry-audit.json",
+    "manifest": "docs/production-logical-palette.json"
+  },
+  "jar": {
+    "before_expected_bytes": 97371528,
+    "jar_after_bytes": 850307,
+    "path": "releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-production-palette-20260924-mc1.20.1.jar",
+    "sha256": "7c2750b84d7d0230eb88418f32c114708b051513f01aa762b487a3c06a4aac45",
+    "status": "BUILT"
+  },
+  "manifest_exclusions": {
+    "by_status": {
+      "REMOVED_COMPATIBILITY": 1,
+      "REMOVED_DUPLICATE": 1,
+      "REMOVED_FRAGMENT": 6,
+      "REMOVED_SUPERSEDED": 6,
+      "UNRESOLVED": 251
+    },
+    "total": 265
+  },
+  "notes": [
+    "Before and after all-model metrics use the same JSON-file/element-geometry units.",
+    "The baseline field unique_textured_uv_geometry is a historical logical-state mesh metric, not a count of model JSON geometries.",
+    "JAR metrics are populated only when --jar names an existing build artifact.",
+    "The original removal-plan path list was overwritten during apply; initial removed count 195143 is retained as task provenance, not recalculated here."
+  ],
+  "registry": {
+    "helper": "PART",
+    "logical_production": 33,
+    "registry_total_with_helper": 34
+  },
+  "resources_after": {
+    "assets_bytes": 388182,
+    "blockstates": {
+      "duplicate_content_entries": 0,
+      "files": 34,
+      "unique_content": 34
+    },
+    "logical_bytes": 1165434,
+    "logical_state_meshes": {
+      "duplicate_referenced_mesh_content_entries": 302,
+      "duplicate_referenced_mesh_id_entries": 302,
+      "mesh_catalog_entries": 222,
+      "state_mesh_references": 524,
+      "unique_referenced_mesh_content": 222,
+      "unique_referenced_mesh_ids": 222
+    },
+    "models": {
+      "duplicate_content_entries": 40,
+      "duplicate_element_geometry_entries": 0,
+      "element_cullface_declarations": 0,
+      "element_geometry_models": 1,
+      "files": 558,
+      "unique_content": 518,
+      "unique_element_geometries": 1
+    },
+    "production_stage_bytes": 1557916,
+    "production_stage_files": 670,
+    "source_resource_bytes": 1559028,
+    "source_resource_files": 673,
+    "textures": {
+      "duplicate_content_entries": 0,
+      "files": 24,
+      "unique_content": 24
+    }
+  },
+  "same_unit_comparison": {
+    "all_model_json_geometry": {
+      "after": {
+        "blockstate_orientation_variant_entries": 525,
+        "duplicate_element_geometry_entries": 0,
+        "duplicate_model_json_entries": 40,
+        "element_cullface_declarations": 0,
+        "element_geometry_models": 1,
+        "logical_alt_model_paths": 262,
+        "logical_base_model_paths": 262,
+        "model_json_files": 558,
+        "unique_element_geometries": 1
+      },
+      "before": {
+        "blockstate_orientation_variant_entries": 198718,
+        "duplicate_element_geometry_entries": 49910,
+        "duplicate_model_json_entries": 41730,
+        "element_cullface_declarations": 375,
+        "element_geometry_models": 50925,
+        "logical_alt_model_paths": 1742,
+        "logical_base_model_paths": 1742,
+        "model_json_files": 101361,
+        "unique_element_geometries": 1015
+      }
+    },
+    "logical_state_meshes": {
+      "after": {
+        "duplicate_referenced_mesh_content_entries": 302,
+        "duplicate_referenced_mesh_id_entries": 302,
+        "mesh_catalog_entries": 222,
+        "state_mesh_references": 524,
+        "unique_referenced_mesh_content": 222,
+        "unique_referenced_mesh_ids": 222
+      },
+      "before": {
+        "duplicate_textured_uv_geometry_entries": 1764,
+        "unique_textured_uv_geometry": 1552
+      }
+    }
+  },
+  "schema_version": 1
+}

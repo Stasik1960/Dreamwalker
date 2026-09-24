@@ -90,7 +90,6 @@ public final class SupportPlaneGameTests implements FabricGameTest {
     ArchitectureBlock block=required(family.id);EnumSet<Direction> placedFacings=EnumSet.noneOf(Direction.class);
     // Hidden/compatibility items may intentionally redirect to a canonical section item;
     // direct-state pick checks above cover that path without asserting an obsolete item ID.
-    if(PaletteAliases.hidden(family.id))continue;
     int platformRadius=platformRadius(family,block);preparePlatform(context,CLICK,platformRadius);
     List<Direction> attempts=block.getDefaultState().contains(Properties.HORIZONTAL_FACING)?List.of(Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST):List.of(Direction.NORTH);
     for(Direction facing:attempts){

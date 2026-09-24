@@ -37,8 +37,7 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
  private record Root(BlockPos pos,BlockState state,BlockPos offset){}
 
  @Override public boolean canReplace(BlockState state,net.minecraft.item.ItemPlacementContext context){
-  Root root=root(context.getWorld(),context.getBlockPos());
-  return root!=null&&PaletteAliases.removed(((ArchitectureBlock)root.state.getBlock()).definition.id);
+  return false;
  }
 
  @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);if(root==null)return VoxelShapes.empty();if(root.state.getBlock() instanceof ArchitectureBlock block&&block.definition.logical)return GeometryRuntime.rootShape(root.state,true).offset(-root.offset.getX(),-root.offset.getY(),-root.offset.getZ());return GeometryRuntime.cellShape(root.state,root.offset,true);}
@@ -64,7 +63,7 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
 
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
   if(!next.isOf(this)&&!GeometryRuntime.isMutating()){
-   Root root=root(world,pos);if(root!=null&&!world.isClient)world.breakBlock(root.pos,!PaletteAliases.removed(((ArchitectureBlock)root.state.getBlock()).definition.id));
+   Root root=root(world,pos);if(root!=null&&!world.isClient)world.breakBlock(root.pos,true);
   }
   super.onStateReplaced(state,world,pos,next,moved);
  }

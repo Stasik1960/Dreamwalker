@@ -26,6 +26,10 @@ public final class BloodborneBlocks implements ModInitializer {
  public static BlockEntityType<ArchitecturePartBlockEntity> PART_BLOCK_ENTITY;
  public static EntityType<ArchitectureSeatEntity> SEAT_ENTITY;
  public static Data DATA;
+ public record ProductionEntry(String id,String semantic_label,List<String> source_reviews) {}
+ private static final Map<String,ProductionEntry> PRODUCTION=new LinkedHashMap<>();
+ private static final class ProductionPalette {int schemaVersion;List<ProductionPaletteEntry> objects;}
+ private static final class ProductionPaletteEntry {String id,semantic_label,status;List<String> source_reviews;}
  public static final class Data {public List<Definition> blocks;public List<List<double[]>> shapes;public Map<String,String> emissive_textures;public Map<String,String> compat_layers;}
  public static final class Definition {
   public String id,source,layer,kind,offset,behavior,connection_family,attachment_item;
@@ -50,31 +54,34 @@ public final class BloodborneBlocks implements ModInitializer {
  public static String key(BlockState state){List<String> entries=new ArrayList<>();state.getEntries().forEach((p,v)->entries.add(p.getName()+"="+value(p,v)));Collections.sort(entries);return String.join(",",entries);}
  @SuppressWarnings({"rawtypes","unchecked"}) public static BlockState set(BlockState state,Property property,String value){Optional<?> parsed=property.parse(value);if(parsed.isEmpty())throw new IllegalArgumentException("Invalid state value "+property+"="+value);return state.with(property,(Comparable)parsed.get());}
  static Data loadDefinitions(){
-  Gson gson=new Gson();Data legacy=readDefinitions(gson,"/bloodborne_blocks/definitions.json");
-  Data modular=readDefinitions(gson,"/bloodborne_blocks/v2/definitions.json");
-  Data logical=readDefinitions(gson,"/bloodborne_blocks/logical/definitions.json");
-  if(legacy.blocks==null||modular.blocks==null||logical.blocks==null)throw new IllegalStateException("Definitions must contain blocks");
-  Set<String> ids=new HashSet<>();for(Definition definition:legacy.blocks)if(!ids.add(definition.id))throw new IllegalStateException("Duplicate legacy block "+definition.id);
-  for(Definition definition:modular.blocks){
-   if(!definition.modular||definition.id==null||!definition.id.startsWith("m_"))throw new IllegalStateException("Invalid modular definition "+definition.id);
-   if(!ids.add(definition.id))throw new IllegalStateException("Legacy/modular ID conflict "+definition.id);
-  }
-  for(Definition definition:logical.blocks){
+  Gson gson=new Gson();Data logical=readDefinitions(gson,"/bloodborne_blocks/logical/definitions.json");
+  if(logical.blocks==null||logical.blocks.isEmpty())throw new IllegalStateException("Logical definitions must contain blocks");
+  Set<String> ids=new HashSet<>();for(Definition definition:logical.blocks){
    if(!definition.logical||definition.id==null||!definition.id.startsWith("o_")||definition.behavior==null||definition.models==null)throw new IllegalStateException("Invalid logical definition "+definition.id);
-   if(!ids.add(definition.id))throw new IllegalStateException("Logical ID conflict "+definition.id);
+   if(!ids.add(definition.id))throw new IllegalStateException("Duplicate logical definition "+definition.id);
   }
-  legacy.blocks=new ArrayList<>(legacy.blocks);legacy.blocks.addAll(modular.blocks);legacy.blocks.addAll(logical.blocks);return legacy;
+  loadProductionPalette(gson,ids);return logical;
  }
  private static Data readDefinitions(Gson gson,String path){
   try(InputStream stream=BloodborneBlocks.class.getResourceAsStream(path)){
    if(stream==null)throw new IOException("Missing generated "+path);return gson.fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),Data.class);
   }catch(IOException|RuntimeException e){throw new IllegalStateException("Cannot load Bloodborne architecture "+path,e);}
  }
- private static Set<String> loadLegacyCreative(){
-  try(InputStream stream=BloodborneBlocks.class.getResourceAsStream("/bloodborne_blocks/v2/legacy-creative.json")){
-   if(stream==null)throw new IOException("Missing legacy creative allow-list");String[] ids=new Gson().fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),String[].class);return Set.of(ids);
-  }catch(IOException|RuntimeException e){throw new IllegalStateException("Cannot load legacy creative allow-list",e);}
+ private static void loadProductionPalette(Gson gson,Set<String> definitionIds){
+  try(InputStream stream=BloodborneBlocks.class.getResourceAsStream("/bloodborne_blocks/logical/production-palette.json")){
+   if(stream==null)throw new IOException("Missing production palette");ProductionPalette palette=gson.fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),ProductionPalette.class);
+   if(palette==null||palette.schemaVersion!=1||palette.objects==null||palette.objects.isEmpty())throw new IllegalStateException("Invalid production palette schema");
+   PRODUCTION.clear();Set<String> labels=new HashSet<>();
+   for(ProductionPaletteEntry entry:palette.objects){
+    if(entry==null||entry.id==null||!entry.id.startsWith("o_")||entry.semantic_label==null||entry.semantic_label.isBlank()||entry.source_reviews==null||entry.source_reviews.isEmpty()||(entry.status!=null&&!"PRODUCTION".equals(entry.status)))throw new IllegalStateException("Invalid production palette entry "+(entry==null?"null":entry.id));
+    if(PRODUCTION.putIfAbsent(entry.id,new ProductionEntry(entry.id,entry.semantic_label,List.copyOf(entry.source_reviews)))!=null)throw new IllegalStateException("Duplicate production palette ID "+entry.id);
+    if(!labels.add(entry.semantic_label))throw new IllegalStateException("Duplicate production semantic label "+entry.semantic_label);
+   }
+   if(!PRODUCTION.keySet().equals(definitionIds))throw new IllegalStateException("Production palette/definition membership mismatch: palette="+PRODUCTION.keySet()+" definitions="+definitionIds);
+  }catch(IOException|RuntimeException e){throw new IllegalStateException("Cannot load Bloodborne production palette",e);}
  }
+ static Map<String,ProductionEntry> productionPalette(){return Collections.unmodifiableMap(PRODUCTION);}
+ static ProductionEntry productionEntry(String id){return PRODUCTION.get(id);}
  static void prepareDefinition(Definition d){
   Identifier source=new Identifier(d.source);if(!Registries.BLOCK.containsId(source))throw new IllegalStateException("Missing source block "+source);d.sourceBlock=Registries.BLOCK.get(source);d.propertyObjects.clear();
   for(String name:d.properties.keySet()){
@@ -84,9 +91,8 @@ public final class BloodborneBlocks implements ModInitializer {
     if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
-   if(p==null&&d.logical&&Set.of("variant","placement_height","visual").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&d.logical&&Set.of("variant","visual").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
-   if(p==null&&d.logical&&name.equals("hinge"))p=net.minecraft.state.property.Properties.DOOR_HINGE;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
    if(p==null&&name.equals("open"))p=net.minecraft.state.property.Properties.OPEN;
@@ -107,7 +113,7 @@ public final class BloodborneBlocks implements ModInitializer {
   for(var entry:definition.placement_properties.entrySet())state=set(state,(Property)definition.propertyObjects.get(entry.getKey()),entry.getValue());
   return state;
  }
- static boolean creativeVisible(Definition definition,Set<String> legacyCreative){return definition.logical||definition.modular&&definition.creative||legacyCreative.contains(definition.id);}
+ static boolean creativeVisible(Definition definition){return definition.logical&&definition.creative;}
  static ItemStack creativeStack(ArchitectureBlock block){
   ItemStack stack=new ItemStack(block);
   if(block.definition.logical&&block.definition.placement_properties!=null)block.definition.placement_properties.forEach(stack.getOrCreateSubNbt("BlockStateTag")::putString);
@@ -125,10 +131,7 @@ public final class BloodborneBlocks implements ModInitializer {
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));BLOCKS.put(d.id,block);
   }
   LogicalAttachments.validateDefinitions(DATA.blocks);
-  LegacyItemSections.load();
-  LogicalItemMigration.load();
-  Set<String> legacyCreative=loadLegacyCreative();
-  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("stone_bricks"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition,legacyCreative)).filter(b->!PaletteAliases.hidden(b.definition.id)&&!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition)).filter(b->!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
   BloodborneCommands.register();
   System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" states="+BLOCKS.values().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }

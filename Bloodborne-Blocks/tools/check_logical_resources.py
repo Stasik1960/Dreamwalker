@@ -31,6 +31,9 @@ def validate(resources=RES):
     logical = root / 'logical'
     definitions = {}
     for relative in ('definitions.json', 'v2/definitions.json', 'logical/definitions.json'):
+        if not (root / relative).exists():
+            assert (logical/'production-palette.json').exists(), 'missing mapping outside production'
+            continue
         for block in read(root / relative)['blocks']:
             assert block['id'] not in definitions, 'duplicate registry ' + block['id']
             definitions[block['id']] = block

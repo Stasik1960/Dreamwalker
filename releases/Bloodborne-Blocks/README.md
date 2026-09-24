@@ -1,4 +1,25 @@
-# Bloodborne Architecture — batch-02 QA2 checkpoint
+# Bloodborne Architecture — production palette, 2026-09-24
+
+- [Новый JAR](bloodborne-blocks-2.1.0-alpha.1-production-palette-20260924-mc1.20.1.jar)
+  — 850 307 байт; [SHA-256](bloodborne-blocks-2.1.0-alpha.1-production-palette-20260924-mc1.20.1.jar.sha256).
+- [Новая production-галерея](production-palette-gallery-ready-20260924.zip)
+  — 31 861 байт, 33 объекта; [SHA-256](production-palette-gallery-ready-20260924.zip.sha256).
+- [Аудит и ограничения](../../Bloodborne-Blocks/docs/PRODUCTION-PALETTE.md),
+  [manifest](../../Bloodborne-Blocks/docs/production-logical-palette.json),
+  [проверки](../../Bloodborne-Blocks/docs/production-checks/README.md).
+
+JAR SHA-256: `7c2750b84d7d0230eb88418f32c114708b051513f01aa762b487a3c06a4aac45`.
+Галерея SHA-256: `c81a4d95084a25875b3a88233f33ef123dd5115cc94d89498fd8d2ae8008fa1c`.
+
+Fabric 1.20.1 / Java 17. Замените предыдущий JAR, не ставьте оба одновременно.
+Извлеките папку `production-palette-gallery-ready-20260924` из ZIP в `saves`.
+Это новая чистая QA-галерея, **не** конвертированный город. Штатный LevelStorage
+распознал мир; графический клиент для визуальной приёмки не запускался.
+`check build logicalGameTest`: BUILD SUCCESSFUL, 19 GameTests и 91 Python tests.
+Предыдущие модифицированные миры/галереи несовместимы с удалёнными registry IDs;
+используйте их только со своими историческими JAR. Оригинальная vanilla карта сохранена.
+
+## История: batch-02 QA2 checkpoint
 
 - [Новый тестовый JAR QA2](bloodborne-blocks-2.1.0-alpha.1-batch-02-qa2-20260923-mc1.20.1.jar).
 - [Новая QA-галерея](reviewed-batch-02-gallery-qa2.zip): 104 образца на белом

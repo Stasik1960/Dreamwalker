@@ -67,7 +67,12 @@ def load_contracts(resources):
     if data.get("schemaVersion") != 2 or data.get("transform_contract") != "transform-v2.json":
         raise ValueError("invalid logical contract schema")
     transform = load_transform(resources / data["transform_contract"])
-    if not POC_FAMILIES <= {f["id"] for f in data["families"]}:
+    production_path = resources / 'production-palette.json'
+    if production_path.exists():
+        production_ids = {o['id'] for o in json.loads(production_path.read_text(encoding='utf8'))['objects']}
+        if production_ids != {f['id'] for f in data['families']}:
+            raise ValueError('production manifest/contract mismatch')
+    elif not POC_FAMILIES <= {f["id"] for f in data["families"]}:
         raise ValueError("schema-v2 must preserve the approved POC families")
     definitions = {d["id"]: d for d in json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
     seen = set()
@@ -134,10 +139,15 @@ def load_contracts(resources):
                     if (not isinstance(transaction, dict) or set(transaction) != {"id", "outputs"} or
                             not isinstance(transaction["id"], str) or not transaction["id"] or len(transaction["id"]) > 128 or
                             not isinstance(transaction["outputs"], list) or len(transaction["outputs"]) < 2 or
-                            any(not isinstance(output, dict) or set(output) != {"family", "root_offset"} or
+                            any(not isinstance(output, dict) or not {"family", "root_offset"} <= set(output) or set(output)-{"family", "root_offset", "properties"} or
                                 not isinstance(output["family"], str) or not output["family"] for output in transaction["outputs"])):
                         raise ValueError("invalid split transaction")
-                    outputs = tuple((output["family"], cell(output["root_offset"])) for output in transaction["outputs"])
+                    outputs = tuple((output["family"], cell(output["root_offset"]), tuple(sorted(output.get('properties',{}).items()))) for output in transaction["outputs"])
+                    for output in transaction['outputs']:
+                        target_def=definitions.get(output['family'])
+                        override=output.get('properties',{})
+                        if not target_def or any(k not in target_def['properties'] or v not in target_def['properties'][k] for k,v in override.items()):
+                            raise ValueError('invalid split output state override')
                     # One rendered family may legitimately be placed more than once
                     # (for example two identical statues at different roots).  The
                     # declaration identity is therefore family + root, while the
@@ -201,12 +211,12 @@ def direct_rules(resources, *, poc_only=False):
                 signature = (tuple(sorted((piece.offset, piece.state) for piece in pieces)),
                              json.dumps(pattern.get("variant_guards", []), sort_keys=True, separators=(",", ":")))
                 split.setdefault((transaction["id"], signature), []).append((family["id"], target, shift, shape, pieces, tuple(pattern.get("variant_guards", [])),
-                                                                               tuple((output["family"], cell(output["root_offset"])) for output in transaction["outputs"])))
+                                                                               tuple((output["family"], cell(output["root_offset"]), tuple(sorted(output.get('properties',{}).items()))) for output in transaction["outputs"])))
     for (transaction_id, _), members in split.items():
         members.sort(key=lambda member: member[0])
         first_family, target, shift, shape, pieces, guards, declarations = members[0]
         by_family = {member[0]: member for member in members}
-        declared_families = {family for family, _ in declarations}
+        declared_families = {family for family, _, _ in declarations}
         member_families = [member[0] for member in members]
         if len(by_family) != len(member_families):
             raise ValueError("split transaction must declare exactly one shared source pattern per output")
@@ -214,8 +224,16 @@ def direct_rules(resources, *, poc_only=False):
             # A disabled historical composite makes its declared split incomplete.
             # Do not silently degrade to the remaining outputs.
             continue
-        outputs = tuple(Output(by_family[family][1], add(by_family[family][2], root_offset), by_family[family][3])
-                        for family, root_offset in declarations)
+        outputs_list=[]
+        family_map={f['id']:f for f in data['families']}
+        for family,root_offset,override in declarations:
+            base=by_family[family]
+            props={**dict(base[1][1]),**dict(override)}
+            target_state=make_state({'id':family,'properties':props},defaults)
+            state_key=','.join(f'{k}={v}' for k,v in sorted(props.items()))
+            target_shape=frozenset(cell(c) for c in family_map[family]['states'][state_key]['interaction_footprint']['cells'])
+            outputs_list.append(Output(target_state,add(base[2],root_offset),target_shape))
+        outputs=tuple(outputs_list)
         occupied = set()
         for output in outputs:
             cells = {tuple(output.root_offset[i] + offset[i] for i in range(3)) for offset in output.shape}

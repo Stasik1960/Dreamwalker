@@ -8,7 +8,6 @@ import java.util.*;
 /** Strict loader for the small authored logical-object contract (schema v2). */
 final class LogicalContractV2 {
  private static final Gson GSON=new Gson();
- private static final Set<String> REQUIRED_POC_FAMILIES=Set.of("o_dead_tree_planter","o_cases_0","o_wall_deco_1","o_iron_gate","o_iron_railing");
  private static Map<String,DebugMetadata> DEBUG_METADATA=Map.of();
  static final class Data {int schemaVersion;String transform_contract;List<Family> families;}
  static final class Family {String id,placement_policy,mirror_policy,collision_policy,selection_policy,collision_justification,review_id,authority;Anchor canonical_anchor;List<Integer> rotations;Map<String,State> states;List<Pattern> migration_source_pattern,review_source_patterns;}
@@ -47,7 +46,7 @@ final class LogicalContractV2 {
    }
    result.put(family.id,block);
   }
-  if(!result.keySet().containsAll(REQUIRED_POC_FAMILIES))throw fail("missing approved POC family");
+  if(!result.keySet().equals(known.keySet()))throw fail("production family coverage");
   DEBUG_METADATA=Collections.unmodifiableMap(debug);
   return result;
  }

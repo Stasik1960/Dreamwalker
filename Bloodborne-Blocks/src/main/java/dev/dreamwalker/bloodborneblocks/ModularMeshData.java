@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.GZIPInputStream;
 
-/** Client-loaded source polygons for the v2 palette. This class has no client API so data tests can validate it. */
+/** Client-loaded source polygons for production logical objects. */
 final class ModularMeshData {
  static final class Mesh {final List<Polygon> polygons;Mesh(List<Polygon> polygons){this.polygons=List.copyOf(polygons);}}
  static final class Polygon {
@@ -20,9 +20,6 @@ final class ModularMeshData {
 
  private ModularMeshData() {}
 
- static Map<String,Mesh> loadAndValidate(){
-  return loadAndValidate("/bloodborne_blocks/v2/meshes.json.gz","m_",0,1);
- }
  /** Logical objects intentionally retain uncut, multi-cell coordinates. */
  static Map<String,Mesh> loadLogicalAndValidate(){
   return loadAndValidate("/bloodborne_blocks/logical/meshes.json.gz","",-64,64);

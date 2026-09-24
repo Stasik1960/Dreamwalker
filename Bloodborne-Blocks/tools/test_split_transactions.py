@@ -4,6 +4,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 import copy
+import gzip
 import json
 from pathlib import Path
 
@@ -15,7 +16,18 @@ from world_io import TAG_BYTE, TAG_COMPOUND, TAG_STRING, NbtFile, RegionFile, Ta
 
 DIM = "minecraft:overworld"
 NS = "bloodborne_blocks:"
-RES = Path(__file__).resolve().parents[1] / "src/main/resources/bloodborne_blocks/logical"
+ROOT = Path(__file__).resolve().parents[1]
+HISTORICAL_INPUTS = ROOT / "docs/production-authoring-inputs.json.gz"
+
+
+def historical_resources(folder: Path) -> Path:
+    """Frozen pre-pruning contract fixture for compiler-invariant tests."""
+    data = json.load(gzip.open(HISTORICAL_INPUTS, "rt", encoding="utf8"))
+    folder.mkdir()
+    (folder / "definitions.json").write_text(json.dumps(data["definitions"]), encoding="utf8")
+    (folder / "contracts-v2.json").write_text(json.dumps(data["contracts"]), encoding="utf8")
+    (folder / "transform-v2.json").write_bytes((ROOT / "src/main/resources/bloodborne_blocks/logical/transform-v2.json").read_bytes())
+    return folder
 
 
 def state(name):
@@ -138,10 +150,8 @@ class SplitTransactionTests(unittest.TestCase):
 
     def test_contract_group_compiles_once_and_disabled_family_is_not_reintroduced(self):
         with tempfile.TemporaryDirectory() as folder:
-            resources = Path(folder)
-            for name in ("definitions.json", "transform-v2.json"):
-                (resources / name).write_bytes((RES / name).read_bytes())
-            contract = json.loads((RES / "contracts-v2.json").read_text(encoding="utf-8"))
+            resources = historical_resources(Path(folder) / "resources")
+            contract = json.loads((resources / "contracts-v2.json").read_text(encoding="utf-8"))
             families = {family["id"]: family for family in contract["families"]}
             left, right = families["o_c002"], families["o_c003"]
             left_state = next(state for state in left["states"].values() if state["migration_source_pattern"])
@@ -165,10 +175,8 @@ class SplitTransactionTests(unittest.TestCase):
 
     def test_split_pattern_requires_one_member_per_unique_output_family(self):
         with tempfile.TemporaryDirectory() as folder:
-            resources = Path(folder)
-            for name in ("definitions.json", "transform-v2.json"):
-                (resources / name).write_bytes((RES / name).read_bytes())
-            contract = json.loads((RES / "contracts-v2.json").read_text(encoding="utf-8"))
+            resources = historical_resources(Path(folder) / "resources")
+            contract = json.loads((resources / "contracts-v2.json").read_text(encoding="utf-8"))
             families = {family["id"]: family for family in contract["families"]}
             left, right = families["o_c002"], families["o_c003"]
             left_state = next(state for state in left["states"].values() if state["migration_source_pattern"])

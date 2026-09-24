@@ -119,7 +119,15 @@ tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
 
 // Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
 // These tests need numpy (same dependency as the existing world converter).
-['test_region_padding', 'test_contract_v2', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng', 'test_reviewed_migration', 'test_reviewed_source_examples', 'test_fixture_level_metadata', 'test_reviewed_gallery', 'test_qa2_trees', 'test_qa2_checkpoint', 'check_contract_orientation', 'check_logical_resources', 'test_split_transactions','test_old_logical_migrations','test_build_nightmare_contracts','test_nightmare_geometry_recipes','test_nightmare_functional_recipes','test_nightmare_composition_recipes','test_visual_slots','test_export_alt_visual_starter','test_nightmare_gallery','test_support_collision','test_support_normalization'].each { testName ->
+// Historical Nightmare/QA2 compiler checks intentionally do not run against
+// the pruned live palette. Their inputs remain frozen in production-authoring
+// evidence; these tasks cover current production behavior and generic safety.
+['test_region_padding', 'test_logical_world', 'test_source_review_decisions', 'test_source_variant_rng',
+ 'test_fixture_level_metadata', 'test_split_transactions', 'test_visual_slots', 'test_support_collision', 'check_contract_orientation',
+ 'test_build_nightmare_contracts', 'test_nightmare_geometry_recipes', 'test_nightmare_functional_recipes',
+ 'test_nightmare_composition_recipes', 'test_export_alt_visual_starter', 'test_support_normalization',
+ 'check_logical_resources', 'test_production_door', 'test_production_inventory', 'test_production_geometry',
+ 'test_production_gallery', 'test_production_palette'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   dependsOn 'normalizeSupportContracts'

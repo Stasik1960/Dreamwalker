@@ -6,9 +6,10 @@ import numpy as np
 ROOT=Path(__file__).resolve().parents[1]
 RES=ROOT/'src/main/resources'
 ASSETS=RES/'assets/bloodborne_blocks'
-VANILLA=Path(os.environ.get('BLOODBORNE_VANILLA_JAR',r'C:\temp\bloodborne-gradle\caches\fabric-loom\1.20.1\minecraft-client.jar'))
+VANILLA=Path(os.environ.get('BLOODBORNE_VANILLA_JAR',str(Path.home()/'.gradle/caches/fabric-loom/1.20.1/minecraft-client.jar')))
 ZIP=zipfile.ZipFile(VANILLA)
-DATA=json.loads((RES/'bloodborne_blocks/definitions.json').read_text(encoding='utf-8-sig'))
+from source_mapping_archive import mapping
+DATA=mapping('definitions.json')
 
 @functools.lru_cache(None)
 def model(name):

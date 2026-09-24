@@ -1,6 +1,39 @@
 # Bloodborne-Blocks — актуальный handoff, 2026-09-24
 
-## Текущий checkpoint: общая support-plane нормализация Contract V2
+## Текущий checkpoint: production palette cleanup
+
+После полного read-only анализа правильного source-world и сверки последних
+corrections в runtime осталось **33 logical blocks/items + 1 internal helper**,
+524 BASE/ALT states. Это не новый discovery/batch-03 и не конвертация города.
+Пользователь подтвердил: сохранять требуется только правильный vanilla source world;
+старые logical QA saves не требуют совместимости. Оригинальные ZIP не изменены.
+
+- Удалены старые 503 carrier IDs и 46 236 modular IDs из runtime. Из 298 logical
+  definitions исключены 6 fragments, 6 superseded, 1 duplicate, 1 compatibility-only
+  и 251 UNRESOLVED. Последние не объявлены мусором: evidence сохранён вне runtime.
+- C001/C009 — один целый `o_c001`; ветви не существуют как отдельные items.
+- C008 — 4 distinct IDs / 6 source placements; `_4` заменён `_2` с facing −90°,
+  доказано сравнением всех 66 текстурированных полигонов во всех направлениях.
+- C282 — один master/item, две створки вокруг внешних hinges; root/чужой context
+  не вращается. Отдельные leaf items удалены. Пересечение с исходными panes остаётся
+  SAFE_BLOCKED, без частичного изменения/затирания окружения.
+- Полный Yharnam scan: 33 regions, 21 503 chunks, 27 119 750 carrier cells.
+  52/64 исторических exact patterns найдены; 1856 matches — не число конверсий.
+- Новая галерея: 33 canonical specimens, 93 helpers, 327 белых support cells.
+  JAR: 97 371 528 → **850 307 bytes**. Model JSON: 101 361 → 558.
+- `check build logicalGameTest`: BUILD SUCCESSFUL, 91 Python tests, 19 GameTests,
+  2096 orientation checks. Новый мир принят штатным LevelStorage 1.20.1.
+  Все 673 source resources сверены с JAR; визуальная приёмка клиентом ещё нужна.
+
+Начать здесь: [PRODUCTION-PALETTE.md](docs/PRODUCTION-PALETTE.md),
+[authoritative manifest](docs/production-logical-palette.json),
+[QA evidence](docs/production-checks/README.md),
+[JAR и галерея](../releases/Bloodborne-Blocks/README.md).
+Для генерации использовать `tools/build_production_palette.py`; прежние carrier,
+modular и QA generators относятся к историческим checkpoint ниже, не к live registry.
+Следующий шаг — визуальная приёмка компактной палитры, не массовая конвертация города.
+
+## История: общая support-plane нормализация Contract V2
 
 Добавлен общий generation/build-time проход, без исключений по C-ID:
 `tools/normalize_support_contracts.py`. Проверяются все **47 V2 families /

@@ -1,0 +1,35 @@
+{
+  "review_id": "C282",
+  "source_inputs": {
+    "resource_pack": "reference-inputs/source-resource-pack.zip",
+    "resource_pack_sha256": "0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308",
+    "model": "assets/minecraft/models/block/dark_door_1.json",
+    "model_fact": "one cuboid from [-16,-16,5] to [32,32,9]; no authored frame or separate leaf elements"
+  },
+  "source_patterns": {
+    "contract_family": "o_c282",
+    "exact_signatures": [
+      "1693c7205135847919a1d515e970dc40905faad299fc826d42cbb4cbdd057b5d",
+      "bc57d1bbc00650adb73bbe5f1fe67cfadea5e41680a64cab0a2c432019f14c04",
+      "bf7a6ede78956684d3a5d64dfd6537e7ea7c331101c9c46adc43cc41e91f0b6f",
+      "f52a071992d987b390919e30535238c25e3deabd949b3db776e4e40961990bd9"
+    ],
+    "fact": "A-D are orientation applications of one carrier panel, not independent door items."
+  },
+  "markup": {
+    "file": "build/nightmare-running-inputs/image8.png",
+    "interpretation": "the red outlines marked 1 and 2 divide one double door at its vertical centre seam."
+  },
+  "latest_user_correction": "Do not expose standalone leaf items. The master/frame stays fixed; only leaf geometry pivots at its outside hinge.",
+  "implemented": {
+    "production_id": "o_c282",
+    "item_count": 1,
+    "seam_x": 0.5,
+    "left_outer_pivot": [-1.0, 0.4375],
+    "right_outer_pivot": [2.0, 0.4375],
+    "frame_policy": "The four source glass-pane context cells remain foreign and are never generated as helpers or geometry. Occupancy overlap rejects the whole placement/transition; SAFE_BLOCKED is not a successful migration.",
+    "compiled_evidence": "production-logical-palette.json: c282 and objects[id=o_c282].compiled_source_patterns",
+    "master_from_review_origin": [0, -1, 0],
+    "leaf_open_yaw_degrees": {"left": 90, "right": 270}
+  }
+}

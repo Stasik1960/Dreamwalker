@@ -60,7 +60,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  /** Keep selection bounds inside the physical shape. Authored render geometry can overhang
   * a block for decorative silhouettes; using it as an outline produced ghost lines in-world. */
  @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,true);}
- @Override public BlockRenderType getRenderType(BlockState state){return PaletteAliases.removed(definition.id)?BlockRenderType.INVISIBLE:BlockRenderType.MODEL;}
+ @Override public BlockRenderType getRenderType(BlockState state){return BlockRenderType.MODEL;}
  @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,false);}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return definition.full_cube&&!definition.custom_geometry?VoxelShapes.fullCube():VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return definition.full_cube?.2F:1F;}
@@ -89,7 +89,6 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
    Direction placementFacing=definition.logical&&Set.of("door","gate").contains(definition.behavior)?ctx.getHorizontalPlayerFacing():ctx.getHorizontalPlayerFacing().getOpposite();
    Property<?> facing=getStateManager().getProperty("facing");if(facing!=null)result=BloodborneBlocks.set(result,facing,placementFacing.asString());
    Property<?> axis=getStateManager().getProperty("axis");if(axis!=null)result=BloodborneBlocks.set(result,axis,ctx.getSide().getAxis().asString());
-   if(definition.logical&&"door".equals(definition.behavior)&&result.contains(Properties.DOOR_HINGE))result=result.with(Properties.DOOR_HINGE,logicalDoorHinge(ctx,placementFacing));
   }
   if(definition.kind.equals("model_door")){
    if(result.contains(Properties.BLOCK_HALF))result=result.with(Properties.BLOCK_HALF,BlockHalf.BOTTOM);
@@ -102,24 +101,13 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
   return BloodborneBlocks.applyPlacementProperties(definition,connections(result,ctx.getWorld(),ctx.getBlockPos()));
  }
- private static DoorHinge logicalDoorHinge(ItemPlacementContext context,Direction facing){
-  World world=context.getWorld();BlockPos pos=context.getBlockPos();Direction left=facing.rotateYCounterclockwise(),right=facing.rotateYClockwise();
-  int leftScore=doorSideScore(world,pos,left),rightScore=doorSideScore(world,pos,right);
-  if(leftScore!=rightScore)return leftScore>rightScore?DoorHinge.RIGHT:DoorHinge.LEFT;
-  double hitRight=(context.getHitPos().x-pos.getX()-.5)*right.getOffsetX()+(context.getHitPos().z-pos.getZ()-.5)*right.getOffsetZ();
-  return hitRight>0?DoorHinge.RIGHT:DoorHinge.LEFT;
- }
- private static int doorSideScore(World world,BlockPos pos,Direction side){
-  int score=0;if(world.getBlockState(pos.offset(side)).isSideSolidFullSquare(world,pos.offset(side),side.getOpposite()))score++;
-  if(world.getBlockState(pos.up().offset(side)).isSideSolidFullSquare(world,pos.up().offset(side),side.getOpposite()))score++;return score;
- }
  /** Mount states reuse the same authored model; horizontal mounts point out from the clicked face. */
  static BlockState logicalMountPlacement(BlockState state,Direction side,Direction playerFacing){
   if(!state.contains(Properties.WALL_MOUNT_LOCATION))return state;
   WallMountLocation face=side==Direction.UP?WallMountLocation.FLOOR:side==Direction.DOWN?WallMountLocation.CEILING:WallMountLocation.WALL;
   return state.with(Properties.WALL_MOUNT_LOCATION,face).with(Properties.HORIZONTAL_FACING,side.getAxis().isHorizontal()?side:playerFacing.getOpposite());
  }
- @Override public boolean canReplace(BlockState state,ItemPlacementContext ctx){if(PaletteAliases.removed(definition.id))return true;if(definition.kind.equals("slab")&&ctx.getStack().isOf(asItem())&&state.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE){boolean upper=ctx.getHitPos().y-ctx.getBlockPos().getY()>.5;return state.get(Properties.SLAB_TYPE)==SlabType.BOTTOM?(ctx.getSide()==Direction.UP||(ctx.getSide().getAxis().isHorizontal()&&upper)):(ctx.getSide()==Direction.DOWN||(ctx.getSide().getAxis().isHorizontal()&&!upper));}return false;}
+ @Override public boolean canReplace(BlockState state,ItemPlacementContext ctx){if(definition.kind.equals("slab")&&ctx.getStack().isOf(asItem())&&state.get(Properties.SLAB_TYPE)!=SlabType.DOUBLE){boolean upper=ctx.getHitPos().y-ctx.getBlockPos().getY()>.5;return state.get(Properties.SLAB_TYPE)==SlabType.BOTTOM?(ctx.getSide()==Direction.UP||(ctx.getSide().getAxis().isHorizontal()&&upper)):(ctx.getSide()==Direction.DOWN||(ctx.getSide().getAxis().isHorizontal()&&!upper));}return false;}
  private boolean connects(BlockState other,WorldAccess world,BlockPos pos,Direction side){
   if(other.getBlock()instanceof ArchitectureBlock b&&b.definition.kind.equals(definition.kind))return true;
   if(definition.kind.equals("pane")&&(other.getBlock()instanceof PaneBlock||other.isIn(BlockTags.WALLS)))return true;
@@ -247,12 +235,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   }return ActionResult.success(world.isClient);
  }
  @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){
-  if(PaletteAliases.removed(definition.id))return ItemStack.EMPTY;
-  LogicalItemMigration.Result migrated=LogicalItemMigration.migrate(this,stackFor(state));
-  if(migrated.matched())return logicalPick(migrated.stack());
-  LogicalItemMigration.Result component=LogicalItemMigration.componentPick(this,stackFor(state));
-  if(component.matched())return logicalPick(component.stack());
-  return logicalPick(stackFor(PaletteAliases.replacement(state).state()));
+  return logicalPick(stackFor(state));
  }
  private static ItemStack stackFor(BlockState state){
   ItemStack stack=new ItemStack(state.getBlock());NbtCompound props=new NbtCompound();BlockState defaults=state.getBlock().getDefaultState();
@@ -262,7 +245,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  private static ItemStack logicalPick(ItemStack stack){
   if(!(stack.getItem() instanceof ArchitectureBlockItem item)||!((ArchitectureBlock)item.getBlock()).definition.logical)return stack;
   NbtCompound properties=stack.getSubNbt("BlockStateTag");if(properties==null)return stack;
-  for(String name:Set.of("facing","face","axis","hinge","open","lit","waterlogged","north","east","south","west","up","down"))properties.remove(name);
+  for(String name:Set.of("facing","face","axis","open","lit","waterlogged","north","east","south","west","up","down"))properties.remove(name);
   Map<String,String> placementProperties=((ArchitectureBlock)item.getBlock()).definition.placement_properties;
   if(placementProperties!=null)placementProperties.keySet().forEach(properties::remove);
   if(properties.isEmpty())stack.removeSubNbt("BlockStateTag");return stack;

@@ -36,6 +36,12 @@ def _resource_carriers(root):
     """All vanilla source IDs referenced by the current mapping resources."""
     root = Path(root)
     ids = set()
+    frozen=root/'docs/pre-production-source-mapping.json.gz'
+    if frozen.exists():
+        from source_mapping_archive import archive
+        for name,data in archive(root).items():
+            if name.endswith('definitions.json'):
+                ids.update(b['source'] for b in data['blocks'] if b.get('source','').startswith('minecraft:'))
     # These are mapping definitions; scanning meshes/geometry is both unrelated
     # and needlessly expensive (their large numeric arrays contain no sources).
     paths = [root / "src/main/resources/bloodborne_blocks/definitions.json",
@@ -66,6 +72,8 @@ def _mapping_sha256(root):
              root / "src/main/resources/bloodborne_blocks/v2/definitions.json",
              root / "src/main/resources/bloodborne_blocks/logical/definitions.json",
              root / "src/main/resources/bloodborne_blocks/v2/sources.json"]
+    if (root/'docs/pre-production-source-mapping.json.gz').exists():
+        paths.append(root/'docs/pre-production-source-mapping.json.gz')
     digest = hashlib.sha256()
     for path in paths:
         digest.update(str(path.relative_to(root)).encode()); digest.update(b"\0")

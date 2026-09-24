@@ -58,17 +58,17 @@ final class LogicalTargetDebug {
 
  private static String rootOrOrdinary(BlockPos root,BlockState state,String target,BlockPos helperOffset){
   if(!(state.getBlock() instanceof ArchitectureBlock block)||!block.definition.logical)return ordinary(root,state,null);
-  String stateKey=BloodborneBlocks.key(state);LogicalContractV2.DebugMetadata metadata=LogicalContractV2.debugMetadata(block.definition.id,stateKey);
-  if(metadata==null)return ordinary(root,state,"logical contract metadata unavailable");
+  BloodborneBlocks.ProductionEntry production=BloodborneBlocks.productionEntry(block.definition.id);
+  if(production==null)return ordinary(root,state,"production palette metadata unavailable");
+  String stateKey=BloodborneBlocks.key(state);
   String facing=state.contains(Properties.HORIZONTAL_FACING)?state.get(Properties.HORIZONTAL_FACING).asString():"none";
-  StringBuilder report=new StringBuilder("Review ID: ").append(metadata.reviewId()==null?"noCatalogID":metadata.reviewId())
-   .append("\nLogical ID: ").append(BloodborneBlocks.id(block.definition.id)).append("\nMaster: ").append(coordinates(root))
+  StringBuilder report=new StringBuilder("Source Review: ").append(String.join(", ",production.source_reviews()))
+   .append("\nLogical/Object ID: ").append(BloodborneBlocks.id(block.definition.id)).append("\nSemantic part: ").append(production.semantic_label())
+   .append("\nMaster: ").append(coordinates(root))
    .append("\nTarget: ").append(target);
   if(helperOffset!=null)report.append("\nHelper offset: ").append(coordinates(helperOffset));
   return report.append("\nFacing: ").append(facing).append("\nState: ").append(stateKey)
-   .append("\nCanonical anchor: ").append(metadata.canonicalAnchor()).append("\nCollision policy: ").append(metadata.collisionPolicy())
-   .append("\nSelection policy: ").append(metadata.selectionPolicy()).append("\nContract schema: v2")
-   .append("\nSource family: ").append(metadata.sourceFamily()).append("\nSource pattern: ").append(metadata.sourcePatternSummary()).toString();
+   .append("\nProduction palette schema: v1").toString();
  }
 
  private static String ordinary(BlockPos pos,BlockState state,String detail){

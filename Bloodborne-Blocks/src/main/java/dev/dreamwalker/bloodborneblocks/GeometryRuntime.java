@@ -52,23 +52,12 @@ final class GeometryRuntime {
  private GeometryRuntime() {}
 
  static void loadAndValidate(BloodborneBlocks.Data definitions) {
-  FileData file=readGeometry("/bloodborne_blocks/geometry.json");
-  if(file==null||file.blocks==null)throw new IllegalStateException("Invalid geometry.json: missing blocks");
-  BLOCKS.clear();STATES.clear();BLOCKS.putAll(file.blocks);
-  Map<String,GeometryState> profiles=new HashMap<>();if(file.profiles!=null)profiles.putAll(file.profiles);
-  if(definitions.blocks.stream().anyMatch(definition->definition.modular)){
-   FileData modular=readGeometry("/bloodborne_blocks/v2/geometry.json");
-   if(modular==null||modular.blocks==null)throw new IllegalStateException("Invalid v2 geometry.json: missing blocks");
-   for(var entry:modular.blocks.entrySet())if(BLOCKS.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Legacy/modular geometry conflict "+entry.getKey());
-   if(modular.profiles!=null)for(var entry:modular.profiles.entrySet())if(profiles.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Legacy/modular geometry profile conflict "+entry.getKey());
-  }
-  if(definitions.blocks.stream().anyMatch(definition->definition.logical)){
-   FileData logical=readGeometry("/bloodborne_blocks/logical/geometry.json");
-   if(logical==null||logical.blocks==null)throw new IllegalStateException("Invalid logical geometry.json: missing blocks");
-   for(var entry:logical.blocks.entrySet())if(BLOCKS.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Logical geometry conflict "+entry.getKey());
-   if(logical.profiles!=null)for(var entry:logical.profiles.entrySet())if(profiles.putIfAbsent(entry.getKey(),entry.getValue())!=null)throw new IllegalStateException("Logical geometry profile conflict "+entry.getKey());
-   for(var entry:LogicalContractV2.load(definitions).entrySet())BLOCKS.put(entry.getKey(),entry.getValue());
-  }
+  if(definitions.blocks==null||definitions.blocks.isEmpty()||definitions.blocks.stream().anyMatch(definition->!definition.logical))throw new IllegalStateException("Production runtime accepts logical definitions only");
+  FileData logical=readGeometry("/bloodborne_blocks/logical/geometry.json");
+  if(logical==null||logical.blocks==null)throw new IllegalStateException("Invalid logical geometry.json: missing blocks");
+  if(logical.profiles!=null&&!logical.profiles.isEmpty())throw new IllegalStateException("Production geometry must not use profile aliases");
+  BLOCKS.clear();STATES.clear();BLOCKS.putAll(logical.blocks);
+  for(var entry:LogicalContractV2.load(definitions).entrySet())BLOCKS.put(entry.getKey(),entry.getValue());
   Set<GeometryState> prepared=Collections.newSetFromMap(new IdentityHashMap<>());
   for(BloodborneBlocks.Definition definition:definitions.blocks){
    GeometryBlock block=BLOCKS.get(definition.id);
@@ -76,7 +65,7 @@ final class GeometryRuntime {
    for(String stateKey:definition.states.keySet()){
     GeometryState state=block.states.get(stateKey);
     if(state==null)throw new IllegalStateException("Missing geometry state "+definition.id+"["+stateKey+"]");
-    if(state.ref!=null){state=profiles.get(state.ref);if(state==null)throw new IllegalStateException("Missing geometry profile "+blockId(definition.id,stateKey,block.states.get(stateKey).ref));block.states.put(stateKey,state);}
+    if(state.ref!=null)throw new IllegalStateException("Production geometry must not use profile reference "+blockId(definition.id,stateKey,state.ref));
     if(prepared.add(state))prepare(definition.id,stateKey,state);
    }
   }
@@ -177,7 +166,6 @@ final class GeometryRuntime {
  }
 
  static VoxelShape cellShape(BlockState rootState,BlockPos offset,boolean outline){
-  if(rootState.getBlock() instanceof ArchitectureBlock block&&PaletteAliases.removed(block.definition.id))return VoxelShapes.empty();
   GeometryState geometry=state(rootState);if(geometry==null)return VoxelShapes.empty();
   GeometryCell cell=geometry.parsedCells.get(offset);if(cell==null)return VoxelShapes.empty();
   return outline?cell.outlineShape:cell.collisionShape;

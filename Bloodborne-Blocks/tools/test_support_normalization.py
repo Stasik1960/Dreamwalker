@@ -10,6 +10,18 @@ from logical_contract_v2 import load_contracts, rotate_box, rotate_cell, master_
 from test_support_collision import cube
 
 
+PRODUCTION_INPUTS = ROOT / 'docs' / 'production-authoring-inputs.json.gz'
+# These state-mesh identities intentionally differ from the frozen all-palette
+# evidence. C282 is a user-directed semantic correction; the remainder are
+# production mesh deduplication outputs. Their non-mesh source identities still
+# must agree with the frozen authoritative input.
+PRODUCTION_MESH_IDENTITY_EXCEPTIONS = {
+    'o_c001', 'o_c008_1', 'o_c008_2', 'o_c008_3', 'o_c008_5', 'o_c1962_b',
+    'o_c1979_1', 'o_c1979_2', 'o_c1979_3', 'o_c1979_4', 'o_c1979_5', 'o_c282',
+    'o_c561', 'o_c618',
+}
+
+
 def fixture(low=(0,-.25,0), high=(1,1,1), *, policy='FLOOR', collision_policy='SIMPLE_BOX'):
     meshes, states = {}, {}
     for yaw, facing in zip((0,90,180,270), ('north','east','south','west')):
@@ -140,20 +152,29 @@ class SupportNormalizationTests(unittest.TestCase):
         data,transform = load_contracts(RES)
         with gzip.open(RES/'meshes.json.gz','rt',encoding='utf8') as stream:
             meshes = json.load(stream)
-        with gzip.open(ROOT/'docs/support-normalization-baseline.json.gz','rt',encoding='utf8') as stream:
-            baseline = json.load(stream)
-        old = {family['id']:family for family in baseline['families']}
-        baseline_normalized, _ = normalize(baseline,meshes)
-        expected_by_id = {family['id']:family for family in baseline_normalized['families']}
+        with gzip.open(PRODUCTION_INPUTS,'rt',encoding='utf8') as stream:
+            frozen = json.load(stream)
+        frozen_by_id = {family['id']:family for family in frozen['contracts']['families']}
+        manifest = json.loads((ROOT/'docs/production-logical-palette.json').read_text(encoding='utf8'))
+        expected_ids = {row['id'] for row in manifest['objects']}
+        self.assertEqual({family['id'] for family in data['families']},expected_ids)
+        self.assertTrue(PRODUCTION_MESH_IDENTITY_EXCEPTIONS <= expected_ids)
         normalized, report = normalize(data,meshes)
         self.assertEqual(data, normalized)
         self.assertEqual(report['summary']['fail_families'],0)
         self.assertEqual(report['summary']['below_support_families'],0)
         checks = 0
         for family in data['families']:
-            if family['id'] in old:
-                self.assertEqual(source_identity(family),source_identity(old[family['id']]))
-                self.assertEqual(family,expected_by_id[family['id']])
+            frozen_identity = source_identity(frozen_by_id[family['id']])
+            current_identity = source_identity(family)
+            if family['id'] not in PRODUCTION_MESH_IDENTITY_EXCEPTIONS:
+                self.assertEqual(current_identity,frozen_identity)
+            else:
+                # Preserve all non-mesh source authority while allowing only
+                # the declared production C282/dedup mesh substitutions.
+                self.assertNotEqual(current_identity,frozen_identity)
+                self.assertEqual({key:value for key,value in current_identity.items() if key!='states'},
+                                 {key:value for key,value in frozen_identity.items() if key!='states'})
             for state in family['states'].values():
                 if family['collision_policy'] not in FUNCTIONAL:
                     self.assertLessEqual(len(state['collision_footprint']['boxes']),3)

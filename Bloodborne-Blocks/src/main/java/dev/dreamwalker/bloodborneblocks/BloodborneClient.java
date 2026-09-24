@@ -31,15 +31,8 @@ public final class BloodborneClient implements ClientModInitializer {
   return 0;
  }
  public void onInitializeClient(){
-  Map<String,ModularMeshData.Mesh> modularMeshes=ModularMeshData.loadAndValidate();
-  Map<String,ModularMeshData.Mesh> logicalMeshes=BloodborneBlocks.DATA.blocks.stream().anyMatch(definition->definition.logical)?ModularMeshData.loadLogicalAndValidate():Map.of();
+  Map<String,ModularMeshData.Mesh> logicalMeshes=ModularMeshData.loadLogicalAndValidate();
   EntityRendererRegistry.register(BloodborneBlocks.SEAT_ENTITY,EmptyEntityRenderer::new);
-  if(BloodborneBlocks.DATA.compat_layers!=null)BloodborneBlocks.DATA.compat_layers.forEach((name,layer)->{
-   var id=new Identifier(name);if(net.minecraft.registry.Registries.BLOCK.containsId(id)){
-    var block=net.minecraft.registry.Registries.BLOCK.get(id);
-    if(net.minecraft.client.render.RenderLayers.getBlockLayer(block.getDefaultState())!=RenderLayer.getTranslucent())BlockRenderLayerMap.INSTANCE.putBlock(block,RenderLayer.getCutout());
-   }
-  });
   for(ArchitectureBlock block:BloodborneBlocks.BLOCKS.values()){
    String layer=block.definition.layer;BlockRenderLayerMap.INSTANCE.putBlock(block,layer.equals("translucent")?RenderLayer.getTranslucent():layer.equals("cutout")?RenderLayer.getCutout():RenderLayer.getSolid());
    ColorProviderRegistry.BLOCK.register((state,view,pos,index)->MinecraftClient.getInstance().getBlockColors().getColor(block.original(state),view,pos,index),block);
@@ -72,18 +65,11 @@ public final class BloodborneClient implements ClientModInitializer {
    }
    if(block==null)return model;
    net.minecraft.client.render.model.BakedModel result=model;
-   if(block.definition.modular){
-    ModularMeshData.Mesh mesh=modularMeshes.get(block.definition.id);if(mesh==null)throw new IllegalStateException("Missing modular mesh "+block.definition.id);
-    int turns=facingTurns(modelId.getVariant());
-    String cacheKey=block.definition.id+":"+turns;
-    result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,turns,bake.textureGetter(),sharedFaces)),result);
-   }
-   if(block.definition.logical){
-    String inventoryKey=BloodborneBlocks.key(BloodborneBlocks.applyPlacementProperties(block.definition,block.getDefaultState()));
-    String meshKey=block.definition.models.get(modelId.getVariant());
-    if(meshKey==null&&modelId.getVariant().equals("inventory"))meshKey=block.definition.models.get(inventoryKey);
-    if(meshKey==null)throw new IllegalStateException("Missing logical mesh state "+block.definition.id+"["+modelId.getVariant()+"]");
-    ModularMeshData.Mesh mesh=logicalMeshes.get(meshKey);if(mesh==null)throw new IllegalStateException("Missing logical mesh "+meshKey+" for "+block.definition.id);
+   String inventoryKey=BloodborneBlocks.key(BloodborneBlocks.applyPlacementProperties(block.definition,block.getDefaultState()));
+   String meshKey=block.definition.models.get(modelId.getVariant());
+   if(meshKey==null&&modelId.getVariant().equals("inventory"))meshKey=block.definition.models.get(inventoryKey);
+   if(meshKey==null)throw new IllegalStateException("Missing logical mesh state "+block.definition.id+"["+modelId.getVariant()+"]");
+   ModularMeshData.Mesh mesh=logicalMeshes.get(meshKey);if(mesh==null)throw new IllegalStateException("Missing logical mesh "+meshKey+" for "+block.definition.id);
     // Logical meshes are generated in their complete state orientation; do not rotate them again.
     String visualPath=block.definition.visual_models==null?null:block.definition.visual_models.get(modelId.getVariant().equals("inventory")?inventoryKey:modelId.getVariant());
     Optional<ModularMeshData.Mesh> appearance=visualPath==null?Optional.of(mesh):visuals.resolve(visualPath);
@@ -93,7 +79,6 @@ public final class BloodborneClient implements ClientModInitializer {
      String cacheKey=visualPath==null?"logical:"+meshKey:"visual:"+visualPath;
      result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,false)),result);
     }
-   }
    if(block.definition.emissive){
     List<EmissiveModel.Pair>pairs=new ArrayList<>();
     for(var e:BloodborneBlocks.DATA.emissive_textures.entrySet()){
