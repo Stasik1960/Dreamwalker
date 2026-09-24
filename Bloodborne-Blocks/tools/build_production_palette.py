@@ -4,7 +4,7 @@ Default is a staging/dry run. --apply publishes the validated, explicit file pla
 Original world/pack and historical review documents are never modified.
 """
 from __future__ import annotations
-import argparse, copy, gzip, hashlib, json, shutil, zipfile
+import argparse, copy, gzip, hashlib, json, os, shutil, tempfile, zipfile
 from collections import Counter
 from pathlib import Path
 from build_visual_slots import build as visual_slots, key, write
@@ -21,6 +21,9 @@ FACINGS=('north','east','south','west')
 def semantic_label(identifier,locale):
     """Latest reviewed meaning supersedes the source-carrier-era item names."""
     labels={
+        'o_barrel':('Barrel','Бочка'),
+        'o_books':('Books','Книги'),
+        'o_bag':('Bag','Мешок'),
         'o_c1491':('Grave','Могила'),
         'o_c1962':('Sack','Мешок'),
         'o_c1979':('Reviewed composition','Композиция по разметке'),
@@ -85,6 +88,22 @@ def assemble(data):
             pattern['master_from_review_origin']=[0,-1,0]
             pattern['matching_evidence']='whole C282; source unchanged, floor master one below source carrier; outer-edge hinges'
     defs['o_c282']=door['definition'];families['o_c282']=door['contract'];meshes.update(door['meshes'])
+    from restore_functional import compile_functional
+    from restore_c003 import compile_c003
+    restored=compile_functional(data); split=compile_c003(data)
+    for result in (restored,split):
+        defs.update({b['id']:b for b in result['blocks']})
+        families.update({f['id']:f for f in result['families']})
+        meshes.update(result['meshes']);selected.update(b['id'] for b in result['blocks'])
+    selected.remove('o_c003')
+    # Preserve other saved review objects, but route their identical raw prop
+    # occurrences to the latest independent semantic families. Their historical
+    # layouts remain available for manual placement, not competing matchers.
+    redirects={'o_c046':'o_cases_0','o_c1319':'o_books','o_c1962_a':'o_bag','o_c1962_b':'o_bag'}
+    for old,new in redirects.items():
+        families[old]['migration_redirect']={'successor':new,'reason':'Latest C003 independent prop semantics; preserve other reviewed palette forms'}
+        for state in families[old]['states'].values():state['migration_source_pattern']=[]
+    families['o_dark_oak_door']['supersedes_targets']=['o_c282']
     # Same statue at a second root: retain atomic transaction and its placement,
     # use a state override rather than a second registry family.
     for family in families.values():
@@ -98,6 +117,9 @@ def assemble(data):
     blocks=[defs[i] for i in sorted(selected)]
     contract={**data['contracts'],'families':[families[i] for i in sorted(selected)]}
     for block in blocks:block['creative']=True
+    door['evidence']['functional_restoration']=restored['evidence']
+    door['evidence']['c003_correction']=split['evidence']
+    door['evidence']['raw_source_redirects']=redirects
     return blocks,contract,meshes,door['evidence']
 
 def texture_resource(name):
@@ -122,8 +144,13 @@ def textures_for_stage(meshes):
             source='bloodborne_blocks:block/production-source/'+source.split(':',1)[1].replace('/','-')
         else:
             path=RES/texture_resource(source)
-            if not path.is_file():raise ValueError('missing reviewed texture '+texture)
-            meta=path.with_suffix('.png.mcmeta'); payload=path.read_bytes();extra=meta.read_bytes() if meta.exists() else b''
+            if not path.is_file():
+                name=texture_resource(texture).replace('assets/bloodborne_blocks/','assets/minecraft/',1)
+                if name not in pack.namelist():raise ValueError('missing reviewed texture '+texture)
+                payload=pack.read(name);extra=pack.read(name+'.mcmeta') if name+'.mcmeta' in pack.namelist() else b''
+                source=texture
+            else:
+                meta=path.with_suffix('.png.mcmeta'); payload=path.read_bytes();extra=meta.read_bytes() if meta.exists() else b''
         h=hashlib.sha256(payload+b'\0'+extra).hexdigest()
         canonical=by_content.setdefault(h,source);aliases[texture]=canonical
         files[texture_resource(canonical)]=payload
@@ -137,14 +164,16 @@ def manifest(data,blocks,contracts,door):
     families={f['id']:f for f in contracts['families']}; keep=set(families)
     patterns=usage['exact_reviewed_patterns']
     objects=[]
+    restored_ids={r['id'] for r in read(ROOT/'docs/required-production-families.json')['restorations']}
     for b in blocks:
         f=families[b['id']];review=f.get('review_id')
-        reviews=['C001','C009'] if b['id']=='o_c001' else [review] if review else ['POC']
+        reviews=['C001','C009'] if b['id']=='o_c001' else [review] if review else ['FUNCTIONAL_RESTORATION'] if b['id'] in restored_ids else ['POC']
         evidence=[p for p in patterns if any(t['id']==b['id'] or (b['id']=='o_c008_2' and t['id']=='o_c008_4') for t in p['targets'])]
         label=data['languages']['en_us'].get('block.bloodborne_blocks.'+b['id'],b['id'])
         label=semantic_label(b['id'],'en_us') or label
         objects.append({'id':b['id'],'status':'PRODUCTION','semantic_label':label+' ['+b['id']+']',
-            'source_reviews':reviews,'provenance':['latest user corrections','NightmareRunning QA','reviewed batch-02' if review else 'approved Contract V2 POC'],
+            'source_reviews':reviews,'provenance':(['explicit user-required restoration','frozen geometry/source rules recompiled into Contract V2'] if b['id'] in restored_ids else ['latest user corrections','NightmareRunning QA','reviewed batch-02' if review else 'approved Contract V2 POC']),
+            'migration_redirect':f.get('migration_redirect'),
             'placement_policy':f['placement_policy'],'collision_policy':f['collision_policy'],
             'source_patterns':[{'signature':p['signature'],'count':p['count'],'origins':p['origins'],'raw':p['pattern']} for p in evidence],
             'source_occurrences':sum(p['count'] for p in evidence),
@@ -152,14 +181,13 @@ def manifest(data,blocks,contracts,door):
             'occurrence_scope':'exact source matches before placement-conflict checks, not converted count',
             'model_variant_relationship':b['properties'],'visual':{'base':'authored baked mesh','alt':'BASE fallback; same gameplay'},
             'migration_target':b['id'],'migration_policy':'exact raw source + guards; atomic split; fail closed on foreign occupancy'})
-    old_splits={'o_c008','o_c1491','o_c1962','o_c1979','o_c471','o_c654'}
-    fragments={'o_c001_a','o_c001_b','o_c009_a','o_c009_b','o_c282_a','o_c282_b'}
+    required=read(ROOT/'docs/required-production-families.json')
     exclusions=[]
     for b in data['definitions']['blocks']:
         i=b['id']
         if i in keep:continue
-        reason='REMOVED_DUPLICATE' if i=='o_c008_4' else 'REMOVED_FRAGMENT' if i in fragments else 'REMOVED_SUPERSEDED' if i in old_splits else 'REMOVED_COMPATIBILITY' if i in data['hidden'] else 'UNRESOLVED'
-        exclusions.append({'id':i,'status':reason,'reason':'not independently approved after current corrections; retain evidence offline, no runtime ID' if reason=='UNRESOLVED' else 'latest manual semantic correction supersedes historical QA representation'})
+        decision=required['successors'].get(i)
+        exclusions.append({'id':i, **(dict(decision,reason='Explicit semantic successor; no old runtime item') if decision else required['remaining_audited_filtered_families'])})
     return {'schemaVersion':1,'authority':'latest user corrections; no authoritative modded world requires compatibility',
         'source_world_sha256':summary['source_sha256'],'source_pack_sha256':summary['pack_sha256'],
         'source_scan':summary,'objects':objects,'excluded':exclusions,'c282':door,
@@ -212,7 +240,7 @@ def build(apply=False):
     write(STAGE/'bloodborne_blocks/aliases.json',{'removed':[],'aliases':{}})
     shutil.copyfile(LOGICAL/'transform-v2.json',logical/'transform-v2.json')
     for b in blocks:
-        ident=b['id'];write(STAGE/f'assets/bloodborne_blocks/models/item/{ident}.json',data['items'][ident])
+        ident=b['id'];write(STAGE/f'assets/bloodborne_blocks/models/item/{ident}.json',data['items'].get(ident,data['items'].get(ident+'_0',{'parent':'minecraft:block/block','display':{'gui':{'scale':[.5,.5,.5]}}})))
         write(STAGE/f'data/bloodborne_blocks/loot_tables/blocks/{ident}.json',{'type':'minecraft:block','pools':[{'rolls':1,'entries':[{'type':'minecraft:item','name':'bloodborne_blocks:'+ident}]}]})
     visual_slots(STAGE)
     # Stitch emissive companions through explicit model texture slots.
@@ -259,6 +287,8 @@ def build(apply=False):
           'texture_aliases':{k:v for k,v in texture_aliases.items() if k!=v},
           'deletion_boundary':'only generated resources under project src/main/resources; originals immutable'}
     write(ROOT/'docs/production-logical-palette.json',final)
+    from production_coverage import validate
+    validate(resources=logical)
     ledger=ROOT/'docs/production-resource-pruning.json'
     if ledger.exists():
         previous=read(ledger)
@@ -272,7 +302,13 @@ def build(apply=False):
             if not any(path.is_relative_to(root.resolve()) for root in managed):raise ValueError('unsafe deletion '+str(path))
             path.unlink()
         for relative in sorted(staged):
-            target=RES/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(STAGE/relative,target)
+            target=RES/relative;target.parent.mkdir(parents=True,exist_ok=True)
+            payload=(STAGE/relative).read_bytes()
+            if target.exists() and target.read_bytes()==payload:continue
+            with tempfile.NamedTemporaryFile(dir=target.parent,prefix='.publish-',delete=False) as stream:
+                temporary=Path(stream.name);stream.write(payload)
+            try:os.replace(temporary,target)
+            finally:temporary.unlink(missing_ok=True)
     print(json.dumps({'production':len(blocks),'mesh_count':len(canonical),'removed_resource_files':len(obsolete),'applied':apply}))
     return final
 

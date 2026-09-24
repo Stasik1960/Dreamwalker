@@ -36,6 +36,7 @@ final class GeometryRuntime {
   String ref;
   int rotation;
   double[] globalOutline;
+  transient List<double[]> gameplayBoxes;
   String placementPolicy;
   String mirrorPolicy;
   transient Map<BlockPos,GeometryCell> parsedCells;

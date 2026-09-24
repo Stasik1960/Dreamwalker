@@ -11,6 +11,12 @@ class ProductionGalleryTests(unittest.TestCase):
         self.assertEqual(canonical_properties(definition), ("facing=north,open=false,variant=source_depth,visual=base",
                          {"facing": "north", "open": "false", "visual": "base", "variant": "source_depth"}))
 
+    def test_wall_origin_lifts_below_origin_helpers_above_pad(self):
+        rows = [{"bounds": (0, -1.5, 0, 1, 1, 1), "footprint": [(0, 0, 0), (0, -1, 0)]}]
+        plan(rows)
+        self.assertEqual(rows[0]["position"][1], 66)
+        self.assertGreater(min(rows[0]["position"][1] + c[1] for c in rows[0]["footprint"]), 63)
+
     def test_plan_keeps_root_and_pad_covering_helpers_and_render(self):
         rows = [{"bounds": (-2.2, 0, -1.2, 1.1, 2, 1.1), "footprint": [(0, 0, 0), (4, 0, 0)]}]
         plan(rows, columns=1)

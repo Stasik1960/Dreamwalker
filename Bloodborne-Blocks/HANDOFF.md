@@ -1,6 +1,32 @@
 # Bloodborne-Blocks — актуальный handoff, 2026-09-24
 
-## Текущий checkpoint: production palette cleanup
+## Текущий checkpoint: functional production restoration + C003 correction
+
+Покрыты **24/251** отфильтрованных families: **21/21 обязательных functional**
+восстановлены напрямую, ещё три старые prop families заменены successors C003.
+Остальные **227** отмечены `INTENTIONALLY_DEFERRED`, а не
+потеряны молча. Сейчас **56 production logical IDs + internal helper**, 1780
+BASE/ALT states. Это не полный каталог resource pack.
+
+- C003 отменён: три независимые бочки используют `o_barrel`; книги `o_books`,
+  мешки `o_bag`, багаж `o_cases_0`. Weighted geometry variants не registry IDs;
+  BASE/ALT — отдельное свойство. Старого `o_c003` в runtime/item нет.
+- Три прежние двери и ставни снова в Contract V2: неподвижный master/frame,
+  отдельные closed/open meshes и collision створок, без leaf-items.
+- C002 и пять одобренных групп C1979 сохранены; добавлен regression gate на
+  textured vertices и source patterns относительно frozen authoring input.
+- Независимый input `docs/required-production-families.json` сверяется с frozen
+  source mapping/census, Contract V2, registry и галереей. Нельзя уменьшить
+  production selection и тем самым незаметно уменьшить ожидаемое покрытие.
+- Discovery и source-world scan **не запускались**. Конвертировались только
+  маленькие synthetic regression fixtures; полного города и batch-03 нет.
+
+Начать с [отчёта восстановления](docs/PRODUCTION-RESTORATION.md),
+[проверок и coverage](docs/production-restoration-checks/README.md),
+[локальных артефактов](../releases/Bloodborne-Blocks/README.md).
+Следующий шаг — клиентская визуальная приёмка новой галереи, не city conversion.
+
+## История: production palette cleanup (до восстановления)
 
 После полного read-only анализа правильного source-world и сверки последних
 corrections в runtime осталось **33 logical blocks/items + 1 internal helper**,

@@ -19,6 +19,7 @@ OUTPUT = ROOT / "build/production-gallery-saves/production-palette-gallery-20260
 PART = "bloodborne_blocks:logical_part"
 FLOOR = "minecraft:white_concrete"
 GAP = 10
+ALT_PROOF_IDS = ("o_c001", "o_c002")
 
 
 def require(value: bool, message: str) -> None:
@@ -37,6 +38,14 @@ def canonical_properties(definition: dict[str, Any]) -> tuple[str, dict[str, str
     return key, values
 
 
+def specimen_properties(definition: dict[str, Any], **overrides: str) -> tuple[str, dict[str, str]]:
+    _key, values = canonical_properties(definition)
+    values.update(overrides)
+    key = state_key(values)
+    require(key in definition["states"], f"specimen state missing for {definition['id']}: {key}")
+    return key, values
+
+
 def plan(specimens: list[dict[str, Any]], columns: int = 4) -> None:
     require(columns > 0, "columns must be positive")
     x = z = 32
@@ -46,7 +55,11 @@ def plan(specimens: list[dict[str, Any]], columns: int = 4) -> None:
         width, depth = high_x - low_x + 1, high_z - low_z + 1
         if number and number % columns == 0:
             x, z, row_depth = 32, z + row_depth + GAP + 4, 0
-        root = (x - low_x, ROOT_Y, z - low_z)
+        # Wall-mounted contracts may own cells below their placement origin.
+        # Lift the specimen, not its contract, so helpers cannot replace the pad.
+        lowest_y = min(0, math.floor(specimen["bounds"][1]),
+                       min(cell[1] for cell in specimen["footprint"]))
+        root = (x - low_x, ROOT_Y - lowest_y, z - low_z)
         specimen["position"] = root
         specimen["pad"] = (x - 2, z - 2, x + width + 1, z + depth + 1)
         x += width + GAP + 4
@@ -67,11 +80,8 @@ def load_specimens(manifest_path: Path = MANIFEST) -> tuple[list[dict], list[dic
     with gzip.open(LOGICAL / "meshes.json.gz", "rt", encoding="utf8") as stream:
         meshes = json.load(stream)
     specimens = []
-    for item in selected:
+    def add(item: dict, definition: dict, contract: dict, state: str, properties: dict[str, str], role: str) -> None:
         ident = item["id"]
-        definition, contract = definitions.get(ident), contracts.get(ident)
-        require(definition is not None and contract is not None, f"production member must be current Contract V2: {ident}")
-        state, properties = canonical_properties(definition)
         render = contract["states"].get(state, {}).get("render_mesh")
         require(render is not None, f"contract render missing: {ident} {state}")
         footprint = geometry_cells(ident, state, contracts, geometry)
@@ -79,9 +89,29 @@ def load_specimens(manifest_path: Path = MANIFEST) -> tuple[list[dict], list[dic
         source_reviews = item.get("source_reviews", [item.get("source_review", contract.get("review_id", "unreviewed"))])
         require(isinstance(source_reviews, list) and all(isinstance(review, str) and review for review in source_reviews),
                 f"invalid SourceReview marker for {ident}")
-        specimens.append({"id": ident, "state": state, "properties": properties, "semantic_label": item.get("semantic_label", ident),
+        specimens.append({"id": ident, "specimen_id": ident + ":" + role, "role": role, "state": state,
+                          "properties": properties, "semantic_label": item.get("semantic_label", ident),
                           "source_review": ", ".join(source_reviews),
                           "bounds": rendered_mesh_bounds(meshes[render["id"]], render), "footprint": footprint})
+
+    for item in selected:
+        ident = item["id"]
+        definition, contract = definitions.get(ident), contracts.get(ident)
+        require(definition is not None and contract is not None, f"production member must be current Contract V2: {ident}")
+        state, properties = canonical_properties(definition)
+        add(item, definition, contract, state, properties, "canonical_base")
+        if definition.get("behavior") in {"door", "shutter", "gate"}:
+            require("open" in definition.get("properties", {}), f"interactive production object lacks open state: {ident}")
+            state, properties = specimen_properties(definition, open="true")
+            add(item, definition, contract, state, properties, "open")
+    for ident in ALT_PROOF_IDS:
+        item = next((row for row in selected if row["id"] == ident), None)
+        if item is None:
+            continue
+        definition, contract = definitions[ident], contracts[ident]
+        require(definition.get("properties", {}).get("visual") == ["base", "alt"], f"ALT proof unavailable: {ident}")
+        state, properties = specimen_properties(definition, visual="alt")
+        add(item, definition, contract, state, properties, "alt_proof")
     plan(specimens)
     return specimens, selected
 
@@ -118,15 +148,16 @@ def build(output: Path = OUTPUT, manifest_path: Path = MANIFEST) -> None:
         marker = (min_x, ROOT_Y, min_z)
         require(marker not in cells, "marker overlaps production object")
         cells[marker] = ("minecraft:oak_sign", {"rotation": "8", "waterlogged": "false"})
-        text = [specimen["id"], specimen["semantic_label"], "SourceReview " + specimen["source_review"], ""]
+        text = [specimen["specimen_id"], specimen["semantic_label"], specimen["state"], "SourceReview " + specimen["source_review"]]
         front = Tag(TAG_COMPOUND, {"messages": Tag(TAG_LIST, [Tag(TAG_STRING, json.dumps({"text": line}, separators=(",", ":"))) for line in text], TAG_STRING),
                                    "color": Tag(TAG_STRING, "black")})
         data = {"id": Tag(TAG_STRING, "minecraft:sign"), "front_text": front, "back_text": front}
         data.update({axis: Tag(TAG_INT, value) for axis, value in zip(("x", "y", "z"), marker)})
-        entities.append(Tag(TAG_COMPOUND, data)); markers.append({"id": specimen["id"], "position": marker, "text": text[:3]})
-        positions.append({key: specimen[key] for key in ("id", "state", "properties", "semantic_label", "source_review", "bounds", "position")})
+        entities.append(Tag(TAG_COMPOUND, data)); markers.append({"specimen_id": specimen["specimen_id"], "role": specimen["role"], "position": marker, "text": text})
+        positions.append({key: specimen[key] for key in ("id", "specimen_id", "role", "state", "properties", "semantic_label", "source_review", "bounds", "position")})
     write_fixture(output, cells, block_entities=entities, floor=False, level_name="Bloodborne production palette gallery")
-    (output / "production-gallery.json").write_text(json.dumps({"manifest_ids": [item["id"] for item in manifest_objects], "positions": positions}, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+    (output / "production-gallery.json").write_text(json.dumps({"manifest_ids": [item["id"] for item in manifest_objects],
+        "unique_logical_count": len(manifest_objects), "specimen_count": len(positions), "positions": positions}, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     (output / "gallery-markers.json").write_text(json.dumps(markers, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
 
 
@@ -137,16 +168,18 @@ def verify(world_path: Path, manifest_path: Path = MANIFEST) -> dict:
     expected, objects = load_specimens(manifest_path)
     metadata = json.loads((world_path / "production-gallery.json").read_text(encoding="utf8"))
     positions = metadata.get("positions", [])
-    require(metadata.get("manifest_ids") == [row["id"] for row in objects] and len(positions) == len(expected), "manifest membership mismatch")
+    require(metadata.get("manifest_ids") == [row["id"] for row in objects] and
+            metadata.get("unique_logical_count") == len(objects) and metadata.get("specimen_count") == len(expected) and
+            len(positions) == len(expected), "manifest membership mismatch")
     defaults = {"bloodborne_blocks:" + row["id"]: row["properties"] for row in expected}
     world, entities = World(world_path, defaults), World(world_path, defaults).block_entities()
     platform_cells = helpers = 0
     for actual, specimen in zip(positions, expected):
-        require(all(actual.get(key) == specimen[key] for key in ("id", "state", "properties", "semantic_label", "source_review")) and
+        require(all(actual.get(key) == specimen[key] for key in ("id", "specimen_id", "role", "state", "properties", "semantic_label", "source_review")) and
                 tuple(actual.get("bounds", ())) == tuple(specimen["bounds"]) and
                 tuple(actual.get("position", ())) == tuple(specimen["position"]), "stale production metadata")
         root = tuple(actual["position"]); name, props = world.get("minecraft:overworld", root) or (None, ())
-        require(root[1] == ROOT_Y and name == "bloodborne_blocks:" + specimen["id"] and dict(props) == specimen["properties"], "root mismatch")
+        require(name == "bloodborne_blocks:" + specimen["id"] and dict(props) == specimen["properties"], "root mismatch")
         for offset in specimen["footprint"]:
             point = tuple(root[index] + offset[index] for index in range(3))
             if offset != (0, 0, 0):
@@ -161,7 +194,7 @@ def verify(world_path: Path, manifest_path: Path = MANIFEST) -> dict:
                 platform_cells += 1
     nbt = read_nbt(world_path / "level.dat"); validate_level_metadata(nbt)
     require(compound(compound(nbt.root)["Data"])["LevelName"].value == "Bloodborne production palette gallery", "level name mismatch")
-    return {"objects": len(expected), "helpers": helpers, "platform_cells": platform_cells, "result": "PASS"}
+    return {"unique_logical_count": len(objects), "specimen_count": len(expected), "helpers": helpers, "platform_cells": platform_cells, "result": "PASS"}
 
 
 def package(world_path: Path, output_zip: Path, manifest_path: Path = MANIFEST) -> dict:

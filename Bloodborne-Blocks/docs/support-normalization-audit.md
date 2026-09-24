@@ -7,15 +7,15 @@ A source cuboid count cannot be reconstructed from an untagged polygon mesh; `re
 
 ```json
 {
-  "families": 33,
-  "states": 524,
-  "ground_families": 30,
+  "families": 56,
+  "states": 1780,
+  "ground_families": 49,
   "below_support_families": 0,
   "automatically_corrected_families": 0,
-  "ambiguous_mount_families": 3,
-  "old_collision_boxes": 812,
-  "new_collision_boxes": 812,
-  "max_ordinary_collision_boxes": 2,
+  "ambiguous_mount_families": 7,
+  "old_collision_boxes": 2140,
+  "new_collision_boxes": 2140,
+  "max_ordinary_collision_boxes": 3,
   "families_with_old_helpers_below": 0,
   "families_with_helpers_below": 0,
   "fail_families": 0
@@ -24,9 +24,15 @@ A source cuboid count cannot be reconstructed from an untagged polygon mesh; `re
 
 | ID | Placement | old minY | Y correction | old → new boxes (sum) | Policy | helpers (max) | below before → after | Status |
 | --- | --- | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| o_acacia_door  | FLOOR | 0 | 0 | 32 → 32 | DOOR | 18 | 0 → 0 | PASS |
+| o_bag  | FLOOR | 0 | 0 | 32 → 32 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
+| o_barrel  | FLOOR | 0 | 0 | 48 → 48 | SIMPLE_BOX | 7 | 0 → 0 | PASS |
+| o_bench  | FLOOR | 0 | 0 | 24 → 24 | THREE_BOX | 22 | 0 → 0 | PASS |
+| o_bench_rotate  | FLOOR | 0 | 0 | 24 → 24 | THREE_BOX | 36 | 0 → 0 | PASS |
+| o_birch_door  | FLOOR | 0 | 0 | 32 → 32 | DOOR | 12 | 0 → 0 | PASS |
+| o_books  | FLOOR | 0 | 0 | 0 → 0 | NONE | 0 | 0 → 0 | PASS |
 | o_c001  | FLOOR | 0 | 0 | 48 → 48 | TRUNK | 9 | 0 → 0 | PASS |
 | o_c002  | FLOOR | 0 | 0 | 8 → 8 | SIMPLE_BOX | 0 | 0 → 0 | PASS |
-| o_c003  | FLOOR | 0 | 0 | 16 → 16 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
 | o_c008_1  | FLOOR | 0 | 0 | 8 → 8 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
 | o_c008_2  | FLOOR | 0 | 0 | 8 → 8 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
 | o_c008_3  | FLOOR | 0 | 0 | 8 → 8 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
@@ -53,15 +59,36 @@ A source cuboid count cannot be reconstructed from an untagged polygon mesh; `re
 | o_c618  | FLOOR | 0 | 0 | 32 → 32 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
 | o_c654_a  | WALL_ADJACENT | 0.1875 | 0 | 16 → 16 | SIMPLE_BOX | 9 | 0 → 0 | WARN |
 | o_c654_b  | WALL_ADJACENT | 0.1875 | 0 | 8 → 8 | SIMPLE_BOX | 8 | 0 → 0 | WARN |
+| o_candles_0  | FLOOR | 0.625 | 0 | 16 → 16 | SIMPLE_BOX | 26 | 0 → 0 | PASS |
+| o_carved_balustrade  | FLOOR | 0 | 0 | 128 → 128 | SIMPLE_BOX | 0 | 0 → 0 | PASS |
 | o_cases_0  | FLOOR | 0 | 0 | 8 → 8 | SIMPLE_BOX | 0 | 0 → 0 | PASS |
+| o_dark_oak_door  | FLOOR | 0 | 0 | 32 → 32 | DOOR | 12 | 0 → 0 | PASS |
+| o_high_balustrade  | FLOOR | 0 | 0 | 128 → 128 | SIMPLE_BOX | 2 | 0 → 0 | PASS |
 | o_iron_gate  | FLOOR | 0 | 0 | 32 → 32 | GATE | 48 | 0 → 0 | PASS |
 | o_iron_railing  | FLOOR | 0 | 0 | 384 → 384 | FENCE | 1 | 0 → 0 | PASS |
+| o_ladder_01  | WALL_ADJACENT | -0.1875 | 0 | 0 → 0 | NONE | 26 | 0 → 0 | WARN |
+| o_ladder_02  | WALL_ADJACENT | 0 | 0 | 0 → 0 | NONE | 5 | 0 → 0 | WARN |
+| o_ladder_03  | WALL_ADJACENT | -1 | 0 | 0 → 0 | NONE | 11 | 0 → 0 | WARN |
+| o_lantern  | FLOOR | 0.1875 | 0 | 16 → 16 | SIMPLE_BOX | 2 | 0 → 0 | PASS |
+| o_lanterns  | FLOOR | 0 | 0 | 16 → 16 | SIMPLE_BOX | 17 | 0 → 0 | PASS |
+| o_lightning_rod  | FLOOR | 0 | 0 | 48 → 48 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
+| o_oak_wood  | FLOOR | 0 | 0 | 48 → 48 | SIMPLE_BOX | 17 | 0 → 0 | PASS |
+| o_ornate_balustrade  | FLOOR | 0 | 0 | 128 → 128 | SIMPLE_BOX | 1 | 0 → 0 | PASS |
+| o_shuttered_window  | WALL_ADJACENT | -1 | 0 | 64 → 64 | DOOR | 17 | 0 → 0 | WARN |
+| o_stepped_balustrade  | FLOOR | 0 | 0 | 128 → 128 | SIMPLE_BOX | 0 | 0 → 0 | PASS |
+| o_stone_curb  | FLOOR | 0 | 0 | 128 → 128 | SIMPLE_BOX | 0 | 0 → 0 | PASS |
+| o_stone_railing  | FLOOR | 0 | 0 | 256 → 256 | SIMPLE_BOX | 0 | 0 → 0 | PASS |
 | o_wall_deco_1  | WALL_ADJACENT | 0 | 0 | 0 → 0 | NONE | 0 | 0 → 0 | WARN |
+| o_wall_lantern  | FLOOR | 0.4375 | 0 | 16 → 16 | SIMPLE_BOX | 8 | 0 → 0 | PASS |
 
 ## Manual review / warnings
 
 - `o_c654_a`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
 - `o_c654_b`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
+- `o_ladder_01`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
+- `o_ladder_02`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
+- `o_ladder_03`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
+- `o_shuttered_window`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
 - `o_wall_deco_1`: AMBIGUOUS_MOUNT_POLICY. wall/ceiling/hanging/support policy has no explicit plane; no floor inference
 
 Already-simple authored collision is retained, not modified to manufacture before/after reductions.

@@ -1,0 +1,1728 @@
+{
+  "manifest_ids": [
+    "o_acacia_door",
+    "o_bag",
+    "o_barrel",
+    "o_bench",
+    "o_bench_rotate",
+    "o_birch_door",
+    "o_books",
+    "o_c001",
+    "o_c002",
+    "o_c008_1",
+    "o_c008_2",
+    "o_c008_3",
+    "o_c008_5",
+    "o_c028",
+    "o_c046",
+    "o_c1319",
+    "o_c1491_a",
+    "o_c1491_b",
+    "o_c1491_c",
+    "o_c1680",
+    "o_c1962_a",
+    "o_c1962_b",
+    "o_c1979_1",
+    "o_c1979_2",
+    "o_c1979_3",
+    "o_c1979_4",
+    "o_c1979_5",
+    "o_c282",
+    "o_c471_a",
+    "o_c471_b",
+    "o_c474",
+    "o_c561",
+    "o_c618",
+    "o_c654_a",
+    "o_c654_b",
+    "o_candles_0",
+    "o_carved_balustrade",
+    "o_cases_0",
+    "o_dark_oak_door",
+    "o_high_balustrade",
+    "o_iron_gate",
+    "o_iron_railing",
+    "o_ladder_01",
+    "o_ladder_02",
+    "o_ladder_03",
+    "o_lantern",
+    "o_lanterns",
+    "o_lightning_rod",
+    "o_oak_wood",
+    "o_ornate_balustrade",
+    "o_shuttered_window",
+    "o_stepped_balustrade",
+    "o_stone_curb",
+    "o_stone_railing",
+    "o_wall_deco_1",
+    "o_wall_lantern"
+  ],
+  "unique_logical_count": 56,
+  "specimen_count": 64,
+  "positions": [
+    {
+      "id": "o_acacia_door",
+      "specimen_id": "o_acacia_door:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,open=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "false",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Acacia Door [o_acacia_door]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.0,
+        0.0,
+        0.9375,
+        2.0,
+        4.0,
+        1.1875
+      ],
+      "position": [
+        33,
+        64,
+        32
+      ]
+    },
+    {
+      "id": "o_acacia_door",
+      "specimen_id": "o_acacia_door:open",
+      "role": "open",
+      "state": "facing=north,open=true,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "true",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Acacia Door [o_acacia_door]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.0,
+        0.0,
+        -0.0625,
+        2.0,
+        4.0,
+        1.1875
+      ],
+      "position": [
+        50,
+        64,
+        33
+      ]
+    },
+    {
+      "id": "o_bag",
+      "specimen_id": "o_bag:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=bag_0,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "bag_0",
+        "visual": "base"
+      },
+      "semantic_label": "Bag [o_bag]",
+      "source_review": "C003",
+      "bounds": [
+        0.1875,
+        0.0,
+        0.1875,
+        0.8125,
+        0.9375,
+        0.8125
+      ],
+      "position": [
+        66,
+        64,
+        32
+      ]
+    },
+    {
+      "id": "o_barrel",
+      "specimen_id": "o_barrel:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=barrel_0,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "barrel_0",
+        "visual": "base"
+      },
+      "semantic_label": "Barrel [o_barrel]",
+      "source_review": "C003",
+      "bounds": [
+        0.03125,
+        0.0,
+        0.03125,
+        0.96875,
+        1.3125,
+        0.96875
+      ],
+      "position": [
+        81,
+        64,
+        32
+      ]
+    },
+    {
+      "id": "o_bench",
+      "specimen_id": "o_bench:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Bench [o_bench]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.9375,
+        0.0,
+        -0.475298,
+        1.9375,
+        2.4483189999999997,
+        1.348728
+      ],
+      "position": [
+        33,
+        64,
+        50
+      ]
+    },
+    {
+      "id": "o_bench_rotate",
+      "specimen_id": "o_bench_rotate:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Bench Rotate [o_bench_rotate]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.206106,
+        0.0,
+        -1.206106,
+        2.020069,
+        2.548958,
+        2.020069
+      ],
+      "position": [
+        51,
+        64,
+        51
+      ]
+    },
+    {
+      "id": "o_birch_door",
+      "specimen_id": "o_birch_door:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,open=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "false",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Birch Door [o_birch_door]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.0,
+        0.0,
+        0.5625,
+        2.0,
+        5.0,
+        0.9375
+      ],
+      "position": [
+        69,
+        64,
+        49
+      ]
+    },
+    {
+      "id": "o_birch_door",
+      "specimen_id": "o_birch_door:open",
+      "role": "open",
+      "state": "facing=north,open=true,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "true",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Birch Door [o_birch_door]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.0,
+        0.0,
+        -0.4375,
+        2.0,
+        5.0,
+        0.9375
+      ],
+      "position": [
+        86,
+        64,
+        50
+      ]
+    },
+    {
+      "id": "o_books",
+      "specimen_id": "o_books:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=books_0,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "books_0",
+        "visual": "base"
+      },
+      "semantic_label": "Books [o_books]",
+      "source_review": "C003",
+      "bounds": [
+        -1.6213199999999999,
+        0.0,
+        -1.6213199999999999,
+        2.62132,
+        0.234375,
+        2.62132
+      ],
+      "position": [
+        34,
+        64,
+        70
+      ]
+    },
+    {
+      "id": "o_c001",
+      "specimen_id": "o_c001:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=tree_254d81d6bf3e,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "tree_254d81d6bf3e",
+        "visual": "base"
+      },
+      "semantic_label": "Complete dead tree [o_c001]",
+      "source_review": "C001, C009",
+      "bounds": [
+        -4.0,
+        0.0,
+        -4.0,
+        5.0,
+        12.0,
+        5.0
+      ],
+      "position": [
+        55,
+        64,
+        72
+      ]
+    },
+    {
+      "id": "o_c002",
+      "specimen_id": "o_c002:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Stone shrine [o_c002]",
+      "source_review": "C002",
+      "bounds": [
+        -0.7260629999999999,
+        0.0,
+        -1.103015,
+        2.895191,
+        3.0,
+        2.310819
+      ],
+      "position": [
+        75,
+        64,
+        70
+      ]
+    },
+    {
+      "id": "o_c008_1",
+      "specimen_id": "o_c008_1:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Pedestal statue — 1 [o_c008_1]",
+      "source_review": "C008",
+      "bounds": [
+        -0.094271,
+        0.0,
+        -0.0625,
+        1.2125,
+        2.961614,
+        1.0625
+      ],
+      "position": [
+        93,
+        64,
+        69
+      ]
+    },
+    {
+      "id": "o_c008_2",
+      "specimen_id": "o_c008_2:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Pedestal statue — 2 [o_c008_2]",
+      "source_review": "C008",
+      "bounds": [
+        0.057408000000000015,
+        0.0,
+        0.015216000000000118,
+        1.446369,
+        2.267523,
+        1.0177990000000001
+      ],
+      "position": [
+        32,
+        64,
+        91
+      ]
+    },
+    {
+      "id": "o_c008_3",
+      "specimen_id": "o_c008_3:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Pedestal statue — 3 [o_c008_3]",
+      "source_review": "C008",
+      "bounds": [
+        0.057227999999999946,
+        0.0,
+        -0.3488309999999999,
+        0.96875,
+        1.626002,
+        1.094271
+      ],
+      "position": [
+        48,
+        64,
+        92
+      ]
+    },
+    {
+      "id": "o_c008_5",
+      "specimen_id": "o_c008_5:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Pedestal statue — 5 [o_c008_5]",
+      "source_review": "C008",
+      "bounds": [
+        -0.030981000000000036,
+        0.0,
+        -0.321129,
+        1.321129,
+        1.591286,
+        1.0751750000000002
+      ],
+      "position": [
+        64,
+        64,
+        92
+      ]
+    },
+    {
+      "id": "o_c028",
+      "specimen_id": "o_c028:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Wall decoration [o_c028]",
+      "source_review": "C028",
+      "bounds": [
+        -0.5764990000000001,
+        0.0,
+        -0.3125,
+        1.476616,
+        1.71875,
+        1.341722
+      ],
+      "position": [
+        81,
+        64,
+        92
+      ]
+    },
+    {
+      "id": "o_c046",
+      "specimen_id": "o_c046:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Stone marker [o_c046]",
+      "source_review": "C046",
+      "bounds": [
+        -0.645937,
+        0.0,
+        -0.491881,
+        1.261081,
+        1.125,
+        1.466984
+      ],
+      "position": [
+        33,
+        64,
+        109
+      ]
+    },
+    {
+      "id": "o_c1319",
+      "specimen_id": "o_c1319:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Stone pedestal [o_c1319]",
+      "source_review": "C1319",
+      "bounds": [
+        -1.6213199999999999,
+        0.0,
+        -1.6213199999999999,
+        2.62132,
+        0.234375,
+        2.62132
+      ],
+      "position": [
+        51,
+        64,
+        110
+      ]
+    },
+    {
+      "id": "o_c1491_a",
+      "specimen_id": "o_c1491_a:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Grave — A [o_c1491_a]",
+      "source_review": "C1491",
+      "bounds": [
+        0.372074,
+        0.0,
+        0.10016800000000003,
+        1.523524,
+        2.875,
+        1.928113
+      ],
+      "position": [
+        68,
+        64,
+        108
+      ]
+    },
+    {
+      "id": "o_c1491_b",
+      "specimen_id": "o_c1491_b:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Grave — B [o_c1491_b]",
+      "source_review": "C1491",
+      "bounds": [
+        0.06064999999999998,
+        0.0,
+        -0.5001180000000001,
+        1.585349,
+        3.0,
+        1.024581
+      ],
+      "position": [
+        84,
+        64,
+        109
+      ]
+    },
+    {
+      "id": "o_c1491_c",
+      "specimen_id": "o_c1491_c:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Grave — C [o_c1491_c]",
+      "source_review": "C1491",
+      "bounds": [
+        0.31867,
+        0.0,
+        0.338881,
+        1.246747,
+        1.25,
+        1.266959
+      ],
+      "position": [
+        32,
+        64,
+        127
+      ]
+    },
+    {
+      "id": "o_c1680",
+      "specimen_id": "o_c1680:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Wall shelf [o_c1680]",
+      "source_review": "C1680",
+      "bounds": [
+        -1.206473,
+        0.0,
+        -1.3125,
+        1.476616,
+        1.71875,
+        1.5471249999999999
+      ],
+      "position": [
+        50,
+        64,
+        129
+      ]
+    },
+    {
+      "id": "o_c1962_a",
+      "specimen_id": "o_c1962_a:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Sack — A [o_c1962_a]",
+      "source_review": "C1962",
+      "bounds": [
+        0.1875,
+        0.0,
+        0.1875,
+        0.8125,
+        0.9375,
+        0.8125
+      ],
+      "position": [
+        66,
+        64,
+        127
+      ]
+    },
+    {
+      "id": "o_c1962_b",
+      "specimen_id": "o_c1962_b:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Sack — B [o_c1962_b]",
+      "source_review": "C1962",
+      "bounds": [
+        0.1875,
+        0.0,
+        0.1875,
+        0.8125,
+        0.9375,
+        0.8125
+      ],
+      "position": [
+        81,
+        64,
+        127
+      ]
+    },
+    {
+      "id": "o_c1979_1",
+      "specimen_id": "o_c1979_1:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Reviewed composition — 1 [o_c1979_1]",
+      "source_review": "C1979",
+      "bounds": [
+        -0.4375,
+        0.0,
+        -0.4375,
+        1.4375,
+        2.0,
+        1.4375
+      ],
+      "position": [
+        33,
+        64,
+        146
+      ]
+    },
+    {
+      "id": "o_c1979_2",
+      "specimen_id": "o_c1979_2:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Reviewed composition — 2 [o_c1979_2]",
+      "source_review": "C1979",
+      "bounds": [
+        -0.4375,
+        0.0,
+        -0.4375,
+        1.4375,
+        2.0,
+        1.4375
+      ],
+      "position": [
+        50,
+        64,
+        146
+      ]
+    },
+    {
+      "id": "o_c1979_3",
+      "specimen_id": "o_c1979_3:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Reviewed composition — 3 [o_c1979_3]",
+      "source_review": "C1979",
+      "bounds": [
+        0.0,
+        0.0,
+        0.0,
+        3.0,
+        1.0,
+        1.0
+      ],
+      "position": [
+        66,
+        64,
+        145
+      ]
+    },
+    {
+      "id": "o_c1979_4",
+      "specimen_id": "o_c1979_4:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Reviewed composition — 4 [o_c1979_4]",
+      "source_review": "C1979",
+      "bounds": [
+        -0.1875,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        2.0
+      ],
+      "position": [
+        84,
+        64,
+        145
+      ]
+    },
+    {
+      "id": "o_c1979_5",
+      "specimen_id": "o_c1979_5:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Reviewed composition — 5 [o_c1979_5]",
+      "source_review": "C1979",
+      "bounds": [
+        0.0,
+        0.0,
+        0.0,
+        1.1875,
+        1.0,
+        2.0
+      ],
+      "position": [
+        32,
+        64,
+        162
+      ]
+    },
+    {
+      "id": "o_c282",
+      "specimen_id": "o_c282:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,open=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "false",
+        "visual": "base"
+      },
+      "semantic_label": "Collective double door [o_c282]",
+      "source_review": "C282",
+      "bounds": [
+        -1.0,
+        0.0,
+        0.3125,
+        2.0,
+        3.0,
+        0.5625
+      ],
+      "position": [
+        49,
+        64,
+        162
+      ]
+    },
+    {
+      "id": "o_c282",
+      "specimen_id": "o_c282:open",
+      "role": "open",
+      "state": "facing=north,open=true,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "true",
+        "visual": "base"
+      },
+      "semantic_label": "Collective double door [o_c282]",
+      "source_review": "C282",
+      "bounds": [
+        -1.125,
+        0.0,
+        0.4375,
+        2.125,
+        3.0,
+        1.9375
+      ],
+      "position": [
+        67,
+        64,
+        162
+      ]
+    },
+    {
+      "id": "o_c471_a",
+      "specimen_id": "o_c471_a:canonical_base",
+      "role": "canonical_base",
+      "state": "visual=base",
+      "properties": {
+        "visual": "base"
+      },
+      "semantic_label": "Spire — A [o_c471_a]",
+      "source_review": "C471",
+      "bounds": [
+        -0.07452400000000003,
+        0.0,
+        -0.07452400000000003,
+        1.074524,
+        3.0,
+        1.074524
+      ],
+      "position": [
+        85,
+        64,
+        163
+      ]
+    },
+    {
+      "id": "o_c471_b",
+      "specimen_id": "o_c471_b:canonical_base",
+      "role": "canonical_base",
+      "state": "visual=base",
+      "properties": {
+        "visual": "base"
+      },
+      "semantic_label": "Spire — B [o_c471_b]",
+      "source_review": "C471",
+      "bounds": [
+        -0.07452400000000003,
+        0.0,
+        -0.07452400000000003,
+        1.074524,
+        3.0,
+        1.0745239999999998
+      ],
+      "position": [
+        33,
+        64,
+        180
+      ]
+    },
+    {
+      "id": "o_c474",
+      "specimen_id": "o_c474:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Timber post [o_c474]",
+      "source_review": "C474",
+      "bounds": [
+        -0.0625,
+        0.0,
+        -0.0625,
+        1.0625,
+        16.0,
+        1.0625
+      ],
+      "position": [
+        50,
+        64,
+        180
+      ]
+    },
+    {
+      "id": "o_c561",
+      "specimen_id": "o_c561:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Wall ornament [o_c561]",
+      "source_review": "C561",
+      "bounds": [
+        -0.645937,
+        0.0,
+        -0.491881,
+        1.261081,
+        1.125,
+        1.466984
+      ],
+      "position": [
+        67,
+        64,
+        180
+      ]
+    },
+    {
+      "id": "o_c618",
+      "specimen_id": "o_c618:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,lit=true,variant=canonical,visual=base",
+      "properties": {
+        "facing": "north",
+        "lit": "true",
+        "variant": "canonical",
+        "visual": "base"
+      },
+      "semantic_label": "Hanging lantern [o_c618]",
+      "source_review": "C618",
+      "bounds": [
+        0.125,
+        0.0,
+        0.125,
+        0.875,
+        1.9375,
+        0.875
+      ],
+      "position": [
+        83,
+        64,
+        179
+      ]
+    },
+    {
+      "id": "o_c654_a",
+      "specimen_id": "o_c654_a:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,variant=surface,visual=base",
+      "properties": {
+        "facing": "north",
+        "variant": "surface",
+        "visual": "base"
+      },
+      "semantic_label": "Wall window frame — A [o_c654_a]",
+      "source_review": "C654",
+      "bounds": [
+        -0.875,
+        0.1875,
+        0.90625,
+        1.875,
+        2.9375,
+        0.96875
+      ],
+      "position": [
+        33,
+        64,
+        196
+      ]
+    },
+    {
+      "id": "o_c654_b",
+      "specimen_id": "o_c654_b:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Wall window frame — B [o_c654_b]",
+      "source_review": "C654",
+      "bounds": [
+        -0.875,
+        0.1875,
+        0.90625,
+        1.875,
+        2.9375,
+        0.96875
+      ],
+      "position": [
+        50,
+        64,
+        196
+      ]
+    },
+    {
+      "id": "o_candles_0",
+      "specimen_id": "o_candles_0:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,lit=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base",
+        "lit": "false"
+      },
+      "semantic_label": "Bloodborne Candles 0 [o_candles_0]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.8125,
+        0.625,
+        -0.654888,
+        1.324524,
+        2.1875,
+        1.709389
+      ],
+      "position": [
+        67,
+        64,
+        197
+      ]
+    },
+    {
+      "id": "o_carved_balustrade",
+      "specimen_id": "o_carved_balustrade:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "visual": "base",
+        "west": "false",
+        "facing": "north"
+      },
+      "semantic_label": "Bloodborne Carved Balustrade [o_carved_balustrade]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.1875,
+        0.0,
+        0.1875,
+        0.8125,
+        1.0,
+        0.8125
+      ],
+      "position": [
+        83,
+        64,
+        196
+      ]
+    },
+    {
+      "id": "o_cases_0",
+      "specimen_id": "o_cases_0:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Cases 0 [o_cases_0]",
+      "source_review": "C003",
+      "bounds": [
+        -0.491881,
+        0.0,
+        -0.261081,
+        1.466984,
+        1.125,
+        1.645937
+      ],
+      "position": [
+        33,
+        64,
+        214
+      ]
+    },
+    {
+      "id": "o_dark_oak_door",
+      "specimen_id": "o_dark_oak_door:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,open=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "false",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Dark Oak Door [o_dark_oak_door]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.0,
+        0.0,
+        0.4375,
+        2.0,
+        4.0,
+        0.6875
+      ],
+      "position": [
+        50,
+        64,
+        213
+      ]
+    },
+    {
+      "id": "o_dark_oak_door",
+      "specimen_id": "o_dark_oak_door:open",
+      "role": "open",
+      "state": "facing=north,open=true,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "true",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Dark Oak Door [o_dark_oak_door]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -1.0,
+        0.0,
+        -0.8125,
+        2.0,
+        4.0,
+        0.6875
+      ],
+      "position": [
+        67,
+        64,
+        214
+      ]
+    },
+    {
+      "id": "o_high_balustrade",
+      "specimen_id": "o_high_balustrade:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "facing": "north",
+        "north": "false",
+        "south": "false",
+        "visual": "base",
+        "west": "false"
+      },
+      "semantic_label": "Bloodborne High Balustrade [o_high_balustrade]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        3.0,
+        1.0
+      ],
+      "position": [
+        83,
+        64,
+        213
+      ]
+    },
+    {
+      "id": "o_iron_gate",
+      "specimen_id": "o_iron_gate:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,open=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "false",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Iron Gate [o_iron_gate]",
+      "source_review": "POC",
+      "bounds": [
+        -1.0,
+        0.0,
+        0.4375,
+        2.0,
+        5.8125,
+        0.5625
+      ],
+      "position": [
+        33,
+        64,
+        230
+      ]
+    },
+    {
+      "id": "o_iron_gate",
+      "specimen_id": "o_iron_gate:open",
+      "role": "open",
+      "state": "facing=north,open=true,visual=base",
+      "properties": {
+        "facing": "north",
+        "open": "true",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Iron Gate [o_iron_gate]",
+      "source_review": "POC",
+      "bounds": [
+        -1.0625,
+        0.0,
+        0.5,
+        2.0625,
+        5.8125,
+        2.0
+      ],
+      "position": [
+        51,
+        64,
+        230
+      ]
+    },
+    {
+      "id": "o_iron_railing",
+      "specimen_id": "o_iron_railing:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "facing": "north",
+        "north": "false",
+        "south": "false",
+        "visual": "base",
+        "west": "false"
+      },
+      "semantic_label": "Bloodborne Iron Railing [o_iron_railing]",
+      "source_review": "POC",
+      "bounds": [
+        0.375,
+        0.0,
+        0.375,
+        0.625,
+        1.4375,
+        0.625
+      ],
+      "position": [
+        68,
+        64,
+        230
+      ]
+    },
+    {
+      "id": "o_ladder_01",
+      "specimen_id": "o_ladder_01:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Ladder 01 [o_ladder_01]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.1875,
+        -0.1875,
+        -1.0,
+        1.1875,
+        2.0,
+        2.0
+      ],
+      "position": [
+        84,
+        65,
+        231
+      ]
+    },
+    {
+      "id": "o_ladder_02",
+      "specimen_id": "o_ladder_02:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Ladder 02 [o_ladder_02]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.1875,
+        0.0,
+        0.9375,
+        1.1875,
+        1.0,
+        1.0625
+      ],
+      "position": [
+        33,
+        64,
+        247
+      ]
+    },
+    {
+      "id": "o_ladder_03",
+      "specimen_id": "o_ladder_03:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Ladder 03 [o_ladder_03]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.1875,
+        -1.0,
+        0.8125,
+        1.1875,
+        1.0,
+        1.1875
+      ],
+      "position": [
+        50,
+        65,
+        247
+      ]
+    },
+    {
+      "id": "o_lantern",
+      "specimen_id": "o_lantern:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,lit=true,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base",
+        "lit": "true"
+      },
+      "semantic_label": "Bloodborne Lantern [o_lantern]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.125,
+        0.1875,
+        0.125,
+        0.875,
+        2.125,
+        0.875
+      ],
+      "position": [
+        66,
+        64,
+        247
+      ]
+    },
+    {
+      "id": "o_lanterns",
+      "specimen_id": "o_lanterns:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,lit=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base",
+        "lit": "false"
+      },
+      "semantic_label": "Bloodborne Lanterns [o_lanterns]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.728553,
+        0.0,
+        -0.121859,
+        0.934359,
+        2.6875,
+        1.496859
+      ],
+      "position": [
+        82,
+        64,
+        248
+      ]
+    },
+    {
+      "id": "o_lightning_rod",
+      "specimen_id": "o_lightning_rod:canonical_base",
+      "role": "canonical_base",
+      "state": "face=floor,facing=north,lit=false,visual=base",
+      "properties": {
+        "face": "floor",
+        "facing": "north",
+        "visual": "base",
+        "lit": "false"
+      },
+      "semantic_label": "Bloodborne Lightning Rod [o_lightning_rod]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.875,
+        1.0
+      ],
+      "position": [
+        32,
+        64,
+        264
+      ]
+    },
+    {
+      "id": "o_oak_wood",
+      "specimen_id": "o_oak_wood:canonical_base",
+      "role": "canonical_base",
+      "state": "face=floor,facing=north,lit=false,visual=base",
+      "properties": {
+        "face": "floor",
+        "facing": "north",
+        "visual": "base",
+        "lit": "false"
+      },
+      "semantic_label": "Bloodborne Oak Wood [o_oak_wood]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.625,
+        0.0,
+        -0.625,
+        1.625,
+        2.0,
+        1.625
+      ],
+      "position": [
+        48,
+        64,
+        265
+      ]
+    },
+    {
+      "id": "o_ornate_balustrade",
+      "specimen_id": "o_ornate_balustrade:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "facing": "north",
+        "north": "false",
+        "south": "false",
+        "visual": "base",
+        "west": "false"
+      },
+      "semantic_label": "Bloodborne Ornate Balustrade [o_ornate_balustrade]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.0,
+        0.0,
+        0.15625,
+        1.0,
+        1.9375,
+        0.84375
+      ],
+      "position": [
+        64,
+        64,
+        264
+      ]
+    },
+    {
+      "id": "o_shuttered_window",
+      "specimen_id": "o_shuttered_window:canonical_base",
+      "role": "canonical_base",
+      "state": "embedded=false,facing=north,open=false,visual=base",
+      "properties": {
+        "embedded": "false",
+        "facing": "north",
+        "open": "false",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Shuttered Window [o_shuttered_window]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.625,
+        -0.875,
+        -0.0625,
+        1.6875,
+        1.5,
+        0.25
+      ],
+      "position": [
+        80,
+        65,
+        265
+      ]
+    },
+    {
+      "id": "o_shuttered_window",
+      "specimen_id": "o_shuttered_window:open",
+      "role": "open",
+      "state": "embedded=false,facing=north,open=true,visual=base",
+      "properties": {
+        "embedded": "false",
+        "facing": "north",
+        "open": "true",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Shuttered Window [o_shuttered_window]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.378188,
+        -0.875,
+        -0.64957,
+        1.378188,
+        1.5,
+        0.620764
+      ],
+      "position": [
+        33,
+        65,
+        282
+      ]
+    },
+    {
+      "id": "o_stepped_balustrade",
+      "specimen_id": "o_stepped_balustrade:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "visual": "base",
+        "west": "false",
+        "facing": "north"
+      },
+      "semantic_label": "Bloodborne Stepped Balustrade [o_stepped_balustrade]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.25,
+        0.0,
+        0.25,
+        0.75,
+        1.0,
+        0.75
+      ],
+      "position": [
+        49,
+        64,
+        281
+      ]
+    },
+    {
+      "id": "o_stone_curb",
+      "specimen_id": "o_stone_curb:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "visual": "base",
+        "west": "false",
+        "facing": "north"
+      },
+      "semantic_label": "Bloodborne Stone Curb [o_stone_curb]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        -0.0625,
+        0.0,
+        0.0,
+        1.0625,
+        0.25,
+        1.0
+      ],
+      "position": [
+        65,
+        64,
+        281
+      ]
+    },
+    {
+      "id": "o_stone_railing",
+      "specimen_id": "o_stone_railing:canonical_base",
+      "role": "canonical_base",
+      "state": "east=false,facing=north,north=false,south=false,up=false,visual=base,west=false",
+      "properties": {
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "visual": "base",
+        "west": "false",
+        "facing": "north"
+      },
+      "semantic_label": "Bloodborne Stone Railing [o_stone_railing]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.25,
+        0.0,
+        0.25,
+        0.75,
+        1.0,
+        0.75
+      ],
+      "position": [
+        81,
+        64,
+        281
+      ]
+    },
+    {
+      "id": "o_wall_deco_1",
+      "specimen_id": "o_wall_deco_1:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base"
+      },
+      "semantic_label": "Bloodborne Wall Deco 1 [o_wall_deco_1]",
+      "source_review": "POC",
+      "bounds": [
+        -1.0,
+        0.0,
+        0.0625,
+        2.0,
+        3.0,
+        1.0
+      ],
+      "position": [
+        33,
+        64,
+        297
+      ]
+    },
+    {
+      "id": "o_wall_lantern",
+      "specimen_id": "o_wall_lantern:canonical_base",
+      "role": "canonical_base",
+      "state": "facing=north,lit=false,visual=base",
+      "properties": {
+        "facing": "north",
+        "visual": "base",
+        "lit": "false"
+      },
+      "semantic_label": "Bloodborne Wall Lantern [o_wall_lantern]",
+      "source_review": "FUNCTIONAL_RESTORATION",
+      "bounds": [
+        0.146447,
+        0.4375,
+        -0.5,
+        0.853553,
+        3.0,
+        1.1875
+      ],
+      "position": [
+        49,
+        64,
+        298
+      ]
+    },
+    {
+      "id": "o_c001",
+      "specimen_id": "o_c001:alt_proof",
+      "role": "alt_proof",
+      "state": "facing=north,variant=tree_254d81d6bf3e,visual=alt",
+      "properties": {
+        "facing": "north",
+        "variant": "tree_254d81d6bf3e",
+        "visual": "alt"
+      },
+      "semantic_label": "Complete dead tree [o_c001]",
+      "source_review": "C001, C009",
+      "bounds": [
+        -4.0,
+        0.0,
+        -4.0,
+        5.0,
+        12.0,
+        5.0
+      ],
+      "position": [
+        68,
+        64,
+        301
+      ]
+    },
+    {
+      "id": "o_c002",
+      "specimen_id": "o_c002:alt_proof",
+      "role": "alt_proof",
+      "state": "facing=north,visual=alt",
+      "properties": {
+        "facing": "north",
+        "visual": "alt"
+      },
+      "semantic_label": "Stone shrine [o_c002]",
+      "source_review": "C002",
+      "bounds": [
+        -0.7260629999999999,
+        0.0,
+        -1.103015,
+        2.895191,
+        3.0,
+        2.310819
+      ],
+      "position": [
+        88,
+        64,
+        299
+      ]
+    }
+  ]
+}

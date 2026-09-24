@@ -205,7 +205,7 @@ def direct_rules(resources, *, poc_only=False):
                 transaction = pattern.get("split_transaction")
                 if transaction is None:
                     rules.append(Rule(len(rules), first, target, shift, tuple(pieces[1:]), None, shape,
-                                      supersedes_targets=frozenset('bloodborne_blocks:'+f['id'] for f in data['families'] if f['id']!=family['id']) if family.get('authority')=='user' else frozenset(),
+                                      supersedes_targets=(frozenset('bloodborne_blocks:'+f['id'] for f in data['families'] if f['id']!=family['id']) if family.get('authority')=='user' else frozenset('bloodborne_blocks:'+i for i in family.get('supersedes_targets',[]))),
                                       variant_guards=tuple(pattern.get('variant_guards', []))))
                     continue
                 signature = (tuple(sorted((piece.offset, piece.state) for piece in pieces)),
@@ -252,6 +252,6 @@ def direct_rules(resources, *, poc_only=False):
                     json.dumps(rule.variant_guards,sort_keys=True))
         reviewed_ids={f['id'] for f in data['families'] if f.get('authority')=='user'}
         reviewed={raw_signature(r) for r in rules if r.target[0].split(':',1)[1] in reviewed_ids}
-        rules=[r for r in rules if r.target[0].split(':',1)[1] not in POC_FAMILIES or raw_signature(r) not in reviewed]
+        rules=[r for r in rules if r.target[0].split(':',1)[1] not in POC_FAMILIES-reviewed_ids or raw_signature(r) not in reviewed]
         rules=[replace(rule,number=i) for i,rule in enumerate(rules)]
     return rules, defaults

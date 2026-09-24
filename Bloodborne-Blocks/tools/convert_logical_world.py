@@ -327,6 +327,21 @@ def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule
     return rules, defaults
 
 
+def has_contract_v2_patterns(resources: Path) -> bool:
+    path = resources / "contracts-v2.json"
+    if not path.is_file():
+        return False
+    contracts = json.loads(path.read_text(encoding="utf-8"))
+    return any(state.get("migration_source_pattern")
+               for family in contracts.get("families", [])
+               for state in family.get("states", {}).values())
+
+
+def legacy_migration_is_empty(resources: Path) -> bool:
+    migration = json.loads((resources / "migration.json").read_text(encoding="utf-8"))
+    return migration.get("schemaVersion") == 1 and migration.get("rules") == []
+
+
 def parse_old_logical_c654_rules(resources: Path, defaults: dict[str, dict[str, str]],
                                  geometry: dict[tuple[str, tuple[tuple[str, str], ...]], set[tuple[int, int, int]]],
                                  start: int) -> list[Rule]:
@@ -1027,6 +1042,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
     report_path = (report_path or default_report_path(output)).resolve()
     report_root = (report_root or (TOOLS.parent / "build")).resolve()
     validate_paths(source, output, resources, report_path, report_root)
+    if source_mode == "legacy" and legacy_migration_is_empty(resources) and has_contract_v2_patterns(resources):
+        raise ValueError("legacy migration.json has no rules while Contract V2 source patterns exist; use --source-mode original-v2")
     rules, defaults = parse_rules(resources, source_mode)
     definitions = definition_hashes(resources)
     status(f"rules parsed: rules={len(rules)}")

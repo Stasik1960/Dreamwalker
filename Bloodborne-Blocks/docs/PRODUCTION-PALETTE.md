@@ -1,5 +1,9 @@
 # Production palette cleanup — 2026-09-24
 
+Historical cleanup checkpoint. **Superseded by the 56-family functional restoration**:
+see [current report](PRODUCTION-RESTORATION.md). Counts below describe the earlier
+33-family build, not the current runtime. Frozen evidence is deliberately retained.
+
 Authoritative runtime palette: **33 logical blocks/items + one internal helper**.
 This is a cleanup of the existing implementation, not a new mod, city conversion,
 or a claim that every architectural feature in Yharnam has been reconstructed.

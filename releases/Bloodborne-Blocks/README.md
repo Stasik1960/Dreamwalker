@@ -1,4 +1,21 @@
-# Bloodborne Architecture — production palette, 2026-09-24
+# Bloodborne Architecture — functional restoration, 2026-09-24
+
+- [Текущий JAR](bloodborne-blocks-2.1.0-alpha.1-functional-restoration-20260924-mc1.20.1.jar)
+- [Новая галерея](production-functional-gallery-20260924.zip)
+- [Отчёт](../../Bloodborne-Blocks/docs/PRODUCTION-RESTORATION.md),
+  [coverage / проверки / SHA-256](../../Bloodborne-Blocks/docs/production-restoration-checks/README.md)
+
+56 production объектов; 64 образца: canonical + open/closed + BASE/ALT proof.
+Восстановлены все 21 обязательных functional families. C003 заменён четырьмя
+семантическими families: независимые бочки, книги, мешки и багаж.
+
+Fabric **1.20.1 / Java 17**. Замените предыдущий JAR, не устанавливайте обе версии.
+Извлеките папку `production-functional-gallery-20260924` из ZIP в `saves`;
+`level.dat` лежит непосредственно в этой папке. Это QA-галерея, не город.
+Оригинальный source world не изменён; старые QA worlds остаются одноразовыми.
+Графическая приёмка новой палитры человеком ещё необходима.
+
+## История: production palette cleanup (до восстановления)
 
 - [Новый JAR](bloodborne-blocks-2.1.0-alpha.1-production-palette-20260924-mc1.20.1.jar)
   — 850 307 байт; [SHA-256](bloodborne-blocks-2.1.0-alpha.1-production-palette-20260924-mc1.20.1.jar.sha256).

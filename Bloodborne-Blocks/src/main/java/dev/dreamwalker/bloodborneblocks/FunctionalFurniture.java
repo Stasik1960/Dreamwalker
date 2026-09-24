@@ -86,6 +86,13 @@ public final class FunctionalFurniture {
 
  private static SeatPoint seatPoint(BlockPos root,BlockState state){
   GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);double[] bounds={Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY};
+  // Test complete authored primitives, not cell-clipped backrest caps which
+  // can be thin enough to masquerade as the actual seat plank.
+  if(geometry!=null&&geometry.gameplayBoxes!=null){
+   double[] seat=null;double area=-1;
+   for(double[] box:geometry.gameplayBoxes){double next=(box[3]-box[0])*(box[5]-box[2]);if(box[4]-box[1]<=.25&&next>area){seat=box;area=next;}}
+   if(seat!=null)return new SeatPoint(root.getX()+(seat[0]+seat[3])*.5,root.getY()+seat[4],root.getZ()+(seat[2]+seat[5])*.5);
+  }
   double[] best={-1,root.getY()+.5};
   if(geometry!=null)geometry.parsedCells.forEach((offset,cell)->cell.collisionShape.forEachBox((minX,minY,minZ,maxX,maxY,maxZ)->{
    double gx=offset.getX()+minX,gz=offset.getZ()+minZ,gxx=offset.getX()+maxX,gzz=offset.getZ()+maxZ;

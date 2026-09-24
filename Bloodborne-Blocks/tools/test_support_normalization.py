@@ -155,6 +155,9 @@ class SupportNormalizationTests(unittest.TestCase):
         with gzip.open(PRODUCTION_INPUTS,'rt',encoding='utf8') as stream:
             frozen = json.load(stream)
         frozen_by_id = {family['id']:family for family in frozen['contracts']['families']}
+        required = json.loads((ROOT/'docs/required-production-families.json').read_text(encoding='utf8'))
+        reauthored = {row['id'] for row in required['restorations']} | set(required['c003_production_ids'])
+        redirected = {'o_c046', 'o_c1319', 'o_c1962_a', 'o_c1962_b'}
         manifest = json.loads((ROOT/'docs/production-logical-palette.json').read_text(encoding='utf8'))
         expected_ids = {row['id'] for row in manifest['objects']}
         self.assertEqual({family['id'] for family in data['families']},expected_ids)
@@ -165,16 +168,25 @@ class SupportNormalizationTests(unittest.TestCase):
         self.assertEqual(report['summary']['below_support_families'],0)
         checks = 0
         for family in data['families']:
-            frozen_identity = source_identity(frozen_by_id[family['id']])
             current_identity = source_identity(family)
-            if family['id'] not in PRODUCTION_MESH_IDENTITY_EXCEPTIONS:
-                self.assertEqual(current_identity,frozen_identity)
-            else:
-                # Preserve all non-mesh source authority while allowing only
-                # the declared production C282/dedup mesh substitutions.
-                self.assertNotEqual(current_identity,frozen_identity)
-                self.assertEqual({key:value for key,value in current_identity.items() if key!='states'},
-                                 {key:value for key,value in frozen_identity.items() if key!='states'})
+            # New V2 contracts and explicitly redirected C003 raw rules are
+            # checked against their source evidence by restoration tests.
+            # Support normalization itself must preserve their entire identity.
+            self.assertEqual(current_identity, source_identity(next(f for f in normalized['families'] if f['id']==family['id'])))
+            if family['id'] not in reauthored | redirected:
+                frozen_identity = source_identity(frozen_by_id[family['id']])
+                # Content dedup/texture aliases may re-key meshes; IDs are not
+                # visual authority. Retain exact anchors/rotations/source rules.
+                for identity in (current_identity, frozen_identity):
+                    for state in identity['states'].values(): state.pop('mesh')
+                if family['id'] in PRODUCTION_MESH_IDENTITY_EXCEPTIONS:
+                    # Existing explicit C008 successor / C282 hinge recipes
+                    # also re-author state patterns; their dedicated tests
+                    # compare geometry and migration independently.
+                    self.assertEqual({k:v for k,v in current_identity.items() if k!='states'},
+                                     {k:v for k,v in frozen_identity.items() if k!='states'})
+                else:
+                    self.assertEqual(current_identity, frozen_identity)
             for state in family['states'].values():
                 if family['collision_policy'] not in FUNCTIONAL:
                     self.assertLessEqual(len(state['collision_footprint']['boxes']),3)

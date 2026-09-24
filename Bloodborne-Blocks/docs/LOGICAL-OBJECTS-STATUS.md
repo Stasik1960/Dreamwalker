@@ -134,7 +134,7 @@ output; no original-world or legacy/v2 resource files were deleted.
 World conversion commands (output must not already exist):
 
 ```powershell
-python -X utf8 tools/convert_logical_world.py SOURCE.zip build/logical-world/OUTPUT --report build/logical-world/REPORT.json --progress
+python -X utf8 tools/convert_logical_world.py SOURCE.zip build/logical-world/OUTPUT --source-mode original-v2 --report build/logical-world/REPORT.json --progress
 python -X utf8 tools/check_logical_world.py SOURCE.zip build/logical-world/OUTPUT build/logical-world/REPORT.json --resources src/main/resources/bloodborne_blocks/logical
 ```
 
@@ -142,6 +142,9 @@ The report contains private coordinates; keep it and world copies under ignored
 `build/`. `unresolvedV2` counts only unmatched *candidate* component positions.
 `unmatchedModules` aggregates all other old modules by dimension/state, with at
 most four coordinate examples; it does not imply those modules are defective.
+The default `legacy` mode is retained only for a non-empty legacy migration
+table. Current Contract V2 production resources intentionally fail closed in
+that mode; use `--source-mode original-v2` for their authored vanilla patterns.
 
 ## Verification record
 

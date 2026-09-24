@@ -94,7 +94,7 @@ final class LogicalContractV2 {
   GeometryRuntime.GeometryState geometry=new GeometryRuntime.GeometryState();geometry.anchor=family.canonical_anchor.cell.clone();geometry.rotation=state.rotation;geometry.render_offset=state.render_mesh.offset.clone();geometry.cells=new LinkedHashMap<>();
   geometry.placementPolicy=family.placement_policy;geometry.mirrorPolicy=family.mirror_policy;
   for(double[] cell:state.interaction_footprint.cells){int x=(int)cell[0],y=(int)cell[1],z=(int)cell[2];GeometryRuntime.GeometryCell part=new GeometryRuntime.GeometryCell();part.collision=clip(state.collision_footprint.boxes,x,y,z);part.outline=clip(state.selection_footprint.boxes,x,y,z);geometry.cells.put(x+","+y+","+z,part);}
-  geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();return geometry;
+  geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();geometry.gameplayBoxes=state.collision_footprint.boxes;return geometry;
  }
  private static List<double[]> clip(List<double[]> boxes,int x,int y,int z){List<double[]> out=new ArrayList<>();for(double[] box:boxes){double[] clipped={Math.max(box[0],x)-x,Math.max(box[1],y)-y,Math.max(box[2],z)-z,Math.min(box[3],x+1)-x,Math.min(box[4],y+1)-y,Math.min(box[5],z+1)-z};if(clipped[0]<clipped[3]&&clipped[1]<clipped[4]&&clipped[2]<clipped[5])out.add(clipped);}return out;}
  private static boolean covered(double[] box,List<double[]> cells){for(int x=(int)Math.floor(box[0]);x<(int)Math.ceil(box[3]);x++)for(int y=(int)Math.floor(box[1]);y<(int)Math.ceil(box[4]);y++)for(int z=(int)Math.floor(box[2]);z<(int)Math.ceil(box[5]);z++){boolean present=false;for(double[] cell:cells)if((int)cell[0]==x&&(int)cell[1]==y&&(int)cell[2]==z)present=true;if(!present)return false;}return true;}

@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "manifest_schema": 2,
+  "checked_live_resources_against_shipped_jar": 673,
+  "jar_crc": "PASS",
+  "all_pack_model_dependent_blockstates_in_census_universe": true,
+  "carrier_universe_size": 463,
+  "omitted_pack_dependent_carriers": {},
+  "all_2605_yharnam_state_counts_match_previous_census": true,
+  "world_model_dependencies_match_vanilla_and_pack_parent_graph": true,
+  "retained_families_geometry_exactly_matches_baseline": 32,
+  "intentional_recompiled_double_door": "o_c282",
+  "protected_inputs_unchanged": true,
+  "visual_client_check": "NOT_RUN",
+  "build": "NOT_RUN",
+  "conversion": "NOT_RUN",
+  "checks": [
+    "asset/family/candidate cardinality and unique IDs",
+    "disjoint missing categories",
+    "C654 manual-only B vs source A",
+    "C008_4 facing transform",
+    "491 omitted states",
+    "actual MCA roots checked by audit_catalog.py",
+    "pack carrier reachability through vanilla parents",
+    "current resources byte-match JAR except fabric.mod.json version expansion and Loom mixin refmap injection"
+  ]
+}

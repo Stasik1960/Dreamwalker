@@ -33,6 +33,8 @@ DECISIONS = {
 def reviewed_authoring(manifest: dict) -> dict:
     """Return compact, deterministic authoring input without mutating evidence."""
     candidates = {row["review_id"]: row for row in manifest["candidates"]}
+    if candidates.get('C003',{}).get('user_decision',{}).get('kind')=='SPLIT_TO_FAMILIES':
+        raise ValueError('Historical batch compiler cannot overwrite current C003 correction; use build_production_palette.py and restore_c003.py')
     families = []
     for review_id, decision in DECISIONS.items():
         row = candidates[review_id]
