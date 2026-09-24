@@ -71,11 +71,18 @@ def validate(resources=RES):
         if block.get('attachment_item'):
             attached = block['attachment_item']
             assert attached in definitions and definitions[attached]['logical'], 'unknown attachment item'
-            assert block['placement_properties'].get('lantern') == 'false', 'attachment cannot be cloned by placement'
-            assert block['properties'].get('lantern') == ['false', 'true'], 'invalid attachment states'
-            expected_drops.append(NS + attached)
-            assert {'condition': 'minecraft:block_state_property', 'block': NS + ident,
-                    'properties': {'lantern': 'true'}} in loot['pools'][1]['conditions'], 'unconditional attachment drop'
+            if 'hand_lantern' in block['properties']:
+                assert block['placement_properties'].get('hand_lantern')=='none','attachment cannot be cloned by placement'
+                assert block['properties']['hand_lantern']==['none','unlit','lit'],'invalid hand attachment states'
+                # Runtime getDroppedStacks preserves the attached item's lit state;
+                # JSON must not add a second, unconditional copy. Covered by GameTests.
+                assert len(loot['pools'])==1,'hand attachment loot is owned by runtime'
+            else:
+                assert block['placement_properties'].get('lantern') == 'false', 'attachment cannot be cloned by placement'
+                assert block['properties'].get('lantern') == ['false', 'true'], 'invalid attachment states'
+                expected_drops.append(NS + attached)
+                assert {'condition': 'minecraft:block_state_property', 'block': NS + ident,
+                        'properties': {'lantern': 'true'}} in loot['pools'][1]['conditions'], 'unconditional attachment drop'
         assert drops == expected_drops, 'logical object must drop one own item and only its installed attachment: ' + ident
         for state in expected:
             mesh = block['models'][state]

@@ -49,7 +49,8 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
   Root root=root(world,pos);if(root==null)return ActionResult.PASS;
   Vec3dOffset offset=new Vec3dOffset(root.pos.getX()-pos.getX(),root.pos.getY()-pos.getY(),root.pos.getZ()-pos.getZ());
-  BlockHitResult delegated=new BlockHitResult(hit.getPos().add(offset.x,offset.y,offset.z),hit.getSide(),root.pos,hit.isInsideBlock());
+  boolean authoredSeats=root.state.getBlock() instanceof ArchitectureBlock block&&block.definition.seat_anchors!=null;
+  BlockHitResult delegated=new BlockHitResult(authoredSeats?hit.getPos():hit.getPos().add(offset.x,offset.y,offset.z),hit.getSide(),root.pos,hit.isInsideBlock());
   return root.state.onUse(world,player,hand,delegated);
  }
 

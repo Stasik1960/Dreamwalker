@@ -1,0 +1,386 @@
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :normalizeSupportContracts
+{"support_normalization": {"families": 49, "states": 1660, "ground_families": 43, "below_support_families": 0, "automatically_corrected_families": 0, "ambiguous_mount_families": 6, "old_collision_boxes": 1772, "new_collision_boxes": 1772, "max_ordinary_collision_boxes": 3, "families_with_old_helpers_below": 0, "families_with_helpers_below": 0, "fail_families": 0}, "changed": false}
+
+> Task :check_contract_orientation
+{"result": "PASS", "rotation_checks": 6640, "symmetric": 2, "facing": 47, "connected": 6}
+
+> Task :check_logical_resources
+{"ok": true, "logicalObjects": 49, "states": 1660, "meshes": 702, "textures": 33, "migrationRules": 0, "hiddenLegacyItems": 0, "maximumFootprintCells": 49}
+
+> Task :compileJava
+
+> Task :processResources SKIPPED
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+> Task :classes
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+
+> Task :geometryCheck
+[00:05:35] [main/INFO]: [STDOUT]: GEOMETRY CHECKS PASSED: states=1660 unique=1660 cells=6996
+
+> Task :logicalContractV2Check
+[00:05:41] [main/INFO]: [STDOUT]: LOGICAL CONTRACT V2 CHECKS PASSED
+
+> Task :logicalObjectCheck
+[00:05:47] [main/INFO]: [STDOUT]: LOGICAL OBJECT CHECKS PASSED: definitions=49 meshes=702
+
+> Task :logicalRegistryCheck
+[00:05:53] [main/INFO]: [STDOUT]: LOGICAL REGISTRY CHECKS PASSED: production=49
+
+> Task :logicalVisualModelsCheck
+
+> Task :modularDataCheck
+[00:05:59] [main/INFO]: [STDOUT]: PRODUCTION MESH CHECKS PASSED: referenced=702 available=702
+
+> Task :production_coverage
+{"result": "PASS", "required_count": 49, "source_world_sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51", "runtime_registry_boundary": "definitions.json feeds Java registry; live registry requires GameTests", "manifest_count": 49, "gallery_checked": false, "gallery_count": null, "errors": []}
+
+> Task :jar
+> Task :sourcesJar
+> Task :test
+
+> Task :test_agony_patch
+......
+----------------------------------------------------------------------
+Ran 6 tests in 3.277s
+
+OK
+
+> Task :test_build_nightmare_contracts
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+OK
+
+> Task :test_build_production_gallery
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.204s
+
+OK
+
+> Task :test_export_alt_visual_starter
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.054s
+
+OK
+
+> Task :test_fixture_level_metadata
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.019s
+
+OK
+
+> Task :test_logical_world
+{"ok": true, "converted": 6, "rejected": 15, "dimensions": 2}
+
+> Task :test_nightmare_composition_recipes
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 1.928s
+
+OK
+
+> Task :test_nightmare_functional_recipes
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.951s
+
+OK
+
+> Task :test_nightmare_geometry_recipes
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.031s
+
+OK
+
+> Task :test_preserved_semantics
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.745s
+
+OK
+
+> Task :test_production_coverage
+............
+----------------------------------------------------------------------
+Ran 12 tests in 15.736s
+
+OK
+
+> Task :test_production_door
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+OK
+
+> Task :test_production_exact_duplicates
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 14.919s
+
+OK
+
+> Task :test_production_fingerprints
+......
+----------------------------------------------------------------------
+Ran 6 tests in 26.663s
+
+OK
+
+> Task :test_production_gallery
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_production_geometry
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+
+> Task :test_production_inventory
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+OK
+
+> Task :test_production_palette
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 1.661s
+
+OK
+
+> Task :test_region_padding
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+OK
+
+> Task :test_restore_c003
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.585s
+
+OK
+
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 2.662s
+
+OK
+> Task :test_restore_functional
+
+> Task :test_restored_migration
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.679s
+
+OK
+
+> Task :test_source_review_decisions
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.007s
+
+OK
+
+> Task :test_source_variant_rng
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_split_transactions
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 1.987s
+
+OK
+
+> Task :test_support_collision
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.009s
+
+OK
+
+> Task :test_support_normalization
+............
+----------------------------------------------------------------------
+Ran 12 tests in 5.182s
+
+OK
+
+> Task :test_visual_slots
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.061s
+
+OK
+Visual slots: 1 families, 4 states
+Visual slots: 1 families, 4 states
+
+> Task :validateAccessWidener NO-SOURCE
+> Task :check
+> Task :compileGametestJava UP-TO-DATE
+> Task :generateDLIConfig
+> Task :generateLog4jConfig
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :configureLaunch
+> Task :processGametestResources UP-TO-DATE
+> Task :gametestClasses UP-TO-DATE
+
+> Task :runGametest
+[00:07:31] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.16.10
+[00:07:31] [main/INFO] (FabricLoader) Loading 47 mods:
+	- bloodborne_blocks 2.1.0-alpha.1
+	- bloodborne_blocks_gametest 1.0.0
+	- fabric-api 0.92.9+1.20.1
+	- fabric-api-base 0.4.32+1802ada577
+	- fabric-api-lookup-api-v1 1.6.37+1802ada577
+	- fabric-biome-api-v1 13.0.15+93aa238b77
+	- fabric-block-api-v1 1.0.12+1802ada577
+	- fabric-block-view-api-v2 1.0.3+924f046a77
+	- fabric-command-api-v1 1.2.35+f71b366f77
+	- fabric-command-api-v2 2.2.14+1802ada577
+	- fabric-commands-v0 0.2.52+df3654b377
+	- fabric-containers-v0 0.1.68+df3654b377
+	- fabric-content-registries-v0 4.0.13+1802ada577
+	- fabric-convention-tags-v1 1.5.6+1802ada577
+	- fabric-crash-report-info-v1 0.2.20+1802ada577
+	- fabric-data-attachment-api-v1 1.0.2+de0fd6d177
+	- fabric-data-generation-api-v1 12.3.9+1802ada577
+	- fabric-dimensions-v1 2.1.55+1802ada577
+	- fabric-entity-events-v1 1.6.1+1c78457f77
+	- fabric-events-interaction-v0 0.6.6+13a40c6677
+	- fabric-events-lifecycle-v0 0.2.64+df3654b377
+	- fabric-game-rule-api-v1 1.0.41+1802ada577
+	- fabric-gametest-api-v1 1.2.15+1802ada577
+	- fabric-item-api-v1 2.1.29+1802ada577
+	- fabric-item-group-api-v1 4.0.14+1802ada577
+	- fabric-lifecycle-events-v1 2.2.23+1802ada577
+	- fabric-loot-api-v2 1.2.3+1802ada577
+	- fabric-loot-tables-v1 1.1.47+9e7660c677
+	- fabric-message-api-v1 5.1.10+1802ada577
+	- fabric-mining-level-api-v1 2.1.52+1802ada577
+	- fabric-networking-api-v1 1.3.15+0caff8d077
+	- fabric-networking-v0 0.3.55+df3654b377
+	- fabric-object-builder-api-v1 11.1.5+e35120df77
+	- fabric-particles-v1 1.1.3+1802ada577
+	- fabric-recipe-api-v1 1.0.25+1802ada577
+	- fabric-registry-sync-v0 2.4.1+4c0a70e677
+	- fabric-rendering-data-attachment-v1 0.3.39+92a0d36777
+	- fabric-rendering-fluids-v1 3.0.29+1802ada577
+	- fabric-resource-conditions-api-v1 2.3.9+1802ada577
+	- fabric-resource-loader-v0 0.11.12+fb82e9d777
+	- fabric-screen-handler-api-v1 1.3.34+1802ada577
+	- fabric-transfer-api-v1 3.3.6+8dd72ea377
+	- fabric-transitive-access-wideners-v1 4.3.2+1802ada577
+	- fabricloader 0.16.10
+	- java 17
+	- minecraft 1.20.1
+	- mixinextras 0.4.1
+[00:07:31] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/vakir/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[00:07:32] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[00:07:32] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[00:07:32] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[00:07:40] [main/INFO] (Minecraft) [STDOUT]: BLOODBORNE_BLOCKS_REGISTERED blocks=49 states=1660
+[00:07:40] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[00:07:40] [main/INFO] (FabricGameTestHelper) Starting test server
+[00:07:42] [main/INFO] (Minecraft) Loaded 7 recipes
+[00:07:42] [main/INFO] (Minecraft) Loaded 1272 advancements
+[00:07:42] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.861 ms
+[00:07:43] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[00:07:43] [Server thread/INFO] (Minecraft) Preparing spawn area: 0%
+[00:07:44] [Worker-Main-4/INFO] (Minecraft) Preparing spawn area: 83%
+[00:07:44] [Worker-Main-13/INFO] (Minecraft) Preparing spawn area: 93%
+[00:07:44] [Server thread/INFO] (Minecraft) Time elapsed: 1031 ms
+[00:07:44] [Server thread/INFO] (Minecraft) Started game test server
+[00:07:44] [Server thread/INFO] (Minecraft) Running test batch 'agony_furniture:1' (2 tests)...
+[00:07:44] [Server thread/INFO] (Minecraft) 32 tests are now running!
+[00:07:44] [Server thread/INFO] (Minecraft) Running test batch 'production_functional:1' (3 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'production_restoration:1' (3 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'agony_surface:1' (4 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'production_palette_rotation:1' (1 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'production_palette_registry:1' (1 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'support_plane_stale_helper:1' (1 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'production_palette_door:1' (3 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'logical_visual:1' (4 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 213 at (1.5, -60.0, 2.5)
+[00:07:45] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'agony_transition:1' (1 tests)...
+[00:07:45] [Server thread/INFO] (Minecraft) Running test batch 'support_plane:1' (2 tests)...
+[00:07:47] [Server thread/INFO] (Minecraft) Running test batch 'production_palette_tree:1' (1 tests)...
+[00:07:47] [Server thread/INFO] (Minecraft) Running test batch 'logical_debug:1' (3 tests)...
+[00:07:47] [Server thread/INFO] (Minecraft) Bloodborne debug: player target required.
+[00:07:47] [Server thread/INFO] (Minecraft) Bloodborne debug: player target required.
+[00:07:47] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 1871 at (-7.5, -60.0, -3.5)
+[00:07:47] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[00:07:47] [Server thread/INFO] (Minecraft) Running test batch 'agony_attachment:1' (3 tests)...
+[00:07:47] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++]
+[00:07:47] [Server thread/INFO] (Minecraft) ========= 32 GAME TESTS COMPLETE ======================
+[00:07:47] [Server thread/INFO] (Minecraft) All 32 required tests passed :)
+[00:07:47] [Server thread/INFO] (Minecraft) ====================================================
+[00:07:47] [Server thread/INFO] (Minecraft) Stopping server
+[00:07:47] [Server thread/INFO] (Minecraft) Saving players
+[00:07:47] [Server thread/INFO] (Minecraft) Saving worlds
+[00:07:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[00:07:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[00:07:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[00:07:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
+[00:07:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[00:07:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[00:07:48] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[00:07:48] [Server thread/INFO] (Minecraft) Game test server shutting down
+
+> Task :logicalGameTest
+> Task :compileLevelMetadataCheckJava UP-TO-DATE
+> Task :processLevelMetadataCheckResources NO-SOURCE
+> Task :levelMetadataCheckClasses UP-TO-DATE
+
+> Task :levelMetadataCheck
+official route: LevelStorage.create(saves).getLevelList() -> loadSummaries(levelList)
+saves: C:\Users\vakir\Documents\ChatGPT\DW\Bloodborne-Blocks\build\production-gallery-saves
+summaries: [production-agony-gallery-ready-20260924, production-agony-gallery-20260924, production-functional-gallery-20260924, production-restored-gallery-ready-20260924-r2, production-restored-gallery-ready-20260924, production-palette-gallery-ready-20260924, production-palette-gallery-20260924]
+production-agony-gallery-20260924: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+production-agony-gallery-ready-20260924: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+production-functional-gallery-20260924: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+production-palette-gallery-20260924: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+production-palette-gallery-ready-20260924: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+production-restored-gallery-ready-20260924: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+production-restored-gallery-ready-20260924-r2: level.dat=true, Data.version=19133, DataVersion=3465, Version.Id=3465, vanilla-summary=true (accepted by vanilla summary loader)
+
+> Task :remapJar
+> Task :remapSourcesJar
+> Task :assemble
+> Task :build
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3m 4s
+53 actionable tasks: 48 executed, 5 up-to-date

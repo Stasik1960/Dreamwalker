@@ -41,7 +41,7 @@ def main():
             key = ",".join(f"{k}={v}" for k, v in sorted(opened.items()))
             samples.append((definition["id"], key, states[key]))
         if definition.get("attachment_item"):
-            attached = {**placed, "lantern": "true"}
+            attached = {**placed, **({'hand_lantern':'lit'} if 'hand_lantern' in definition['properties'] else {'lantern':'true'})}
             key = ",".join(f"{k}={v}" for k, v in sorted(attached.items()))
             samples.append((definition["id"], key, states[key]))
         if definition.get("behavior") == "connected":

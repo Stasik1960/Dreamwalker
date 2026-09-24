@@ -1,0 +1,30 @@
+{
+  "method": "Read-only model-UV audit with Pillow alpha samples.",
+  "candles": {
+    "mesh_polygons": 104,
+    "support_groups": 19,
+    "all_groups_have_nontransparent_geometry_at_local_y0": true,
+    "nontransparent_base_samples": 1320,
+    "bounds": {
+      "x": [-0.8125, 1.324524],
+      "y": [0.0, 1.1875],
+      "z": [-0.654888, 1.709389]
+    }
+  },
+  "shuttered_window_open": {
+    "front_polygon": 10,
+    "back_polygon": 14,
+    "texture": "bloodborne_blocks:block/addon/roof_1",
+    "uv_bounds": {"u": [11.625, 14.375], "v": [10.0, 14.0]},
+    "front_plane_z": 0.125,
+    "back_plane_z": 0.25,
+    "alpha_patch_pixels": 704,
+    "transparent_pixels": 244,
+    "opaque_pixels": 460,
+    "back_uses_reversed_front_uv_winding": true,
+    "centre_uv_13_12_alpha": 255,
+    "adjacent_uv_12_5_12_alpha": 0,
+    "adjacent_uv_13_5_12_alpha": 0,
+    "finding": "Both faces share the transparent alpha mask; a narrow opaque decorative centre divider remains."
+  }
+}

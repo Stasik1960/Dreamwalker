@@ -16,9 +16,9 @@ PRODUCTION_INPUTS = ROOT / 'docs' / 'production-authoring-inputs.json.gz'
 # production mesh deduplication outputs. Their non-mesh source identities still
 # must agree with the frozen authoritative input.
 PRODUCTION_MESH_IDENTITY_EXCEPTIONS = {
-    'o_c001', 'o_c008_1', 'o_c008_2', 'o_c008_3', 'o_c008_5', 'o_c1962_b',
+    'o_c001', 'o_c008_1', 'o_c008_2', 'o_c008_3', 'o_c008_5',
     'o_c1979_1', 'o_c1979_2', 'o_c1979_3', 'o_c1979_4', 'o_c1979_5', 'o_c282',
-    'o_c561', 'o_c618',
+    'o_c618',
 }
 
 

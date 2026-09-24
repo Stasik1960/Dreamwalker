@@ -3,6 +3,9 @@ package dev.dreamwalker.bloodborneblocks;
 import net.minecraft.Bootstrap;
 import net.minecraft.SharedConstants;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 
@@ -21,6 +24,11 @@ public final class LogicalRegistryChecks {
    check(definition.logical&&definition.id.startsWith("o_"),"production definition is logical: "+definition.id);
    check(BloodborneBlocks.productionEntry(definition.id)!=null&&ids.add(definition.id),"manifest has one definition: "+definition.id);
    BloodborneBlocks.prepareDefinition(definition);ArchitectureBlock block=ArchitectureBlock.create(definition);BlockState state=block.getDefaultState();
+   Registry.register(Registries.BLOCK,BloodborneBlocks.id(definition.id),block);
+   ArchitectureBlockItem item=new ArchitectureBlockItem(block,new Item.Settings());
+   Registry.register(Registries.ITEM,BloodborneBlocks.id(definition.id),item);
+   item.appendBlocks(Item.BLOCK_ITEMS,item);
+   BloodborneBlocks.BLOCKS.put(definition.id,block);
    if(state.contains(Properties.HORIZONTAL_FACING))check(block.rotate(state,BlockRotation.CLOCKWISE_90).get(Properties.HORIZONTAL_FACING)==BlockRotation.CLOCKWISE_90.rotate(state.get(Properties.HORIZONTAL_FACING)),"rotation preserves object identity: "+definition.id);
    if(definition.properties.containsKey("visual"))check(block.getStateManager().getProperty("visual")!=null,"visual state property: "+definition.id);
    check(definition.states.keySet().equals(definition.models.keySet()),"one production mesh per state: "+definition.id);

@@ -20,6 +20,8 @@ PART = "bloodborne_blocks:logical_part"
 FLOOR = "minecraft:white_concrete"
 GAP = 10
 ALT_PROOF_IDS = ("o_c001", "o_c002")
+STATUE_IDS = ("o_c008_1", "o_c008_2", "o_c008_3", "o_c008_5")
+LADDER_SECTIONS = 5
 
 
 def require(value: bool, message: str) -> None:
@@ -66,6 +68,67 @@ def plan(specimens: list[dict[str, Any]], columns: int = 4) -> None:
         row_depth = max(row_depth, depth)
 
 
+def functional_group_placement(specimens: list[dict[str, Any]]) -> None:
+    """Place only explicitly authored functional groups; never infer them from world cells."""
+    def place(specimen: dict[str, Any], root: tuple[int, int, int], marker: tuple[int, int, int]) -> None:
+        low_x, low_z, high_x, high_z = _horizontal_extent(specimen["bounds"], specimen["footprint"])
+        specimen["position"] = root
+        specimen["pad"] = (root[0] + low_x - 2, root[2] + low_z - 2, root[0] + high_x + 1, root[2] + high_z + 1)
+        specimen["marker"] = marker
+
+    groups = {row["specimen_id"]: row for row in specimens}
+    shutters = [row for row in specimens if row["id"] == "o_shuttered_window" and row["role"] in {"canonical_base", "open"}]
+    for number, shutter in enumerate(sorted(shutters, key=lambda row: row["role"])):
+        # The shutter contract itself owns the complete 3x3 wall cells in each state.
+        # Do not put an opaque vanilla backing plane behind it: that would conceal the opening.
+        place(shutter, (256 + number * 8, ROOT_Y + 1, 32), (224 + number * 2, ROOT_Y, 32))
+    statues = [row for row in specimens if row["id"] in STATUE_IDS]
+    for number, statue in enumerate(sorted(statues, key=lambda row: row["specimen_id"])):
+        place(statue, (256 + (number % 4) * 8, ROOT_Y, 48 + (number // 4) * 8), (224 + number * 2, ROOT_Y, 48))
+    lanterns = [row for row in specimens if row["id"] == "o_lantern"]
+    for number, lantern in enumerate(sorted(lanterns, key=lambda row: row["specimen_id"])):
+        place(lantern, (256 + number * 4, ROOT_Y, 72), (224 + number * 2, ROOT_Y, 64))
+    benches = [row for row in specimens if row["id"] == "o_bench"]
+    for number, bench in enumerate(sorted(benches, key=lambda row: row["specimen_id"])):
+        place(bench, (256 + (number % 4) * 8, ROOT_Y, 88 + (number // 4) * 8), (224 + number * 2, ROOT_Y, 80))
+    ladders = [groups[f"o_ladder_03:ladder_section_{number}"] for number in range(1, LADDER_SECTIONS + 1)
+               if f"o_ladder_03:ladder_section_{number}" in groups]
+    if len(ladders) == LADDER_SECTIONS:
+        first = (320, ROOT_Y + 1, 32)
+        for number, ladder in enumerate(ladders):
+            place(ladder, (first[0], first[1] + number * 2, first[2]), (224 + number * 2, ROOT_Y, 96))
+        landing = groups.get("o_ladder_01:ladder_landing")
+        if landing is not None:
+            last = ladders[-1]["position"]
+            # The landing deck is authored at local y=.8125, while the last ladder
+            # reaches local y=1. Keep the landing one cell in front without pretending
+            # the two authored surfaces are flush; the remaining .1875 vertical step is
+            # intentional and leaves every helper cell collision-safe.
+            place(landing, (last[0], last[1], last[2] - 2), (224 + LADDER_SECTIONS * 2, ROOT_Y, 96))
+
+
+def functional_context(specimen: dict[str, Any]) -> dict[tuple[int, int, int], str]:
+    """Static wall cells adjacent to, never inside, authored logical ownership."""
+    root = specimen["position"]
+    if specimen["id"] == "o_shuttered_window" and specimen["role"] in {"canonical_base", "open"}:
+        # Frame the 3x3 state-owned opening from its own wall plane.  The full opening
+        # (including helpers) stays clear and no z+1 backing can obscure the shutters.
+        return {(root[0] + x, root[1] + y, root[2]): "minecraft:stone"
+                for x in range(-2, 3) for y in range(-2, 3) if abs(x) == 2 or abs(y) == 2}
+    if specimen["id"] == "o_ladder_03" and specimen["role"].startswith("ladder_section_"):
+        return {(root[0] + x, root[1] + y, root[2] + 1): "minecraft:stone"
+                for x in range(-1, 2) for y in (-1, 0)}
+    if specimen["id"] == "o_ladder_01" and specimen["role"] == "ladder_landing":
+        return {(root[0] + x, root[1] + y, root[2] - 2): "minecraft:stone"
+                for x in range(-1, 2) for y in range(-1, 2)}
+    return {}
+
+
+def platform_block(specimen: dict[str, Any], point: tuple[int, int, int]) -> str:
+    """Return the intended support material, retaining functional frame cells at floor level."""
+    return functional_context(specimen).get(point, FLOOR)
+
+
 def load_specimens(manifest_path: Path = MANIFEST) -> tuple[list[dict], list[dict]]:
     manifest = json.loads(manifest_path.read_text(encoding="utf8"))
     objects = manifest.get("objects")
@@ -104,6 +167,47 @@ def load_specimens(manifest_path: Path = MANIFEST) -> tuple[list[dict], list[dic
             require("open" in definition.get("properties", {}), f"interactive production object lacks open state: {ident}")
             state, properties = specimen_properties(definition, open="true")
             add(item, definition, contract, state, properties, "open")
+    for ident in STATUE_IDS:
+        item = next((row for row in selected if row["id"] == ident), None)
+        if item is None:
+            continue
+        definition, contract = definitions[ident], contracts[ident]
+        if "hand_lantern" in definition.get("properties", {}):
+            state, properties = specimen_properties(definition, hand_lantern="lit")
+            add(item, definition, contract, state, properties, "hand_lantern_lit")
+    lantern_item = next((row for row in selected if row["id"] == "o_lantern"), None)
+    if lantern_item is not None:
+        definition, contract = definitions["o_lantern"], contracts["o_lantern"]
+        if "lit" in definition.get("properties", {}):
+            canonical = canonical_properties(definition)[1].get("lit")
+            for value in ("false", "true"):
+                if value != canonical:
+                    state, properties = specimen_properties(definition, lit=value)
+                    add(lantern_item, definition, contract, state, properties, "lantern_" + ("lit" if value == "true" else "unlit"))
+    bench_item = next((row for row in selected if row["id"] == "o_bench"), None)
+    if bench_item is not None:
+        definition, contract = definitions["o_bench"], contracts["o_bench"]
+        if "diagonal" in definition.get("properties", {}):
+            canonical = canonical_properties(definition)[1]
+            for facing in ("north", "east", "south", "west"):
+                for diagonal in ("false", "true"):
+                    values = {"facing": facing, "diagonal": diagonal}
+                    if all(canonical.get(name) == value for name, value in values.items()):
+                        continue
+                    state, properties = specimen_properties(definition, **values)
+                    add(bench_item, definition, contract, state, properties, f"bench_{facing}_diagonal_{diagonal}")
+    ladder_item = next((row for row in selected if row["id"] == "o_ladder_03"), None)
+    if ladder_item is not None:
+        definition, contract = definitions["o_ladder_03"], contracts["o_ladder_03"]
+        canonical_state, canonical = canonical_properties(definition)
+        first = next(row for row in specimens if row["id"] == "o_ladder_03" and row["role"] == "canonical_base")
+        first["role"] = "ladder_section_1"; first["specimen_id"] = "o_ladder_03:ladder_section_1"
+        for number in range(2, LADDER_SECTIONS + 1):
+            add(ladder_item, definition, contract, canonical_state, dict(canonical), f"ladder_section_{number}")
+    landing_item = next((row for row in selected if row["id"] == "o_ladder_01"), None)
+    if landing_item is not None:
+        landing = next(row for row in specimens if row["id"] == "o_ladder_01" and row["role"] == "canonical_base")
+        landing["role"] = "ladder_landing"; landing["specimen_id"] = "o_ladder_01:ladder_landing"
     for ident in ALT_PROOF_IDS:
         item = next((row for row in selected if row["id"] == ident), None)
         if item is None:
@@ -113,6 +217,7 @@ def load_specimens(manifest_path: Path = MANIFEST) -> tuple[list[dict], list[dic
         state, properties = specimen_properties(definition, visual="alt")
         add(item, definition, contract, state, properties, "alt_proof")
     plan(specimens)
+    functional_group_placement(specimens)
     return specimens, selected
 
 
@@ -141,11 +246,14 @@ def build(output: Path = OUTPUT, manifest_path: Path = MANIFEST) -> None:
             data = {"id": Tag(TAG_STRING, PART), "Owner": Tag(TAG_STRING, owner), "Root": Tag(TAG_LONG, block_pos_long(*root))}
             data.update({axis: Tag(TAG_INT, value) for axis, value in zip(("x", "y", "z"), point)})
             entities.append(Tag(TAG_COMPOUND, data))
+        for point, block in functional_context(specimen).items():
+            require(point not in cells, "functional context overlaps an authored cell")
+            cells[point] = (block, {})
         min_x, min_z, max_x, max_z = specimen["pad"]
         for x in range(min_x, max_x + 1):
             for z in range(min_z, max_z + 1):
                 cells.setdefault((x, FLOOR_Y, z), (FLOOR, {}))
-        marker = (min_x, ROOT_Y, min_z)
+        marker = specimen.get("marker", (min_x, ROOT_Y, min_z))
         require(marker not in cells, "marker overlaps production object")
         cells[marker] = ("minecraft:oak_sign", {"rotation": "8", "waterlogged": "false"})
         text = [specimen["specimen_id"], specimen["semantic_label"], specimen["state"], "SourceReview " + specimen["source_review"]]
@@ -187,10 +295,19 @@ def verify(world_path: Path, manifest_path: Path = MANIFEST) -> dict:
                 data = compound(entities[("minecraft:overworld", *point)])
                 require(data["Owner"].value == name and data["Root"].value == block_pos_long(*root), "helper ownership mismatch")
                 helpers += 1
+        for point, block in functional_context(specimen).items():
+            require((world.get("minecraft:overworld", point) or (None, ()))[0] == block, "functional context mismatch")
+        if specimen["id"] == "o_shuttered_window" and specimen["role"] in {"canonical_base", "open"}:
+            for x in range(-1, 2):
+                for y in range(-1, 2):
+                    aperture = (root[0] + x, root[1] + y, root[2])
+                    require(world.get("minecraft:overworld", aperture) is not None, "shutter opening is missing authored ownership")
         low_x, low_z, high_x, high_z = _horizontal_extent(specimen["bounds"], specimen["footprint"])
         for x in range(root[0] + low_x, root[0] + high_x + 1):
             for z in range(root[2] + low_z, root[2] + high_z + 1):
-                require((world.get("minecraft:overworld", (x, FLOOR_Y, z)) or (None, ()))[0] == FLOOR, "platform coverage mismatch")
+                point = (x, FLOOR_Y, z)
+                require((world.get("minecraft:overworld", point) or (None, ()))[0] == platform_block(specimen, point),
+                        "platform coverage mismatch")
                 platform_cells += 1
     nbt = read_nbt(world_path / "level.dat"); validate_level_metadata(nbt)
     require(compound(compound(nbt.root)["Data"])["LevelName"].value == "Bloodborne production palette gallery", "level name mismatch")

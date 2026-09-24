@@ -7,14 +7,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashSet;
 import java.util.WeakHashMap;
 
 /** Exact opt-in behavior for the authored ladder and bench models. */
@@ -66,22 +70,76 @@ public final class FunctionalFurniture {
  }
 
  static ActionResult sit(World world,BlockPos root,BlockState state,PlayerEntity player){
+  return sit(world,root,state,player,null);
+ }
+
+ static ActionResult sit(World world,BlockPos root,BlockState state,PlayerEntity player,BlockHitResult hit){
   if(world.isClient)return ActionResult.SUCCESS;
   if(!(world instanceof ServerWorld server)||player.hasVehicle()||!isBench(state))return ActionResult.FAIL;
   List<ArchitectureSeatEntity> existing=server.getEntitiesByClass(ArchitectureSeatEntity.class,new Box(root).expand(8),seat->seat.rootPos().equals(root));
+  if(isAuthoredBench(state))return sitAuthored(server,root,state,player,hit,existing);
   for(ArchitectureSeatEntity seat:existing){if(seat.hasPassengers())return ActionResult.FAIL;seat.discard();}
   SeatPoint point=seatPoint(root,state);ArchitectureSeatEntity seat=BloodborneBlocks.SEAT_ENTITY.create(server);if(seat==null)return ActionResult.FAIL;
   Direction facing=state.contains(Properties.HORIZONTAL_FACING)?state.get(Properties.HORIZONTAL_FACING).getOpposite():Direction.SOUTH;
   // PlayerEntity already supplies a -0.35 sitting offset; do not apply it twice.
-  seat.bind(root,point.x,point.y,point.z,facing.asRotation());
+  seat.bind(root,0,point.x,point.y,point.z,facing.asRotation());
   if(!server.spawnEntity(seat)){seat.discard();return ActionResult.FAIL;}
   if(!player.startRiding(seat,true)){seat.discard();return ActionResult.FAIL;}
   player.setYaw(facing.asRotation());player.setHeadYaw(facing.asRotation());player.setBodyYaw(facing.asRotation());return ActionResult.CONSUME;
  }
 
+ private static boolean isAuthoredBench(BlockState state){
+  return state.getBlock() instanceof ArchitectureBlock block&&block.definition.logical&&"bench".equals(block.definition.behavior)
+   &&block.definition.seat_anchors!=null&&block.definition.seat_anchors.length>0;
+ }
+
+ private static boolean diagonal(BlockState state){
+  var property=state.getBlock().getStateManager().getProperty("diagonal");
+  return property instanceof BooleanProperty value&&state.get(value);
+ }
+
+ private static ActionResult sitAuthored(ServerWorld server,BlockPos root,BlockState state,PlayerEntity player,BlockHitResult hit,List<ArchitectureSeatEntity> existing){
+  List<Vec3d> points=seatPoints(root,state);HashSet<Integer> occupied=new HashSet<>();
+  for(ArchitectureSeatEntity seat:existing){
+   if(!seat.hasPassengers()){seat.discard();continue;}
+   if(seat.seatIndex()<0||seat.seatIndex()>=points.size())return ActionResult.FAIL;
+   occupied.add(seat.seatIndex());
+  }
+  int selected=-1;double best=Double.POSITIVE_INFINITY;Vec3d click=hit==null?null:hit.getPos();
+  for(int index=0;index<points.size();index++)if(!occupied.contains(index)){
+   double distance=click==null?index:click.squaredDistanceTo(points.get(index));
+   if(distance<best){best=distance;selected=index;}
+  }
+  if(selected<0||(click!=null&&best>9))return ActionResult.FAIL;
+  ArchitectureSeatEntity seat=BloodborneBlocks.SEAT_ENTITY.create(server);if(seat==null)return ActionResult.FAIL;
+  Direction facing=state.contains(Properties.HORIZONTAL_FACING)?state.get(Properties.HORIZONTAL_FACING).getOpposite():Direction.SOUTH;
+  // Passenger Y is vehicle Y + mounted offset + PlayerEntity's -0.35
+  // height offset. Its biped hip pivot is 12 model pixels (0.75 blocks)
+  // above its feet: 1.0 + (-0.40) + (-0.35) + 0.75 = 1.0 plank Y.
+  Vec3d point=points.get(selected);float yaw=facing.asRotation()+(diagonal(state)?45:0);seat.bind(root,selected,point.x,point.y,point.z,yaw,-.40);
+  if(!server.spawnEntity(seat)){seat.discard();return ActionResult.FAIL;}
+  if(!player.startRiding(seat,true)){seat.discard();return ActionResult.FAIL;}
+  seat.updatePassengerPosition(player);
+  player.setYaw(yaw);player.setHeadYaw(yaw);player.setBodyYaw(yaw);return ActionResult.CONSUME;
+ }
+
  static void removeSeats(World world,BlockPos root){
   if(!(world instanceof ServerWorld server))return;
   for(ArchitectureSeatEntity seat:server.getEntitiesByClass(ArchitectureSeatEntity.class,new Box(root).expand(8),entity->entity.rootPos().equals(root)))seat.discard();
+ }
+
+ /** Authored north-facing local anchors, rotated about the block center. */
+ static List<Vec3d> seatPoints(BlockPos root,BlockState state){
+  if(!(state.getBlock() instanceof ArchitectureBlock block)||block.definition.seat_anchors==null)return List.of();
+  Direction facing=state.contains(Properties.HORIZONTAL_FACING)?state.get(Properties.HORIZONTAL_FACING):Direction.NORTH;
+  double angle=Math.toRadians(facing.asRotation()-180+(diagonal(state)?45:0));double cos=Math.cos(angle),sin=Math.sin(angle);
+  java.util.ArrayList<Vec3d> points=new java.util.ArrayList<>();
+  for(double[] anchor:block.definition.seat_anchors){
+   if(anchor==null||anchor.length!=3)throw new IllegalStateException("Invalid authored seat anchor "+block.definition.id);
+   double x=anchor[0]-.5,z=anchor[2]-.5;
+   points.add(new Vec3d(root.getX()+.5+x*cos-z*sin,root.getY()+anchor[1],root.getZ()+.5+x*sin+z*cos));
+  }
+  return List.copyOf(points);
  }
 
  private static SeatPoint seatPoint(BlockPos root,BlockState state){

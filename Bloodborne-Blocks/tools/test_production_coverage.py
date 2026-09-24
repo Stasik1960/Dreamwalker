@@ -4,6 +4,7 @@ import json
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from production_coverage import DEFAULT_MANIFEST, DEFAULT_REQUIRED, DEFAULT_RESOURCES, required_ids, validate
 
@@ -17,6 +18,30 @@ def write(path: Path, value) -> None:
 
 
 class ProductionCoverageTests(unittest.TestCase):
+    def test_retirement_cannot_contradict_required_successor(self):
+        import production_coverage as coverage
+        original=coverage._read
+        for field,value in [('status','CONTEXT_ONLY'),('ids',['o_bag']),('reason','invented reason')]:
+            def modified(path):
+                data=original(path)
+                if path.name=='decisions.json':next(x for x in data['decisions'] if x['id']=='o_c561')[field]=value
+                return data
+            with patch.object(coverage,'_read',side_effect=modified),self.assertRaisesRegex(ValueError,'contradicts required successor'):
+                validate()
+
+    def test_context_evidence_cannot_disappear(self):
+        import production_coverage as coverage
+        original=coverage._read
+        for mutation in ('row','patterns'):
+            def modified(path):
+                data=original(path)
+                if path.name=='decisions.json':
+                    if mutation=='row':data['decisions']=[x for x in data['decisions'] if x['id']!='o_ladder_02']
+                    else:next(x for x in data['decisions'] if x['id']=='o_iron_railing')['source_patterns']=[]
+                return data
+            with patch.object(coverage,'_read',side_effect=modified),self.assertRaisesRegex(ValueError,'decision IDs|source evidence'):
+                validate()
+
     def copied_inputs(self, folder: str) -> tuple[Path, Path]:
         base = Path(folder)
         resources = base / "logical"; shutil.copytree(DEFAULT_RESOURCES, resources)
@@ -24,14 +49,14 @@ class ProductionCoverageTests(unittest.TestCase):
         return resources, manifest
 
     def test_handwritten_union_is_fixed(self):
-        self.assertEqual(len(required_ids(read(DEFAULT_REQUIRED))), 56)
+        self.assertEqual(len(required_ids(read(DEFAULT_REQUIRED))), 49)
         for old, new in [('o_barrel_0','o_barrel'),('o_books_0','o_books'),('o_bag_0','o_bag')]:
             self.assertEqual(read(DEFAULT_REQUIRED)['successors'][old], {'status':'MERGED_WITH_SUCCESSOR','ids':[new]})
 
     def test_live_complete_palette_passes(self):
         report = validate(required_path=DEFAULT_REQUIRED, resources=DEFAULT_RESOURCES, manifest_path=DEFAULT_MANIFEST)
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["required_count"], 56)
+        self.assertEqual(report["required_count"], 49)
 
     def test_required_spec_catches_id_removed_from_every_production_input(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -68,6 +93,14 @@ class ProductionCoverageTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "required.json"; write(path, required)
             with self.assertRaisesRegex(ValueError, "incomplete successor: o_c003"):
+                validate(required_path=path, resources=DEFAULT_RESOURCES, manifest_path=DEFAULT_MANIFEST)
+
+    def test_context_retirement_requires_an_explicit_reason(self):
+        required = read(DEFAULT_REQUIRED)
+        required["successors"]["o_ladder_02"]["reason"] = ""
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "required.json"; write(path, required)
+            with self.assertRaisesRegex(ValueError, "successor lacks explicit reason: o_ladder_02"):
                 validate(required_path=path, resources=DEFAULT_RESOURCES, manifest_path=DEFAULT_MANIFEST)
 
     def test_restoration_without_raw_source_pattern_is_rejected(self):

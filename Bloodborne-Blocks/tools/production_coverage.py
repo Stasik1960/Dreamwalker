@@ -24,6 +24,22 @@ def required_ids(required: dict[str, Any]) -> set[str]:
     return set(required["retained_reviewed_ids"]) | {row["id"] for row in required["restorations"]} | set(required["c003_production_ids"])
 
 
+def successor_leaves(ident: str, successors: dict[str, Any], wanted: set[str], visiting: set[str] | None = None) -> set[str]:
+    """Resolve explicit successor chains; a retired intermediary is not a live leaf."""
+    if ident in wanted:
+        return {ident}
+    if ident not in successors:
+        return set()
+    visiting = set() if visiting is None else visiting
+    if ident in visiting:
+        return set()
+    visiting.add(ident)
+    leaves: set[str] = set()
+    for target in successors[ident].get("ids", []):
+        leaves |= successor_leaves(target, successors, wanted, visiting)
+    return leaves
+
+
 def _fail(errors: list[str], condition: bool, message: str) -> None:
     if not condition: errors.append(message)
 
@@ -34,7 +50,9 @@ def validate(*, required_path: Path = DEFAULT_REQUIRED, resources: Path = DEFAUL
     required = _read(required_path)
     wanted = required_ids(required)
     errors: list[str] = []
-    _fail(errors, len(wanted) == 56, f"required family union must be 56, got {len(wanted)}")
+    expected_count = required.get("expected_production_count")
+    _fail(errors, isinstance(expected_count, int) and len(wanted) == expected_count,
+          f"required family union must be {expected_count}, got {len(wanted)}")
     _fail(errors, required.get("generator_policy", "").startswith("Read-only"), "required input is not handwritten/read-only")
     contracts = {row["id"]: row for row in _read(resources / "contracts-v2.json")["families"]}
     definitions = {row["id"]: row for row in _read(resources / "definitions.json")["blocks"]}
@@ -45,9 +63,45 @@ def validate(*, required_path: Path = DEFAULT_REQUIRED, resources: Path = DEFAUL
         _fail(errors, ident in manifest_ids, f"missing production manifest family: {ident}")
     forbidden = set(required["forbidden_production_ids"])
     _fail(errors, not (forbidden & manifest_ids), "forbidden production IDs: " + ", ".join(sorted(forbidden & manifest_ids)))
-    for retired, successor in required["successors"].items():
+    successors = required["successors"]
+    for retired, successor in successors.items():
         _fail(errors, successor["status"] in required["approved_statuses"], f"unapproved successor status: {retired}")
-        _fail(errors, set(successor["ids"]) <= wanted, f"incomplete successor: {retired}")
+        if successor["status"] == "CONTEXT_ONLY":
+            _fail(errors, bool(successor.get("reason")), f"successor lacks explicit reason: {retired}")
+            _fail(errors, not successor.get("ids"), f"context-only retirement has a successor: {retired}")
+        else:
+            _fail(errors, bool(successor_leaves(retired, successors, wanted)), f"incomplete successor: {retired}")
+    decisions_path = ROOT / required["agony_cumulative_decisions"]
+    _fail(errors, decisions_path.is_file(), "missing Agony retirement decisions")
+    if decisions_path.is_file():
+        decisions = {row["id"]: row for row in _read(decisions_path).get("decisions", [])}
+        with gzip.open(ROOT/'docs/agony-patch/baseline-fingerprints.json.gz','rt',encoding='utf8') as stream:
+            baseline=json.load(stream)['fingerprints']['families']
+        expected_retirements=set(baseline)-wanted
+        _fail(errors,set(decisions)==expected_retirements,'Agony decision IDs do not match baseline retirements')
+        for retired, decision in decisions.items():
+            _fail(errors, all(decision.get(k)==successors.get(retired,{}).get(k) for k in ('status','ids','reason')),
+                  f'retirement decision contradicts required successor: {retired}')
+            _fail(errors, decision.get("status") in required["approved_statuses"] and bool(decision.get("reason")),
+                  f"retired family lacks approved explicit decision: {retired}")
+            original=baseline.get(retired,{}).get('core',{}).get('contract',{})
+            expected_patterns=[{'state':k,'pattern':p} for k,s in original.get('states',{}).items() for p in s.get('migration_source_pattern',[])]
+            _fail(errors,decision.get('source_patterns')==expected_patterns,
+                  f'retired source evidence changed or missing: {retired}')
+            _fail(errors,decision.get('review_source_patterns')==original.get('review_source_patterns',[]),
+                  f'retired review source evidence changed or missing: {retired}')
+            if retired=='o_c561':
+                survivor=contracts.get('o_c046',{})
+                review_union=baseline['o_c046']['core']['contract'].get('review_source_patterns',[])+original.get('review_source_patterns',[])
+                _fail(errors,all(p in survivor.get('review_source_patterns',[]) for p in review_union),
+                      'C046 lost C046/C561 review source evidence')
+                _fail(errors,survivor.get('migration_redirect',{}).get('successor')=='o_cases_0',
+                      'indistinguishable C046 raw carrier must retain authoritative CASES mapping')
+            if decision.get("status") == "CONTEXT_ONLY":
+                _fail(errors, not decision.get("ids"), f"context-only retirement has a successor: {retired}")
+                _fail(errors,bool(expected_patterns),f'context retirement lacks baseline source patterns: {retired}')
+            else:
+                _fail(errors, bool(successor_leaves(retired, successors, wanted)), f"retired family lacks surviving successor: {retired}")
     # Frozen evidence is read only: it proves the restoration inputs were not
     # guessed from a new world scan.
     mapping_path = ROOT / required["source_mapping"]

@@ -1,4 +1,24 @@
-# Bloodborne Architecture — functional restoration, 2026-09-24
+# Bloodborne Architecture — cumulative Агония, 2026-09-25
+
+- [Текущий JAR](bloodborne-blocks-2.1.0-alpha.1-agony-20260925-mc1.20.1.jar)
+- [Новая галерея](production-agony-gallery-ready-20260924.zip)
+- [Изменения и ограничения](../../Bloodborne-Blocks/docs/agony-patch/RESULTS.md)
+- [Проверки и SHA-256](../../Bloodborne-Blocks/docs/agony-patch/release-proof.json)
+
+49 production предметов, 73 образца; 37 unrelated families сохранены без
+изменения geometry/gameplay data. Fabric **1.20.1, Java 17**. Замените прошлый
+JAR, не устанавливайте обе версии одновременно. Из ZIP извлеките папку
+`production-agony-gallery-ready-20260924` в `saves`, с `level.dat` прямо внутри.
+Суффикс галереи — дата начала этого прохода; это новый cumulative QA save.
+
+Проверяйте in-wall окна (проём должен быть подготовлен), фонари в руках статуй,
+8 направлений/3 места скамьи и пять секций лестницы с отдельной площадкой.
+Переход на площадку — короткий прыжок, не бесшовная дорожка. Настроенные
+NBT/именованные фонари не принимаются в крепление и не расходуются.
+Исходный мир не изменён. Старые QA saves — только со своими историческими JAR.
+Итоговая графическая приёмка человеком остаётся необходимой.
+
+## История: functional restoration, 2026-09-24
 
 - [Текущий JAR](bloodborne-blocks-2.1.0-alpha.1-functional-restoration-20260924-mc1.20.1.jar)
 - [Новая галерея](production-functional-gallery-20260924.zip)

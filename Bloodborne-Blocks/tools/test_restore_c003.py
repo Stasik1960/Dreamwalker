@@ -24,6 +24,15 @@ class C003RestorationTests(unittest.TestCase):
             self.assertNotIn('alt',b['properties'].get('variant', []))
             self.assertTrue(all(len(values) > 1 for values in b['properties'].values()))
 
+    def test_agony_sack_and_book_merges_preserve_the_existing_variants(self):
+        decision=json.loads((ROOT/'docs/c003-semantic-correction.json').read_bytes())
+        bag=next(row for row in decision['families'] if row['id']=='o_bag')
+        self.assertEqual('SACK',bag['semantic'])
+        self.assertEqual('C1962_a',bag['survivor_provenance'])
+        self.assertEqual(['bag_0','bag_1','bag_2','bag_3'],bag['variants'])
+        required=json.loads((ROOT/'docs/required-production-families.json').read_bytes())
+        self.assertEqual(['o_books'],required['successors']['o_c1319']['ids'])
+
     def test_each_occurrence_uses_only_itself_and_same_source_root(self):
         for f in self.families.values():
             self.assertFalse(f.get('migration_disabled',False))

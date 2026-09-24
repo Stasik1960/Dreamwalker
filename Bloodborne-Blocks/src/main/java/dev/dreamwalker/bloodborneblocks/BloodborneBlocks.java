@@ -34,6 +34,8 @@ public final class BloodborneBlocks implements ModInitializer {
  public static final class Definition {
   public String id,source,layer,kind,offset,behavior,connection_family,attachment_item;
   public String semantic;
+  /** Three canonical north-facing seat contact points, never inferred per tick. */
+  public double[][] seat_anchors;
   public float hardness,resistance,slipperiness,velocity,jump;
   public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical;
   public Map<String,List<String>> properties;
@@ -86,12 +88,12 @@ public final class BloodborneBlocks implements ModInitializer {
   Identifier source=new Identifier(d.source);if(!Registries.BLOCK.containsId(source))throw new IllegalStateException("Missing source block "+source);d.sourceBlock=Registries.BLOCK.get(source);d.propertyObjects.clear();
   for(String name:d.properties.keySet()){
    Property<?>p;
-   if(name.equals("embedded")||name.equals("lantern")){
+   if(name.equals("embedded")||name.equals("lantern")||name.equals("diagonal")){
     List<String> values=d.properties.get(name);
     if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
-   if(p==null&&d.logical&&Set.of("variant","visual").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&d.logical&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;

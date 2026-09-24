@@ -99,6 +99,11 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(definition.extra_facing&&!definition.logical)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
   if(definition.logical){result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());result=GeometryRuntime.applyPlacementPolicy(result,ctx.getSide());}
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
+  if(definition.seat_anchors!=null&&getStateManager().getProperty("diagonal") instanceof BooleanProperty diagonal){
+   int eighth=Math.floorMod(Math.round(ctx.getPlayerYaw()/45F),8);
+   Direction northFrame=Direction.fromHorizontal((eighth/2+2)%4);
+   result=result.with(Properties.HORIZONTAL_FACING,northFrame).with(diagonal,(eighth&1)!=0);
+  }
   return BloodborneBlocks.applyPlacementProperties(definition,connections(result,ctx.getWorld(),ctx.getBlockPos()));
  }
  /** Mount states reuse the same authored model; horizontal mounts point out from the clicked face. */
@@ -206,7 +211,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  static boolean canReplaceLogicalState(boolean oldCellsLoaded,boolean nextCellsLoaded,boolean nextCanOccupy){return oldCellsLoaded&&nextCellsLoaded&&nextCanOccupy;}
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
   ActionResult attachment=LogicalAttachments.use(state,world,pos,player,hand);if(attachment!=null)return attachment;
-  if(FunctionalFurniture.isBench(state))return FunctionalFurniture.sit(world,pos,state,player);
+  if(FunctionalFurniture.isBench(state))return FunctionalFurniture.sit(world,pos,state,player,hit);
   if(definition.logical&&"lantern".equals(definition.behavior)){
    Property<?> property=getStateManager().getProperty("lit");
    if(!(property instanceof BooleanProperty lit))return ActionResult.PASS;
@@ -237,6 +242,11 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){
   return logicalPick(stackFor(state));
  }
+ @Override public java.util.List<ItemStack> getDroppedStacks(BlockState state,net.minecraft.loot.context.LootContextParameterSet.Builder builder){
+  java.util.List<ItemStack> drops=new java.util.ArrayList<>(super.getDroppedStacks(state,builder));
+  ItemStack mounted=getStateManager().getProperty("hand_lantern")==null?ItemStack.EMPTY:LogicalAttachments.attachedItem(state);if(!mounted.isEmpty())drops.add(mounted);
+  return drops;
+ }
  private static ItemStack stackFor(BlockState state){
   ItemStack stack=new ItemStack(state.getBlock());NbtCompound props=new NbtCompound();BlockState defaults=state.getBlock().getDefaultState();
   state.getEntries().forEach((p,v)->{if(!v.equals(defaults.get(p)))props.putString(p.getName(),BloodborneBlocks.value(p,v));});
@@ -245,7 +255,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  private static ItemStack logicalPick(ItemStack stack){
   if(!(stack.getItem() instanceof ArchitectureBlockItem item)||!((ArchitectureBlock)item.getBlock()).definition.logical)return stack;
   NbtCompound properties=stack.getSubNbt("BlockStateTag");if(properties==null)return stack;
-  for(String name:Set.of("facing","face","axis","open","lit","waterlogged","north","east","south","west","up","down"))properties.remove(name);
+  for(String name:Set.of("facing","face","axis","open","lit","waterlogged","north","east","south","west","up","down","diagonal"))properties.remove(name);
   Map<String,String> placementProperties=((ArchitectureBlock)item.getBlock()).definition.placement_properties;
   if(placementProperties!=null)placementProperties.keySet().forEach(properties::remove);
   if(properties.isEmpty())stack.removeSubNbt("BlockStateTag");return stack;

@@ -18,8 +18,8 @@ class ProductionPaletteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.manifest=read(ROOT/'docs/production-logical-palette.json')
-        required=read(REQUIRED)
-        cls.required_ids=set(required['retained_reviewed_ids'])|{row['id'] for row in required['restorations']}|set(required['c003_production_ids'])
+        cls.required=read(REQUIRED)
+        cls.required_ids=set(cls.required['retained_reviewed_ids'])|{row['id'] for row in cls.required['restorations']}|set(cls.required['c003_production_ids'])
         cls.blocks={b['id']:b for b in read(LOG/'definitions.json')['blocks']}
         cls.contracts,_=load_contracts(LOG)
         cls.families={f['id']:f for f in cls.contracts['families']}
@@ -27,9 +27,10 @@ class ProductionPaletteTests(unittest.TestCase):
 
     def test_exact_manifest_registry_and_no_superseded_members(self):
         ids={o['id'] for o in self.manifest['objects']}
-        self.assertEqual(56,len(self.required_ids));self.assertEqual(ids,self.required_ids);self.assertEqual(ids,set(self.blocks));self.assertEqual(ids,set(self.families))
+        self.assertEqual(49,self.required['expected_production_count']);self.assertEqual(49,len(self.required_ids));self.assertEqual(ids,self.required_ids);self.assertEqual(ids,set(self.blocks));self.assertEqual(ids,set(self.families))
         self.assertTrue(all(o['status']=='PRODUCTION' for o in self.manifest['objects']))
         self.assertFalse(ids & {x['id'] for x in self.manifest['excluded']})
+        self.assertFalse(ids & set(self.required['forbidden_production_ids']))
         self.assertEqual([],read(LOG/'hidden-items.json'))
         self.assertFalse((RES/'bloodborne_blocks/definitions.json').exists())
         self.assertFalse((RES/'bloodborne_blocks/v2/definitions.json').exists())
@@ -39,11 +40,14 @@ class ProductionPaletteTests(unittest.TestCase):
         for ident in ('o_c001_a','o_c001_b','o_c009_a','o_c009_b','o_dead_tree_planter','o_c008','o_c008_4','o_c282_a','o_c282_b','o_c654'):
             self.assertNotIn(ident,self.blocks)
             self.assertFalse((RES/f'assets/bloodborne_blocks/models/item/{ident}.json').exists())
-        expected={'C003':4,'C008':4,'C1491':3,'C1962':2,'C1979':5,'C471':2,'C282':1,'C654':2}
+        expected={'C003':4,'C008':4,'C1491':3,'C1962':1,'C1979':5,'C471':2,'C282':1,'C654':2}
         for review,count in expected.items():
             self.assertEqual(count,sum(review in o['source_reviews'] for o in self.manifest['objects']))
         self.assertNotIn('o_c003',self.blocks)
         for ident in ('o_barrel','o_books','o_bag','o_cases_0'):self.assertIn(ident,self.blocks)
+        bag=next(o for o in self.manifest['objects'] if o['id']=='o_bag')
+        self.assertEqual({'C1962','C1962_a','C1962_b','C003','C003 component 4'},set(bag['source_reviews']))
+        self.assertEqual(['o_books'],self.required['successors']['o_c1319']['ids'])
 
     def test_required_family_cannot_be_replaced_by_a_smaller_generated_selection(self):
         selected={o['id'] for o in self.manifest['objects']}
@@ -60,16 +64,13 @@ class ProductionPaletteTests(unittest.TestCase):
                                  {k:v for k,v in other.items() if k!='migration_source_pattern'})
                 self.assertEqual([],other['migration_source_pattern'])
 
-    def test_reviewed_labels_do_not_inherit_wrong_carrier_names(self):
+    def test_manifest_labels_match_current_player_facing_translations(self):
         english=read(RES/'assets/bloodborne_blocks/lang/en_us.json')
         russian=read(RES/'assets/bloodborne_blocks/lang/ru_ru.json')
-        for prefix,en,ru in [('o_c1491','Grave','Могила'),('o_c1962','Sack','Мешок'),
-                             ('o_c471','Spire','Шпиль'),('o_c282','Collective double door','Двустворчатая дверь')]:
-            for obj in self.manifest['objects']:
-                if obj['id']==prefix or obj['id'].startswith(prefix+'_'):
-                    self.assertTrue(obj['semantic_label'].startswith(en))
-                    self.assertTrue(english['block.bloodborne_blocks.'+obj['id']].startswith(en))
-                    self.assertTrue(russian['block.bloodborne_blocks.'+obj['id']].startswith(ru))
+        for obj in self.manifest['objects']:
+            key='block.bloodborne_blocks.'+obj['id']
+            self.assertEqual(obj['semantic_label'],english[key])
+            self.assertTrue(russian[key])
 
     def test_split_retains_second_statue_root_and_rotated_state(self):
         rules,_=direct_rules(LOG)
@@ -99,7 +100,8 @@ class ProductionPaletteTests(unittest.TestCase):
         facing=('north','east','south','west')
         for index,direction in enumerate(facing):
             source=frozen['meshes'][old['models'][f'facing={direction},visual=base']]['polygons']
-            target=self.meshes[self.blocks['o_c008_2']['models'][f'facing={facing[(index-1)%4]},visual=base']]['polygons']
+            target_key=f'facing={facing[(index-1)%4]},hand_lantern=none,visual=base'
+            target=self.meshes[self.blocks['o_c008_2']['models'][target_key]]['polygons']
             remaining=list(target)
             for polygon in source:
                 a=np.asarray(polygon['vertices']);matches=[]

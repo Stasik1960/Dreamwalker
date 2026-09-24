@@ -109,9 +109,9 @@ tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalOb
 // All present/future Contract V2 output passes the same offline support gate.
 // Runtime consumes precomputed transforms/shapes; no tick/frame mesh analysis.
 tasks.register('normalizeSupportContracts', Exec) {
- group = 'generation'
+ group = 'verification'
  commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
-  'tools/normalize_support_contracts.py', '--write', '--report', 'docs/support-normalization-audit.json'
+  'tools/normalize_support_contracts.py'
 }
 tasks.named('processResources') { dependsOn 'normalizeSupportContracts' }
 tasks.named('check') { dependsOn 'normalizeSupportContracts' }
@@ -128,7 +128,8 @@ tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
  'test_nightmare_composition_recipes', 'test_export_alt_visual_starter', 'test_support_normalization',
  'check_logical_resources', 'test_production_door', 'test_production_inventory', 'test_production_geometry',
  'test_production_gallery', 'test_build_production_gallery', 'test_production_palette',
- 'test_restore_functional', 'test_restore_c003', 'test_restored_migration', 'test_preserved_semantics', 'test_production_coverage', 'production_coverage'].each { testName ->
+ 'test_restore_functional', 'test_restore_c003', 'test_restored_migration', 'test_preserved_semantics', 'test_production_coverage', 'production_coverage',
+ 'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   dependsOn 'normalizeSupportContracts'

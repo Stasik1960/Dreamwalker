@@ -13,12 +13,17 @@ import net.minecraft.util.math.Vec3d;
 public final class ArchitectureBlockItem extends BlockItem {
  public ArchitectureBlockItem(ArchitectureBlock block,Settings settings){super(block,settings);}
 
+ @Override public ActionResult useOnBlock(ItemUsageContext context){
+  ActionResult special=AuthoredSurfacePlacement.use(this,context);
+  return special==null?super.useOnBlock(context):special;
+ }
+
  @Override public ActionResult place(ItemPlacementContext original){
   ArchitectureBlock source=(ArchitectureBlock)getBlock();
   ItemStack working=new ItemStack(source,original.getStack().getCount());
   if(original.getStack().hasNbt())working.setNbt(original.getStack().getNbt().copy());
   ItemStack placedStack=working;
-  ItemPlacementContext prepared=new ItemPlacementContext(original){@Override public ItemStack getStack(){return placedStack;}};
+  ItemPlacementContext prepared=AuthoredSurfacePlacement.copy(original,placedStack);
   ActionResult result=placePrepared(prepared);
   if(result.isAccepted())original.getStack().decrement(Math.max(0,original.getStack().getCount()-working.getCount()));
   return result;
@@ -37,12 +42,13 @@ public final class ArchitectureBlockItem extends BlockItem {
    @Override public BlockPos getBlockPos(){return root;}
    @Override public Vec3d getHitPos(){return original.getHitPos().add(delta);}
    @Override public ItemStack getStack(){return original.getStack();}
-   @Override public boolean canPlace(){return getWorld().getBlockState(root).canReplace(this);}
+   @Override public boolean canPlace(){return AuthoredSurfacePlacement.mayReplace(original,root)||getWorld().getBlockState(root).canReplace(this);}
   };
   if(!shifted.canPlace())return ActionResult.FAIL;
   BlockState base=block.getPlacementState(shifted);if(base==null)return ActionResult.FAIL;
   normalizePlacementTag(original.getStack(),block,base);
   BlockState finalState=applyStateTag(base,original.getStack());
+  if(!AuthoredSurfacePlacement.validate(block,original,root,finalState))return ActionResult.FAIL;
   if(!GeometryRuntime.canPlace(original.getWorld(),root,finalState)||!block.canPlaceConventionalDoor(original.getWorld(),root,finalState))return ActionResult.FAIL;
   return super.place(shifted);
  }
@@ -69,7 +75,7 @@ public final class ArchitectureBlockItem extends BlockItem {
    Property<?> axis=block.getStateManager().getProperty("axis");if(axis!=null)properties.putString("axis",BloodborneBlocks.value((Property)axis,(Comparable)placement.get((Property)axis)));
   }
   if(block.definition.logical){
-   for(String name:java.util.List.of("face","north","east","south","west","up","down")){
+   for(String name:java.util.List.of("face","north","east","south","west","up","down","diagonal")){
     Property<?> property=block.getStateManager().getProperty(name);
     if(property!=null)properties.putString(name,BloodborneBlocks.value((Property)property,(Comparable)placement.get((Property)property)));
    }

@@ -1,6 +1,36 @@
 # Bloodborne-Blocks — актуальный handoff, 2026-09-24
 
-## Текущий checkpoint: functional production restoration + C003 correction
+## Текущий checkpoint: cumulative «Агония», 2026-09-25
+
+Продолжение functional checkpoint `3d78c873`, **не** новый palette rebuild.
+**56 → 49 production logical IDs**, 1660 BASE/ALT states. Семь удалений:
+`o_c561`, `o_c1319`, `o_c1962_a`, `o_c1962_b`, `o_bench_rotate` — merges;
+`o_iron_railing`, `o_ladder_02` — явный непотребляемый source context.
+227 deferred families, исходный мир/pack и все 37 unrelated families сохранены.
+
+- [Полный краткий отчёт и ID-таблица](docs/agony-patch/RESULTS.md),
+  [baseline / scope](docs/agony-patch/PATCH-PLAN.md),
+  [машинные результаты / SHA-256](docs/agony-patch/release-proof.json).
+- Исправлены площадка/подсвечники, безопасное in-wall окно, четыре statue
+  attachments `none|unlit|lit`, wall ladder stack и скамья 8-way/3 seats с
+  синхронизированной высотой. Старая C003 assembly не возвращена.
+- Показанные одинаковые двери/деревья уже были одним ID: `o_acacia_door` и
+  `o_c001`; другие двери и шесть настоящих tree variants не удалялись.
+- Важное ограничение: C046/C561 — один authored prefab `o_c046`, но их raw
+  carriers неотличимы от C003 CASES. Пять review observations сохранены;
+  raw migration сохраняет прежний `o_cases_0` successor. Не создавать
+  конкурирующий C046 matcher без отдельной semantic коррекции пользователя.
+- [Новый JAR и галерея](../releases/Bloodborne-Blocks/README.md): 49 предметов,
+  73 specimen. Город не конвертирован; графическая приёмка ещё нужна.
+
+Не запускать `build_production_palette.py` для обычной сборки текущего patch:
+это исторический compiler checkpoint. Scoped `tools/apply_agony_patch.py`
+явно восстанавливает только allowlisted targets из immutable baseline;
+он не является глобальной генерацией. Сборочный support gate теперь read-only.
+После изменений запускать `check logicalGameTest build` и независимые
+`production_fingerprints --verify`, `production_coverage --gallery`.
+
+## История: functional production restoration + C003 correction
 
 Покрыты **24/251** отфильтрованных families: **21/21 обязательных functional**
 восстановлены напрямую, ещё три старые prop families заменены successors C003.
