@@ -13,7 +13,7 @@
 | [RP Chat UI](RP-Chat-UI/README.md) | 0.3.7 | Перемещаемые окна, вкладки, поиск, избранное, оформление и редактор сообщений | Интерфейс на клиенте; серверная часть для дополнительных функций |
 | [DW Magic Connect](DW_Magic_Connect/README.md) | 0.4.3 | Магические рации, частоты на часах, громкая связь, интеграция с RP Chat и языками | Сервер и клиенты; RP Chat 0.1.16+ |
 | [DW Languages](DW_Languages/README.md) | 0.1.0 | Языки персонажей, знания игроков, настраиваемые преобразования речи | Сервер; RP Chat 0.1.16+ |
-| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.0.1 | Строительные секции по одной клетке, простые формы, сохранение 503 прежних ID, крупные объекты и открывающиеся двери | Сервер и клиенты |
+| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-beta.1 | 49 production-предметов, функциональные лестницы, двери, лавки и ALT-оформление; старый город ещё несовместим с beta | Сервер и клиенты; beta |
 | [Danny’s AoT — неофициальный порт](Danny-AOT-Backport/README.md) | 2.4.3-backport.2 | Порт с 1.21.1; GeckoLib, AAA Particles и Player Animation Library внутри одного JAR | Сервер и клиенты; тестовая сборка |
 
 ### MC-Pool
@@ -54,13 +54,17 @@ RP Chat управляет доставкой и содержанием сооб
 
 Администратор управляет знаниями через `/lang add`, `/lang del`, `/lang reload`. Языки находятся в `config/dw_languages/languages/`, знания игроков — в папке мира `dw_languages/players.json`. Поддерживаются роли RP Chat и права LuckPerms; Fabric Permissions API включён в JAR. Подробности: [гайд по настройке языков](DW_Languages/LANGUAGE-GUIDE.md).
 
-### Bloodborne Architecture 2.0.1
+### Bloodborne Architecture
+
+Текущая [2.1.0-beta.1](releases/Bloodborne-Blocks/2.1.0-beta.1/README.md) содержит исправления после «Агонии», проверенную галерею и ALT-комплект. Конвертированные копии старого города опубликованы как **UNRESOLVED**, с отчётами несовместимых ID; это не готовые игровые миры. Графическая приёмка ещё не выполнена.
+
+#### Историческая ветка 2.0.1
 
 Строительный набор сохраняет **503 прежних ID** и добавляет палитру секций, занимающих одну клетку. Кладка, ограды, карнизы и лестничные секции разделены по сетке; большие двери, деревья и мебель остаются цельными. Мод **не генерирует город**: отдельно подготовлена переработанная копия предоставленного мира Ether.
 
 У мягкой растительности нет столкновений. Новая секция использует не больше четырёх простых коробок столкновения, одну рамку и не имеет тикающей block entity. Текстурированные торцы закрывают разрезанные модели; плоской графике добавлена толщина. Предметы ограничены по размеру для рук и инвентаря. Сохранены открывание больших дверей, сидение на лавке и подъём по лестницам.
 
-Готовая карта не требует команд обновления по чанкам; одной замены JAR для разделения старой карты недостаточно. Последний архив карты — **Ether 2.0.2-positions**, совместимый с JAR **2.0.1**: удалены 4 905 барьеров и восстановлено исходное положение смещённых объектов. Мир с данными игроков выдаётся локально и не публикуется в Git. [Инструкция](Bloodborne-Blocks/README.md), [восстановление расположения и ограничения](Bloodborne-Blocks/docs/MAP-POSITIONS-2.0.2-RU.md). Minecraft локально не запускался; FPS/TPS не измерены.
+Готовая карта не требует команд обновления по чанкам; одной замены JAR для разделения старой карты недостаточно. Последний архив карты — **Ether 2.0.2-positions**, совместимый с JAR **2.0.1**: удалены 4 905 барьеров и восстановлено исходное положение смещённых объектов. В этом историческом релизе мир с данными игроков выдавался локально. Для нынешней beta опубликованы отдельно обозначенные UNRESOLVED-копии и отчёты. [Инструкция](Bloodborne-Blocks/README.md), [восстановление расположения и ограничения](Bloodborne-Blocks/docs/MAP-POSITIONS-2.0.2-RU.md). Minecraft локально не запускался; FPS/TPS не измерены.
 
 ### Danny’s AoT 2.4.3-backport.2
 
@@ -72,7 +76,8 @@ RP Chat управляет доставкой и содержанием сооб
 
 | Мод | Последний JAR в папке `releases` |
 | --- | --- |
-| Bloodborne Architecture | [2.0.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar.sha256) |
+| Bloodborne Architecture — beta | [2.1.0-beta.1, галерея, ALT и отчёты](releases/Bloodborne-Blocks/2.1.0-beta.1/README.md) |
+| Bloodborne Architecture — историческая 2.0.1 | [2.0.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar.sha256) |
 | Bloodborne Architecture — экспериментальная нормализация | [2.1.0-alpha.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar.sha256) · [Ограничения](releases/Bloodborne-Blocks/README.md) |
 | Danny’s AoT — неофициальный порт | [2.4.3-backport.2](releases/Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar) · [SHA-256](releases/Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar.sha256) |
 | RP Chat | [0.1.16](releases/RP-Chat/rp-chat-0.1.16.jar) · [SHA-256](releases/RP-Chat/rp-chat-0.1.16.jar.sha256) |

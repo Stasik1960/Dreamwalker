@@ -1,6 +1,16 @@
 # Bloodborne Architecture — Fabric 1.20.1
 
-## Текущее состояние — production palette cleanup, 2026-09-24
+## Текущее состояние — 2.1.0-beta.1, 2026-09-25
+
+49 production-предметов, 1644 BASE/ALT состояния. Завершены автоматические проверки исправлений лестниц, площадки, фонарей статуй и обычного окна 1×2. Сохранена корректная частичная работа после «Агонии».
+
+[Beta JAR, галерея и ALT-комплект](../releases/Bloodborne-Blocks/2.1.0-beta.1/README.md) · [Актуальный HANDOFF](HANDOFF.md) · [Проверки](docs/beta-client-qa/README.md).
+
+Две копии MODDED-карты конвертированы и снабжены журналами, но имеют статус **UNRESOLVED / NOT BETA READY**: миллионы старых ID отсутствуют в beta registry. Их нельзя считать готовой заменой игрового мира. Vanilla-карта использовалась только как read-only reference. Графическая приёмка не выполнена.
+
+Ниже сохранена история проекта; её старые числа и команды не описывают текущую beta.
+
+## История — production palette cleanup, 2026-09-24
 
 **33 logical blocks/items + internal helper**, 524 BASE/ALT states. Registry
 больше не загружает 503 старых carrier и 46 236 modular blocks. Неподтверждённые

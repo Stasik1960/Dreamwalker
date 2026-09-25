@@ -1,3 +1,58 @@
+# Bloodborne Blocks — beta continuation, 2026-09-25
+
+**Current result: production beta and ALT kit delivered; city conversion outputs remain UNRESOLVED / NOT BETA READY.**
+
+The Agony section below is historical. The latest four client-QA requirements supersede embedded-window behavior. Good partial work from `99a7779313025eeb5081d8229abb9fb6e77f3ae1` was retained, not rebuilt.
+
+## Beta and fixes
+
+- Version `2.1.0-beta.1`, tag `bloodborne-blocks-v2.1.0-beta.1`, release commit `acc0e0dcae1ae895305b704b7c7e6cd145204d61`; fixes `5ed9b9c413fd190357e26bebbff6a93e4a537c6f`.
+- JAR: `releases/Bloodborne-Blocks/2.1.0-beta.1/bloodborne-blocks-2.1.0-beta.1-mc1.20.1.jar`; SHA256 `dec80051dc04854121b33911f965f4c9193ecb4e8529ea4d6e9feed1846f9e03`.
+- Ladder03: reflected wall plane; narrow cell-local collisions; owned-cell stacking and real travel across nine seams tested, including inverse placement.
+- Landing01: full deck support across nine owned cells in all four facings.
+- Statue lanterns: attachment survives collision-equivalent toggle transitions near players. Four sockets follow frozen source faces; none/unlit/lit and source lit artwork retained; exact cardinal mesh transforms pass orientation checks.
+- Window: ordinary 1×2 placement, confined ownership/collision, no background mutation; saved embedded states handled offline.
+- Global collision-boundary gate PASS; 41 unrelated production families unchanged. No palette rebuild, new dependencies, or permanent rendering entities added.
+
+## Immutable inputs
+
+- Final conversion input ONLY `reference-inputs/latest-modded-world.zip`: `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
+- Vanilla reference ONLY `reference-inputs/source-world.zip`: `4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51`.
+- Source pack `reference-inputs/source-resource-pack.zip`: `0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308`.
+- Archive integrity and historical reconciliation: [input proof](docs/beta-client-qa/input-integrity.json), [reconciliation](docs/beta-client-qa/RECONCILIATION.md).
+
+## Converted copies and remaining incompatibility
+
+- Conservative: `releases/Bloodborne-Blocks/2.1.0-beta.1/Bloodborne-Beta-Conservative-UNRESOLVED.zip`; SHA256 `b6e02c0e87101ca74b8fa72b0850645b51a3821fff649ffddfef6c550cc52eeb`.
+  Converted 21629; forced 0; terminal untouched/rejected candidates 3441; unresolved registry cells 27652724. Second invocation: 0 conversions.
+- Aggressive: `releases/Bloodborne-Blocks/2.1.0-beta.1/Bloodborne-Beta-Aggressive-UNRESOLVED.zip`; SHA256 `fa5e83daa18196679c0913dece746d9630a28bb9be9a1dbd98506c453cab7d78`.
+  Converted 22351; forced 737; terminal untouched/rejected candidates 1777; unresolved registry cells 27649304. Second invocation: 0 conversions.
+
+These are inspection/conversion evidence copies, **not playable beta cities**. Millions of old masonry/module IDs are outside the deliberately scoped 49-family registry; they were preserved, not replaced with air or arbitrary blocks. Registry QA fails explicitly. Resolving them requires a separately scoped compatibility/restoration decision; no unrelated production families were restored automatically.
+
+NBT/ledger preservation checks passed for 10,009 chunks and 170 nonterrain files in each copy. Checks validate converted roots/helpers and preserve untouched data; they do not certify unknown legacy objects. Reference comparison uses archived `eh_s2:yharnam` for the modded overworld. The 240 differing original carrier states are reported; no speculative XYZ corrections were made.
+
+- [Machine proof and counts](../releases/Bloodborne-Blocks/2.1.0-beta.1/worlds-proof.json).
+- [Converter operation and limits](docs/modded-beta-conversion/README.md).
+- Full JSON/Markdown ledgers, conflicts with `/tp`, second-pass proofs, input inventory and reference comparisons: `Bloodborne-Beta-World-Reports.zip` in the release directory.
+
+## ALT delivery
+
+- `releases/Bloodborne-Blocks/2.1.0-beta.1/Bloodborne-Blocks-2.1.0-beta.1-ALT-Art-Kit.zip`; SHA256 `ae8a7905e71030a8289e2368df69691ea179e246f1e2202025442dd0a08b834a`.
+- `releases/Bloodborne-Blocks/2.1.0-beta.1/ALT-ResourcePack-Template.zip`; SHA256 `a1dae2bed56940f7d0fc910b8dedc16f6f4b7c2e63731b602914439e5ca7c1c7`.
+
+Fresh production-only export: 49 families / 1644 states. Per-family BASE_REFERENCE and ALT_WORK models/PNGs, file hash manifest and exact runtime paths. The Minecraft resource-pack template resolves 822 models and 1142 textures in the Java model check. Visual edits do not change gameplay, ownership, anchors or packets.
+
+## Verification and remaining acceptance
+
+- Full beta `check build`: PASS, 28 Python suites / 156 tests at beta freeze; 6576 orientation checks; gallery 49 families / 77 specimens.
+- Dedicated-server GameTests: 33/33 PASS. They ran before final numerical cardinal rounding; final asset/orientation checks covered that rounding.
+- Final converter/tool regression `check`: see [final verification](docs/beta-client-qa/final-verification.json).
+- **GRAPHICAL_CLIENT_ACCEPTANCE_NOT_RUN**. No claim of graphical or full-city runtime acceptance. City runtime acceptance is also blocked by the explicit registry mismatch.
+- Scoped code review fixed CRLF-sensitive text fingerprints, stale embedded-state expectations and the gallery helper ID. Targeted Java scan found no external process/network execution; this is not a security certification.
+
+## Historical handoff follows
+
 # Bloodborne-Blocks — актуальный handoff, 2026-09-24
 
 ## Текущий checkpoint: cumulative «Агония», 2026-09-25

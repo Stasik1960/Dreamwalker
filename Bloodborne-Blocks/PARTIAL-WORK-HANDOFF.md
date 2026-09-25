@@ -1,3 +1,7 @@
+# Historical partial checkpoint — superseded
+
+See [current HANDOFF](HANDOFF.md) for beta, verified conversion outputs, explicit city incompatibility and ALT delivery. The original stop-point record below is retained as history.
+
 # Partial beta checkpoint
 
 - Agony / beta-pass base HEAD: `733c8323e455adb4ae811aa53dff69239ac2720f`.
