@@ -1,0 +1,180 @@
+{
+  "status": "OFFLINE_VERIFIED_AWAITING_USER_PLAYTEST",
+  "sourceSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+  "referenceSha256": "8a8e95fd2bb71b749c7dd525bf663412b86b795764660b6ea28ebc071005dd28",
+  "codeCheckpoint": "15ae818b077e2a0a3aaad30b35a83cf15b3fef3d",
+  "runtimeChanged": false,
+  "minecraftTesting": "NOT_RUN_USER_REQUEST",
+  "worlds": {
+    "conservative": {
+      "counts": {
+        "converted": 21629,
+        "forced": 0,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 0,
+        "rejected": 3441,
+        "rules": 361,
+        "unmatchedModules": 0,
+        "unresolvedV2": 0
+      },
+      "recovery": {
+        "planSha256": "55d09da2a55cdad1381b565ae2252d99d12a6539a5ed608ca9ffc744b5b47925",
+        "referenceSha256": "8a8e95fd2bb71b749c7dd525bf663412b86b795764660b6ea28ebc071005dd28",
+        "restoredEmptyCells": 3,
+        "restoredHelpers": 30
+      },
+      "helperAudit": {
+        "checked": 16032,
+        "ok": true,
+        "orphans": []
+      },
+      "check": {
+        "format": "bloodborne-logical-world-check-v1",
+        "ledgerEntries": 21629,
+        "chunks": 10009,
+        "checkedBlocks": 1003216896,
+        "unchangedExternalFiles": 170,
+        "sourceHashVerified": true,
+        "resourceHashesVerified": true,
+        "ok": true
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 27553353,
+        "ledger_cells": 27084,
+        "changed_chunks": 1536,
+        "unchanged_chunks": 8473,
+        "preserved_nonterrain_files": 170,
+        "errors": []
+      },
+      "secondPass": {
+        "logicalChanges": 0,
+        "paletteChanges": 0,
+        "recoveryChanges": 0
+      },
+      "referenceSummary": {
+        "chunksRequested": 688,
+        "componentChecks": {
+          "MATCH": 21473,
+          "MISMATCH": 240,
+          "MISSING": 0
+        },
+        "coordinateCorrectionsApplied": 0,
+        "entries": 21629,
+        "match": 21389,
+        "mismatch": 240,
+        "missing": 0,
+        "missingRegions": 0,
+        "not_applicable": 0,
+        "regionsLoaded": 4
+      },
+      "archive": {
+        "file": "Bloodborne-City-Beta2-Conservative-Recovered.zip",
+        "sha256": "92b88febd665fd6b9671dee575c92aa825ff8f3e1fd712cfd439098c57e7d358",
+        "bytes": 18947565,
+        "verifiedFiles": 186
+      }
+    },
+    "aggressive": {
+      "counts": {
+        "converted": 22351,
+        "forced": 737,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 0,
+        "rejected": 1777,
+        "rules": 361,
+        "unmatchedModules": 0,
+        "unresolvedV2": 0
+      },
+      "recovery": {
+        "planSha256": "55d09da2a55cdad1381b565ae2252d99d12a6539a5ed608ca9ffc744b5b47925",
+        "referenceSha256": "8a8e95fd2bb71b749c7dd525bf663412b86b795764660b6ea28ebc071005dd28",
+        "restoredEmptyCells": 3,
+        "restoredHelpers": 30
+      },
+      "helperAudit": {
+        "checked": 18195,
+        "ok": true,
+        "orphans": []
+      },
+      "check": {
+        "format": "bloodborne-logical-world-check-v1",
+        "ledgerEntries": 22351,
+        "chunks": 10009,
+        "checkedBlocks": 1003216896,
+        "unchangedExternalFiles": 170,
+        "sourceHashVerified": true,
+        "resourceHashesVerified": true,
+        "ok": true
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 27555063,
+        "ledger_cells": 32978,
+        "changed_chunks": 1536,
+        "unchanged_chunks": 8473,
+        "preserved_nonterrain_files": 170,
+        "errors": []
+      },
+      "secondPass": {
+        "logicalChanges": 0,
+        "paletteChanges": 0,
+        "recoveryChanges": 0
+      },
+      "referenceSummary": {
+        "chunksRequested": 737,
+        "componentChecks": {
+          "MATCH": 22254,
+          "MISMATCH": 240,
+          "MISSING": 0
+        },
+        "coordinateCorrectionsApplied": 0,
+        "entries": 22351,
+        "match": 22111,
+        "mismatch": 240,
+        "missing": 0,
+        "missingRegions": 0,
+        "not_applicable": 0,
+        "regionsLoaded": 4
+      },
+      "archive": {
+        "file": "Bloodborne-City-Beta2-Aggressive-Recovered.zip",
+        "sha256": "8a539efb84ab7e699bc2203f201285d2092427d7f596eadc90960d8ff731d4f4",
+        "bytes": 18952469,
+        "verifiedFiles": 186
+      }
+    }
+  },
+  "tests": {
+    "cityRecovery": 9,
+    "cityPalette": 4,
+    "moddedWorldAdapter": 6,
+    "moddedPreservation": 1,
+    "logicalWorldScript": "PASS"
+  },
+  "scopeCheck": {
+    "conservative": {
+      "logicalFinalStatesOutsideRecoveryUnchanged": true,
+      "cityPaletteMappingCountsUnchanged": true,
+      "recoveryScopeCells": 33
+    },
+    "aggressive": {
+      "logicalFinalStatesOutsideRecoveryUnchanged": true,
+      "cityPaletteMappingCountsUnchanged": true,
+      "recoveryScopeCells": 33
+    }
+  },
+  "jar": {
+    "file": "bloodborne-blocks-2.1.0-beta.2-mc1.20.1.jar",
+    "sha256": "ef1c7d40dd76b64435d6ce2b5cb1f66e8f5f69df70eecc255f17738395bf2a3f",
+    "bytes": 34496175
+  },
+  "reports": {
+    "file": "Bloodborne-City-Recovery-Reports.zip",
+    "sha256": "781657aa12d77838b31f53ff1b52e59c6c70512c58ab67f0318ef52a7c740191",
+    "bytes": 4059660,
+    "verifiedFiles": 13
+  }
+}

@@ -27,5 +27,8 @@ checker verifies the complete before/after chain and unrelated typed NBT.
 This restores an evidenced previous layout; it does not reconstruct the
 missing transient composite model assets bit for bit. The current world's
 other cells remain subject only to the existing reviewed conversion rules.
-World verification and delivery results will be recorded separately after
-both conversion policies complete. In-game checks are excluded by user request.
+Both policies passed whole-world and preservation checks; second invocation
+changes zero objects, palette cells and recovery cells. See
+[verification](recovery-verification.json) and the
+[delivery](../../../releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md).
+In-game checks are excluded by user request.

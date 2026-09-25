@@ -1,3 +1,7 @@
+> Historical missing-model evidence. The world-cell blocker was resolved
+> using the old MODDED map; see [recovery](RECOVERY.md). Lost composite assets
+> themselves were not reconstructed.
+
 # Missing transient city models
 
 The frozen city contains 23 `m_*` registry IDs in 33 cells whose model and

@@ -1,5 +1,10 @@
 # City compatibility continuation — 2026-09-25
 
+Current status: **OFFLINE_VERIFIED_AWAITING_USER_PLAYTEST**. Both recovered
+worlds have zero unknown IDs. See [recovery](RECOVERY.md) and
+[verification](recovery-verification.json). The missing-cell counts below
+describe the superseded diagnostic release.
+
 Scope: finish city compatibility on top of the existing 49-family beta. The
 user excluded client/server playtesting and will perform it themselves.
 
@@ -37,11 +42,12 @@ decor and helpers owned by other objects are not forcibly erased. This is
 retention of authored sections, not a claim that every such group became a
 new logical production object.
 
-The 240 vanilla-reference differences remain historical material/state
-differences; the production ledger is unchanged from beta.1. The reference
+The rerun comparison still has 240 historical material/state differences.
+Recovery adds owned helper changes to the ledger; final logical states outside
+the 33 recovery cells and palette counts equal beta.2. The reference
 world is not used to overwrite MODDED edits or invent coordinate corrections.
 
-## Remaining blocker
+## Previous blocker — resolved by historical recovery
 
 The original inventory has 23 transient composite IDs / 33 cells without
 their generated assets. Production conversion resolves some of those cells;

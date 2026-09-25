@@ -1,3 +1,5 @@
+> Superseded world copies: use the [recovered city delivery](../2.1.0-beta.2-city-recovery/README.md). The beta.2 JAR is unchanged.
+
 # Bloodborne Blocks 2.1.0-beta.2 — city compatibility preview
 
 **The city is still UNRESOLVED. Do not replace the live world with these

@@ -13,8 +13,10 @@
 | [RP Chat UI](RP-Chat-UI/README.md) | 0.3.7 | Перемещаемые окна, вкладки, поиск, избранное, оформление и редактор сообщений | Интерфейс на клиенте; серверная часть для дополнительных функций |
 | [DW Magic Connect](DW_Magic_Connect/README.md) | 0.4.3 | Магические рации, частоты на часах, громкая связь, интеграция с RP Chat и языками | Сервер и клиенты; RP Chat 0.1.16+ |
 | [DW Languages](DW_Languages/README.md) | 0.1.0 | Языки персонажей, знания игроков, настраиваемые преобразования речи | Сервер; RP Chat 0.1.16+ |
-| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-beta.2 preview | 49 production-предметов и компактная совместимость старой архитектуры; у диагностических карт остаются 33/13 клеток без моделей | Сервер и клиенты; beta |
+| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-beta.2 preview | 49 production-предметов и компактная совместимость старой архитектуры; восстановленная карта без неизвестных ID, ожидает игровой проверки | Сервер и клиенты; beta |
 | [Danny’s AoT — неофициальный порт](Danny-AOT-Backport/README.md) | 2.4.3-backport.2 | Порт с 1.21.1; GeckoLib, AAA Particles и Player Animation Library внутри одного JAR | Сервер и клиенты; тестовая сборка |
+
+Восстановленная карта Bloodborne: [основной комплект и ALT](releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md). Прежние карты `UNRESOLVED` заменены этим комплектом; JAR beta.2 прежний.
 
 ### MC-Pool
 
@@ -56,7 +58,7 @@ RP Chat управляет доставкой и содержанием сооб
 
 ### Bloodborne Architecture
 
-[2.1.0-beta.2 preview](releases/Bloodborne-Blocks/2.1.0-beta.2/README.md) добавляет совместимость более 27,5 млн клеток старого города без смещения. Проверки сохранности обеих карт прошли, но 33/13 клеток всё ещё требуют потерянных моделей: карты остаются **UNRESOLVED**, не готовой заменой игрового мира.
+[Восстановленная карта beta.2](releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md): оставшиеся клетки восстановлены по старой MODDED-карте; неизвестных ID больше нет. Полная проверка чанков, сохранности и повторной конвертации пройдена. JAR beta.2 прежний; проверка в игре остаётся за пользователем.
 
 Предыдущая [2.1.0-beta.1](releases/Bloodborne-Blocks/2.1.0-beta.1/README.md) содержит исправления после «Агонии», проверенную галерею и ALT-комплект. Конвертированные копии старого города опубликованы как **UNRESOLVED**, с отчётами несовместимых ID; это не готовые игровые миры. Графическая приёмка ещё не выполнена.
 
@@ -78,7 +80,7 @@ RP Chat управляет доставкой и содержанием сооб
 
 | Мод | Последний JAR в папке `releases` |
 | --- | --- |
-| Bloodborne Architecture — city preview | [2.1.0-beta.2: JAR, UNRESOLVED-карты и отчёты](releases/Bloodborne-Blocks/2.1.0-beta.2/README.md) |
+| Bloodborne Architecture — city preview | [2.1.0-beta.2: JAR, восстановленные карты и отчёты](releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md) |
 | Bloodborne Architecture — beta.1 | [2.1.0-beta.1, галерея, ALT и отчёты](releases/Bloodborne-Blocks/2.1.0-beta.1/README.md) |
 | Bloodborne Architecture — историческая 2.0.1 | [2.0.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.0.1-mc1.20.1.jar.sha256) |
 | Bloodborne Architecture — экспериментальная нормализация | [2.1.0-alpha.1](releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar) · [SHA-256](releases/Bloodborne-Blocks/bloodborne-blocks-2.1.0-alpha.1-mc1.20.1.jar.sha256) · [Ограничения](releases/Bloodborne-Blocks/README.md) |

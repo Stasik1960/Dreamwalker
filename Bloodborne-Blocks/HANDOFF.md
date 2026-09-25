@@ -1,5 +1,25 @@
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
+## Latest continuation: historical MODDED cell recovery
+
+Supersedes the beta.2 missing-model blocker below. Both recovered worlds have
+zero unknown IDs, valid helper ownership, full independent/preservation PASS,
+and zero logical/palette/recovery changes on a second invocation.
+See [recovery evidence](docs/city-compat/RECOVERY.md),
+[verification](docs/city-compat/recovery-verification.json), and
+[delivery](../releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md).
+Code checkpoint: `15ae818b077e2a0a3aaad30b35a83cf15b3fef3d`.
+Runtime JAR is unchanged beta.2. Final input is still the immutable latest
+MODDED ZIP below. The old local map contributes only 33 explicitly verified
+cells through a checksum-frozen four-region evidence excerpt. Recovery runs
+before existing logical conversion; it is not a parallel migration engine.
+30 helpers + 3 air cells are restored before conversion; stale old helpers
+are subsequently consumed by the existing door rules. Main policy remains
+conservative (no forced conversions); aggressive is a separate ALT.
+Client/server checks remain NOT_RUN_USER_REQUEST. Await user playtesting.
+
+## Previous checkpoint (historical results follow)
+
 ## Latest continuation: compact city compatibility, beta.2
 
 Code checkpoint `4c060f3d11ba7f8c6bc5df4fe595360ac9191218` adds the bounded
