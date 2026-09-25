@@ -58,7 +58,8 @@ class RestoredMigrationTests(unittest.TestCase):
         self.assertEqual(states[(96, 64, 11)][0], "minecraft:stone")
 
     def test_shutter_open_and_closed_carriers_remain_distinct(self):
-        selected = [self.matching("o_shuttered_window", open=value, embedded="true") for value in ("false", "true")]
+        selected = [self.matching("o_shuttered_window", open=value) for value in ("false", "true")]
+        self.assertTrue(all("embedded" not in dict(rule.target[1]) for rule in selected))
         report, states, roots = self.convert_rules(selected)
         self.assertEqual(report["counts"]["converted"], 2, report["rejected"])
         self.assertEqual([dict(states[root][1])["open"] for root in roots], ["false", "true"])

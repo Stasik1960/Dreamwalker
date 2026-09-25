@@ -42,7 +42,14 @@ def digest_bytes(data: bytes) -> str:
 
 
 def file_hash(path: Path) -> str | None:
-    return digest_bytes(path.read_bytes()) if path.is_file() else None
+    if not path.is_file():
+        return None
+    data = path.read_bytes()
+    # Git may check text out as CRLF on Windows; fingerprints describe the
+    # repository payload, not the checkout's platform-specific line endings.
+    if path.suffix in {".json", ".java"}:
+        data = data.replace(b"\r\n", b"\n")
+    return digest_bytes(data)
 
 
 def required_ids(root: Path) -> set[str]:
@@ -99,7 +106,7 @@ def resource_hashes(root: Path, ident: str, visual_models: dict[str, str]) -> di
 
 def runtime_java_hashes(root: Path) -> dict[str, str]:
     base = root / "src/main/java"
-    return {path.relative_to(root).as_posix(): digest_bytes(path.read_bytes())
+    return {path.relative_to(root).as_posix(): file_hash(path)
             for path in sorted(base.rglob("*.java"))}
 
 

@@ -38,7 +38,7 @@ class ProductionGallerySpecimenTests(unittest.TestCase):
     def test_statue_lantern_and_bench_functional_states_are_explicit(self):
         for ident in STATUE_IDS:
             rows = self.rows(ident)
-            self.assertEqual({row["properties"].get("hand_lantern") for row in rows}, {"none", "lit"})
+            self.assertEqual({row["properties"].get("hand_lantern") for row in rows}, {"none", "unlit", "lit"})
             self.assertIn(ident + ":hand_lantern_lit", {row["specimen_id"] for row in rows})
         self.assertEqual({row["properties"].get("lit") for row in self.rows("o_lantern")}, {"false", "true"})
         bench = {(row["properties"].get("facing"), row["properties"].get("diagonal")) for row in self.rows("o_bench")}
@@ -60,9 +60,9 @@ class ProductionGallerySpecimenTests(unittest.TestCase):
         for shutter in (row for row in self.rows("o_shuttered_window") if row["role"] in {"canonical_base", "open"}):
             context = functional_context(shutter)
             self.assertEqual(set(context.values()), {"minecraft:stone"})
-            self.assertEqual(len(context), 16)
+            self.assertEqual(len(context), 10)
             opening = {(shutter["position"][0] + x, shutter["position"][1] + y, shutter["position"][2])
-                       for x in range(-1, 2) for y in range(-1, 2)}
+                       for x in (0,) for y in (0, 1)}
             footprint = {tuple(shutter["position"][index] + offset[index] for index in range(3))
                          for offset in shutter["footprint"]}
             self.assertTrue(all(point[2] == shutter["position"][2] for point in context))
@@ -79,7 +79,7 @@ class ProductionGallerySpecimenTests(unittest.TestCase):
 
     def test_platform_verification_keeps_a_functional_frame_stone_at_floor_level(self):
         shutter = next(row for row in self.rows("o_shuttered_window") if row["role"] == "canonical_base")
-        frame_point = (shutter["position"][0] - 2, FLOOR_Y, shutter["position"][2])
+        frame_point = (shutter["position"][0] - 1, FLOOR_Y, shutter["position"][2])
         self.assertEqual(functional_context(shutter)[frame_point], "minecraft:stone")
         self.assertEqual(platform_block(shutter, frame_point), "minecraft:stone")
 

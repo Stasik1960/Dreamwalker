@@ -22,6 +22,43 @@ LOGICAL = RES / "bloodborne_blocks/logical"
 DOC = ROOT / "docs/beta-client-qa"
 PATCHED = {"o_ladder_01", "o_ladder_03", "o_shuttered_window", "o_lantern", *STATUES}
 
+# Exact canonical centers of the distal hand end-cap in the frozen C008
+# source geometry.  These are generated from the reviewed source application,
+# then normalized by nightmare_composition_recipes.py; they replace the
+# rounded visual estimates used by the Agony checkpoint.  The source contains
+# no mounted single-lantern composition, so the already approved handheld
+# scale remains authored rather than being presented as source-derived.
+STATUE_HAND_SOCKETS = {
+    "o_c008_1": {
+        "position": [0.814422, 2.24161, 0.300141],
+        "source_model": "minecraft:block/hold/statue",
+        "source_component": 6,
+        "source_element": 5,
+        "source_face": "south",
+    },
+    "o_c008_2": {
+        "position": [1.001923, 1.122392, 0.153886],
+        "source_model": "minecraft:block/hold/statue_3",
+        "source_component": 5,
+        "source_element": 10,
+        "source_face": "down",
+    },
+    "o_c008_3": {
+        "position": [0.631753, 0.792948, -0.281602],
+        "source_model": "minecraft:block/hold/statue_4",
+        "source_component": 3,
+        "source_element": 7,
+        "source_face": "west",
+    },
+    "o_c008_5": {
+        "position": [1.092947, 0.57794, 0.123782],
+        "source_model": "minecraft:block/hold/statue_5",
+        "source_component": 4,
+        "source_element": 5,
+        "source_face": "north",
+    },
+}
+
 
 def state_mesh(definition, family, state_key, polygons, meshes, *, collision=None,
                selection=None, footprint=None, offset=None):
@@ -68,6 +105,35 @@ def merge_patterns(*groups):
             if marker not in seen:
                 seen.add(marker)
                 result.append(copy.deepcopy(pattern))
+    return result
+
+
+def rotate_cardinal(polygons, yaw):
+    """Rotate an already mounted mesh with the exact Contract V2 matrix.
+
+    The generic Agony helper uses sin/cos.  At six-decimal source coordinates
+    that can cross the orientation gate's five-decimal boundary after a second
+    cardinal rotation.  Exact quarter turns preserve the group invariant.
+    """
+    turns = (yaw // 90) % 4
+    if yaw % 90:
+        raise ValueError("mounted statue lantern yaw must be cardinal")
+    result = []
+    for polygon in polygons:
+        vertices = []
+        for vertex in polygon["vertices"]:
+            x, z = vertex[0] - .5, vertex[2] - .5
+            if turns == 1:
+                x, z = -z, x
+            elif turns == 2:
+                x, z = -x, -z
+            elif turns == 3:
+                x, z = z, -x
+            # Contract orientation identity is defined at five decimals.  Snap
+            # once in canonical space so every direct facing has the same
+            # representation at half-way decimal boundaries.
+            vertices.append([round(.5 + x, 5), round(vertex[1], 5), round(.5 + z, 5), *vertex[3:]])
+        result.append({**polygon, "vertices": vertices})
     return result
 
 
@@ -157,7 +223,19 @@ def patch_lantern_art(definitions, families, meshes):
         family = families[ident]
         old_models = copy.deepcopy(definition["models"])
         hand = family["hand_lantern"]
-        socket, scale, pivot = hand["position"], hand["scale"], hand["source_pivot"]
+        evidence = STATUE_HAND_SOCKETS[ident]
+        socket, scale, pivot = evidence["position"], hand["scale"], hand["source_pivot"]
+        hand["position"] = copy.deepcopy(socket)
+        hand["rotation"] = [0, 0, 0]
+        hand["position_authority"] = {
+            "kind": "source_distal_face_center",
+            "model": evidence["source_model"],
+            "component": evidence["source_component"],
+            "element": evidence["source_element"],
+            "face": evidence["source_face"],
+        }
+        hand["rotation_authority"] = "upright source lantern; yaw follows statue facing"
+        hand["scale_authority"] = "Agony authored handheld size; no mounted single-lantern source composition exists"
         for state_key in list(family["states"]):
             state_props = props(state_key)
             mode = state_props["hand_lantern"]
@@ -172,7 +250,7 @@ def patch_lantern_art(definitions, families, meshes):
                 vertices = [[socket[index] + (vertex[index] - pivot[index]) * scale for index in range(3)] + vertex[3:]
                             for vertex in polygon["vertices"]]
                 mounted.append({**polygon, "vertices": vertices})
-            polygons = base + rotate(mounted, FACINGS.index(state_props["facing"]) * 90)
+            polygons = base + rotate_cardinal(mounted, FACINGS.index(state_props["facing"]) * 90)
             state_mesh(definition, family, state_key, polygons, meshes)
 
 
@@ -232,6 +310,7 @@ def apply():
         "source_asset_evidence": {
             "o_lantern_unlit": "source resource pack assets/minecraft/models/block/lantern_0.json (structural polygons, no flame planes)",
             "o_lantern_lit": "source resource pack assets/minecraft/models/block/lantern.json (same structure plus flower_pot flame planes)",
+            "statue_hand_sockets": STATUE_HAND_SOCKETS,
         },
         "world_scan": False,
         "global_palette_reauthored": False,

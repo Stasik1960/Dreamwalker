@@ -1,0 +1,79 @@
+{
+  "starting_head": "99a7779313025eeb5081d8229abb9fb6e77f3ae1",
+  "agony_head": "733c8323e455adb4ae811aa53dff69239ac2720f",
+  "inputs": [
+    {
+      "path": "reference-inputs/latest-modded-world.zip",
+      "bytes": 21573228,
+      "sha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+      "role": "FINAL_CONVERSION_INPUT"
+    },
+    {
+      "path": "reference-inputs/source-world.zip",
+      "bytes": 104878288,
+      "sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51",
+      "role": "REFERENCE_ONLY"
+    },
+    {
+      "path": "reference-inputs/source-resource-pack.zip",
+      "bytes": 1359605,
+      "sha256": "0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308",
+      "role": "REFERENCE_ONLY"
+    }
+  ],
+  "handoff_archive": {
+    "sha256": "dbc0d2b7e1f4b6ff67bb29dc09b91cb7b9b0673864890d7b732995f4e6dce4a8",
+    "manifest_entries_verified": 14
+  },
+  "modded_inventory": {
+    "level": {
+      "dataVersion": 3465,
+      "version": {
+        "Id": 3465,
+        "Name": "1.20.1",
+        "Series": "main",
+        "Snapshot": 0
+      },
+      "enabledFeatures": null,
+      "dataPacks": {
+        "enabled": [
+          "vanilla",
+          "fabric",
+          "Supplementaries Generated Pack"
+        ],
+        "disabled": [
+          "bundle"
+        ]
+      }
+    },
+    "anvil": {
+      "regionFiles": 16,
+      "chunks": 10009,
+      "chunksByDimension": {
+        "minecraft:overworld": 10009
+      },
+      "chunkDataVersions": {
+        "2975": 38,
+        "3465": 9971
+      },
+      "sectionY": {
+        "min": -5,
+        "max": 19
+      },
+      "nonAirSectionBoundsInclusive": {
+        "min": [
+          -960,
+          -64,
+          -656
+        ],
+        "max": [
+          111,
+          239,
+          415
+        ]
+      }
+    },
+    "bloodborne_cells": 27691980,
+    "logical_o_states": 0
+  }
+}

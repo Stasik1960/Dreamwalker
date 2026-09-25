@@ -82,7 +82,7 @@ public final class AgonySurfaceGameTests implements FabricGameTest {
    ItemStack repairTop=new ItemStack(ladder);backing(world,eight,side);context.assertTrue(use(ladder,world,player,repairTop,six,Direction.UP).isAccepted()&&world.getBlockState(eight).isOf(ladder),"top root re-places "+side);
    world.breakBlock(four.down(),false,player);context.assertTrue(world.getBlockState(four).isAir()&&roots(world,ladder,root,two,six,eight),"breaking middle helper preserves other roots "+side);
    ItemStack repairMiddle=new ItemStack(ladder);backing(world,four,side);context.assertTrue(use(ladder,world,player,repairMiddle,two,Direction.UP).isAccepted()&&roots(world,ladder,root,two,four,six,eight),"middle root re-places without disturbing stack "+side);
-   BlockPos landingRoot=root.offset(side.rotateYClockwise(),3);world.setBlockState(landingRoot,landing.getDefaultState(),Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,landingRoot,world.getBlockState(landingRoot)),"landing rebuilds beside ladder "+side);BlockState landingState=world.getBlockState(landingRoot);context.assertTrue(GeometryRuntime.rootShape(landingState,false).getBoundingBox().maxY>=.75&&!FunctionalFurniture.isClimbable(world,landingRoot),"landing remains standable/non-climbable beside ladder "+side);for(var entry:GeometryRuntime.state(landingState).parsedCells.entrySet())context.assertTrue(!GeometryRuntime.cellShape(landingState,entry.getKey(),false).isEmpty(),"every visible deck cell has walkable support "+entry.getKey()+" "+side);
+   BlockPos landingRoot=root.offset(side.rotateYClockwise(),3);world.setBlockState(landingRoot,landing.getDefaultState().with(Properties.HORIZONTAL_FACING,side),Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,landingRoot,world.getBlockState(landingRoot)),"landing rebuilds beside ladder "+side);BlockState landingState=world.getBlockState(landingRoot);context.assertTrue(GeometryRuntime.rootShape(landingState,false).getBoundingBox().maxY>=.75&&!FunctionalFurniture.isClimbable(world,landingRoot),"landing remains standable/non-climbable beside ladder "+side);for(var entry:GeometryRuntime.state(landingState).parsedCells.entrySet())context.assertTrue(!GeometryRuntime.cellShape(landingState,entry.getKey(),false).isEmpty(),"every visible deck cell has walkable support "+entry.getKey()+" "+side);
   }context.complete();}finally{clearArea(context);player.discard();}
  }
 
@@ -91,6 +91,13 @@ public final class AgonySurfaceGameTests implements FabricGameTest {
   ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();ArchitectureBlock ladder=required("o_ladder_03"),landing=required("o_ladder_01");BlockPos root=context.getAbsolutePos(BASE);
   try{
    for(int n=0;n<5;n++){BlockPos step=root.up(n*2);backing(world,step,Direction.NORTH);world.setBlockState(step,ladder.getDefaultState(),Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,step,world.getBlockState(step)),"ladder stack fixture rebuilds");}
+   // Exercise vanilla travel at every helper/root and inter-section seam.
+   for(int dy=-1;dy<8;dy++){
+    player.refreshPositionAndAngles(root.getX()+.5,root.getY()+dy-.1,root.getZ()-.3,0,0);player.setVelocity(0,0,0);
+    context.assertTrue(player.isClimbing(),"ladder contact at seam "+dy);double seamY=player.getY();
+    for(int tick=0;tick<8;tick++)player.travel(new Vec3d(0,0,1));
+    context.assertTrue(player.getY()>seamY+.1,"vanilla travel crosses ladder seam "+dy);
+   }
    BlockPos top=root.up(8),deck=top.north(2);world.setBlockState(deck,landing.getDefaultState(),Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,deck,world.getBlockState(deck)),"landing beside actual stack does not consume ladder ownership");
    player.refreshPositionAndAngles(top.getX()+.5,top.getY()-.6,top.getZ()-.3,0,0);player.setVelocity(0,0,0);context.assertTrue(player.isClimbing(),"player contacts the inverted ladder plane before travel");double startY=player.getY();
    for(int tick=0;tick<5;tick++)player.travel(new Vec3d(0,0,1));

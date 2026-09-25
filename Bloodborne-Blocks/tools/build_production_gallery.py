@@ -11,12 +11,12 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from build_nightmare_gallery import FLOOR_Y, ROOT_Y, _horizontal_extent, geometry_cells, rendered_mesh_bounds, state_key
+from convert_logical_world import PART
 
 ROOT = Path(__file__).resolve().parents[1]
 LOGICAL = ROOT / "src/main/resources/bloodborne_blocks/logical"
 MANIFEST = ROOT / "docs/production-logical-palette.json"
 OUTPUT = ROOT / "build/production-gallery-saves/production-palette-gallery-20260924"
-PART = "bloodborne_blocks:logical_part"
 FLOOR = "minecraft:white_concrete"
 GAP = 10
 ALT_PROOF_IDS = ("o_c001", "o_c002")
@@ -79,9 +79,8 @@ def functional_group_placement(specimens: list[dict[str, Any]]) -> None:
     groups = {row["specimen_id"]: row for row in specimens}
     shutters = [row for row in specimens if row["id"] == "o_shuttered_window" and row["role"] in {"canonical_base", "open"}]
     for number, shutter in enumerate(sorted(shutters, key=lambda row: row["role"])):
-        # The shutter contract itself owns the complete 3x3 wall cells in each state.
-        # Do not put an opaque vanilla backing plane behind it: that would conceal the opening.
-        place(shutter, (256 + number * 8, ROOT_Y + 1, 32), (224 + number * 2, ROOT_Y, 32))
+        # The window owns exactly one column of two cells; adjacent masonry stays independent.
+        place(shutter, (256 + number * 8, ROOT_Y, 32), (224 + number * 2, ROOT_Y, 32))
     statues = [row for row in specimens if row["id"] in STATUE_IDS]
     for number, statue in enumerate(sorted(statues, key=lambda row: row["specimen_id"])):
         place(statue, (256 + (number % 4) * 8, ROOT_Y, 48 + (number // 4) * 8), (224 + number * 2, ROOT_Y, 48))
@@ -111,10 +110,9 @@ def functional_context(specimen: dict[str, Any]) -> dict[tuple[int, int, int], s
     """Static wall cells adjacent to, never inside, authored logical ownership."""
     root = specimen["position"]
     if specimen["id"] == "o_shuttered_window" and specimen["role"] in {"canonical_base", "open"}:
-        # Frame the 3x3 state-owned opening from its own wall plane.  The full opening
-        # (including helpers) stays clear and no z+1 backing can obscure the shutters.
+        # Frame the physical 1x2 opening without a backing plane.
         return {(root[0] + x, root[1] + y, root[2]): "minecraft:stone"
-                for x in range(-2, 3) for y in range(-2, 3) if abs(x) == 2 or abs(y) == 2}
+                for x in range(-1, 2) for y in range(-1, 3) if abs(x) == 1 or y in (-1, 2)}
     if specimen["id"] == "o_ladder_03" and specimen["role"].startswith("ladder_section_"):
         return {(root[0] + x, root[1] + y, root[2] + 1): "minecraft:stone"
                 for x in range(-1, 2) for y in (-1, 0)}
@@ -173,8 +171,9 @@ def load_specimens(manifest_path: Path = MANIFEST) -> tuple[list[dict], list[dic
             continue
         definition, contract = definitions[ident], contracts[ident]
         if "hand_lantern" in definition.get("properties", {}):
-            state, properties = specimen_properties(definition, hand_lantern="lit")
-            add(item, definition, contract, state, properties, "hand_lantern_lit")
+            for mode in ("unlit", "lit"):
+                state, properties = specimen_properties(definition, hand_lantern=mode)
+                add(item, definition, contract, state, properties, "hand_lantern_" + mode)
     lantern_item = next((row for row in selected if row["id"] == "o_lantern"), None)
     if lantern_item is not None:
         definition, contract = definitions["o_lantern"], contracts["o_lantern"]
@@ -280,7 +279,8 @@ def verify(world_path: Path, manifest_path: Path = MANIFEST) -> dict:
             metadata.get("unique_logical_count") == len(objects) and metadata.get("specimen_count") == len(expected) and
             len(positions) == len(expected), "manifest membership mismatch")
     defaults = {"bloodborne_blocks:" + row["id"]: row["properties"] for row in expected}
-    world, entities = World(world_path, defaults), World(world_path, defaults).block_entities()
+    world = World(world_path, defaults)
+    entities = world.block_entities()
     platform_cells = helpers = 0
     for actual, specimen in zip(positions, expected):
         require(all(actual.get(key) == specimen[key] for key in ("id", "specimen_id", "role", "state", "properties", "semantic_label", "source_review")) and
@@ -298,8 +298,8 @@ def verify(world_path: Path, manifest_path: Path = MANIFEST) -> dict:
         for point, block in functional_context(specimen).items():
             require((world.get("minecraft:overworld", point) or (None, ()))[0] == block, "functional context mismatch")
         if specimen["id"] == "o_shuttered_window" and specimen["role"] in {"canonical_base", "open"}:
-            for x in range(-1, 2):
-                for y in range(-1, 2):
+            for x in (0,):
+                for y in (0, 1):
                     aperture = (root[0] + x, root[1] + y, root[2])
                     require(world.get("minecraft:overworld", aperture) is not None, "shutter opening is missing authored ownership")
         low_x, low_z, high_x, high_z = _horizontal_extent(specimen["bounds"], specimen["footprint"])

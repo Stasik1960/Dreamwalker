@@ -18,6 +18,18 @@ ROOT = Path(__file__).resolve().parents[1]
 LOGICAL = ROOT / "src/main/resources/bloodborne_blocks/logical"
 FACINGS = ("north", "east", "south", "west")
 EPSILON = 1.0e-6
+STATUE_HAND_SOCKETS = {
+    "o_c008_1": ([0.814422, 2.24161, 0.300141], "minecraft:block/hold/statue", 6, 5, "south"),
+    "o_c008_2": ([1.001923, 1.122392, 0.153886], "minecraft:block/hold/statue_3", 5, 10, "down"),
+    "o_c008_3": ([0.631753, 0.792948, -0.281602], "minecraft:block/hold/statue_4", 3, 7, "west"),
+    "o_c008_5": ([1.092947, 0.57794, 0.123782], "minecraft:block/hold/statue_5", 4, 5, "north"),
+}
+STATUE_SOURCE_FACE_POLYGONS = {
+    "o_c008_1": 31,
+    "o_c008_2": 48,
+    "o_c008_3": 40,
+    "o_c008_5": 25,
+}
 
 
 def read(path: Path):
@@ -40,7 +52,21 @@ def occupied_cells(box: list[float]) -> set[tuple[int, int, int]]:
 
 def contains(box: list[float], x: float, y: float, z: float) -> bool:
     return all(box[index] - EPSILON <= value <= box[index + 3] + EPSILON
-               for index, value in enumerate((x, y, z)))
+                for index, value in enumerate((x, y, z)))
+
+
+def rotate_vertex(vertex: list[float], yaw: int) -> list[float]:
+    x, z = vertex[0] - .5, vertex[2] - .5
+    turns = (yaw // 90) % 4
+    if yaw % 90:
+        raise ValueError("statue facing yaw must be cardinal")
+    if turns == 1:
+        x, z = -z, x
+    elif turns == 2:
+        x, z = -x, -z
+    elif turns == 3:
+        x, z = z, -x
+    return [round(.5 + x, 5), round(vertex[1], 5), round(.5 + z, 5), *vertex[3:]]
 
 
 class BetaClientQaTests(unittest.TestCase):
@@ -49,6 +75,7 @@ class BetaClientQaTests(unittest.TestCase):
         cls.definitions = {row["id"]: row for row in read(LOGICAL / "definitions.json")["blocks"]}
         cls.contracts = {row["id"]: row for row in read(LOGICAL / "contracts-v2.json")["families"]}
         cls.meshes = read(LOGICAL / "meshes.json.gz")
+        cls.baseline = read(ROOT / "docs/beta-client-qa/baseline-fingerprints.json.gz")["fingerprints"]["families"]
 
     def test_only_explicit_beta_families_changed(self):
         result = verify(baseline_path=ROOT / "docs/beta-client-qa/baseline-fingerprints.json.gz",
@@ -134,6 +161,37 @@ class BetaClientQaTests(unittest.TestCase):
             lit = self.meshes[definition["models"][lit_key]]["polygons"]
             self.assertFalse(any(polygon["texture"].endswith("/flower_pot") for polygon in unlit), ident)
             self.assertTrue(any(polygon["texture"].endswith("/flower_pot") for polygon in lit), ident)
+
+    def test_statue_hand_sockets_match_frozen_source_faces_for_every_facing(self):
+        lantern = self.definitions["o_lantern"]
+        for ident, (socket, model, component, element, face) in STATUE_HAND_SOCKETS.items():
+            source_state = self.baseline[ident]["core"]["state_evidence"][
+                "facing=north,hand_lantern=none,visual=base"]
+            source_face = source_state["mesh"]["polygons"][STATUE_SOURCE_FACE_POLYGONS[ident]]
+            source_center = [round(sum(vertex[axis] for vertex in source_face["vertices"])
+                                   / len(source_face["vertices"]), 6) for axis in range(3)]
+            self.assertEqual(socket, source_center, f"{ident} source distal-face center")
+            hand = self.contracts[ident]["hand_lantern"]
+            self.assertEqual(socket, hand["position"], ident)
+            self.assertEqual([0, 0, 0], hand["rotation"], ident)
+            self.assertEqual({"kind": "source_distal_face_center", "model": model,
+                              "component": component, "element": element, "face": face},
+                             hand["position_authority"], ident)
+            self.assertIn("no mounted single-lantern source composition", hand["scale_authority"], ident)
+            for facing_index, facing in enumerate(FACINGS):
+                yaw = facing_index * 90
+                for mode, lit in (("unlit", "false"), ("lit", "true")):
+                    lamp_key = f"facing=north,lit={lit},visual=base"
+                    lamp = self.meshes[lantern["models"][lamp_key]]["polygons"]
+                    expected = []
+                    for polygon in lamp:
+                        expected.append({**polygon, "vertices": [rotate_vertex(
+                            [socket[index] + (vertex[index] - hand["source_pivot"][index]) * hand["scale"]
+                             for index in range(3)] + vertex[3:], yaw) for vertex in polygon["vertices"]]})
+                    for visual in ("base", "alt"):
+                        state_key = f"facing={facing},hand_lantern={mode},visual={visual}"
+                        actual = self.meshes[self.definitions[ident]["models"][state_key]]["polygons"][-len(expected):]
+                        self.assertEqual(expected, actual, (ident, facing, mode, visual))
 
 
 if __name__ == "__main__":

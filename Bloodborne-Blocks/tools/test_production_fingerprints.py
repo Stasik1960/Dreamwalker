@@ -38,6 +38,18 @@ class ProductionFingerprintTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             capture(root=ROOT, output=self.base)
 
+    def test_checkout_line_endings_do_not_change_text_fingerprints(self):
+        path = Path(self.temp.name) / "checkout.json"
+        path.write_bytes(b'{"value": 1}\n')
+        expected = fingerprints.file_hash(path)
+        path.write_bytes(b'{"value": 1}\r\n')
+        self.assertEqual(expected, fingerprints.file_hash(path))
+        path.write_bytes(b'{"value": 2}\r\n')
+        self.assertNotEqual(expected, fingerprints.file_hash(path))
+        binary = path.with_suffix('.png')
+        binary.write_bytes(b'\r\n')
+        self.assertEqual(fingerprints.digest_bytes(b'\r\n'), fingerprints.file_hash(binary))
+
     def test_geometry_uv_helpers_and_patterns_require_explicit_family_allowlist(self):
         def geometry(data):
             state = next(iter(data["fingerprints"]["families"]["o_c002"]["core"]["state_evidence"].values()))
