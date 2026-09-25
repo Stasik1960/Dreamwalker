@@ -15,9 +15,15 @@ def verify(source:Path,output:Path,report:dict):
     if report.get('dryRun') or not isinstance(report.get('ledger'),list):
         return {'result':'FAIL','changed_cells':0,'ledger_cells':0,'changed_chunks':0,'unchanged_chunks':0,
                 'preserved_nonterrain_files':0,'errors':['completed conversion ledger required']}
-    for item in report['ledger']:
+    entries = report['ledger']
+    if 'cityRecovery' in report:
+        from city_recovery import prepare_directory
+        from convert_logical_world import DEFAULT_RESOURCES
+        recovery = prepare_directory(source, DEFAULT_RESOURCES, report['cityRecovery'])
+        entries = [dict(e, pass_number=1) for e in recovery['entries']] + [dict(e, pass_number=e.get('pass',1)+1) for e in entries]
+    for item in entries:
         dim=item.get('dimension')
-        pass_number=item.get('pass',1) if report.get('sourceMode')=='modded' else 1
+        pass_number=item.get('pass_number',item.get('pass',1)) if report.get('sourceMode')=='modded' else 1
         if type(pass_number) is not int or pass_number<1 or pass_number<previous_pass:
             errors.append('invalid ledger pass sequence: '+str(pass_number));continue
         if pass_number!=previous_pass:seen_in_pass=set()

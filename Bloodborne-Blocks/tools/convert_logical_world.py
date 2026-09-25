@@ -1089,7 +1089,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             report_path: Path | None = None, dry_run: bool = False, progress: bool = False,
             report_root: Path | None = None, source_mode: str = "legacy",
             conflict_policy: str = "conservative", inventory_path: Path | None = None,
-            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False) -> dict[str, Any]:
+            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False) -> dict[str, Any]:
     def status(message: str) -> None:
         if progress:
             print(f"logical-world: {message}", file=sys.stderr, flush=True)
@@ -1113,6 +1113,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         raise ValueError("legacy migration.json has no rules while Contract V2 source patterns exist; use --source-mode original-v2")
     if city_compat and source_mode != "modded":
         raise ValueError("city compatibility requires the MODDED source adapter")
+    if recover_city and (not city_compat or source_mode != "modded"):
+        raise ValueError("city recovery requires MODDED city compatibility")
     mapping_diagnostics = None
     if source_mode == "modded":
         from modded_world_adapter import compile_modded_rules
@@ -1129,6 +1131,12 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         status("world loading")
         world = World(copied, defaults)
         status(f"world loaded: chunks={len(world.chunks)}")
+        recovery = None
+        if recover_city:
+            from city_recovery import prepare as prepare_recovery, apply as apply_recovery
+            recovery = prepare_recovery(world, resources)
+            apply_recovery(world, recovery)
+            status(f"historical recovery: {len(recovery['entries'])} cells")
         registered_ids = ({PART} | {full_id(row["id"]) for row in
                           json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
                           if source_mode == "modded" else None)
@@ -1191,6 +1199,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
                        "legacyCarrierRules": mapping_diagnostics.get("compiledLegacyCarrierRules", 0) if mapping_diagnostics else 0},
             **({"passes": pass_summaries} if source_mode == "modded" else {}),
             **({"cityPaletteMigration": city_report} if city_report is not None else {}),
+            **({"cityRecovery": recovery} if recovery is not None else {}),
             "ledger": ledger,
             "rejected": [{"rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
                           "origin": list(item.origin), "reason": item.reason, "decision": "untouched",
@@ -1233,13 +1242,14 @@ def main() -> None:
                         help="modded composes frozen m_* and Bloodborne carrier mappings with current Contract V2; original-v2 reads raw vanilla carriers")
     parser.add_argument("--conflict-policy", choices=("conservative", "aggressive"), default="conservative")
     parser.add_argument("--allow-unresolved-city", action="store_true", help="diagnostic output only: preserve missing city IDs and mark registry QA FAIL")
+    parser.add_argument("--recover-city", action="store_true", help="restore exact missing cells from verified historical MODDED reference before conversion")
     parser.add_argument("--city-compat", action="store_true", help="map remaining historical module palettes to the compact city registry")
     parser.add_argument("--inventory", type=Path, help="trusted inspection inventory used only to select rare exact MODDED anchors")
     parser.add_argument("--expected-source-sha256", help="required for a MODDED ZIP; refuses a mismatched immutable input")
     args = parser.parse_args()
     report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode,
                      conflict_policy=args.conflict_policy, inventory_path=args.inventory,
-                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city)
+                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city)
     print(json.dumps(report["counts"], ensure_ascii=False))
 
 

@@ -223,7 +223,7 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
     return {proposal["key"] for proposal in proposals if not proposal["rejected"] and not proposal["superseded"]}
 
 
-def validate_ledger(before, report, rules):
+def validate_ledger(before, report, rules, recovery_entries=()):
     """Authorize each edit from the unmodified world, independently of planning.
 
     The report is an assertion to verify, never permission to change arbitrary
@@ -250,6 +250,12 @@ def validate_ledger(before, report, rules):
 
     view = OverlayWorld(before)
     entity_overlay = dict(before.block_entities())
+    from city_recovery import parse_state, helper_tag
+    for entry in recovery_entries:
+        for change in entry["changes"]:
+            view.states[(entry["dimension"], tuple(change["position"]))] = parse_state(change["after"])
+        for helper in entry["helpers"]:
+            entity_overlay[(entry["dimension"], *helper["position"])] = helper_tag(helper)
 
     def current_owned():
         result = {}
@@ -274,7 +280,7 @@ def validate_ledger(before, report, rules):
         previous_pass = pass_number
     if not groups:
         groups = [(1, [])]
-    touched_all = set()
+    touched_all = {(entry["dimension"], *change["position"]) for entry in recovery_entries for change in entry["changes"]}
     for pass_number, entries in groups:
         owned = current_owned()
         expected_effects = independently_accepted_effects(view, rules, entity_overlay, owned, conflict_policy)
@@ -464,11 +470,15 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
         before, after = World(source_world, defaults), World(converted.resolve(), defaults)
         if set(before.chunks) != set(after.chunks):
             raise AssertionError("converted world changed the chunk set")
-        touched_chunks = validate_ledger(before, report, rules)
+        recovery_entries = []
+        if "cityRecovery" in report:
+            from city_recovery import prepare
+            recovery_entries = prepare(before, resources, declared=report["cityRecovery"])["entries"]
+        touched_chunks = validate_ledger(before, report, rules, recovery_entries)
         allowed = {}
         allowed_sections = {}
         expected_helpers = {}
-        for entry in report["ledger"]:
+        for entry in recovery_entries + report["ledger"]:
             dim = entry["dimension"]
             for change in entry["changes"]:
                 x, y, z = change["position"]
