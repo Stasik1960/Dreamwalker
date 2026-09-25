@@ -45,6 +45,7 @@ world is not used to overwrite MODDED edits or invent coordinate corrections.
 
 The original inventory has 23 transient composite IDs / 33 cells without
 their generated assets. Production conversion resolves some of those cells;
+the conservative copy retains all **23 missing IDs / 33 cells**, while
 the aggressive copy retains **9 missing IDs / 13 cells**. See
 [missing evidence](MISSING-MODELS.md) and
 [remaining positions](remaining-aggressive-models.json).

@@ -1,0 +1,107 @@
+{
+  "status": "UNRESOLVED_MISSING_TRANSIENT_MODELS",
+  "codeCheckpoint": "4c060f3d11ba7f8c6bc5df4fe595360ac9191218",
+  "jar": {
+    "file": "bloodborne-blocks-2.1.0-beta.2-mc1.20.1.jar",
+    "sha256": "ef1c7d40dd76b64435d6ce2b5cb1f66e8f5f69df70eecc255f17738395bf2a3f"
+  },
+  "sourceSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+  "worlds": {
+    "conservative": {
+      "archive": "Bloodborne-City-Beta2-Conservative-UNRESOLVED.zip",
+      "sha256": "66f91548cf5215c93657b8097e3b28a97a0ad5519d6ad6de4de14c153e74c0bd",
+      "counts": {
+        "converted": 21629,
+        "forced": 0,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 33,
+        "rejected": 3441,
+        "rules": 361,
+        "unmatchedModules": 33,
+        "unresolvedV2": 0
+      },
+      "paletteChangedCells": 27527924,
+      "helpers": {
+        "checked": 16008,
+        "ok": true,
+        "orphans": []
+      },
+      "independentCheck": {
+        "format": "bloodborne-logical-world-check-v1",
+        "ledgerEntries": 21629,
+        "chunks": 10009,
+        "checkedBlocks": 1003216896,
+        "unchangedExternalFiles": 170,
+        "sourceHashVerified": true,
+        "resourceHashesVerified": true,
+        "ok": true
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 27553320,
+        "ledger_cells": 27051,
+        "changed_chunks": 1536,
+        "unchanged_chunks": 8473,
+        "preserved_nonterrain_files": 170
+      },
+      "secondPassConversions": 0,
+      "secondPassPaletteChanges": 0,
+      "logicalLedgerIdenticalToBeta1": true,
+      "referenceComparisonReusedForIdenticalLedger": true,
+      "registryReady": false
+    },
+    "aggressive": {
+      "archive": "Bloodborne-City-Beta2-Aggressive-UNRESOLVED.zip",
+      "sha256": "db2f3e4dfc4cfc88b7d2a4b782bc4d97f177784545dd70600d734cbad3caaca2",
+      "counts": {
+        "converted": 22351,
+        "forced": 737,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 13,
+        "rejected": 1777,
+        "rules": 361,
+        "unmatchedModules": 13,
+        "unresolvedV2": 0
+      },
+      "paletteChangedCells": 27525320,
+      "helpers": {
+        "checked": 18195,
+        "ok": true,
+        "orphans": []
+      },
+      "independentCheck": {
+        "format": "bloodborne-logical-world-check-v1",
+        "ledgerEntries": 22351,
+        "chunks": 10009,
+        "checkedBlocks": 1003216896,
+        "unchangedExternalFiles": 170,
+        "sourceHashVerified": true,
+        "resourceHashesVerified": true,
+        "ok": true
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 27555050,
+        "ledger_cells": 32965,
+        "changed_chunks": 1536,
+        "unchanged_chunks": 8473,
+        "preserved_nonterrain_files": 170
+      },
+      "secondPassConversions": 0,
+      "secondPassPaletteChanges": 0,
+      "logicalLedgerIdenticalToBeta1": true,
+      "referenceComparisonReusedForIdenticalLedger": true,
+      "registryReady": false
+    }
+  },
+  "checks": {
+    "checkBuild": "PASS",
+    "pythonUnittestSuites": 32,
+    "pythonUnittestCases": 169,
+    "finalItemVariantFixCompileAndStaticCheck": "PASS",
+    "clientAndServerRuntime": "NOT_RUN_BY_USER_REQUEST"
+  },
+  "reportsSha256": "b26fa5da6b2dd520dc45472054eb78e98c4ec2b48165fa9f60704c968ac72886"
+}

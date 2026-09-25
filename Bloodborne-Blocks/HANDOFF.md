@@ -1,5 +1,36 @@
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
+## Latest continuation: compact city compatibility, beta.2
+
+Code checkpoint `4c060f3d11ba7f8c6bc5df4fe595360ac9191218` adds the bounded
+city compatibility palette on top of the unchanged 49 production families.
+See [current city handoff](docs/city-compat/README.md) and
+[verification](docs/city-compat/verification.json).
+
+- 2,914 compatibility blocks / 48,632 states, maximum four collision boxes and
+  one outline box per cell. Existing runtime reused; no new ticking entities.
+- Both copies were regenerated from the exact latest MODDED ZIP below.
+  More than 27.5 million historical module cells now have compatible IDs,
+  without palette-stage coordinate changes.
+- Conservative: 21,629 logical conversions, 0 forced, **33 unknown cells**.
+  Aggressive: 22,351 logical conversions, 737 forced, **13 unknown cells**.
+- Both independent whole-world checks PASS: 10,009 chunks, 1,003,216,896
+  checked block cells, 170 unchanged nonterrain files. Preservation PASS;
+  no orphan helpers; second invocation changes zero objects/palette cells.
+- `check build` PASS (169 Python unittest cases / 32 suites plus Java/custom
+  checks); final city inventory-variant correction compiled, statically
+  checked and included in the rebuilt JAR.
+- **Client/server playtesting explicitly excluded by the user.**
+- **Still UNRESOLVED, not a final playable city:** transient composite models
+  were not saved with the supplied world. The user-provided 1.2.1 JAR does
+  not contain them. Missing source IDs/positions and the smaller aggressive
+  remainder are documented; no placeholder or air substitution was made.
+- Artifacts and complete reports: `releases/Bloodborne-Blocks/2.1.0-beta.2/`.
+  The normal converter fails closed; these diagnostic world copies explicitly
+  used `--allow-unresolved-city` and retain registry QA FAIL.
+
+The beta.1 section below is the preceding checkpoint, not the latest counts.
+
 **Current result: production beta and ALT kit delivered; city conversion outputs remain UNRESOLVED / NOT BETA READY.**
 
 The Agony section below is historical. The latest four client-QA requirements supersede embedded-window behavior. Good partial work from `99a7779313025eeb5081d8229abb9fb6e77f3ae1` was retained, not rebuilt.

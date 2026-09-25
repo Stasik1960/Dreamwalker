@@ -1,3 +1,5 @@
+> Latest city continuation: [compact compatibility and remaining model gap](docs/city-compat/README.md). Beta.2 code/artifacts are delivered; conservative/aggressive unknown cells are now 33/13. In-game testing was explicitly excluded by the user. Historical task below is preserved.
+
 > Execution record, 2026-09-25: continue from [current HANDOFF](HANDOFF.md), not from this task's historical starting point. Beta, converter, both reported conversion copies, ALT kit and checkpoints were delivered. Automated QA passed; full-city beta compatibility remains UNRESOLVED (legacy registry IDs), and graphical acceptance was not run. The original requirements below are retained verbatim.
 
 # Bloodborne-Blocks — beta fix, конвертация latest MODDED backup и ALT artist kit
