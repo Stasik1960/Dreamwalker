@@ -1,3 +1,7 @@
+# Latest beta
+
+[2.1.0-beta.1 — JAR, gallery, checksums and verification](2.1.0-beta.1/README.md). Graphical acceptance pending; old modular city requires separate conversion review.
+
 # Bloodborne Architecture — cumulative Агония, 2026-09-25
 
 - [Текущий JAR](bloodborne-blocks-2.1.0-alpha.1-agony-20260925-mc1.20.1.jar)
