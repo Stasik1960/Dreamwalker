@@ -129,7 +129,7 @@ tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
  'check_logical_resources', 'test_production_door', 'test_production_inventory', 'test_production_geometry',
  'test_production_gallery', 'test_build_production_gallery', 'test_production_palette',
  'test_restore_functional', 'test_restore_c003', 'test_restored_migration', 'test_preserved_semantics', 'test_production_coverage', 'production_coverage',
- 'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch', 'test_beta_client_qa'].each { testName ->
+ 'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch', 'test_beta_client_qa', 'test_modded_world_adapter'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   dependsOn 'normalizeSupportContracts'

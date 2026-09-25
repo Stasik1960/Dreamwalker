@@ -17,7 +17,7 @@ import shutil
 import tempfile
 import sys
 import zipfile
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path, PurePosixPath
 from typing import Any, Callable, Iterable
@@ -233,6 +233,8 @@ class Rule:
     variant_guards: tuple[dict, ...] = ()
     transaction_id: str | None = None
     outputs: tuple["Output", ...] = ()
+    source_mode: str = "legacy"
+    source_reference: str | None = None
 
 
 @dataclass(frozen=True)
@@ -250,6 +252,10 @@ def vector(value: Any, label: str) -> tuple[int, int, int]:
 
 
 def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule], dict[str, dict[str, str]]]:
+    if source_mode == "modded":
+        from modded_world_adapter import compile_modded_rules
+        rules, defaults, _ = compile_modded_rules(resources)
+        return rules, defaults
     if source_mode in ("original-v2-poc", "original-v2"):
         from logical_contract_v2 import direct_rules
         return direct_rules(resources,poc_only=source_mode == 'original-v2-poc')
@@ -698,6 +704,7 @@ class Candidate:
     stale: set[tuple[int, int, int]] = field(default_factory=set)
     reason: str | None = None
     existing_helpers: set[tuple[int, int, int]] = field(default_factory=set)
+    conflicts: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def touched(self) -> set[tuple[int, int, int]]:
@@ -724,10 +731,13 @@ def owned_part(current: tuple[str, tuple[tuple[str, str], ...]] | None, entity: 
             root is not None and root.type == TAG_LONG and root.value == block_pos_long(*root_pos))
 
 
-def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] | None = None) -> tuple[list[Candidate], dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]], list[dict[str, Any]]]:
+def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] | None = None,
+               conflict_policy: str = "conservative", report_all_modules: bool = False) -> tuple[list[Candidate], dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]], list[dict[str, Any]]]:
+    if conflict_policy not in ("conservative", "aggressive"):
+        raise ValueError("conflict policy must be conservative or aggressive")
     inverse: dict[tuple[str, tuple[tuple[str, str], ...]], list[tuple[Rule, str, tuple[int, int, int]]]] = defaultdict(list)
     for rule in rules:
-        inverse[rule.source.state].append((rule, "legacy", rule.source.offset))
+        inverse[rule.source.state].append((rule, rule.source_mode, rule.source.offset))
         if rule.components:
             for component in rule.components:
                 inverse[component.state].append((rule, "v2", component.offset))
@@ -756,7 +766,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                     result.setdefault(key, Candidate(rule, mode, chunk.dimension, origin, set(), (0, 0, 0), {}))
             palette_counts = np.bincount(index_array, minlength=len(states))
             for palette_index, state in enumerate(states):
-                if not state[0].startswith(NS + "m_") or state in inverse:
+                if not state[0].startswith(NS + "m_") or (state in inverse and not report_all_modules):
                     continue
                 count = int(palette_counts[palette_index])
                 if not count:
@@ -779,7 +789,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             if owned_part(world.get(dim, (x, y, z)), entity, str(owner.value), unpack_pos_long(int(root.value))):
                 owned_parts[(dim, str(owner.value), int(root.value))].add((x, y, z))
     for item in result.values():
-        pieces = ((item.rule.source,) + item.rule.members) if item.mode == "legacy" else item.rule.components or ()
+        pieces = ((item.rule.source,) + item.rule.members) if item.mode in ("legacy", "modded") else item.rule.components or ()
         actual: set[tuple[int, int, int]] = set()
         for piece in pieces:
             point = add(item.origin, piece.offset)
@@ -826,12 +836,12 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             item.reason = "target_outside_dimension_build_height"
             continue
         source_owned: set[tuple[int, int, int]] = set()
-        if item.mode == "legacy":
+        if item.mode in ("legacy", "modded"):
             for piece in pieces:
                 piece_root = add(item.origin, piece.offset)
                 for point in owned_parts.get((item.dimension, piece.state[0], block_pos_long(*piece_root)), ()):
                     helper_offset = (point[0] - piece_root[0], point[1] - piece_root[1], point[2] - piece_root[2])
-                    if helper_offset != (0, 0, 0) and helper_offset in piece.shape:
+                    if helper_offset != (0, 0, 0) and (item.mode == "modded" or helper_offset in piece.shape):
                         source_owned.add(point)
             item.stale.update(source_owned - set(item.writes))
         # Existing helper cells may be replaced only if they explicitly already
@@ -850,9 +860,19 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             if owned and current == (PART, ()):
                 item.existing_helpers.add(point)
             if point in item.writes and point not in item.source and current is not None and current[0] not in AIR_NAMES and not owned:
-                item.reason = "target_would_overwrite_foreign_block"
-                break
+                blocker_helpers = owned_parts.get((item.dimension, current[0], block_pos_long(*point)), ())
+                if (conflict_policy == "aggressive" and current[0].startswith(NS) and
+                        current[0] != PART and not blocker_helpers):
+                    item.conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(current)),
+                                           "reason": "forced_target_overwrites_bloodborne_state"})
+                else:
+                    item.conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(current)),
+                                           "reason": "aggressive_blocker_has_owned_helpers" if blocker_helpers else
+                                                     "target_would_overwrite_foreign_block"})
+                    item.reason = "aggressive_blocker_has_owned_helpers" if blocker_helpers else "target_would_overwrite_foreign_block"
+                    break
             if entity is not None and not owned:
+                item.conflicts.append({"position": list(point), "reason": "foreign_block_entity"})
                 item.reason = "foreign_block_entity"
                 break
         if item.reason:
@@ -870,6 +890,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         if item.reason:
             continue
         if world.ticks_at(item.dimension, item.touched):
+            item.conflicts.append({"reason": "scheduled_tick_at_changed_position"})
             item.reason = "scheduled_tick_at_changed_position"
     return list(result.values()), found, list(unmatched.values())
 
@@ -970,6 +991,12 @@ def apply(world: World, items: Iterable[Candidate]) -> list[dict[str, Any]]:
         ledger.append({
             "rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
             "origin": list(item.origin), "targetRoot": list(item.target_root),
+            "originalReference": item.rule.source_reference,
+            "delta": [item.target_root[index] - item.origin[index] for index in range(3)],
+            "decision": "forced" if item.conflicts else "converted",
+            "reason": "aggressive_proven_touched_set" if item.conflicts else "exact_mapping",
+            "conflictingCells": item.conflicts,
+            "tp": f"/execute in {item.dimension} run tp @s {item.origin[0]} {item.origin[1]} {item.origin[2]}",
             **({"transaction": item.rule.transaction_id,
                 "outputs": [{"targetRoot": list(root), "target": block_state_key(as_tag_state(target))}
                             for root, target in item.output_roots]} if item.rule.transaction_id else {}),
@@ -1027,14 +1054,45 @@ def write_report(report_path: Path, report: dict[str, Any]) -> None:
             temporary.unlink()
 
 
+def write_markdown_report(report_path: Path, report: dict[str, Any]) -> None:
+    counts = report["counts"]
+    rows = [
+        "# Bloodborne modded-world conversion",
+        "",
+        f"- Policy: `{report.get('conflictPolicy')}`",
+        f"- Converted: {counts['converted']}",
+        f"- Forced: {counts.get('forced', 0)}",
+        f"- Untouched conflicts: {counts['rejected']}",
+        f"- Unresolved registry blocks: {counts.get('registryIncompatibleBlocks', 0)}",
+        f"- Beta registry QA: **{report.get('registryCompatibility', {}).get('result', 'UNKNOWN')}**",
+        "",
+        "## Coordinates",
+        "",
+    ]
+    for item in report.get("ledger", []):
+        rows.append(f"- `{item['tp']}` — {item['decision']}: {item['reason']}")
+    for item in report.get("rejected", []):
+        rows.append(f"- `{item['tp']}` — untouched: {item['reason']}")
+    report_path.with_suffix(".md").write_text("\n".join(rows) + "\n", encoding="utf-8")
+
+
 def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             report_path: Path | None = None, dry_run: bool = False, progress: bool = False,
-            report_root: Path | None = None, source_mode: str = "legacy") -> dict[str, Any]:
+            report_root: Path | None = None, source_mode: str = "legacy",
+            conflict_policy: str = "conservative", inventory_path: Path | None = None,
+            expected_source_sha256: str | None = None) -> dict[str, Any]:
     def status(message: str) -> None:
         if progress:
             print(f"logical-world: {message}", file=sys.stderr, flush=True)
 
     source, output, resources = source.resolve(), output.resolve(), resources.resolve()
+    if expected_source_sha256 is not None:
+        if len(expected_source_sha256) != 64 or any(char not in "0123456789abcdefABCDEF" for char in expected_source_sha256):
+            raise ValueError("expected source SHA-256 must be 64 hexadecimal characters")
+        if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != expected_source_sha256.lower():
+            raise ValueError("source archive SHA-256 does not match --expected-source-sha256")
+    elif source_mode == "modded" and source.is_file():
+        raise ValueError("modded ZIP conversion requires --expected-source-sha256")
     if output.exists():
         raise ValueError("output must be a new directory outside the source")
     if not (resources / "migration.json").is_file() or not (resources / "geometry.json").is_file():
@@ -1044,7 +1102,13 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
     validate_paths(source, output, resources, report_path, report_root)
     if source_mode == "legacy" and legacy_migration_is_empty(resources) and has_contract_v2_patterns(resources):
         raise ValueError("legacy migration.json has no rules while Contract V2 source patterns exist; use --source-mode original-v2")
-    rules, defaults = parse_rules(resources, source_mode)
+    mapping_diagnostics = None
+    if source_mode == "modded":
+        from modded_world_adapter import compile_modded_rules
+        resolved_inventory = inventory_path.resolve() if inventory_path is not None else None
+        rules, defaults, mapping_diagnostics = compile_modded_rules(resources, resolved_inventory)
+    else:
+        rules, defaults = parse_rules(resources, source_mode)
     definitions = definition_hashes(resources)
     status(f"rules parsed: rules={len(rules)}")
     with tempfile.TemporaryDirectory(prefix="logical-world-", dir=str(output.parent)) as temporary:
@@ -1054,24 +1118,63 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         status("world loading")
         world = World(copied, defaults)
         status(f"world loaded: chunks={len(world.chunks)}")
-        items, found, unmatched_modules = candidates(world, rules, status if progress else None)
+        items, found, unmatched_modules = candidates(world, rules, status if progress else None, conflict_policy,
+                                                     report_all_modules=source_mode == "modded")
         reject_overlaps(items)
         unresolved = unresolved_components(items, found, rules)
         status(f"candidates resolved: accepted={sum(item.reason is None for item in items)}, rejected={sum(item.reason is not None for item in items)}, unresolvedV2={len(unresolved)}")
+        removed_modules: Counter[tuple[str, str]] = Counter()
+        removed_positions: set[tuple[str, tuple[int, int, int]]] = set()
+        if source_mode == "modded":
+            for item in items:
+                if item.reason is not None:
+                    continue
+                for point in item.touched:
+                    before = world.get(item.dimension, point)
+                    after = item.writes.get(point, (AIR_NAME, ()))
+                    if before is not None and before[0].startswith(NS + "m_") and before != after:
+                        removed_modules[(item.dimension, block_state_key(as_tag_state(before)))] += 1
+                        removed_positions.add((item.dimension, point))
         ledger = apply(world, items)
+        if source_mode == "modded":
+            retained_groups = []
+            for group in unmatched_modules:
+                group = copy.deepcopy(group)
+                group["count"] -= removed_modules[(group["dimension"], group["state"])]
+                group["samples"] = [point for point in group["samples"]
+                                    if (group["dimension"], tuple(point)) not in removed_positions]
+                if group["count"] > 0:
+                    retained_groups.append(group)
+            unmatched_modules = retained_groups
+        registry_incompatible = sum(group["count"] for group in unmatched_modules)
+        forced = sum(bool(item.conflicts) for item in items if item.reason is None)
         report = {
-            "format": "bloodborne-logical-world-conversion-v1", "dryRun": dry_run, "sourceMode": source_mode,
+            "format": "bloodborne-logical-world-conversion-v2" if source_mode == "modded" else "bloodborne-logical-world-conversion-v1",
+            "dryRun": dry_run, "sourceMode": source_mode,
+            "conflictPolicy": conflict_policy,
             "source": {"path": str(source), "kind": source_kind, "hashes": source_hashes},
             "resources": {"path": str(resources), "migrationSha256": hashlib.sha256((resources / "migration.json").read_bytes()).hexdigest(),
                           "geometrySha256": hashlib.sha256((resources / "geometry.json").read_bytes()).hexdigest(), "definitionsSha256": definitions},
-            "counts": {"rules": len(rules), "converted": len(ledger), "rejected": sum(item.reason is not None for item in items), "unresolvedV2": len(unresolved), "unmatchedModules": sum(group["count"] for group in unmatched_modules)},
+            "counts": {"rules": len(rules), "converted": len(ledger), "forced": forced,
+                       "rejected": sum(item.reason is not None for item in items), "unresolvedV2": len(unresolved),
+                       "unmatchedModules": registry_incompatible, "registryIncompatibleBlocks": registry_incompatible,
+                       "mappingGaps": len(mapping_diagnostics.get("mappingGaps", [])) if mapping_diagnostics else 0},
             "ledger": ledger,
             "rejected": [{"rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
-                          "origin": list(item.origin), "reason": item.reason} for item in items if item.reason],
+                          "origin": list(item.origin), "reason": item.reason, "decision": "untouched",
+                          "conflictingCells": item.conflicts,
+                          "tp": f"/execute in {item.dimension} run tp @s {item.origin[0]} {item.origin[1]} {item.origin[2]}"}
+                         for item in items if item.reason],
             "unresolved": unresolved,
             "unmatchedModules": unmatched_modules,
+            "mappingDiagnostics": mapping_diagnostics,
+            "registryCompatibility": {"result": "FAIL" if registry_incompatible else "PASS",
+                                      "reason": "unmapped m_* IDs are not in the 49-family beta registry" if registry_incompatible else None,
+                                      "betaReady": registry_incompatible == 0},
             "reportNotes": {"unresolvedV2": "Unconsumed positions whose exact state is a component of an inverse rule, after alias deduplication and overlap rejection.",
-                            "unmatchedModules": "Aggregated non-inverse bloodborne_blocks:m_* states; these rows are inventory statistics, not conversion failures."},
+                            "unmatchedModules": ("All m_* states remaining after accepted conversions; any positive count is a beta registry incompatibility."
+                                                 if source_mode == "modded" else
+                                                 "Aggregated non-inverse bloodborne_blocks:m_* states; these rows are inventory statistics, not conversion failures.")},
         }
         if not dry_run:
             world.save()
@@ -1079,6 +1182,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             # original source was only read, including when supplied as a zip.
             os.replace(copied, output)
         write_report(report_path, report)
+        if source_mode == "modded":
+            write_markdown_report(report_path, report)
         status(f"complete: converted={len(ledger)}")
     return report
 
@@ -1092,10 +1197,15 @@ def main() -> None:
     parser.add_argument("--report-root", type=Path, help="permitted root for --report (defaults to this project's build directory)")
     parser.add_argument("--dry-run", action="store_true", help="scan and report without creating output")
     parser.add_argument("--progress", action="store_true", help="write conversion phases and counts to stderr")
-    parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc", "original-v2"), default="legacy",
-                        help="original-v2 matches reviewed Contract V2 vanilla patterns; original-v2-poc restricts to original five")
+    parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc", "original-v2", "modded"), default="legacy",
+                        help="modded composes frozen m_* mappings with current Contract V2; original-v2 reads raw vanilla carriers")
+    parser.add_argument("--conflict-policy", choices=("conservative", "aggressive"), default="conservative")
+    parser.add_argument("--inventory", type=Path, help="trusted inspection inventory used only to select a rare exact m_* anchor")
+    parser.add_argument("--expected-source-sha256", help="required for a MODDED ZIP; refuses a mismatched immutable input")
     args = parser.parse_args()
-    report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode)
+    report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode,
+                     conflict_policy=args.conflict_policy, inventory_path=args.inventory,
+                     expected_source_sha256=args.expected_source_sha256)
     print(json.dumps(report["counts"], ensure_ascii=False))
 
 

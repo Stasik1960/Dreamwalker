@@ -90,7 +90,7 @@ def explicitly_supersedes(large, small):
             (small["source"] | small["existing_helpers"]) <= large["touched"])
 
 
-def proved_helpers(before, dim, origin, root, rule, pieces, owned):
+def proved_helpers(before, dim, origin, root, rule, pieces, owned, mode="legacy"):
     """Adopt only helpers of matched roots inside their exact old footprints.
 
     The helper's claimed Owner/Root is not proof by itself. In particular, a
@@ -104,15 +104,15 @@ def proved_helpers(before, dim, origin, root, rule, pieces, owned):
             continue
         for point in owned.get((dim, piece.state[0], block_pos_long(*source_root)), ()):
             offset = tuple(point[i] - source_root[i] for i in range(3))
-            if offset != (0, 0, 0) and offset in piece.shape and before.get(dim, point) == (PART, ()):
+            if offset != (0, 0, 0) and (mode == "modded" or offset in piece.shape) and before.get(dim, point) == (PART, ()):
                 result.add(point)
     return result
 
 
-def proved_transaction_helpers(before, dim, origin, rule, pieces, owned):
+def proved_transaction_helpers(before, dim, origin, rule, pieces, owned, mode="legacy"):
     outputs = rule_outputs(rule, origin)
     root, target, _shape = outputs[0]
-    result = proved_helpers(before, dim, origin, root, rule, pieces, owned)
+    result = proved_helpers(before, dim, origin, root, rule, pieces, owned, mode)
     for root, target, _shape in outputs[1:]:
         for point in owned.get((dim, target[0], block_pos_long(*root)), ()):
             if before.get(dim, point) == (PART, ()):
@@ -120,7 +120,7 @@ def proved_transaction_helpers(before, dim, origin, rule, pieces, owned):
     return result
 
 
-def independently_accepted_effects(before, rules, old_entities, owned):
+def independently_accepted_effects(before, rules, old_entities, owned, conflict_policy="conservative"):
     """Enumerate complete groups, deduplicate effects and reject global conflicts.
 
     The first member is sufficient to discover every *complete* group. This
@@ -128,7 +128,7 @@ def independently_accepted_effects(before, rules, old_entities, owned):
     """
     starts = {}
     for rule in rules:
-        starts.setdefault(rule.source.state, []).append((rule, "legacy", rule.source.offset))
+        starts.setdefault(rule.source.state, []).append((rule, rule.source_mode, rule.source.offset))
         if rule.components:
             first = rule.components[0]
             starts.setdefault(first.state, []).append((rule, "v2", first.offset))
@@ -160,7 +160,7 @@ def independently_accepted_effects(before, rules, old_entities, owned):
                         proposals[(rule.number, mode, chunk.dimension, origin)] = rule
     effects = {}
     for (_, mode, dim, origin), rule in proposals.items():
-        pieces = (rule.source,) + rule.members if mode == "legacy" else rule.components
+        pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components
         source = {tuple(origin[i] + part.offset[i] for i in range(3)) for part in pieces}
         if len(source) != len(pieces) or any(before.get(dim, tuple(origin[i] + part.offset[i] for i in range(3))) != part.state for part in pieces):
             continue
@@ -169,7 +169,7 @@ def independently_accepted_effects(before, rules, old_entities, owned):
             if not guards_match(rule.variant_guards,origin): continue
         root = rule_outputs(rule, origin)[0][0]
         writes = output_writes(rule, origin)
-        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned)
+        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned, mode)
         stale = helpers - set(writes)
         touched = source | stale | set(writes)
         valid = True
@@ -179,7 +179,9 @@ def independently_accepted_effects(before, rules, old_entities, owned):
             if (old is None or (dim, *point) in scheduled or
                     (point in stale and not is_owned) or
                     ((dim, *point) in old_entities and not is_owned) or
-                    (point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned)):
+                    (point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned and
+                     not (conflict_policy == "aggressive" and old[0].startswith("bloodborne_blocks:") and
+                          old[0] != PART and not owned.get((dim, old[0], block_pos_long(*point)))))):
                 valid = False
                 break
         if valid:
@@ -226,8 +228,12 @@ def validate_ledger(before, report, rules):
     The report is an assertion to verify, never permission to change arbitrary
     blocks. Do not call the converter's candidates/apply/overlap routines here.
     """
-    if report.get("dryRun") or report.get("format") != "bloodborne-logical-world-conversion-v1":
+    if report.get("dryRun") or report.get("format") not in {
+            "bloodborne-logical-world-conversion-v1", "bloodborne-logical-world-conversion-v2"}:
         raise AssertionError("only a completed conversion report can verify a world")
+    conflict_policy = report.get("conflictPolicy", "conservative")
+    if conflict_policy not in ("conservative", "aggressive"):
+        raise AssertionError("unknown conflict policy")
     old_entities = before.block_entities()
     owned = {}
     for (dim, x, y, z), entity in old_entities.items():
@@ -245,7 +251,7 @@ def validate_ledger(before, report, rules):
             raise AssertionError("ledger has an unknown migration rule")
         rule = rules[number]
         mode = entry.get("mode")
-        pieces = (rule.source,) + rule.members if mode == "legacy" else rule.components if mode == "v2" else None
+        pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components if mode == "v2" else None
         if not pieces:
             raise AssertionError("ledger mode has no proven source group")
         dim = entry["dimension"]
@@ -276,13 +282,14 @@ def validate_ledger(before, report, rules):
                 raise AssertionError("ledger transaction outputs do not match rule")
         elif "transaction" in entry or "outputs" in entry:
             raise AssertionError("non-transaction ledger entry declares outputs")
-        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned)
+        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned, mode)
         stale = helpers - set(writes)
         if sorted(map(tuple, entry["staleRemoved"])) != sorted(stale):
             raise AssertionError("ledger stale-helper set is not provably owned")
         touched = source | stale | set(writes)
         reported_effects.add(effect_key(dim, source, touched, writes))
         expected_changes = {}
+        expected_conflicts = []
         for point in touched:
             old = before.get(dim, point)
             if old is None:
@@ -294,7 +301,12 @@ def validate_ledger(before, report, rules):
             if entity is not None and not is_owned:
                 raise AssertionError("ledger destroys a foreign block entity")
             if point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned:
-                raise AssertionError("ledger overwrites a foreign block")
+                if (conflict_policy == "aggressive" and old[0].startswith("bloodborne_blocks:") and
+                        old[0] != PART and not owned.get((dim, old[0], block_pos_long(*point)))):
+                    expected_conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(old)),
+                                               "reason": "forced_target_overwrites_bloodborne_state"})
+                else:
+                    raise AssertionError("ledger overwrites a foreign block")
             for name in ("block_ticks", "TileTicks", "fluid_ticks", "LiquidTicks"):
                 ticks = before.chunk(dim, point[0], point[2]).root().get(name)
                 for tick in ticks.value if ticks is not None else ():
@@ -314,6 +326,11 @@ def validate_ledger(before, report, rules):
             actual_changes[point] = (change["before"], change["after"])
         if actual_changes != expected_changes:
             raise AssertionError("ledger before/after changes are not authorized by its rule")
+        if report.get("format") == "bloodborne-logical-world-conversion-v2":
+            if entry.get("conflictingCells") != expected_conflicts:
+                raise AssertionError("ledger forced conflicts do not match original world")
+            if entry.get("decision") != ("forced" if expected_conflicts else "converted"):
+                raise AssertionError("ledger decision does not match conflicts")
         expected_helpers = {}
         for output_root, target, shape in outputs:
             for offset in shape:
@@ -325,7 +342,7 @@ def validate_ledger(before, report, rules):
             raise AssertionError("ledger helper data does not match target geometry")
     if report.get("counts", {}).get("converted") != len(report["ledger"]):
         raise AssertionError("conversion count differs from ledger")
-    expected_effects = independently_accepted_effects(before, rules, old_entities, owned)
+    expected_effects = independently_accepted_effects(before, rules, old_entities, owned, conflict_policy)
     if reported_effects != expected_effects:
         raise AssertionError(f"ledger differs from independently accepted groups: missing={len(expected_effects - reported_effects)}, unexpected={len(reported_effects - expected_effects)}")
     return {(dim, x // 16, z // 16) for dim, x, y, z in reserved}
