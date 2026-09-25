@@ -72,6 +72,25 @@ final class GeometryRuntime {
   }
  }
 
+ static void loadCityAndValidate(BloodborneBlocks.Data definitions){
+  if(definitions.blocks==null||definitions.blocks.isEmpty()||definitions.blocks.stream().anyMatch(definition->!definition.city_compat||definition.logical))throw new IllegalStateException("City runtime accepts compatibility definitions only");
+  FileData city=readGeometry("/bloodborne_blocks/city/geometry.json");
+  if(city==null||city.blocks==null)throw new IllegalStateException("Invalid city geometry.json: missing blocks");
+  Map<String,GeometryState> profiles=city.profiles==null?Map.of():city.profiles;
+  Set<GeometryState> prepared=Collections.newSetFromMap(new IdentityHashMap<>());
+  for(BloodborneBlocks.Definition definition:definitions.blocks){
+   GeometryBlock block=city.blocks.get(definition.id);
+   if(block==null||block.states==null||!block.states.keySet().equals(definition.states.keySet()))throw new IllegalStateException("Missing city geometry states "+definition.id);
+   for(var entry:block.states.entrySet()){
+    GeometryState state=entry.getValue();
+    if(state==null)throw new IllegalStateException("Null city geometry state "+definition.id+"["+entry.getKey()+"]");
+    if(state.ref!=null){GeometryState profile=profiles.get(state.ref);if(profile==null||profile.ref!=null)throw new IllegalStateException("Invalid city geometry profile "+blockId(definition.id,entry.getKey(),state.ref));entry.setValue(state=profile);}
+    if(prepared.add(state))prepare(definition.id,entry.getKey(),state);
+   }
+   if(BLOCKS.putIfAbsent(definition.id,block)!=null)throw new IllegalStateException("Duplicate runtime geometry block "+definition.id);
+  }
+ }
+
  private static FileData readGeometry(String path){
   try(InputStream stream=GeometryRuntime.class.getResourceAsStream(path)){
    if(stream==null)throw new IOException("Missing generated "+path);return GSON.fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),FileData.class);

@@ -7,6 +7,11 @@ from convert_logical_world import list_region_files,region_dimension
 
 def verify(source:Path,output:Path,report:dict):
     allowed={};errors=[];seen_in_pass=set();previous_pass=0
+    city_mapping={}
+    if 'cityPaletteMigration' in report:
+        from city_palette import load as load_city
+        city_mapping={k:block_state_key(v) for k,v in load_city(declared=report['cityPaletteMigration'])[0].items()}
+
     if report.get('dryRun') or not isinstance(report.get('ledger'),list):
         return {'result':'FAIL','changed_cells':0,'ledger_cells':0,'changed_chunks':0,'unchanged_chunks':0,
                 'preserved_nonterrain_files':0,'errors':['completed conversion ledger required']}
@@ -53,7 +58,8 @@ def verify(source:Path,output:Path,report:dict):
                 b.nbt();unchanged_chunks+=1;continue
             changed_chunks+=1
             ar=compound(a.nbt().root);br=compound(b.nbt().root);cx=int(ar['xPos'].value);cz=int(ar['zPos'].value)
-            if (dim,cx,cz) not in allowed_chunks:errors.append('chunk changed without ledger cells: '+str((name,cx,cz)))
+            from city_palette import chunk_has_mapping
+            if (dim,cx,cz) not in allowed_chunks and not chunk_has_mapping(ar,city_mapping):errors.append('chunk changed without ledger cells: '+str((name,cx,cz)))
             asec={int(compound(s)['Y'].value):s for s in ar.get('sections',Tag(TAG_LIST,[],TAG_COMPOUND)).value}
             bsec={int(compound(s)['Y'].value):s for s in br.get('sections',Tag(TAG_LIST,[],TAG_COMPOUND)).value}
             for sy in asec.keys()|bsec.keys():
@@ -67,8 +73,8 @@ def verify(source:Path,output:Path,report:dict):
                     pos=(cx*16+(i&15),sy*16+(i>>8),cz*16+((i>>4)&15));key=(dim,pos);c=allowed.get(key)
                     if c is not None:
                         seen_allowed.add(key)
-                        if c['before']!=av or c['after']!=bv:errors.append('cell does not match ledger: '+str(key))
-                    elif av!=bv:errors.append('cell changed outside ledger: '+str(key))
+                        if c['before']!=av or city_mapping.get(c['after'],c['after'])!=bv:errors.append('cell does not match ledger: '+str(key))
+                    elif city_mapping.get(av,av)!=bv:errors.append('cell changed outside ledger: '+str(key))
                     if av!=bv:changed_cells+=1
             # Only palette data, invalidated light caches/heightmaps and touched
             # block entities may differ. Everything else compares as typed NBT.

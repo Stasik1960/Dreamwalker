@@ -24,6 +24,11 @@ final class ModularMeshData {
  static Map<String,Mesh> loadLogicalAndValidate(){
   return loadAndValidate("/bloodborne_blocks/logical/meshes.json.gz","",-64,64);
  }
+ /** Optional compatibility meshes are client-only and strictly cell-local. */
+ static Map<String,Mesh> loadCityIfPresent(){
+  if(ModularMeshData.class.getResource("/bloodborne_blocks/city/meshes.json.gz")==null)return Map.of();
+  return loadAndValidate("/bloodborne_blocks/city/meshes.json.gz","",0,1);
+ }
  private static Map<String,Mesh> loadAndValidate(String path,String prefix,float minimum,float maximum){
   Map<String,String> textures=new HashMap<>();Map<String,Mesh> meshes=new LinkedHashMap<>();
   try(InputStream stream=ModularMeshData.class.getResourceAsStream(path)){

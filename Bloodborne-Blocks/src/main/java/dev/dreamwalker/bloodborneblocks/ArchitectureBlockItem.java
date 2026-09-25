@@ -8,10 +8,19 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.text.Text;
 
 /** Shifts authored multi-cell objects so their minimum occupied cell is the clicked cell. */
 public final class ArchitectureBlockItem extends BlockItem {
  public ArchitectureBlockItem(ArchitectureBlock block,Settings settings){super(block,settings);}
+
+ @Override public Text getName(ItemStack stack){
+  ArchitectureBlock block=(ArchitectureBlock)getBlock();
+  if(!block.definition.city_compat||block.definition.models==null)return super.getName(stack);
+  String variant=block.definition.defaultProperties==null?null:block.definition.defaultProperties.get("variant");
+  NbtCompound tag=stack.getSubNbt("BlockStateTag");if(tag!=null&&tag.contains("variant",8))variant=tag.getString("variant");
+  return variant==null?super.getName(stack):Text.translatable("city."+BloodborneBlocks.ID+"."+block.definition.id+"."+variant);
+ }
 
  @Override public ActionResult useOnBlock(ItemUsageContext context){
   ActionResult special=AuthoredSurfacePlacement.use(this,context);

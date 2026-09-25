@@ -29,7 +29,7 @@ def section_values(section, defaults):
     return [states[index] for index in indices]
 
 
-def section_codes(section, defaults, codes):
+def section_codes(section, defaults, codes, transform=None):
     """Compare palettes in bulk; expand coordinates only for actual changes."""
     unpacked = None if section is None else section_blocks(section)
     if unpacked is None:
@@ -38,6 +38,7 @@ def section_codes(section, defaults, codes):
     mapping = []
     for entry in palette:
         state = state_of(entry, defaults)
+        if transform is not None: state = transform.get(state, state)
         mapping.append(codes.setdefault(state, len(codes)))
     return np.asarray(mapping, dtype=np.int32)[np.asarray(indices, dtype=np.int32)]
 
@@ -425,6 +426,15 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
     if definitions_hashes != report.get("resources", {}).get("definitionsSha256"):
         raise AssertionError("resource definitions changed since conversion")
     rules, defaults = parse_rules(resources, report.get("sourceMode", "legacy"))
+    city_mapping, city_transform = {}, {}
+    if "cityPaletteMigration" in report:
+        from city_palette import load as load_city
+        city_mapping, _, _ = load_city(resources.parent / "city", report['cityPaletteMigration'])
+        def saved_state(k):
+            name, _, props = k.partition('[')
+            return (name, tuple(sorted(tuple(p.split('=',1)) for p in props.rstrip(']').split(',')))) if props else (name, ())
+        city_transform = {saved_state(k): state_of(v, defaults) for k,v in city_mapping.items()}
+
     source = source.resolve()
     declared = report.get("source", {})
     kind, hashes = declared.get("kind"), declared.get("hashes")
@@ -476,7 +486,8 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
         seen_allowed = set()
         for key in before.chunks:
             left, right = before.chunks[key].root(), after.chunks[key].root()
-            touched = key in touched_chunks
+            from city_palette import chunk_has_mapping
+            touched = key in touched_chunks or chunk_has_mapping(left, city_mapping)
             ignored_root = {"sections", "block_entities", "TileEntities"} | (cache_root if touched else set())
             ignored_section = {"block_states"} | (cache_section if touched else set())
             if touched and cache_root & set(right):
@@ -493,7 +504,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
                 if {k: v for k, v in a.items() if k not in ignored_section} != {k: v for k, v in b.items() if k not in ignored_section}:
                     raise AssertionError(f"section NBT changed outside permitted fields: {key}/{sy}")
                 codes = {}
-                old_codes = section_codes(left_sections.get(sy), defaults, codes)
+                old_codes = section_codes(left_sections.get(sy), defaults, codes, city_transform)
                 new_codes = section_codes(right_sections.get(sy), defaults, codes)
                 states_by_code = {code: state for state, code in codes.items()}
                 section_allowed = allowed_sections.get((*key, sy), {})
@@ -502,6 +513,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
                     old, new = states_by_code[int(old_codes[index])], states_by_code[int(new_codes[index])]
                     point = (key[0], key[1] * 16 + (index & 15), sy * 16 + (index >> 8), key[2] * 16 + ((index >> 4) & 15))
                     expected = allowed.get(point)
+                    if expected in city_mapping: expected = block_state_key(city_mapping[expected])
                     if expected is None and old != new:
                         raise AssertionError(f"block changed outside ledger at {point}: {old} -> {new}")
                     if expected is not None and block_state_key(as_tag_state(new)) != expected:
@@ -523,6 +535,10 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
                     raise AssertionError(f"block entity changed outside ledger at {point}")
                 elif point in allowed and point not in expected_helpers and point in new_entities:
                     raise AssertionError(f"unexpected entity at converted position {point}")
+        if city_mapping:
+            from city_palette import audit_helpers
+            helper_audit = audit_helpers(after, resources.parent / 'city')
+            if not helper_audit['ok']: raise AssertionError('Orphan helpers in converted city')
         missing_helpers = set(expected_helpers) - seen_helpers
         if missing_helpers:
             raise AssertionError(f"missing helper entities from ledger: {sorted(missing_helpers)}")

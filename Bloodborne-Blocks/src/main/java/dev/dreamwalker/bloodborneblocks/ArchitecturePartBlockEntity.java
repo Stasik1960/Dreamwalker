@@ -42,7 +42,7 @@ public final class ArchitecturePartBlockEntity extends BlockEntity {
 
  public void bind(BlockPos root,Identifier owner){this.root=root.toImmutable();this.owner=owner;markDirty();}
  public BlockPos rootPos(){return root;}
- public Block ownerBlock(){return Registries.BLOCK.get(owner);}
+ public Block ownerBlock(){ArchitectureBlock registered=owner.getNamespace().equals(BloodborneBlocks.ID)?BloodborneBlocks.registeredBlock(owner.getPath()):null;return registered==null?Registries.BLOCK.get(owner):registered;}
  Identifier ownerId(){return owner;}
 
  void validateWhenRootLoads(ServerWorld world){

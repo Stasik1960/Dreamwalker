@@ -22,10 +22,11 @@ public final class BloodborneBlocks implements ModInitializer {
  public static final String ID="bloodborne_blocks";
  public static final BooleanProperty ASSEMBLED=BooleanProperty.of("assembled");
  public static final Map<String,ArchitectureBlock> BLOCKS=new LinkedHashMap<>();
+ public static final Map<String,ArchitectureBlock> CITY_BLOCKS=new LinkedHashMap<>();
  public static final ArchitecturePartBlock PART_BLOCK=new ArchitecturePartBlock();
  public static BlockEntityType<ArchitecturePartBlockEntity> PART_BLOCK_ENTITY;
  public static EntityType<ArchitectureSeatEntity> SEAT_ENTITY;
- public static Data DATA;
+ public static Data DATA,CITY_DATA;
  public record ProductionEntry(String id,String semantic_label,List<String> source_reviews) {}
  private static final Map<String,ProductionEntry> PRODUCTION=new LinkedHashMap<>();
  private static final class ProductionPalette {int schemaVersion;List<ProductionPaletteEntry> objects;}
@@ -37,7 +38,7 @@ public final class BloodborneBlocks implements ModInitializer {
   /** Three canonical north-facing seat contact points, never inferred per tick. */
   public double[][] seat_anchors;
   public float hardness,resistance,slipperiness,velocity,jump;
-  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical;
+  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat;
   public Map<String,List<String>> properties;
   /** State values forced only while a logical item is being placed. */
   public Map<String,String> placement_properties;
@@ -63,6 +64,21 @@ public final class BloodborneBlocks implements ModInitializer {
    if(!ids.add(definition.id))throw new IllegalStateException("Duplicate logical definition "+definition.id);
   }
   loadProductionPalette(gson,ids);return logical;
+ }
+ static Data loadCityDefinitions(){
+  Data city=readDefinitions(new Gson(),"/bloodborne_blocks/city/definitions.json");
+  if(city.blocks==null||city.blocks.isEmpty())throw new IllegalStateException("City definitions must contain blocks");
+  Set<String> ids=new HashSet<>(PRODUCTION.keySet());ids.add("architecture_part");
+  for(Definition definition:city.blocks){
+   if(definition==null||!definition.city_compat||definition.logical||definition.id==null||Identifier.tryParse(ID+":"+definition.id)==null||!ids.add(definition.id))throw new IllegalStateException("Invalid city definition "+(definition==null?"null":definition.id));
+   if(definition.properties==null||definition.states==null)throw new IllegalStateException("Incomplete city definition "+definition.id);
+   if(definition.models!=null){
+    List<String> variants=definition.properties.get("variant");
+    if(!definition.modular||!"generic".equals(definition.kind)||!"minecraft:stone".equals(definition.source)||definition.properties.size()!=1||variants==null||variants.isEmpty()||variants.size()>16||new HashSet<>(variants).size()!=variants.size())throw new IllegalStateException("Invalid city module page "+definition.id);
+    if(!definition.states.keySet().equals(definition.models.keySet()))throw new IllegalStateException("City module state/model mismatch "+definition.id);
+   }else if(definition.modular)throw new IllegalStateException("Native city block cannot be modular "+definition.id);
+  }
+  return city;
  }
  private static Data readDefinitions(Gson gson,String path){
   try(InputStream stream=BloodborneBlocks.class.getResourceAsStream(path)){
@@ -93,7 +109,7 @@ public final class BloodborneBlocks implements ModInitializer {
     if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
-   if(p==null&&d.logical&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&(d.logical||d.city_compat)&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
@@ -116,6 +132,13 @@ public final class BloodborneBlocks implements ModInitializer {
   return state;
  }
  static boolean creativeVisible(Definition definition){return definition.logical&&definition.creative;}
+ static Collection<ArchitectureBlock> allBlocks(){List<ArchitectureBlock> result=new ArrayList<>(BLOCKS.size()+CITY_BLOCKS.size());result.addAll(BLOCKS.values());result.addAll(CITY_BLOCKS.values());return Collections.unmodifiableList(result);}
+ static ArchitectureBlock registeredBlock(String id){ArchitectureBlock block=BLOCKS.get(id);return block!=null?block:CITY_BLOCKS.get(id);}
+ static String cityVariantModelKey(Definition definition,String variant){
+  if(!definition.city_compat||definition.models==null||variant==null)return null;
+  List<String> allowed=definition.properties==null?null:definition.properties.get("variant");String key="variant="+variant;
+  return allowed!=null&&allowed.contains(variant)&&definition.models.containsKey(key)?key:null;
+ }
  static ItemStack creativeStack(ArchitectureBlock block){
   ItemStack stack=new ItemStack(block);
   if(block.definition.logical&&block.definition.placement_properties!=null)block.definition.placement_properties.forEach(stack.getOrCreateSubNbt("BlockStateTag")::putString);
@@ -124,6 +147,8 @@ public final class BloodborneBlocks implements ModInitializer {
  public void onInitialize(){
   DATA=loadDefinitions();
   GeometryRuntime.loadAndValidate(DATA);
+  CITY_DATA=loadCityDefinitions();
+  GeometryRuntime.loadCityAndValidate(CITY_DATA);
   Registry.register(Registries.BLOCK,id("architecture_part"),PART_BLOCK);
   PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,PART_BLOCK).build(null));
   ArchitecturePartBlockEntity.registerValidation();
@@ -132,9 +157,13 @@ public final class BloodborneBlocks implements ModInitializer {
    prepareDefinition(d);
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));BLOCKS.put(d.id,block);
   }
+  for(Definition d:CITY_DATA.blocks){
+   prepareDefinition(d);
+   ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));CITY_BLOCKS.put(d.id,block);
+  }
   LogicalAttachments.validateDefinitions(DATA.blocks);
   Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition)).filter(b->!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
   BloodborneCommands.register();
-  System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" states="+BLOCKS.values().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
+  System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" city_blocks="+CITY_BLOCKS.size()+" states="+allBlocks().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }
 }

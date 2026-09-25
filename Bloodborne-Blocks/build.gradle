@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '2.1.0-beta.1'
+version = '2.1.0-beta.2'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -80,6 +80,14 @@ tasks.register('logicalRegistryCheck', JavaExec) {
  javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
  maxHeapSize = '1G'
 }
+tasks.register('cityCompatibilityCheck', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
+ mainClass = 'dev.dreamwalker.bloodborneblocks.BootstrapCheckLauncher'
+ args 'dev.dreamwalker.bloodborneblocks.CityCompatibilityChecks'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+ maxHeapSize = '1G'
+}
 tasks.register('logicalContractV2Check', JavaExec) {
  dependsOn testClasses
  classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
@@ -104,7 +112,7 @@ tasks.register('logicalVisualModelsCheck', JavaExec) {
  if (project.hasProperty('altStarterKitZip')) systemProperty 'bloodborne.altStarterKitZip', project.file(project.property('altStarterKitZip')).absolutePath
 }
 tasks.named('check') { dependsOn 'logicalVisualModelsCheck' }
-tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck', 'logicalContractV2Check' }
+tasks.named('check') { dependsOn 'geometryCheck', 'modularDataCheck', 'logicalObjectCheck', 'logicalRegistryCheck', 'logicalContractV2Check', 'cityCompatibilityCheck' }
 
 // All present/future Contract V2 output passes the same offline support gate.
 // Runtime consumes precomputed transforms/shapes; no tick/frame mesh analysis.
@@ -129,7 +137,7 @@ tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
  'check_logical_resources', 'test_production_door', 'test_production_inventory', 'test_production_geometry',
  'test_production_gallery', 'test_build_production_gallery', 'test_production_palette',
  'test_restore_functional', 'test_restore_c003', 'test_restored_migration', 'test_preserved_semantics', 'test_production_coverage', 'production_coverage',
- 'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch', 'test_beta_client_qa', 'test_modded_world_adapter', 'test_modded_preservation', 'test_compare_modded_reference'].each { testName ->
+ 'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch', 'test_beta_client_qa', 'test_city_palette', 'test_modded_world_adapter', 'test_modded_preservation', 'test_compare_modded_reference'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   dependsOn 'normalizeSupportContracts'
