@@ -6,19 +6,29 @@ from world_io import RegionFile,compound,section_blocks,block_state_key,invalida
 from convert_logical_world import list_region_files,region_dimension
 
 def verify(source:Path,output:Path,report:dict):
-    allowed={};errors=[]
+    allowed={};errors=[];seen_in_pass=set();previous_pass=0
     if report.get('dryRun') or not isinstance(report.get('ledger'),list):
         return {'result':'FAIL','changed_cells':0,'ledger_cells':0,'changed_chunks':0,'unchanged_chunks':0,
                 'preserved_nonterrain_files':0,'errors':['completed conversion ledger required']}
     for item in report['ledger']:
         dim=item.get('dimension')
+        pass_number=item.get('pass',1) if report.get('sourceMode')=='modded' else 1
+        if type(pass_number) is not int or pass_number<1 or pass_number<previous_pass:
+            errors.append('invalid ledger pass sequence: '+str(pass_number));continue
+        if pass_number!=previous_pass:seen_in_pass=set()
+        previous_pass=pass_number
         for c in item.get('changes',[]):
             p=tuple(c.get('position',()))
             key=(dim,p)
             if len(p)!=3 or any(type(value) is not int for value in p):errors.append('invalid ledger position: '+str(key));continue
-            if key in allowed:errors.append('duplicate ledger position: '+str(key));continue
+            if key in seen_in_pass:errors.append('duplicate ledger position in pass: '+str(key));continue
             if not isinstance(c.get('before'),str) or not isinstance(c.get('after'),str):errors.append('invalid ledger state: '+str(key));continue
-            allowed[key]=c
+            seen_in_pass.add(key)
+            if key in allowed:
+                if allowed[key]['after']!=c['before']:
+                    errors.append('broken ledger state chain: '+str(key));continue
+                allowed[key]={'before':allowed[key]['before'],'after':c['after']}
+            else:allowed[key]={'before':c['before'],'after':c['after']}
     allowed_chunks={(dim,p[0]//16,p[2]//16) for dim,p in allowed}
     seen_allowed=set()
     changed_cells=0;changed_chunks=0;unchanged_chunks=0

@@ -6,9 +6,10 @@ import unittest
 from pathlib import Path
 
 from convert_logical_world import DEFAULT_RESOURCES, PART, World, add, block_pos_long, convert
-from check_logical_world import check
+from check_logical_world import check, same_conflict_rows
 from modded_world_adapter import compile_modded_rules
 from test_logical_world import assembly_source, entity, tree_hash
+from verify_modded_preservation import verify
 from world_io import TAG_LONG, TAG_STRING, Tag
 
 
@@ -40,6 +41,12 @@ class ModdedWorldAdapterTests(unittest.TestCase):
                 convert(source, base / "output", resources=DEFAULT_RESOURCES,
                         report_path=base / "report.json", report_root=base,
                         source_mode="modded", expected_source_sha256="0" * 64)
+
+    def test_checker_conflicts_are_order_independent_but_duplicate_exact(self):
+        first = {"position": [1, 2, 3], "before": "bloodborne_blocks:m_a", "reason": "forced"}
+        second = {"position": [4, 5, 6], "before": "bloodborne_blocks:m_b", "reason": "forced"}
+        self.assertTrue(same_conflict_rows([second, first], [first, second]))
+        self.assertFalse(same_conflict_rows([first, first, second], [first, second]))
 
     def test_legacy_carrier_full_assembly_is_atomic_and_foreign_safe(self):
         selected = None
@@ -91,6 +98,44 @@ class ModdedWorldAdapterTests(unittest.TestCase):
             self.assertGreater(report["counts"]["registryIncompatibleBlocks"], 1)
             self.assertGreater(report["counts"]["legacyCarrierRules"], 0)
             self.assertTrue(check(source, output, report_root / "report.json", DEFAULT_RESOURCES)["ok"])
+
+    def test_owned_helper_dependency_reaches_fixed_point_in_one_atomic_output(self):
+        dependent = self.rules[86]
+        remover = self.rules[120]
+        self.assertIn("legacy carriers", dependent.source_reference)
+        self.assertIn("legacy carriers", remover.source_reference)
+        dependent_origin = (8, 64, 8)
+        remover_origin = (9, 64, 6)
+        blocker = (8, 64, 7)
+        blocks = {
+            add(dependent_origin, dependent.source.offset): (dependent.source.state[0], dict(dependent.source.state[1])),
+            add(remover_origin, remover.source.offset): (remover.source.state[0], dict(remover.source.state[1])),
+            blocker: (PART, {}),
+        }
+        helper = entity(blocker, PART, Owner=Tag(TAG_STRING, remover.source.state[0]),
+                        Root=Tag(TAG_LONG, block_pos_long(*remover_origin)))
+        with tempfile.TemporaryDirectory(prefix="modded-fixed-point-test-") as temporary:
+            base = Path(temporary)
+            source = base / "source"
+            assembly_source(source, blocks, [helper])
+            reports = base / "reports"
+            reports.mkdir()
+            output = base / "output"
+            report = convert(source, output, resources=DEFAULT_RESOURCES,
+                             report_path=reports / "first.json", report_root=reports,
+                             source_mode="modded", conflict_policy="conservative")
+            self.assertEqual([1, 1, 0], [row["converted"] for row in report["passes"]], report["passes"])
+            self.assertEqual([1, 2], [row["pass"] for row in report["ledger"]])
+            self.assertTrue(check(source, output, reports / "first.json", DEFAULT_RESOURCES)["ok"])
+            self.assertEqual("PASS", verify(source, output, report)["result"])
+            final_world = World(output, self.defaults)
+            self.assertEqual(dependent.target[0], final_world.get("minecraft:overworld", dependent_origin)[0])
+
+            second = convert(output, base / "second", resources=DEFAULT_RESOURCES,
+                             report_path=reports / "second.json", report_root=reports,
+                             source_mode="modded", conflict_policy="conservative")
+            self.assertEqual(0, second["counts"]["converted"], second)
+            self.assertEqual([0], [row["converted"] for row in second["passes"]])
 
     def test_conservative_aggressive_embedded_preservation_and_idempotence(self):
         # A compact rule with a new owned master cell exercises both policies.

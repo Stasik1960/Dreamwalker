@@ -62,6 +62,23 @@ class ModdedPreservationTests(unittest.TestCase):
             self.assertEqual("FAIL", duplicate_result["result"])
             self.assertTrue(any("duplicate ledger position" in error for error in duplicate_result["errors"]))
 
+            chained = copy.deepcopy(report)
+            chained["sourceMode"] = "modded"
+            chained["ledger"][0]["pass"] = 1
+            later = copy.deepcopy(chained["ledger"][0])
+            later["pass"] = 2
+            for change in later["changes"]:
+                change["before"] = change["after"]
+            chained["ledger"].append(later)
+            chained_result = verify(source, output, chained)
+            self.assertEqual("PASS", chained_result["result"], chained_result)
+
+            broken = copy.deepcopy(chained)
+            broken["ledger"][-1]["changes"][0]["before"] = "minecraft:diamond_block"
+            broken_result = verify(source, output, broken)
+            self.assertEqual("FAIL", broken_result["result"])
+            self.assertTrue(any("broken ledger state chain" in error for error in broken_result["errors"]))
+
 
 if __name__ == "__main__":
     unittest.main()

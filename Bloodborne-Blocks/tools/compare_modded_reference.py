@@ -8,6 +8,7 @@ read from the verified ZIP.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import re
@@ -22,6 +23,8 @@ from world_io import TAG_LIST, RegionFile, Tag, block_state_key, compound, secti
 
 
 RAW_RULE = re.compile(r"Contract V2 raw rule (\d+)$")
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE_INDEX = ROOT / "docs/source-assembly-carrier-index.json.gz"
 
 
 def _sha256_file(path: Path) -> str:
@@ -30,6 +33,35 @@ def _sha256_file(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _reference_dimension_mapping(reference_sha256: str) -> tuple[dict[str, str], dict[str, Any] | None]:
+    """Return the archived dimension move only for its exact source SHA."""
+    if not SOURCE_INDEX.is_file():
+        return {}, None
+    raw = SOURCE_INDEX.read_bytes()
+    evidence = json.loads(gzip.decompress(raw))
+    source = evidence.get("source", {})
+    if source.get("sha256") != reference_sha256:
+        return {}, None
+    dimensions = set()
+    for member in evidence.get("regions", []):
+        normalized = str(member).replace("\\", "/")
+        marker = "/dimensions/"
+        if marker not in "/" + normalized or "/region/" not in normalized:
+            continue
+        suffix = ("/" + normalized).split(marker, 1)[1].split("/region/", 1)[0].split("/")
+        if len(suffix) >= 2:
+            dimensions.add(suffix[0] + ":" + "/".join(suffix[1:]))
+    if len(dimensions) != 1:
+        raise ValueError("frozen source index does not prove one reference dimension")
+    reference_dimension = next(iter(dimensions))
+    return {"minecraft:overworld": reference_dimension}, {
+        "path": str(SOURCE_INDEX),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "referenceSourceSha256": source["sha256"],
+        "basis": "all indexed source carrier regions belong to one archived custom dimension",
+    }
 
 
 def _region_relative(dimension: str, region_x: int, region_z: int) -> str:
@@ -107,6 +139,7 @@ def compare(report: dict[str, Any], reference_zip: Path, resources: Path, invent
     actual_sha = _sha256_file(reference_zip)
     if actual_sha != expected_reference_sha256.lower():
         raise ValueError("original reference ZIP SHA-256 mismatch")
+    dimension_mapping, dimension_evidence = _reference_dimension_mapping(actual_sha)
     compiled, _defaults, diagnostics = compile_modded_rules(resources, inventory)
     raw_rules, _raw_defaults = direct_rules(resources)
     declared_inventory = (report.get("mappingDiagnostics") or {}).get("inventorySha256")
@@ -127,6 +160,7 @@ def compare(report: dict[str, Any], reference_zip: Path, resources: Path, invent
             base = {
                 "ledgerIndex": index,
                 "dimension": entry["dimension"],
+                "referenceDimension": dimension_mapping.get(entry["dimension"], entry["dimension"]),
                 "origin": entry["origin"],
                 "targetRoot": entry.get("targetRoot"),
                 "conversionDelta": entry.get("delta"),
@@ -146,7 +180,7 @@ def compare(report: dict[str, Any], reference_zip: Path, resources: Path, invent
             checks = []
             for piece in (raw_rule.source,) + raw_rule.members:
                 point = add(origin, piece.offset)
-                found, actual = reader.state(entry["dimension"], point)
+                found, actual = reader.state(base["referenceDimension"], point)
                 expected = block_state_key(as_tag_state(piece.state))
                 status = "MISSING" if found == "MISSING" else "MATCH" if actual == expected else "MISMATCH"
                 checks.append({"position": list(point), "expected": expected, "actual": actual, "status": status})
@@ -163,6 +197,7 @@ def compare(report: dict[str, Any], reference_zip: Path, resources: Path, invent
     return {
         "format": "bloodborne-modded-reference-comparison-v1",
         "reference": {"path": str(reference_zip), "sha256": actual_sha, "readOnly": True},
+        "dimensionMapping": {"mappings": dimension_mapping, "evidence": dimension_evidence},
         "conversionInput": report.get("source"),
         "summary": {"entries": len(rows), **{name.lower(): count for name, count in statuses.items()},
                     "componentChecks": component_statuses,

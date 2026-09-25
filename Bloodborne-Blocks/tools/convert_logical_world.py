@@ -749,12 +749,16 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         progress(f"scan start: chunks={len(world.chunks)}, inverseStates={len(inverse)}")
     for chunk in world.chunks.values():
         for sy, section in ((int(compound(s)["Y"].value), s) for s in chunk.root().get("sections", Tag(TAG_LIST, [], TAG_COMPOUND)).value):
-            values = section_blocks(section)
-            if values is None:
-                continue
-            palette, indices = values
+            if sy in chunk.loaded:
+                _palmap, palette, index_array = chunk.loaded[sy]
+                indices = index_array.tolist()
+            else:
+                values = section_blocks(section)
+                if values is None:
+                    continue
+                palette, indices = values
+                index_array = np.asarray(indices)
             states = [state_of(value, world.defaults) for value in palette]
-            index_array = np.asarray(indices)
             relevant = [i for i, value in enumerate(states) if value in inverse]
             for index in np.flatnonzero(np.isin(index_array, relevant)):
                 i = int(index)
@@ -1126,38 +1130,39 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         registered_ids = ({PART} | {full_id(row["id"]) for row in
                           json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
                           if source_mode == "modded" else None)
-        items, found, unmatched_modules = candidates(world, rules, status if progress else None, conflict_policy,
-                                                     report_all_modules=source_mode == "modded",
-                                                     registered_ids=registered_ids)
-        reject_overlaps(items)
-        unresolved = unresolved_components(items, found, rules)
-        status(f"candidates resolved: accepted={sum(item.reason is None for item in items)}, rejected={sum(item.reason is not None for item in items)}, unresolvedV2={len(unresolved)}")
-        removed_modules: Counter[tuple[str, str]] = Counter()
-        removed_positions: set[tuple[str, tuple[int, int, int]]] = set()
-        if source_mode == "modded":
-            for item in items:
-                if item.reason is not None:
-                    continue
-                for point in item.touched:
-                    before = world.get(item.dimension, point)
-                    after = item.writes.get(point, (AIR_NAME, ()))
-                    if (before is not None and registered_ids is not None and before[0].startswith(NS) and
-                            before[0] not in registered_ids and before != after):
-                        removed_modules[(item.dimension, block_state_key(as_tag_state(before)))] += 1
-                        removed_positions.add((item.dimension, point))
-        ledger = apply(world, items)
-        if source_mode == "modded":
-            retained_groups = []
-            for group in unmatched_modules:
-                group = copy.deepcopy(group)
-                group["count"] -= removed_modules[(group["dimension"], group["state"])]
-                group["samples"] = [point for point in group["samples"]
-                                    if (group["dimension"], tuple(point)) not in removed_positions]
-                if group["count"] > 0:
-                    retained_groups.append(group)
-            unmatched_modules = retained_groups
+        ledger = []
+        pass_summaries = []
+        previous_source_cells = None
+        pass_number = 1
+        while True:
+            items, found, unmatched_modules = candidates(world, rules, status if progress else None, conflict_policy,
+                                                         report_all_modules=source_mode == "modded",
+                                                         registered_ids=registered_ids)
+            source_cells = len(found)
+            if source_mode == "modded" and previous_source_cells is not None and source_cells >= previous_source_cells:
+                raise ValueError("MODDED fixed-point pass did not decrease legacy source cells")
+            reject_overlaps(items)
+            unresolved = unresolved_components(items, found, rules)
+            accepted = [item for item in items if item.reason is None]
+            pass_forced = sum(bool(item.conflicts) for item in accepted)
+            status(f"pass {pass_number}: accepted={len(accepted)}, rejected={sum(item.reason is not None for item in items)}, unresolvedV2={len(unresolved)}")
+            pass_summaries.append({"pass": pass_number, "sourceCellsBefore": source_cells,
+                                   "converted": len(accepted), "forced": pass_forced,
+                                   "rejected": sum(item.reason is not None for item in items),
+                                   "terminal": not accepted})
+            if not accepted:
+                break
+            pass_ledger = apply(world, items)
+            if source_mode == "modded":
+                for entry in pass_ledger:
+                    entry["pass"] = pass_number
+            ledger.extend(pass_ledger)
+            if source_mode != "modded":
+                break
+            previous_source_cells = source_cells
+            pass_number += 1
         registry_incompatible = sum(group["count"] for group in unmatched_modules)
-        forced = sum(bool(item.conflicts) for item in items if item.reason is None)
+        forced = sum(summary["forced"] for summary in pass_summaries)
         report = {
             "format": "bloodborne-logical-world-conversion-v2" if source_mode == "modded" else "bloodborne-logical-world-conversion-v1",
             "dryRun": dry_run, "sourceMode": source_mode,
@@ -1170,6 +1175,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
                        "unmatchedModules": registry_incompatible, "registryIncompatibleBlocks": registry_incompatible,
                        "mappingGaps": len(mapping_diagnostics.get("mappingGaps", [])) if mapping_diagnostics else 0,
                        "legacyCarrierRules": mapping_diagnostics.get("compiledLegacyCarrierRules", 0) if mapping_diagnostics else 0},
+            **({"passes": pass_summaries} if source_mode == "modded" else {}),
             "ledger": ledger,
             "rejected": [{"rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
                           "origin": list(item.origin), "reason": item.reason, "decision": "untouched",

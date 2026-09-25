@@ -9,7 +9,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from compare_modded_reference import compare
+from compare_modded_reference import _reference_dimension_mapping, compare
 from convert_logical_world import DEFAULT_RESOURCES, add
 from logical_contract_v2 import direct_rules
 from modded_world_adapter import compile_modded_rules
@@ -17,6 +17,14 @@ from test_logical_world import assembly_source
 
 
 class CompareModdedReferenceTests(unittest.TestCase):
+    def test_verified_source_dimension_is_explicit_frozen_evidence(self):
+        mapping, evidence = _reference_dimension_mapping(
+            "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51")
+        self.assertEqual({"minecraft:overworld": "eh_s2:yharnam"}, mapping)
+        self.assertEqual("4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51",
+                         evidence["referenceSourceSha256"])
+        self.assertTrue(evidence["path"].endswith("source-assembly-carrier-index.json.gz"))
+
     def test_match_mismatch_missing_and_embedded_not_applicable(self):
         with tempfile.TemporaryDirectory(prefix="reference-compare-test-") as temporary:
             base = Path(temporary)

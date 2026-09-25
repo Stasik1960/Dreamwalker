@@ -234,118 +234,180 @@ def validate_ledger(before, report, rules):
     conflict_policy = report.get("conflictPolicy", "conservative")
     if conflict_policy not in ("conservative", "aggressive"):
         raise AssertionError("unknown conflict policy")
-    old_entities = before.block_entities()
-    owned = {}
-    for (dim, x, y, z), entity in old_entities.items():
-        data = compound(entity)
-        if (data.get("id") == Tag(TAG_STRING, PART) and
-                data.get("Owner", Tag(TAG_LIST, [])).type == TAG_STRING and
-                data.get("Root", Tag(TAG_LIST, [])).type == TAG_LONG and
-                before.get(dim, (x, y, z)) == (PART, ())):
-            owned.setdefault((dim, data["Owner"].value, data["Root"].value), set()).add((x, y, z))
-    reserved = set()
-    reported_effects = set()
+    class OverlayWorld:
+        def __init__(self, base):
+            self.base = base
+            self.chunks = base.chunks
+            self.defaults = base.defaults
+            self.states = {}
+
+        def get(self, dim, point):
+            return self.states.get((dim, point), self.base.get(dim, point))
+
+        def chunk(self, dim, x, z):
+            return self.base.chunk(dim, x, z)
+
+    view = OverlayWorld(before)
+    entity_overlay = dict(before.block_entities())
+
+    def current_owned():
+        result = {}
+        for (dim, x, y, z), entity in entity_overlay.items():
+            data = compound(entity)
+            if (data.get("id") == Tag(TAG_STRING, PART) and
+                    data.get("Owner", Tag(TAG_LIST, [])).type == TAG_STRING and
+                    data.get("Root", Tag(TAG_LIST, [])).type == TAG_LONG and
+                    view.get(dim, (x, y, z)) == (PART, ())):
+                result.setdefault((dim, data["Owner"].value, data["Root"].value), set()).add((x, y, z))
+        return result
+
+    groups = []
+    previous_pass = 0
     for entry in report.get("ledger", []):
-        number = entry.get("rule")
-        if type(number) is not int or not 0 <= number < len(rules):
-            raise AssertionError("ledger has an unknown migration rule")
-        rule = rules[number]
-        mode = entry.get("mode")
-        pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components if mode == "v2" else None
-        if not pieces:
-            raise AssertionError("ledger mode has no proven source group")
-        dim = entry["dimension"]
-        origin = entry["origin"]
-        if len(origin) != 3 or any(type(value) is not int for value in origin):
-            raise AssertionError("ledger origin is not an integer block position")
-        source = set()
-        for piece in pieces:
-            point = tuple(origin[i] + piece.offset[i] for i in range(3))
-            if before.get(dim, point) != piece.state:
-                raise AssertionError("ledger source group does not match original world")
-            source.add(point)
-        if len(source) != len(pieces) or sorted(map(tuple, entry["source"])) != sorted(source):
-            raise AssertionError("ledger source positions do not match rule")
-        if rule.variant_guards:
-            from source_variant_rng import guards_match
-            if not guards_match(rule.variant_guards,origin):
-                raise AssertionError('ledger does not preserve positional source visual')
-        root = rule_outputs(rule, origin)[0][0]
-        if tuple(entry["targetRoot"]) != root:
-            raise AssertionError("ledger moved the root outside its rule")
-        writes = output_writes(rule, origin)
-        outputs = rule_outputs(rule, origin)
-        if rule.transaction_id:
-            expected_outputs = [{"targetRoot": list(output_root), "target": block_state_key(as_tag_state(target))}
-                                for output_root, target, _shape in outputs]
-            if entry.get("transaction") != rule.transaction_id or entry.get("outputs") != expected_outputs:
-                raise AssertionError("ledger transaction outputs do not match rule")
-        elif "transaction" in entry or "outputs" in entry:
-            raise AssertionError("non-transaction ledger entry declares outputs")
-        helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned, mode)
-        stale = helpers - set(writes)
-        if sorted(map(tuple, entry["staleRemoved"])) != sorted(stale):
-            raise AssertionError("ledger stale-helper set is not provably owned")
-        touched = source | stale | set(writes)
-        reported_effects.add(effect_key(dim, source, touched, writes))
-        expected_changes = {}
-        expected_conflicts = []
-        for point in touched:
-            old = before.get(dim, point)
-            if old is None:
-                raise AssertionError("ledger targets a missing chunk")
-            entity = old_entities.get((dim, *point))
-            is_owned = point in helpers and old == (PART, ())
-            if point in stale and not is_owned:
-                raise AssertionError("ledger removes a foreign stale helper")
-            if entity is not None and not is_owned:
-                raise AssertionError("ledger destroys a foreign block entity")
-            if point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned:
-                if (conflict_policy == "aggressive" and old[0].startswith("bloodborne_blocks:") and
-                        old[0] != PART and not owned.get((dim, old[0], block_pos_long(*point)))):
-                    expected_conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(old)),
-                                               "reason": "forced_target_overwrites_bloodborne_state"})
-                else:
-                    raise AssertionError("ledger overwrites a foreign block")
-            for name in ("block_ticks", "TileTicks", "fluid_ticks", "LiquidTicks"):
-                ticks = before.chunk(dim, point[0], point[2]).root().get(name)
-                for tick in ticks.value if ticks is not None else ():
-                    data = compound(tick)
-                    if all(axis in data for axis in ("x", "y", "z")) and tuple(data[axis].value for axis in ("x", "y", "z")) == point:
-                        raise AssertionError("ledger changes a scheduled-tick position")
-            location = (dim, *point)
-            if location in reserved:
-                raise AssertionError("ledger has overlapping object edits")
-            reserved.add(location)
-            expected_changes[point] = (block_state_key(as_tag_state(old)), block_state_key(as_tag_state(writes.get(point, AIR))))
-        actual_changes = {}
-        for change in entry["changes"]:
-            point = tuple(change["position"])
-            if point in actual_changes:
-                raise AssertionError("duplicate ledger change")
-            actual_changes[point] = (change["before"], change["after"])
-        if actual_changes != expected_changes:
-            raise AssertionError("ledger before/after changes are not authorized by its rule")
-        if report.get("format") == "bloodborne-logical-world-conversion-v2":
-            if entry.get("conflictingCells") != expected_conflicts:
-                raise AssertionError("ledger forced conflicts do not match original world")
-            if entry.get("decision") != ("forced" if expected_conflicts else "converted"):
-                raise AssertionError("ledger decision does not match conflicts")
-        expected_helpers = {}
-        for output_root, target, shape in outputs:
-            for offset in shape:
-                point = tuple(output_root[i] + offset[i] for i in range(3))
-                if point != output_root:
-                    expected_helpers[point] = {"position": list(point), "id": PART, "Root": block_pos_long(*output_root), "Owner": target[0]}
-        actual_helpers = {tuple(helper["position"]): helper for helper in entry["helpers"]}
-        if len(actual_helpers) != len(entry["helpers"]) or actual_helpers != expected_helpers:
-            raise AssertionError("ledger helper data does not match target geometry")
+        pass_number = entry.get("pass", 1) if report.get("sourceMode") == "modded" else 1
+        if type(pass_number) is not int or pass_number < 1 or pass_number < previous_pass:
+            raise AssertionError("ledger pass sequence is invalid")
+        if not groups or groups[-1][0] != pass_number:
+            groups.append((pass_number, []))
+        groups[-1][1].append(entry)
+        previous_pass = pass_number
+    if not groups:
+        groups = [(1, [])]
+    touched_all = set()
+    for pass_number, entries in groups:
+        owned = current_owned()
+        expected_effects = independently_accepted_effects(view, rules, entity_overlay, owned, conflict_policy)
+        reported_effects = set()
+        reserved = set()
+        for entry in entries:
+            number = entry.get("rule")
+            if type(number) is not int or not 0 <= number < len(rules):
+                raise AssertionError("ledger has an unknown migration rule")
+            rule = rules[number]
+            mode = entry.get("mode")
+            pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components if mode == "v2" else None
+            if not pieces:
+                raise AssertionError("ledger mode has no proven source group")
+            dim = entry["dimension"]
+            origin = entry["origin"]
+            if len(origin) != 3 or any(type(value) is not int for value in origin):
+                raise AssertionError("ledger origin is not an integer block position")
+            source = set()
+            for piece in pieces:
+                point = tuple(origin[i] + piece.offset[i] for i in range(3))
+                if view.get(dim, point) != piece.state:
+                    raise AssertionError("ledger source group does not match original world")
+                source.add(point)
+            if len(source) != len(pieces) or sorted(map(tuple, entry["source"])) != sorted(source):
+                raise AssertionError("ledger source positions do not match rule")
+            if rule.variant_guards:
+                from source_variant_rng import guards_match
+                if not guards_match(rule.variant_guards,origin):
+                    raise AssertionError('ledger does not preserve positional source visual')
+            root = rule_outputs(rule, origin)[0][0]
+            if tuple(entry["targetRoot"]) != root:
+                raise AssertionError("ledger moved the root outside its rule")
+            writes = output_writes(rule, origin)
+            outputs = rule_outputs(rule, origin)
+            if rule.transaction_id:
+                expected_outputs = [{"targetRoot": list(output_root), "target": block_state_key(as_tag_state(target))}
+                                    for output_root, target, _shape in outputs]
+                if entry.get("transaction") != rule.transaction_id or entry.get("outputs") != expected_outputs:
+                    raise AssertionError("ledger transaction outputs do not match rule")
+            elif "transaction" in entry or "outputs" in entry:
+                raise AssertionError("non-transaction ledger entry declares outputs")
+            helpers = proved_transaction_helpers(view, dim, origin, rule, pieces, owned, mode)
+            stale = helpers - set(writes)
+            if sorted(map(tuple, entry["staleRemoved"])) != sorted(stale):
+                raise AssertionError("ledger stale-helper set is not provably owned")
+            touched = source | stale | set(writes)
+            reported_effects.add(effect_key(dim, source, touched, writes))
+            expected_changes = {}
+            expected_conflicts = []
+            for point in touched:
+                old = view.get(dim, point)
+                if old is None:
+                    raise AssertionError("ledger targets a missing chunk")
+                entity = entity_overlay.get((dim, *point))
+                is_owned = point in helpers and old == (PART, ())
+                if point in stale and not is_owned:
+                    raise AssertionError("ledger removes a foreign stale helper")
+                if entity is not None and not is_owned:
+                    raise AssertionError("ledger destroys a foreign block entity")
+                if point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned:
+                    if (conflict_policy == "aggressive" and old[0].startswith("bloodborne_blocks:") and
+                            old[0] != PART and not owned.get((dim, old[0], block_pos_long(*point)))):
+                        expected_conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(old)),
+                                                   "reason": "forced_target_overwrites_bloodborne_state"})
+                    else:
+                        raise AssertionError("ledger overwrites a foreign block")
+                for name in ("block_ticks", "TileTicks", "fluid_ticks", "LiquidTicks"):
+                    ticks = before.chunk(dim, point[0], point[2]).root().get(name)
+                    for tick in ticks.value if ticks is not None else ():
+                        data = compound(tick)
+                        if all(axis in data for axis in ("x", "y", "z")) and tuple(data[axis].value for axis in ("x", "y", "z")) == point:
+                            raise AssertionError("ledger changes a scheduled-tick position")
+                location = (dim, *point)
+                if location in reserved:
+                    raise AssertionError("ledger has overlapping object edits")
+                reserved.add(location)
+                touched_all.add(location)
+                expected_changes[point] = (block_state_key(as_tag_state(old)), block_state_key(as_tag_state(writes.get(point, AIR))))
+            actual_changes = {}
+            for change in entry["changes"]:
+                point = tuple(change["position"])
+                if point in actual_changes:
+                    raise AssertionError("duplicate ledger change")
+                actual_changes[point] = (change["before"], change["after"])
+            if actual_changes != expected_changes:
+                raise AssertionError("ledger before/after changes are not authorized by its rule")
+            if report.get("format") == "bloodborne-logical-world-conversion-v2":
+                if not same_conflict_rows(entry.get("conflictingCells"), expected_conflicts):
+                    raise AssertionError("ledger forced conflicts do not match original world")
+                if entry.get("decision") != ("forced" if expected_conflicts else "converted"):
+                    raise AssertionError("ledger decision does not match conflicts")
+            expected_helpers = {}
+            for output_root, target, shape in outputs:
+                for offset in shape:
+                    point = tuple(output_root[i] + offset[i] for i in range(3))
+                    if point != output_root:
+                        expected_helpers[point] = {"position": list(point), "id": PART, "Root": block_pos_long(*output_root), "Owner": target[0]}
+            actual_helpers = {tuple(helper["position"]): helper for helper in entry["helpers"]}
+            if len(actual_helpers) != len(entry["helpers"]) or actual_helpers != expected_helpers:
+                raise AssertionError("ledger helper data does not match target geometry")
+            for point in touched:
+                view.states[(dim, point)] = writes.get(point, AIR)
+                entity_overlay.pop((dim, *point), None)
+            for point, helper in actual_helpers.items():
+                entity_overlay[(dim, *point)] = Tag(TAG_COMPOUND, {
+                    "id": Tag(TAG_STRING, PART), "x": Tag(TAG_INT, point[0]),
+                    "y": Tag(TAG_INT, point[1]), "z": Tag(TAG_INT, point[2]),
+                    "Root": Tag(TAG_LONG, helper["Root"]), "Owner": Tag(TAG_STRING, helper["Owner"]),
+                })
+        if reported_effects != expected_effects:
+            raise AssertionError(f"pass {pass_number} ledger differs from independently accepted groups: "
+                                 f"missing={len(expected_effects - reported_effects)}, unexpected={len(reported_effects - expected_effects)}")
     if report.get("counts", {}).get("converted") != len(report["ledger"]):
         raise AssertionError("conversion count differs from ledger")
-    expected_effects = independently_accepted_effects(before, rules, old_entities, owned, conflict_policy)
-    if reported_effects != expected_effects:
-        raise AssertionError(f"ledger differs from independently accepted groups: missing={len(expected_effects - reported_effects)}, unexpected={len(reported_effects - expected_effects)}")
-    return {(dim, x // 16, z // 16) for dim, x, y, z in reserved}
+    summaries = report.get("passes")
+    if report.get("sourceMode") == "modded" and summaries is not None:
+        if (not isinstance(summaries, list) or not summaries or not summaries[-1].get("terminal") or
+                summaries[-1].get("converted") != 0):
+            raise AssertionError("MODDED report has no terminal fixed-point scan")
+        actual_counts = {number: len(entries) for number, entries in groups}
+        for summary in summaries:
+            if summary.get("converted") and actual_counts.get(summary.get("pass")) != summary["converted"]:
+                raise AssertionError("MODDED pass summary differs from ledger")
+    return {(dim, x // 16, z // 16) for dim, x, y, z in touched_all}
+
+
+def same_conflict_rows(actual, expected):
+    if not isinstance(actual, list) or not isinstance(expected, list):
+        return False
+    conflict_key = lambda row: (tuple(row.get("position", ())), row.get("before"), row.get("reason"))
+    # Conflict order comes from set iteration in two independent processes.
+    # Lists retain their lengths, so duplicates still fail exact comparison.
+    return sorted(actual, key=conflict_key) == sorted(expected, key=conflict_key)
 
 
 def check(source: Path, converted: Path, report_path: Path, resources: Path) -> dict:
@@ -400,6 +462,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
             dim = entry["dimension"]
             for change in entry["changes"]:
                 x, y, z = change["position"]
+                expected_helpers.pop((dim, x, y, z), None)
                 allowed[(dim, x, y, z)] = change["after"]
                 allowed_sections.setdefault((dim, x // 16, z // 16, y // 16), {})[(y & 15) * 256 + (z & 15) * 16 + (x & 15)] = change["after"]
             for helper in entry["helpers"]:

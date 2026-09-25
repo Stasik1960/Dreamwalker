@@ -1,11 +1,17 @@
 # MODDED beta conversion
 
-Input is only latest-modded-world.zip, SHA-256 c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9. The original source world is reference-only.
+Input is only `reference-inputs/latest-modded-world.zip`, SHA-256 `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`. The original source world is reference-only.
 
-The existing converter now accepts --source-mode modded and --conflict-policy conservative|aggressive. Frozen v2 carrier-to-module evidence is composed with current reviewed Contract V2 patterns; it never performs raw vanilla conversion. Exact modular groups are atomic. Unknown states stay unchanged and are reported as incompatible with beta.
+The existing converter accepts `--source-mode modded` and `--conflict-policy conservative|aggressive`. Frozen modular mappings and named legacy carriers are composed with the current reviewed Contract V2 patterns. It never converts raw vanilla blocks. Unknown IDs remain untouched and explicitly fail beta registry compatibility; retaining a block is not proof that beta can load it.
 
-Use --inventory build/modded-input-inspection/inventory.json for rare source anchors; ZIP input requires --expected-source-sha256. Reports include coordinate ledgers and Markdown conflict lists. Aggressive mode only allows proven target cells occupied by Bloodborne blocks without unrelated block entities/ticks/helper ownership; foreign blocks remain untouched.
+Use `--inventory` with the inventory included in the world-report archive to select rare exact anchors. ZIP input requires `--expected-source-sha256`; a mismatch fails before copying. Output must be a fresh directory. Work happens in a temporary copy, and the source remains immutable.
 
-Old embedded windows have explicit offline migration. Other retired logical o_* merges are not implemented in this adapter: none occur in the supplied modded input. Their historical evidence remains available; no guessed mappings are added.
+Conservative mode rejects occupied targets atomically. Aggressive mode permits only proven target-cell replacements of Bloodborne states with no foreign block entities, scheduled ticks or unrelated helper ownership. It does not guess unknown families or positions. Exact assembly matches are applied through the existing world engine, including dependent passes when a conversion frees another object's target. The report records every pass and before/after change; a second invocation must convert zero objects.
 
-Tool tests: test_modded_world_adapter 3/3; existing test_logical_world, test_split_transactions 7/7 and test_restored_migration 5/5 passed. Actual output QA and reference comparison are recorded with the converted copies, not inferred from these fixtures.
+Old embedded windows have explicit offline migration. Other retired logical `o_*` merges are absent from the supplied input and are not implemented by this adapter. Their historical evidence remains available; the adapter makes no claim to handle hypothetical saves containing them.
+
+`check_logical_world.py` independently replays authorization and checks final NBT/helper ownership. `verify_modded_preservation.py` checks the cell-change chain and preservation outside the ledger, including chunk metadata and nonterrain files. These tools do not turn unknown legacy IDs into registered beta blocks.
+
+`compare_modded_reference.py` reads only relevant regions from the hash-verified vanilla reference. Its frozen source-index evidence maps the modded overworld to original `eh_s2:yharnam`; XYZ is unchanged. It reports exact matches and mismatches rather than moving objects speculatively. No reference data is used as conversion input.
+
+Actual counts, SHA-256 values, idempotence and QA limitations are published in `releases/Bloodborne-Blocks/2.1.0-beta.1/worlds-proof.json` and the accompanying world-report archive. Never treat an `UNRESOLVED` output as a playable beta city.
