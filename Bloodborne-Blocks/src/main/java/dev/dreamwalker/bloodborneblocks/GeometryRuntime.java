@@ -191,6 +191,22 @@ final class GeometryRuntime {
   }
   return true;
  }
+ /**
+  * Preflight for an in-place logical state transition.  Entity intersection
+  * is relevant only when the transition changes physical collision.  A visual
+  * attachment/tint/state toggle must not reject itself merely because an
+  * entity is already standing against the unchanged object.
+  */
+ static boolean canTransition(World world,BlockPos root,BlockState before,BlockState next){
+  if(!allCellsLoaded(world,root,before)||!allCellsLoaded(world,root,next)||conflict(world,root,next,root)!=null)return false;
+  return samePhysicalFootprint(before,next)||canOccupy(world,root,next,root);
+ }
+ private static boolean samePhysicalFootprint(BlockState before,BlockState next){
+  GeometryState first=required(before),second=required(next);
+  if(!first.parsedCells.keySet().equals(second.parsedCells.keySet()))return false;
+  for(BlockPos cell:first.parsedCells.keySet())if(!sameBoxes(first.parsedCells.get(cell).collision,second.parsedCells.get(cell).collision))return false;
+  return true;
+ }
  static boolean allCellsLoaded(World world,BlockPos root,BlockState state){
   for(BlockPos offset:required(state).parsedCells.keySet())if(!world.isChunkLoaded(root.add(offset)))return false;return world.isChunkLoaded(root);
  }

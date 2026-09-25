@@ -45,10 +45,13 @@ public final class FunctionalFurniture {
  }
 
  private static BlockPos findClimbablePos(LivingEntity entity){
-  Box body=entity.getBoundingBox();Box box=new Box(body.minX-.125,body.minY,body.minZ-.125,body.maxX+.125,body.minY+.6,body.maxZ+.125);
+  Box body=entity.getBoundingBox();Box box=new Box(body.minX-.125,body.minY,body.minZ-.125,body.maxX+.125,body.maxY,body.maxZ+.125);
   for(BlockPos pos:BlockPos.iterate((int)Math.floor(box.minX),(int)Math.floor(box.minY),(int)Math.floor(box.minZ),(int)Math.floor(box.maxX),(int)Math.floor(box.maxY),(int)Math.floor(box.maxZ))){
    if(!isClimbable(entity.getWorld(),pos))continue;
-   var shape=entity.getWorld().getBlockState(pos).getOutlineShape(entity.getWorld(),pos);
+   // Climbing follows the physical plane owned by this exact cell.  The
+   // logical outline may intentionally include render overhang from the root
+   // and must never make a neighboring non-physical cell climbable.
+   var shape=entity.getWorld().getBlockState(pos).getCollisionShape(entity.getWorld(),pos);
    if(!shape.isEmpty()&&shape.getBoundingBox().offset(pos).intersects(box))return pos.toImmutable();
   }
   return null;

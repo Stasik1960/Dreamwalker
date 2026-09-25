@@ -55,11 +55,11 @@ class AgonyPatchTests(unittest.TestCase):
         self.assertEqual('static',self.ds['o_ladder_01']['behavior'])
         for ident in ('o_ladder_01','o_ladder_03'):
             for k,s in self.fs[ident]['states'].items():
-                self.assertEqual(1,len(s['collision_footprint']['boxes']),ident)
+                self.assertEqual(9 if ident=='o_ladder_01' else 2,len(s['collision_footprint']['boxes']),ident)
                 if ident=='o_ladder_03':
                     self.assertEqual([[0,-1,0],[0,0,0]],s['interaction_footprint']['cells'])
-                    b=s['collision_footprint']['boxes'][0]
-                    self.assertAlmostEqual(.125,min(b[3]-b[0],b[5]-b[2]))
+                    for b in s['collision_footprint']['boxes']:
+                        self.assertAlmostEqual(.125,min(b[3]-b[0],b[5]-b[2]))
         pol=self.ms[self.ds['o_ladder_01']['models']['facing=north,visual=base']]['polygons']
         for target,origin in ((9,8),(10,7)):
             self.assertEqual(pol[origin]['texture'],pol[target]['texture'])
@@ -82,16 +82,17 @@ class AgonyPatchTests(unittest.TestCase):
 
     def test_window_has_no_opaque_embedded_carrier(self):
         d=self.ds['o_shuttered_window'];f=self.fs['o_shuttered_window']
+        self.assertNotIn('embedded',d['properties'])
         for opened in ('false','true'):
-            k=key({'embedded':'false','facing':'north','open':opened,'visual':'base'})
-            self.assertEqual(d['models'][k],d['models'][k.replace('embedded=false','embedded=true')])
+            k=key({'facing':'north','open':opened,'visual':'base'})
             pol=self.ms[d['models'][k]]['polygons'];self.assertEqual(15,len(pol))
             self.assertEqual(pol[10]['texture'],pol[14]['texture'])
             self.assertEqual([v[3:] for v in reversed(pol[10]['vertices'])],[v[3:] for v in pol[14]['vertices']])
         # Geometry and owned root transform remain stationary; only authored shutters change.
-        a=f['states'][key({'embedded':'false','facing':'north','open':'false','visual':'base'})]
-        b=f['states'][key({'embedded':'false','facing':'north','open':'true','visual':'base'})]
+        a=f['states'][key({'facing':'north','open':'false','visual':'base'})]
+        b=f['states'][key({'facing':'north','open':'true','visual':'base'})]
         self.assertEqual(a['rotation'],b['rotation'])
-        self.assertNotEqual(a['collision_footprint'],b['collision_footprint'])
+        self.assertEqual(a['collision_footprint'],b['collision_footprint'])
+        self.assertEqual([[0,0,0],[0,1,0]],a['interaction_footprint']['cells'])
 
 if __name__=='__main__':unittest.main()

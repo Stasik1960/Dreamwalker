@@ -85,7 +85,7 @@ final class LogicalAttachments {
  }
  private static boolean replace(BlockState state,World world,BlockPos pos,Property<?> property,String value){
   BlockState next=BloodborneBlocks.set(state,property,property instanceof BooleanProperty?("none".equals(value)?"false":"true"):value);
-  if(!GeometryRuntime.allCellsLoaded(world,pos,state)||!GeometryRuntime.allCellsLoaded(world,pos,next)||!GeometryRuntime.canOccupy(world,pos,next,pos))return false;
+  if(!GeometryRuntime.canTransition(world,pos,state,next))return false;
   world.setBlockState(pos,next,Block.NOTIFY_ALL);return world.getBlockState(pos).equals(next);
  }
  private static String attachment(BlockState state,Property<?> property){

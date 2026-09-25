@@ -41,7 +41,8 @@ public final class ProductionRestorationGameTests implements FabricGameTest {
    VoxelShape passage=VoxelShapes.cuboid(cx-.05,.3,cz-.05,cx+.05,1,cz+.05);
    context.assertTrue(VoxelShapes.matchesAnywhere(closedShape,passage,BooleanBiFunction.AND),"closed panel blocks passage "+id+" "+facing);
    context.useBlock(ROOT,player);BlockState open=world.getBlockState(root);context.assertTrue(open.isOf(block)&&open.get(Properties.OPEN),"opens at unchanged root "+id+" "+facing);
-   context.assertTrue(!VoxelShapes.matchesAnywhere(wholeCollision(open),passage,BooleanBiFunction.AND),"open wings free passage "+id+" "+facing);
+   if(id.equals("o_shuttered_window"))context.assertTrue(VoxelShapes.matchesAnywhere(wholeCollision(open),passage,BooleanBiFunction.AND),"open shutters retain the confined window pane "+facing);
+   else context.assertTrue(!VoxelShapes.matchesAnywhere(wholeCollision(open),passage,BooleanBiFunction.AND),"open wings free passage "+id+" "+facing);
    assertOwned(context,root,open,id+" open");context.useBlock(ROOT,player);BlockState reclosed=world.getBlockState(root);context.assertTrue(reclosed.isOf(block)&&!reclosed.get(Properties.OPEN),"closes at unchanged root "+id+" "+facing);assertOwned(context,root,reclosed,id+" closed");
   }context.complete();}finally{for(String id:List.of("o_acacia_door","o_birch_door","o_dark_oak_door","o_shuttered_window"))clear(context,required(id));player.discard();}
  }

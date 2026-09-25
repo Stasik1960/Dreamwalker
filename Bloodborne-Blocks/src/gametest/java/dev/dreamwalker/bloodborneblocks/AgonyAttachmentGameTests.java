@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -52,6 +53,15 @@ public final class AgonyAttachmentGameTests implements FabricGameTest {
    }
    context.complete();
   }finally{for(String id:new String[]{"o_c008_1","o_c008_2","o_c008_3","o_c008_5"})clear(context,required(id));player.discard();}
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="agony_attachment")
+ public void attachmentSurvivesNearbyPlayerTickAndHelperReconciliation(TestContext context){
+  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();ArchitectureBlock statue=required("o_c008_1"),lantern=required("o_lantern");BlockPos root=context.getAbsolutePos(ROOT);
+  place(context,root,statue.getDefaultState(),"near-player statue fixture");player.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.5,0,0);var pig=EntityType.PIG.create(world);context.assertTrue(pig!=null,"collision fixture entity exists");pig.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.5,0,0);context.assertTrue(world.spawnEntity(pig),"collision fixture entity spawns");ItemStack held=new ItemStack(lantern);player.setStackInHand(Hand.MAIN_HAND,held);
+  ActionResult attached=use(world,root,player);context.assertTrue(attached==ActionResult.SUCCESS&&"unlit".equals(hand(world.getBlockState(root)))&&held.isEmpty(),"visual-only attachment transition succeeds even while the interacting player overlaps unchanged statue collision");
+  context.assertTrue(GeometryRuntime.rebuild(world,root,world.getBlockState(root)),"attachment helper reconciliation succeeds");
+  context.runAtTick(3,()->{try{context.assertTrue("unlit".equals(hand(world.getBlockState(root))),"mounted lantern survives server tick and helper reconciliation");context.complete();}finally{clear(context,statue);pig.discard();player.discard();}});
  }
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="agony_attachment")

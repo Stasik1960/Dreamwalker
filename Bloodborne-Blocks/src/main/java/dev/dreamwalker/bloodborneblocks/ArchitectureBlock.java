@@ -202,7 +202,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(next.isOf(this)&&definition.logical&&!world.isClient&&!GeometryRuntime.isMutating()){
    // Direct /setblock and editor state changes do not use the interaction preflight.
    // Keep the old object intact unless the complete replacement can own every cell.
-   if(!canReplaceLogicalState(GeometryRuntime.allCellsLoaded(world,pos,state),GeometryRuntime.allCellsLoaded(world,pos,next),GeometryRuntime.canOccupy(world,pos,next,pos))){GeometryRuntime.restoreRoot(world,pos,state);return;}
+   if(!GeometryRuntime.canTransition(world,pos,state,next)){GeometryRuntime.restoreRoot(world,pos,state);return;}
    GeometryRuntime.removeOwnedParts(world,pos,state);
    if(!GeometryRuntime.rebuild(world,pos,next))GeometryRuntime.restoreRoot(world,pos,state);
   }
@@ -217,7 +217,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
    if(!(property instanceof BooleanProperty lit))return ActionResult.PASS;
    if(!world.isClient){
     BlockState next=state.cycle(lit);
-    if(!GeometryRuntime.allCellsLoaded(world,pos,state)||!GeometryRuntime.allCellsLoaded(world,pos,next)||!GeometryRuntime.canOccupy(world,pos,next,pos))return ActionResult.FAIL;
+    if(!GeometryRuntime.canTransition(world,pos,state,next))return ActionResult.FAIL;
     GeometryRuntime.removeOwnedParts(world,pos,state);world.setBlockState(pos,next,Block.NOTIFY_ALL);
     if(!GeometryRuntime.rebuild(world,pos,next)){GeometryRuntime.restoreRoot(world,pos,state);return ActionResult.FAIL;}
    }
@@ -228,7 +228,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   if(definition.kind.equals("model_door")&&state.contains(Properties.STAIR_SHAPE)&&state.get(Properties.STAIR_SHAPE)!=StairShape.STRAIGHT)return ActionResult.PASS;
   if(!world.isClient){BlockState next=state.cycle(Properties.OPEN);BlockPos other=null;BlockState sibling=null,nextSibling=null;
    if(!definition.logical&&definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)){other=state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER?pos.up():pos.down();sibling=world.getBlockState(other);if(sibling.isOf(this))nextSibling=sibling.with(Properties.OPEN,next.get(Properties.OPEN));}
-   if(!GeometryRuntime.allCellsLoaded(world,pos,state)||(nextSibling!=null&&!GeometryRuntime.allCellsLoaded(world,other,sibling))||!GeometryRuntime.canOccupy(world,pos,next,pos)||(nextSibling!=null&&!GeometryRuntime.canOccupy(world,other,nextSibling,other)))return ActionResult.FAIL;
+   if(!GeometryRuntime.canTransition(world,pos,state,next)||(nextSibling!=null&&!GeometryRuntime.canTransition(world,other,sibling,nextSibling)))return ActionResult.FAIL;
    GeometryRuntime.removeOwnedParts(world,pos);if(nextSibling!=null)GeometryRuntime.removeOwnedParts(world,other);
    world.setBlockState(pos,next,Block.NOTIFY_ALL);if(nextSibling!=null)world.setBlockState(other,nextSibling,Block.NOTIFY_ALL);
    GeometryRuntime.rebuild(world,pos,next);if(nextSibling!=null)GeometryRuntime.rebuild(world,other,nextSibling);

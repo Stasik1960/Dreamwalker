@@ -20,7 +20,7 @@ from logical_contract_v2 import BUDGETS, MATRICES, box_cells, rotate_box, rotate
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / 'src/main/resources/bloodborne_blocks/logical'
 EPSILON = 1e-6
-FUNCTIONAL = {'DOOR', 'GATE', 'FENCE', 'WALL', 'STAIRS'}
+FUNCTIONAL = {'DOOR', 'GATE', 'FENCE', 'WALL', 'STAIRS', 'DECK'}
 TRANSFORM = {'rotations': MATRICES}
 
 
@@ -128,7 +128,7 @@ def collision_proposals(family, definitions, meshes):
     if policy in FUNCTIONAL:
         return {}, None
     excessive = any(len(s['collision_footprint']['boxes']) > 3 for s in family['states'].values())
-    if policy in BUDGETS and not excessive:
+    if policy in BUDGETS and (not excessive or policy == 'DECK'):
         return {}, None
     if definitions.get(family['id'], {}).get('behavior', 'static') != 'static':
         return {}, 'no approved physical semantics for non-static family'

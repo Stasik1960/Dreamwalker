@@ -8,6 +8,7 @@ import java.util.*;
 /** Strict loader for the small authored logical-object contract (schema v2). */
 final class LogicalContractV2 {
  private static final Gson GSON=new Gson();
+ private static final double COLLISION_EPSILON=1.0e-6;
  private static Map<String,DebugMetadata> DEBUG_METADATA=Map.of();
  static final class Data {int schemaVersion;String transform_contract;List<Family> families;}
  static final class Family {String id,placement_policy,mirror_policy,collision_policy,selection_policy,collision_justification,review_id,authority;Anchor canonical_anchor;List<Integer> rotations;Map<String,State> states;List<Pattern> migration_source_pattern,review_source_patterns;}
@@ -40,7 +41,7 @@ final class LogicalContractV2 {
      if(state.render_mesh.bounds[1]+state.render_mesh.offset[1]<-1e-6)throw fail("RENDER_BELOW_SUPPORT_PLANE "+family.id+"["+key+"]");
      for(double[] cell:state.interaction_footprint.cells)if(cell[1]<0)throw fail("GROUND_OBJECT_HAS_HELPER_BELOW_ANCHOR "+family.id+"["+key+"]");
     }
-    for(double[] box:state.collision_footprint.boxes)if(!covered(box,state.interaction_footprint.cells))throw fail("collision cell coverage "+family.id+"["+key+"]");
+    for(double[] box:state.collision_footprint.boxes)if(!covered(box,state.interaction_footprint.cells))throw fail("COLLISION_OUTSIDE_OWNED_CELLS "+family.id+"["+key+"]");
     block.states.put(key,geometry(family,state));
     debug.put(family.id+"\u0000"+key,new DebugMetadata(family.review_id,anchorText(family.canonical_anchor),family.collision_policy,family.selection_policy==null?"AUTHORED_OUTLINE":family.selection_policy,sourceFamily(family),sourcePatternSummary(family,state)));
    }
@@ -97,8 +98,8 @@ final class LogicalContractV2 {
   geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();geometry.gameplayBoxes=state.collision_footprint.boxes;return geometry;
  }
  private static List<double[]> clip(List<double[]> boxes,int x,int y,int z){List<double[]> out=new ArrayList<>();for(double[] box:boxes){double[] clipped={Math.max(box[0],x)-x,Math.max(box[1],y)-y,Math.max(box[2],z)-z,Math.min(box[3],x+1)-x,Math.min(box[4],y+1)-y,Math.min(box[5],z+1)-z};if(clipped[0]<clipped[3]&&clipped[1]<clipped[4]&&clipped[2]<clipped[5])out.add(clipped);}return out;}
- private static boolean covered(double[] box,List<double[]> cells){for(int x=(int)Math.floor(box[0]);x<(int)Math.ceil(box[3]);x++)for(int y=(int)Math.floor(box[1]);y<(int)Math.ceil(box[4]);y++)for(int z=(int)Math.floor(box[2]);z<(int)Math.ceil(box[5]);z++){boolean present=false;for(double[] cell:cells)if((int)cell[0]==x&&(int)cell[1]==y&&(int)cell[2]==z)present=true;if(!present)return false;}return true;}
- private static int budget(Family f){int n=switch(f.collision_policy){case "NONE"->0;case "SIMPLE_BOX"->1;case "TWO_BOX"->2;case "THREE_BOX"->3;case "TRUNK"->2;case "POST"->1;case "FENCE","WALL"->5;case "DOOR","GATE"->2;case "STAIRS"->3;default->-1;};if(n<0||(("TRUNK".equals(f.collision_policy)||"STAIRS".equals(f.collision_policy)||"TWO_BOX".equals(f.collision_policy)||"THREE_BOX".equals(f.collision_policy))&&(f.collision_justification==null||f.collision_justification.isBlank())))throw fail("collision policy "+f.id);return n;}
+ private static boolean covered(double[] box,List<double[]> cells){for(int x=(int)Math.floor(box[0]+COLLISION_EPSILON);x<(int)Math.ceil(box[3]-COLLISION_EPSILON);x++)for(int y=(int)Math.floor(box[1]+COLLISION_EPSILON);y<(int)Math.ceil(box[4]-COLLISION_EPSILON);y++)for(int z=(int)Math.floor(box[2]+COLLISION_EPSILON);z<(int)Math.ceil(box[5]-COLLISION_EPSILON);z++){boolean present=false;for(double[] cell:cells)if((int)cell[0]==x&&(int)cell[1]==y&&(int)cell[2]==z)present=true;if(!present)return false;}return true;}
+ private static int budget(Family f){int n=switch(f.collision_policy){case "NONE"->0;case "SIMPLE_BOX"->1;case "TWO_BOX"->2;case "THREE_BOX"->3;case "TRUNK"->2;case "POST"->1;case "FENCE","WALL"->5;case "DOOR","GATE"->2;case "STAIRS"->3;case "DECK"->9;default->-1;};if(n<0||(("TRUNK".equals(f.collision_policy)||"STAIRS".equals(f.collision_policy)||"TWO_BOX".equals(f.collision_policy)||"THREE_BOX".equals(f.collision_policy)||"DECK".equals(f.collision_policy))&&(f.collision_justification==null||f.collision_justification.isBlank())))throw fail("collision policy "+f.id);return n;}
  private static void checkAnchor(Anchor a){LogicalTransform.requireCell(a.cell,"anchor");for(int n:a.cell)if(Math.abs(n)>64)throw fail("anchor cell");if(a.pivot==null||a.pivot.length!=3||a.pivot[0]!=.5||a.pivot[1]!=0||a.pivot[2]!=.5)throw fail("anchor pivot");}
  private static void checkRender(Render r){if(r.id==null||r.bounds==null||r.bounds.length!=6||r.offset==null||r.offset.length!=3)throw fail("render mesh");for(double n:r.bounds)bounded(n,"render bounds");for(double n:r.offset)bounded(n,"render offset");}
  private static void checkBoxes(Footprint f,String name,int max){if(f==null||f.boxes==null||f.boxes.size()>max||("selection".equals(name)&&f.boxes.size()!=1))throw fail(name+" budget");for(double[] b:f.boxes){if(b==null||b.length!=6)throw fail(name+" box");for(double n:b)bounded(n,name);if(b[0]>=b[3]||b[1]>=b[4]||b[2]>=b[5])throw fail(name+" empty");}}

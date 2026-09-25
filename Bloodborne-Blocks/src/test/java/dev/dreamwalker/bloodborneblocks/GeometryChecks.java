@@ -30,6 +30,6 @@ public final class GeometryChecks {
   check(blocks.keySet().containsAll(BloodborneBlocks.productionPalette().keySet()),"geometry includes every production object");
   System.out.println("GEOMETRY CHECKS PASSED: states="+states+" unique="+unique.size()+" cells="+cells);
  }
- private static void checkShape(VoxelShape shape){if(shape.isEmpty())return;for(Direction.Axis axis:Direction.Axis.values())check(shape.getMin(axis)>=0&&shape.getMax(axis)<=1,"cell-local shape");}
+ private static void checkShape(VoxelShape shape){if(shape.isEmpty())return;for(Direction.Axis axis:Direction.Axis.values())check(shape.getMin(axis)>=-1.0e-6&&shape.getMax(axis)<=1+1.0e-6,"COLLISION_OUTSIDE_OWNED_CELLS");}
  private static void check(boolean value,String message){if(!value)throw new AssertionError(message);}
 }

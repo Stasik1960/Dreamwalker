@@ -12,7 +12,9 @@ import math
 from pathlib import Path
 
 BUDGETS = {"NONE": 0, "SIMPLE_BOX": 1, "TWO_BOX": 2, "THREE_BOX": 3, "TRUNK": 2,
-           "POST": 1, "FENCE": 5, "WALL": 5, "DOOR": 2, "GATE": 2, "STAIRS": 3}
+           "POST": 1, "FENCE": 5, "WALL": 5, "DOOR": 2, "GATE": 2, "STAIRS": 3,
+           "DECK": 9}
+COLLISION_EPSILON = 1e-6
 MATRICES = {"0": [[1,0,0],[0,1,0],[0,0,1]], "90": [[0,0,-1],[0,1,0],[1,0,0]],
             "180": [[-1,0,0],[0,1,0],[0,0,-1]], "270": [[0,0,1],[0,1,0],[-1,0,0]]}
 POC_FAMILIES = {"o_dead_tree_planter", "o_cases_0", "o_wall_deco_1", "o_iron_gate", "o_iron_railing"}
@@ -41,7 +43,8 @@ def rotate_box(box, rotation, transform, pivot=(.5, 0, .5)):
 
 
 def box_cells(box):
-    return set(itertools.product(*(range(math.floor(box[i]), math.ceil(box[i+3])) for i in range(3))))
+    return set(itertools.product(*(range(math.floor(box[i]+COLLISION_EPSILON),
+                                         math.ceil(box[i+3]-COLLISION_EPSILON)) for i in range(3))))
 
 
 def check_box(box):
@@ -93,7 +96,7 @@ def load_contracts(resources):
             raise ValueError("unsupported placement policy")
         policy = family["collision_policy"]
         budget = BUDGETS[policy]
-        if policy in ("TRUNK", "STAIRS", "TWO_BOX", "THREE_BOX") and not family.get("collision_justification"):
+        if policy in ("TRUNK", "STAIRS", "TWO_BOX", "THREE_BOX", "DECK") and not family.get("collision_justification"):
             raise ValueError("multiple primitive policy needs justification")
         if set(family["states"]) != set(definitions[ident]["states"]):
             raise ValueError("contract must describe all existing family states")
@@ -117,7 +120,7 @@ def load_contracts(resources):
                 if render['bounds'][1]+render['offset'][1] < -1e-6:
                     raise ValueError('RENDER_BELOW_SUPPORT_PLANE: '+ident)
             if any(not box_cells(b) <= set(cells) for b in collision):
-                raise ValueError("collision outside explicit interaction footprint")
+                raise ValueError("COLLISION_OUTSIDE_OWNED_CELLS: "+ident+"["+key+"]")
             for pattern in state["migration_source_pattern"]:
                 components = pattern["components"]
                 positions = [cell(c["offset"]) for c in components]
