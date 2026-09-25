@@ -1,10 +1,10 @@
-"""Compile frozen modular ``m_*`` states into the existing world converter.
+"""Compile frozen modular and legacy carrier states for the existing converter.
 
-The latest modded backup contains the old generated modular registry, not the
-raw vanilla carrier blocks.  This adapter composes the immutable archived
-carrier-to-module table with current reviewed Contract V2 rules.  It produces
-ordinary :class:`convert_logical_world.Rule` objects; scanning, overlap
-rejection, ownership checks and writes stay in the established engine.
+The latest modded backup contains the old generated modular registry and old
+Bloodborne carrier IDs, not raw vanilla carrier blocks.  This adapter composes
+both immutable archived schemas with current reviewed Contract V2 rules.  It
+produces ordinary :class:`convert_logical_world.Rule` objects; scanning,
+overlap rejection, ownership checks and writes stay in the established engine.
 """
 from __future__ import annotations
 
@@ -90,6 +90,40 @@ def compose_rule(raw_rule, migration: dict[str, Any], old_defaults: dict[str, di
     return tuple(Expected(offset, state) for offset, state in sorted(by_offset.items())), []
 
 
+def compose_legacy_rule(raw_rule, definitions: dict[str, dict[str, Any]]):
+    """Translate one raw assembly to exact old Bloodborne carrier states.
+
+    The old mod copied vanilla carrier properties into Bloodborne IDs and added
+    properties such as ``assembled`` and ``open``.  Those added properties are
+    taken only from the frozen definition defaults, and the resulting complete
+    key must occur in that definition's archived ``states`` table.
+    """
+    from convert_logical_world import Expected
+
+    pieces = []
+    missing = []
+    for piece in (raw_rule.source,) + raw_rule.members:
+        carrier = piece.state[0].split(":", 1)[-1]
+        definition = definitions.get(carrier)
+        if definition is None:
+            missing.append({"rule": raw_rule.number, "target": raw_rule.target[0],
+                            "source": carrier, "reason": "legacy_definition_missing"})
+            continue
+        properties = {**{str(k): str(v) for k, v in definition.get("default", {}).items()},
+                      **dict(piece.state[1])}
+        state_key = _state_key(properties)
+        if state_key not in definition.get("states", {}):
+            missing.append({"rule": raw_rule.number, "target": raw_rule.target[0],
+                            "source": carrier, "state": state_key,
+                            "reason": "legacy_state_missing"})
+            continue
+        state = ("bloodborne_blocks:" + carrier, tuple(sorted(properties.items())))
+        pieces.append(Expected(piece.offset, state, piece.shape))
+    if missing:
+        return None, missing
+    return tuple(pieces), []
+
+
 def _embedded_window_rules(resources: Path, start: int):
     """Compile the removed ``embedded`` property from immutable beta evidence."""
     if not BASELINE_PATH.is_file():
@@ -130,14 +164,25 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
         "bloodborne_blocks:" + row["id"]: {str(k): str(v) for k, v in row.get("default", {}).items()}
         for row in frozen["v2\\definitions.json"]["blocks"]
     }
+    legacy_definitions = {row["id"]: row for row in frozen["definitions.json"]["blocks"]}
+    legacy_defaults = {
+        "bloodborne_blocks:" + ident: {str(k): str(v) for k, v in row.get("default", {}).items()}
+        for ident, row in legacy_definitions.items()
+    }
     raw_rules, defaults = direct_rules(resources)
     compiled = []
+    compiled_legacy = []
     gaps = []
+    legacy_gaps = []
     for raw_rule in raw_rules:
         pieces, missing = compose_rule(raw_rule, migration, old_defaults)
         gaps.extend(missing)
         if pieces:
             compiled.append((raw_rule, pieces))
+        legacy_pieces, legacy_missing = compose_legacy_rule(raw_rule, legacy_definitions)
+        legacy_gaps.extend(legacy_missing)
+        if legacy_pieces:
+            compiled_legacy.append((raw_rule, legacy_pieces))
 
     inventory_counts, inventory_sha = _inventory_counts(inventory_path)
     static_frequency = Counter(piece.state for _, pieces in compiled for piece in pieces)
@@ -164,21 +209,56 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
                             "state": source.state[0], "offset": list(source.offset),
                             "inventoryCount": inventory_counts.get(source.state) if inventory_counts else None})
 
+    legacy_anchor_rows = []
+    for raw_rule, pieces in compiled_legacy:
+        def legacy_rank(piece):
+            count = inventory_counts.get(piece.state, 0) if inventory_counts else 0
+            return count, piece.offset, piece.state
+        source = min(pieces, key=legacy_rank)
+        members = tuple(piece for piece in pieces if piece is not source)
+        rules.append(Rule(len(rules), source, raw_rule.target, raw_rule.root_offset, members, None,
+                          raw_rule.shape, raw_rule.supersedes_targets, raw_rule.variant_guards,
+                          raw_rule.transaction_id, raw_rule.outputs, "modded",
+                          f"frozen definitions.json legacy carriers + Contract V2 raw rule {raw_rule.number}"))
+        legacy_anchor_rows.append({"rule": len(rules) - 1, "target": raw_rule.target[0],
+                                   "state": source.state[0], "offset": list(source.offset),
+                                   "inventoryCount": inventory_counts.get(source.state) if inventory_counts else None})
+
     embedded, embedded_gaps = _embedded_window_rules(resources, len(rules))
     rules.extend(embedded)
     gaps.extend(embedded_gaps)
+    current_ids = {"bloodborne_blocks:architecture_part"} | {
+        "bloodborne_blocks:" + row["id"]
+        for row in json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]
+    }
+    incompatible_inventory = Counter()
+    for state, count in inventory_counts.items():
+        name = state[0]
+        if not name.startswith("bloodborne_blocks:") or name in current_ids:
+            continue
+        category = ("modular" if name.startswith("bloodborne_blocks:m_") else
+                    "legacyCarrier" if name.split(":", 1)[1] in legacy_definitions else
+                    "otherRetired")
+        incompatible_inventory[category] += count
     diagnostics = {
         "archiveSha256": hashlib.sha256(ARCHIVE_PATH.read_bytes()).hexdigest(),
         "inventorySha256": inventory_sha,
         "rawRules": len(raw_rules),
         "compiledRawRules": len(compiled),
+        "compiledLegacyCarrierRules": len(compiled_legacy),
         "embeddedWindowRules": len(embedded),
         "mappingGaps": gaps,
+        "legacyCarrierMappingGaps": legacy_gaps,
         "anchors": anchor_rows,
+        "legacyCarrierAnchors": legacy_anchor_rows,
         "estimatedAnchorHits": sum(row["inventoryCount"] or 0 for row in anchor_rows) if inventory_counts else None,
         "maximumAnchorHits": max((row["inventoryCount"] or 0 for row in anchor_rows), default=0) if inventory_counts else None,
+        "estimatedLegacyCarrierAnchorHits": sum(row["inventoryCount"] or 0 for row in legacy_anchor_rows) if inventory_counts else None,
+        "maximumLegacyCarrierAnchorHits": max((row["inventoryCount"] or 0 for row in legacy_anchor_rows), default=0) if inventory_counts else None,
+        "inventoryRegistryIncompatibleBlocks": sum(incompatible_inventory.values()) if inventory_counts else None,
+        "inventoryRegistryIncompatibleByCategory": dict(sorted(incompatible_inventory.items())) if inventory_counts else None,
         "retiredLogicalMappings": "NOT_IMPLEMENTED_NOT_PRESENT_IN_INPUT; frozen pre-Agony evidence exists, but inspected latest modded input reports zero o_* states",
     }
     # Old defaults are required when a palette entry omits a property; current
     # production defaults then override only IDs that still exist.
-    return rules, {**old_defaults, **load_defaults(resources)}, diagnostics
+    return rules, {**old_defaults, **legacy_defaults, **load_defaults(resources)}, diagnostics

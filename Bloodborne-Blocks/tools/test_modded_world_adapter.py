@@ -41,6 +41,57 @@ class ModdedWorldAdapterTests(unittest.TestCase):
                         report_path=base / "report.json", report_root=base,
                         source_mode="modded", expected_source_sha256="0" * 64)
 
+    def test_legacy_carrier_full_assembly_is_atomic_and_foreign_safe(self):
+        selected = None
+        for rule in self.rules:
+            if not (rule.source_reference or "").startswith("frozen definitions.json legacy carriers"):
+                continue
+            source_offsets = {piece.offset for piece in (rule.source,) + rule.members}
+            write_offsets = {add(rule.root_offset, offset) for offset in rule.shape}
+            if write_offsets - source_offsets:
+                selected = rule
+                break
+        self.assertIsNotNone(selected)
+        rule = selected
+        source_offsets = {piece.offset for piece in (rule.source,) + rule.members}
+        conflict_offset = sorted({add(rule.root_offset, offset) for offset in rule.shape} - source_offsets)[0]
+
+        def put(blocks, origin):
+            for piece in (rule.source,) + rule.members:
+                blocks[add(origin, piece.offset)] = (piece.state[0], dict(piece.state[1]))
+
+        safe_origin = (3, 64, 3)
+        blocked_origin = (10, 64, 10)
+        blocks = {}
+        put(blocks, safe_origin)
+        put(blocks, blocked_origin)
+        chest = add(blocked_origin, conflict_offset)
+        blocks[chest] = ("minecraft:chest", {"facing": "north", "type": "single", "waterlogged": "false"})
+        unknown = (14, 64, 3)
+        blocks[unknown] = ("bloodborne_blocks:retired_probe", {})
+
+        with tempfile.TemporaryDirectory(prefix="legacy-carrier-test-") as temporary:
+            base = Path(temporary)
+            source = base / "source"
+            assembly_source(source, blocks, [entity(chest, "minecraft:chest")])
+            report_root = base / "reports"
+            report_root.mkdir()
+            output = base / "output"
+            report = convert(source, output, resources=DEFAULT_RESOURCES,
+                             report_path=report_root / "report.json", report_root=report_root,
+                             source_mode="modded", conflict_policy="conservative")
+            world = World(output, self.defaults)
+            self.assertEqual(rule.target[0], world.get("minecraft:overworld", add(safe_origin, rule.root_offset))[0])
+            self.assertEqual(rule.source.state, world.get("minecraft:overworld", add(blocked_origin, rule.source.offset)))
+            self.assertEqual("minecraft:chest", world.get("minecraft:overworld", chest)[0])
+            self.assertEqual("bloodborne_blocks:retired_probe", world.get("minecraft:overworld", unknown)[0])
+            self.assertTrue(any(row["origin"] == list(blocked_origin) and row["reason"] == "target_would_overwrite_foreign_block"
+                                for row in report["rejected"]), report["rejected"])
+            self.assertEqual("FAIL", report["registryCompatibility"]["result"])
+            self.assertGreater(report["counts"]["registryIncompatibleBlocks"], 1)
+            self.assertGreater(report["counts"]["legacyCarrierRules"], 0)
+            self.assertTrue(check(source, output, report_root / "report.json", DEFAULT_RESOURCES)["ok"])
+
     def test_conservative_aggressive_embedded_preservation_and_idempotence(self):
         # A compact rule with a new owned master cell exercises both policies.
         selected = None

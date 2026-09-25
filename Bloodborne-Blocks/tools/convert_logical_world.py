@@ -732,7 +732,8 @@ def owned_part(current: tuple[str, tuple[tuple[str, str], ...]] | None, entity: 
 
 
 def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] | None = None,
-               conflict_policy: str = "conservative", report_all_modules: bool = False) -> tuple[list[Candidate], dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]], list[dict[str, Any]]]:
+               conflict_policy: str = "conservative", report_all_modules: bool = False,
+               registered_ids: set[str] | None = None) -> tuple[list[Candidate], dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]], list[dict[str, Any]]]:
     if conflict_policy not in ("conservative", "aggressive"):
         raise ValueError("conflict policy must be conservative or aggressive")
     inverse: dict[tuple[str, tuple[tuple[str, str], ...]], list[tuple[Rule, str, tuple[int, int, int]]]] = defaultdict(list)
@@ -766,7 +767,11 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                     result.setdefault(key, Candidate(rule, mode, chunk.dimension, origin, set(), (0, 0, 0), {}))
             palette_counts = np.bincount(index_array, minlength=len(states))
             for palette_index, state in enumerate(states):
-                if not state[0].startswith(NS + "m_") or (state in inverse and not report_all_modules):
+                if registered_ids is not None:
+                    report_state = state[0].startswith(NS) and state[0] not in registered_ids
+                else:
+                    report_state = state[0].startswith(NS + "m_")
+                if not report_state or (state in inverse and not report_all_modules):
                     continue
                 count = int(palette_counts[palette_index])
                 if not count:
@@ -1118,8 +1123,12 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         status("world loading")
         world = World(copied, defaults)
         status(f"world loaded: chunks={len(world.chunks)}")
+        registered_ids = ({PART} | {full_id(row["id"]) for row in
+                          json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
+                          if source_mode == "modded" else None)
         items, found, unmatched_modules = candidates(world, rules, status if progress else None, conflict_policy,
-                                                     report_all_modules=source_mode == "modded")
+                                                     report_all_modules=source_mode == "modded",
+                                                     registered_ids=registered_ids)
         reject_overlaps(items)
         unresolved = unresolved_components(items, found, rules)
         status(f"candidates resolved: accepted={sum(item.reason is None for item in items)}, rejected={sum(item.reason is not None for item in items)}, unresolvedV2={len(unresolved)}")
@@ -1132,7 +1141,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
                 for point in item.touched:
                     before = world.get(item.dimension, point)
                     after = item.writes.get(point, (AIR_NAME, ()))
-                    if before is not None and before[0].startswith(NS + "m_") and before != after:
+                    if (before is not None and registered_ids is not None and before[0].startswith(NS) and
+                            before[0] not in registered_ids and before != after):
                         removed_modules[(item.dimension, block_state_key(as_tag_state(before)))] += 1
                         removed_positions.add((item.dimension, point))
         ledger = apply(world, items)
@@ -1158,7 +1168,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             "counts": {"rules": len(rules), "converted": len(ledger), "forced": forced,
                        "rejected": sum(item.reason is not None for item in items), "unresolvedV2": len(unresolved),
                        "unmatchedModules": registry_incompatible, "registryIncompatibleBlocks": registry_incompatible,
-                       "mappingGaps": len(mapping_diagnostics.get("mappingGaps", [])) if mapping_diagnostics else 0},
+                       "mappingGaps": len(mapping_diagnostics.get("mappingGaps", [])) if mapping_diagnostics else 0,
+                       "legacyCarrierRules": mapping_diagnostics.get("compiledLegacyCarrierRules", 0) if mapping_diagnostics else 0},
             "ledger": ledger,
             "rejected": [{"rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
                           "origin": list(item.origin), "reason": item.reason, "decision": "untouched",
@@ -1169,10 +1180,10 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             "unmatchedModules": unmatched_modules,
             "mappingDiagnostics": mapping_diagnostics,
             "registryCompatibility": {"result": "FAIL" if registry_incompatible else "PASS",
-                                      "reason": "unmapped m_* IDs are not in the 49-family beta registry" if registry_incompatible else None,
+                                      "reason": "unmapped Bloodborne IDs are not in the 49-family beta registry" if registry_incompatible else None,
                                       "betaReady": registry_incompatible == 0},
             "reportNotes": {"unresolvedV2": "Unconsumed positions whose exact state is a component of an inverse rule, after alias deduplication and overlap rejection.",
-                            "unmatchedModules": ("All m_* states remaining after accepted conversions; any positive count is a beta registry incompatibility."
+                            "unmatchedModules": ("All Bloodborne states whose IDs are absent from the beta registry after accepted conversions; any positive count is a beta registry incompatibility."
                                                  if source_mode == "modded" else
                                                  "Aggregated non-inverse bloodborne_blocks:m_* states; these rows are inventory statistics, not conversion failures.")},
         }
@@ -1198,9 +1209,9 @@ def main() -> None:
     parser.add_argument("--dry-run", action="store_true", help="scan and report without creating output")
     parser.add_argument("--progress", action="store_true", help="write conversion phases and counts to stderr")
     parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc", "original-v2", "modded"), default="legacy",
-                        help="modded composes frozen m_* mappings with current Contract V2; original-v2 reads raw vanilla carriers")
+                        help="modded composes frozen m_* and Bloodborne carrier mappings with current Contract V2; original-v2 reads raw vanilla carriers")
     parser.add_argument("--conflict-policy", choices=("conservative", "aggressive"), default="conservative")
-    parser.add_argument("--inventory", type=Path, help="trusted inspection inventory used only to select a rare exact m_* anchor")
+    parser.add_argument("--inventory", type=Path, help="trusted inspection inventory used only to select rare exact MODDED anchors")
     parser.add_argument("--expected-source-sha256", help="required for a MODDED ZIP; refuses a mismatched immutable input")
     args = parser.parse_args()
     report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode,
