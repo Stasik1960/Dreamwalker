@@ -1,0 +1,206 @@
+{
+  "status": "UNRESOLVED_NOT_BETA_READY",
+  "input": {
+    "path": "Bloodborne-Blocks/reference-inputs/latest-modded-world.zip",
+    "sha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9"
+  },
+  "converterCommit": "2928def42d241330750479e66167b5d4fea49731",
+  "worlds": {
+    "conservative": {
+      "artifact": {
+        "file": "Bloodborne-Beta-Conservative-UNRESOLVED.zip",
+        "bytes": 21754994,
+        "sha256": "b6e02c0e87101ca74b8fa72b0850645b51a3821fff649ffddfef6c550cc52eeb"
+      },
+      "counts": {
+        "converted": 21629,
+        "forced": 0,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 27652724,
+        "rejected": 3441,
+        "rules": 361,
+        "unmatchedModules": 27652724,
+        "unresolvedV2": 0
+      },
+      "passes": [
+        {
+          "converted": 21619,
+          "forced": 0,
+          "pass": 1,
+          "rejected": 4844,
+          "sourceCellsBefore": 23100,
+          "terminal": false
+        },
+        {
+          "converted": 10,
+          "forced": 0,
+          "pass": 2,
+          "rejected": 3474,
+          "sourceCellsBefore": 1406,
+          "terminal": false
+        },
+        {
+          "converted": 0,
+          "forced": 0,
+          "pass": 3,
+          "rejected": 3441,
+          "sourceCellsBefore": 1396,
+          "terminal": true
+        }
+      ],
+      "registryCompatibility": {
+        "betaReady": false,
+        "reason": "unmapped Bloodborne IDs are not in the 49-family beta registry",
+        "result": "FAIL"
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 25396,
+        "ledger_cells": 27051,
+        "changed_chunks": 696,
+        "unchanged_chunks": 9313,
+        "preserved_nonterrain_files": 170,
+        "errors": []
+      },
+      "independentChecker": {
+        "format": "bloodborne-logical-world-check-v1",
+        "ledgerEntries": 21629,
+        "chunks": 10009,
+        "checkedBlocks": 1003216896,
+        "unchangedExternalFiles": 170,
+        "sourceHashVerified": true,
+        "resourceHashesVerified": true,
+        "ok": true
+      },
+      "secondPass": {
+        "converted": 0,
+        "forced": 0,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 27652724,
+        "rejected": 3441,
+        "rules": 361,
+        "unmatchedModules": 27652724,
+        "unresolvedV2": 0
+      },
+      "referenceComparison": {
+        "chunksRequested": 688,
+        "componentChecks": {
+          "MATCH": 21473,
+          "MISMATCH": 240,
+          "MISSING": 0
+        },
+        "coordinateCorrectionsApplied": 0,
+        "entries": 21629,
+        "match": 21389,
+        "mismatch": 240,
+        "missing": 0,
+        "missingRegions": 0,
+        "not_applicable": 0,
+        "regionsLoaded": 4
+      }
+    },
+    "aggressive": {
+      "artifact": {
+        "file": "Bloodborne-Beta-Aggressive-UNRESOLVED.zip",
+        "bytes": 21800658,
+        "sha256": "fa5e83daa18196679c0913dece746d9630a28bb9be9a1dbd98506c453cab7d78"
+      },
+      "counts": {
+        "converted": 22351,
+        "forced": 737,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 27649304,
+        "rejected": 1777,
+        "rules": 361,
+        "unmatchedModules": 27649304,
+        "unresolvedV2": 0
+      },
+      "passes": [
+        {
+          "converted": 22334,
+          "forced": 730,
+          "pass": 1,
+          "rejected": 4129,
+          "sourceCellsBefore": 23100,
+          "terminal": false
+        },
+        {
+          "converted": 17,
+          "forced": 7,
+          "pass": 2,
+          "rejected": 1845,
+          "sourceCellsBefore": 682,
+          "terminal": false
+        },
+        {
+          "converted": 0,
+          "forced": 0,
+          "pass": 3,
+          "rejected": 1777,
+          "sourceCellsBefore": 663,
+          "terminal": true
+        }
+      ],
+      "registryCompatibility": {
+        "betaReady": false,
+        "reason": "unmapped Bloodborne IDs are not in the 49-family beta registry",
+        "result": "FAIL"
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 29730,
+        "ledger_cells": 32965,
+        "changed_chunks": 744,
+        "unchanged_chunks": 9265,
+        "preserved_nonterrain_files": 170,
+        "errors": []
+      },
+      "independentChecker": {
+        "format": "bloodborne-logical-world-check-v1",
+        "ledgerEntries": 22351,
+        "chunks": 10009,
+        "checkedBlocks": 1003216896,
+        "unchangedExternalFiles": 170,
+        "sourceHashVerified": true,
+        "resourceHashesVerified": true,
+        "ok": true
+      },
+      "secondPass": {
+        "converted": 0,
+        "forced": 0,
+        "legacyCarrierRules": 248,
+        "mappingGaps": 220,
+        "registryIncompatibleBlocks": 27649304,
+        "rejected": 1777,
+        "rules": 361,
+        "unmatchedModules": 27649304,
+        "unresolvedV2": 0
+      },
+      "referenceComparison": {
+        "chunksRequested": 737,
+        "componentChecks": {
+          "MATCH": 22254,
+          "MISMATCH": 240,
+          "MISSING": 0
+        },
+        "coordinateCorrectionsApplied": 0,
+        "entries": 22351,
+        "match": 22111,
+        "mismatch": 240,
+        "missing": 0,
+        "missingRegions": 0,
+        "not_applicable": 0,
+        "regionsLoaded": 4
+      }
+    }
+  },
+  "graphicalClient": "GRAPHICAL_CLIENT_ACCEPTANCE_NOT_RUN",
+  "reports": {
+    "file": "Bloodborne-Beta-World-Reports.zip",
+    "bytes": 7542053,
+    "sha256": "5e634503a7479809e48f5413343d3f6a474e247c0cc6d86626dc86fbfcba62bc"
+  }
+}

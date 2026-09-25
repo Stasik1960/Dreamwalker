@@ -7,3 +7,7 @@ Fabric 1.20.1, Java 17, Fabric API. 49 production families, 1644 states, 722 mes
 - `release-proof.json` / `.sha256` — checksums and verification evidence.
 
 GRAPHICAL_CLIENT_ACCEPTANCE_NOT_RUN. This beta is for the production gallery. The old modular 2.0.2 city contains IDs outside this palette; conversion reports must be reviewed before attempting to use that city with beta.
+
+## Карта
+
+[Две копии и отчёты конвертации](WORLDS.md): **UNRESOLVED / NOT BETA READY**. Проверки NBT и идемпотентности пройдены; старые архитектурные ID остаются несовместимыми с beta.
