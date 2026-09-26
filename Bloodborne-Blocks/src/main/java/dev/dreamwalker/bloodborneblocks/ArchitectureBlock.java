@@ -127,6 +127,7 @@ public class ArchitectureBlock extends Block implements Waterloggable {
   return other.isSideSolidFullSquare(world,pos,side.getOpposite());
  }
  private BlockState connections(BlockState s,WorldAccess world,BlockPos pos){
+  if(ReviewedWallConnections.building(this))return ReviewedWallConnections.update(s,world,pos);
   if(definition.logical&&"ladder".equals(definition.behavior))return s;
   if(definition.logical&&"connected".equals(definition.behavior)){
    if(world instanceof World loaded&&!logicalNeighborsLoaded(loaded,pos))return s;
@@ -172,7 +173,7 @@ public class ArchitectureBlock extends Block implements Waterloggable {
  @Override public BlockState getStateForNeighborUpdate(BlockState state,Direction direction,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos){
   if(state.contains(Properties.WATERLOGGED)&&state.get(Properties.WATERLOGGED))world.scheduleFluidTick(pos,Fluids.WATER,Fluids.WATER.getTickRate(world));
   // Existing authored connections remain stable. Logical connections are an explicit opt-in path.
-  if(definition.logical&&"connected".equals(definition.behavior)&&world instanceof World loaded&&logicalNeighborsLoaded(loaded,pos)&&GeometryRuntime.allCellsLoaded(loaded,pos,state)){
+  if((definition.logical&&"connected".equals(definition.behavior)||ReviewedWallConnections.building(this))&&world instanceof World loaded&&logicalNeighborsLoaded(loaded,pos)&&GeometryRuntime.allCellsLoaded(loaded,pos,state)){
    BlockState next=connections(state,world,pos);
    if(next!=state&&GeometryRuntime.allCellsLoaded(loaded,pos,next)&&GeometryRuntime.canOccupy(loaded,pos,next,pos))return next;
   }
@@ -244,10 +245,12 @@ public class ArchitectureBlock extends Block implements Waterloggable {
   }return ActionResult.success(world.isClient);
  }
  @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){
+  ItemStack reviewed=ReviewedWallConnections.item(this);if(reviewed!=null)return reviewed;
   return logicalPick(stackFor(state));
  }
  @Override public java.util.List<ItemStack> getDroppedStacks(BlockState state,net.minecraft.loot.context.LootContextParameterSet.Builder builder){
   java.util.List<ItemStack> drops=new java.util.ArrayList<>(super.getDroppedStacks(state,builder));
+  ItemStack reviewed=ReviewedWallConnections.item(this);if(reviewed!=null)for(int i=0;i<drops.size();i++)if(drops.get(i).isOf(asItem())){ItemStack replacement=reviewed.copy();replacement.setCount(drops.get(i).getCount());drops.set(i,replacement);}
   if((definition.logical||definition.city_compat)&&definition.models!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))copyVariant(state,drop);
   Property<?> rootAnchor=getStateManager().getProperty("root_anchor");
   if(rootAnchor!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))drop.getOrCreateSubNbt("BlockStateTag").putString("root_anchor",BloodborneBlocks.value((Property)rootAnchor,(Comparable)state.get((Property)rootAnchor)));

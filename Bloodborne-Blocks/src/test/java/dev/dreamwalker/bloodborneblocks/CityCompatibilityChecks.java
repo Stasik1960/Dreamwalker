@@ -21,7 +21,13 @@ public final class CityCompatibilityChecks {
    BloodborneBlocks.prepareDefinition(definition);
    ArchitectureBlock block=ArchitectureBlock.create(definition);
    check(definition.city_compat&&!definition.logical,"city marker: "+definition.id);
-   if(definition.whole_owner){
+   if(ReviewedWallConnections.ID.equals(definition.id)){
+    ReviewedWallConnections.validate(definition,city);
+    check(block instanceof SharedArchitectureBlock,"reviewed building retains shared ownership");
+    check(block.getStateManager().getStates().size()==128,"reviewed building exact supported states");
+    for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"reviewed wall existing mesh: "+mesh);
+    for(var state:block.getStateManager().getStates())check(GeometryRuntime.state(state).parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"reviewed wall remains one physical cell");
+   }else if(definition.whole_owner){
     check(definition.models!=null&&definition.id.startsWith("owner_"),"whole owner art: "+definition.id);
     check(GeometryRuntime.usesHelpers(block),"whole owner helper lifecycle: "+definition.id);
     check(GeometryRuntime.rebuildsHelperTransitions(block),"whole owner helper state transitions: "+definition.id);

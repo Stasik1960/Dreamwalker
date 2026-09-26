@@ -51,7 +51,7 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
   context.complete();
  }
 
- @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="production_palette_door")
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=160,batchId="production_palette_door")
  public void c282IsOneDoubleLeafDoorAcrossFacings(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock door=required("o_c282");BlockPos root=context.getAbsolutePos(ROOT);
   try{
@@ -74,7 +74,7 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
   }finally{clear(context,door);player.discard();}
  }
 
- @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="production_palette_door")
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=100,batchId="production_palette_door")
  public void c282OpenIsAtomicWhenAnOuterLeafCellIsBlocked(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock door=required("o_c282");BlockPos root=context.getAbsolutePos(ROOT);
   try{
@@ -93,7 +93,7 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
   }finally{clear(context,door);player.discard();}
  }
 
- @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=140,batchId="production_palette_door")
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=140,batchId="production_palette_door")
  public void c282AuthenticSourcePaneContextIsNeverClaimed(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock door=required("o_c282");
   try{

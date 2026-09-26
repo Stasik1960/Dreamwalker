@@ -29,7 +29,7 @@ CASES = [
 ]
 
 
-def build(destination):
+def build(destination,edition=1):
     if destination.exists():
         raise FileExistsError('Use a new output directory; existing test saves are preserved')
     source = ROOT/'reference-inputs/latest-modded-world.zip'
@@ -73,9 +73,27 @@ def build(destination):
                           'sourceCells':len(source_cells),'outputs':[
                               {'root':add(origin,o.root_offset),'state':key(o.target)} for o in outputs]})
     reader.close()
+    manual_cells={};manual_helpers=[]
+    if edition==2:
+        # Clearly labelled constructed regression scenes; not historical evidence.
+        for x in range(18,72):
+            for z in range(-8,14):cells[x,63,z]=('minecraft:smooth_stone',{})
+        window=('bloodborne_blocks:o_shuttered_window',{'facing':'north','open':'false','visual':'base'})
+        wall='bloodborne_blocks:building_stone_brick_wall'
+        manual_cells[(25,64,0)]=window
+        manual_cells[(25,65,0)]=(wall,{'facing':'north','connection':'low_0'})
+        manual_helpers.append(((25,65,0),(25,64,0),window[0]))
+        for x,mask in [(42,2),(49,3),(56,7),(65,15)]:
+            manual_cells[(x,64,0)]=(wall,{'facing':'north','connection':'low_'+str(mask)})
+            for bit,(dx,dz) in enumerate(((0,-1),(1,0),(0,1),(-1,0))):
+                if mask&(1<<bit):manual_cells[x+dx,64,dz]=(wall,{'facing':'north','connection':'low_'+str(1<<((bit+2)%4))})
+        for x,facing in zip((42,47,52,57),('north','east','south','west')):
+            manual_cells[x,64,8]=(wall,{'facing':facing,'connection':'low_0'})
+        # Preallocate chunk/sections, but add regression states only after ledger authorization.
+        for pos in manual_cells:cells[pos]=('minecraft:air',{})
     original=destination/'conversion-input-fixture'
-    playable=destination/'Bloodborne-REPAIR-TEST-1'
-    write_fixture(original,cells,floor=False,level_name='Bloodborne REPAIR TEST 1 - NOT FULL')
+    playable=destination/f'Bloodborne-REPAIR-TEST-{edition}'
+    write_fixture(original,cells,floor=False,level_name=f'Bloodborne REPAIR TEST {edition} - NOT FULL')
     shutil.copytree(original,playable)
     world=World(playable,defaults)
     items,_,_=candidates(world,selected)
@@ -85,6 +103,8 @@ def build(destination):
     report={'format':'bloodborne-logical-world-conversion-v2','sourceMode':'modded',
             'counts':{'converted':len(ledger)},'ledger':ledger}
     validate_ledger(World(original,defaults),report,selected)
+    for pos,(name,props) in manual_cells.items():world.set(DIM,pos,(name,tuple(sorted(props.items()))))
+    for pos,root,owner in manual_helpers:world.add_helper(DIM,pos,root,owner)
     world.save()
     again=World(playable,defaults)
     declared={'bloodborne_blocks:architecture_part'}
@@ -103,6 +123,7 @@ def build(destination):
         for change in entry['changes']:
             name,props=state(change['after'])
             expected[tuple(change['position'])]=(name,dict(props))
+    expected.update(manual_cells)
     for pos,(name,props) in expected.items():
         actual=again.get(DIM,pos)
         assert actual and actual[0]==name and dict(actual[1])=={**defaults.get(name,{}),**props}, pos
@@ -121,10 +142,13 @@ def build(destination):
                    'secondPassByteIdentical':True,'wholeWorldGates':'FAIL / UNFINISHED',
                    'graphicalClientChecks':'NOT_RUN - user test required',
                    'note':'Synthetic platforms, source positions unchanged. No surrounding city copied.'})
+    if edition==2:report['constructedRegressions']={'windowRoot':[25,64,0],'sharedWallRoot':[25,65,0],
+            'wallExamples':[[42,64,0],[49,64,0],[56,64,0],[65,64,0]],
+            'historicalEvidence':False,'note':'New manual test arrangements, original five specimens preserved.'}
     (destination/'conversion-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
-    lines=['# Промежуточный REPAIR TEST 1 — не beta.4 и не FULL', '',
+    lines=[f'# Промежуточный REPAIR TEST {edition} — не beta.4 и не FULL', '',
            'Minecraft 1.20.1 / Fabric / Java 17. Установите тестовый JAR вместо прежнего Bloodborne JAR в отдельной копии сборки; Fabric API обязателен.',
-           'Распакуйте папку Bloodborne-REPAIR-TEST-1 в saves. Мир творческий, команды включены. Полная карта и main не изменены; whole-world gates остаются FAIL.', '',
+           f'Распакуйте папку Bloodborne-REPAIR-TEST-{edition} в saves. Мир творческий, команды включены. Полная карта и main не изменены; whole-world gates остаются FAIL.', '',
            'Это пять изолированных фрагментов из проверенных assemblies latest MODDED backup на исходных координатах. Площадки искусственные; окружающая архитектура не включена.',
            'C618 показан без соседней исторической панели. Это не доказательство сохранности всей городской сцены.', '',
            '## Переходы к образцам']
@@ -143,8 +167,17 @@ def build(destination):
               'У connected-ограды при обычной установке/обновлении соседей соединения пересчитываются. В изолированной конфликтующей паре исходные east/south-соединения могут исчезнуть без соответствующих соседей. Конвертированный снимок сохраняет исходные флаги, а ручная установка следует обычной логике соединений; это не должно удалять корни или гостевую физику.',
               'Общая helper-клетка не выбирает случайного владельца: для получения предмета/действия цельтесь именно в нужный корень.',
               '', 'Запишите результат по каждому пункту и приложите координаты/скриншот при сбое. Серверные GameTests и офлайн-конвертация не заменяют этот клиентский чек-лист.']
+    if edition==2:
+        lines=[line for line in lines if 'Вставка нового корня' not in line]
+        lines+=['','## Новые проверки REPAIR TEST 2',
+          '`/tp @s 25.5 65 -5.5` — специально собранная регрессионная пара: окно (25,64,0), кирпичная ограда в общей верхней клетке (25,65,0). Это новый стенд, не восстановленная историческая сцена.',
+          'Возьмите предмет стены, удалите только стену, поставьте её обратно с зажатым Shift кликом по верхней грани нижней части окна (обычный ПКМ открывает окно). Затем отдельно удалите/верните окно. Повторите несколько раз и после выхода/входа в мир. Второй объект должен оставаться целым.',
+          '`/tp @s 49.5 65 -5.5` — рядом показаны пара, угол, Т и перекрёсток. Возьмите предмет с любой старой кирпичной секции из исходной сцены: это один предмет «Кирпичная ограда — соединяемая». Проверьте свободную установку и удаление соседей.',
+          'Низкий перекрёсток использует существующий вариант без центрального столба. Низкий перекрёсток со столбом не поддержан; новых моделей нет. Под сплошным блоком сверху используется существующая высокая секция.',
+          'Исходные шесть ID кирпичных секций остаются совместимыми и визуально неизменными. Их предмет для строительства теперь общий. Это не объединяет o_stone_railing и другие семейства.',
+          'Важное различие: в неизменённой исходной сцене верхняя клетка окна (-428,101,32) изначально была helper, а соседние стены стояли при x=-427. Новая пара отдельно проверяет именно вставку корня в занятую helper-клетку.']
     (destination/'README-RU.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
-    with zipfile.ZipFile(destination/'Bloodborne-REPAIR-TEST-1-world.zip','w',zipfile.ZIP_DEFLATED) as archive:
+    with zipfile.ZipFile(destination/f'Bloodborne-REPAIR-TEST-{edition}-world.zip','w',zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(playable.rglob('*')):
             if path.is_file(): archive.write(path,path.relative_to(destination))
     print(json.dumps({k:report[k] for k in ('counts','helperAudit','secondPassChanges','wholeWorldGates')},ensure_ascii=False))
@@ -154,4 +187,5 @@ if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser()
     parser.add_argument('output',type=Path)
-    build(parser.parse_args().output)
+    parser.add_argument('--edition',type=int,choices=(1,2),default=1)
+    args=parser.parse_args();build(args.output,args.edition)

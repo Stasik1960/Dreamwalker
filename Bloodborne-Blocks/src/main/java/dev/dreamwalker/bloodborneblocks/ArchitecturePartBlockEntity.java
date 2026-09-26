@@ -58,6 +58,7 @@ public final class ArchitecturePartBlockEntity extends BlockEntity {
  public boolean unbindRoot(BlockPos root){boolean removed=bindings.removeIf(binding->binding.root().equals(root));if(removed)changed();return removed;}
  public boolean hasBinding(BlockPos root,Identifier owner){return bindings.contains(new Binding(root,owner));}
  public List<Binding> bindings(){return List.copyOf(bindings);}
+ void syncBindings(){changed();}
  public boolean isEmpty(){return bindings.isEmpty();}
  public BlockPos rootPos(){return bindings.isEmpty()?BlockPos.ORIGIN:bindings.get(0).root();}
  public Block ownerBlock(){Identifier owner=ownerId();ArchitectureBlock registered=owner.getNamespace().equals(BloodborneBlocks.ID)?BloodborneBlocks.registeredBlock(owner.getPath()):null;return registered==null?Registries.BLOCK.get(owner):registered;}

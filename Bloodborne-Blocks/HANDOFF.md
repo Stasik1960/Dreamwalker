@@ -1,5 +1,12 @@
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
+## REPAIR TEST 2 continuation — 2026-09-26
+
+Follow [REPAIR-TEST-2](docs/composite-grid-repair/REPAIR-TEST-2.md) for the current
+bounded runtime fixes and reproduction limitations. Pre-change checkpoint `cf25cbf1f`.
+The five TEST1 specimens remain. No main integration or full-city conversion is authorized
+before the next user test. Whole-world gates remain FAIL, not reevaluated by this kit.
+
 ## Repair branch continuation — 2026-09-26
 
 On `repair/composite-preserving-grid`, follow

@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -26,6 +27,7 @@ final class GeometryRuntime {
  private static final Map<String,GeometryBlock> BLOCKS=new HashMap<>();
  private static final Map<BlockState,GeometryState> STATES=new IdentityHashMap<>();
  private static final ThreadLocal<Boolean> MUTATING=ThreadLocal.withInitial(()->false);
+ private static final ThreadLocal<RootInsertion> ROOT_INSERTION=new ThreadLocal<>();
  private static final int MAX_PENDING_GUEST_RECOVERIES=4096;
  private static final int GUEST_RECOVERIES_PER_TICK=256;
  private static final Map<ServerWorld,LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>>> GUEST_RECOVERIES=Collections.synchronizedMap(new WeakHashMap<>());
@@ -213,6 +215,48 @@ final class GeometryRuntime {
  static boolean canPlace(World world,BlockPos root,BlockState state){
   return canOccupy(world,root,state,null);
  }
+
+ /**
+  * Admits one existing helper carrier as the root cell of another complete
+  * object.  This is deliberately narrower than block replaceability: every
+  * saved guest binding must be loaded and valid, and the candidate must pass
+  * the same complete geometry/entity preflight as an ordinary placement.
+  */
+ static List<ArchitecturePartBlockEntity.Binding> rootInsertionGuests(World world,BlockPos root,BlockState state){
+  if(!(state.getBlock() instanceof SharedArchitectureBlock)||!world.isChunkLoaded(root)||!world.getBlockState(root).isOf(BloodborneBlocks.PART_BLOCK))return null;
+  ArchitecturePartBlockEntity part=part(world,root);if(part==null||part.isEmpty())return null;List<ArchitecturePartBlockEntity.Binding> guests=part.bindings();
+  if(!hasRootInsertionCapacity(guests.size()))return null;
+  for(var binding:guests)if(!world.isChunkLoaded(binding.root())||!ownsHelper(world.getBlockState(binding.root()),binding.root(),root,binding.owner()))return null;
+  return canOccupy(world,root,state,root)?guests:null;
+ }
+
+ static boolean isRootInsertionCarrier(World world,BlockPos root,ArchitectureBlock block){
+  if(!(block instanceof SharedArchitectureBlock)||!world.isChunkLoaded(root)||!world.getBlockState(root).isOf(BloodborneBlocks.PART_BLOCK))return false;
+  ArchitecturePartBlockEntity part=part(world,root);if(part==null||part.isEmpty()||!hasRootInsertionCapacity(part.bindings().size()))return false;
+  for(var binding:part.bindings())if(!world.isChunkLoaded(binding.root())||!ownsHelper(world.getBlockState(binding.root()),binding.root(),root,binding.owner()))return false;
+  return true;
+ }
+
+ static boolean hasRootInsertionCapacity(int guestBindings){return guestBindings>=0&&guestBindings<ArchitecturePartBlockEntity.MAX_BINDINGS;}
+
+ static ActionResult placeRootIntoHelper(World world,BlockPos root,BlockState state,List<ArchitecturePartBlockEntity.Binding> guests,java.util.function.Supplier<ActionResult> placement){
+  List<ArchitecturePartBlockEntity.Binding> current=rootInsertionGuests(world,root,state);if(current==null||!current.equals(guests))return ActionResult.FAIL;
+  RootInsertion previous=ROOT_INSERTION.get();ROOT_INSERTION.set(new RootInsertion(world,root.toImmutable()));ActionResult result;
+  try{result=placement.get();}finally{if(previous==null)ROOT_INSERTION.remove();else ROOT_INSERTION.set(previous);}
+  if(!result.isAccepted())return result;
+  // Server WorldChunk retains the old BE because the scoped Part callback does
+  // not remove it. The client removes old BEs independently, so recreate its
+  // prediction from the already validated snapshot. No fallible world change
+  // remains after vanilla placement has committed successfully.
+  ArchitecturePartBlockEntity carrier=part(world,root);if(carrier==null)carrier=ensurePartEntity(world,root);
+  if(carrier!=null)for(var binding:guests)carrier.bind(binding.root(),binding.owner());
+  if(carrier!=null&&!world.isClient)carrier.syncBindings();
+  return result;
+ }
+
+ static boolean isRootInsertion(World world,BlockPos pos){RootInsertion insertion=ROOT_INSERTION.get();return insertion!=null&&insertion.world()==world&&insertion.root().equals(pos);}
+
+ private record RootInsertion(World world,BlockPos root){}
  static boolean canOccupy(World world,BlockPos root,BlockState state,BlockPos ownedRoot){
   if(conflict(world,root,state,ownedRoot)!=null)return false;
   GeometryState geometry=required(state);

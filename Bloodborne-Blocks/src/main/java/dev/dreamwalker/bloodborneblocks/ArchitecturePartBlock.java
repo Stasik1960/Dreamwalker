@@ -61,6 +61,10 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
  @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){if(GeometryRuntime.ownedRoots(world,pos).size()>1)return ItemStack.EMPTY;Root root=root(world,pos);return root==null?ItemStack.EMPTY:root.state.getBlock().getPickStack(world,root.pos,root.state);}
 
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
+  // WorldChunk will reuse this BE for the SharedArchitectureBlock and update
+  // its cached state. Keeping it here transfers guest bindings before any
+  // onBlockAdded/onPlaced/neighbor notification can observe the new root.
+  if(!next.isOf(this)&&GeometryRuntime.isRootInsertion(world,pos))return;
   if(!next.isOf(this)&&!GeometryRuntime.isMutating()&&!world.isClient){
    ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);
    if(part!=null&&GeometryRuntime.hasUnloadedGuest(world,part.bindings())){GeometryRuntime.restoreCarrier(world,pos,state,part.bindings());return;}
