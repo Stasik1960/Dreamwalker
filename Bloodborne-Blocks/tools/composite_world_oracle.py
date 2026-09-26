@@ -18,7 +18,16 @@ SOURCE_SHA = '4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51'
 
 class EvidenceReader(LazyReference):
     """Bounded decoded-section cache; uses the existing archive path validation."""
-    @lru_cache(maxsize=256)
+    def _region(self,relative):
+        result=super()._region(relative)
+        while len(self.regions)>4:
+            oldest=next(iter(self.regions))
+            if oldest==relative:
+                self.regions[oldest]=self.regions.pop(oldest)
+            else:self.regions.pop(oldest)
+        return result
+
+    @lru_cache(maxsize=64)
     def sections(self, dimension, cx, cz):
         region = self._region(_region_relative(dimension, cx//32, cz//32))
         stored = region.get_chunk(cx%32, cz%32) if region else None
@@ -29,7 +38,7 @@ class EvidenceReader(LazyReference):
             values = section_blocks(section)
             if values:
                 palette, indices = values
-                result[int(compound(section)['Y'].value)] = ([block_state_key(p) for p in palette], indices)
+                result[int(compound(section)['Y'].value)] = ([block_state_key(p) for p in palette], np.asarray(indices,dtype=np.uint16))
         return result
 
     def state(self, dimension, point):
@@ -45,6 +54,38 @@ class EvidenceReader(LazyReference):
         super().close()
 
 def key(state): return block_state_key(as_tag_state(state))
+
+def reconcile(occurrences, rules):
+    """Only explicit existing supersession may remove an exact raw match."""
+    by_cell=defaultdict(set)
+    sources=[]
+    for i,row in enumerate(occurrences):
+        cells=frozenset(tuple(c['position']) for c in row['source_cells'])
+        sources.append(cells)
+        for p in cells:by_cell[(row['dimension'],p)].add(i)
+    removed={}
+    for i,row in enumerate(occurrences):
+        rule=rules[row['rule']]
+        possible=set().union(*(by_cell[(row['dimension'],p)] for p in sources[i]))
+        for j in possible-{i}:
+            other=occurrences[j]
+            if sources[j]<sources[i] and all('bloodborne_blocks:'+o['family'] in rule.supersedes_targets for o in other['outputs']):
+                removed.setdefault(j,[]).append(i)
+    # A supersession cycle is impossible with strict containment. Do not
+    # remove a match unless at least one surviving ancestor really replaces it.
+    retained=[row for i,row in enumerate(occurrences) if i not in removed]
+    superseded=[{'rule':occurrences[i]['rule'],'origin':occurrences[i]['origin'],
+                 'families':[o['family'] for o in occurrences[i]['outputs']],
+                 'by':[{'rule':occurrences[j]['rule'],'origin':occurrences[j]['origin']} for j in parents]}
+                for i,parents in sorted(removed.items())]
+    owners=defaultdict(list)
+    for i,row in enumerate(retained):
+        for output in row['outputs']:
+            for p in output['physical_cells']:
+                owners[(row['dimension'],tuple(p))].append({'occurrence':i,'family':output['family'],
+                    'root':output['canonical_root'],'state':output['expected_logical_state']})
+    conflicts=[{'dimension':dim,'position':list(p),'owners':values} for (dim,p),values in sorted(owners.items()) if len(values)>1]
+    return retained,superseded,conflicts
 
 def build():
     source = ROOT/'reference-inputs/source-world.zip'
@@ -98,11 +139,14 @@ def build():
                         'physical_cells':[list(add(add(origin,o.root_offset),p)) for p in sorted(o.shape)]
                     } for o in outputs]})
             print(f'oracle rule {rule.number}: checked {len(origins[rule.number])}',flush=True)
+        exact_count=len(occurrences)
+        occurrences,superseded,conflicts=reconcile(occurrences,rules)
         families=json.loads((DEFAULT_RESOURCES/'contracts-v2.json').read_bytes())['families']
         totals=Counter(o['family'] for row in occurrences for o in row['outputs'])
         result={'schema':1,'baseline':'419b85eeab56180f0e26272ffc2a2136f6a05a18',
             'source_sha256':SOURCE_SHA,'contract_sha256':hashlib.sha256((DEFAULT_RESOURCES/'contracts-v2.json').read_bytes()).hexdigest(),
-            'policy':'Exact current source patterns plus original weighted-model guards; no semantic discovery.',
+            'policy':'Exact current source patterns, weighted-model guards and declared strict-source supersession; no semantic discovery.',
+            'exact_transaction_matches':exact_count,'superseded_matches':superseded,'physical_conflicts':conflicts,
             'families':{f['id']:{'expected_source_occurrences':totals[f['id']],
                 'migration_disabled':f.get('migration_disabled',False)} for f in families},'occurrences':occurrences}
         path=ROOT/'docs/composite-grid-repair/protected-world-oracle.json'

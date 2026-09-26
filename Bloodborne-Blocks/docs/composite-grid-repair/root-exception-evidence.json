@@ -1,0 +1,383 @@
+{
+  "scope": "Only the two explicitly authorized exceptions; no generic root-shift fallback.",
+  "required_proofs": [
+    "unchanged world-space mesh at every rotation",
+    "own pivot without translation drift",
+    "neighbor is own assembly or proven free",
+    "no footprint expansion",
+    "other object unchanged",
+    "shared manual/converter anchor policy",
+    "idempotent second conversion"
+  ],
+  "cases": [
+    {
+      "root": [
+        -374,
+        73,
+        -291
+      ],
+      "family": "o_bench",
+      "source_cells": [
+        {
+          "position": [
+            -374,
+            74,
+            -291
+          ],
+          "state": "minecraft:nether_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+        }
+      ],
+      "candidates": [
+        {
+          "position": [
+            -374,
+            74,
+            -291
+          ],
+          "delta": [
+            0,
+            1,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:nether_brick_stairs[assembled=false,facing=north,half=bottom,shape=straight,waterlogged=false]"
+          ],
+          "own_source_cell": true,
+          "physical_owners": [
+            {
+              "family": "o_bench",
+              "root": [
+                -374,
+                73,
+                -291
+              ]
+            }
+          ]
+        },
+        {
+          "position": [
+            -374,
+            72,
+            -291
+          ],
+          "delta": [
+            0,
+            -1,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_4d7016aac3f9d81c[facing=west]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": []
+        },
+        {
+          "position": [
+            -373,
+            73,
+            -291
+          ],
+          "delta": [
+            1,
+            0,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_1f238956607955f0[facing=east]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": [
+            {
+              "family": "o_bench",
+              "root": [
+                -374,
+                73,
+                -291
+              ]
+            }
+          ]
+        },
+        {
+          "position": [
+            -375,
+            73,
+            -291
+          ],
+          "delta": [
+            -1,
+            0,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_140a01150e01aea6[facing=north]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": [
+            {
+              "family": "o_bench",
+              "root": [
+                -374,
+                73,
+                -291
+              ]
+            }
+          ]
+        },
+        {
+          "position": [
+            -374,
+            73,
+            -290
+          ],
+          "delta": [
+            0,
+            0,
+            1
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_0c3d93425d55e14f[facing=north]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": [
+            {
+              "family": "o_bench",
+              "root": [
+                -374,
+                73,
+                -291
+              ]
+            }
+          ]
+        },
+        {
+          "position": [
+            -374,
+            73,
+            -292
+          ],
+          "delta": [
+            0,
+            0,
+            -1
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_2f78ad177e9c2610[facing=south]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": [
+            {
+              "family": "o_bench",
+              "root": [
+                -374,
+                73,
+                -291
+              ]
+            }
+          ]
+        }
+      ],
+      "status": "EVIDENCE_ONLY_NOT_AUTHORIZED_FOR_AUTOMATIC_RELOCATION"
+    },
+    {
+      "root": [
+        -560,
+        98,
+        -9
+      ],
+      "family": "o_high_balustrade",
+      "source_cells": [
+        {
+          "position": [
+            -560,
+            99,
+            -9
+          ],
+          "state": "minecraft:cut_copper_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+        }
+      ],
+      "candidates": [
+        {
+          "position": [
+            -560,
+            99,
+            -9
+          ],
+          "delta": [
+            0,
+            1,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_34df6072a370872d[facing=east]"
+          ],
+          "own_source_cell": true,
+          "physical_owners": [
+            {
+              "family": "o_high_balustrade",
+              "root": [
+                -560,
+                98,
+                -9
+              ]
+            }
+          ]
+        },
+        {
+          "position": [
+            -560,
+            97,
+            -9
+          ],
+          "delta": [
+            0,
+            -1,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_41c998a4df80f612[facing=west]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": []
+        },
+        {
+          "position": [
+            -559,
+            98,
+            -9
+          ],
+          "delta": [
+            1,
+            0,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_1a253c473341ac93[facing=north]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": [
+            {
+              "family": "o_high_balustrade",
+              "root": [
+                -559,
+                98,
+                -9
+              ]
+            }
+          ]
+        },
+        {
+          "position": [
+            -561,
+            98,
+            -9
+          ],
+          "delta": [
+            -1,
+            0,
+            0
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "own_source_cell": false,
+          "physical_owners": []
+        },
+        {
+          "position": [
+            -560,
+            98,
+            -8
+          ],
+          "delta": [
+            0,
+            0,
+            1
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_2027249716b54db4[facing=east]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": []
+        },
+        {
+          "position": [
+            -560,
+            98,
+            -10
+          ],
+          "delta": [
+            0,
+            0,
+            -1
+          ],
+          "source": [
+            "FOUND",
+            "minecraft:air"
+          ],
+          "modded": [
+            "FOUND",
+            "bloodborne_blocks:m_00ae71ad06810ec9[facing=east]"
+          ],
+          "own_source_cell": false,
+          "physical_owners": []
+        }
+      ],
+      "status": "EVIDENCE_ONLY_NOT_AUTHORIZED_FOR_AUTOMATIC_RELOCATION"
+    }
+  ]
+}

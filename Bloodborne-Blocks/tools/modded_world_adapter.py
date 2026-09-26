@@ -44,7 +44,7 @@ def _fragment_state(fragment: dict[str, Any], old_defaults: dict[str, dict[str, 
     return make_state(fragment, old_defaults)
 
 
-def compose_rule(raw_rule, migration: dict[str, Any], old_defaults: dict[str, dict[str, str]]):
+def compose_rule(raw_rule, migration: dict[str, Any], old_defaults: dict[str, dict[str, str]], compositions=None):
     """Return exact archived modular pieces for one reviewed raw rule.
 
     Missing archived source states are returned as diagnostics rather than
@@ -82,6 +82,10 @@ def compose_rule(raw_rule, migration: dict[str, Any], old_defaults: dict[str, di
             state = _fragment_state(fragment, old_defaults)
             previous = by_offset.get(offset)
             if previous is not None and previous != state:
+                replacement=(compositions or {}).get(frozenset((previous,state)))
+                if replacement is not None:
+                    by_offset[offset]=replacement
+                    continue
                 missing.append({"rule": raw_rule.number, "target": raw_rule.target[0],
                                 "offset": list(offset), "reason": "archive_fragment_overlap"})
             by_offset[offset] = state
@@ -124,6 +128,53 @@ def compose_legacy_rule(raw_rule, definitions: dict[str, dict[str, Any]]):
     return tuple(pieces), []
 
 
+def compose_mixed_kept_carriers(raw_rule, migration, old_defaults, definitions, retained_ids):
+    """Resolve frozen ``keep`` entries to observed retained Bloodborne carriers.
+
+    This is an exact schema translation, not an alias by visual similarity.
+    Existing raw-kept and all-legacy rules remain available independently.
+    """
+    from convert_logical_world import Expected
+    pieces, missing = compose_rule(raw_rule, migration, old_defaults)
+    if not pieces:
+        return None, missing
+    changed = False
+    result = []
+    for piece in pieces:
+        carrier = piece.state[0].removeprefix('minecraft:')
+        if not piece.state[0].startswith('minecraft:') or carrier not in retained_ids:
+            result.append(piece)
+            continue
+        definition = definitions.get(carrier)
+        if definition is None or definition.get('source') != 'minecraft:' + carrier:
+            return None, [{'reason': 'mixed_carrier_identity_missing', 'source': carrier}]
+        props = {**definition.get('default', {}), **dict(piece.state[1])}
+        if _state_key(props) not in definition['states']:
+            return None, [{'reason': 'mixed_carrier_state_missing', 'source': carrier}]
+        result.append(Expected(piece.offset, ('bloodborne_blocks:' + carrier, tuple(sorted(props.items()))), piece.shape))
+        changed = True
+    return (tuple(result) if changed else None), []
+
+
+def proven_compositions():
+    from convert_logical_world import make_state
+    path=ROOT/'docs/composite-grid-repair/proven-module-compositions.json'
+    if not path.exists():return {}
+    data=json.loads(path.read_text(encoding='utf-8'))
+    if data.get('schemaVersion')!=1:raise ValueError('module composition evidence schema')
+    result={}
+    for row in data['compositions']:
+        sources=[]
+        for text in row['sources']:
+            name,_,props=text.partition('[')
+            pairs=dict(p.split('=',1) for p in props.rstrip(']').split(',')) if props else {}
+            sources.append((name,tuple(sorted(pairs.items()))))
+        identity=frozenset(sources)
+        if len(identity)!=2 or identity in result:raise ValueError('ambiguous module composition evidence')
+        result[identity]=make_state(row['result'],{})
+    return result
+
+
 def _embedded_window_rules(resources: Path, start: int):
     """Compile the removed ``embedded`` property from immutable beta evidence."""
     if not BASELINE_PATH.is_file():
@@ -132,7 +183,8 @@ def _embedded_window_rules(resources: Path, start: int):
 
     baseline = json.load(gzip.open(BASELINE_PATH, "rt", encoding="utf-8"))["fingerprints"]["families"]
     old = baseline["o_shuttered_window"]["core"]["contract"]
-    current = {row["id"]: row for row in json.loads((resources / "contracts-v2.json").read_text(encoding="utf-8"))["families"]}[
+    from logical_contract_v2 import load_contracts
+    current = {row["id"]: row for row in load_contracts(resources)[0]["families"]}[
         "o_shuttered_window"]
     defaults = {"bloodborne_blocks:o_shuttered_window": {}}
     rules = []
@@ -148,7 +200,7 @@ def _embedded_window_rules(resources: Path, start: int):
                           frozenset(tuple(cell) for cell in old_state["interaction_footprint"]["cells"]))
         target = make_state({"id": "o_shuttered_window", "properties": properties}, defaults)
         rules.append(Rule(start + len(rules), source, target, (0, 0, 0), (), None,
-                          frozenset(tuple(cell) for cell in target_state["interaction_footprint"]["cells"]),
+                          frozenset(tuple(cell) for cell in target_state["physical_footprint"]["cells"]),
                           source_mode="modded", source_reference="frozen beta embedded-window Contract V2"))
     return rules, []
 
@@ -224,6 +276,36 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
                                    "state": source.state[0], "offset": list(source.offset),
                                    "inventoryCount": inventory_counts.get(source.state) if inventory_counts else None})
 
+    city_path = resources.parent / 'city/definitions.json'
+    retained_ids = ({b['id'] for b in json.loads(city_path.read_text(encoding='utf-8'))['blocks']
+                     if not b['id'].startswith('city_')} if city_path.exists() else set())
+    mixed_count = 0
+    for raw_rule in raw_rules:
+        pieces, missing = compose_mixed_kept_carriers(raw_rule, migration, old_defaults, legacy_definitions, retained_ids)
+        gaps.extend(missing)
+        if not pieces:
+            continue
+        source = min(pieces, key=lambda p:(static_frequency[p.state], p.offset, p.state))
+        rules.append(Rule(len(rules), source, raw_rule.target, raw_rule.root_offset,
+                          tuple(p for p in pieces if p is not source), None, raw_rule.shape,
+                          raw_rule.supersedes_targets, raw_rule.variant_guards, raw_rule.transaction_id,
+                          raw_rule.outputs, 'modded', f'frozen mixed kept carriers + Contract V2 raw rule {raw_rule.number}'))
+        mixed_count += 1
+
+    overlap_count=0
+    compositions=proven_compositions()
+    for raw_rule in raw_rules:
+        ordinary,missing=compose_rule(raw_rule,migration,old_defaults)
+        if ordinary or not any(gap.get('reason')=='archive_fragment_overlap' for gap in missing):continue
+        pieces,remaining=compose_rule(raw_rule,migration,old_defaults,compositions)
+        if not pieces:continue
+        source=min(pieces,key=lambda p:(static_frequency[p.state],p.offset,p.state))
+        rules.append(Rule(len(rules),source,raw_rule.target,raw_rule.root_offset,
+                          tuple(p for p in pieces if p is not source),None,raw_rule.shape,
+                          raw_rule.supersedes_targets,raw_rule.variant_guards,raw_rule.transaction_id,
+                          raw_rule.outputs,'modded',f'proven textured module composition + Contract V2 raw rule {raw_rule.number}'))
+        overlap_count+=1
+
     embedded, embedded_gaps = _embedded_window_rules(resources, len(rules))
     rules.extend(embedded)
     gaps.extend(embedded_gaps)
@@ -241,6 +323,8 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
                     "otherRetired")
         incompatible_inventory[category] += count
     diagnostics = {
+        'compiledMixedKeptCarrierRules': mixed_count,
+        'compiledProvenOverlapRules': overlap_count,
         "archiveSha256": hashlib.sha256(ARCHIVE_PATH.read_bytes()).hexdigest(),
         "inventorySha256": inventory_sha,
         "rawRules": len(raw_rules),

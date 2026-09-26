@@ -275,7 +275,7 @@ def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule
         for family in contracts["families"]:
             for key, state in family["states"].items():
                 target = make_state({"id": family["id"], "properties": dict(p.split("=", 1) for p in key.split(",") if p)}, defaults)
-                geometry[target] = {tuple(c) for c in state["interaction_footprint"]["cells"]}
+                geometry[target] = {tuple(c) for c in state["physical_footprint"]["cells"]}
     legacy_geometry = parse_geometry(resources.parent, defaults) if (resources.parent / "geometry.json").is_file() else {}
     def legacy_shape(state: tuple[str, tuple[tuple[str, str], ...]]) -> frozenset[tuple[int, int, int]]:
         shape = set(legacy_geometry.get(state, ()))
