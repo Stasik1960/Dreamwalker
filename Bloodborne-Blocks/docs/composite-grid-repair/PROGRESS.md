@@ -137,3 +137,36 @@ the proof. Conversion is still unresolved: it must recover both whole objects
 atomically, including the rest of the neighboring object's source membership.
 Do not turn this evidence into a rule that consumes the merged cell for the
 wall alone or treats the residual slab as an independent object.
+
+## Membership proof continuation
+
+The exact carrier manifest now covers 89 states, including sandstone_wall.
+The independent negative gate reports 6,248 unresolved memberships, down by
+441 from 6,689. Mixed wall/decor modules remain excluded; a regression test
+explicitly rejects m_37ae347a7c9d73ae as a complete wall. Four wall tests PASS.
+
+Read-only full-artwork audit separated exact, shared and missing geometry.
+The new historical producer closure audit checks every admitted source object's
+complete component set. It can explain old opaque-dominant suppression only
+when the opaque cube's own original carrier component is exact, its textures
+are fully opaque, all six exterior faces cover the cell, and the occluder's
+complete source object closes in the same evidence graph. These cubes remain
+separate owners; this is not permission to consume or overwrite them.
+
+The (-560,98,-9) conflict has a closed historical graph of eight source objects
+and 27 cells. Three regression tests PASS: positive full graph, removed remote
+component rejects closure, and unproven source attribution rejects occlusion.
+The test monkeypatches readers only; immutable input ZIPs are never modified.
+
+All 6,866 relevant source seeds were audited with radius 3/node limit 128.
+5,173 of the 6,248 occurrences have historical owner closure evidence; 1,075
+remain unresolved. Full evidence is historical-owner-closures.json.gz, with
+hash/counts in membership-proof-progress.json. These are NOT world PASS counts.
+Converter integration for grouped owners is still pending; the existing world
+gate correctly continues to fail. A larger bounded diagnostic retry is being
+run only for the 265 traces that hit the node limit.
+
+Targeted Gradle check PASS: six tasks, 1m10s, including wall evidence,
+MODDED adapter, owner-closure negatives, composite and root exceptions.
+Log: build/membership-closure-gradle-check.log. No JAR/world release created,
+no independent compatibility fallback added, and main remains untouched.

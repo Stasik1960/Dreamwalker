@@ -60,14 +60,17 @@ def historical_art():
             mm.cells_for_app.cache_clear()
 
 
-def carrier_cells(jar, ident, props):
+def carrier_cells(jar, ident, props, position=None):
     props = {**archive()['v2\\migration.json'][ident]['default'], **props}
     cells = {}
     state = json.loads(jar.read(f'assets/bloodborne_blocks/blockstates/{ident}.json'))
     for group in cg.applications(state, props):
         if len(group) != 1:
-            raise ValueError('WEIGHTED_VARIANT_REQUIRES_POSITION_EVIDENCE')
-        for cell, polys in mm.cells_for_app(json.dumps(group[0], sort_keys=True)).items():
+            if position is None: raise ValueError('WEIGHTED_VARIANT_REQUIRES_POSITION_EVIDENCE')
+            from source_variant_rng import weighted_index
+            choice = weighted_index([app.get('weight', 1) for app in group], position, 'multipart' in state)
+        else: choice = 0
+        for cell, polys in mm.cells_for_app(json.dumps(group[choice], sort_keys=True)).items():
             cells.setdefault(cell, []).extend(polys)
     return {cell: compact_faces(polys) for cell, polys in cells.items()}
 
@@ -96,7 +99,7 @@ def mappings():
     from logical_contract_v2 import direct_rules
     from convert_logical_world import DEFAULT_RESOURCES
     raw, _ = direct_rules(DEFAULT_RESOURCES)
-    allowed = {'red_nether_brick_wall', 'mossy_cobblestone_wall'}
+    allowed = {'red_nether_brick_wall', 'mossy_cobblestone_wall', 'sandstone_wall'}
     sources = archive()['v2\\sources.json']
     rows = []
     with historical_art() as jar:

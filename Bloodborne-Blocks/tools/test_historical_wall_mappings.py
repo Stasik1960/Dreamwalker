@@ -12,6 +12,14 @@ from check_logical_world import check
 
 
 class HistoricalWallMappingsTests(unittest.TestCase):
+    def test_shared_stepped_wall_is_not_admitted_as_whole_wall(self):
+        evidence = json.loads(MANIFEST.read_bytes())
+        admitted = {(m['id'], m['facing']) for row in evidence['mappings'] for m in row['matches']}
+        self.assertNotIn(('m_37ae347a7c9d73ae', 'east'), admitted)
+        rules, _, _ = compile_modded_rules(DEFAULT_RESOURCES)
+        self.assertFalse(any(r.source.state == ('bloodborne_blocks:m_37ae347a7c9d73ae', (('facing', 'east'),))
+                             and not r.members for r in rules))
+
     def test_reconstruct_every_mapping_from_frozen_artifact(self):
         self.assertEqual(json.loads(MANIFEST.read_bytes()), mappings())
 
@@ -28,10 +36,10 @@ class HistoricalWallMappingsTests(unittest.TestCase):
 
     def test_complete_walls_preserve_neighbors_and_second_pass(self):
         rules, defaults, _ = compile_modded_rules(DEFAULT_RESOURCES)
-        ids = ('m_0730cfd72a0dbe29', 'm_5992264774a8b7bf')
+        ids = ('m_0730cfd72a0dbe29', 'm_5992264774a8b7bf', 'm_10f85cfb698c6973')
         picked = [next(r for r in rules if r.source.state[0] == 'bloodborne_blocks:'+ident
                        and not r.members) for ident in ids]
-        positions = ((3, 64, 3), (10, 64, 10))
+        positions = ((3, 64, 3), (10, 64, 10), (3, 64, 10))
         blocks = {p: (r.source.state[0], dict(r.source.state[1])) for p, r in zip(positions, picked)}
         neighbor = (4, 64, 3); blocks[neighbor] = ('minecraft:diamond_block', {})
         with tempfile.TemporaryDirectory() as temp:
