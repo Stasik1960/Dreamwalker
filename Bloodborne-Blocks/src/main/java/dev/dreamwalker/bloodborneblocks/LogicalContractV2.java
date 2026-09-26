@@ -18,12 +18,15 @@ final class LogicalContractV2 {
  static final class Footprint {List<double[]> boxes,cells;}
  static final class Pattern {String exact_source_signature;List<Component> components;}
  static final class Component {String id;Map<String,String> properties;int[] offset;}
+ static final class PhysicalData {int schemaVersion;Map<String,Map<String,PhysicalState>> families;}
+ static final class PhysicalState {List<int[]> cells;Map<String,List<double[]>> collision_by_cell;}
  record DebugMetadata(String reviewId,String canonicalAnchor,String collisionPolicy,String selectionPolicy,String sourceFamily,String sourcePatternSummary) {}
  private LogicalContractV2() {}
 
  static Map<String,GeometryRuntime.GeometryBlock> load(BloodborneBlocks.Data definitions){
   LogicalTransform.loadAndValidate();Data data=read();if(data.schemaVersion!=2||!"transform-v2.json".equals(data.transform_contract)||data.families==null)throw fail("schema");
-  Map<String,BloodborneBlocks.Definition> known=new HashMap<>();for(BloodborneBlocks.Definition d:definitions.blocks)known.put(d.id,d);Set<String> meshes=ModularMeshData.loadLogicalAndValidate().keySet();
+  Map<String,BloodborneBlocks.Definition> known=new HashMap<>();for(BloodborneBlocks.Definition d:definitions.blocks)known.put(d.id,d);Set<String> meshes=ModularMeshData.loadLogicalAndValidate().keySet();PhysicalData physical=readPhysical();
+  if(physical.schemaVersion!=1||physical.families==null||!physical.families.keySet().equals(known.keySet()))throw fail("physical footprint family coverage");
   Map<String,GeometryRuntime.GeometryBlock> result=new HashMap<>();Map<String,DebugMetadata> debug=new HashMap<>();Set<String> ids=new HashSet<>();
   for(Family family:data.families){
    if(family==null||family.id==null||!ids.add(family.id)||family.states==null||family.canonical_anchor==null||family.rotations==null)throw fail("family");
@@ -32,17 +35,18 @@ final class LogicalContractV2 {
    if(family.id.startsWith("o_c")&&!Arrays.equals(family.canonical_anchor.cell,new int[]{0,0,0}))throw fail("batch anchor "+family.id);
    if((family.review_id==null)!=(family.authority==null)||(family.review_id!=null&&(family.review_id.isBlank()||!"user".equals(family.authority))))throw fail("review metadata "+family.id);
    if(!family.states.keySet().equals(definition.states.keySet())||definition.models==null)throw fail("states "+family.id);
+   Map<String,PhysicalState> physicalStates=physical.families.get(family.id);if(physicalStates==null||!physicalStates.keySet().equals(family.states.keySet()))throw fail("physical footprint state coverage "+family.id);
    checkOrientations(family);
    GeometryRuntime.GeometryBlock block=new GeometryRuntime.GeometryBlock();block.states=new HashMap<>();
    for(var entry:family.states.entrySet()){
     String key=entry.getKey();State state=entry.getValue();if(state==null||!family.rotations.contains(state.rotation)||state.render_mesh==null||!Objects.equals(definition.models.get(key),state.render_mesh.id)||!meshes.contains(state.render_mesh.id))throw fail("mesh "+family.id+"["+key+"]");
-    checkRender(state.render_mesh);checkBoxes(state.selection_footprint,"selection",1);checkBoxes(state.collision_footprint,"collision",budget(family));checkCells(state.interaction_footprint);checkPattern(state.migration_source_pattern);
+    checkRender(state.render_mesh);checkBoxes(state.selection_footprint,"selection",1);checkBoxes(state.collision_footprint,"collision",budget(family));checkCells(state.interaction_footprint);checkPattern(state.migration_source_pattern);PhysicalState physicalState=physicalStates.get(key);checkPhysical(family.id,key,state,physicalState);
     if("FLOOR".equals(family.placement_policy)){
      if(state.render_mesh.bounds[1]+state.render_mesh.offset[1]<-1e-6)throw fail("RENDER_BELOW_SUPPORT_PLANE "+family.id+"["+key+"]");
      for(double[] cell:state.interaction_footprint.cells)if(cell[1]<0)throw fail("GROUND_OBJECT_HAS_HELPER_BELOW_ANCHOR "+family.id+"["+key+"]");
     }
     for(double[] box:state.collision_footprint.boxes)if(!covered(box,state.interaction_footprint.cells))throw fail("COLLISION_OUTSIDE_OWNED_CELLS "+family.id+"["+key+"]");
-    block.states.put(key,geometry(family,state));
+    block.states.put(key,geometry(family,state,physicalState));
     debug.put(family.id+"\u0000"+key,new DebugMetadata(family.review_id,anchorText(family.canonical_anchor),family.collision_policy,family.selection_policy==null?"AUTHORED_OUTLINE":family.selection_policy,sourceFamily(family),sourcePatternSummary(family,state)));
    }
    result.put(family.id,block);
@@ -91,12 +95,27 @@ final class LogicalContractV2 {
   for(String entry:key.split(",")){String[] pair=entry.split("=",-1);if(pair.length!=2||pair[0].isBlank()||pair[1].isBlank()||result.put(pair[0],pair[1])!=null)throw fail("state key "+key);}return result;
  }
  private static Data read(){try(InputStream in=LogicalContractV2.class.getResourceAsStream("/bloodborne_blocks/logical/contracts-v2.json")){if(in==null)throw fail("missing contracts-v2.json");return GSON.fromJson(new InputStreamReader(in,StandardCharsets.UTF_8),Data.class);}catch(IOException|RuntimeException e){throw e instanceof IllegalStateException?(IllegalStateException)e:new IllegalStateException("Cannot load contracts-v2",e);}}
- private static GeometryRuntime.GeometryState geometry(Family family,State state){
+ private static PhysicalData readPhysical(){try(InputStream in=LogicalContractV2.class.getResourceAsStream("/bloodborne_blocks/logical/physical-footprints.json")){if(in==null)throw fail("missing physical-footprints.json");return GSON.fromJson(new InputStreamReader(in,StandardCharsets.UTF_8),PhysicalData.class);}catch(IOException|RuntimeException e){throw e instanceof IllegalStateException?(IllegalStateException)e:new IllegalStateException("Cannot load physical-footprints",e);}}
+ private static GeometryRuntime.GeometryState geometry(Family family,State state,PhysicalState physical){
   GeometryRuntime.GeometryState geometry=new GeometryRuntime.GeometryState();geometry.anchor=family.canonical_anchor.cell.clone();geometry.rotation=state.rotation;geometry.render_offset=state.render_mesh.offset.clone();geometry.cells=new LinkedHashMap<>();
   geometry.placementPolicy=family.placement_policy;geometry.mirrorPolicy=family.mirror_policy;
-  for(double[] cell:state.interaction_footprint.cells){int x=(int)cell[0],y=(int)cell[1],z=(int)cell[2];GeometryRuntime.GeometryCell part=new GeometryRuntime.GeometryCell();part.collision=clip(state.collision_footprint.boxes,x,y,z);part.outline=clip(state.selection_footprint.boxes,x,y,z);geometry.cells.put(x+","+y+","+z,part);}
+  geometry.physical_footprint=new ArrayList<>();
+  for(int[] cell:physical.cells){int x=cell[0],y=cell[1],z=cell[2];String cellKey=x+","+y+","+z;GeometryRuntime.GeometryCell part=new GeometryRuntime.GeometryCell();part.collision=copyBoxes(physical.collision_by_cell.get(cellKey));part.outline=clip(state.selection_footprint.boxes,x,y,z);geometry.cells.put(cellKey,part);geometry.physical_footprint.add(cell.clone());}
   geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();geometry.gameplayBoxes=state.collision_footprint.boxes;return geometry;
  }
+ private static List<double[]> copyBoxes(List<double[]> boxes){List<double[]> copy=new ArrayList<>();for(double[] box:boxes)copy.add(box.clone());return copy;}
+ private static void checkPhysical(String familyId,String stateKey,State authored,PhysicalState physical){
+  if(physical==null||physical.cells==null||physical.cells.isEmpty()||physical.collision_by_cell==null)throw fail("physical footprint "+familyId+"["+stateKey+"]");
+  LinkedHashSet<String> cells=new LinkedHashSet<>();boolean root=false;
+  for(int[] cell:physical.cells){LogicalTransform.requireCell(cell,"physical footprint");String key=cell[0]+","+cell[1]+","+cell[2];if(!cells.add(key))throw fail("duplicate physical cell "+familyId+"["+stateKey+"] "+key);if(key.equals("0,0,0"))root=true;}
+  if(!root)throw fail("physical footprint omits root "+familyId+"["+stateKey+"]");
+  if(!physical.collision_by_cell.keySet().equals(cells))throw fail("collision_by_cell coverage "+familyId+"["+stateKey+"]");
+  for(int[] cell:physical.cells){String key=cell[0]+","+cell[1]+","+cell[2];List<double[]> boxes=physical.collision_by_cell.get(key);checkLocalBoxes(familyId,stateKey,key,boxes);List<double[]> expected=clip(authored.collision_footprint.boxes,cell[0],cell[1],cell[2]);if(!sameBoxes(expected,boxes))throw fail("collision_by_cell authored mismatch "+familyId+"["+stateKey+"] "+key);}
+  for(double[] box:authored.collision_footprint.boxes)if(!coveredByKeys(box,cells))throw fail("COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT "+familyId+"["+stateKey+"]");
+ }
+ private static void checkLocalBoxes(String familyId,String stateKey,String cell,List<double[]> boxes){if(boxes==null)throw fail("null collision_by_cell "+familyId+"["+stateKey+"] "+cell);for(double[] box:boxes){if(box==null||box.length!=6)throw fail("collision_by_cell box "+familyId+"["+stateKey+"] "+cell);for(double value:box)if(!Double.isFinite(value)||value<-COLLISION_EPSILON||value>1+COLLISION_EPSILON)throw fail("COLLISION_OUTSIDE_LOCAL_CELL "+familyId+"["+stateKey+"] "+cell);if(box[0]>=box[3]||box[1]>=box[4]||box[2]>=box[5])throw fail("empty collision_by_cell box "+familyId+"["+stateKey+"] "+cell);}}
+ private static boolean sameBoxes(List<double[]> expected,List<double[]> actual){if(expected.size()!=actual.size())return false;for(int i=0;i<expected.size();i++){double[] left=expected.get(i),right=actual.get(i);if(right==null||left.length!=right.length)return false;for(int j=0;j<left.length;j++)if(Math.abs(left[j]-right[j])>COLLISION_EPSILON)return false;}return true;}
+ private static boolean coveredByKeys(double[] box,Set<String> cells){for(int x=(int)Math.floor(box[0]+COLLISION_EPSILON);x<(int)Math.ceil(box[3]-COLLISION_EPSILON);x++)for(int y=(int)Math.floor(box[1]+COLLISION_EPSILON);y<(int)Math.ceil(box[4]-COLLISION_EPSILON);y++)for(int z=(int)Math.floor(box[2]+COLLISION_EPSILON);z<(int)Math.ceil(box[5]-COLLISION_EPSILON);z++)if(!cells.contains(x+","+y+","+z))return false;return true;}
  private static List<double[]> clip(List<double[]> boxes,int x,int y,int z){List<double[]> out=new ArrayList<>();for(double[] box:boxes){double[] clipped={Math.max(box[0],x)-x,Math.max(box[1],y)-y,Math.max(box[2],z)-z,Math.min(box[3],x+1)-x,Math.min(box[4],y+1)-y,Math.min(box[5],z+1)-z};if(clipped[0]<clipped[3]&&clipped[1]<clipped[4]&&clipped[2]<clipped[5])out.add(clipped);}return out;}
  private static boolean covered(double[] box,List<double[]> cells){for(int x=(int)Math.floor(box[0]+COLLISION_EPSILON);x<(int)Math.ceil(box[3]-COLLISION_EPSILON);x++)for(int y=(int)Math.floor(box[1]+COLLISION_EPSILON);y<(int)Math.ceil(box[4]-COLLISION_EPSILON);y++)for(int z=(int)Math.floor(box[2]+COLLISION_EPSILON);z<(int)Math.ceil(box[5]-COLLISION_EPSILON);z++){boolean present=false;for(double[] cell:cells)if((int)cell[0]==x&&(int)cell[1]==y&&(int)cell[2]==z)present=true;if(!present)return false;}return true;}
  private static int budget(Family f){int n=switch(f.collision_policy){case "NONE"->0;case "SIMPLE_BOX"->1;case "TWO_BOX"->2;case "THREE_BOX"->3;case "TRUNK"->2;case "POST"->1;case "FENCE","WALL"->5;case "DOOR","GATE"->2;case "STAIRS"->3;case "DECK"->9;default->-1;};if(n<0||(("TRUNK".equals(f.collision_policy)||"STAIRS".equals(f.collision_policy)||"TWO_BOX".equals(f.collision_policy)||"THREE_BOX".equals(f.collision_policy)||"DECK".equals(f.collision_policy))&&(f.collision_justification==null||f.collision_justification.isBlank())))throw fail("collision policy "+f.id);return n;}

@@ -31,6 +31,7 @@ final class GeometryRuntime {
  static final class GeometryBlock {Map<String,GeometryState> states;}
  static final class GeometryState {
   Map<String,GeometryCell> cells;
+  List<int[]> physical_footprint;
   int[] anchor;
   double[] render_offset={0,0,0};
   String ref;
@@ -85,7 +86,7 @@ final class GeometryRuntime {
     GeometryState state=entry.getValue();
     if(state==null)throw new IllegalStateException("Null city geometry state "+definition.id+"["+entry.getKey()+"]");
     if(state.ref!=null){GeometryState profile=profiles.get(state.ref);if(profile==null||profile.ref!=null)throw new IllegalStateException("Invalid city geometry profile "+blockId(definition.id,entry.getKey(),state.ref));entry.setValue(state=profile);}
-    if(prepared.add(state))prepare(definition.id,entry.getKey(),state);
+    if(prepared.add(state)){prepare(definition.id,entry.getKey(),state);requireCityLocal(definition.id,entry.getKey(),state);}
    }
    if(BLOCKS.putIfAbsent(definition.id,block)!=null)throw new IllegalStateException("Duplicate runtime geometry block "+definition.id);
   }
@@ -118,6 +119,12 @@ final class GeometryRuntime {
    state.parsedCells.put(offset.toImmutable(),cell);
   }
   if(state.globalOutline!=null){validateGlobalBox(blockId,stateKey,state.globalOutline);state.wholeOutline=VoxelShapes.cuboid(state.globalOutline[0],state.globalOutline[1],state.globalOutline[2],state.globalOutline[3],state.globalOutline[4],state.globalOutline[5]);}
+ }
+
+ private static void requireCityLocal(String blockId,String stateKey,GeometryState state){
+  if(!Arrays.equals(state.anchor,new int[]{0,0,0}))throw new IllegalStateException("City anchor must be origin "+blockId+"["+stateKey+"]");
+  if(!state.parsedCells.keySet().equals(Set.of(BlockPos.ORIGIN)))throw new IllegalStateException("City physical cells must be origin-only "+blockId+"["+stateKey+"]");
+  if(state.physical_footprint==null||state.physical_footprint.size()!=1||!Arrays.equals(state.physical_footprint.get(0),new int[]{0,0,0}))throw new IllegalStateException("City physical_footprint must be [[0,0,0]] "+blockId+"["+stateKey+"]");
  }
 
  private static void validateGlobalBox(String id,String key,double[] box){if(box==null||box.length!=6)throw new IllegalStateException("Invalid global outline "+id+"["+key+"]");for(double value:box)if(!Double.isFinite(value))throw new IllegalStateException("Invalid global outline "+id+"["+key+"]");if(box[0]>=box[3]||box[1]>=box[4]||box[2]>=box[5])throw new IllegalStateException("Empty global outline "+id+"["+key+"]");}
