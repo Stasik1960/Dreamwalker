@@ -41,7 +41,8 @@ final class LogicalContractV2 {
    for(var entry:family.states.entrySet()){
     String key=entry.getKey();State state=entry.getValue();if(state==null||!family.rotations.contains(state.rotation)||state.render_mesh==null||!Objects.equals(definition.models.get(key),state.render_mesh.id)||!meshes.contains(state.render_mesh.id))throw fail("mesh "+family.id+"["+key+"]");
     checkRender(state.render_mesh);checkBoxes(state.selection_footprint,"selection",1);checkBoxes(state.collision_footprint,"collision",budget(family));checkCells(state.interaction_footprint);checkPattern(state.migration_source_pattern);
-    state.physical_footprint=masks.get(key);checkCells(state.physical_footprint);checkBoxes(state.physical_footprint,"physical collision",budget(family));
+    state.physical_footprint=masks.get(key);checkCells(state.physical_footprint);checkBoxes(state.physical_footprint,"physical collision",budget(family)*state.physical_footprint.cells.size());
+    for(double[] cell:state.physical_footprint.cells)if(clip(state.physical_footprint.boxes,(int)cell[0],(int)cell[1],(int)cell[2]).size()>budget(family))throw fail("PHYSICAL_CELL_PRIMITIVE_BUDGET "+family.id+"["+key+"]");
     for(double[] box:state.physical_footprint.boxes)if(!covered(box,state.physical_footprint.cells))throw fail("COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT "+family.id+"["+key+"]");
     if("FLOOR".equals(family.placement_policy)){
      if(state.render_mesh.bounds[1]+state.render_mesh.offset[1]<-1e-6)throw fail("RENDER_BELOW_SUPPORT_PLANE "+family.id+"["+key+"]");

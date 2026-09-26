@@ -113,12 +113,16 @@ def load_contracts(resources):
             physical_cells = [cell(c) for c in mask['cells']]
             if len(physical_cells) != len(set(physical_cells)) or (0,0,0) not in physical_cells or len(physical_cells)>512:
                 raise ValueError('invalid physical footprint')
-            if len(mask['boxes']) > budget:
+            if len(mask['boxes']) > budget * len(physical_cells):
                 raise ValueError('physical collision budget exceeded')
             for box in mask['boxes']:
                 check_box(box)
                 if not box_cells(box) <= set(physical_cells):
                     raise ValueError('COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT')
+            for physical_cell in physical_cells:
+                if sum(all(max(box[i],physical_cell[i]) < min(box[i+3],physical_cell[i]+1)
+                           for i in range(3)) for box in mask['boxes']) > budget:
+                    raise ValueError('PHYSICAL_CELL_PRIMITIVE_BUDGET')
             if family['placement_policy']=='FLOOR' and any(c[1]<0 for c in physical_cells):
                 raise ValueError('physical helper below floor anchor')
             state['physical_footprint'] = mask

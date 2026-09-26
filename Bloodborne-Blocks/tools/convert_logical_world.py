@@ -181,7 +181,7 @@ def definition_hashes(resources: Path) -> dict[str, str | None]:
     result = {"legacy": hashlib.sha256((resources.parent / "definitions.json").read_bytes()).hexdigest() if (resources.parent / "definitions.json").is_file() else None,
             "logical": hashlib.sha256((resources / "definitions.json").read_bytes()).hexdigest() if (resources / "definitions.json").is_file() else None,
             "legacyGeometry": hashlib.sha256((resources.parent / "geometry.json").read_bytes()).hexdigest() if (resources.parent / "geometry.json").is_file() else None}
-    for name in ("contracts-v2.json", "transform-v2.json"):
+    for name in ("contracts-v2.json", "transform-v2.json", "physical-footprints.json"):
         if (resources / name).is_file():
             result[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
     return result

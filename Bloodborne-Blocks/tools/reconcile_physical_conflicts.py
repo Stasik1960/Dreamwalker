@@ -32,7 +32,7 @@ def merge(boxes):
             if changed:break
     return boxes
 
-def plan(oracle,contracts):
+def plan(oracle,contracts,external_evidence=()):
     by_id={f['id']:f for f in contracts['families']};remove=defaultdict(set)
     shared=[]
     for conflict in oracle['physical_conflicts']:
@@ -43,6 +43,24 @@ def plan(oracle,contracts):
             if p==(0,0,0):continue
             family=owner['family'];key=owner['state'].partition('[')[2].rstrip(']')
             remove[(family,key)].add(p)
+    external=[]
+    for evidence in external_evidence:
+        # Only the separately proved panel beside this reviewed C618 fixture.
+        # Never infer ownership merely because the existing ID is Bloodborne.
+        if evidence['position']!=[-540,42,-33]:continue
+        sources=evidence['matching_forward_sources']
+        if len(sources)!=1 or sources[0]['mismatches'] or sources[0]['parts']!=1 or sources[0]['origin']!=evidence['position']:
+            raise ValueError('UNPROVEN_EXTERNAL_PANEL')
+        if sources[0]['source_state']!='minecraft:magenta_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=true]':
+            raise ValueError('UNEXPECTED_EXTERNAL_PANEL_SOURCE')
+        outputs=[o for row in oracle['occurrences'] for o in row['outputs']
+                 if o['family']=='o_c618' and o['canonical_root']==[-540,41,-33]]
+        if len(outputs)!=1:raise ValueError('C618_FIXTURE_NOT_UNIQUE')
+        output=outputs[0]
+        state_key=output['expected_logical_state'].partition('[')[2].rstrip(']')
+        remove[('o_c618',state_key)].add((0,1,0))
+        external.append({'family':'o_c618','root':output['canonical_root'],'position':evidence['position'],
+                         'preserved_source':sources[0]['source_state'],'basis':'Exact frozen forward mapping, all component states match MODDED input.'})
     # Keep cardinally related masks equivalent: one map occurrence must not
     # accidentally make the same object's east-facing item physically different.
     for (family,key),cells in list(remove.items()):
@@ -55,6 +73,23 @@ def plan(oracle,contracts):
             target_key=','.join(k+'='+v for k,v in sorted(target_props.items()))
             if target_key in by_id[family]['states']:
                 remove[(family,target_key)].update(rotate(c,turn-source_turn) for c in cells)
+    # Appearance slots and lamp lighting must not restore a removed reservation.
+    # Do not generalize this to open doors: those genuinely change geometry.
+    for (family,key),cells in list(remove.items()):
+        props=dict(v.split('=',1) for v in key.split(',') if v)
+        for visual in ('base','alt') if 'visual' in props else (None,):
+            for lit in ('false','true') if 'lit' in props else (None,):
+                target_props=dict(props)
+                if visual is not None:target_props['visual']=visual
+                if lit is not None:target_props['lit']=lit
+                target_key=','.join(k+'='+v for k,v in sorted(target_props.items()))
+                if target_key in by_id[family]['states']:
+                    original=by_id[family]['states'][key]
+                    other=by_id[family]['states'][target_key]
+                    if (original['interaction_footprint']!=other['interaction_footprint'] or
+                            original['collision_footprint']!=other['collision_footprint']):
+                        raise ValueError('APPEARANCE_TRANSITION_CHANGES_AUTHORED_PHYSICS')
+                    remove[(family,target_key)].update(cells)
     masks={};changes=[]
     for family in contracts['families']:
         states={};masks[family['id']]=states
@@ -68,16 +103,17 @@ def plan(oracle,contracts):
                 boxes=merge([part for b in boxes for c in sorted(after) if (part:=clipped(b,c)) is not None])
                 changes.append({'family':family['id'],'state':key,'removed_cells':[list(c) for c in sorted(removed)],
                                 'before_boxes':state['collision_footprint']['boxes'],'after_boxes':boxes,
-                                'basis':'Exact source occurrence physical overlap, plus cardinal closure; user authorizes smaller collision with unchanged visuals.'})
+                                'basis':'Exact source occurrence physical overlap, plus cardinal and appearance-slot closure; user authorizes smaller collision with unchanged visuals.'})
             states[key]={'cells':[list(c) for c in sorted(after)],'boxes':boxes}
     return {'schemaVersion':1,'basis':'User-approved reductions for proven physical overlaps only','families':masks}, {
-        'changed_states':len(changes),'changes':changes,'unresolved_shared_roots':shared,
+        'changed_states':len(changes),'changes':changes,'unresolved_shared_roots':shared,'external_source_conflicts':external,
         'models_changed':0,'root_positions_changed':0,'city_geometry_changed':0}
 
 if __name__=='__main__':
     directory=ROOT/'docs/composite-grid-repair'
     masks,report=plan(json.loads((directory/'protected-world-oracle.json').read_bytes()),
-                      json.loads((ROOT/'src/main/resources/bloodborne_blocks/logical/contracts-v2.json').read_bytes()))
+                      json.loads((ROOT/'src/main/resources/bloodborne_blocks/logical/contracts-v2.json').read_bytes()),
+                      json.loads((directory/'module-provenance.json').read_bytes()))
     # Reviewable proposal only: do not change production until shared roots
     # and all source membership conflicts have been reconciled.
     (ROOT/'build/composite-proposed-physical-footprints.json').write_text(json.dumps(masks,separators=(',',':'))+'\n',encoding='utf8')

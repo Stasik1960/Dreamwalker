@@ -18,7 +18,9 @@ def inspect():
                 point=tuple(a+b for a,b in zip(root,delta))
                 owners=[{'family':o['family'],'root':o['canonical_root']} for row in oracle['occurrences'] for o in row['outputs'] if list(point) in o['physical_cells']]
                 candidates.append({'position':point,'delta':delta,
-                    'source':readers[0].state(assembly['dimension'],point),
+                    # Oracle output dimensions are MODDED dimensions; source
+                    # Yharnam was historically mapped into the overworld.
+                    'source':readers[0].state('eh_s2:yharnam',point),
                     'modded':readers[1].state('minecraft:overworld',point),
                     'own_source_cell':any(tuple(c['position'])==point for c in assembly['source_cells']),
                     'physical_owners':owners})
