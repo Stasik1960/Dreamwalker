@@ -23,11 +23,14 @@ public final class CityCompatibilityChecks {
    check(definition.city_compat&&!definition.logical,"city marker: "+definition.id);
    if(definition.whole_owner){
     check(definition.models!=null&&definition.id.startsWith("owner_"),"whole owner art: "+definition.id);
+    check(GeometryRuntime.usesHelpers(block),"whole owner helper lifecycle: "+definition.id);
+    check(GeometryRuntime.rebuildsHelperTransitions(block),"whole owner helper state transitions: "+definition.id);
     check(block.getStateManager().getStates().size()==4,"whole owner rotation states: "+definition.id);
     check(block.getStateManager().getProperty("facing")!=null,"whole owner pivot rotation: "+definition.id);
     for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"whole owner complete mesh: "+mesh);
    }else if(definition.models!=null){
     pages++;check(definition.modular&&block.getStateManager().getProperty("facing")==null,"module page is cell-local without facing: "+definition.id);
+    check(!GeometryRuntime.usesHelpers(block),"module page remains cell-local: "+definition.id);
     check(block.getStateManager().getStates().size()<=16,"module page state bound: "+definition.id);
     for(String variant:definition.properties.get("variant"))check(("variant="+variant).equals(BloodborneBlocks.cityVariantModelKey(definition,variant)),"item variant resolves its baked state: "+definition.id+"/"+variant);
     check(BloodborneBlocks.cityVariantModelKey(definition,"invalid")==null,"invalid item variant falls back: "+definition.id);

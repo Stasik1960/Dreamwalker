@@ -256,7 +256,7 @@ final class GeometryRuntime {
  }
 
  static boolean rebuild(World world,BlockPos root,BlockState state){
-  if(state.getBlock() instanceof ArchitectureBlock block&&block.definition.modular)return true;
+  if(state.getBlock() instanceof ArchitectureBlock block&&!usesHelpers(block))return true;
   if(world.isClient||MUTATING.get())return true;
   BlockPos conflict=conflict(world,root,state,root);if(conflict!=null)return false;
   MUTATING.set(true);
@@ -286,7 +286,7 @@ final class GeometryRuntime {
   removeOwnedParts(world,root,world.getBlockState(root));
  }
  static void removeOwnedParts(World world,BlockPos root,BlockState geometryState){
-  if(geometryState.getBlock() instanceof ArchitectureBlock block&&block.definition.modular)return;
+  if(geometryState.getBlock() instanceof ArchitectureBlock block&&!usesHelpers(block))return;
   if(MUTATING.get()){removeOwnedParts(world,root,geometryState,Set.of());return;}
   MUTATING.set(true);try{removeOwnedParts(world,root,geometryState,Set.of());}finally{MUTATING.set(false);}
  }
@@ -353,7 +353,7 @@ final class GeometryRuntime {
   for(int x=center.getX()-radius;x<=center.getX()+radius;x++)for(int y=Math.max(world.getBottomY(),center.getY()-radius);y<=Math.min(world.getTopY()-1,center.getY()+radius);y++)for(int z=center.getZ()-radius;z<=center.getZ()+radius;z++){
    cursor.set(x,y,z);if(!world.isChunkLoaded(cursor))continue;
    BlockState state=world.getBlockState(cursor);
-   if(state.getBlock() instanceof ArchitectureBlock architecture&&!architecture.definition.modular){
+   if(state.getBlock() instanceof ArchitectureBlock architecture&&usesHelpers(architecture)){
     roots++;BlockPos immutable=cursor.toImmutable();boolean blocked=conflict(world,immutable,state,immutable)!=null;
     if(!blocked&&!apply){for(BlockPos target:occupiedTargets(immutable,state))if(previewReservations.containsKey(target)&&!previewReservations.get(target).equals(immutable)){blocked=true;break;}}
     if(blocked)conflicts++;else{repaired++;if(apply)rebuild(world,immutable,state);else for(BlockPos target:occupiedTargets(immutable,state))previewReservations.put(target,immutable);}
@@ -369,6 +369,9 @@ final class GeometryRuntime {
  private static Set<BlockPos> occupiedTargets(BlockPos root,BlockState state){
   Set<BlockPos> targets=new HashSet<>();for(BlockPos offset:required(state).parsedCells.keySet())if(!offset.equals(BlockPos.ORIGIN)&&!reservedDoorSibling(state,offset))targets.add(root.add(offset));return targets;
  }
+
+ static boolean usesHelpers(ArchitectureBlock block){return !block.definition.modular||block.definition.whole_owner;}
+ static boolean rebuildsHelperTransitions(ArchitectureBlock block){return block.definition.logical||block.definition.whole_owner;}
 
  static boolean isMutating(){return MUTATING.get();}
 

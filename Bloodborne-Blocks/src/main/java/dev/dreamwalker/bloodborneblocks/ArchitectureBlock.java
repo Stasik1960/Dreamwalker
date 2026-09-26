@@ -188,7 +188,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   return (old.isAir()||old.isReplaceable())&&GeometryRuntime.canPlace(world,upper,upperState);
  }
  @Override public void onPlaced(World world,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){
-  if(definition.modular)return;
+  if(!GeometryRuntime.usesHelpers(this))return;
   if(world.isClient){refreshEditedNeighbors(world,pos);return;}
   if(definition.kind.equals("door")&&state.contains(Properties.DOUBLE_BLOCK_HALF)&&state.get(Properties.DOUBLE_BLOCK_HALF)==DoubleBlockHalf.LOWER){
    BlockState upper=state.with(Properties.DOUBLE_BLOCK_HALF,DoubleBlockHalf.UPPER);world.setBlockState(pos.up(),upper,Block.NOTIFY_ALL);GeometryRuntime.rebuild(world,pos.up(),upper);
@@ -196,10 +196,10 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
   GeometryRuntime.rebuild(world,pos,state);refreshEditedNeighbors(world,pos);
  }
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
-  if(definition.modular){super.onStateReplaced(state,world,pos,next,moved);return;}
+  if(!GeometryRuntime.usesHelpers(this)){super.onStateReplaced(state,world,pos,next,moved);return;}
   if(FunctionalFurniture.isBench(state)&&state!=next)FunctionalFurniture.removeSeats(world,pos);
   if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating())GeometryRuntime.removeOwnedParts(world,pos,state);
-  if(next.isOf(this)&&definition.logical&&!world.isClient&&!GeometryRuntime.isMutating()){
+  if(next.isOf(this)&&GeometryRuntime.rebuildsHelperTransitions(this)&&!world.isClient&&!GeometryRuntime.isMutating()){
    // Direct /setblock and editor state changes do not use the interaction preflight.
    // Keep the old object intact unless the complete replacement can own every cell.
    if(!GeometryRuntime.canTransition(world,pos,state,next)){GeometryRuntime.restoreRoot(world,pos,state);return;}
