@@ -170,3 +170,36 @@ Targeted Gradle check PASS: six tasks, 1m10s, including wall evidence,
 MODDED adapter, owner-closure negatives, composite and root exceptions.
 Log: build/membership-closure-gradle-check.log. No JAR/world release created,
 no independent compatibility fallback added, and main remains untouched.
+
+### Expanded bounds and recovered conversion ledgers
+
+Retries only for traces hitting the 128/512-node bounds used limits 512/2048.
+Merged evidence now proves 5,315 of the 6,248 remaining historical memberships;
+933 remain unresolved. The compressed evidence and progress hash are updated.
+No converter/world gate consumes this diagnostic evidence automatically.
+
+Recovered original local conversion reports from the existing Dreamwalker
+checkout. Thirteen reports are frozen in historical-conversion-ledgers.json.gz
+with original hashes and bundle hash in its manifest. They are evidence data,
+not instructions and not an alternative world input. Do not replay them.
+
+audit_historical_omissions.py verifies every claim against exact original source
+state, full textured incoming fragment, recorded owner/root and unchanged
+current protected state. It found 337 matching fragment contexts across 149
+source roots among the unresolved cases; 221 candidate contexts were rejected.
+These witnesses explain historical refusal to write into occupied cells, NOT
+permission to overwrite those cells or a complete membership/world PASS.
+Keep the whole current block and block-entity context intact until an atomic
+multi-object conversion/preservation proof is implemented.
+
+Example: the books at (-644,83,-25) have two pieces explicitly refused by
+world-static-grid-v2 at (-644,83,-23) and (-643,83,-23). Both incoming textured
+meshes match exactly and the existing protected helpers still occupy those
+cells. Four new tests PASS: positive exact witness, changed context rejection,
+wrong source-state rejection and incomplete textured-fragment rejection.
+
+Current repair checkpoint still has no released JAR or FULL map. Required next
+steps remain: finish unresolved memberships and preservation constraints;
+integrate proven owner groups atomically in the existing converter/runtime;
+pass whole-world gates; then beta.4 JAR + ONE FULL world from the immutable
+MODDED ZIP, zero-change second pass, and finally history-preserving main work.
