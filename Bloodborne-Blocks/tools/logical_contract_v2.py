@@ -178,6 +178,10 @@ def direct_rules(resources, *, poc_only=False):
     from convert_logical_world import Expected, Output, Rule, add, load_defaults, make_state
     data, transform = load_contracts(resources)
     defaults = load_defaults(resources)
+    physical_path=Path(resources)/'physical-footprints.json'
+    physical=json.loads(physical_path.read_bytes())['families'] if physical_path.exists() else None
+    def physical_cells(ident,key,state):
+        return physical[ident][key]['cells'] if physical is not None else state['interaction_footprint']['cells']
     rules = []
     split = {}
     for family in data["families"]:
@@ -204,7 +208,7 @@ def direct_rules(resources, *, poc_only=False):
                 # explicit-anchor transform used by item placement (zero relative shift).
                 anchor = rotate_cell(family["canonical_anchor"]["cell"], state["rotation"], transform)
                 shift = master_origin(anchor, family["canonical_anchor"]["cell"], state["rotation"], transform)
-                shape = frozenset(cell(c) for c in state["interaction_footprint"]["cells"])
+                shape = frozenset(cell(c) for c in physical_cells(family["id"],key,state))
                 transaction = pattern.get("split_transaction")
                 if transaction is None:
                     rules.append(Rule(len(rules), first, target, shift, tuple(pieces[1:]), None, shape,
@@ -234,7 +238,7 @@ def direct_rules(resources, *, poc_only=False):
             props={**dict(base[1][1]),**dict(override)}
             target_state=make_state({'id':family,'properties':props},defaults)
             state_key=','.join(f'{k}={v}' for k,v in sorted(props.items()))
-            target_shape=frozenset(cell(c) for c in family_map[family]['states'][state_key]['interaction_footprint']['cells'])
+            target_shape=frozenset(cell(c) for c in physical_cells(family,state_key,family_map[family]['states'][state_key]))
             outputs_list.append(Output(target_state,add(base[2],root_offset),target_shape))
         outputs=tuple(outputs_list)
         occupied = set()

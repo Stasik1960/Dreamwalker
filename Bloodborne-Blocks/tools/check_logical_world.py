@@ -257,6 +257,14 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         for helper in entry["helpers"]:
             entity_overlay[(entry["dimension"], *helper["position"])] = helper_tag(helper)
 
+    pre_entries=report.get('gridPreReconciliation',{}).get('entries',[])
+    if 'gridPreReconciliation' in report:
+        from grid_world_reconciliation import plan
+        if plan(view,entity_overlay)!=pre_entries:raise AssertionError('GRID_PRE_RECONCILIATION_NOT_AUTHORIZED')
+        for entry in pre_entries:
+            for change in entry['changes']:
+                point=tuple(change['position']);view.states[(entry['dimension'],point)]=parse_state(change['after'])
+                entity_overlay.pop((entry['dimension'],*point),None)
     def current_owned():
         result = {}
         for (dim, x, y, z), entity in entity_overlay.items():
@@ -280,7 +288,7 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         previous_pass = pass_number
     if not groups:
         groups = [(1, [])]
-    touched_all = {(entry["dimension"], *change["position"]) for entry in recovery_entries for change in entry["changes"]}
+    touched_all = {(entry["dimension"], *change["position"]) for entry in list(recovery_entries)+pre_entries for change in entry["changes"]}
     for pass_number, entries in groups:
         owned = current_owned()
         expected_effects = independently_accepted_effects(view, rules, entity_overlay, owned, conflict_policy)
@@ -405,6 +413,13 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         for summary in summaries:
             if summary.get("converted") and actual_counts.get(summary.get("pass")) != summary["converted"]:
                 raise AssertionError("MODDED pass summary differs from ledger")
+    if 'gridReconciliation' in report:
+        from grid_world_reconciliation import plan,ROOT as grid_root
+        if hashlib.sha256((grid_root/'src/main/resources/bloodborne_blocks/logical/physical-footprints.json').read_bytes()).hexdigest()!=report['gridReconciliation']['physicalFootprintsSha256']:raise AssertionError('GRID_PHYSICS_HASH_CHANGED')
+        expected=plan(view,entity_overlay)
+        if expected!=report['gridReconciliation']['entries']:raise AssertionError('GRID_RECONCILIATION_NOT_AUTHORIZED')
+        for entry in expected:
+            for change in entry['changes']:touched_all.add((entry['dimension'],*change['position']))
     return {(dim, x // 16, z // 16) for dim, x, y, z in touched_all}
 
 
@@ -478,7 +493,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
         allowed = {}
         allowed_sections = {}
         expected_helpers = {}
-        for entry in recovery_entries + report["ledger"]:
+        for entry in recovery_entries + report.get("gridPreReconciliation",{}).get("entries",[]) + report["ledger"] + report.get("gridReconciliation",{}).get("entries",[]):
             dim = entry["dimension"]
             for change in entry["changes"]:
                 x, y, z = change["position"]

@@ -68,6 +68,9 @@ def prepare(world, resources, declared=None, *, plan_path=PLAN, reference=REFERE
     from convert_logical_world import PART, block_pos_long
     plan,sha=load_plan(plan_path,reference)
     geometry=json.loads((resources.parent/'city/geometry.json').read_bytes())
+    if (resources/'physical-footprints.json').exists():
+        import gzip
+        geometry=json.loads(gzip.decompress((ROOT/'docs/grid-physics/legacy-city-geometry.json.gz').read_bytes()))
     entities=world.block_entities();entries=[]
     for row in plan['cells']:
         dim=row['dimension'];p=tuple(row['position']);state=world.get(dim,p)

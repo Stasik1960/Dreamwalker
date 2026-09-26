@@ -15,12 +15,16 @@ def verify(source:Path,output:Path,report:dict):
     if report.get('dryRun') or not isinstance(report.get('ledger'),list):
         return {'result':'FAIL','changed_cells':0,'ledger_cells':0,'changed_chunks':0,'unchanged_chunks':0,
                 'preserved_nonterrain_files':0,'errors':['completed conversion ledger required']}
-    entries = report['ledger']
+    entries=[]
     if 'cityRecovery' in report:
         from city_recovery import prepare_directory
         from convert_logical_world import DEFAULT_RESOURCES
-        recovery = prepare_directory(source, DEFAULT_RESOURCES, report['cityRecovery'])
-        entries = [dict(e, pass_number=1) for e in recovery['entries']] + [dict(e, pass_number=e.get('pass',1)+1) for e in entries]
+        recovery=prepare_directory(source,DEFAULT_RESOURCES,report['cityRecovery'])
+        entries += [dict(e,pass_number=1) for e in recovery['entries']]
+    entries += [dict(e,pass_number=2) for e in report.get('gridPreReconciliation',{}).get('entries',[])]
+    entries += [dict(e,pass_number=e.get('pass',1)+2) for e in report['ledger']]
+    final_pass=max([e['pass_number'] for e in entries] or [2])+1
+    entries += [dict(e,pass_number=final_pass) for e in report.get('gridReconciliation',{}).get('entries',[])]
     for item in entries:
         dim=item.get('dimension')
         pass_number=item.get('pass_number',item.get('pass',1)) if report.get('sourceMode')=='modded' else 1

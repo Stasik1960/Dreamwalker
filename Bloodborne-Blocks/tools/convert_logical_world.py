@@ -1089,7 +1089,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             report_path: Path | None = None, dry_run: bool = False, progress: bool = False,
             report_root: Path | None = None, source_mode: str = "legacy",
             conflict_policy: str = "conservative", inventory_path: Path | None = None,
-            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False) -> dict[str, Any]:
+            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False, full_grid: bool = False) -> dict[str, Any]:
     def status(message: str) -> None:
         if progress:
             print(f"logical-world: {message}", file=sys.stderr, flush=True)
@@ -1111,6 +1111,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
     validate_paths(source, output, resources, report_path, report_root)
     if source_mode == "legacy" and legacy_migration_is_empty(resources) and has_contract_v2_patterns(resources):
         raise ValueError("legacy migration.json has no rules while Contract V2 source patterns exist; use --source-mode original-v2")
+    if full_grid and (not city_compat or source_mode!='modded' or not (resources/'physical-footprints.json').exists()):
+        raise ValueError('Full grid requires MODDED input, city compatibility and explicit physical masks')
     if city_compat and source_mode != "modded":
         raise ValueError("city compatibility requires the MODDED source adapter")
     if recover_city and (not city_compat or source_mode != "modded"):
@@ -1137,6 +1139,11 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             recovery = prepare_recovery(world, resources)
             apply_recovery(world, recovery)
             status(f"historical recovery: {len(recovery['entries'])} cells")
+        grid_pre = None
+        if full_grid:
+            from grid_world_reconciliation import apply as reconcile_grid
+            grid_pre = reconcile_grid(world)
+            status(f"pre-conversion grid helpers released: {grid_pre['helperChanges']}")
         registered_ids = ({PART} | {full_id(row["id"]) for row in
                           json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
                           if source_mode == "modded" else None)
@@ -1172,10 +1179,14 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             previous_source_cells = source_cells
             pass_number += 1
         city_report = None
+        grid_report = None
         if city_compat:
             from city_palette import apply as apply_city
             status("applying cell-preserving city palette")
             city_report = apply_city(world, resources.parent / "city", allow_unresolved=allow_unresolved_city)
+            if (resources / 'physical-footprints.json').exists():
+                from grid_world_reconciliation import apply as reconcile_grid
+                grid_report = reconcile_grid(world)
             from city_palette import audit_helpers
             city_report['helpers'] = audit_helpers(world, resources.parent / "city")
             if not city_report['helpers']['ok']:
@@ -1183,6 +1194,9 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             city_report['retainedAssemblies'] = dict(Counter(item.reason for item in items if item.reason))
             unmatched_modules = [{"state": state, "count": count, "reason": "historical_city_model_missing"}
                                  for state,count in city_report["unknownStates"].items()]
+        if full_grid:
+            city_report['fullGrid'] = True
+            city_report['fallbackPolicy'] = 'Exact cell-preserving current compatibility states, no legacy module retention'
         registry_incompatible = sum(group["count"] for group in unmatched_modules)
         forced = sum(summary["forced"] for summary in pass_summaries)
         report = {
@@ -1199,10 +1213,12 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
                        "legacyCarrierRules": mapping_diagnostics.get("compiledLegacyCarrierRules", 0) if mapping_diagnostics else 0},
             **({"passes": pass_summaries} if source_mode == "modded" else {}),
             **({"cityPaletteMigration": city_report} if city_report is not None else {}),
+            **({"gridPreReconciliation": grid_pre} if grid_pre is not None else {}),
+            **({"gridReconciliation": grid_report} if grid_report is not None else {}),
             **({"cityRecovery": recovery} if recovery is not None else {}),
             "ledger": ledger,
             "rejected": [{"rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
-                          "origin": list(item.origin), "reason": item.reason, "decision": "untouched",
+                          "origin": list(item.origin), "reason": item.reason, "decision": "current_compatibility_fallback" if full_grid else "untouched",
                           "conflictingCells": item.conflicts,
                           "tp": f"/execute in {item.dimension} run tp @s {item.origin[0]} {item.origin[1]} {item.origin[2]}"}
                          for item in items if item.reason],
@@ -1241,6 +1257,7 @@ def main() -> None:
     parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc", "original-v2", "modded"), default="legacy",
                         help="modded composes frozen m_* and Bloodborne carrier mappings with current Contract V2; original-v2 reads raw vanilla carriers")
     parser.add_argument("--conflict-policy", choices=("conservative", "aggressive"), default="conservative")
+    parser.add_argument("--full-grid", action="store_true", help="authoritative current one-cell compatibility fallback for terminal legacy architecture")
     parser.add_argument("--allow-unresolved-city", action="store_true", help="diagnostic output only: preserve missing city IDs and mark registry QA FAIL")
     parser.add_argument("--recover-city", action="store_true", help="restore exact missing cells from verified historical MODDED reference before conversion")
     parser.add_argument("--city-compat", action="store_true", help="map remaining historical module palettes to the compact city registry")
@@ -1249,7 +1266,7 @@ def main() -> None:
     args = parser.parse_args()
     report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode,
                      conflict_policy=args.conflict_policy, inventory_path=args.inventory,
-                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city)
+                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city, full_grid=args.full_grid)
     print(json.dumps(report["counts"], ensure_ascii=False))
 
 
