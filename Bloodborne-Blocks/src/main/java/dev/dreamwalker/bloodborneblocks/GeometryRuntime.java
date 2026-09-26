@@ -33,6 +33,7 @@ final class GeometryRuntime {
   Map<String,GeometryCell> cells;
   int[] anchor;
   double[] render_offset={0,0,0};
+  int[] technical_root_offset={0,0,0};
   String ref;
   int rotation;
   double[] globalOutline;

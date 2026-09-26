@@ -1,5 +1,6 @@
 """Scoped cumulative-patch invariants; consumes saved evidence, never scans a world."""
 import copy, json, unittest
+from pathlib import Path
 from apply_agony_patch import DOC, LOGICAL, MERGES, CONTEXT, STATUES, FACINGS, read, props, key, rotate, bounds
 from production_fingerprints import verify
 from logical_contract_v2 import direct_rules
@@ -13,7 +14,11 @@ class AgonyPatchTests(unittest.TestCase):
         cls.baseline=read(DOC/'baseline-fingerprints.json.gz')['fingerprints']['families']
 
     def test_untouched_families(self):
-        result=verify(allowlist_path=DOC/'allowlist.json')
+        # Keep historical evidence immutable. Only the two explicitly approved
+        # saved-root variants extend its allowlist; old states must stay exact.
+        from verify_root_state_baseline import verify as verify_roots
+        self.assertEqual('PASS',verify_roots()['result'])
+        result=verify(allowlist_path=Path(__file__).resolve().parents[1]/'docs/composite-grid-repair/root-state-agony-allowlist.json')
         self.assertEqual('PASS',result['result'])
         self.assertEqual(sorted(set(MERGES)|CONTEXT),result['approved_retired_removals'])
 

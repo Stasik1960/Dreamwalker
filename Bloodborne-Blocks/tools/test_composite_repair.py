@@ -21,15 +21,20 @@ class CompositeRepairTests(unittest.TestCase):
     def test_physical_changes_are_exact_documented_nonexpanding_reductions(self):
         data,_=load_contracts(DEFAULT_RESOURCES)
         plan=json.loads((ROOT/'docs/composite-grid-repair/physical-conflict-plan.json').read_bytes())
-        approved={(c['family'],c['state']):c for c in plan['changes']}
+        approved={(c['family'],','.join(p for p in c['state'].split(',') if not p.startswith('root_anchor='))):c for c in plan['changes']}
         for f in data['families']:
             for state_key,s in f['states'].items():
                 before={tuple(c) for c in s['interaction_footprint']['cells']}
                 after={tuple(c) for c in s['physical_footprint']['cells']}
-                change=approved.get((f['id'],state_key))
-                self.assertEqual(before-({tuple(c) for c in change['removed_cells']} if change else set()),after)
-                self.assertEqual(change['after_boxes'] if change else s['collision_footprint']['boxes'],s['physical_footprint']['boxes'])
+                baseline_key=','.join(p for p in state_key.split(',') if not p.startswith('root_anchor='))
+                change=approved.get((f['id'],baseline_key))
+                shift=s.get('technical_root_offset',[0,0,0])
+                expected=before-({tuple(c) for c in change['removed_cells']} if change else set())
+                if any(shift):expected.discard((0,0,0))
+                self.assertEqual({tuple(c[i]-shift[i] for i in range(3)) for c in expected},after)
+                if not any(shift):self.assertEqual(change['after_boxes'] if change else s['collision_footprint']['boxes'],s['physical_footprint']['boxes'])
                 for box in s['physical_footprint']['boxes']:
+                    box=[v+shift[i%3] for i,v in enumerate(box)]
                     # Partition at every original boundary to test containment
                     # in the UNION, including merged adjacent primitives.
                     from itertools import product
@@ -82,6 +87,8 @@ class CompositeRepairTests(unittest.TestCase):
         for row in oracle['occurrences']:
             for output in row['outputs']:
                 state_key=output['expected_logical_state'].partition('[')[2].rstrip(']')
+                if output['family'] in {'o_bench','o_high_balustrade'}:
+                    state_key=','.join(sorted(state_key.split(',')+['root_anchor=canonical']))
                 state=families[output['family']]['states'][state_key]
                 for delta in state['physical_footprint']['cells']:
                     owners[add(output['canonical_root'],delta)].append(output['family'])

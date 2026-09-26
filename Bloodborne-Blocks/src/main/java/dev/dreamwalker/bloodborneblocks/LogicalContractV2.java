@@ -13,7 +13,7 @@ final class LogicalContractV2 {
  static final class Data {int schemaVersion;String transform_contract;List<Family> families;}
  static final class Family {String id,placement_policy,mirror_policy,collision_policy,selection_policy,collision_justification,review_id,authority;Anchor canonical_anchor;List<Integer> rotations;Map<String,State> states;List<Pattern> migration_source_pattern,review_source_patterns;}
  static final class Anchor {int[] cell;double[] pivot;}
- static final class State {int rotation;Render render_mesh;Footprint selection_footprint,collision_footprint,interaction_footprint,physical_footprint;List<Pattern> migration_source_pattern;}
+ static final class State {int rotation;int[] technical_root_offset;Render render_mesh;Footprint selection_footprint,collision_footprint,interaction_footprint,physical_footprint;List<Pattern> migration_source_pattern;}
  static final class PhysicalData {int schemaVersion;Map<String,Map<String,Footprint>> families;}
  static final class Render {String id;double[] bounds,offset;}
  static final class Footprint {List<double[]> boxes,cells;}
@@ -41,6 +41,8 @@ final class LogicalContractV2 {
    for(var entry:family.states.entrySet()){
     String key=entry.getKey();State state=entry.getValue();if(state==null||!family.rotations.contains(state.rotation)||state.render_mesh==null||!Objects.equals(definition.models.get(key),state.render_mesh.id)||!meshes.contains(state.render_mesh.id))throw fail("mesh "+family.id+"["+key+"]");
     checkRender(state.render_mesh);checkBoxes(state.selection_footprint,"selection",1);checkBoxes(state.collision_footprint,"collision",budget(family));checkCells(state.interaction_footprint);checkPattern(state.migration_source_pattern);
+    boolean upper="upper".equals(parseStateKey(key).get("root_anchor"));
+    if(upper!= (state.technical_root_offset!=null)||upper&&(!Set.of("o_bench","o_high_balustrade").contains(family.id)||!Arrays.equals(state.technical_root_offset,new int[]{0,1,0})||!state.migration_source_pattern.isEmpty()))throw fail("UNAPPROVED_TECHNICAL_ROOT "+family.id+"["+key+"]");
     state.physical_footprint=masks.get(key);checkCells(state.physical_footprint);checkBoxes(state.physical_footprint,"physical collision",budget(family)*state.physical_footprint.cells.size());
     for(double[] cell:state.physical_footprint.cells)if(clip(state.physical_footprint.boxes,(int)cell[0],(int)cell[1],(int)cell[2]).size()>budget(family))throw fail("PHYSICAL_CELL_PRIMITIVE_BUDGET "+family.id+"["+key+"]");
     for(double[] box:state.physical_footprint.boxes)if(!covered(box,state.physical_footprint.cells))throw fail("COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT "+family.id+"["+key+"]");
@@ -51,7 +53,8 @@ final class LogicalContractV2 {
     }
     for(double[] box:state.collision_footprint.boxes)if(!covered(box,state.interaction_footprint.cells))throw fail("COLLISION_OUTSIDE_OWNED_CELLS "+family.id+"["+key+"]");
     block.states.put(key,geometry(family,state));
-    debug.put(family.id+"\u0000"+key,new DebugMetadata(family.review_id,anchorText(family.canonical_anchor),family.collision_policy,family.selection_policy==null?"AUTHORED_OUTLINE":family.selection_policy,sourceFamily(family),sourcePatternSummary(family,state)));
+    String anchorDescription=anchorText(family.canonical_anchor)+(upper?"; technical root +[0,1,0], effective anchor "+Arrays.toString(block.states.get(key).anchor):"");
+    debug.put(family.id+"\u0000"+key,new DebugMetadata(family.review_id,anchorDescription,family.collision_policy,family.selection_policy==null?"AUTHORED_OUTLINE":family.selection_policy,sourceFamily(family),sourcePatternSummary(family,state)));
    }
    result.put(family.id,block);
   }
@@ -104,7 +107,22 @@ final class LogicalContractV2 {
   GeometryRuntime.GeometryState geometry=new GeometryRuntime.GeometryState();geometry.anchor=family.canonical_anchor.cell.clone();geometry.rotation=state.rotation;geometry.render_offset=state.render_mesh.offset.clone();geometry.cells=new LinkedHashMap<>();
   geometry.placementPolicy=family.placement_policy;geometry.mirrorPolicy=family.mirror_policy;
   for(double[] cell:state.physical_footprint.cells){int x=(int)cell[0],y=(int)cell[1],z=(int)cell[2];GeometryRuntime.GeometryCell part=new GeometryRuntime.GeometryCell();part.collision=clip(state.physical_footprint.boxes,x,y,z);part.outline=clip(state.selection_footprint.boxes,x,y,z);geometry.cells.put(x+","+y+","+z,part);}
-  geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();geometry.gameplayBoxes=state.physical_footprint.boxes;return geometry;
+  geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();geometry.gameplayBoxes=state.physical_footprint.boxes;
+  if(state.technical_root_offset!=null){
+   // Only a vertical one-cell rebase: it commutes with every supported rotation.
+   // Mesh payload and its original pivot are untouched; translate after baking.
+   if(!geometry.cells.containsKey("0,1,0"))throw fail("UPPER_ROOT_NOT_OWNED "+family.id);
+   Map<String,GeometryRuntime.GeometryCell> shifted=new LinkedHashMap<>();List<double[]> gameplay=new ArrayList<>();
+   for(var entry:geometry.cells.entrySet()){
+    if(entry.getKey().equals("0,0,0"))continue;
+    String[] xyz=entry.getKey().split(",");int x=Integer.parseInt(xyz[0]),y=Integer.parseInt(xyz[1])-1,z=Integer.parseInt(xyz[2]);
+    shifted.put(x+","+y+","+z,entry.getValue());
+    for(double[] local:entry.getValue().collision)gameplay.add(new double[]{local[0]+x,local[1]+y,local[2]+z,local[3]+x,local[4]+y,local[5]+z});
+   }
+   geometry.cells=shifted;geometry.gameplayBoxes=gameplay;geometry.anchor[1]-=1;geometry.render_offset[1]-=1;
+   geometry.globalOutline[1]-=1;geometry.globalOutline[4]-=1;geometry.technical_root_offset=state.technical_root_offset.clone();
+  }
+  return geometry;
  }
  private static List<double[]> clip(List<double[]> boxes,int x,int y,int z){List<double[]> out=new ArrayList<>();for(double[] box:boxes){double[] clipped={Math.max(box[0],x)-x,Math.max(box[1],y)-y,Math.max(box[2],z)-z,Math.min(box[3],x+1)-x,Math.min(box[4],y+1)-y,Math.min(box[5],z+1)-z};if(clipped[0]<clipped[3]&&clipped[1]<clipped[4]&&clipped[2]<clipped[5])out.add(clipped);}return out;}
  private static boolean covered(double[] box,List<double[]> cells){for(int x=(int)Math.floor(box[0]+COLLISION_EPSILON);x<(int)Math.ceil(box[3]-COLLISION_EPSILON);x++)for(int y=(int)Math.floor(box[1]+COLLISION_EPSILON);y<(int)Math.ceil(box[4]-COLLISION_EPSILON);y++)for(int z=(int)Math.floor(box[2]+COLLISION_EPSILON);z<(int)Math.ceil(box[5]-COLLISION_EPSILON);z++){boolean present=false;for(double[] cell:cells)if((int)cell[0]==x&&(int)cell[1]==y&&(int)cell[2]==z)present=true;if(!present)return false;}return true;}

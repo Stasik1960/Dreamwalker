@@ -245,6 +245,8 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  @Override public java.util.List<ItemStack> getDroppedStacks(BlockState state,net.minecraft.loot.context.LootContextParameterSet.Builder builder){
   java.util.List<ItemStack> drops=new java.util.ArrayList<>(super.getDroppedStacks(state,builder));
   if(definition.city_compat&&definition.models!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))copyVariant(state,drop);
+  Property<?> rootAnchor=getStateManager().getProperty("root_anchor");
+  if(rootAnchor!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))drop.getOrCreateSubNbt("BlockStateTag").putString("root_anchor",BloodborneBlocks.value((Property)rootAnchor,(Comparable)state.get((Property)rootAnchor)));
   ItemStack mounted=getStateManager().getProperty("hand_lantern")==null?ItemStack.EMPTY:LogicalAttachments.attachedItem(state);if(!mounted.isEmpty())drops.add(mounted);
   return drops;
  }

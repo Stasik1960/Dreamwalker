@@ -146,6 +146,20 @@ def load_contracts(resources):
                     raise ValueError('RENDER_BELOW_SUPPORT_PLANE: '+ident)
             if any(not box_cells(b) <= set(cells) for b in collision):
                 raise ValueError("COLLISION_OUTSIDE_OWNED_CELLS: "+ident+"["+key+"]")
+            upper=dict(p.split('=',1) for p in key.split(',')).get('root_anchor')=='upper'
+            shift=state.get('technical_root_offset')
+            if upper != (shift is not None) or upper and (ident not in {'o_bench','o_high_balustrade'} or shift!=[0,1,0] or state['migration_source_pattern']):
+                raise ValueError('UNAPPROVED_TECHNICAL_ROOT')
+            if upper:
+                if (0,1,0) not in physical_cells:raise ValueError('UPPER_ROOT_NOT_OWNED')
+                kept=[c for c in physical_cells if c!=(0,0,0)]
+                boxes=[]
+                for c in kept:
+                    for b in mask['boxes']:
+                        clipped=[max(b[i],c[i]) for i in range(3)]+[min(b[i+3],c[i]+1) for i in range(3)]
+                        if all(clipped[i]<clipped[i+3] for i in range(3)):
+                            clipped[1]-=1;clipped[4]-=1;boxes.append(clipped)
+                state['physical_footprint']={'cells':[[x,y-1,z] for x,y,z in kept],'boxes':boxes}
             for pattern in state["migration_source_pattern"]:
                 components = pattern["components"]
                 positions = [cell(c["offset"]) for c in components]

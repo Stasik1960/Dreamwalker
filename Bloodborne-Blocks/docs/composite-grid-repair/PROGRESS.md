@@ -56,7 +56,10 @@ upper neighboring cell belongs to each moving object's source assembly and
 physical footprint, with no second protected physical owner. See
 root-exception-evidence.json and inspect_root_exceptions.py.
 
-The upper-cell rebase is a candidate, not implemented runtime behavior.
+The upper-cell rebase is now implemented as an explicit saved root_anchor
+state for these two families, with canonical remaining the default. The
+converter enables it only at the two approved coordinates, with exact source
+membership and a preserved-neighbor state guard. No generic relocation exists.
 Two separate evidence tests pass, including cancellation of root displacement
 after cardinal rotation around the original pivot and exact equality of every
 real mesh vertex for all current states of both families. These tests do not
@@ -70,8 +73,30 @@ an entire family's anchor merely to solve these two map occurrences.
 
 ## Remaining
 
-Integrate the bounded root policy with existing state/runtime/converter paths;
-finish composite membership recovery
+Finish composite membership recovery
 and independent whole-world gates; convert ONLY latest-modded-world.zip;
 verify the whole map and idempotence. Release/main integration must wait for
 the required gates. Client graphical verification has not been performed.
+
+## Root-state verification (2026-09-26)
+
+- Full Gradle check PASS: 52 tasks, 3m38s; log
+  build/root-state-full-check-final.log. Isolated JDK17 was used; stale daemon
+  metadata still mentions an unrelated missing system JDK.
+- Two real headless Fabric GameTests PASS, covering both families in four
+  directions, foreign-cell preservation, helper creation/removal, seating and
+  pick-state preservation. These are not graphical client tests.
+- Bench (-374,73,-291): immutable input membership verified; conversion fixture,
+  independent output checker and byte-identical second pass PASS. Replacing
+  the preserved neighbor with a foreign block rejects the exception.
+- Balustrade (-560,98,-9): actual map conversion remains UNRESOLVED. Frozen
+  expected modules are not the actual assembly. Polygon comparison found six
+  additional polygons at each of y98 and y99; none may be discarded by guess.
+- verify_root_state_baseline.py proves all canonical resource payloads equal
+  baseline 419b85e after removing the explicit new property/state variants.
+  The other 47 production families are unchanged.
+- Physical reduction report now includes 136 entries (upper-state duplicates
+  included); upper states rebase the already reduced mask without expansion.
+
+The earlier paragraphs describing the rebase as evidence-only are superseded
+by this section. No final world or beta.4 release has been generated.

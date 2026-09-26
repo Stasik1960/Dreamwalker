@@ -343,6 +343,8 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
         "inventoryRegistryIncompatibleByCategory": dict(sorted(incompatible_inventory.items())) if inventory_counts else None,
         "retiredLogicalMappings": "NOT_IMPLEMENTED_NOT_PRESENT_IN_INPUT; frozen pre-Agony evidence exists, but inspected latest modded input reports zero o_* states",
     }
+    from explicit_root_exceptions import apply as apply_root_exceptions
+    rules=apply_root_exceptions(rules,resources)
     # Old defaults are required when a palette entry omits a property; current
     # production defaults then override only IDs that still exist.
     return rules, {**old_defaults, **legacy_defaults, **load_defaults(resources)}, diagnostics

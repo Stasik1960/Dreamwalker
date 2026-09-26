@@ -235,6 +235,13 @@ class Rule:
     outputs: tuple["Output", ...] = ()
     source_mode: str = "legacy"
     source_reference: str | None = None
+    allowed_origins: tuple[tuple[str, tuple[int, int, int]], ...] = ()
+    excluded_origins: tuple[tuple[str, tuple[int, int, int]], ...] = ()
+    required_context: tuple[Expected, ...] = ()
+
+    def accepts_origin(self,dimension,origin):
+        point=(dimension,tuple(origin))
+        return (not self.allowed_origins or point in self.allowed_origins) and point not in self.excluded_origins
 
 
 @dataclass(frozen=True)
@@ -767,6 +774,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                 found[(chunk.dimension, pos)] = state
                 for rule, mode, offset in inverse.get(state, ()):
                     origin = (pos[0] - offset[0], pos[1] - offset[1], pos[2] - offset[2])
+                    if not rule.accepts_origin(chunk.dimension,origin):continue
                     key = (rule.number, mode, chunk.dimension, origin)
                     result.setdefault(key, Candidate(rule, mode, chunk.dimension, origin, set(), (0, 0, 0), {}))
             palette_counts = np.bincount(index_array, minlength=len(states))
@@ -798,6 +806,9 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             if owned_part(world.get(dim, (x, y, z)), entity, str(owner.value), unpack_pos_long(int(root.value))):
                 owned_parts[(dim, str(owner.value), int(root.value))].add((x, y, z))
     for item in result.values():
+        if any(world.get(item.dimension,add(item.origin,p.offset))!=p.state for p in item.rule.required_context):
+            item.reason='explicit_root_context_mismatch'
+            continue
         pieces = ((item.rule.source,) + item.rule.members) if item.mode in ("legacy", "modded") else item.rule.components or ()
         actual: set[tuple[int, int, int]] = set()
         for piece in pieces:

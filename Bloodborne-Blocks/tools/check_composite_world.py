@@ -13,11 +13,14 @@ from convert_logical_world import PART, unpack_pos_long, DEFAULT_RESOURCES, add
 from composite_world_oracle import key
 from modded_world_adapter import compile_modded_rules
 from source_variant_rng import guards_match
+from logical_contract_v2 import load_contracts
 
 def technical_membership(row,before,rules):
     """Require a complete exact MODDED assembly, not a raw carrier heuristic."""
     origin=tuple(row['origin']);dim=row['dimension'];matched=[]
     for rule in rules:
+        if not rule.accepts_origin(dim,origin):continue
+        if any(before.state(dim,add(origin,p.offset))[1]!=key(p.state) for p in rule.required_context):continue
         if not guards_match(rule.variant_guards,origin):continue
         cells=[(add(origin,p.offset),key(p.state)) for p in (rule.source,)+rule.members]
         if all(before.state(dim,p)[1]==expected for p,expected in cells):matched.append(cells)
@@ -77,19 +80,35 @@ def check(output,oracle_path,source):
     if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest()!='c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9':
         raise ValueError('IMMUTABLE_MODDED_INPUT_HASH_MISMATCH')
     oracle=json.loads(oracle_path.read_bytes())
-    physical=json.loads((DEFAULT_RESOURCES/'physical-footprints.json').read_bytes())['families']
+    contracts,_=load_contracts(DEFAULT_RESOURCES)
+    physical={f['id']:{k:s['physical_footprint'] for k,s in f['states'].items()} for f in contracts['families']}
     compiled,_,_=compile_modded_rules(DEFAULT_RESOURCES)
     by_raw={}
     for rule in compiled:
         match=re.search(r'raw rule (\d+)$',rule.source_reference or '')
         if match:by_raw.setdefault(int(match.group(1)),[]).append(rule)
-    permitted_roots={(r['dimension'],tuple(o['canonical_root'])):o['expected_logical_state']
-                     for r in oracle['occurrences'] for o in r['outputs']}
     actual=WorldReader(output);before=WorldReader(source)
     families={f:{'expected':v['expected_source_occurrences'],'logical':0,'foreign_conflicts':0,'fragmented':0}
               for f,v in oracle['families'].items()}
     failures=[];foreign=[];unresolved_membership=[]
     try:
+        # Persisted state defaults preserve old oracle identities. Relocation
+        # is recognized only for an exact, coordinate-guarded source assembly.
+        for row in oracle['occurrences']:
+            for o in row['outputs']:
+                if o['family'] not in {'o_bench','o_high_balustrade'}:continue
+                name,_,suffix=o['expected_logical_state'].partition('[')
+                props=dict(p.split('=',1) for p in suffix.rstrip(']').split(',') if p)
+                props['root_anchor']='canonical'
+                o['expected_logical_state']=name+'['+','.join(k+'='+v for k,v in sorted(props.items()))+']'
+                for rule in by_raw.get(row['rule'],()):
+                    if not rule.allowed_origins or rule.target[0]!=name or not rule.accepts_origin(row['dimension'],tuple(row['origin'])):continue
+                    if all(before.state(row['dimension'],add(row['origin'],p.offset))[1]==key(p.state) for p in (rule.source,)+rule.members+rule.required_context):
+                        o['canonical_root']=list(add(row['origin'],rule.root_offset))
+                        o['expected_logical_state']=key(rule.target)
+                        break
+        permitted_roots={(r['dimension'],tuple(o['canonical_root'])):o['expected_logical_state']
+                         for r in oracle['occurrences'] for o in r['outputs']}
         rows=sorted(oracle['occurrences'],key=lambda r:(r['dimension'],r['origin'][0]//16,r['origin'][2]//16,r['origin'][1]))
         for number,row in enumerate(rows):
             if number%2500==0:print('protected world gate',number,'/',len(rows),flush=True)

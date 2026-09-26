@@ -1,0 +1,22 @@
+// Explicitly scoped test run; only the BUILD copy of the GameTest descriptor
+// is filtered. Production resources and the normal full test suite stay intact.
+gradle.projectsEvaluated {
+ def p=rootProject
+ p.tasks.named('processGametestResources') {
+  outputs.upToDateWhen { false }
+  doLast {
+   def target=new File(destinationDir,'fabric.mod.json')
+   def data=new groovy.json.JsonSlurper().parse(target)
+   data.entrypoints['fabric-gametest']=['dev.dreamwalker.bloodborneblocks.ExplicitRootGameTests']
+   target.text=groovy.json.JsonOutput.toJson(data)
+  }
+ }
+ p.tasks.named('runGametest') {
+  jvmArgs "-Dfabric-api.gametest.report-file=${p.file('build/test-results/root-exceptions/TEST-root-exceptions.xml').absolutePath}"
+  finalizedBy 'restoreFullGameTestDescriptor'
+ }
+ p.tasks.register('restoreFullGameTestDescriptor',Copy) {
+  from p.file('src/gametest/resources/fabric.mod.json')
+  into p.tasks.named('processGametestResources').get().destinationDir
+ }
+}

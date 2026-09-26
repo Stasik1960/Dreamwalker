@@ -158,9 +158,11 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
                     pos = (chunk.x * 16 + (cell & 15), sy * 16 + (cell >> 8), chunk.z * 16 + ((cell >> 4) & 15))
                     for rule, mode, offset in choices:
                         origin = tuple(pos[i] - offset[i] for i in range(3))
+                        if not rule.accepts_origin(chunk.dimension,origin):continue
                         proposals[(rule.number, mode, chunk.dimension, origin)] = rule
     effects = {}
     for (_, mode, dim, origin), rule in proposals.items():
+        if any(before.get(dim,tuple(origin[i]+p.offset[i] for i in range(3)))!=p.state for p in rule.required_context):continue
         pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components
         source = {tuple(origin[i] + part.offset[i] for i in range(3)) for part in pieces}
         if len(source) != len(pieces) or any(before.get(dim, tuple(origin[i] + part.offset[i] for i in range(3))) != part.state for part in pieces):

@@ -110,6 +110,7 @@ public final class BloodborneBlocks implements ModInitializer {
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
    if(p==null&&(d.logical||d.city_compat)&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&d.logical&&name.equals("root_anchor")&&Set.of("o_bench","o_high_balustrade").contains(d.id)&&d.properties.get(name).equals(List.of("canonical","upper")))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;

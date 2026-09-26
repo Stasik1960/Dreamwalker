@@ -34,6 +34,10 @@ def merge(boxes):
 
 def plan(oracle,contracts,external_evidence=()):
     by_id={f['id']:f for f in contracts['families']};remove=defaultdict(set)
+    def canonical_key(family,key):
+        if family in {'o_bench','o_high_balustrade'} and any('root_anchor=' in k for k in by_id[family]['states']):
+            return ','.join(sorted([p for p in key.split(',') if not p.startswith('root_anchor=')]+['root_anchor=canonical']))
+        return key
     shared=[]
     for conflict in oracle['physical_conflicts']:
         roots=[o for o in conflict['owners'] if o['root']==conflict['position']]
@@ -41,7 +45,7 @@ def plan(oracle,contracts,external_evidence=()):
         for owner in conflict['owners']:
             p=tuple(conflict['position'][i]-owner['root'][i] for i in range(3))
             if p==(0,0,0):continue
-            family=owner['family'];key=owner['state'].partition('[')[2].rstrip(']')
+            family=owner['family'];key=canonical_key(family,owner['state'].partition('[')[2].rstrip(']'))
             remove[(family,key)].add(p)
     external=[]
     for evidence in external_evidence:
@@ -95,7 +99,7 @@ def plan(oracle,contracts,external_evidence=()):
         states={};masks[family['id']]=states
         for key,state in family['states'].items():
             before={tuple(c) for c in state['interaction_footprint']['cells']}
-            removed=before&remove[(family['id'],key)]
+            removed=before&remove[(family['id'],canonical_key(family['id'],key))]
             after=before-removed
             if (0,0,0) not in after:raise ValueError('ROOT_REMOVAL_FORBIDDEN')
             boxes=state['collision_footprint']['boxes']

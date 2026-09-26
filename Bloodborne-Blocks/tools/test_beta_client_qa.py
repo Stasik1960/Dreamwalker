@@ -79,7 +79,7 @@ class BetaClientQaTests(unittest.TestCase):
 
     def test_only_explicit_beta_families_changed(self):
         result = verify(baseline_path=ROOT / "docs/beta-client-qa/baseline-fingerprints.json.gz",
-                        allowlist_path=ROOT / "docs/beta-client-qa/allowlist.json")
+                        allowlist_path=ROOT / "docs/composite-grid-repair/root-state-beta-allowlist.json")
         self.assertEqual("PASS", result["result"])
 
     def test_collision_never_leaves_explicit_owned_cells(self):
