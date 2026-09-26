@@ -306,6 +306,32 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
                           raw_rule.outputs,'modded',f'proven textured module composition + Contract V2 raw rule {raw_rule.number}'))
         overlap_count+=1
 
+    # Later historical ornament expansion was not recorded in migration.json.
+    # Admit only independently reconstructed, complete textured-mesh identities.
+    wall_count = 0
+    from convert_logical_world import Expected
+    evidence_path = ROOT/'docs/composite-grid-repair/historical-wall-mesh-mappings.json'
+    if evidence_path.exists():
+        evidence = json.loads(evidence_path.read_bytes())
+        if evidence.get('schemaVersion') != 1:
+            raise ValueError('WALL_MESH_EVIDENCE_SCHEMA')
+        identities = {(r['source'][0], tuple(tuple(p) for p in r['source'][1])): r['matches']
+                      for r in evidence['mappings']}
+        for raw_rule in raw_rules:
+            if raw_rule.members or raw_rule.outputs: continue
+            for match in identities.get(raw_rule.source.state, ()):
+                source = Expected(raw_rule.source.offset,
+                                  ('bloodborne_blocks:'+match['id'], (('facing', match['facing']),)))
+                if any(r.source == source and not r.members and r.target == raw_rule.target
+                       and r.root_offset == raw_rule.root_offset and r.variant_guards == raw_rule.variant_guards
+                       and r.source_reference and r.source_reference.endswith(f'raw rule {raw_rule.number}')
+                       for r in rules): continue
+                rules.append(Rule(len(rules), source, raw_rule.target, raw_rule.root_offset,
+                                  (), None, raw_rule.shape, raw_rule.supersedes_targets,
+                                  raw_rule.variant_guards, raw_rule.transaction_id, (), 'modded',
+                                  f'proven complete historical wall mesh + Contract V2 raw rule {raw_rule.number}'))
+                wall_count += 1
+
     embedded, embedded_gaps = _embedded_window_rules(resources, len(rules))
     rules.extend(embedded)
     gaps.extend(embedded_gaps)
@@ -323,6 +349,7 @@ def compile_modded_rules(resources: Path, inventory_path: Path | None = None):
                     "otherRetired")
         incompatible_inventory[category] += count
     diagnostics = {
+        'compiledExactHistoricalWallRules': wall_count,
         'compiledMixedKeptCarrierRules': mixed_count,
         'compiledProvenOverlapRules': overlap_count,
         "archiveSha256": hashlib.sha256(ARCHIVE_PATH.read_bytes()).hexdigest(),

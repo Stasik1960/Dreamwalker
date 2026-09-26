@@ -100,3 +100,30 @@ the required gates. Client graphical verification has not been performed.
 
 The earlier paragraphs describing the rebase as evidence-only are superseded
 by this section. No final world or beta.4 release has been generated.
+
+## Exact historical wall recovery
+
+Reconstructed complete textured meshes from the checksum-frozen 2.0.1 JAR,
+using its original carrier blockstates/models and historical clipping code.
+59 source states of red_nether_brick_wall/mossy_cobblestone_wall have exact
+single-cell matches with source attribution and no missing/extra polygons.
+Mappings already handled by the frozen migration are not duplicated. The
+new evidence is historical-wall-mesh-mappings.json; regeneration is checked
+by test_historical_wall_mappings.py. No runtime art/physics was changed.
+
+Three new tests PASS: complete evidence reconstruction, absence of ambiguous
+targets, conversion with preserved foreign neighbor and byte-identical second
+pass checked by the independent world validator. Related adapter, composite
+and explicit-root suites PASS through Gradle (5 tasks, 54s), log
+build/historical-wall-gradle-check-final.log.
+
+Expanded negative world gate still FAILS beta.3, as required: 9,551 fragmented
+objects, 6,689 unresolved technical memberships (down from 8,023). Fragmented
+counts are not comparable directly to the earlier gate because saved default
+root_anchor state is now included. No positive whole-world PASS is claimed.
+The 1,334 newly proven memberships do not imply a delivered converted map.
+
+Stepped balustrade sample (-676,35,-312) is not admitted: 33 expected polygons
+are contained in an actual 39-polygon mesh. The extra six form a separate
+spirelamp_002 textured slab (y=0..0.1875). Its owner remains to be proved;
+neither containment alone nor its appearance authorizes discarding it.
