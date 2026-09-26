@@ -22,18 +22,18 @@ import java.util.IdentityHashMap;
 import java.util.Set;
 import java.util.Objects;
 
-/** Decorative state machine: no random ticks, block entities, redstone machines or inventories. */
-public final class ArchitectureBlock extends Block implements Waterloggable {
+/** Decorative state machine; shared logical roots alone may carry helper ownership block entities. */
+public class ArchitectureBlock extends Block implements Waterloggable {
  private static final ThreadLocal<BloodborneBlocks.Definition> CONSTRUCTING=new ThreadLocal<>();
  public final BloodborneBlocks.Definition definition;
  private final Map<BlockState,BlockState> originals=new IdentityHashMap<>();
- public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
+ public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return d.logical||d.whole_owner?new SharedArchitectureBlock(d):new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
  private static Settings settings(BloodborneBlocks.Definition d){
   Block material=semanticMaterial(d);BlockState materialState=material.getDefaultState();
   Settings s=Settings.create().strength(semanticHardness(d),semanticResistance(d)).sounds(material.getSoundGroup(materialState)).mapColor(materialState.getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
   if(!d.full_cube||d.custom_geometry)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
   if(!d.offset.equals("none"))s.offset(d.offset.equals("xyz")?OffsetType.XYZ:OffsetType.XZ).dynamicBounds();
-  return s;
+  return d.logical||d.whole_owner?s.dynamicBounds():s;
  }
  private static Block semanticMaterial(BloodborneBlocks.Definition d){
   if(!d.modular||d.semantic==null)return d.sourceBlock;
@@ -46,7 +46,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  }
  private static float semanticHardness(BloodborneBlocks.Definition d){return !d.modular||d.semantic==null?d.hardness:switch(d.semantic){case "window"->.3F;case "tree","bush","plant","floor_decoration"->.2F;case "ladder"->.4F;case "wood","container","bench"->2F;default->d.hardness;};}
  private static float semanticResistance(BloodborneBlocks.Definition d){return !d.modular||d.semantic==null?d.resistance:switch(d.semantic){case "window"->.3F;case "tree","bush","plant","floor_decoration"->.2F;case "ladder"->.4F;case "wood","container","bench"->3F;default->d.resistance;};}
- private ArchitectureBlock(BloodborneBlocks.Definition d){
+ protected ArchitectureBlock(BloodborneBlocks.Definition d){
   super(settings(d));definition=d;BlockState defaultState=getStateManager().getDefaultState();
   for(var e:d.defaultProperties.entrySet())defaultState=BloodborneBlocks.set(defaultState,d.propertyObjects.get(e.getKey()),e.getValue());setDefaultState(defaultState);
   for(BlockState state:getStateManager().getStates()){
@@ -59,9 +59,9 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  public BlockState original(BlockState state){return originals.getOrDefault(state,definition.sourceBlock.getDefaultState());}
  /** Keep selection bounds inside the physical shape. Authored render geometry can overhang
   * a block for decorative silhouettes; using it as an outline produced ghost lines in-world. */
- @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,true);}
+ @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return VoxelShapes.union(GeometryRuntime.rootShape(state,true),GeometryRuntime.guestShape(world,pos,true));}
  @Override public BlockRenderType getRenderType(BlockState state){return BlockRenderType.MODEL;}
- @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.rootShape(state,false);}
+ @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return VoxelShapes.union(GeometryRuntime.rootShape(state,false),GeometryRuntime.guestShape(world,pos,false));}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return definition.full_cube&&!definition.custom_geometry?VoxelShapes.fullCube():VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return definition.full_cube?.2F:1F;}
  @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return !definition.full_cube;}
@@ -197,8 +197,12 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  }
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
   if(!GeometryRuntime.usesHelpers(this)){super.onStateReplaced(state,world,pos,next,moved);return;}
+  if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating()){
+   ArchitecturePartBlockEntity carrier=GeometryRuntime.part(world,pos);java.util.List<ArchitecturePartBlockEntity.Binding> guests=carrier==null?java.util.List.of():carrier.bindings();
+   if(GeometryRuntime.hasUnloadedGuest(world,guests)){GeometryRuntime.restoreCarrier(world,pos,state,guests);return;}
+   GeometryRuntime.removeOwnedParts(world,pos,state);if(!guests.isEmpty())GeometryRuntime.preserveGuestsAfterCarrierRemoval(world,pos,guests);
+  }
   if(FunctionalFurniture.isBench(state)&&state!=next)FunctionalFurniture.removeSeats(world,pos);
-  if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating())GeometryRuntime.removeOwnedParts(world,pos,state);
   if(next.isOf(this)&&GeometryRuntime.rebuildsHelperTransitions(this)&&!world.isClient&&!GeometryRuntime.isMutating()){
    // Direct /setblock and editor state changes do not use the interaction preflight.
    // Keep the old object intact unless the complete replacement can own every cell.
@@ -244,7 +248,7 @@ public final class ArchitectureBlock extends Block implements Waterloggable {
  }
  @Override public java.util.List<ItemStack> getDroppedStacks(BlockState state,net.minecraft.loot.context.LootContextParameterSet.Builder builder){
   java.util.List<ItemStack> drops=new java.util.ArrayList<>(super.getDroppedStacks(state,builder));
-  if(definition.city_compat&&definition.models!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))copyVariant(state,drop);
+  if((definition.logical||definition.city_compat)&&definition.models!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))copyVariant(state,drop);
   Property<?> rootAnchor=getStateManager().getProperty("root_anchor");
   if(rootAnchor!=null)for(ItemStack drop:drops)if(drop.isOf(asItem()))drop.getOrCreateSubNbt("BlockStateTag").putString("root_anchor",BloodborneBlocks.value((Property)rootAnchor,(Comparable)state.get((Property)rootAnchor)));
   ItemStack mounted=getStateManager().getProperty("hand_lantern")==null?ItemStack.EMPTY:LogicalAttachments.attachedItem(state);if(!mounted.isEmpty())drops.add(mounted);

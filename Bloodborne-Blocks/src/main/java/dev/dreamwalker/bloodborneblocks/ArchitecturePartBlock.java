@@ -28,11 +28,7 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
  }
 
  private Root root(BlockView world,BlockPos pos){
-  ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);if(part==null)return null;
-  if(world instanceof World loadedWorld&&!loadedWorld.isChunkLoaded(part.rootPos()))return null;
-  BlockState state=world.getBlockState(part.rootPos());
-  if(!GeometryRuntime.ownsHelper(state,part.rootPos(),pos,part.ownerId()))return null;
-  return new Root(part.rootPos(),state,pos.subtract(part.rootPos()));
+  var roots=GeometryRuntime.ownedRoots(world,pos);if(roots.isEmpty())return null;var root=roots.get(0);return new Root(root.pos(),root.state(),root.offset());
  }
  private record Root(BlockPos pos,BlockState state,BlockPos offset){}
 
@@ -40,13 +36,14 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
   return false;
  }
 
- @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);if(root==null)return VoxelShapes.empty();if(root.state.getBlock() instanceof ArchitectureBlock block&&block.definition.logical)return GeometryRuntime.rootShape(root.state,true).offset(-root.offset.getX(),-root.offset.getY(),-root.offset.getZ());return GeometryRuntime.cellShape(root.state,root.offset,true);}
- @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){Root root=root(world,pos);return root==null?VoxelShapes.empty():GeometryRuntime.cellShape(root.state,root.offset,false);}
+ @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){VoxelShape shape=VoxelShapes.empty();for(var root:GeometryRuntime.ownedRoots(world,pos)){VoxelShape next=root.state().getBlock() instanceof ArchitectureBlock block&&block.definition.logical?GeometryRuntime.rootShape(root.state(),true).offset(-root.offset().getX(),-root.offset().getY(),-root.offset().getZ()):GeometryRuntime.cellShape(root.state(),root.offset(),true);shape=VoxelShapes.union(shape,next);}return shape;}
+ @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return GeometryRuntime.guestShape(world,pos,false);}
  @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
  @Override public float getAmbientOcclusionLightLevel(BlockState state,BlockView world,BlockPos pos){return 1.0F;}
- @Override public float calcBlockBreakingDelta(BlockState state,PlayerEntity player,BlockView world,BlockPos pos){Root root=root(world,pos);return root==null?1.0F:root.state.calcBlockBreakingDelta(player,world,root.pos);}
+ @Override public float calcBlockBreakingDelta(BlockState state,PlayerEntity player,BlockView world,BlockPos pos){if(GeometryRuntime.ownedRoots(world,pos).size()>1)return 0.0F;Root root=root(world,pos);return root==null?1.0F:root.state.calcBlockBreakingDelta(player,world,root.pos);}
 
  @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){
+  if(GeometryRuntime.ownedRoots(world,pos).size()>1)return ActionResult.PASS;
   Root root=root(world,pos);if(root==null)return ActionResult.PASS;
   Vec3dOffset offset=new Vec3dOffset(root.pos.getX()-pos.getX(),root.pos.getY()-pos.getY(),root.pos.getZ()-pos.getZ());
   boolean authoredSeats=root.state.getBlock() instanceof ArchitectureBlock block&&block.definition.seat_anchors!=null;
@@ -55,16 +52,20 @@ public final class ArchitecturePartBlock extends BlockWithEntity {
  }
 
  @Override public void onBreak(World world,BlockPos pos,BlockState state,PlayerEntity player){
+  if(GeometryRuntime.ownedRoots(world,pos).size()>1)return;
   Root root=root(world,pos);
   if(root!=null&&!world.isClient)world.breakBlock(root.pos,!player.isCreative(),player);
   super.onBreak(world,pos,state,player);
  }
 
- @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){Root root=root(world,pos);return root==null?ItemStack.EMPTY:root.state.getBlock().getPickStack(world,root.pos,root.state);}
+ @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){if(GeometryRuntime.ownedRoots(world,pos).size()>1)return ItemStack.EMPTY;Root root=root(world,pos);return root==null?ItemStack.EMPTY:root.state.getBlock().getPickStack(world,root.pos,root.state);}
 
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
-  if(!next.isOf(this)&&!GeometryRuntime.isMutating()){
-   Root root=root(world,pos);if(root!=null&&!world.isClient)world.breakBlock(root.pos,true);
+  if(!next.isOf(this)&&!GeometryRuntime.isMutating()&&!world.isClient){
+   ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);
+   if(part!=null&&GeometryRuntime.hasUnloadedGuest(world,part.bindings())){GeometryRuntime.restoreCarrier(world,pos,state,part.bindings());return;}
+   if(part!=null&&part.bindings().size()>1)GeometryRuntime.preserveGuestsAfterCarrierRemoval(world,pos,part.bindings());
+   else{Root root=root(world,pos);if(root!=null)world.breakBlock(root.pos,true);}
   }
   super.onStateReplaced(state,world,pos,next,moved);
  }

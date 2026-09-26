@@ -26,6 +26,9 @@ final class GeometryRuntime {
  private static final Map<String,GeometryBlock> BLOCKS=new HashMap<>();
  private static final Map<BlockState,GeometryState> STATES=new IdentityHashMap<>();
  private static final ThreadLocal<Boolean> MUTATING=ThreadLocal.withInitial(()->false);
+ private static final int MAX_PENDING_GUEST_RECOVERIES=4096;
+ private static final int GUEST_RECOVERIES_PER_TICK=256;
+ private static final Map<ServerWorld,LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>>> GUEST_RECOVERIES=Collections.synchronizedMap(new WeakHashMap<>());
 
  static final class FileData {Map<String,GeometryState> profiles;Map<String,GeometryBlock> blocks;}
  static final class GeometryBlock {Map<String,GeometryState> states;}
@@ -50,6 +53,7 @@ final class GeometryRuntime {
   transient VoxelShape outlineShape;
  }
  record RepairResult(int roots,int repaired,int conflicts,int orphans) {}
+ record OwnedRoot(BlockPos pos,BlockState state,BlockPos offset,Identifier owner) {}
 
  private GeometryRuntime() {}
 
@@ -192,6 +196,16 @@ final class GeometryRuntime {
   return outline?cell.outlineShape:cell.collisionShape;
  }
 
+ static List<OwnedRoot> ownedRoots(BlockView world,BlockPos carrier){
+  ArchitecturePartBlockEntity part=part(world,carrier);if(part==null)return List.of();List<OwnedRoot> roots=new ArrayList<>();
+  for(ArchitecturePartBlockEntity.Binding binding:part.bindings()){
+   if(world instanceof World loaded&&!loaded.isChunkLoaded(binding.root()))continue;
+   BlockState rootState=world.getBlockState(binding.root());if(ownsHelper(rootState,binding.root(),carrier,binding.owner()))roots.add(new OwnedRoot(binding.root(),rootState,carrier.subtract(binding.root()),binding.owner()));
+  }
+  return roots;
+ }
+ static VoxelShape guestShape(BlockView world,BlockPos carrier,boolean outline){ArchitecturePartBlockEntity part=part(world,carrier);if(part==null)return VoxelShapes.empty();return part.guestShape(ownedRoots(world,carrier),outline);}
+
  private static GeometryState required(BlockState state){
   GeometryState geometry=state(state);if(geometry==null)throw new IllegalStateException("Missing runtime geometry for "+state);return geometry;
  }
@@ -232,6 +246,10 @@ final class GeometryRuntime {
  }
 
  static BlockPos conflict(World world,BlockPos root,BlockState state,BlockPos ownedRoot){
+  if(!root.equals(ownedRoot)){
+   if(!world.isChunkLoaded(root)||!world.isInBuildLimit(root)||!world.getWorldBorder().contains(root))return root;
+   BlockState rootState=world.getBlockState(root);if(!rootState.isAir()&&!rootState.isReplaceable())return root;
+  }
   GeometryState geometry=required(state);
   for(BlockPos offset:geometry.parsedCells.keySet()){
    if(offset.equals(BlockPos.ORIGIN)||reservedDoorSibling(state,offset))continue;
@@ -240,13 +258,20 @@ final class GeometryRuntime {
    if(!world.isChunkLoaded(target)||!world.isInBuildLimit(target)||!world.getWorldBorder().contains(target))return target;
    BlockState there=world.getBlockState(target);
    if(there.isAir()||there.isReplaceable())continue;
-   if(there.isOf(BloodborneBlocks.PART_BLOCK)){
-    ArchitecturePartBlockEntity part=part(world,target);
-    if(part!=null&&ownedRoot!=null&&part.rootPos().equals(ownedRoot)&&ownsHelper(state,ownedRoot,target,part.ownerId()))continue;
-   }
+    if(there.isOf(BloodborneBlocks.PART_BLOCK)||there.getBlock() instanceof ArchitectureBlock){
+     ArchitecturePartBlockEntity part=part(world,target);Identifier owner=RegistriesHolder.id(state.getBlock());
+     if(part!=null&&ownedRoot!=null&&part.hasBinding(ownedRoot,owner)&&ownsHelper(state,ownedRoot,target,owner))continue;
+     if(canShareCarrier(world,target,there,part))continue;
+    }
    return target;
   }
   return null;
+ }
+
+ private static boolean canShareCarrier(World world,BlockPos target,BlockState carrier,ArchitecturePartBlockEntity part){
+  if(carrier.isOf(BloodborneBlocks.PART_BLOCK)&&(part==null||part.isEmpty()))return false;
+  if(part==null)return carrier.getBlock() instanceof SharedArchitectureBlock;
+  return part.bindings().size()<ArchitecturePartBlockEntity.MAX_BINDINGS&&ownedRoots(world,target).size()==part.bindings().size();
  }
 
  private static boolean reservedDoorSibling(BlockState state,BlockPos offset){
@@ -267,9 +292,9 @@ final class GeometryRuntime {
    Identifier owner=RegistriesHolder.id(state.getBlock());
    for(BlockPos target:wanted){
     BlockState there=world.getBlockState(target);
-    if(!there.isOf(BloodborneBlocks.PART_BLOCK))world.setBlockState(target,BloodborneBlocks.PART_BLOCK.getDefaultState(),Block.NOTIFY_ALL);
-    BlockEntity entity=world.getBlockEntity(target);
-    if(entity instanceof ArchitecturePartBlockEntity part){part.bind(root,owner);world.updateListeners(target,there,BloodborneBlocks.PART_BLOCK.getDefaultState(),Block.NOTIFY_ALL);}
+    if(there.isAir()||there.isReplaceable())world.setBlockState(target,BloodborneBlocks.PART_BLOCK.getDefaultState(),Block.NOTIFY_ALL);
+    ArchitecturePartBlockEntity part=ensurePartEntity(world,target);if(part==null||!part.bind(root,owner))return false;
+    world.updateListeners(target,there,world.getBlockState(target),Block.NOTIFY_ALL);
    }
    return true;
   }finally{MUTATING.set(false);}
@@ -298,13 +323,59 @@ final class GeometryRuntime {
   if(geometry==null)return;
   for(BlockPos offset:geometry.parsedCells.keySet()){
    BlockPos target=root.add(offset);if(target.equals(root)||keep.contains(target)||!world.isChunkLoaded(target))continue;
-   if(!world.getBlockState(target).isOf(BloodborneBlocks.PART_BLOCK))continue;
-   ArchitecturePartBlockEntity part=part(world,target);
-   if(part!=null&&part.rootPos().equals(root)&&ownsHelper(rootState,root,target,part.ownerId()))world.removeBlock(target,false);
+    BlockState carrier=world.getBlockState(target);if(!carrier.isOf(BloodborneBlocks.PART_BLOCK)&&!(carrier.getBlock() instanceof ArchitectureBlock))continue;
+    ArchitecturePartBlockEntity part=part(world,target);
+    Identifier owner=RegistriesHolder.id(rootState.getBlock());
+    if(part!=null&&part.hasBinding(root,owner)&&ownsHelper(rootState,root,target,owner)){
+     part.unbind(root,owner);if(part.isEmpty()){if(carrier.isOf(BloodborneBlocks.PART_BLOCK))world.removeBlock(target,false);else world.removeBlockEntity(target);}
+    }
   }
  }
 
  static ArchitecturePartBlockEntity part(BlockView world,BlockPos pos){BlockEntity entity=world.getBlockEntity(pos);return entity instanceof ArchitecturePartBlockEntity part?part:null;}
+ private static ArchitecturePartBlockEntity ensurePartEntity(World world,BlockPos pos){
+  ArchitecturePartBlockEntity existing=part(world,pos);if(existing!=null)return existing;BlockState state=world.getBlockState(pos);
+  if(!state.isOf(BloodborneBlocks.PART_BLOCK)&&!(state.getBlock() instanceof SharedArchitectureBlock))return null;
+  ArchitecturePartBlockEntity created=new ArchitecturePartBlockEntity(pos,state);world.addBlockEntity(created);return created;
+ }
+
+ static void preserveGuestsAfterCarrierRemoval(World world,BlockPos carrier,List<ArchitecturePartBlockEntity.Binding> guests){
+  if(!(world instanceof ServerWorld server)||guests.isEmpty())return;
+  boolean queued=false;
+  synchronized(GUEST_RECOVERIES){LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> pending=GUEST_RECOVERIES.computeIfAbsent(server,key->new LinkedHashMap<>());long key=carrier.asLong();if(pending.containsKey(key)||pending.size()<MAX_PENDING_GUEST_RECOVERIES){pending.put(key,List.copyOf(guests));queued=true;}}
+  if(!queued)breakLoadedGuests(server,carrier,guests);
+ }
+
+ static boolean hasUnloadedGuest(World world,List<ArchitecturePartBlockEntity.Binding> guests){for(var binding:guests)if(!world.isChunkLoaded(binding.root()))return true;return false;}
+ static void restoreCarrier(World world,BlockPos carrier,BlockState state,List<ArchitecturePartBlockEntity.Binding> guests){
+  boolean previous=MUTATING.get();MUTATING.set(true);try{world.setBlockState(carrier,state,Block.NOTIFY_ALL);}finally{MUTATING.set(previous);}
+  ArchitecturePartBlockEntity part=ensurePartEntity(world,carrier);if(part!=null)for(var binding:guests)part.bind(binding.root(),binding.owner());
+ }
+
+ static void drainGuestRecoveries(ServerWorld server){
+  LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> queued;
+  synchronized(GUEST_RECOVERIES){queued=GUEST_RECOVERIES.remove(server);}
+  if(queued==null)return;
+  LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> deferred=new LinkedHashMap<>();int processed=0;
+  for(var entry:queued.entrySet()){
+   BlockPos carrier=BlockPos.fromLong(entry.getKey());List<ArchitecturePartBlockEntity.Binding> snapshot=entry.getValue();
+   if(processed++>=GUEST_RECOVERIES_PER_TICK||!server.isChunkLoaded(carrier)){deferred.put(entry.getKey(),snapshot);continue;}
+   BlockState current=server.getBlockState(carrier);
+   if(current.isAir()){
+    boolean previous=MUTATING.get();MUTATING.set(true);try{server.setBlockState(carrier,BloodborneBlocks.PART_BLOCK.getDefaultState(),Block.NOTIFY_ALL);}finally{MUTATING.set(previous);}
+    ArchitecturePartBlockEntity part=ensurePartEntity(server,carrier);if(part!=null)for(var binding:snapshot)part.bind(binding.root(),binding.owner());continue;
+   }
+   if(current.getBlock() instanceof SharedArchitectureBlock){ArchitecturePartBlockEntity part=ensurePartEntity(server,carrier);if(part!=null)for(var binding:snapshot)part.bind(binding.root(),binding.owner());continue;}
+   // Never overwrite a foreign replacement. Loaded guest roots are removed as
+   // complete objects instead of leaving them with a missing physical cell.
+   List<ArchitecturePartBlockEntity.Binding> unresolved=breakLoadedGuests(server,carrier,snapshot);if(!unresolved.isEmpty())deferred.put(entry.getKey(),unresolved);
+  }
+  if(!deferred.isEmpty())synchronized(GUEST_RECOVERIES){LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> pending=GUEST_RECOVERIES.computeIfAbsent(server,key->new LinkedHashMap<>());for(var entry:deferred.entrySet())if(pending.size()<MAX_PENDING_GUEST_RECOVERIES||pending.containsKey(entry.getKey()))pending.putIfAbsent(entry.getKey(),entry.getValue());}
+ }
+
+ private static List<ArchitecturePartBlockEntity.Binding> breakLoadedGuests(ServerWorld server,BlockPos carrier,List<ArchitecturePartBlockEntity.Binding> bindings){
+  List<ArchitecturePartBlockEntity.Binding> unresolved=new ArrayList<>();for(var binding:bindings){if(!server.isChunkLoaded(binding.root())){unresolved.add(binding);continue;}if(ownsHelper(server.getBlockState(binding.root()),binding.root(),carrier,binding.owner()))server.breakBlock(binding.root(),true);}return unresolved;
+ }
 
  /** A helper belongs only to the current root state, never merely to a reused registry ID. */
  static boolean ownsHelper(BlockState rootState,BlockPos root,BlockPos helper,Identifier owner){
@@ -357,9 +428,12 @@ final class GeometryRuntime {
     roots++;BlockPos immutable=cursor.toImmutable();boolean blocked=conflict(world,immutable,state,immutable)!=null;
     if(!blocked&&!apply){for(BlockPos target:occupiedTargets(immutable,state))if(previewReservations.containsKey(target)&&!previewReservations.get(target).equals(immutable)){blocked=true;break;}}
     if(blocked)conflicts++;else{repaired++;if(apply)rebuild(world,immutable,state);else for(BlockPos target:occupiedTargets(immutable,state))previewReservations.put(target,immutable);}
+    ArchitecturePartBlockEntity carrier=part(world,immutable);if(apply&&carrier!=null)carrier.validateOwner(world);
    }
    else if(state.isOf(BloodborneBlocks.PART_BLOCK)){
-    ArchitecturePartBlockEntity part=part(world,cursor);boolean orphan=part==null||(world.isChunkLoaded(part.rootPos())&&!ownsHelper(world.getBlockState(part.rootPos()),part.rootPos(),cursor,part.ownerId()));
+    ArchitecturePartBlockEntity part=part(world,cursor);boolean valid=false,unresolved=false;
+    if(part!=null)for(var binding:new ArrayList<>(part.bindings())){if(!world.isChunkLoaded(binding.root())){unresolved=true;continue;}if(ownsHelper(world.getBlockState(binding.root()),binding.root(),cursor,binding.owner()))valid=true;else if(apply)part.unbind(binding.root(),binding.owner());}
+    boolean orphan=part==null||(!valid&&!unresolved);
     if(orphan){orphans++;if(apply)world.removeBlock(cursor,false);}
    }
   }

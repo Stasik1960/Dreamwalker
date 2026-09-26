@@ -32,10 +32,9 @@ public final class FunctionalFurniture {
 
  static boolean isClimbable(World world,BlockPos pos){
   if(!world.isChunkLoaded(pos))return false;BlockState state=world.getBlockState(pos);
-  if(state.getBlock() instanceof ArchitectureBlock)return isLadderRoot(state);
-  if(!state.isOf(BloodborneBlocks.PART_BLOCK))return false;
-  ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);if(part==null||!world.isChunkLoaded(part.rootPos()))return false;
-  BlockState root=world.getBlockState(part.rootPos());return GeometryRuntime.ownsHelper(root,part.rootPos(),pos,part.ownerId())&&isLadderRoot(root);
+  if(isLadderRoot(state))return true;
+  if(!state.isOf(BloodborneBlocks.PART_BLOCK)&&!(state.getBlock() instanceof SharedArchitectureBlock))return false;
+  return GeometryRuntime.ownedRoots(world,pos).stream().anyMatch(root->isLadderRoot(root.state()));
  }
 
  public static BlockPos climbablePos(LivingEntity entity){

@@ -153,8 +153,6 @@ public final class BloodborneBlocks implements ModInitializer {
   CITY_DATA=loadCityDefinitions();
   GeometryRuntime.loadCityAndValidate(CITY_DATA);
   Registry.register(Registries.BLOCK,id("architecture_part"),PART_BLOCK);
-  PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,PART_BLOCK).build(null));
-  ArchitecturePartBlockEntity.registerValidation();
   SEAT_ENTITY=Registry.register(Registries.ENTITY_TYPE,id("seat"),EntityType.Builder.<ArchitectureSeatEntity>create(ArchitectureSeatEntity::new,SpawnGroup.MISC).setDimensions(.01F,.01F).maxTrackingRange(8).trackingTickInterval(20).disableSaving().disableSummon().build(ID+":seat"));
   for(Definition d:DATA.blocks){
    prepareDefinition(d);
@@ -164,6 +162,9 @@ public final class BloodborneBlocks implements ModInitializer {
    prepareDefinition(d);
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));CITY_BLOCKS.put(d.id,block);
   }
+  List<Block> partCarriers=new ArrayList<>();partCarriers.add(PART_BLOCK);allBlocks().stream().filter(block->block instanceof BlockEntityProvider).forEach(partCarriers::add);
+  PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,partCarriers.toArray(Block[]::new)).build(null));
+  ArchitecturePartBlockEntity.registerValidation();
   LogicalAttachments.validateDefinitions(DATA.blocks);
   Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition)).filter(b->!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
   BloodborneCommands.register();

@@ -1,5 +1,17 @@
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
+## Repair branch continuation — 2026-09-26
+
+On `repair/composite-preserving-grid`, follow
+[REPAIR-TEST-1](docs/composite-grid-repair/REPAIR-TEST-1.md) before the historical
+delivery sections below. The current deliverable is an intermediate test JAR
+and five isolated source-verified specimens, not beta.4/FULL and not main.
+Whole-world gates remain **FAIL** (6,518 protected failures); see
+[current status](docs/composite-grid-repair/repair-test-whole-world-status.json).
+No mass membership search, mask shrink, root shift or independent-fragment
+fallback was introduced. The full city remains unfinished. User client testing
+of the practical kit precedes broad shared-cell conversion activation.
+
 ## Latest continuation: historical MODDED cell recovery
 
 Supersedes the beta.2 missing-model blocker below. Both recovered worlds have

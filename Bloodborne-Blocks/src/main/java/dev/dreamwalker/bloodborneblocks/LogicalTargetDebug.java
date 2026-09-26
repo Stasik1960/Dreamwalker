@@ -49,6 +49,7 @@ final class LogicalTargetDebug {
  private static String helper(ServerWorld world,BlockPos helper,BlockState helperState){
   ArchitecturePartBlockEntity part=GeometryRuntime.part(world,helper);
   if(part==null)return ordinary(helper,helperState,"invalid architecture_part (missing ownership)");
+  if(part.bindings().size()!=1)return ordinary(helper,helperState,"shared architecture_part ("+part.bindings().size()+" owners; target a root explicitly)");
   BlockPos root=part.rootPos();
   if(!world.isChunkLoaded(root))return ordinary(helper,helperState,"invalid architecture_part (root chunk unloaded)");
   BlockState rootState=world.getBlockState(root);

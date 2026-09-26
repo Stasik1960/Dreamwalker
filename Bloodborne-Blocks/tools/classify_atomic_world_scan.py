@@ -13,7 +13,7 @@ from check_composite_world import WorldReader
 from source_mapping_archive import archive
 
 
-def classify(scan_path,gate_path):
+def classify(scan_path,gate_path,destination=None):
     scan=json.loads(scan_path.read_bytes())
     gate=json.loads(gate_path.read_bytes())
     rules,_,_=compile_modded_rules(DEFAULT_RESOURCES);rules,diagnostic=compile_groups(rules,DEFAULT_RESOURCES)
@@ -32,7 +32,7 @@ def classify(scan_path,gate_path):
         shared=[{'position':p,'owners':v,'rootConflict':sum(o['isRoot'] for o in v)>1} for p,v in occupants.items() if len(v)>1]
         reason=rejected.get(r.number,{}).get('reason','not_instantiated')
         groups.append({'transaction':r.transaction_id,'origin':origin,'owners':g['owners'],
-            'category':'shared-cell / root conflict' if shared or reason in {'target_would_overwrite_foreign_block','aggressive_blocker_has_owned_helpers','ambiguous_overlap_or_double_consumption'}
+            'category':'shared-cell / root conflict' if (shared and not r.shared_physics) or reason in {'shared_root_conflict','shared_owner_limit','overlapping_transaction_outputs','target_would_overwrite_foreign_block','aggressive_blocker_has_owned_helpers','ambiguous_overlap_or_double_consumption'}
                        else 'exact owner closure; converter/runtime group support incomplete',
             'preflightReason':reason,'sharedCells':shared,'mappingErrors':g['errors'],'occurrences':g['occurrences']})
     # A ledger's protectedBlock string is insufficient. Check actual helper NBT,
@@ -84,7 +84,7 @@ def classify(scan_path,gate_path):
         'fragmentedProtectedObjects':gate['fragmented'],
         'omissionCurrentOwnerProof':dict(Counter('proven' if r['currentOwnerProven'] else r['reason'] for r in omissions)),
         'groups':groups,'unresolvedMemberships':unresolved,'omissions':omissions}
-    destination=ROOT/'docs/composite-grid-repair/atomic-world-residuals.json.gz'
+    destination=destination or ROOT/'docs/composite-grid-repair/atomic-world-residuals.json.gz'
     destination.write_bytes(gzip.compress((json.dumps(result,separators=(',',':'))+'\n').encode(),mtime=0))
     print(json.dumps({k:v for k,v in result.items() if k not in {'groups','unresolvedMemberships','omissions'}},indent=2))
 
@@ -92,4 +92,5 @@ def classify(scan_path,gate_path):
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser();parser.add_argument('scan',type=Path);parser.add_argument('gate',type=Path)
-    args=parser.parse_args();classify(args.scan,args.gate)
+    parser.add_argument('--output',type=Path)
+    args=parser.parse_args();classify(args.scan,args.gate,args.output)

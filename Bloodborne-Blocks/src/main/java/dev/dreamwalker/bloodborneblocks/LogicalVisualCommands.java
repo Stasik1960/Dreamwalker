@@ -104,7 +104,7 @@ final class LogicalVisualCommands {
   if(!world.isChunkLoaded(target))return null;BlockState state=world.getBlockState(target);
   if(state.getBlock() instanceof ArchitectureBlock block&&block.definition.logical)return target;
   if(!state.isOf(BloodborneBlocks.PART_BLOCK))return null;
-  ArchitecturePartBlockEntity part=GeometryRuntime.part(world,target);if(part==null||!world.isChunkLoaded(part.rootPos()))return null;
+  ArchitecturePartBlockEntity part=GeometryRuntime.part(world,target);if(part==null||part.bindings().size()!=1||!world.isChunkLoaded(part.rootPos()))return null;
   BlockState root=world.getBlockState(part.rootPos());return GeometryRuntime.ownsHelper(root,part.rootPos(),target,part.ownerId())?part.rootPos():null;
  }
 

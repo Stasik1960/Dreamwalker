@@ -37,6 +37,21 @@ def independent_fragment_errors(actual,dim,positions,permitted_roots):
             errors.append({'reason':'source_component_remains_independent','position':p,'state':value})
     return errors
 
+def shared_helper_matches(actual,dim,p,owner,expected_bindings,permitted_roots):
+    bindings=actual.helper_owners(dim,p)
+    if not bindings or owner not in bindings:return False
+    # Plural/root carriers require the entire exact expected binding set,
+    # not merely finding this object's name somewhere in untrusted NBT.
+    carrier=actual.state(dim,p)[1]
+    if len(bindings)>1 or len(expected_bindings.get((dim,p),()))>1 or carrier!=PART:
+        if bindings!=expected_bindings.get((dim,p),set()):return False
+        if carrier!=PART and (dim,p) not in permitted_roots:return False
+        if carrier!=PART and carrier!=permitted_roots[(dim,p)]:return False
+        for root,name in bindings:
+            expected=permitted_roots.get((dim,root))
+            if not expected or expected.split('[')[0]!=name or actual.state(dim,root)[1]!=expected:return False
+    return True
+
 class WorldReader(EvidenceReader):
     def __init__(self,path):
         self.directory=path if path.is_dir() else None
@@ -61,6 +76,10 @@ class WorldReader(EvidenceReader):
         if not self.directory:super().close()
 
     def helper_owner(self,dim,pos):
+        owners=self.helper_owners(dim,pos)
+        return next(iter(owners)) if owners and len(owners)==1 else None
+
+    def helper_owners(self,dim,pos):
         return self.helper_index(dim,pos[0]//16,pos[2]//16).get(pos)
 
     @lru_cache(maxsize=256)
@@ -74,7 +93,10 @@ class WorldReader(EvidenceReader):
             d=compound(entry)
             if all(k in d for k in ('x','y','z')):
                 if d.get('id') and d['id'].value==PART and 'Root' in d and 'Owner' in d:
-                    result[tuple(d[k].value for k in ('x','y','z'))]=(unpack_pos_long(d['Root'].value),d['Owner'].value)
+                    from city_palette import helper_bindings
+                    try:owners=frozenset(helper_bindings(d))
+                    except ValueError:owners=None
+                    result[tuple(d[k].value for k in ('x','y','z'))]=owners
         return result
 
 def check(output,oracle_path,source):
@@ -135,6 +157,18 @@ def check(output,oracle_path,source):
                         dict(out.target[1]).get('root_anchor')=='upper' and
                         p==add(tuple(output['canonical_root']),(0,1,0))):
                         output['canonical_root']=list(p);output['expected_logical_state']=key(out.target)
+        expected_bindings={}
+        for rule in group_rules.values():
+            dim,origin=rule.allowed_origins[0]
+            for out in rule.outputs:
+                root=add(origin,out.root_offset)
+                for offset in out.shape:
+                    if offset!=(0,0,0):expected_bindings.setdefault((dim,add(root,offset)),set()).add((root,out.target[0]))
+        for row in oracle['occurrences']:
+            for out in row['outputs']:
+                root=tuple(out['canonical_root']);name,_,suffix=out['expected_logical_state'].partition('[')
+                for offset in physical[out['family']][suffix.rstrip(']')]['cells']:
+                    if tuple(offset)!=(0,0,0):expected_bindings.setdefault((row['dimension'],add(root,offset)),set()).add((root,name))
         rows=sorted(oracle['occurrences'],key=lambda r:(r['dimension'],r['origin'][0]//16,r['origin'][2]//16,r['origin'][1]))
         for number,row in enumerate(rows):
             if number%2500==0:print('protected world gate',number,'/',len(rows),flush=True)
@@ -166,7 +200,7 @@ def check(output,oracle_path,source):
                     for offset in physical[o['family']][state_key]['cells']:
                         p=add(root,offset)
                         if p==root:continue
-                        if actual.state(dim,p)[1]!=PART or actual.helper_owner(dim,p)!=(root,expected.split('[')[0]):
+                        if not shared_helper_matches(actual,dim,p,(root,expected.split('[')[0]),expected_bindings,permitted_roots):
                             errors.append({'reason':'physical_helper_missing_or_wrong_owner','position':p})
                 errors.extend(fragment_errors)
                 if membership is None:errors.append({'reason':'technical_membership_not_proven'})
@@ -188,7 +222,7 @@ def check(output,oracle_path,source):
                     continue
                 for offset in out.shape:
                     p=add(root,offset)
-                    if p!=root and (actual.state(dim,p)[1]!=PART or actual.helper_owner(dim,p)!=(root,out.target[0])):
+                    if p!=root and not shared_helper_matches(actual,dim,p,(root,out.target[0]),expected_bindings,permitted_roots):
                         errors.append({'reason':'whole_owner_helper_missing','position':p})
             if errors:group_failures.append({'transaction':rule.transaction_id,'errors':errors})
             else:group_passed+=1
