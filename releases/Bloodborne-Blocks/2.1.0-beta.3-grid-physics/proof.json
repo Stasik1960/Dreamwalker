@@ -1,0 +1,104 @@
+{
+  "base_HEAD": "419b85eeab56180f0e26272ffc2a2136f6a05a18",
+  "final_HEAD": "0d853e6066fb3d53c647bae73f25110a3cb7bd73",
+  "final_HEAD_scope": "Final implementation commit; later commits package release and update handoff without runtime changes.",
+  "input_hashes": {
+    "latest-modded-world.zip": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+    "source-resource-pack.zip": "0f2c3d64a1d60734ae0786d128b522ea6bbd175f26f5d164bed5522c46898308",
+    "source-world.zip": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51"
+  },
+  "jar_sha256": "81b3f296c27fe35814b1274b11d8657c1db47c35621c1c64c27a2853981fe33d",
+  "world_sha256": "14a7b283baeb6262b484f6773442d85260d3bc97a15a0dea05c4a88bbb2a2028",
+  "family_counts": {
+    "logical": 49,
+    "protected": 49,
+    "auto_safe_logical": 0,
+    "ambiguous_logical": 0,
+    "compatibility_auto_safe": 2914
+  },
+  "conversion": {
+    "logical_objects": 21673,
+    "compatibility_palette_cells": 27527924,
+    "old_helpers_removed": 15789,
+    "remaining_helpers": 4253,
+    "forced_foreign_overwrites": 0
+  },
+  "whole_world_verification": {
+    "format": "bloodborne-logical-world-check-v1",
+    "ledgerEntries": 21673,
+    "chunks": 10009,
+    "checkedBlocks": 1003216896,
+    "unchangedExternalFiles": 170,
+    "sourceHashVerified": true,
+    "resourceHashesVerified": true,
+    "ok": true
+  },
+  "registry_census": {
+    "chunks": 10009,
+    "checked_cells": 983924736,
+    "unknown_bloodborne_ids": {},
+    "old_module_cells": 0,
+    "invalid_current_states": {},
+    "possible_raw_vanilla_source_cells": {},
+    "current_bloodborne_cells": 27674331,
+    "result": "PASS"
+  },
+  "preservation": {
+    "result": "PASS",
+    "changed_cells": 27565528,
+    "ledger_cells": 39650,
+    "changed_chunks": 1536,
+    "unchanged_chunks": 8473,
+    "preserved_nonterrain_files": 170,
+    "errors": []
+  },
+  "helper_audit": {
+    "checked": 4253,
+    "ok": true,
+    "orphans": []
+  },
+  "second_pass_zero_counts": {
+    "logical": 0,
+    "compatibility": 0,
+    "helpers": 0,
+    "physics_reconciliation": 0
+  },
+  "acceptance": {
+    "unknown_bloodborne_ids": 0,
+    "old_module_ids": 0,
+    "old_vanilla_carrier_matches": 0,
+    "orphan_helpers": 0,
+    "helpers_outside_physical_footprint": 0,
+    "collision_outside_local_cells": 0,
+    "unresolved_bloodborne_cells": 0,
+    "rejected_proven_bloodborne_cells": 0
+  },
+  "tests": {
+    "check_build": "PASS",
+    "gametests": "37/37 PASS (dedicated Fabric server)",
+    "converter_targeted_unittests": "30/30 PASS",
+    "all_python_discovery": "318 run: 16 historical baseline failures/errors; one transient Windows rename error passed isolated rerun. No unresolved new test failure.",
+    "baseline_reproduction": "Same 16 historical tests fail at base HEAD; historical palette expectations not rewritten.",
+    "artifact": {
+      "result": "PASS",
+      "artifact": "bloodborne-blocks-2.1.0-beta.3.jar",
+      "bytes": 34477590,
+      "sha256": "81b3f296c27fe35814b1274b11d8657c1db47c35621c1c64c27a2853981fe33d",
+      "source_resources_byte_compared": 13968,
+      "loom_mixin_metadata_semantically_compared": 1,
+      "production_ids": 49,
+      "registry_with_helper": 2964,
+      "obsolete_packaged_resources": 0,
+      "refmap": "bloodborne-blocks-refmap.json",
+      "crc": "PASS",
+      "scope": "archive integrity and exact resource closure; not client visual acceptance"
+    },
+    "graphical_client_acceptance": "NOT_RUN"
+  },
+  "notes": [
+    "Logical candidates not promoted are retained in CURRENT one-cell compatibility representation, not historical m_* IDs.",
+    "All production logical families have manual/authored physics and were frozen unchanged.",
+    "Compatibility render mappings/meshes/textures unchanged; one-cell physics and placement anchor normalized."
+  ],
+  "second_pass_byte_identical_files": 186
+}
