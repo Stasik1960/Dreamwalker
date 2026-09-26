@@ -53,6 +53,26 @@ class CompositeRepairTests(unittest.TestCase):
             self.assertGreater(len(matches[0].members)+1,len(matches[0].shape))
         finally:reader.close()
 
+    def test_world_gate_sees_tree_fragments_outside_raw_carrier_cells(self):
+        from check_composite_world import technical_membership, independent_fragment_errors
+        data=json.loads((ROOT/'docs/composite-grid-repair/protected-world-oracle.json').read_bytes())
+        row=next(r for r in data['occurrences'] if any(o['family']=='o_c001' and o['canonical_root']==[-284,42,-71] for o in r['outputs']))
+        reader=EvidenceReader(ROOT/'reference-inputs/latest-modded-world.zip')
+        try:
+            rules=[r for r in self.rules if (r.source_reference or '').endswith('raw rule '+str(row['rule']))]
+            cells=technical_membership(row,reader,rules)
+            self.assertEqual(114,len(cells))
+            raw={tuple(c['position']) for c in row['source_cells']}
+            extra=next(p for p in sorted(cells-raw) if reader.state(row['dimension'],p)[1].startswith('bloodborne_blocks:m_'))
+            fragment=reader.state(row['dimension'],extra)[1]
+        finally:reader.close()
+        root=tuple(row['outputs'][0]['canonical_root']);expected=row['outputs'][0]['expected_logical_state']
+        class PartlyRestored:
+            def state(self,dim,p):
+                return 'FOUND',expected if p==root else fragment if p==extra else 'minecraft:air'
+        errors=independent_fragment_errors(PartlyRestored(),row['dimension'],cells,{(row['dimension'],root):expected})
+        self.assertEqual([{'reason':'source_component_remains_independent','position':extra,'state':fragment}],errors)
+
     def test_reduced_masks_leave_only_two_explicit_shared_root_cases(self):
         from collections import defaultdict
         data,_=load_contracts(DEFAULT_RESOURCES)

@@ -8,7 +8,7 @@ Verified partial fixes:
 - Exact retained-carrier rules recover the 114-cell C001 fixture atomically.
 - C474's frozen module union is supported by historical textured polygon
   evidence; the 32-cell fixture converts into its reviewed logical identity.
-- Ten composite regression tests pass. The protected-world checker remains
+- Eleven composite regression tests pass. The protected-world checker remains
   explicitly incomplete as a global gate; beta.3 fails its negative check.
 
 ## User-approved conflict handling
@@ -32,6 +32,23 @@ in that archive; it must not be assigned to another object by guesswork.
 Gradle check passed 51 tasks before the final lighting-toggle closure. After
 that closure, the ten composite tests and fourteen production-palette tests
 pass. A final runtime resource validation remains necessary before delivery.
+
+Latest targeted Gradle validation passed (geometryCheck,
+logicalContractV2Check, test_composite_repair, test_root_exception_evidence,
+test_production_palette; 8 tasks, 28 seconds). This validates the final 128
+physical reductions, not an unreleased root relocation implementation.
+
+The protected world gate now checks complete exact MODDED technical membership
+(114 cells for the real tree fixture), and uses the current physical sidecar.
+A negative test leaves a module outside the original 16 raw tree carriers even
+though the root is restored: the gate detects that fragment. Unknown logical
+roots no longer qualify as automatically acceptable source replacements.
+The expanded beta.3 negative run reports 8,996 fragmented objects and 8,023
+occurrences without a complete exact archived assembly match. The latter are
+explicit failures, not permission to infer or discard source components.
+Frequently missing mappings include old modular carved/stepped balustrades;
+the frozen mapping says keep-carrier while the MODDED input contains modules.
+These require further historical evidence; the checker must not be weakened.
 
 Technical root exceptions are limited to bench/books at (-374,73,-291) and
 balustrade/railing at (-560,98,-9). Read-only input inspection proves that the

@@ -2,13 +2,36 @@
 import argparse
 import hashlib
 import json
+import re
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 from composite_world_oracle import EvidenceReader, ROOT
 from compare_modded_reference import _region_relative
 from world_io import RegionFile, compound
-from convert_logical_world import PART, unpack_pos_long
+from convert_logical_world import PART, unpack_pos_long, DEFAULT_RESOURCES, add
+from composite_world_oracle import key
+from modded_world_adapter import compile_modded_rules
+from source_variant_rng import guards_match
+
+def technical_membership(row,before,rules):
+    """Require a complete exact MODDED assembly, not a raw carrier heuristic."""
+    origin=tuple(row['origin']);dim=row['dimension'];matched=[]
+    for rule in rules:
+        if not guards_match(rule.variant_guards,origin):continue
+        cells=[(add(origin,p.offset),key(p.state)) for p in (rule.source,)+rule.members]
+        if all(before.state(dim,p)[1]==expected for p,expected in cells):matched.append(cells)
+    return {p for cells in matched for p,_ in cells} if matched else None
+
+def independent_fragment_errors(actual,dim,positions,permitted_roots):
+    errors=[]
+    for p in sorted(positions):
+        value=actual.state(dim,p)[1]
+        if value is None:
+            errors.append({'reason':'source_component_chunk_missing','position':p})
+        elif value.startswith('bloodborne_blocks:') and value!=PART and permitted_roots.get((dim,p))!=value:
+            errors.append({'reason':'source_component_remains_independent','position':p,'state':value})
+    return errors
 
 class WorldReader(EvidenceReader):
     def __init__(self,path):
@@ -54,10 +77,18 @@ def check(output,oracle_path,source):
     if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest()!='c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9':
         raise ValueError('IMMUTABLE_MODDED_INPUT_HASH_MISMATCH')
     oracle=json.loads(oracle_path.read_bytes())
+    physical=json.loads((DEFAULT_RESOURCES/'physical-footprints.json').read_bytes())['families']
+    compiled,_,_=compile_modded_rules(DEFAULT_RESOURCES)
+    by_raw={}
+    for rule in compiled:
+        match=re.search(r'raw rule (\d+)$',rule.source_reference or '')
+        if match:by_raw.setdefault(int(match.group(1)),[]).append(rule)
+    permitted_roots={(r['dimension'],tuple(o['canonical_root'])):o['expected_logical_state']
+                     for r in oracle['occurrences'] for o in r['outputs']}
     actual=WorldReader(output);before=WorldReader(source)
     families={f:{'expected':v['expected_source_occurrences'],'logical':0,'foreign_conflicts':0,'fragmented':0}
               for f,v in oracle['families'].items()}
-    failures=[];foreign=[]
+    failures=[];foreign=[];unresolved_membership=[]
     try:
         rows=sorted(oracle['occurrences'],key=lambda r:(r['dimension'],r['origin'][0]//16,r['origin'][2]//16,r['origin'][1]))
         for number,row in enumerate(rows):
@@ -75,20 +106,24 @@ def check(output,oracle_path,source):
                 foreign.append({'gate':'PROTECTED_ORACLE_FOREIGN_CONFLICT','origin':row['origin'],'cells':conflicts})
                 for o in row['outputs']:families[o['family']]['foreign_conflicts']+=1
                 continue
+            membership=technical_membership(row,before,by_raw.get(row['rule'],()))
+            if membership is None:
+                unresolved_membership.append({'origin':row['origin'],'rule':row['rule'],'reason':'no_complete_exact_modded_assembly'})
+            cells=set(tuple(c['position']) for c in row['source_cells']) | (membership or set())
+            fragment_errors=independent_fragment_errors(actual,dim,cells,permitted_roots)
             for o in row['outputs']:
                 root=tuple(o['canonical_root']);expected=o['expected_logical_state'];state=actual.state(dim,root)[1]
                 errors=[]
                 if state!=expected:errors.append({'reason':'expected_logical_root_missing','actual':state})
                 else:
-                    for p in o['physical_cells']:
-                        p=tuple(p)
+                    state_key=expected.partition('[')[2].rstrip(']')
+                    for offset in physical[o['family']][state_key]['cells']:
+                        p=add(root,offset)
                         if p==root:continue
                         if actual.state(dim,p)[1]!=PART or actual.helper_owner(dim,p)!=(root,expected.split('[')[0]):
                             errors.append({'reason':'physical_helper_missing_or_wrong_owner','position':p})
-                for c in row['source_cells']:
-                    p=tuple(c['position']);v=actual.state(dim,p)[1]
-                    if v and v.startswith('bloodborne_blocks:') and v!=PART and not v.startswith('bloodborne_blocks:o_'):
-                        errors.append({'reason':'source_component_remains_independent','position':p,'state':v})
+                errors.extend(fragment_errors)
+                if membership is None:errors.append({'reason':'technical_membership_not_proven'})
                 if errors:
                     families[o['family']]['fragmented']+=1
                     failures.append({'family':o['family'],'root':root,'errors':errors})
@@ -99,6 +134,7 @@ def check(output,oracle_path,source):
                 'PROTECTED_WORLD_OBJECT_PRESERVED':'FAIL' if failures else 'PASS',
                 'scope':'Protected exact source-pattern occurrences only; compatibility assembly gate still required.',
                 'fragmented':n,'families':families,'failures':failures,'foreign_conflicts':foreign,
+                'unresolved_technical_membership':unresolved_membership,
                 'oracle_sha256':hashlib.sha256(oracle_path.read_bytes()).hexdigest()}
     finally:actual.close();before.close()
 
