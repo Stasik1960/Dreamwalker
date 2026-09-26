@@ -1,3 +1,33 @@
+# Latest: Source-Grid Physics, beta.3 — 2026-09-26
+
+Implementation checkpoint: `0d853e606` (later release/docs commits contain artifacts and handoff only).
+Base: `419b85eeab56180f0e26272ffc2a2136f6a05a18`.
+
+This supersedes the previous conservative/aggressive city pair. Deliver ONE FULL world:
+[beta.3 Grid Physics release](../releases/Bloodborne-Blocks/2.1.0-beta.3-grid-physics/README.md).
+
+- [Task](docs/grid-physics/TASK.md), [baseline audit](docs/grid-physics/audit.md),
+  [protected set](docs/grid-physics/protected-families.json), [verification](docs/grid-physics/verification.json).
+- All 49 current logical families have manual/authored physics and remain frozen. No new semantic discovery, IDs, meshes, textures or ALT art.
+- Explicit `logical/physical-footprints.json` separates physical cells/collision from selection/render. Both runtime and raw-rule compiler consume masks; protected compiled rules remain exactly equal.
+- All 2914 city compatibility blocks now have one physical cell, zero helpers, origin placement anchors. 25 native families previously reserved neighbors or shifted placement. Render offsets remain untouched.
+- `grid_world_reconciliation.py` removes only helpers with a verified old owner state and old geometry offset; foreign/custom helper NBT fails closed. Frozen old city geometry is evidence only, never final physics.
+- Full conversion restores historical evidence, reconciles old helpers FIRST, then runs existing logical fixed-point conversion and exact compatibility palette fallback. Doing cleanup afterwards was tested and rejected because it required a second pass.
+- Source is ONLY immutable `reference-inputs/latest-modded-world.zip` (hash unchanged). 21673 logical objects, 27527924 module cells; 15789 legacy helpers removed, 4253 valid current helpers remain. No forced foreign overwrites.
+- Independent whole-world verification, NBT preservation and registry census PASS. Second pass all counts zero and all 186 files byte-identical; 170 external files preserved.
+- `check build` PASS; dedicated GameTests 37/37; targeted Python 30/30. Full discovery exposes 16 historical failures/errors reproduced at base HEAD; do not re-author production to satisfy retired palette expectations. Graphical client acceptance NOT_RUN.
+
+Reproduce (JDK17, bundled Python with numpy/Pillow):
+```
+./gradlew.bat --offline -I tools/verification-direct-resources.init.gradle -PbloodbornePython=<python> check logicalGameTest build
+<python> tools/check_grid_physics.py
+<python> tools/convert_logical_world.py reference-inputs/latest-modded-world.zip build/new-full --source-mode modded --city-compat --recover-city --full-grid --expected-source-sha256 c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9 --report build/new-full-report.json
+<python> tools/check_logical_world.py reference-inputs/latest-modded-world.zip build/new-full build/new-full-report.json --resources src/main/resources/bloodborne_blocks/logical
+<python> tools/check_grid_world.py build/new-full build/new-full-census.json
+```
+
+## Previous handoff (historical)
+
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
 ## Latest continuation: historical MODDED cell recovery
