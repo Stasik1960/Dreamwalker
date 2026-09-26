@@ -28,7 +28,7 @@ def validate(root=ROOT):
             from logical_contract_v2 import box_cells
             if any(not box_cells(b)<=set(map(tuple,p['cells'])) for b in s['collision_footprint']['boxes']):raise ValueError('COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT')
     changed=subprocess.check_output(['git','diff','--name-only','419b85eeab56180f0e26272ffc2a2136f6a05a18','--','Bloodborne-Blocks/src/main/resources'],cwd=root.parent,text=True).splitlines()
-    allowed={'Bloodborne-Blocks/src/main/resources/bloodborne_blocks/city/geometry.json','Bloodborne-Blocks/src/main/resources/bloodborne_blocks/logical/physical-footprints.json'}
+    allowed={'Bloodborne-Blocks/src/main/resources/fabric.mod.json','Bloodborne-Blocks/src/main/resources/bloodborne_blocks/city/geometry.json','Bloodborne-Blocks/src/main/resources/bloodborne_blocks/logical/physical-footprints.json'}
     if set(changed)-allowed:raise ValueError('RENDER_OR_SOURCE_MAPPING_CHANGED_UNEXPECTEDLY: '+str(set(changed)-allowed))
     city=read(res/'city/geometry.json')
     old=read(root/'docs/grid-physics/legacy-city-geometry.json.gz')

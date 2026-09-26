@@ -23,6 +23,7 @@ public final class GeometryChecks {
    GeometryRuntime.GeometryBlock block=blocks.get(definition.id);check(block!=null&&block.states.keySet().equals(definition.states.keySet()),"production geometry states: "+definition.id);
    for(var entry:block.states.entrySet()){
     states++;GeometryRuntime.GeometryState state=entry.getValue();check(state!=null&&state.parsedCells!=null&&!state.parsedCells.isEmpty(),"prepared geometry: "+definition.id+"["+entry.getKey()+"]");
+    check(state.physical_footprint!=null&&state.physical_footprint.size()==state.parsedCells.size(),"physical footprint coverage: "+definition.id+"["+entry.getKey()+"]");
     if(!unique.add(state))continue;
     for(GeometryRuntime.GeometryCell cell:state.parsedCells.values()){cells++;checkShape(cell.collisionShape);checkShape(cell.outlineShape);check(cell.outline.size()<=1,"one selection box per cell");check(cell.collision.size()<=5,"bounded collision boxes per cell");}
    }
@@ -30,6 +31,6 @@ public final class GeometryChecks {
   check(blocks.keySet().containsAll(BloodborneBlocks.productionPalette().keySet()),"geometry includes every production object");
   System.out.println("GEOMETRY CHECKS PASSED: states="+states+" unique="+unique.size()+" cells="+cells);
  }
- private static void checkShape(VoxelShape shape){if(shape.isEmpty())return;for(Direction.Axis axis:Direction.Axis.values())check(shape.getMin(axis)>=-1.0e-6&&shape.getMax(axis)<=1+1.0e-6,"COLLISION_OUTSIDE_OWNED_CELLS");}
+ private static void checkShape(VoxelShape shape){if(shape.isEmpty())return;for(Direction.Axis axis:Direction.Axis.values())check(shape.getMin(axis)>=-1.0e-6&&shape.getMax(axis)<=1+1.0e-6,"COLLISION_OUTSIDE_LOCAL_CELL");}
  private static void check(boolean value,String message){if(!value)throw new AssertionError(message);}
 }

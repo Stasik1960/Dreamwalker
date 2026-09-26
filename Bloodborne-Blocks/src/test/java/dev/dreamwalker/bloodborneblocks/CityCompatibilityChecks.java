@@ -29,7 +29,8 @@ public final class CityCompatibilityChecks {
    for(var state:block.getStateManager().getStates()){
     states++;GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);
     check(geometry!=null&&geometry.parsedCells!=null&&!geometry.parsedCells.isEmpty(),"prepared city geometry: "+state);
-    if(definition.models!=null)check(geometry.parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"module page has no helper cells: "+state);
+    check(geometry.parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"every city state has no helper cells: "+state);
+    check(geometry.physical_footprint!=null&&geometry.physical_footprint.size()==1&&java.util.Arrays.equals(geometry.physical_footprint.get(0),new int[]{0,0,0}),"every city state declares an origin-only physical footprint: "+state);
    }
   }
   check(pages>0&&nativeBlocks>0,"city registry contains module pages and native blocks");

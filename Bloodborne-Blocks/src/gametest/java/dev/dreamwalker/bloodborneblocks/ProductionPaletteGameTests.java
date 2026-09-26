@@ -39,10 +39,12 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
  public void registryExactlyMatchesProductionPaletteAndPart(TestContext context){
   Set<Identifier> expected=new LinkedHashSet<>();
   for(String objectId:BloodborneBlocks.productionPalette().keySet())expected.add(BloodborneBlocks.id(objectId));
+  for(String cityId:BloodborneBlocks.CITY_BLOCKS.keySet())expected.add(BloodborneBlocks.id(cityId));
   expected.add(BloodborneBlocks.id("architecture_part"));
   Set<Identifier> actual=new LinkedHashSet<>();
   for(Identifier id:Registries.BLOCK.getIds())if(BloodborneBlocks.ID.equals(id.getNamespace()))actual.add(id);
-  context.assertTrue(actual.equals(expected),"registered production blocks exactly match production-palette.json: actual="+actual+" expected="+expected);
+  Set<Identifier> missing=new LinkedHashSet<>(expected);missing.removeAll(actual);Set<Identifier> unexpected=new LinkedHashSet<>(actual);unexpected.removeAll(expected);
+  context.assertTrue(actual.equals(expected),"registered Bloodborne blocks match production + city definitions: actual="+actual.size()+" expected="+expected.size()+" missing="+missing+" unexpected="+unexpected);
   for(String restored:List.of("o_acacia_door","o_birch_door","o_dark_oak_door","o_shuttered_window","o_stone_railing","o_ornate_balustrade","o_carved_balustrade","o_stepped_balustrade","o_high_balustrade","o_stone_curb","o_ladder_01","o_ladder_03","o_candles_0","o_lanterns","o_wall_lantern","o_lantern","o_lightning_rod","o_oak_wood","o_bench","o_barrel","o_books","o_bag","o_cases_0"))context.assertTrue(BloodborneBlocks.BLOCKS.containsKey(restored),"required restored production ID: "+restored);
   context.assertTrue(!BloodborneBlocks.BLOCKS.containsKey("o_c003"),"retired C003 composite must not return through production selection");
   for(String obsolete:List.of("o_c001_a","o_c001_b","o_c009_a","o_c009_b","o_c282_a","o_c282_b","o_c008_4","o_bench_rotate","o_ladder_02"))context.assertTrue(!BloodborneBlocks.BLOCKS.containsKey(obsolete)&&!Registries.BLOCK.containsId(BloodborneBlocks.id(obsolete)),"obsolete fragment is not registered: "+obsolete);

@@ -31,7 +31,8 @@ def verify(path: Path) -> dict:
         manifest = json.loads(jar.read('bloodborne_blocks/logical/production-palette.json'))
         production = {row['id'] for row in manifest['objects']}
         actual = {Path(n).stem for n in names if n.startswith('assets/bloodborne_blocks/blockstates/') and n.endswith('.json')}
-        assert actual == production | {'architecture_part'}, 'blockstate registry mismatch'
+        city={row['id'] for row in json.loads(jar.read('bloodborne_blocks/city/definitions.json'))['blocks']}
+        assert actual == production | city | {'architecture_part'}, 'blockstate registry mismatch'
         prefix = 'dev/dreamwalker/bloodborneblocks/'
         for obsolete in ('PaletteAliases', 'LogicalItemMigration', 'LegacyItemSections', 'PaletteMigration'):
             assert prefix + obsolete + '.class' not in names, f'obsolete compatibility class: {obsolete}'
