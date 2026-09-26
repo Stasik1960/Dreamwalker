@@ -243,6 +243,7 @@ class Rule:
     required_context: tuple[Expected, ...] = ()
     atomic_owner_group: bool = False
     preflight_error: str | None = None
+    shared_physics: bool = False
 
     def accepts_origin(self,dimension,origin):
         point=(dimension,tuple(origin))
@@ -690,6 +691,21 @@ class World:
         chunk.root()[key] = Tag(TAG_LIST, entries, TAG_COMPOUND)
         chunk.changed = True
 
+    def add_shared_helper(self, dim, pos, owners):
+        """Same persistent helper type; a root carrier stores guest bindings only."""
+        owners = sorted(set(owners), key=lambda entry: (entry[1], entry[0]))
+        if not owners or len(owners) > 16 or any(root == pos for _, root in owners):
+            raise ValueError('invalid shared helper owners')
+        self.add_helper(dim, pos, owners[0][1], owners[0][0])
+        row = {'position': list(pos), 'id': PART, 'Root': block_pos_long(*owners[0][1]), 'Owner': owners[0][0]}
+        if len(owners) > 1:
+            row['Owners'] = [{'Root': block_pos_long(*root), 'Owner': owner} for owner, root in owners]
+            chunk = self.chunk(dim, pos[0], pos[2])
+            compound(chunk.entities()[1][-1])['Owners'] = Tag(TAG_LIST, [Tag(TAG_COMPOUND, {
+                'Root': Tag(TAG_LONG, entry['Root']), 'Owner': Tag(TAG_STRING, entry['Owner'])
+            }) for entry in row['Owners']], TAG_COMPOUND)
+        return row
+
     def save(self) -> None:
         for chunk in self.chunks.values():
             chunk.finish()
@@ -730,6 +746,13 @@ class Candidate:
                 return output.target[0], root
         return None
 
+    def helper_owners_at(self, point):
+        outputs = self.rule.outputs or (Output(self.rule.target, self.rule.root_offset, self.rule.shape),)
+        return sorted({(output.target[0], add(self.origin, output.root_offset)) for output in outputs
+                       if point != add(self.origin, output.root_offset) and
+                       tuple(point[i]-self.origin[i]-output.root_offset[i] for i in range(3)) in output.shape},
+                      key=lambda entry: (entry[1], entry[0]))
+
 
 def add(a: tuple[int, int, int], b: tuple[int, int, int]) -> tuple[int, int, int]:
     return a[0] + b[0], a[1] + b[1], a[2] + b[2]
@@ -738,7 +761,7 @@ def add(a: tuple[int, int, int], b: tuple[int, int, int]) -> tuple[int, int, int
 def owned_part(current: tuple[str, tuple[tuple[str, str], ...]] | None, entity: Tag | None, owner_name: str, root_pos: tuple[int, int, int]) -> bool:
     data = compound(entity) if entity is not None else {}
     entity_id, owner, root = data.get("id"), data.get("Owner"), data.get("Root")
-    return (current == (PART, ()) and entity_id is not None and entity_id.type == TAG_STRING and entity_id.value == PART and
+    return ('Owners' not in data and current == (PART, ()) and entity_id is not None and entity_id.type == TAG_STRING and entity_id.value == PART and
             owner is not None and owner.type == TAG_STRING and owner.value == owner_name and
             root is not None and root.type == TAG_LONG and root.value == block_pos_long(*root_pos))
 
@@ -860,19 +883,33 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         item.target_root = add(item.origin, outputs[0].root_offset)
         item.output_roots = tuple((add(item.origin, output.root_offset), output.target) for output in outputs)
         item.writes = {}
+        root_cells = set()
+        occupancy = {}
         for output in outputs:
             root = add(item.origin, output.root_offset)
             for offset in output.shape:
                 point = add(root, offset)
+                occupancy[point] = occupancy.get(point, 0) + 1
                 if point in item.writes:
-                    item.reason = "overlapping_transaction_outputs"
-                    break
-                item.writes[point] = (PART, ()) if offset != (0, 0, 0) else output.target
+                    if not (item.rule.atomic_owner_group and item.rule.shared_physics):
+                        item.reason = "overlapping_transaction_outputs"
+                        break
+                    if offset == (0, 0, 0) and point in root_cells:
+                        item.reason = 'shared_root_conflict'
+                        break
+                    if occupancy[point] > 16:
+                        item.reason = 'shared_owner_limit'
+                        break
+                if offset == (0, 0, 0):
+                    root_cells.add(point)
+                    item.writes[point] = output.target
+                elif point not in item.writes:
+                    item.writes[point] = (PART, ())
             if item.reason:
                 break
         if item.reason:
             continue
-        if len(item.writes) != sum(len(output.shape) for output in outputs):
+        if not item.rule.shared_physics and len(item.writes) != sum(len(output.shape) for output in outputs):
             item.reason = "duplicate_target_geometry"
             continue
         if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
@@ -1037,12 +1074,9 @@ def apply(world: World, items: Iterable[Candidate]) -> list[dict[str, Any]]:
         world.remove_entities(item.dimension, item.touched)
         helpers = []
         for point, state in item.writes.items():
-            if state[0] == PART:
-                owner = item.owner_at(point)
-                if owner is None:
-                    raise ValueError("helper has no transaction output owner")
-                world.add_helper(item.dimension, point, owner[1], owner[0])
-                helpers.append({"position": list(point), "id": PART, "Root": block_pos_long(*owner[1]), "Owner": owner[0]})
+            owners = item.helper_owners_at(point)
+            if owners:
+                helpers.append(world.add_shared_helper(item.dimension, point, owners))
         ledger.append({
             "rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
             "origin": list(item.origin), "targetRoot": list(item.target_root),

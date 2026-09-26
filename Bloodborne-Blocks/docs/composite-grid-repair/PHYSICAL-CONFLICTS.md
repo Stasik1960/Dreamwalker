@@ -62,3 +62,20 @@ This fixes lifecycle, not shared-cell admission. The whole-world gate rerun on
 the unchanged diagnostic conversion is exactly equal to the integration scan:
 356 accepted atomic groups, 6,518 failed protected occurrences, overall FAIL.
 See `physical-lifecycle-gate.json`. No conversion mask or root changed.
+
+## Shared-cell prototype (not enabled for world conversion)
+
+The existing converter has an explicit `Rule.shared_physics` capability,
+default false. No compiled real owner graph enables it yet. It admits shared
+helper cells and one root plus guest helper bindings only inside an atomic
+transaction. Two roots, more than 16 contributors and foreign destinations
+still reject the transaction. Masks, root coordinates and render data are
+unchanged. Singleton helper NBT retains `Root`/`Owner`; multiple bindings add
+an ordered `Owners` list. Root carriers store only the guest bindings.
+
+Eight atomic tests and the existing logical-world regression script PASS,
+including independent ledger validation, saved NBT, second pass zero,
+missing-binding tampering, root/root rejection and conservative/aggressive
+foreign-block protection. This is **not** runtime proof or a reduced conflict
+count. Activation requires the real runtime lifecycle tests and then a fresh
+full MODDED conversion, independent verification and whole-world gate.

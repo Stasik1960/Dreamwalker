@@ -72,14 +72,31 @@ def rule_outputs(rule, origin):
 
 
 def output_writes(rule, origin):
-    writes = {}
+    cells = {}
     for root, target, shape in rule_outputs(rule, origin):
         for offset in shape:
             point = tuple(root[i] + offset[i] for i in range(3))
-            if point in writes:
-                raise AssertionError("rule has overlapping transaction outputs")
-            writes[point] = target if offset == (0, 0, 0) else (PART, ())
+            cells.setdefault(point, []).append((root, target))
+    writes = {}
+    for point, contributors in cells.items():
+        roots = [target for root, target in contributors if root == point]
+        if len(contributors) > 1 and not (rule.atomic_owner_group and rule.shared_physics):
+            raise AssertionError('rule has overlapping transaction outputs')
+        if len(roots) > 1 or len(contributors) > 16:
+            raise AssertionError('shared cell has conflicting roots or too many owners')
+        writes[point] = roots[0] if roots else (PART, ())
     return writes
+
+
+def helper_entity_data(point, helper):
+    data = {'id': Tag(TAG_STRING, PART), 'x': Tag(TAG_INT, point[0]),
+            'y': Tag(TAG_INT, point[1]), 'z': Tag(TAG_INT, point[2]),
+            'Root': Tag(TAG_LONG, helper['Root']), 'Owner': Tag(TAG_STRING, helper['Owner'])}
+    if 'Owners' in helper:
+        data['Owners'] = Tag(TAG_LIST, [Tag(TAG_COMPOUND, {
+            'Root': Tag(TAG_LONG, row['Root']), 'Owner': Tag(TAG_STRING, row['Owner'])
+        }) for row in helper['Owners']], TAG_COMPOUND)
+    return data
 
 
 def explicitly_supersedes(large, small):
@@ -272,7 +289,7 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         result = {}
         for (dim, x, y, z), entity in entity_overlay.items():
             data = compound(entity)
-            if (data.get("id") == Tag(TAG_STRING, PART) and
+            if ('Owners' not in data and data.get("id") == Tag(TAG_STRING, PART) and
                     data.get("Owner", Tag(TAG_LIST, [])).type == TAG_STRING and
                     data.get("Root", Tag(TAG_LIST, [])).type == TAG_LONG and
                     view.get(dim, (x, y, z)) == (PART, ())):
@@ -385,11 +402,16 @@ def validate_ledger(before, report, rules, recovery_entries=()):
                 if entry.get("decision") != ("forced" if expected_conflicts else "converted"):
                     raise AssertionError("ledger decision does not match conflicts")
             expected_helpers = {}
+            helper_bindings = {}
             for output_root, target, shape in outputs:
                 for offset in shape:
                     point = tuple(output_root[i] + offset[i] for i in range(3))
                     if point != output_root:
-                        expected_helpers[point] = {"position": list(point), "id": PART, "Root": block_pos_long(*output_root), "Owner": target[0]}
+                        helper_bindings.setdefault(point, set()).add((output_root, target[0]))
+            for point, bindings in helper_bindings.items():
+                ordered = [{'Root': block_pos_long(*root), 'Owner': owner} for root, owner in sorted(bindings)]
+                expected_helpers[point] = {'position': list(point), 'id': PART, **ordered[0]}
+                if len(ordered) > 1: expected_helpers[point]['Owners'] = ordered
             actual_helpers = {tuple(helper["position"]): helper for helper in entry["helpers"]}
             if len(actual_helpers) != len(entry["helpers"]) or actual_helpers != expected_helpers:
                 raise AssertionError("ledger helper data does not match target geometry")
@@ -397,11 +419,7 @@ def validate_ledger(before, report, rules, recovery_entries=()):
                 view.states[(dim, point)] = writes.get(point, AIR)
                 entity_overlay.pop((dim, *point), None)
             for point, helper in actual_helpers.items():
-                entity_overlay[(dim, *point)] = Tag(TAG_COMPOUND, {
-                    "id": Tag(TAG_STRING, PART), "x": Tag(TAG_INT, point[0]),
-                    "y": Tag(TAG_INT, point[1]), "z": Tag(TAG_INT, point[2]),
-                    "Root": Tag(TAG_LONG, helper["Root"]), "Owner": Tag(TAG_STRING, helper["Owner"]),
-                })
+                entity_overlay[(dim, *point)] = Tag(TAG_COMPOUND, helper_entity_data(point, helper))
         if reported_effects != expected_effects:
             raise AssertionError(f"pass {pass_number} ledger differs from independently accepted groups: "
                                  f"missing={len(expected_effects - reported_effects)}, unexpected={len(reported_effects - expected_effects)}")
@@ -554,9 +572,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
                     seen_helpers.add(point)
                     data = compound(new_entities.get(point, Tag(TAG_COMPOUND, {})))
                     expected = expected_helpers[point]
-                    if data != {"id": Tag(TAG_STRING, PART), "x": Tag(TAG_INT, point[1]),
-                                "y": Tag(TAG_INT, point[2]), "z": Tag(TAG_INT, point[3]),
-                                "Root": Tag(TAG_LONG, expected["Root"]), "Owner": Tag(TAG_STRING, expected["Owner"])}:
+                    if data != helper_entity_data(point[1:], expected):
                         raise AssertionError(f"bad helper entity at {point}")
                 elif point not in allowed and old_entities.get(point) != new_entities.get(point):
                     raise AssertionError(f"block entity changed outside ledger at {point}")

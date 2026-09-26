@@ -59,6 +59,65 @@ class AtomicOwnerGroupsTests(unittest.TestCase):
         self.assertEqual([],apply(world,items))
         self.assertTrue(all(i.reason for i in items))
 
+    def test_opt_in_shared_physics_keeps_roots_and_exact_bindings(self):
+        from world_io import compound
+        from check_logical_world import validate_ledger
+        for root_helper in (False, True):
+            with self.subTest(root_helper=root_helper):
+                world,rules=self.fixture()
+                left=frozenset({(0,0,0),(1,0,0)})
+                right=frozenset({(0,0,0)} if root_helper else {(0,0,0),(-1,0,0)})
+                rules[0]=replace(rules[0],shared_physics=True,outputs=(
+                    Output(A,(0,0,0),left),Output(B,(1 if root_helper else 2,0,0),right)))
+                items,_,_=candidates(world,rules);reject_overlaps(items);ledger=apply(world,items)
+                self.assertEqual(1,len(ledger))
+                validate_ledger(World(world.root,{}),{'ledger':ledger,'sourceMode':'modded',
+                    'format':'bloodborne-logical-world-conversion-v2','counts':{'converted':1}},rules)
+                helper=ledger[0]['helpers'][0]
+                self.assertEqual([1,64,0],helper['position'])
+                if root_helper:
+                    self.assertEqual(B,world.get(DIM,(1,64,0)))
+                    self.assertNotIn('Owners',helper)
+                else:
+                    self.assertEqual(2,len(helper['Owners']))
+                world.save()
+                again=World(world.root,{})
+                entity=compound(again.block_entities()[(DIM,1,64,0)])
+                self.assertEqual(A[0],entity['Owner'].value)
+                scanned,_,_=candidates(again,rules);reject_overlaps(scanned)
+                self.assertEqual([],apply(again,scanned))
+
+    def test_shared_physics_still_rejects_root_root_and_foreign_block_atomically(self):
+        for options in ({'overlap':True},{'obstruction':True}):
+            world,rules=self.fixture(**options);rules[0]=replace(rules[0],shared_physics=True)
+            items,_,_=candidates(world,rules,conflict_policy='aggressive');reject_overlaps(items)
+            self.assertEqual([],apply(world,items))
+            from check_logical_world import independently_accepted_effects
+            self.assertEqual(set(),independently_accepted_effects(world,rules,{}, {},'aggressive'))
+
+    def test_shared_owner_limit_and_non_atomic_opt_in_fail_closed(self):
+        for atomic in (True,False):
+            world,rules=self.fixture()
+            outputs=tuple(Output(A,(3+i,0,0),frozenset({(0,0,0),(-2-i,0,0)}))
+                          for i in range(17 if atomic else 2))
+            rules=[replace(rules[0],shared_physics=True,atomic_owner_group=atomic,outputs=outputs)]
+            items,_,_=candidates(world,rules);reject_overlaps(items)
+            self.assertEqual([],apply(world,items))
+            from check_logical_world import output_writes
+            with self.assertRaises(AssertionError):output_writes(rules[0],(0,64,0))
+
+    def test_independent_checker_rejects_missing_shared_binding(self):
+        world,rules=self.fixture()
+        rules[0]=replace(rules[0],shared_physics=True,outputs=(
+            Output(A,(0,0,0),frozenset({(0,0,0),(1,0,0)})),
+            Output(B,(2,0,0),frozenset({(0,0,0),(-1,0,0)}))))
+        items,_,_=candidates(world,rules);reject_overlaps(items);ledger=apply(world,items)
+        ledger[0]['helpers'][0].pop('Owners')
+        from check_logical_world import validate_ledger
+        with self.assertRaisesRegex(AssertionError,'helper data'):
+            validate_ledger(World(world.root,{}),{'ledger':ledger,'sourceMode':'modded',
+                'format':'bloodborne-logical-world-conversion-v2','counts':{'converted':1}},rules)
+
     def test_real_graphs_are_disjoint_and_high_root_exception_is_exact(self):
         rules,_,_=compile_modded_rules(DEFAULT_RESOURCES)
         rules,diagnostic=compile_groups(rules,DEFAULT_RESOURCES)
