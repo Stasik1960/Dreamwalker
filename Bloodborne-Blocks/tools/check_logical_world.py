@@ -127,14 +127,20 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
     The first member is sufficient to discover every *complete* group. This
     verifier intentionally has a different scanning strategy from conversion.
     """
+    from atomic_owner_groups import reservations
+    reserved = reservations(rules)
     starts = {}
     for rule in rules:
+        if rule.allowed_origins:continue
         starts.setdefault(rule.source.state, []).append((rule, rule.source_mode, rule.source.offset))
         if rule.components:
             first = rule.components[0]
             starts.setdefault(first.state, []).append((rule, "v2", first.offset))
     scheduled = set()
     proposals = {}
+    for rule in rules:
+        for dim,origin in rule.allowed_origins:
+            if rule.accepts_origin(dim,origin):proposals[(rule.number,rule.source_mode,dim,origin)]=rule
     for chunk in before.chunks.values():
         for name in ("block_ticks", "TileTicks", "fluid_ticks", "LiquidTicks"):
             ticks = chunk.root().get(name)
@@ -162,6 +168,7 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
                         proposals[(rule.number, mode, chunk.dimension, origin)] = rule
     effects = {}
     for (_, mode, dim, origin), rule in proposals.items():
+        if rule.preflight_error: continue
         if any(before.get(dim,tuple(origin[i]+p.offset[i] for i in range(3)))!=p.state for p in rule.required_context):continue
         pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components
         source = {tuple(origin[i] + part.offset[i] for i in range(3)) for part in pieces}
@@ -171,10 +178,12 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
             from source_variant_rng import guards_match
             if not guards_match(rule.variant_guards,origin): continue
         root = rule_outputs(rule, origin)[0][0]
-        writes = output_writes(rule, origin)
+        try: writes = output_writes(rule, origin)
+        except AssertionError: continue
         helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned, mode)
         stale = helpers - set(writes)
         touched = source | stale | set(writes)
+        if any(reserved.get((dim,p),rule.transaction_id)!=rule.transaction_id for p in touched):continue
         valid = True
         for point in touched:
             old = before.get(dim, point)
@@ -183,7 +192,7 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
                     (point in stale and not is_owned) or
                     ((dim, *point) in old_entities and not is_owned) or
                     (point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned and
-                     not (conflict_policy == "aggressive" and old[0].startswith("bloodborne_blocks:") and
+                     not (conflict_policy == "aggressive" and not rule.atomic_owner_group and old[0].startswith("bloodborne_blocks:") and
                           old[0] != PART and not owned.get((dim, old[0], block_pos_long(*point)))))):
                 valid = False
                 break
@@ -431,9 +440,15 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
     for name in ("contracts-v2.json", "transform-v2.json", "physical-footprints.json"):
         if (resources / name).is_file():
             definitions_hashes[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
+    for name in ('definitions.json','geometry.json','owner-runtime-mappings.json','owner-meshes.json.gz'):
+        path=resources.parent/'city'/name
+        if path.is_file():definitions_hashes['city/'+name]=hashlib.sha256(path.read_bytes()).hexdigest()
     if definitions_hashes != report.get("resources", {}).get("definitionsSha256"):
         raise AssertionError("resource definitions changed since conversion")
     rules, defaults = parse_rules(resources, report.get("sourceMode", "legacy"))
+    if report.get('atomicOwnerGroups'):
+        from atomic_owner_groups import compile_groups
+        rules, _ = compile_groups(rules, resources)
     city_mapping, city_transform = {}, {}
     if "cityPaletteMigration" in report:
         from city_palette import load as load_city

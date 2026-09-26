@@ -19,10 +19,11 @@ def technical_membership(row,before,rules):
     """Require a complete exact MODDED assembly, not a raw carrier heuristic."""
     origin=tuple(row['origin']);dim=row['dimension'];matched=[]
     for rule in rules:
-        if not rule.accepts_origin(dim,origin):continue
-        if any(before.state(dim,add(origin,p.offset))[1]!=key(p.state) for p in rule.required_context):continue
-        if not guards_match(rule.variant_guards,origin):continue
-        cells=[(add(origin,p.offset),key(p.state)) for p in (rule.source,)+rule.members]
+        rule_origin=rule.allowed_origins[0][1] if rule.atomic_owner_group else origin
+        if not rule.accepts_origin(dim,rule_origin):continue
+        if any(before.state(dim,add(rule_origin,p.offset))[1]!=key(p.state) for p in rule.required_context):continue
+        if not guards_match(rule.variant_guards,rule_origin):continue
+        cells=[(add(rule_origin,p.offset),key(p.state)) for p in (rule.source,)+rule.members]
         if all(before.state(dim,p)[1]==expected for p,expected in cells):matched.append(cells)
     return {p for cells in matched for p,_ in cells} if matched else None
 
@@ -83,6 +84,15 @@ def check(output,oracle_path,source):
     contracts,_=load_contracts(DEFAULT_RESOURCES)
     physical={f['id']:{k:s['physical_footprint'] for k,s in f['states'].items()} for f in contracts['families']}
     compiled,_,_=compile_modded_rules(DEFAULT_RESOURCES)
+    from atomic_owner_groups import compile_groups
+    compiled,group_diagnostics=compile_groups(compiled,DEFAULT_RESOURCES)
+    group_rules={r.transaction_id:r for r in compiled if r.atomic_owner_group}
+    by_occurrence={}
+    for group in group_diagnostics['groups']:
+        incomplete={tuple(e['origin']) for e in group['errors'] if 'origin' in e}
+        for row in group['occurrences']:
+            if tuple(row['origin']) not in incomplete:
+                by_occurrence[(row['rule'],tuple(row['origin']))]=group_rules[group['transaction']]
     by_raw={}
     for rule in compiled:
         match=re.search(r'raw rule (\d+)$',rule.source_reference or '')
@@ -109,6 +119,22 @@ def check(output,oracle_path,source):
                         break
         permitted_roots={(r['dimension'],tuple(o['canonical_root'])):o['expected_logical_state']
                          for r in oracle['occurrences'] for o in r['outputs']}
+        for rule in group_rules.values():
+            dim,origin=rule.allowed_origins[0]
+            for output in rule.outputs:
+                permitted_roots[(dim,add(origin,output.root_offset))]=key(output.target)
+        # Root exceptions are read from the same complete group identity,
+        # never inferred from an arbitrary nearby output block.
+        for row in oracle['occurrences']:
+            rule=by_occurrence.get((row['rule'],tuple(row['origin'])))
+            if rule is None:continue
+            for output in row['outputs']:
+                for out in rule.outputs:
+                    p=add(rule.allowed_origins[0][1],out.root_offset)
+                    if (out.target[0]=='bloodborne_blocks:'+output['family'] and
+                        dict(out.target[1]).get('root_anchor')=='upper' and
+                        p==add(tuple(output['canonical_root']),(0,1,0))):
+                        output['canonical_root']=list(p);output['expected_logical_state']=key(out.target)
         rows=sorted(oracle['occurrences'],key=lambda r:(r['dimension'],r['origin'][0]//16,r['origin'][2]//16,r['origin'][1]))
         for number,row in enumerate(rows):
             if number%2500==0:print('protected world gate',number,'/',len(rows),flush=True)
@@ -125,7 +151,8 @@ def check(output,oracle_path,source):
                 foreign.append({'gate':'PROTECTED_ORACLE_FOREIGN_CONFLICT','origin':row['origin'],'cells':conflicts})
                 for o in row['outputs']:families[o['family']]['foreign_conflicts']+=1
                 continue
-            membership=technical_membership(row,before,by_raw.get(row['rule'],()))
+            group_rule=by_occurrence.get((row['rule'],tuple(row['origin'])))
+            membership=technical_membership(row,before,[group_rule] if group_rule else by_raw.get(row['rule'],()))
             if membership is None:
                 unresolved_membership.append({'origin':row['origin'],'rule':row['rule'],'reason':'no_complete_exact_modded_assembly'})
             cells=set(tuple(c['position']) for c in row['source_cells']) | (membership or set())
@@ -148,12 +175,30 @@ def check(output,oracle_path,source):
                     failures.append({'family':o['family'],'root':root,'errors':errors})
                 else:families[o['family']]['logical']+=1
         n=sum(v['fragmented'] for v in families.values())
+        group_failures=[];group_passed=0
+        for group in group_diagnostics['groups']:
+            rule=group_rules[group['transaction']];dim,origin=rule.allowed_origins[0]
+            errors=list(group['errors'])
+            errors.extend(independent_fragment_errors(actual,dim,
+                {add(origin,p.offset) for p in (rule.source,)+rule.members},permitted_roots))
+            for out in rule.outputs:
+                root=add(origin,out.root_offset)
+                if actual.state(dim,root)[1]!=key(out.target):
+                    errors.append({'reason':'whole_owner_root_missing','root':root,'expected':key(out.target)})
+                    continue
+                for offset in out.shape:
+                    p=add(root,offset)
+                    if p!=root and (actual.state(dim,p)[1]!=PART or actual.helper_owner(dim,p)!=(root,out.target[0])):
+                        errors.append({'reason':'whole_owner_helper_missing','position':p})
+            if errors:group_failures.append({'transaction':rule.transaction_id,'errors':errors})
+            else:group_passed+=1
         return {'result':'FAIL' if failures else 'INCOMPLETE',
                 'NO_COMPOSITE_FRAGMENTATION':'FAIL' if failures else 'NOT_PROVEN',
                 'PROTECTED_WORLD_OBJECT_PRESERVED':'FAIL' if failures else 'PASS',
                 'scope':'Protected exact source-pattern occurrences only; compatibility assembly gate still required.',
                 'fragmented':n,'families':families,'failures':failures,'foreign_conflicts':foreign,
                 'unresolved_technical_membership':unresolved_membership,
+                'atomic_owner_groups':{'total':len(group_rules),'passed':group_passed,'failures':group_failures},
                 'oracle_sha256':hashlib.sha256(oracle_path.read_bytes()).hexdigest()}
     finally:actual.close();before.close()
 

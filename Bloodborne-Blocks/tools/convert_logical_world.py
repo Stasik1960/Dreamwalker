@@ -184,6 +184,9 @@ def definition_hashes(resources: Path) -> dict[str, str | None]:
     for name in ("contracts-v2.json", "transform-v2.json", "physical-footprints.json"):
         if (resources / name).is_file():
             result[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
+    for name in ('definitions.json','geometry.json','owner-runtime-mappings.json','owner-meshes.json.gz'):
+        path=resources.parent/'city'/name
+        if path.is_file():result['city/'+name]=hashlib.sha256(path.read_bytes()).hexdigest()
     return result
 
 
@@ -238,6 +241,8 @@ class Rule:
     allowed_origins: tuple[tuple[str, tuple[int, int, int]], ...] = ()
     excluded_origins: tuple[tuple[str, tuple[int, int, int]], ...] = ()
     required_context: tuple[Expected, ...] = ()
+    atomic_owner_group: bool = False
+    preflight_error: str | None = None
 
     def accepts_origin(self,dimension,origin):
         point=(dimension,tuple(origin))
@@ -743,8 +748,11 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                registered_ids: set[str] | None = None) -> tuple[list[Candidate], dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]], list[dict[str, Any]]]:
     if conflict_policy not in ("conservative", "aggressive"):
         raise ValueError("conflict policy must be conservative or aggressive")
+    from atomic_owner_groups import reservations
+    reserved = reservations(rules)
     inverse: dict[tuple[str, tuple[tuple[str, str], ...]], list[tuple[Rule, str, tuple[int, int, int]]]] = defaultdict(list)
     for rule in rules:
+        if rule.allowed_origins: continue
         inverse[rule.source.state].append((rule, rule.source_mode, rule.source.offset))
         if rule.components:
             for component in rule.components:
@@ -752,6 +760,18 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
     found: dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]] = {}
     unmatched: dict[tuple[str, tuple[str, tuple[tuple[str, str], ...]]], dict[str, Any]] = {}
     result: dict[tuple[int, str, str, tuple[int, int, int]], Candidate] = {}
+    # Coordinate-scoped groups must not fan out through every matching palette
+    # cell in the city. Their permitted origins are explicit evidence data.
+    for rule in rules:
+        for dim,origin in rule.allowed_origins:
+            if not rule.accepts_origin(dim,origin):continue
+            matches=False
+            for piece in (rule.source,)+rule.members:
+                point=add(origin,piece.offset)
+                if world.get(dim,point)==piece.state:
+                    found[(dim,point)]=piece.state;matches=True
+            if matches or rule.atomic_owner_group:
+                result[(rule.number,rule.source_mode,dim,origin)]=Candidate(rule,rule.source_mode,dim,origin,set(),(0,0,0),{})
     if progress:
         progress(f"scan start: chunks={len(world.chunks)}, inverseStates={len(inverse)}")
     for chunk in world.chunks.values():
@@ -806,6 +826,14 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             if owned_part(world.get(dim, (x, y, z)), entity, str(owner.value), unpack_pos_long(int(root.value))):
                 owned_parts[(dim, str(owner.value), int(root.value))].add((x, y, z))
     for item in result.values():
+        declared_source = {add(item.origin, p.offset) for p in (item.rule.source,) + item.rule.members}
+        if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
+               for p in declared_source):
+            item.reason = 'reserved_by_atomic_owner_group'
+            continue
+        if item.rule.preflight_error:
+            item.reason = item.rule.preflight_error
+            continue
         if any(world.get(item.dimension,add(item.origin,p.offset))!=p.state for p in item.rule.required_context):
             item.reason='explicit_root_context_mismatch'
             continue
@@ -847,6 +875,10 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         if len(item.writes) != sum(len(output.shape) for output in outputs):
             item.reason = "duplicate_target_geometry"
             continue
+        if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
+               for p in item.touched):
+            item.reason = 'reserved_by_atomic_owner_group'
+            continue
         try:
             min_y, max_y = world.build_height(item.dimension)
         except ValueError:
@@ -881,7 +913,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                 item.existing_helpers.add(point)
             if point in item.writes and point not in item.source and current is not None and current[0] not in AIR_NAMES and not owned:
                 blocker_helpers = owned_parts.get((item.dimension, current[0], block_pos_long(*point)), ())
-                if (conflict_policy == "aggressive" and current[0].startswith(NS) and
+                if (conflict_policy == "aggressive" and not item.rule.atomic_owner_group and current[0].startswith(NS) and
                         current[0] != PART and not blocker_helpers):
                     item.conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(current)),
                                            "reason": "forced_target_overwrites_bloodborne_state"})
@@ -912,6 +944,9 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         if world.ticks_at(item.dimension, item.touched):
             item.conflicts.append({"reason": "scheduled_tick_at_changed_position"})
             item.reason = "scheduled_tick_at_changed_position"
+        if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
+               for p in item.touched):
+            item.reason = 'reserved_by_atomic_owner_group'
     return list(result.values()), found, list(unmatched.values())
 
 
@@ -1100,7 +1135,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             report_path: Path | None = None, dry_run: bool = False, progress: bool = False,
             report_root: Path | None = None, source_mode: str = "legacy",
             conflict_policy: str = "conservative", inventory_path: Path | None = None,
-            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False) -> dict[str, Any]:
+            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False,
+            atomic_owner_groups: bool = False) -> dict[str, Any]:
     def status(message: str) -> None:
         if progress:
             print(f"logical-world: {message}", file=sys.stderr, flush=True)
@@ -1131,8 +1167,14 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         from modded_world_adapter import compile_modded_rules
         resolved_inventory = inventory_path.resolve() if inventory_path is not None else None
         rules, defaults, mapping_diagnostics = compile_modded_rules(resources, resolved_inventory)
+        if atomic_owner_groups:
+            from atomic_owner_groups import compile_groups
+            rules, mapping_diagnostics['atomicOwnerGroups'] = compile_groups(rules, resources)
     else:
         rules, defaults = parse_rules(resources, source_mode)
+        if atomic_owner_groups: raise ValueError('Atomic owner graphs require MODDED input')
+    if city_compat and (atomic_owner_groups or (resources.parent/'city/owner-runtime-mappings.json').exists()):
+        raise ValueError('Independent city palette is forbidden until all composite ownership is resolved')
     definitions = definition_hashes(resources)
     status(f"rules parsed: rules={len(rules)}")
     with tempfile.TemporaryDirectory(prefix="logical-world-", dir=str(output.parent)) as temporary:
@@ -1151,6 +1193,9 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         registered_ids = ({PART} | {full_id(row["id"]) for row in
                           json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
                           if source_mode == "modded" else None)
+        if atomic_owner_groups:
+            registered_ids.update(full_id(b['id']) for b in json.loads(
+                (resources.parent/'city/definitions.json').read_bytes())['blocks'] if b.get('whole_owner'))
         ledger = []
         pass_summaries = []
         previous_source_cells = None
@@ -1199,6 +1244,7 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         report = {
             "format": "bloodborne-logical-world-conversion-v2" if source_mode == "modded" else "bloodborne-logical-world-conversion-v1",
             "dryRun": dry_run, "sourceMode": source_mode,
+            "atomicOwnerGroups": atomic_owner_groups,
             "conflictPolicy": conflict_policy,
             "source": {"path": str(source), "kind": source_kind, "hashes": source_hashes},
             "resources": {"path": str(resources), "migrationSha256": hashlib.sha256((resources / "migration.json").read_bytes()).hexdigest(),
@@ -1255,12 +1301,14 @@ def main() -> None:
     parser.add_argument("--allow-unresolved-city", action="store_true", help="diagnostic output only: preserve missing city IDs and mark registry QA FAIL")
     parser.add_argument("--recover-city", action="store_true", help="restore exact missing cells from verified historical MODDED reference before conversion")
     parser.add_argument("--city-compat", action="store_true", help="map remaining historical module palettes to the compact city registry")
+    parser.add_argument("--atomic-owner-groups", action="store_true", help="reserve and convert proven historical owner graphs atomically")
     parser.add_argument("--inventory", type=Path, help="trusted inspection inventory used only to select rare exact MODDED anchors")
     parser.add_argument("--expected-source-sha256", help="required for a MODDED ZIP; refuses a mismatched immutable input")
     args = parser.parse_args()
     report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode,
                      conflict_policy=args.conflict_policy, inventory_path=args.inventory,
-                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city)
+                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city,
+                     atomic_owner_groups=args.atomic_owner_groups)
     print(json.dumps(report["counts"], ensure_ascii=False))
 
 

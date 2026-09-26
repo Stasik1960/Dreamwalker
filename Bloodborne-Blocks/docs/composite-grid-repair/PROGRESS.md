@@ -203,3 +203,17 @@ steps remain: finish unresolved memberships and preservation constraints;
 integrate proven owner groups atomically in the existing converter/runtime;
 pass whole-world gates; then beta.4 JAR + ONE FULL world from the immutable
 MODDED ZIP, zero-change second pass, and finally history-preserving main work.
+
+### Atomic integration (supersedes evidence-only status above)
+
+See [ATOMIC-INTEGRATION.md](ATOMIC-INTEGRATION.md) for the implemented existing
+converter/runtime integration, full-world results and exact remaining lists.
+3,238 connected groups compiled; 356 groups / 2,471 owners converted atomically.
+2,882 groups stay fail-closed. New protected scan: 6,518 failed objects, 933
+unresolved memberships (2 proven current-owner omission contexts, 931 still
+insufficient). 53 root conflicts in 43 groups are explicitly listed; no new
+technical-root moves were made. Independent full-world edit verification,
+zero-orphan helper audit and byte-identical zero-change second pass PASS.
+Composite/preservation/registry gates remain FAIL. No beta.4/FULL release or
+main changes. Continue targeted physical conflict and membership work from
+this implementation rather than returning to unbounded evidence exploration.

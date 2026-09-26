@@ -27,7 +27,12 @@ final class ModularMeshData {
  /** Optional compatibility meshes are client-only and strictly cell-local. */
  static Map<String,Mesh> loadCityIfPresent(){
   if(ModularMeshData.class.getResource("/bloodborne_blocks/city/meshes.json.gz")==null)return Map.of();
-  return loadAndValidate("/bloodborne_blocks/city/meshes.json.gz","",0,1);
+  Map<String,Mesh> result=new LinkedHashMap<>(loadAndValidate("/bloodborne_blocks/city/meshes.json.gz","",0,1));
+  if(ModularMeshData.class.getResource("/bloodborne_blocks/city/owner-meshes.json.gz")!=null)
+   loadAndValidate("/bloodborne_blocks/city/owner-meshes.json.gz","owner_",-64,64).forEach((id,mesh)->{
+    if(result.putIfAbsent(id,mesh)!=null)throw new IllegalStateException("Duplicate whole owner mesh "+id);
+   });
+  return Collections.unmodifiableMap(result);
  }
  private static Map<String,Mesh> loadAndValidate(String path,String prefix,float minimum,float maximum){
   Map<String,String> textures=new HashMap<>();Map<String,Mesh> meshes=new LinkedHashMap<>();

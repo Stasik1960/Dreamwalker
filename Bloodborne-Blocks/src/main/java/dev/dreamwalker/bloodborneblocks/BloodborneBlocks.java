@@ -38,7 +38,7 @@ public final class BloodborneBlocks implements ModInitializer {
   /** Three canonical north-facing seat contact points, never inferred per tick. */
   public double[][] seat_anchors;
   public float hardness,resistance,slipperiness,velocity,jump;
-  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat;
+  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat,whole_owner;
   public Map<String,List<String>> properties;
   /** State values forced only while a logical item is being placed. */
   public Map<String,String> placement_properties;
@@ -72,7 +72,9 @@ public final class BloodborneBlocks implements ModInitializer {
   for(Definition definition:city.blocks){
    if(definition==null||!definition.city_compat||definition.logical||definition.id==null||Identifier.tryParse(ID+":"+definition.id)==null||!ids.add(definition.id))throw new IllegalStateException("Invalid city definition "+(definition==null?"null":definition.id));
    if(definition.properties==null||definition.states==null)throw new IllegalStateException("Incomplete city definition "+definition.id);
-   if(definition.models!=null){
+   if(definition.whole_owner){
+    if(!definition.id.startsWith("owner_")||!definition.modular||!"generic".equals(definition.kind)||!definition.extra_facing||definition.models==null||!definition.properties.keySet().equals(Set.of("facing"))||!new HashSet<>(definition.properties.get("facing")).equals(Set.of("north","east","south","west"))||definition.states.size()!=4||!definition.states.keySet().equals(definition.models.keySet())||definition.models.values().stream().anyMatch(name->!name.startsWith(definition.id+"_")))throw new IllegalStateException("Invalid whole owner definition "+definition.id);
+   }else if(definition.models!=null){
     List<String> variants=definition.properties.get("variant");
     if(!definition.modular||!"generic".equals(definition.kind)||!"minecraft:stone".equals(definition.source)||definition.properties.size()!=1||variants==null||variants.isEmpty()||variants.size()>16||new HashSet<>(variants).size()!=variants.size())throw new IllegalStateException("Invalid city module page "+definition.id);
     if(!definition.states.keySet().equals(definition.models.keySet()))throw new IllegalStateException("City module state/model mismatch "+definition.id);

@@ -82,7 +82,7 @@ public final class BloodborneClient implements ClientModInitializer {
     // Only our explicit mesh/polygon JSON extension uses the static quad adapter.
     if(appearance.isPresent()){
      String cacheKey=visualPath==null?"logical:"+meshKey:"visual:"+visualPath;
-     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,block.definition.city_compat)),result);
+     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,block.definition.city_compat&&!block.definition.whole_owner)),result);
     }
    }
    if(block.definition.emissive){
@@ -98,7 +98,7 @@ public final class BloodborneClient implements ClientModInitializer {
    }
    double[] offset=GeometryRuntime.renderOffset(id.getPath(),modelId.getVariant());
    if(offset!=null&&(offset[0]!=0||offset[1]!=0||offset[2]!=0))result=new TranslatedBakedModel(result,offset);
-   if(block.definition.city_compat&&block.definition.models!=null){
+   if(block.definition.city_compat&&!block.definition.whole_owner&&block.definition.models!=null){
     Map<String,net.minecraft.client.render.model.BakedModel> variants=cityItemVariants.computeIfAbsent(block.definition.id,key->new ConcurrentHashMap<>());
     if(modelId.getVariant().equals("inventory"))result=new CityVariantItemModel(result,block.definition,variants);
     else variants.put(modelId.getVariant(),result);
