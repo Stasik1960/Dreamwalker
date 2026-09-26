@@ -127,3 +127,13 @@ Stepped balustrade sample (-676,35,-312) is not admitted: 33 expected polygons
 are contained in an actual 39-polygon mesh. The extra six form a separate
 spirelamp_002 textured slab (y=0..0.1875). Its owner remains to be proved;
 neither containment alone nor its appearance authorizes discarding it.
+
+Subsequent exact neighbor proof now identifies that slab: sandstone_stairs
+at (-676,34,-312), offset (0,1,0). Its six textured polygons plus the wall's
+33 exactly equal the observed 39, with no missing/extra polygons. Verified
+source states and the actual MODDED state are frozen in
+stepped-wall-overlap-evidence.json; verify_stepped_wall_overlap.py reproduces
+the proof. Conversion is still unresolved: it must recover both whole objects
+atomically, including the rest of the neighboring object's source membership.
+Do not turn this evidence into a rule that consumes the merged cell for the
+wall alone or treats the residual slab as an independent object.
