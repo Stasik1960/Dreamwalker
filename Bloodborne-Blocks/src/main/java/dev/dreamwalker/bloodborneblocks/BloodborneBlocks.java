@@ -137,7 +137,6 @@ public final class BloodborneBlocks implements ModInitializer {
   for(var entry:definition.placement_properties.entrySet())state=set(state,(Property)definition.propertyObjects.get(entry.getKey()),entry.getValue());
   return state;
  }
- static boolean creativeVisible(Definition definition){return (definition.logical||ReviewedWallConnections.ID.equals(definition.id))&&definition.creative;}
  static Collection<ArchitectureBlock> allBlocks(){List<ArchitectureBlock> result=new ArrayList<>(BLOCKS.size()+CITY_BLOCKS.size());result.addAll(BLOCKS.values());result.addAll(CITY_BLOCKS.values());return Collections.unmodifiableList(result);}
  static ArchitectureBlock registeredBlock(String id){ArchitectureBlock block=BLOCKS.get(id);return block!=null?block:CITY_BLOCKS.get(id);}
  static String cityVariantModelKey(Definition definition,String variant){
@@ -169,7 +168,7 @@ public final class BloodborneBlocks implements ModInitializer {
   PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,partCarriers.toArray(Block[]::new)).build(null));
   ArchitecturePartBlockEntity.registerValidation();
   LogicalAttachments.validateDefinitions(DATA.blocks);
-  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->allBlocks().stream().filter(b->creativeVisible(b.definition)).filter(b->!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->ArchitectureCreativeCatalog.entries().forEach(entries::add)).build());
   BloodborneCommands.register();
   System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" city_blocks="+CITY_BLOCKS.size()+" states="+allBlocks().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }

@@ -14,6 +14,10 @@ import net.minecraft.text.Text;
 public final class ArchitectureBlockItem extends BlockItem {
  public ArchitectureBlockItem(ArchitectureBlock block,Settings settings){super(block,settings);}
 
+ @Override public void appendTooltip(ItemStack stack,net.minecraft.world.World world,java.util.List<Text> tooltip,net.minecraft.client.item.TooltipContext context){
+  super.appendTooltip(stack,world,tooltip,context);ArchitectureCreativeCatalog.tooltip(this,stack,tooltip);
+ }
+
  @Override public Text getName(ItemStack stack){
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
   if(!block.definition.city_compat||block.definition.models==null)return super.getName(stack);

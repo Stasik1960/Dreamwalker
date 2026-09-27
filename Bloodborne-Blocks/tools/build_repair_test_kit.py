@@ -74,7 +74,8 @@ def build(destination,edition=1):
                               {'root':add(origin,o.root_offset),'state':key(o.target)} for o in outputs]})
     reader.close()
     manual_cells={};manual_helpers=[]
-    if edition==2:
+    window_stands=[]
+    if edition>=2:
         # Clearly labelled constructed regression scenes; not historical evidence.
         for x in range(18,72):
             for z in range(-8,14):cells[x,63,z]=('minecraft:smooth_stone',{})
@@ -89,6 +90,26 @@ def build(destination,edition=1):
                 if mask&(1<<bit):manual_cells[x+dx,64,dz]=(wall,{'facing':'north','connection':'low_'+str(1<<((bit+2)%4))})
         for x,facing in zip((42,47,52,57),('north','east','south','west')):
             manual_cells[x,64,8]=(wall,{'facing':facing,'connection':'low_0'})
+        if edition>=3:
+            # Separate ordinary backing and a window root/helper column. No shared wall cells.
+            for x in range(80,134):
+                for z in range(16,81):cells[x,63,z]=('minecraft:smooth_stone',{})
+            for index,(facing,dx,dz,material) in enumerate((
+                    ('north',0,-1,'lime_wool'),('east',1,0,'stone_bricks'),
+                    ('south',0,1,'oak_planks'),('west',-1,0,'glass'))):
+                for row,(visual,opened) in enumerate((('base','false'),('base','true'),('alt','false'),('alt','true'),('empty','false'),('no_backing','false'))):
+                    root=(86+index*12,64,22+row*10)
+                    backing=(root[0]-dx,root[1],root[2]-dz)
+                    if visual!='no_backing':
+                        for dy in range(-1,4):
+                            for lateral in range(-2,3):
+                                manual_cells[backing[0]+dz*lateral,64+dy,backing[2]-dx*lateral]=('minecraft:'+material,{})
+                    if visual!='empty':
+                        manual_cells[root]=('bloodborne_blocks:o_shuttered_window',{'facing':facing,'open':opened,'visual':'base' if visual=='no_backing' else visual})
+                        helper=(root[0],root[1]+1,root[2])
+                        manual_cells[helper]=('bloodborne_blocks:architecture_part',{})
+                        manual_helpers.append((helper,root,'bloodborne_blocks:o_shuttered_window'))
+                    window_stands.append({'root':list(root),'backing':list(backing),'facing':facing,'material':'minecraft:'+material,'visual':visual,'open':opened})
         # Preallocate chunk/sections, but add regression states only after ledger authorization.
         for pos in manual_cells:cells[pos]=('minecraft:air',{})
     original=destination/'conversion-input-fixture'
@@ -142,9 +163,10 @@ def build(destination,edition=1):
                    'secondPassByteIdentical':True,'wholeWorldGates':'FAIL / UNFINISHED',
                    'graphicalClientChecks':'NOT_RUN - user test required',
                    'note':'Synthetic platforms, source positions unchanged. No surrounding city copied.'})
-    if edition==2:report['constructedRegressions']={'windowRoot':[25,64,0],'sharedWallRoot':[25,65,0],
+    if edition>=2:report['constructedRegressions']={'windowRoot':[25,64,0],'sharedWallRoot':[25,65,0],
             'wallExamples':[[42,64,0],[49,64,0],[56,64,0],[65,64,0]],
             'historicalEvidence':False,'note':'New manual test arrangements, original five specimens preserved.'}
+    if edition>=3:report['windowTest3Stands']=window_stands
     (destination/'conversion-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     lines=[f'# Промежуточный REPAIR TEST {edition} — не beta.4 и не FULL', '',
            'Minecraft 1.20.1 / Fabric / Java 17. Установите тестовый JAR вместо прежнего Bloodborne JAR в отдельной копии сборки; Fabric API обязателен.',
@@ -167,7 +189,7 @@ def build(destination,edition=1):
               'У connected-ограды при обычной установке/обновлении соседей соединения пересчитываются. В изолированной конфликтующей паре исходные east/south-соединения могут исчезнуть без соответствующих соседей. Конвертированный снимок сохраняет исходные флаги, а ручная установка следует обычной логике соединений; это не должно удалять корни или гостевую физику.',
               'Общая helper-клетка не выбирает случайного владельца: для получения предмета/действия цельтесь именно в нужный корень.',
               '', 'Запишите результат по каждому пункту и приложите координаты/скриншот при сбое. Серверные GameTests и офлайн-конвертация не заменяют этот клиентский чек-лист.']
-    if edition==2:
+    if edition>=2:
         lines=[line for line in lines if 'Вставка нового корня' not in line]
         lines+=['','## Новые проверки REPAIR TEST 2',
           '`/tp @s 25.5 65 -5.5` — специально собранная регрессионная пара: окно (25,64,0), кирпичная ограда в общей верхней клетке (25,65,0). Это новый стенд, не восстановленная историческая сцена.',
@@ -176,6 +198,14 @@ def build(destination,edition=1):
           'Низкий перекрёсток использует существующий вариант без центрального столба. Низкий перекрёсток со столбом не поддержан; новых моделей нет. Под сплошным блоком сверху используется существующая высокая секция.',
           'Исходные шесть ID кирпичных секций остаются совместимыми и визуально неизменными. Их предмет для строительства теперь общий. Это не объединяет o_stone_railing и другие семейства.',
           'Важное различие: в неизменённой исходной сцене верхняя клетка окна (-428,101,32) изначально была helper, а соседние стены стояли при x=-427. Новая пара отдельно проверяет именно вставку корня в занятую helper-клетку.']
+    if edition>=3:
+        lines+=['','## Новые проверки REPAIR TEST 3',
+          '`/tp @s 86 65 17` — начало стенда обычных стен. Столбцы x=86/98/110/122: north/east/south/west, соответственно лаймовая шерсть / каменный кирпич / дубовые доски / стекло. Нижние корни всех окон y=64; полный опорный блок — y=63.',
+          'Ряды z=22/32/42/52: BASE закрыто / BASE открыто / ALT закрыто / ALT открыто. У каждой стены своё окно в соседнем столбце; стена не занимает root/helper окна. Подоконник должен касаться опорной плоскости, рама — наружной грани задника. Декоративные края не расширяют физическую маску 1×2.',
+          'Ряд z=62 — четыре готовые стены без окон: возьмите окно из вкладки и нажмите на соответствующую наружную грань стены на y=64. Ряд z=72 — четыре окна без задника: заполните задний столбец обычными блоками на y=63..67, затем замените их другим материалом. Координаты всех корней/задников перечислены в conversion-report.json → windowTest3Stands.',
+          'Удалите и верните задник, откройте/закройте ставни, снимите окно за нижнюю и верхнюю часть, снова установите. Соседняя стена и оставшиеся предметы должны сохраняться. Сплошная стена закономерно видна в просвете рамы. Проём оставляется вручную.',
+          'Вкладка Bloodborne: сначала цельные/строительные объекты, затем исторические owner, native compatibility и технические city-секции с подсказками. Выберите ALT дерева с небазовым variant и несколько city variant=1/3/7, поставьте их на свободной площадке и сравните выбранный вариант. Повороты, открывание и служебные состояния отдельными предметами не перечислены.',
+          'Сохраните мир, полностью закройте и запустите клиент, повторите проверку. Автоматические item/GameTests подтверждают серверное поведение и NBT, но графический клиент и его перезапуск здесь не запускались.']
     (destination/'README-RU.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
     with zipfile.ZipFile(destination/f'Bloodborne-REPAIR-TEST-{edition}-world.zip','w',zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(playable.rglob('*')):
@@ -187,5 +217,5 @@ if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser()
     parser.add_argument('output',type=Path)
-    parser.add_argument('--edition',type=int,choices=(1,2),default=1)
+    parser.add_argument('--edition',type=int,choices=(1,2,3),default=1)
     args=parser.parse_args();build(args.output,args.edition)

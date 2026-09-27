@@ -1,5 +1,9 @@
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
+## TEST3 local continuation — 2026-09-27
+
+Read [TEST3 report](docs/window-creative-test3/REPAIR-TEST-3.md) and its archived user prompt before continuing. The full creative catalog and a small 24-position ordinary-wall/window stand are prepared locally on the existing repair branch. TEST3 is not released yet: the user is being asked to resolve the original open-shutter pose intersecting a solid backing after the required fixed-frame mount. Do not silently change hinge artwork or claim graphical client testing. Main and the full city remain unchanged. Current input checkpoint is `f80a7fe3bd87bd47ba649997fee5ebee95ab8ba2`; preserve all unrelated local user files.
+
 ## REPAIR TEST 2 continuation — 2026-09-26
 
 Follow [REPAIR-TEST-2](docs/composite-grid-repair/REPAIR-TEST-2.md) for the current

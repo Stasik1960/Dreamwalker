@@ -1,0 +1,80 @@
+{
+  "status": "CANDIDATE_PENDING_USER_WINDOW_POSE_DECISION",
+  "baseline": "f80a7fe3bd87bd47ba649997fee5ebee95ab8ba2",
+  "branch": "repair/composite-preserving-grid",
+  "checkBuild": "PASS",
+  "pythonTests": 223,
+  "pythonSuites": 42,
+  "dedicatedGameTests": {
+    "passed": 56,
+    "failed": 0
+  },
+  "itemModelSelectionCheck": "PASS",
+  "creativeCoverage": {
+    "registeredBlockItems": 3827,
+    "representedBlockItems": 3827,
+    "visualEntries": 46669,
+    "entriesBySection": {
+      "0": 139,
+      "1": 863,
+      "2": 49,
+      "3": 45618
+    },
+    "excludedValuesAndServiceBlocks": [
+      "o_c654_a.variant=source_depth: placement policy forces surface",
+      "bloodborne_blocks:architecture_part: service block without independent BlockItem"
+    ],
+    "missing": [],
+    "coverage": "PASS",
+    "graphicalClient": "NOT_RUN"
+  },
+  "packagedResourceByteParity": "PASS",
+  "graphicalClient": "NOT_RUN",
+  "actualClientRestart": "NOT_RUN",
+  "knownReleaseBlocker": "Open shutters penetrate full backing by 0.370764 block; original pose retained pending permission for leaf-only angle correction. Support normalization is +0.875Y, requiring clarification of prompt wording down.",
+  "windowMeshChanged": false,
+  "fullCityConversion": "NOT_RUN",
+  "commitPush": "PENDING_RELEASE_BLOCKER",
+  "checks": [
+    {
+      "command": [
+        "C:\\Windows\\system32\\cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        "-I",
+        "tools/verification-direct-resources.init.gradle",
+        "-PbloodbornePython=C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+        "check",
+        "build",
+        "logicalGameTest"
+      ],
+      "seconds": 462.1,
+      "exitCode": 0,
+      "log": "C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\test3-verification\\check-build-gametest.log"
+    },
+    {
+      "command": [
+        "C:\\Windows\\system32\\cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        "-I",
+        "tools/verification-direct-resources.init.gradle",
+        "-PbloodbornePython=C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+        "itemModelSelectionCheck"
+      ],
+      "seconds": 34.4,
+      "exitCode": 0,
+      "log": "C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\test3-verification\\item-model-selection.log"
+    }
+  ]
+}

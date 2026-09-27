@@ -14,8 +14,8 @@ class AgonyPatchTests(unittest.TestCase):
         cls.baseline=read(DOC/'baseline-fingerprints.json.gz')['fingerprints']['families']
 
     def test_untouched_families(self):
-        # Keep historical evidence immutable. Only the two explicitly approved
-        # saved-root variants extend its allowlist; old states must stay exact.
+        # Keep historical evidence immutable. The root variants and exact TEST3
+        # window mounting delta are checked; every other old field stays exact.
         from verify_root_state_baseline import verify as verify_roots
         self.assertEqual('PASS',verify_roots()['result'])
         result=verify(allowlist_path=Path(__file__).resolve().parents[1]/'docs/composite-grid-repair/root-state-agony-allowlist.json')

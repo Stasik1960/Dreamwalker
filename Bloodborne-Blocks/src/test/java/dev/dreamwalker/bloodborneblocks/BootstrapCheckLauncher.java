@@ -50,7 +50,9 @@ public final class BootstrapCheckLauncher {
   BootstrapClassLoader(URL[] urls,ClassLoader parent) { super(urls,parent); }
 
   @Override protected synchronized Class<?> loadClass(String name,boolean resolve) throws ClassNotFoundException {
-   if(!name.startsWith("net.minecraft.")&&!name.startsWith("dev.dreamwalker.bloodborneblocks."))return super.loadClass(name,resolve);
+   // The item-model dispatch check needs renderer interfaces to resolve the
+   // same isolated BakedModel/ItemStack types as the checked implementation.
+   if(!name.startsWith("net.minecraft.")&&!name.startsWith("dev.dreamwalker.bloodborneblocks.")&&!name.startsWith("net.fabricmc.fabric.api.renderer.v1."))return super.loadClass(name,resolve);
    Class<?> loaded=findLoadedClass(name);
    if(loaded==null)loaded=findClass(name);
    if(resolve)resolveClass(loaded);
