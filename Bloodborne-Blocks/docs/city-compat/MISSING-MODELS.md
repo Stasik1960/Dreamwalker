@@ -1,6 +1,7 @@
-> Historical missing-model evidence. The world-cell blocker was resolved
-> using the old MODDED map; see [recovery](RECOVERY.md). Lost composite assets
-> themselves were not reconstructed.
+> Historical missing-model evidence. On 2026-09-27 the release owner elected
+> to retire these unrelated, unrecoverable cells rather than reconstruct them.
+> The exact 23 IDs / 33 cells are changed to air only in a new copy of the
+> MODDED world; the frozen input remains intact. See the release ledger.
 
 # Missing transient city models
 
@@ -35,7 +36,7 @@ world or any shipped JAR.
 All frozen legacy ornament states and cell fragments were regenerated with the
 historical 2.0 toolchain and resources. None produced any of the 23 hashes.
 The missing IDs are composition hashes, so their polygons and collision cannot
-be recovered from the hash or inferred from neighboring blocks. The city
-converter must keep any residual states unresolved and fail closed. It must not
-replace them with air, a visually similar module, or a placeholder registry
-entry.
+be recovered from the hash or inferred from neighboring blocks. The release
+world therefore removes exactly the recorded cells, after checking their saved
+states, scheduled ticks and block entities. It does not fabricate a replacement
+model or alter any other source cell.

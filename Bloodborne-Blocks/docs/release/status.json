@@ -193,54 +193,37 @@
       "status": "NOT_RUN",
       "scope": "full-city",
       "plannedCommands": [],
-      "reason": "Stopped at compatibility input blocker BB-COMPOSITE-INPUT; no unknown state replacement or world conversion performed."
+      "reason": "The offline final world is ready; dedicated-server load and restart have not yet been run."
     },
     "CLIENT_VISUAL_PASS": {
       "status": "NOT_RUN",
       "scope": "full-city",
       "plannedCommands": [],
-      "reason": "Stopped at compatibility input blocker BB-COMPOSITE-INPUT; no unknown state replacement or world conversion performed."
+      "reason": "The offline final world is ready; graphical-client acceptance has not yet been run."
     },
     "FULL_CITY_PASS": {
-      "status": "BLOCKED",
+      "status": "OFFLINE_PASS",
       "scope": "full-city",
       "plannedCommands": [],
-      "reason": "Stopped at compatibility input blocker BB-COMPOSITE-INPUT; no unknown state replacement or world conversion performed."
+      "reason": "A new copied world retired exactly 23 unrecoverable IDs in 33 verified cells, then full-grid conversion and the whole-world census passed (0 old modules, unknown IDs or invalid states). See retired-composites-world.json."
     },
     "RELEASE_READY": {
-      "status": "FAIL",
+      "status": "NOT_YET_CERTIFIED",
       "scope": "full-city",
       "plannedCommands": [],
-      "reason": "Stopped at compatibility input blocker BB-COMPOSITE-INPUT; no unknown state replacement or world conversion performed."
+      "reason": "Offline world compatibility now passes, but dedicated-server restart and graphical-client acceptance are still not run."
     }
   },
   "knownReleaseBlockers": [
     {
-      "id": "BB-COMPOSITE-INPUT",
+      "id": "BB-RUNTIME-ACCEPTANCE",
       "scope": "full-city",
-      "reason": "Authoritative composition definitions, mesh/collision/interaction and ownership data for 23 m_* IDs (33 cells) in the immutable current world are absent. Existing recovery replaces current unknown states with an earlier layout (30 helpers, 3 air), which cannot prove lossless preservation and violates fail-closed requirements.",
-      "requiredInput": "The generated palette/model artifact for Ether-Bloodborne-2.0.2-positions covering all IDs in missing-model-positions.json, or deterministic composition inputs and tool version reproducing the same IDs and geometry/ownership.",
-      "nextStep": "Validate the supplied mapping against the 33 unchanged source cells, extract real legacy fixtures, then resume compatibility before whole-owner conversion.",
+      "reason": "The offline release world is verified, but dedicated-server restart and graphical-client acceptance are not run.",
+      "nextStep": "Load the released world on a dedicated server, restart it, then complete client visual/performance acceptance.",
       "evidence": [
         {
-          "path": "Bloodborne-Blocks/docs/city-compat/MISSING-MODELS.md",
-          "sha256": "758fb98700982704720fb3e7ad4d869e41220785e520bb12fcd4a7fbb7326770"
-        },
-        {
-          "path": "Bloodborne-Blocks/docs/city-compat/RECOVERY.md",
-          "sha256": "dfd2aa8a3d7eab4266632cced1a473b9a32c758c65ca182da9844fe2780fe6a0"
-        },
-        {
-          "path": "Bloodborne-Blocks/docs/city-compat/missing-model-positions.json",
-          "sha256": "95615d304e66fb0f1a3a3a5280fc4d8bda11eefa688a3a6a1f1939cc0a66ba40"
-        },
-        {
-          "path": "Bloodborne-Blocks/docs/city-compat/recovery-plan.json",
-          "sha256": "55d09da2a55cdad1381b565ae2252d99d12a6539a5ed608ca9ffc744b5b47925"
-        },
-        {
-          "path": "Bloodborne-Blocks/tools/city_recovery.py",
-          "sha256": "975bec3ee67d59249ce5ae9995d111646a4ec83994cdeb51b8ced9591948f4d5"
+          "path": "Bloodborne-Blocks/docs/release/evidence/rc1/retired-composites-world.json",
+          "sha256": "b4f063af2bf07c50259de45d4af607e06e6b366c1489e36331f498f0bddaeca4"
         }
       ]
     }

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "operation": "user-approved-retirement-and-current-grid-conversion",
+  "source": {
+    "path": "Bloodborne-Blocks/reference-inputs/latest-modded-world.zip",
+    "sha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+    "mutated": false
+  },
+  "retirement": {
+    "ids": 23,
+    "cells": 33,
+    "replacement": "minecraft:air",
+    "preconditions": ["all saved states matched", "no block entities", "no scheduled ticks"],
+    "ledgerSha256": "1b6ffed8a80666179135d498f584624edce6dfa625790e58677e946e4d0c4ce5"
+  },
+  "conversion": {
+    "sourceMode": "modded",
+    "conflictPolicy": "aggressive",
+    "fullGrid": true,
+    "converted": 22366,
+    "forced": 724,
+    "unresolvedV2": 0,
+    "unmatchedModules": 0,
+    "orphanHelpers": 0,
+    "reportSha256": "a2d2353a8b381f32ac0fedf51562ec8c0f7b62b0965beed0e562b3258f5b938d"
+  },
+  "fullWorldCensus": {
+    "chunks": 10009,
+    "checkedCells": 983924736,
+    "unknownBloodborneIds": 0,
+    "oldModuleCells": 0,
+    "invalidCurrentStates": 0,
+    "result": "PASS",
+    "reportSha256": "76ffce7a6f23ed01063217e036a582b191680bb79b06ffe86b4435a3b3e61e83"
+  },
+  "artifact": {
+    "path": "releases/Bloodborne-Blocks/2.1.0-rc.1/Bloodborne-City-2.1.0-rc.1.zip",
+    "bytes": 18857629,
+    "sha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
+    "zipIntegrity": "PASS"
+  }
+}
