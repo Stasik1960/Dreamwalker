@@ -1,26 +1,34 @@
 # 2.1.0-rc.1 migration status
 
-**No production migration is approved.** This is a verification candidate based
-on `b086e88929a971a2abd184629b3e7a59225304e5`. Only version metadata changes in
-the runtime resources; no registry aliases, NBT schema changes or repair
-converter/runtime port are included. Replacing a beta/legacy JAR with rc.1 is
-not a verified world upgrade.
+**23 неизвестных composite ID намеренно удалены в новой карте; перед
+обновлением обязателен backup старого мира.** Это intentional retirement,
+а не восстановление: 33 точно перечисленные клетки заменены только на
+`minecraft:air`. Возможны визуальные пустоты.
 
-Keep the original world archive and existing JAR unchanged. Do not open the
-legacy world with the candidate: unregistered IDs have no proven lossless
-runtime migration. Do not apply `--recover-city` to satisfy the current gate;
-it replaces unknown composites with a previous helper/air layout.
+Исходный `reference-inputs/latest-modded-world.zip` неизменён. Его SHA-256:
+`c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
+Новая копия `Bloodborne-MODDED-retired-composites-rc1.zip`, SHA-256:
+`aed638e52143522abfbb3c63b85f377726727a5af039f532417ae0c6772504d1`.
+Полный список ID/координат, ledger, команды и независимые доказательства:
+[RETIREMENT.md](RETIREMENT.md).
 
-Resume only after the authoritative source data for the 23 missing composite
-IDs is available. Validate that data against the exact frozen source, build
-real chunk/ItemStack fixtures, and prove load/place/break/use/save/restart
-compatibility. Then audit the full world read-only, convert a separate copy
-using whole-owner atomic transactions, and run the independent preservation
-and byte-identical second-pass checks. Keep player data and other-mod data
-unchanged. A failed attempt is abandoned in favour of another copy of the
-original archive; the original is never overwritten.
+Удалены ровно эти 33 клетки. Соседние блоки, декор, block entities и другие
+NBT-данные не изменены; все 170 nonterrain-файлов, включая player data и данные
+других модов, побайтно сохранены. Helper-блоки не удалялись. Повторный запуск
+ничего не меняет. `--recover-city` не используется и не подходит для этого решения.
 
-Dedicated and client acceptance, including resource reload, chunk boundaries
-and performance measurements, are required before a release. The current
-[status](../RELEASE-STATUS.md) records the actual gates and required input.
-The locally verified artifact hashes are in [SHA256SUMS.txt](SHA256SUMS.txt).
+**Копия после retirement всё ещё содержит legacy registry IDs. Она не является
+итоговой release-картой; запускать её с rc.1 нельзя.** Диагностическая конвертация
+существующим repair-конвертером оставляет отклонённые целые объекты. Эти данные
+не удаляются автоматически и не переводятся поклеточным fallback.
+
+Для продолжения нужны доказанные полные owner-группы известных оставшихся
+объектов, точные runtime mappings и разрешение конфликтов без потери чужих
+блоков. Затем обязательны independent full-world verifier, нулевой второй проход
+с побайтно одинаковым миром, настоящие dedicated/client запуски, взаимодействия
+и измерения startup/RAM/reload/FPS/TPS. GameTests не заменяют этот QA.
+
+До всех PASS production migration, merge, push, release tag и публикация не
+выполняются. Текущие gates — в [RELEASE-STATUS.md](../RELEASE-STATUS.md).
+Rollback: оставить старый backup/JAR и создать другую новую копию из immutable
+архива; не переносить чанки из неполного диагностического результата.

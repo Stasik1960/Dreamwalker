@@ -1,5 +1,10 @@
 # Historical MODDED cell recovery
 
+> Superseded for the current task. Do not run `--recover-city` on the rc.1
+> retirement path: the user approved all 33 exact cells becoming air, not a
+> previous helper layout. See [intentional retirement](../release/RETIREMENT.md).
+> The following text and evidence describe an earlier experiment only.
+
 The local `_bloodborne_rebuild/output/ether-v2-positionfix` map supplies
 coordinate-specific evidence for the 33 unresolved input cells: 30 owned
 `architecture_part` cells and three air cells. All 30 owner roots have the

@@ -1,6 +1,7 @@
-> Historical missing-model evidence. The world-cell blocker was resolved
-> using the old MODDED map; see [recovery](RECOVERY.md). Lost composite assets
-> themselves were not reconstructed.
+> Historical missing-model evidence. On 2026-09-27 the user explicitly approved
+> intentional retirement of these exact 23 IDs / 33 cells to air in a new copy.
+> [Retirement and independent proof](../release/RETIREMENT.md) supersede the
+> earlier recovery policy. No old helper layout or lost asset was reconstructed.
 
 # Missing transient city models
 
@@ -35,7 +36,7 @@ world or any shipped JAR.
 All frozen legacy ornament states and cell fragments were regenerated with the
 historical 2.0 toolchain and resources. None produced any of the 23 hashes.
 The missing IDs are composition hashes, so their polygons and collision cannot
-be recovered from the hash or inferred from neighboring blocks. The city
-converter must keep any residual states unresolved and fail closed. It must not
-replace them with air, a visually similar module, or a placeholder registry
-entry.
+be recovered from the hash or inferred from neighboring blocks. The sole approved
+exception is the exact fixed-source retirement list: those 33 cells become air.
+Other missing or ambiguous states still fail closed. The historical recovery
+procedure below is not the authorized migration for the new rc.1 copy.

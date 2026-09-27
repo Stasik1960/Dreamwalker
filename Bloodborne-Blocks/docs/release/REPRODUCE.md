@@ -2,8 +2,7 @@
 
 Команды ниже выполняются из `Bloodborne-Blocks`. Нужны Java 17, wrapper Gradle
 8.8, Python 3.11+ и зависимости из `tools/requirements-ci.txt` (NumPy и Pillow).
-Release suites
-используют только стандартную библиотеку Python. Зависимости Minecraft/Fabric/Yarn/Loom
+Retirement suites используют NumPy и реальный Anvil/NBT reader. Зависимости Minecraft/Fabric/Yarn/Loom
 не изменены. Git LFS-входы должны быть гидратированы, а не оставаться pointer-файлами.
 
 ```powershell
@@ -13,6 +12,7 @@ python -m pip install -r tools/requirements-ci.txt
 python -c "import sys,numpy,PIL; print(sys.version); print(numpy.__version__); print(PIL.__version__)"
 .\gradlew.bat check build logicalGameTest checkReleaseVersion --max-workers=1
 python -B -X utf8 -m unittest discover -s tools -p 'test_release*.py'
+python -B -X utf8 -m unittest discover -s tools -p 'test_composite_retirement*.py'
 python -B -X utf8 tools/release_gates.py docs/release/status.json --evidence-root ..
 python -B -X utf8 tools/release_gates.py docs/release/status.json --evidence-root .. --require-ready
 ```
@@ -28,10 +28,16 @@ python -B -X utf8 tools/release_gates.py docs/release/status.json --evidence-roo
 - [полный check/build/GameTest/package](evidence/main-checks/check-build-gametest.json);
 - [финальные release suites/package](evidence/main-checks/release-checks.json).
 
-Свежий rc.1 запуск с NumPy 1.26.4 / Pillow 10.4.0 (локально Python 3.12.14):
+Исторический rc.1 запуск до intentional retirement, с NumPy 1.26.4 / Pillow 10.4.0 (локально Python 3.12.14):
 [команда и exit code](evidence/rc1/check-build-gametest.json),
 [лог](evidence/rc1/check-build-gametest.log), [package](evidence/rc1/package.json).
 Он прошёл 202 Python tests и 37/37 GameTests. CI отдельно использует Python 3.11.
+
+Новый локальный запуск после controlled retirement: 219 Python tests / 38 запусков,
+37/37 GameTests и check/build/version/package PASS —
+[команда](evidence/retirement-rc1/verification/check-build-gametest.json),
+[лог](evidence/retirement-rc1/verification/check-build-gametest.log).
+Полная конвертация отдельно получила FAIL, см. [диагностику](FULL-CITY-DIAGNOSTIC.md).
 
 Init script — существующая оптимизация копирования ресурсов. Полное сравнение
 13 969 source resources с remapped JAR подтверждено package check. 25 production
@@ -64,6 +70,12 @@ LFS-входы и полную Git-историю для историческо�
 Результаты последующих GitHub Actions runs проверяются отдельно по SHA коммита.
 
 ## Следующий обязательный порядок
+
+Согласованное удаление 23 неизвестных ID уже выполнено только в новой копии.
+Команды, точные 33 клетки, immutable input hash и independent verifier — в
+[RETIREMENT.md](RETIREMENT.md). Старый `--recover-city` не применяется.
+Свежие проверки и оставшиеся ограничения — в [status.json](status.json);
+старый GitHub Actions run не проверяет новые retirement tools.
 
 1. Проверить совместимость выбранного rc.1 runtime baseline `b086e8892`.
    Локальные repair-изменения не сливаются автоматически. Восстановить/доказать

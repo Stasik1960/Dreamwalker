@@ -1,0 +1,89 @@
+{
+  "result": "PASS",
+  "sourceZipSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+  "approvedListSha256": "18fba494229775f0d240b1afc6f61762328274e4e311bbf6ee51de9409edf0a0",
+  "retiredIds": [
+    "bloodborne_blocks:m_002066f51dada272",
+    "bloodborne_blocks:m_0268950fde384cd2",
+    "bloodborne_blocks:m_083b37846b84dfe5",
+    "bloodborne_blocks:m_0d33f9f2548b0bd4",
+    "bloodborne_blocks:m_0d5afc55969e4401",
+    "bloodborne_blocks:m_0ea41aaba3b1270b",
+    "bloodborne_blocks:m_151c82c89bf3e903",
+    "bloodborne_blocks:m_1c956864ebbe7275",
+    "bloodborne_blocks:m_1d1b7a097ae079e4",
+    "bloodborne_blocks:m_28eeb854521aed82",
+    "bloodborne_blocks:m_2a7c34363b43c4c7",
+    "bloodborne_blocks:m_33da6ee4228d8f7b",
+    "bloodborne_blocks:m_35d489409e5bc984",
+    "bloodborne_blocks:m_3b25c328c5fab38a",
+    "bloodborne_blocks:m_3fffe3a64e33d90e",
+    "bloodborne_blocks:m_4abc6814bf623d92",
+    "bloodborne_blocks:m_500cb8aa0c17f2f8",
+    "bloodborne_blocks:m_54ab4b8bd1db37ef",
+    "bloodborne_blocks:m_64d5e280da6d5edc",
+    "bloodborne_blocks:m_6e29addcc429a971",
+    "bloodborne_blocks:m_7e28f29afb24c0b3",
+    "bloodborne_blocks:m_9bbec750aad6d419",
+    "bloodborne_blocks:m_9d9cec331c072bb9"
+  ],
+  "retiredCells": 33,
+  "changedChunks": 21,
+  "checkedChunks": 10009,
+  "checkedSections": 244926,
+  "remainingRetiredIds": [],
+  "unknownModPaletteIds": [],
+  "unknownModPaletteIdCount": 0,
+  "unknownToCurrentRuntimeIdCount": 43634,
+  "unknownScope": "frozen legacy + frozen v2 + current registry; runtime separately reported",
+  "helperSchema": "pre-conversion legacy; current-only IDs use current geometry",
+  "notRuntimeCompatibilityProof": true,
+  "helperCells": 15759,
+  "orphanHelpers": 0,
+  "orphans": [],
+  "additionalTerrainChanges": 0,
+  "additionalDeletions": 0,
+  "helperRemovals": 0,
+  "nonTargetTypedNbtUnchanged": true,
+  "nonTerrainByteIdentical": true,
+  "preservedNonTerrainFiles": 170,
+  "ledgerSha256": "6b0a26c4344eb70694fbee7c4fedfa4df258391b8c7fe254ed7189d26caecbe3",
+  "phase": "CONTROLLED_RETIREMENT_ONLY",
+  "archive": {
+    "path": "Bloodborne-Blocks/build/retirement-rc1-20260927/Bloodborne-MODDED-retired-composites-rc1.zip",
+    "sha256": "aed638e52143522abfbb3c63b85f377726727a5af039f532417ae0c6772504d1",
+    "bytes": 21558947,
+    "worldFiles": 186,
+    "payloadMatchesVerifiedDirectory": true
+  },
+  "repeatChanges": 0,
+  "repeatWorldByteIdentical": true,
+  "repeatLedgerByteIdentical": true,
+  "fullVerifier": {
+    "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/independent-verifier.json.gz",
+    "sha256": "73e17d63e4b4e0ee8dc8fac8b5361d41dc12d2a26ae9e2b42a17d8e7ac86e8e4"
+  },
+  "runtimeWarning": "Legacy map before conversion; do not load with rc.1.",
+  "reports": {
+    "retirement-ledger.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/retirement-ledger.json",
+      "sha256": "6b0a26c4344eb70694fbee7c4fedfa4df258391b8c7fe254ed7189d26caecbe3"
+    },
+    "independent-verifier.json.gz": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/independent-verifier.json.gz",
+      "sha256": "73e17d63e4b4e0ee8dc8fac8b5361d41dc12d2a26ae9e2b42a17d8e7ac86e8e4"
+    },
+    "independent-verifier-final.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/independent-verifier-final.command.json",
+      "sha256": "93a21ae7b5af5d3b3deb3ce78a0745efb72e4e170a76f58e920fc862b210fbe8"
+    },
+    "independent-verifier-final.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/independent-verifier-final.log",
+      "sha256": "8fe7d93d22f25b228f761839e32ac76ed0c26b30358332736a68c40dc04812ff"
+    },
+    "idempotence.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/idempotence.command.json",
+      "sha256": "680e6ecc545f60b683a2d549c2b55d9ef4ffd1a5ec051463ab256e597a9f6dcb"
+    }
+  }
+}

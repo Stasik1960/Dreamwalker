@@ -1,0 +1,1014 @@
+{
+  "sourceCommit": "b6e757067c46343447cea423f67b7bb84ed9c231",
+  "scope": "Exact rc.1 code/build/tests/tools and version README bytes; parent commit plus working tree changes",
+  "files": [
+    {
+      "path": ".github/workflows/bloodborne-blocks.yml",
+      "sha256": "20ae7d916f531f5b4507497dd9e3d78966e34a28bef3237ec9bccb246397bee5"
+    },
+    {
+      "path": "Bloodborne-Blocks/build.gradle",
+      "sha256": "d5b051e23a8a188f06119b704ca12e1944276ec0ac8d7decc0bd85b72ba7a96d"
+    },
+    {
+      "path": "Bloodborne-Blocks/docs/city-compat/missing-model-positions.json",
+      "sha256": "95615d304e66fb0f1a3a3a5280fc4d8bda11eefa688a3a6a1f1939cc0a66ba40"
+    },
+    {
+      "path": "Bloodborne-Blocks/docs/pre-production-source-mapping.json.gz",
+      "sha256": "d0bc2543551af6bf6d65b0ecef33eba2fa51ae28b1bcf0485d2c482f5475527e"
+    },
+    {
+      "path": "Bloodborne-Blocks/gradle/wrapper/gradle-wrapper.jar",
+      "sha256": "cb0da6751c2b753a16ac168bb354870ebb1e162e9083f116729cec9c781156b8"
+    },
+    {
+      "path": "Bloodborne-Blocks/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "053fecb8aafc90218106cefdebbfc8c04f92c1b124d3d0f0a454e358c0118dfc"
+    },
+    {
+      "path": "Bloodborne-Blocks/gradle.properties",
+      "sha256": "e52dab9a556787263d7be194f99f9aee61e491dbddbbacf5347b9f61006fdf90"
+    },
+    {
+      "path": "Bloodborne-Blocks/gradlew",
+      "sha256": "7894ab10d8139c6fed08960256bde04bb0020f58592f0cf7429b351e42b1f606"
+    },
+    {
+      "path": "Bloodborne-Blocks/gradlew.bat",
+      "sha256": "f75c6784f084eaddb15ce4ea716b1dba5114867032459a4e890942ff664dbc69"
+    },
+    {
+      "path": "Bloodborne-Blocks/README.md",
+      "sha256": "48539c4c7bd9695b083767c08cee23f64d2d73afbfa515ca305080d31fac7fb7"
+    },
+    {
+      "path": "Bloodborne-Blocks/settings.gradle",
+      "sha256": "e4b6526763f551f7c79c013dd83dffaf131adedb784f555aa9d091df6aedc261"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/AgonyAttachmentGameTests.java",
+      "sha256": "0bb7d895e5054cca797e981fe952e0cc8578e9b9c910d42681ed4e1f316eb3c9"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/AgonyFurnitureGameTests.java",
+      "sha256": "48efeb2608970e182e6ac1998f668d40ca55bcb79a935d81e3d409ea78a4d616"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/AgonySurfaceGameTests.java",
+      "sha256": "b3a3e008c70873c730ded31189b2ff4d5134ea40f7a5d111303f70e6b61a3880"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/GridPhysicsGameTests.java",
+      "sha256": "628ad453f056e4f3aa27fdc763995245a195a6a22f798ac72901cf8830cb641e"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/LogicalDebugGameTests.java",
+      "sha256": "36ea8e0fdb41b36f158c1c9d0a20b7bfd3250be2e8e374f50214f5f26fa93a2d"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/LogicalVisualGameTests.java",
+      "sha256": "ec95acc27dee329547a0f79144741afcc581e98c5e936f7e826e5514ff6c0d57"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/ProductionFunctionalGameTests.java",
+      "sha256": "7945340bcb6ce4572d8d4d1e9991db72632f0320b11ecefc224d699ec5171e41"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/ProductionPaletteGameTests.java",
+      "sha256": "e0f359815ab228b3233d1d590ac96b65fa3f6fccac2fe0bbb48f2813f2352021"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/ProductionRestorationGameTests.java",
+      "sha256": "dfa4fa93aed603b7285cef93f6c4a73e16a103af36e434428fc5a45aa6128aba"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/SupportPlaneGameTests.java",
+      "sha256": "22a9d93cc6e7f8f7348c0f259babd84ab0be87cd650576b14b127ce2da3d0b77"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/gametest/resources/fabric.mod.json",
+      "sha256": "c390db17b9a5aa910185c9ea573d61c7bb45db699bdff5764158470d68558c4e"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureBlock.java",
+      "sha256": "e2111c60aa61b72f7bdc27a83985932c3aa2c575ef456a2bd3257fa1a3d4f227"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureBlockItem.java",
+      "sha256": "17e59358a2228f93b9a8835f9a56588e03df3087f1a9a694ffbec5fd41273f79"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitecturePartBlock.java",
+      "sha256": "b806ae50f27da68e482e0fc42618f9bf955f895cc5bf33c5e7e8b47a6e94f0e0"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitecturePartBlockEntity.java",
+      "sha256": "ab2bf42fd59facb1ca3999ad79faade9be451945cab683c4c8e5cb4229e05bc6"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureSeatEntity.java",
+      "sha256": "f8fdacc7cef3d5f54f04066aec5105ced58c7800f3f2b09c1dcbcb36b02bbbc7"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/AuthoredSurfacePlacement.java",
+      "sha256": "a2a9c84b85ff4a790f102d25fc2bc747ffb4dca42ddab0cdcef3207c7b750775"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneBlocks.java",
+      "sha256": "ba2218601f7e0731b77fd999ab33a64fb34103aa5193d2934952a4ad7c776e61"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneClient.java",
+      "sha256": "66b568d7b7b59293d6ca49b405a9f93d7b2b212ce6435de2e7ea12121e907686"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneCommands.java",
+      "sha256": "60a9176256620a98d013c6b82198d4c9dd3f69f011dfd5adeb9fdfafdb10b324"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/CityVariantItemModel.java",
+      "sha256": "7706e33bbe340903b76e17951e40d5e4307cf2847f32638641a7a76a99eb11de"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/EmissiveModel.java",
+      "sha256": "64832ebced8a74631868a383ab436321a1a62d3a8502085fa3b73c31aa043ec6"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/FunctionalFurniture.java",
+      "sha256": "ce8eaf579cde2a0f8fa2fe23e90374e50979d04cd112319938f84662dc9fcb85"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GeneratedShape.java",
+      "sha256": "6ddb52d3194d18dc342db4d08e440ccc21a677f4d5b6b1955787d7460b7d5968"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GeometryRuntime.java",
+      "sha256": "b2d9070cc6720e416359fed49ccdb1016b475ebfd3334686dd302db047eb456e"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalAttachments.java",
+      "sha256": "6dd2a0766a4afaa5e281a391a976061052c7c722ce04393bc049aeb8d086f9a1"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalContractV2.java",
+      "sha256": "c588731271dbbd81179d98d920b0d17f648f536c64a6d0c1bdf03915df6246ab"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalTargetDebug.java",
+      "sha256": "704d969ac7b4683a9e230ae57a0cdd0c86d64a5fc04ebfa8e958dc0f6475e8e3"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalTransform.java",
+      "sha256": "77d232bc8f83c17c19d287ef11c74f53e5a365116ddd8cd505fb80e529612d51"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVariantProperty.java",
+      "sha256": "4e51999947229e1c9a1a56767267001a833de4536522a735d82be9f393f926d9"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVisualCommands.java",
+      "sha256": "e8259ca99c3e3e2e077be53c5f89702e8d9e035069ff5c9e9bdeac308bac8f68"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVisualModels.java",
+      "sha256": "f0f0d2a5d08c34aca6e6e613533ba4df1f86ad18338b6a15897dda1a409f1d90"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/mixin/DecorativeClimbMixin.java",
+      "sha256": "17d647d965860ac39867448e5246a2c5e5a6507dfbcb0f33606714441e02bb76"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ModularBakedModel.java",
+      "sha256": "af983124b932a723b6546e7d3d17502e46f2cb542b19fc6b45ed69200ea849f5"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ModularMeshData.java",
+      "sha256": "ba164ee3c6db04a9022ad0ed51d5485e6e3e8687e6ff07d44456cfabd4ba0a96"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/TranslatedBakedModel.java",
+      "sha256": "0b2acfaf33619ceb6af6887fcc9601fae488057d890850210acea3576c1627cf"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/BootstrapCheckLauncher.java",
+      "sha256": "e93dad18ee8d5ab933d0477c070865ee1d94cd768bc44811e551358836bddb2c"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/CityCompatibilityChecks.java",
+      "sha256": "7c5cfc3fe864def7c3d5701d35f491592025dd38a905a058c8500fc5ed99bde3"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/GeometryChecks.java",
+      "sha256": "8ad1fb6c4d341f98f8e0e441172b55a97b9192e93ea667682dd8a130f65bb5e8"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/LogicalContractV2Checks.java",
+      "sha256": "ceac5e4dbffa2c752b89c35309d970571fdb675884f3be2d221dfec96c15ef5d"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/LogicalObjectChecks.java",
+      "sha256": "bf72ad8ef151ef50dfe71246c6e3d9ed2d8573923353a198d92d1bcc51241897"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/LogicalRegistryChecks.java",
+      "sha256": "ed6860d35745be793f655b5a85b37d61fe2897b765fb54c3cdb1ac1087bc73b3"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/LogicalVisualModelsChecks.java",
+      "sha256": "947a96f5433ee7149d072ff00d7d692680273513d98fd481dc02f7b7047ffd3b"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/test/java/dev/dreamwalker/bloodborneblocks/ModularDataChecks.java",
+      "sha256": "06957aa3e6ee7a24007576532e6a484e15d08c39c8de931f368c4349855148cf"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/apply_agony_patch.py",
+      "sha256": "7072f761656e1b820058f9aa1c5d5e45b2fb6e2a6795fc4cae9a9ad54434d5c8"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/apply_beta_client_qa_patch.py",
+      "sha256": "56f8bd4d9f5e69e52c13aaeac32f499001a3dd87bae65935f503f5a243802b9a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_grid_physics.py",
+      "sha256": "c6b09c80ed181f15d5e153e886cc867a11eb807797b4588ce52f537753800c3d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_logical_objects.py",
+      "sha256": "52d215ef2dbdc3d457fb8973da644d58e56d082eaade6f1c8b6b6a385e074c3b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_modular_interactions.py",
+      "sha256": "fc612d33c615812b20c57bbeb3b87d0f008e6e459cc9a72825a4419ef7df6e66"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_modular_overlaps.py",
+      "sha256": "e79b3c72ba63e6d421f137cb78f2aa6d97e8a7e15727807a9ea351e54134de70"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_production_geometry.py",
+      "sha256": "aa03dc646caeecaedd5c29b02b5fa41cd308e7cfeb290af24949f0d52a5275bc"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_production_palette.py",
+      "sha256": "2f34ee5ec77819bc851083dd5d8e110bbaf40f8b6667b826c1ae213f1f127862"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/audit_source_regions.py",
+      "sha256": "dfad065c6fd8fa10e7135376fa07bdd335fab435ab8c04b84437ba002a0ab19a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_city_compat.py",
+      "sha256": "18347cafc75e15cf79584ba3c800ea56dd37ea7cc210c89c925b0698e2f34e90"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_contract_poc.py",
+      "sha256": "7a83a7e1ec266d413503be7e02c049e674c309f66a71cb30cad9da95bacdf4b0"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_logical_objects.py",
+      "sha256": "dce3e19291b53296d77f09ab2473f48c38a70cd6304bc59374c611ba3808c2d9"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_modular_palette.py",
+      "sha256": "0e52175c05437aef52402e3753cc1f0fb90bd4387c1a438ae7a183c212d785ae"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_nightmare_contracts.py",
+      "sha256": "cea1228aaacf1e1ae8b489e713b428891163449f4ea6af58333804b5069d27c1"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_nightmare_gallery.py",
+      "sha256": "d4b6e657f122ad5327bc0347c3ac869ff7eea980adc4b0c2a8ead5048c31a28b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_production_gallery.py",
+      "sha256": "48ceea39f3d430627ecf36a5bf3cdc80fae73021ec7f23ef671834c43de0ff2d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_production_palette.py",
+      "sha256": "4f9a161d6362a954b736d7685b027ea25c40c35b7dda54e083f07ecf0b7fed9e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_qa2_trees.py",
+      "sha256": "43b04adc298a141e5e4dac4023de851980149cf75af0c565f15cdf95d3200f33"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_reviewed_contracts.py",
+      "sha256": "438508d65db0a9d92fd7a024f7a2a2f9ae6332f8a5106f0efbd58db4fe565811"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_reviewed_gallery.py",
+      "sha256": "571761413e1fa8fa5ec6d53768535f141dc2b25b5b7ab40c25e3faffa141ca1b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/build_visual_slots.py",
+      "sha256": "ff3daf4a953c0fdf75eab46e0ea53558bfbfc0650170ca435088d8cd09f0491a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/capture_fixture_level_template.py",
+      "sha256": "73817ed6ae35b96411b111c84d9a0bf875ebfe973fadef541bbf266868ccc9a0"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/capture_reviewed_poc_baseline.py",
+      "sha256": "f2534c097f671f142063c460a55074885eb1db6b3240254be017fd397c3730e8"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/catalog_geometry.py",
+      "sha256": "9ab456545c02b7e7db4d0100f959abd78b9b549492a5c7f03b69175a83f1f909"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_chunk_validation.py",
+      "sha256": "6e3235a5eaa60d92e9c487e8c5f42099ff0bb6795eb3f270b6dea2949a5f63bd"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_contract_orientation.py",
+      "sha256": "29454be5e4f5bf40f66b285900d5abeec06dda593138bd99c1ba5a21b38358cc"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_external_resources.py",
+      "sha256": "5f3531d97eb8f0dc10997078ed027613e6c53b621830066e5b3bc17f9ae14f20"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_grid_physics.py",
+      "sha256": "a7b236cbbdda00b1a01110397d150f43c67327380d06c6cf5d628a96c9044422"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_grid_world.py",
+      "sha256": "e7a005a730e609557b86f56436a8ed081045e649b8ea0334c3862b18340dc377"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_logical_mount_transition.py",
+      "sha256": "674cf4235cbece39cc1de91454866cdf775ec5e3e11e824c179235f35ac51b9e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_logical_preservation.py",
+      "sha256": "cce8623247cc77f8305e0b384fbd0d8e7f77b5e098681a5967625595308a276a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_logical_resources.py",
+      "sha256": "d2e5c0c5c71460fc6399aec023c2c8cac88ebde47fb1c4cbf341ade7b376883d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_logical_world.py",
+      "sha256": "d91c5b3ce46890cd1c7cb58dd12dd9f642d5565d5d9ae19be8910235ee334844"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_migration.py",
+      "sha256": "fbf04aeda7f1eccb434d3c82000a621cd06dc3b7f221819c8be7d6fcdebbaca7"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_mixin_package.py",
+      "sha256": "d7df44c2e1aa4663d5219922d4ac7c80a0a196dcd129246d494f845e32abeb42"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_modular_mesh.py",
+      "sha256": "9414b510e993d4cd5777b33a97ca198c6ed0960a035df92a4287df78165c4894"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_packaged_resources.py",
+      "sha256": "242b2aaa75ee447ca945961a7a371d171d5b8588275664041be83f6c6f3a7927"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_release_package.py",
+      "sha256": "28c1be84c9caddd3eb05f33056c41dadc35351a48376d3ac24d0731bc9eff100"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_staged_resources.py",
+      "sha256": "4632ea90db9f8860be8bbbc9153d099c13bba4143a37e01b7a533a39e00d3d63"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/check_world_lighting.py",
+      "sha256": "949d5e2162bc3e35f2d3a66db816d801ca6a691f3168f0df8b5dc09554ccac1a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/city_palette.py",
+      "sha256": "c5f82a1f41e10c006c0b6f56e674d671541807f082801fb3bffd452650cffb3e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/city_recovery.py",
+      "sha256": "975bec3ee67d59249ce5ae9995d111646a4ec83994cdeb51b8ced9591948f4d5"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/collect_release_baseline.py",
+      "sha256": "5559693f2a306b853dbf1f770ae4beb026b2c77c6e1862238ab50a3b848a6b67"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/compare_modded_reference.py",
+      "sha256": "5858ae3a9cba851f86e9161b1f8f1333320e18880fed08148591c7939a36b363"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/compile_reviewed_migration.py",
+      "sha256": "a4f6dcf52592e10aaf53f8545327123b7178e18c7928e58dd451cabf8536f742"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/convert_logical_world.py",
+      "sha256": "3ad2a96099728f8321c15b4ff7c91cc29b2bc5e615fcb47092b1e500afbdb547"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/convert_modular_world.py",
+      "sha256": "c2f9637adcae7d36f2a85f6cc3f1f8377218fb7da3813e07669e4e2928114c54"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/curate_logical_families.py",
+      "sha256": "d84bdfa3d90aee0b614f60f74fb224ebb539919166e3882298889b8367755c4e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/expand_modular_ornaments.py",
+      "sha256": "62b7be95af747f6606113891edb0237bfd3f5875d3e23827c63521256bb98529"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/export_alt_artist_kit.py",
+      "sha256": "07935e9c4c482d18e645b3a083ec74a9c850d522a9d0d11c7e913d6ced0adc04"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/export_alt_visual_starter.py",
+      "sha256": "2ba8eb98be6c6cb681219e02503b512e128c785b47b5471e2785fd9127b52dc1"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/extrude_legacy_sprites.py",
+      "sha256": "fe060d6f7d5c37d49a5e1bffc5806b461fad1e5a1e41cac6231aafa327476e1b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/finalize_modular_palette.py",
+      "sha256": "132496ce72fba71e9b4e5a974724f0089421e8426d73c0e642b6358ff040113d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/finalize_modular_world.py",
+      "sha256": "cbcb10bbb499fc0455995c492037da29866bb4106b22556afc18d86458f25f95"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/finalize_placement_models.py",
+      "sha256": "a62122739a59004a44fd35b7a0ade2c8f71e08e44a15d9b93b28e1332ade1211"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/find_aliases.py",
+      "sha256": "b0f31985db61ea762df2441aecc14ee961cc9fefa3431f1323408189f5dbc0ad"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/fixture_level_metadata.py",
+      "sha256": "eee2a2218a0875ad0f7f6dfa14f645674fcf6de2cb1377d2b641514e3a06194a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/generate_collision.py",
+      "sha256": "6ab53587aba0376b534345aef9f9ef476593443762b707c8ab6d97951203c657"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/grid_world_reconciliation.py",
+      "sha256": "80ab318741ca38bf08467f3622b162a2bfacf7cf2e8d291e25cd0d2d637b49a3"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/inspect_reviewed_tree_context.py",
+      "sha256": "f46e8888e7088259be4edf915dd8bda9ace3489fb54415f92ac43dd593724645"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/java/LevelMetadataCheck.java",
+      "sha256": "939dd8ed3fce263e8f66db7ccd51e20560e18033ba541cf3a96df1639595259c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/level-metadata-check.init.gradle",
+      "sha256": "d8e606c1c7d94334b6800093e7c49df643eddcc67fcadaa7a8a14acf8c388418"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/logical_contract_v2.py",
+      "sha256": "d7df0b78ed7d04d00c0b2f0487179031143d44d2ab8af4260ae10836d5dc5230"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/logical_palette.py",
+      "sha256": "c6bc633de69c14c5a86319aae29fd030b967e9754225488b6a8adcd8fc189a68"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/manual_review.py",
+      "sha256": "41f794a9762b2e1ea54fbffcdbcdbaf34d37b506aa844041fe04bdae7fa35dca"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/manual_review_render.py",
+      "sha256": "313ee33febba1d50404ca8a780cbd4cc59a20afe228d6032009ecce692e6621a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/manual_review_template.html",
+      "sha256": "21b098594eaa24c1c0a79d965d60eb431b7ab051b3a3e30b9edf404fe4d1e4e6"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/manual_review_world.py",
+      "sha256": "99142ab139aafe7972bdbc9d5f2e6b8cddcbaa8abf4d8b28ca5a30a12f6d74e1"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/modded_world_adapter.py",
+      "sha256": "50010dfef1781d1ce473cd872c45be98af667e8e88f6b4bba4c7b302037321c3"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/modular_mesh.py",
+      "sha256": "c169be3b55edb95e6cf33f24c371bc9dd520c3939278b8c524865ed95433fb57"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/nightmare_composition_recipes.py",
+      "sha256": "fc91dab515082892c555042146ef8aaedd800d40f80510e48c51cfe74ca07518"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/nightmare_functional_recipes.py",
+      "sha256": "1e1046a4ae915bb5385c5ba4b29a0894af24332abc365b0f69b8d0bf592f815c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/nightmare_geometry_recipes.py",
+      "sha256": "6784041ac6f9a7b378df1685295da1c44dea9f263d74b3c59bb948690c1523b9"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/normalize_grid_physics.py",
+      "sha256": "cf440f18e45268a1adbe11f439105e89367061aa4c06913b19aebe955950aaf2"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/normalize_items.py",
+      "sha256": "9c1fd9056779c08914ae571d4dd7d0e50e63c022f06e999a74a3b0d6bd9e2466"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/normalize_support_contracts.py",
+      "sha256": "105d8dd40d2b3e400bb9777410f3d4929337c8b981aa6bef0f092a03f581cdd4"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/optimize_architecture.py",
+      "sha256": "e1e0aacbfad93c59e326b87df6d0fb7a0bd17ba6da80ebf65d63fdb0ddca555f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/package_nightmare_gallery.py",
+      "sha256": "4ccaa62e7ac2c6e13b1c032921aae5abedb9d9e7ff9d33b2fff77398acb375ed"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/package_rebuild.py",
+      "sha256": "85b71f7f65ab6d17ebe0c82df44e9b95178da6adc71702eb2fff5bea9299a5f4"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/package_restored_world.py",
+      "sha256": "26c01a8a51428af2b6f720a6434657367812797a443419e33d6e82ce5864109b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/prepare_architecture.py",
+      "sha256": "d68acf3925a8076162b57e73b809b88d008029fc5bb4d46e1f034e93b7b4d29f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/production_coverage.py",
+      "sha256": "b29ca6dfcfcda069b215b8587a5e735f77fdc251a3f9d8965779e88b7aad19e8"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/production_door.py",
+      "sha256": "084ab7d86fa4666bd256e36bf211da376b1b3ac44c64351a93e72b4ff454b677"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/production_exact_duplicates.py",
+      "sha256": "68aafaf8d6f17e0938699138c4eea635b4f5fc3823e4016750588d5207134320"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/production_fingerprints.py",
+      "sha256": "fdf42b586c68e07934beebf9cf28d2ad7d5679eba39275c6f70d3e5b8f9b0b40"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/reconcile_production_inventory.py",
+      "sha256": "77c6c19b1e1b08aa7b7a3f9311b1ba76b4428d6518d239cf517170b7142f861e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/record_nightmare_release.py",
+      "sha256": "78ec9da61e75df298e8881d1a6850b4f673ffd5dbc79eae4b6132b817a0f8cdf"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/record_support_release.py",
+      "sha256": "711fc54fc2607d052c48c765cea6354814b4d29d3f4aad97e4669aa65ba34068"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/release_gates.py",
+      "sha256": "8bafc1fc4cc4ff26c11fb5c858017a46243ee3f8288422af543549ec7964229e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/relocate_modular_conflicts.py",
+      "sha256": "04e60976ce8bcfd75f0cfc7f22fb73bebf19d5c975a50b182a888db5bfa490d8"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/remove_world_barriers.py",
+      "sha256": "fe906bc4fb43e7b9e5cb9d67f41635a78261027d9f6e5fdd8624695f2db8bcc1"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/render_catalog.py",
+      "sha256": "225fed736988986efe64cf47c5a773bbe4cfcd7255184b4cf46a7c81fe8a4d19"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/render_logical_preview.py",
+      "sha256": "80e945c89037e32d01bfcc46f38602f46ef6fc9db67eae4055255a39b30901ce"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/render_modular_preview.py",
+      "sha256": "c2f92e7c6c0c741eab240180c35553fbda90d6ab90db198a0f10305d77f10e29"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/render_restored_positions.py",
+      "sha256": "8649dcb52e0282a097239679a9bfc85e5d9d37ec4e6f179cf55500190a27e22c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/render_source_audit.py",
+      "sha256": "445107e7dbdcdf3f901633fba580ff27298e24475c017a617e367660f31b7e5f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/repair_faces.py",
+      "sha256": "8b04500e6aacfaf889bf77736f29d496988a4e8fae2c99504a8a687b35426b6d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/repair_modular_interactions.py",
+      "sha256": "74d94f1789950681bcc5d73c263f6220dc1ff016fb6f4694fcd322728fd0bb71"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/repair_modular_overlaps.py",
+      "sha256": "edd139719a434f4be864a2e21aff40f65fab01ef4fac1a12cc76e6e685f5161f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/repair_modular_water.py",
+      "sha256": "14e7a84fbd9733ee1cdeddf7a99b8dc7eac0a5cc17a474fcbad48869dec2b9e8"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/repair_world_lighting.py",
+      "sha256": "e327243aa0c8dca233c455b0adfe487d6340ebfe28de88d5ae0daede91a60740"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/report_production_resources.py",
+      "sha256": "a2847cb95e5686ec8421d7df0315f8a442407a90e01a035b2f5842afbc4716ed"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/requirements-ci.txt",
+      "sha256": "f4cb27da8d3bc5f82ef40f5656e9f38964ef5c6f83142eea4f43a43a0468cecf"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/restore_c003.py",
+      "sha256": "124ade023ca679c8e3aec3a053eef5fee4af1e25e0176330e3fbf6232d731c5f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/restore_functional.py",
+      "sha256": "59c06e898d122b85b3d2f3b7b091a4b360f98867aeee5f6861caa5c21c1194d4"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/restore_world_positions.py",
+      "sha256": "696007feca87db999783df1489b0dedf6bf864ae9cf63e30c98531434048f208"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/retire_missing_composites.py",
+      "sha256": "0cf914d09ce9fea9a16c1cbddac36eba87af4be34226887d0a4556cfe352617b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/reviewed_migration_fixture.py",
+      "sha256": "4c41ea7ff6e206a65e71e636a5b7d9442aa2c35f0db7eac9400ff70cbd109337"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/rollback_modular_relocation.py",
+      "sha256": "8d7c301b4f289f7e672885d97818389796673692c64faf8c2f9dfc5648ab2d0e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/scan_production_usage.py",
+      "sha256": "9b59f5c0004216fd06f362a445a49743964adfd68fbe2f38e7154de4da320b43"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_assembly_index.py",
+      "sha256": "518d328bd908b7037d0e64b782f7a355c4b63b424e490fbb627ed797510d239a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_assembly_pipeline.py",
+      "sha256": "e9a2f06c672fef6c25afe20fe404da346ffb6f5377cad15066f9b3ab89aa5419"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_assembly_render.py",
+      "sha256": "4fb5fe8dc6b92ae4a629b59b48f6a605cc938f0d1548057a75c6c9a27d68d769"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_assembly_review.py",
+      "sha256": "f54f6d6928fd5c75699cc8e298edbe6eae51e436e143eeee82f4a31cae273a08"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_assembly_signatures.py",
+      "sha256": "9987df4638593f8ece2b5e2fb6fb227e976800721071034ed7fb8880c95214ac"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_assembly_visuals.py",
+      "sha256": "6535c6c685c72c7737f194347945cdf5611bfa36aade14efbdf9773af31b0a2f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_contract_rotations.py",
+      "sha256": "dca1c7de42cfccbd1f2ae01e6e542c1b6c940c00cfb849a413f2aed113696667"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_mapping_archive.py",
+      "sha256": "477d47129da985f6f7da0dc9ebc653b80c9af52578e586d77cd9f86638cb5d7f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_review_decisions.py",
+      "sha256": "95e9ee576d9681502b09f2f5eb86ad136562eae2d10df935c2d6f8b7c9e586b0"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/source_variant_rng.py",
+      "sha256": "57cc09dedaad47ce04b5ca1e65813301c29a30b682ef03737bef7c2a1462b59d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/support_collision.py",
+      "sha256": "250ee24ae0112c8799e746d870b0ca5e845f0d59e9643b7faa7e71ddc1bfdded"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/sync_reviewed_geometry.py",
+      "sha256": "c51a7d2699100e13fc57becf117b82dc9f8af4bafdb72b19c730a791f3efa978"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/templates/level-1.20.1.dat",
+      "sha256": "131410b7a460c010447d35601f99e4a0ee1ba6332d929cbb522662df1d256b4c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/templates/level-1.20.1.provenance.json",
+      "sha256": "7709a14f6dc689a61ee85d20fca806f924bf6f8e1d53f42ede3f6041e8230904"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_agony_patch.py",
+      "sha256": "ea9acb39f21fc2ecd7de66d8b6f8f55e2707e5240011e673b65248db60a89723"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_beta_client_qa.py",
+      "sha256": "1724212e32a06e41320a170e2fa8e5f95ea732caf4760a2ba79b309e009fc217"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_build_nightmare_contracts.py",
+      "sha256": "0879091453172395482ff8519ab04be373be1462eb095780cd326532a1ab9487"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_build_production_gallery.py",
+      "sha256": "2666cb15a53856b63c450cf42f6c16ea866a372a8ce2fdbf4807709741386ca2"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_city_palette.py",
+      "sha256": "d52b5e2d91db22dea0e27b17a80221e80da994293668d9ce0b6411b96c2776da"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_city_recovery.py",
+      "sha256": "da108cbbe7c0d96b43aecb9a5f5b486e9eb003c51623f1f0338453655b2a159c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_compare_modded_reference.py",
+      "sha256": "d4e61d664da47279ecfc0f3d834c0619cc514346fbec798300f692a1e4efccec"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_composite_retirement.py",
+      "sha256": "d9c6aacfaa116aa9ca40e97c888e6c6e4ff5ebbf65f415818749fcd7087064ae"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_composite_retirement_verifier.py",
+      "sha256": "49f572ba79b5dbbe3d453e6b72dfb421fa269c3ae4ebe188b3e513efd14b6d5b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_contract_v2.py",
+      "sha256": "84f45c27ce2784d12f3f6c360b6219837a550b1ebe26af3d0ddbb4f4c4598eee"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_export_alt_visual_starter.py",
+      "sha256": "d062d8d6b30bf9186d65c5328d6d9930f1d484313823b7d60c8f0d010dba59dc"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_fixture_level_metadata.py",
+      "sha256": "b1e08f45fd07cb3ae1a375fc0149f687b33463da2918d7711e272648be1ed716"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_grid_physics.py",
+      "sha256": "5d552f8c27db2bb581a750ed13bbd9bba1b342aa052b77d5e2748dc8048556e5"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_logical_objects.py",
+      "sha256": "d81afb77919c0399fd9c16310a4f74298cf055966651647eb25948dd90e4e152"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_logical_palette.py",
+      "sha256": "80d27e24af95950dc418971e24138d84a5a807d6108a885f740e5b1d72b8d2c4"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_logical_world.py",
+      "sha256": "bc213893a034e94e9de2a96b3ccb8b7398e163d96a2fb0d530813cd59c3607ce"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_manual_review.py",
+      "sha256": "0ea10cdfcd170d955ebb734249bf3cd84054eedfa7abb105ef835709e41b9e91"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_manual_review_render.py",
+      "sha256": "4a70c9ce231de92cf54b2a7646b7023b939393330e8c781261b6ff0404f44ddf"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_manual_review_world.py",
+      "sha256": "ae524644088244b5cb6c86e96120028db2beb46616616d2934704276da48df51"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_modded_preservation.py",
+      "sha256": "aed06d16fd3e237a9c531e54c1c3f130346aa6f807a79046b1ae37096622e87a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_modded_world_adapter.py",
+      "sha256": "ce83095fbf3be5d45b95218535d753c11d8b19142f5b2a24959a1b83c8e515c6"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_nightmare_composition_recipes.py",
+      "sha256": "87771fa803876c1afc05d88ab726cc728f807101cef20a3f974ff086cf23d701"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_nightmare_functional_recipes.py",
+      "sha256": "aa9c7e597de9553427d05f8a8cd973f9dc20defe59af285eb957e8d69bd3ea5d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_nightmare_gallery.py",
+      "sha256": "2c5f5138b26b4c27f0da78a77e412098ff29389bab9f829f45f42f0ef427857d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_nightmare_geometry_recipes.py",
+      "sha256": "b2c547633f7d48a86337c7fb87eafca017b66f8cc519e4672eaad53a77cbaf7b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_old_logical_migrations.py",
+      "sha256": "afb90b42a031d456d34690042afc2945701683a60685c80ee043b0f59a320253"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_preserved_semantics.py",
+      "sha256": "15255218c22c3209c07a39aaa51b5f9800da2ed982e40531c5a55ed7d9ed9234"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_coverage.py",
+      "sha256": "3a60ec006006b5ca1961a6bc322aa70614b7cd21d0d4202f3e556aa08de35565"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_door.py",
+      "sha256": "8028b7800abb67853fb7a69f3dde0db78c2f46bb6a032ab915d3b9dfabc8f360"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_exact_duplicates.py",
+      "sha256": "52bc54cfafd9f9af768f1c9d02ac5f0a58a790982c4fbfbb26c081415a7506df"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_fingerprints.py",
+      "sha256": "967c8c381b7e470c521b5176cf245385c6536dc1178e67cccc2ee9d2241367aa"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_gallery.py",
+      "sha256": "200392cfa116ee8a88bbb74b2384e4d084358a24021a6eb6901de9dc2b63775f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_geometry.py",
+      "sha256": "de5b6b1b8eded704a85fcd4b7cad846c70e68222f798ba9f91aa152d04c7006d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_inventory.py",
+      "sha256": "64dacee1cf9656144bf0974f3ca6b8f228a1d80b8539a8a94858fc76b64ce75e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_production_palette.py",
+      "sha256": "9d97db4daaac9ddda23a179097c35a782e0e4f0ea23235a86127085e79db4ea3"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_qa2_checkpoint.py",
+      "sha256": "ee5646c720e40461b4b1a5b48bd98b12c0f06e289e2b0994f35a66e76bedb68d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_qa2_trees.py",
+      "sha256": "f272fb697e7e483006e4669b4a95d27aff99efba07e94b29a6e059be41320bf0"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_region_padding.py",
+      "sha256": "b2ce84139622d2019efd98b344cf959498c0e31b22de8512203d465364edee1f"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_release_gates.py",
+      "sha256": "34dce9eb12de3a5efabf0165a176b153434f65019c439508f4ee70e7c0caf5cb"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_release_package.py",
+      "sha256": "05c2181c110c63acd9fdd90d36d33457d2619cee1563f02217d33dc5c0702f6a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_restore_c003.py",
+      "sha256": "ec0209483fcc0633bdeb887ae6c5a341960b08de14a41f718ab410fd7f90b737"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_restore_functional.py",
+      "sha256": "c1a5aafe4b3c46756afd64ae92be382578fbd7ebd0a485c5e5f1ee7598026f99"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_restored_migration.py",
+      "sha256": "ca66bfb37463b3cb3aa46aca36e683608f1f3adbe61d173c5988b4e080ff336e"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_reviewed_gallery.py",
+      "sha256": "c0753681a3af60b20507cb131d7c3cbca9da6dc1b3d48b53be40fb912607105d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_reviewed_migration.py",
+      "sha256": "abb9a7e2cf1e7f459f1968a5b9d882b221f28fbc698d4ba7a040fb32530dcb79"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_reviewed_source_examples.py",
+      "sha256": "ae7430fe72a60c6d08992837af91c5f6b54f624cff9594c847d7dba1a68ca1fc"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_assembly_index.py",
+      "sha256": "9b76e00d5abd0ad51c0ad6abfa5175d01e6a57abb88cea1ed137bc3f3a4940e5"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_assembly_pipeline.py",
+      "sha256": "9316c29ca7974d4bc16b1affe79e9c4c05ff7fb630e720d251713dc124544d73"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_assembly_render.py",
+      "sha256": "6d95d002df0a6ce7a00e84c35c9580a43c5d2244429ef5160c360a08a7e4555a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_assembly_review.py",
+      "sha256": "f130c9ec8197cf7630b2ff8a9f68dadb4803e3e56a950b9ba52c55bff5718824"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_assembly_signatures.py",
+      "sha256": "c8acbd79bdaf7875b9be50275a0a8d784e8b982a119611d989feb51f0ace639d"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_review_decisions.py",
+      "sha256": "07bc813926a8acad9832023e91f2e287e17ba5cb40d0fa2b3d60149585aee7b9"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_source_variant_rng.py",
+      "sha256": "3cd5c616a30239b2aeeb1b5a72d9f58c909490503752f686a871e9ea9420e84a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_split_transactions.py",
+      "sha256": "386cc305618f01ed79d779cbb3903c5bfff20b1acc13519386d294a4ab8abe6a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_support_collision.py",
+      "sha256": "a35718d313912c23efabd589fe89cab20b2bf529bcb600ef632955cac1a4606c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_support_normalization.py",
+      "sha256": "2e3a557be7421beb1382385fb4b0ae32e94bd4699b7cd6e2d5a8ed89965de7da"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_verification_guards.py",
+      "sha256": "e54a75e32498177dec38ecab839b6006bf7a939aa64a184d409f453c6e350262"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/test_visual_slots.py",
+      "sha256": "65ad7588a603cb307e81f1bb5c66f61a013e8d87652c876fb3e5a591eff0094a"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/validate_architecture.py",
+      "sha256": "9ae458e97eaf6309082ca1aa0e4c25b5c55446c3ddc59c503013c31d8da3e447"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verification-direct-resources.init.gradle",
+      "sha256": "e7316e49d07848380440ac96f6a532ce49936687e2ac62eb6821ac5f6df6bb2c"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_agony_release.py",
+      "sha256": "070614edf623d91f063921b38a59328259c6e9d4d079492288f7a7a015e15d18"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_composite_retirement.py",
+      "sha256": "2aac618837e6cbf0122d6e15688d8882bd6dda4e3e6bd6e526917ad5f31caffc"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_modded_preservation.py",
+      "sha256": "e12616f21ea4665ebb4fa114436b03bd40940131777493e849b7c4f226ed01ee"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_modular_world.py",
+      "sha256": "2758f791432eeef9d8a4adf7cf760ef5cf9adf515af007243828ba479a4c4e34"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_production_artifact.py",
+      "sha256": "45fbdaef4b491237a9cc2679e0c13f3bce0f956c081f6318516b47ba62c72e24"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_qa2_checkpoint.py",
+      "sha256": "dd174481e15dc478c3e2900af9fd03006fda6f4e1468288c04ff4425f32d7b69"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_restored_positions.py",
+      "sha256": "086fe9a53304f09dd501dda0ae0b2335013120fc5aa2170633564867ae65159b"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_reviewed_checkpoint.py",
+      "sha256": "03cfc2bff04ea7c01d82b8fdd3eb61bd1a3db9dc1ff8d0e812b42ef28ae72cf3"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/verify_source_assembly_catalog.py",
+      "sha256": "e2a391c3d2e6f7da0a0113adc9ec8b0dff4b574dae68f59063030a692a071984"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/world_edit.py",
+      "sha256": "b003d79c15785a9f51e87485877303a4524da506cd0aa035a27969740a373b22"
+    },
+    {
+      "path": "Bloodborne-Blocks/tools/world_io.py",
+      "sha256": "a36eebe338d6f61c334a02ed33fd806eea520e2b7cf8e1aec21116e95be8387f"
+    },
+    {
+      "path": "Bloodborne-Blocks/VERSION",
+      "sha256": "557b59ce11c9a82a190470e07865c10de8a1575579f791684a039511bac923ff"
+    },
+    {
+      "path": "README.md",
+      "sha256": "33bb9481048760c3dac757fa25cd47391158f3ac28f09b77c653e8eb27c15f12"
+    }
+  ]
+}

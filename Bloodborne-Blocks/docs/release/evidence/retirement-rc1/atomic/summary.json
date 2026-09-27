@@ -1,0 +1,220 @@
+{
+  "fullCityResult": "FAIL",
+  "scope": "DIAGNOSTIC_ONLY: existing uncommitted repair engine, no rc.1 runtime port",
+  "inputZipSha256": "aed638e52143522abfbb3c63b85f377726727a5af039f532417ae0c6772504d1",
+  "originalZipSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+  "convertedTransactions": 26804,
+  "forcedTransactions": 0,
+  "atomicGroups": {
+    "total": 3238,
+    "converted": 3126,
+    "notConverted": 112,
+    "rejectedByReason": {
+      "protected_owner_closure_incomplete": 37,
+      "reserved_by_atomic_owner_group": 1,
+      "shared_root_conflict": 42,
+      "target_would_overwrite_foreign_block": 29,
+      "whole_owner_runtime_mapping_missing": 3
+    },
+    "independentComplete": 3101,
+    "independentFailed": 137
+  },
+  "protected": {
+    "result": "FAIL",
+    "fragmented": 1979,
+    "unprovenMemberships": 933,
+    "preservation": "FAIL",
+    "comparisonScope": "Historical protected-object oracle, whose source hash is pinned to the original ZIP; retirement itself is verified separately against the cleaned copy.",
+    "protectedLoss": "NOT_PROVEN: failure count is incomplete objects against historical oracle, not proof of newly deleted objects"
+  },
+  "registry": {
+    "converterReportedUnmatchedBlocks": 27584575,
+    "rejectedCandidates": 8432,
+    "independentUnknownToTargetPaletteIds": 39996,
+    "remainingRetiredIds": []
+  },
+  "helpers": {
+    "checked": 59270,
+    "orphans": 0,
+    "scope": "Existing repair target runtime geometry and full palette scan; not rc.1 registry."
+  },
+  "acceptedTransactionsVerifier": {
+    "format": "bloodborne-logical-world-check-v1",
+    "ledgerEntries": 26804,
+    "chunks": 10009,
+    "checkedBlocks": 1003216896,
+    "unchangedExternalFiles": 170,
+    "sourceHashVerified": true,
+    "resourceHashesVerified": true,
+    "ok": true
+  },
+  "preservation": {
+    "result": "PASS",
+    "changed_cells": 96812,
+    "ledger_cells": 98512,
+    "changed_chunks": 826,
+    "unchanged_chunks": 9183,
+    "preserved_nonterrain_files": 170,
+    "errors": []
+  },
+  "secondPass": {
+    "counts": {
+      "converted": 0,
+      "forced": 0,
+      "legacyCarrierRules": 248,
+      "mappingGaps": 342,
+      "registryIncompatibleBlocks": 27584575,
+      "rejected": 8432,
+      "rules": 3731,
+      "unmatchedModules": 27584575,
+      "unresolvedV2": 0
+    },
+    "preservation": {
+      "result": "PASS",
+      "changed_cells": 0,
+      "ledger_cells": 0,
+      "changed_chunks": 0,
+      "unchanged_chunks": 10009,
+      "preserved_nonterrain_files": 170,
+      "errors": []
+    },
+    "byteIdentical": true,
+    "worldFiles": 186
+  },
+  "retirementAirChecks": [
+    {
+      "world": "Bloodborne-MODDED-atomic-diagnostic-rc1",
+      "cells": 33,
+      "nonAir": []
+    },
+    {
+      "world": "second-world-verified",
+      "cells": 33,
+      "nonAir": []
+    }
+  ],
+  "engineUnchanged": true,
+  "foreignOverwrites": "No forced conversions or changes outside the validated ledger; rejected foreign conflicts remain untouched.",
+  "reports": {
+    "first.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/first.command.json",
+      "sha256": "40ad7cdd10e1a0003a5cbcbdf5aacb551f43c88acb46fc1134c96c4b0a89d694"
+    },
+    "first.json.gz": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/first.json.gz",
+      "sha256": "a7fbb415e0d7cf4106c1f1ccf32e91797166b8c937c35863708286da85d1d814"
+    },
+    "first.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/first.log",
+      "sha256": "e0f4d41385b506e509006fc5d7ca7e7729ae5fe6c80e8d42928773fcad5cdc3f"
+    },
+    "helpers-registry.json.gz": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/helpers-registry.json.gz",
+      "sha256": "8aef7d6b7d02043ce2806aa14d639bd619136c5dd926c785a81897924b3bf344"
+    },
+    "protected.json.gz": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/protected.json.gz",
+      "sha256": "634cba19ef49c5ed2a21055daf9f4963593b7e02db05858db642dd2ae2aa9d61"
+    },
+    "run_atomic_diagnostic.py": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/run_atomic_diagnostic.py",
+      "sha256": "51218818bf28a5afae5d012ee6a1282d09bf91a0f343323473142eb5672a2035"
+    },
+    "run_verified_pipeline.py": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/run_verified_pipeline.py",
+      "sha256": "f5bc5cac11a85a6494e58d3020ca7bab8eab5397224dcd0a01f997ff8587e3a6"
+    },
+    "second.json.gz": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/second.json.gz",
+      "sha256": "348be54361e6d3ebed535b0e7c9d726bd94d6fa2333d77f39d04e4578519675c"
+    },
+    "verified-accepted-transactions.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-accepted-transactions.json",
+      "sha256": "d40699fb4f555de0484857fe56d6ddb2f7b2f60bff9ab96ca315e6f555251d4e"
+    },
+    "verified-first-world-manifest.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-first-world-manifest.json",
+      "sha256": "5436d8eb698b836bb515fc88d44fc9b2e1ef3b5dcaebc037a9dbacb1126b5412"
+    },
+    "verified-helpers-registry.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-helpers-registry.command.json",
+      "sha256": "24e6adfc5304f884d2dbb4d5320cd895dcfa544873bafc889c594050d34261c9"
+    },
+    "verified-helpers-registry.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-helpers-registry.log",
+      "sha256": "cd8659844ee6b68736d99177558446ed694e53e00a26bfed853bc9a44f9da7ff"
+    },
+    "verified-logical.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-logical.command.json",
+      "sha256": "c176e03f553e62d47e5ba02b375f449ad3527be29cebd30da317d835bfd3a537"
+    },
+    "verified-logical.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-logical.log",
+      "sha256": "b080d2cc561d3681a6af8fadff1bf5282c15bc6691d65ee5793881003faf89a9"
+    },
+    "verified-manifests.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-manifests.command.json",
+      "sha256": "3daefa7dae6b881201bd219cb3c9cd66dce60271c776ec7196e5bdce2134021f"
+    },
+    "verified-manifests.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-manifests.json",
+      "sha256": "220e77baeed41ba8d81ebbe92385ce2db52483960871bbafbec3df58ea45932a"
+    },
+    "verified-manifests.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-manifests.log",
+      "sha256": "5fd691ca0366e21ceae701ea150f45d34e17f52f81df513290c8e3a137a04037"
+    },
+    "verified-pipeline.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-pipeline.json",
+      "sha256": "76a790577883fb3f7cceeddf7ed88d5a7c3e838f2add162f43bdef91ac271fff"
+    },
+    "verified-preservation.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-preservation.command.json",
+      "sha256": "2b648fbed2de05711b0b9145c7ff9cf73a54da6f393ec0785310649fd77c4993"
+    },
+    "verified-preservation.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-preservation.json",
+      "sha256": "d4b201658a9063115c7f6742227be8967022efbc1df37c6614614475eacaece4"
+    },
+    "verified-preservation.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-preservation.log",
+      "sha256": "a3497803786e2dbd7b70ea41235d8666e145785daf655571f8d4f6b5ea0d3f6f"
+    },
+    "verified-protected.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-protected.command.json",
+      "sha256": "e5494a4e5fcc0425af7f9d7d9eafa7d393225c8716c51f64b0c902d4e0bfd260"
+    },
+    "verified-protected.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-protected.log",
+      "sha256": "5d5af6766152d194fe05138e3a1e6aed954e41f3ea5063343ef8f370486e4fe6"
+    },
+    "verified-second-convert.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-second-convert.command.json",
+      "sha256": "7ee19b8c8b212e0fe03a4ac71e251035b6a1640f15899ee2ba4dc05690a2e1b5"
+    },
+    "verified-second-convert.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-second-convert.log",
+      "sha256": "b727647b2b5a05d6269d8d5fa9734f730d8cf90872b79864eac815dd4abb9c07"
+    },
+    "verified-second-preservation.command.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-second-preservation.command.json",
+      "sha256": "f8fd639cbf05cafa0b1810ffdd7b1b4d730fa13199fdcb32f401c4ac6edc862a"
+    },
+    "verified-second-preservation.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-second-preservation.json",
+      "sha256": "db32301a9770f6e0525ba7ddb49462998eead66766772d42829548bc779234b1"
+    },
+    "verified-second-preservation.log": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-second-preservation.log",
+      "sha256": "e2271cfd4803af2864ca5924c7d4157bf78cb135eba7264defe4b14aeb168d5a"
+    },
+    "verified-second-world-manifest.json": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified-second-world-manifest.json",
+      "sha256": "5436d8eb698b836bb515fc88d44fc9b2e1ef3b5dcaebc037a9dbacb1126b5412"
+    },
+    "verified_phase2_stage.py": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/retirement-rc1/atomic/verified_phase2_stage.py",
+      "sha256": "aa0d14b49d74d10a0a12f1b52f0117aa0cea55995ae4f0b26a1148795ccbf5ef"
+    }
+  }
+}

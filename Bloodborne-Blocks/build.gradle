@@ -126,7 +126,7 @@ tasks.named('check') { dependsOn 'normalizeSupportContracts' }
 tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
 
 // File-backed release evidence checks; these never publish or mark a release ready.
-['test_release_gates', 'test_release_package'].each { name ->
+['test_release_gates', 'test_release_package', 'test_composite_retirement', 'test_composite_retirement_verifier'].each { name ->
  tasks.register(name, Exec) {
   group = 'verification'
   commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${name}.py"

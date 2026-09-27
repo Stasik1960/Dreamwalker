@@ -1,0 +1,29 @@
+{
+  "command": [
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\rc1-verification\\venv\\Scripts\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/retire_missing_composites.py",
+    "reference-inputs/latest-modded-world.zip",
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\retirement-rc1-20260927\\Bloodborne-MODDED-retired-composites-rc1",
+    "--retire-missing-composites",
+    "--ledger",
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\retirement-rc1-20260927\\retirement-ledger.json",
+    "--expected-source-sha256",
+    "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9"
+  ],
+  "startedUtc": "2026-09-27T18:51:41.449323+00:00",
+  "exitCode": 0,
+  "result": {
+    "sourceZipSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+    "worldName": "Bloodborne-MODDED-retired-composites-rc1",
+    "retiredCells": 33,
+    "helperRemovals": 0,
+    "changedCellsThisRun": 0,
+    "idempotent": true
+  },
+  "allWorldFilesByteIdentical": true,
+  "ledgerByteIdentical": true,
+  "worldFiles": 186
+}

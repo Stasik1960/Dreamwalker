@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\rc1-verification\\venv\\Scripts\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/verify_composite_retirement.py",
+    "reference-inputs/latest-modded-world.zip",
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\retirement-rc1-20260927\\Bloodborne-MODDED-retired-composites-rc1",
+    "--ledger",
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\retirement-rc1-20260927\\retirement-ledger.json",
+    "--report",
+    "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\retirement-rc1-20260927\\independent-verifier-final.json",
+    "--expected-source-sha256",
+    "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9"
+  ],
+  "startedUtc": "2026-09-27T18:47:03.061790+00:00",
+  "verifierSha256": "2aac618837e6cbf0122d6e15688d8882bd6dda4e3e6bd6e526917ad5f31caffc",
+  "pid": 26324,
+  "exitCode": 0,
+  "seconds": 36.31
+}
