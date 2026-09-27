@@ -2,13 +2,15 @@
 
 ## Current disposition
 
-See [RELEASE-STATUS.md](docs/RELEASE-STATUS.md). The selected audit/source
+See [RELEASE-STATUS.md](docs/RELEASE-STATUS.md). Verification candidate
+`2.1.0-rc.1` uses the selected runtime
 baseline is `origin/main` at
 `b086e88929a971a2abd184629b3e7a59225304e5`
 (`origin/archive/beta3-grid-fragmentation-broken`). It is **not** certified for
 release: RELEASE CANDIDATE is BLOCKED and RELEASE_READY is FAIL.
 
-No certified stable commit is known. Do not infer that beta.3 artifacts, its
+No certified stable commit is known. The candidate has a new JAR identity;
+equivalence to the published beta.3 binary is not claimed. Do not infer that beta.3 artifacts, its
 offline checks, or earlier repair diagnostics establish full city, protected
 object, graphical-client or restart coverage.
 

@@ -1,49 +1,59 @@
 # Bloodborne Blocks — RELEASE_READY: FAIL
 
-2026-09-27. Production-кандидат **не выбран**: стабильная совместимая линия пока
-не подтверждена. `origin/main` используется только как база аудита и совпадает
-с `origin/archive/beta3-grid-fragmentation-broken`.
+2026-09-27. Проверочный кандидат: **2.1.0-rc.1**. Runtime baseline —
+`b086e88929a971a2abd184629b3e7a59225304e5`; процессная ветка —
+`codex/bloodborne-release-audit`. Из repair runtime ничего не перенесено.
+Изменены CI, версия и документация; это не production-релиз.
 
-Рабочая ветка: `codex/bloodborne-release-audit`.
-Базовый commit проверенных запусков: `b086e88929a971a2abd184629b3e7a59225304e5`.
-Audit/CI/docs фиксируются отдельно; точный снимок проверенных исходников указан ниже.
-Gradle / fabric.mod.json / VERSION: `2.1.0-beta.3`. Runtime-код и ресурсы не менялись.
-
-| Gate | Статус | Доказательство / ограничение |
+| Gate | Фактический статус | Доказательство / ограничение |
 |---|---|---|
-| TEST_SCOPE_PASS | PASS | Текущие ограниченные code/data/contract fixtures; [scope](release/evidence/test-scope.json) |
-| STATIC_PASS | PASS | `check build`, версии и полный package check; [лог](release/evidence/main-checks/check-build-gametest.log), [финальный package log](release/evidence/main-checks/release-checks.log) |
-| GAMETEST_PASS | PASS | 37/37, 0 failures; [свежий XML](release/evidence/main-checks/TEST-logical-gametest.xml) и тот же лог |
-| DEDICATED_RESTART_PASS | NOT_RUN | Production fresh/save/restart со старым совместимым миром не выполнялся |
-| CLIENT_VISUAL_PASS | NOT_RUN | Нет реального client fresh/reload/restart/interaction acceptance |
-| FULL_CITY_PASS | BLOCKED | Нет доказанного whole-owner converter/compatibility baseline; новый world dry-run и conversion не запускались |
-| RELEASE_READY | FAIL | Обязательные gates и provenance blockers остаются открытыми |
+| TEST_SCOPE_PASS | PASS | 202 Python tests / 36 запусков и Java/data checks; только объявленный [scope](release/evidence/rc1/test-scope.json) |
+| STATIC_PASS | PASS | Локальные `check build checkReleaseVersion`; [лог](release/evidence/rc1/check-build-gametest.log), [package](release/evidence/rc1/package.json) |
+| GAMETEST_PASS | PASS | 37/37, 0 failures; [свежий XML](release/evidence/rc1/TEST-logical-gametest.xml) |
+| DEDICATED_RESTART_PASS | NOT_RUN | Остановка на compatibility blocker до загрузки legacy-мира |
+| CLIENT_VISUAL_PASS | NOT_RUN | По той же причине; startup/RAM/reload/FPS/TPS не измерены |
+| FULL_CITY_PASS | BLOCKED | Неизвестные текущие composite states нельзя заменять прежней раскладкой |
+| RELEASE_READY | FAIL | Compatibility input отсутствует; последующие gates не выполнены |
 
-Все gates, точные выполненные команды и scoped blockers: [status.json](release/status.json).
-`STATIC_PASS` описывает код и пакет; не означает проверку карты. TEST3 в эти
-production-доказательства не переносится: [scope erratum](release/test3-scope-erratum.json).
+GitHub Actions: ожидается запуск после push текущего проверочного коммита.
+Workflow теперь получает полную Git-историю и устанавливает NumPy 1.26.4 /
+Pillow 10.4.0; выполняет check/build/GameTests/version/package checks.
 
-Артефакты текущей **проверочной сборки**, не release package:
+**Единственный непосредственный blocker: BB-COMPOSITE-INPUT.** Для 23 `m_*` ID
+в 33 клетках неизменного MODDED-входа нет authoritative definitions, моделей,
+коллизий и ownership/composition mapping. Точные ID и координаты сохранены в
+[missing-model-positions.json](city-compat/missing-model-positions.json).
 
-- JAR: `build/libs/bloodborne-blocks-2.1.0-beta.3.jar`, 34 498 188 байт,
-  SHA-256 `31a9c5a21a33b4999e05e8faf74238e62af2e6ddd2f96f9712bb73566280482b`.
-- Sources: `build/libs/bloodborne-blocks-2.1.0-beta.3-sources.jar`, 60 512 байт,
-  SHA-256 `891e0335604bab64d3002e3c80278909f62d790f80887b0f27e3671f1ee8fe44`.
-- MODDED-вход: `reference-inputs/latest-modded-world.zip`,
-  SHA-256 `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
-- [Source snapshot](release/evidence/source-snapshot.json):
-  `88ae1f953fcf339d415b1d8831511d6f66be22cafedfbba2ecf9ea545dbced51`.
-- [Resource manifest](release/evidence/resource-manifest.json):
-  `8a93772aeabb82c8682e757840a9ffb960296fac30797ca3679c76170801a9a1`.
+Старый [recovery](city-compat/RECOVERY.md) восстанавливает **предыдущую** раскладку
+(30 helpers + 3 air). Он прямо не восстанавливает потерянные transient composites.
+Проверка соответствия старой карте не доказывает сохранение нынешней геометрии
+и коллизий. Поэтому `--recover-city` не применялся: подмена неизвестного
+содержимого нарушает требование fail-closed.
 
-Главные blockers: старые ID/ItemStack/NBT не имеют доказанной миграции; полный город
-не прошёл whole-owner проверку; restart/client/performance не проверены; точная
-историческая разница 355/356 групп и пять class-file различий опубликованного
-JAR остаются неразрешёнными. 6518 TEST3-history и 1979 dirty-repair diagnostic —
-разные проваленные прогоны, ни один не принадлежит свежему аудиту `main`.
+Нужен исходный generated palette/model artifact, соответствующий
+`Ether-Bloodborne-2.0.2-positions`, с данными всех 23 ID, либо детерминированные
+composition inputs и версия генератора, воспроизводящие те же ID, геометрию и
+ownership. Минимальный следующий шаг — сверить этот источник с 33 исходными
+клетками и продолжить реальные legacy fixtures. Совместимость legacy-мира
+**не подтверждена**. Отсутствие дальнейших проверок не означает их успех.
 
-Счётчики до/после, таблица веток и объяснение расхождений: [AUDIT.md](release/AUDIT.md).
-Команды и дальнейшие проверки: [REPRODUCE.md](release/REPRODUCE.md).
-Отдельные выводы агента: [AGENT-COMMENTS.md](release/AGENT-COMMENTS.md).
-Публикация audit-коммита в отдельной ветке не является выпуском мода.
-Merge, release и новая массовая конвертация не выполнялись.
+Артефакты локальной **проверочной сборки**, не production package:
+
+- `build/libs/bloodborne-blocks-2.1.0-rc.1.jar` — SHA-256
+  `dec76327fba9db0e699aff75168ce1d533e34bd5da5c7fca98437008d846505d`.
+- `build/libs/bloodborne-blocks-2.1.0-rc.1-sources.jar` — SHA-256
+  `fc1e6b7509c83241e3b226bb5d92ce8da8af62b17b4529ae987f3dfeb232d8a9`.
+- MODDED ZIP не изменён: SHA-256
+  `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
+
+rc.1 получает собственную версию: эквивалентность опубликованному beta.3 JAR
+не заявляется. Пять class differences и старый repair delta 355/356 сохранены
+как история; они не подменяют доказательства нового кандидата.
+
+Точные команды, fingerprints и разделение TEST/full-city:
+[status.json](release/status.json). Старое evidence не перезаписано:
+[beta.3 status](release/evidence/status-beta3.json), [аудит](release/AUDIT.md).
+См. [migration guide](release/MIGRATION.md), [воспроизведение](release/REPRODUCE.md)
+и [отдельный комментарий агента](release/AGENT-COMMENTS.md).
+
+Конвертация мира, merge в `main`, release tag и production-публикация не выполнялись.

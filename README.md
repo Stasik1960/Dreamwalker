@@ -13,7 +13,7 @@
 | [RP Chat UI](RP-Chat-UI/README.md) | 0.3.7 | Перемещаемые окна, вкладки, поиск, избранное, оформление и редактор сообщений | Интерфейс на клиенте; серверная часть для дополнительных функций |
 | [DW Magic Connect](DW_Magic_Connect/README.md) | 0.4.3 | Магические рации, частоты на часах, громкая связь, интеграция с RP Chat и языками | Сервер и клиенты; RP Chat 0.1.16+ |
 | [DW Languages](DW_Languages/README.md) | 0.1.0 | Языки персонажей, знания игроков, настраиваемые преобразования речи | Сервер; RP Chat 0.1.16+ |
-| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-beta.3 audit baseline | Архитектурный набор; выпуск заблокирован до завершения release gates | Сервер и клиенты; не выпуск |
+| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-rc.1 verification candidate | Архитектурный набор; выпуск заблокирован до завершения release gates | Сервер и клиенты; не выпуск |
 | [Danny’s AoT — неофициальный порт](Danny-AOT-Backport/README.md) | 2.4.3-backport.2 | Порт с 1.21.1; GeckoLib, AAA Particles и Player Animation Library внутри одного JAR | Сервер и клиенты; тестовая сборка |
 
 Bloodborne Architecture находится в аудите: [статус выпуска](Bloodborne-Blocks/docs/RELEASE-STATUS.md). Текущий кандидат заблокирован; не используйте beta.2/beta.3 как готовое обновление мира.
@@ -58,7 +58,7 @@ RP Chat управляет доставкой и содержанием сооб
 
 ### Bloodborne Architecture
 
-Текущий статус: [RELEASE CANDIDATE BLOCKED / RELEASE_READY FAIL](Bloodborne-Blocks/docs/RELEASE-STATUS.md). Версия исходного audit baseline — 2.1.0-beta.3, но сертифицированного stable commit нет. Исторические beta.2/beta.3 пакеты и восстановленные миры не рекомендуются как готовые current-world обновления. См. [ограничения](Bloodborne-Blocks/docs/known-issues/README.md) и [исторические записи](Bloodborne-Blocks/docs/history/README.md).
+Текущий статус: [RELEASE CANDIDATE BLOCKED / RELEASE_READY FAIL](Bloodborne-Blocks/docs/RELEASE-STATUS.md). Проверочный кандидат — 2.1.0-rc.1 на runtime-базе b086e8892; production-совместимость ещё не подтверждена. Исторические beta.2/beta.3 пакеты и восстановленные миры не рекомендуются как готовые current-world обновления. См. [ограничения](Bloodborne-Blocks/docs/known-issues/README.md) и [исторические записи](Bloodborne-Blocks/docs/history/README.md).
 
 #### Историческая ветка 2.0.1
 

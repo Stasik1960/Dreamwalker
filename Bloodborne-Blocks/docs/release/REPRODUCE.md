@@ -1,14 +1,16 @@
 # Воспроизведение проверок и границы QA
 
 Команды ниже выполняются из `Bloodborne-Blocks`. Нужны Java 17, wrapper Gradle
-8.8, Python 3.11+ и NumPy для существующих world/data tools. Новые release suites
+8.8, Python 3.11+ и зависимости из `tools/requirements-ci.txt` (NumPy и Pillow).
+Release suites
 используют только стандартную библиотеку Python. Зависимости Minecraft/Fabric/Yarn/Loom
 не изменены. Git LFS-входы должны быть гидратированы, а не оставаться pointer-файлами.
 
 ```powershell
 java -version
 .\gradlew.bat --version
-python -c "import sys,numpy; print(sys.version); print(numpy.__version__)"
+python -m pip install -r tools/requirements-ci.txt
+python -c "import sys,numpy,PIL; print(sys.version); print(numpy.__version__); print(PIL.__version__)"
 .\gradlew.bat check build logicalGameTest checkReleaseVersion --max-workers=1
 python -B -X utf8 -m unittest discover -s tools -p 'test_release*.py'
 python -B -X utf8 tools/release_gates.py docs/release/status.json --evidence-root ..
@@ -19,25 +21,31 @@ python -B -X utf8 tools/release_gates.py docs/release/status.json --evidence-roo
 Корректная JSON-схема не является разрешением выпуска. Положительные unit fixtures
 синтетические: они проверяют валидатор, не являются доказательствами игровых запусков.
 
-Фактически выполненные здесь команды с абсолютными Java/Python путями,
+Исторические beta.3 команды с абсолютными Java/Python путями,
 `--offline --no-daemon`, `verification-direct-resources.init.gradle`, exit code
 и длительностью сохранены в:
 
 - [полный check/build/GameTest/package](evidence/main-checks/check-build-gametest.json);
 - [финальные release suites/package](evidence/main-checks/release-checks.json).
 
+Свежий rc.1 запуск с NumPy 1.26.4 / Pillow 10.4.0 (локально Python 3.12.14):
+[команда и exit code](evidence/rc1/check-build-gametest.json),
+[лог](evidence/rc1/check-build-gametest.log), [package](evidence/rc1/package.json).
+Он прошёл 202 Python tests и 37/37 GameTests. CI отдельно использует Python 3.11.
+
 Init script — существующая оптимизация копирования ресурсов. Полное сравнение
 13 969 source resources с remapped JAR подтверждено package check. 25 production
 Java sources проверены по inventory в sources JAR; Java sources ремаппятся Loom,
 поэтому их текст не сравнивается с Yarn source побайтно.
 
-Для повторного read-only census доступны:
+Для воспроизведения только исторического beta.3 read-only census доступны:
 
 ```powershell
 python -B -X utf8 tools/collect_release_baseline.py --repair-checkout '<path-to-repair-checkout>' --junit build/release-audit/TEST-logical-gametest.xml
 ```
 
-Collector читает source/artifacts и записывает evidence; world conversion не
+Collector содержит beta.3 имена JAR: его нельзя запускать как сборщик текущего
+rc.1 evidence. Он читает source/artifacts и записывает evidence; world conversion не
 выполняет. `--junit` должен указывать на XML нужного свежего запуска, а не на
 исторический tracked XML. После нового запуска/изменения исходников необходимо
 пересобрать связанные gate reports/status с новыми хэшами; прежний `PASS` не переносится.
@@ -47,23 +55,24 @@ Collector читает source/artifacts и записывает evidence; world 
 checkout также меняет эти хэши и требует нового снимка для новой сборки.
 
 Linux CI использует `bash ./gradlew` (executable bit у wrapper отсутствует),
-Java 17, Python 3.11 и NumPy. Workflow
+Java 17, Python 3.11, NumPy 1.26.4 и Pillow 10.4.0. Workflow
 `.github/workflows/bloodborne-blocks.yml` скачивает только относящиеся к Bloodborne
-LFS-входы, выполняет check/build/GameTests/package/version и пишет SHA двух
+LFS-входы и полную Git-историю для исторической базы grid-check,
+выполняет check/build/GameTests/package/version и пишет SHA двух
 проверенных JAR. Логи выгружаются и при ошибке; бинарники — только после успеха.
 Сохранённое evidence относится к локальным запускам до публикации audit-коммита.
 Результаты последующих GitHub Actions runs проверяются отдельно по SHA коммита.
 
 ## Следующий обязательный порядок
 
-1. Закрыть provenance-различия и выбрать подтверждённую стабильную линию.
+1. Проверить совместимость выбранного rc.1 runtime baseline `b086e8892`.
    Локальные repair-изменения не сливаются автоматически. Восстановить/доказать
    старые registry IDs, chunk NBT и ItemStack; повторить старые compatibility tests.
 2. На read-only копии MODDED-входа получить полный owner graph, физические и
    interaction footprints, foreign/unknown/helper census и fail-closed whole-owner
    transaction plan. Main `--full-grid` этого условия не выполняет.
-3. Для фактической массовой конвертации копии требуется отдельное разрешение
-   пользователя. Проверить первый результат независимым verifier; второй проход
+3. Пользователь разрешил конвертацию тестовой копии после read-only audit и
+   выполнения compatibility/whole-owner условий. Проверить результат независимым verifier; второй проход
    должен давать ноль изменений и одинаковые file manifests. Player data и данные
    других модов должны оставаться побайтно неизменными. Исходный архив не заменяется;
    rollback — возврат из неизменного исходника в другую тестовую копию.
@@ -79,8 +88,8 @@ LFS-входы, выполняет check/build/GameTests/package/version и пи
    логи и PNG screenshots. Обязательны RAM/startup/reload/FPS/TPS на одной
    конфигурации до/после. PNG evidence проверяется структурно, визуальная оценка
    требует человека/интерактивной сессии и не выводится из наличия файла.
-6. Проверить весь evidence и только затем `--require-ready`. Отдельное разрешение
-   пользователя всё равно необходимо для публикации/merge; этот workflow их не делает.
+6. Проверить весь evidence и только затем `--require-ready`. Пользователь разрешил
+   release/merge только при всех обязательных PASS; этот workflow их не делает.
 
 Это план непроведённых проверок. Пустые `plannedCommands` у runtime gates в JSON
 означают отсутствие готовой совместимой среды/конвертера, а не успешный пропуск.

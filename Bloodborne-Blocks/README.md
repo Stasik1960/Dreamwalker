@@ -1,7 +1,7 @@
 # Bloodborne Blocks
 
 Minecraft 1.20.1 / Fabric architectural mod. The declared build version is
-`2.1.0-beta.3`; this is an audit baseline, **not** a release recommendation.
+`2.1.0-rc.1`; this is a verification candidate, **not** a release recommendation.
 
 Current release evidence and gates are maintained in
 [RELEASE-STATUS.md](docs/RELEASE-STATUS.md). The current conclusion is
@@ -17,10 +17,11 @@ world upgrade path.
 
 ## Development baseline
 
-The selected audit/source baseline is `origin/main` at
+The selected runtime baseline is `origin/main` at
 `b086e88929a971a2abd184629b3e7a59225304e5`, also named
 `origin/archive/beta3-grid-fragmentation-broken`. It is an origin point for the
-audit only.
+candidate verification only. The candidate has a new version and JAR identity;
+it is not presented as the previously published beta.3 binary.
 
 Repair checkpoint `3d07` and local catalog work in progress are separate and
 unmerged. They do not change the baseline or establish release readiness.

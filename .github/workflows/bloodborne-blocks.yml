@@ -14,13 +14,13 @@ jobs:
         working-directory: Bloodborne-Blocks
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 1, lfs: false}
+        with: {fetch-depth: 0, lfs: false}
       - run: git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**' --exclude=''
       - uses: actions/setup-java@v4
         with: {distribution: temurin, java-version: '17'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - run: python -m pip install --disable-pip-version-check numpy
+      - run: python -m pip install --disable-pip-version-check -r tools/requirements-ci.txt
       - id: metadata
         run: echo "version=$(python tools/check_release_package.py --version-only)" >> "$GITHUB_OUTPUT"
       - run: |

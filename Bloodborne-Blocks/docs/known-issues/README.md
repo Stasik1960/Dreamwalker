@@ -1,25 +1,25 @@
 # Known issues and release limits
 
-The current authority is [RELEASE-STATUS.md](../RELEASE-STATUS.md): RELEASE
-CANDIDATE is BLOCKED and RELEASE_READY is FAIL. No certified stable commit is
-known.
+Current authority: [RELEASE-STATUS.md](../RELEASE-STATUS.md) and
+[status.json](../release/status.json). Candidate `2.1.0-rc.1` uses runtime
+baseline `b086e88929a971a2abd184629b3e7a59225304e5`. RELEASE_READY is FAIL.
+No repair runtime changes have been ported.
 
-The selected source/audit baseline is `origin/main`
-`b086e88929a971a2abd184629b3e7a59225304e5`
-(`origin/archive/beta3-grid-fragmentation-broken`). Beta.3 offline evidence does
-not establish protected-object coverage, full-city conversion, graphical client
-acceptance or restart coverage.
+The immediate blocker is missing authoritative composition/model/collision and
+ownership data for the 23 transient `m_*` IDs (33 cells) in the immutable MODDED
+input. The historical recovery reverts these cells to an earlier helper/air
+layout. It does not establish lossless compatibility with the current unknown
+composites and is prohibited under the current fail-closed requirement.
+See the required input and next step in the release status.
 
-Historical `6518` is a repair diagnostic and local `1979` is a different dirty
-repair run. Neither is attributable to `main` or proof of release readiness.
-Repair `3d07` and local catalog WIP are separate, unmerged work.
+Legacy fixtures, whole-owner full-city conversion, dedicated restart, real
+client interactions and startup/RAM/reload/FPS/TPS remain unverified. Static
+checks and 37 GameTests do not prove those gates. Read the
+[migration guide](../release/MIGRATION.md) before using the candidate.
 
-Scoped blockers B01–B07 are enumerated in [status.json](../release/status.json).
-They cover stable-baseline selection, legacy ID/ItemStack compatibility,
-whole-owner full-city preservation, real runtime/restart/client QA, missing
-performance measurements, the unreproduced 355/356 group delta, and five
-unclassified class-file differences between the published and rebuilt JAR.
-
-The original TEST3 `knownReleaseBlockers: []` is superseded for readiness
-interpretation by [the scoped erratum](../release/test3-scope-erratum.json).
-The original historical file and its SHA remain unchanged.
+Historical beta.3 evidence, TEST3, dirty repair diagnostics and the 355/356
+payload discrepancy remain available in [AUDIT.md](../release/AUDIT.md) and
+[the previous status](../release/evidence/status-beta3.json). Their old gate
+results are not adopted for rc.1. The five beta.3 class differences remain
+unclassified, but rc.1 has its own artifact identity and makes no binary
+equivalence claim. This historical difference is not the current input blocker.
