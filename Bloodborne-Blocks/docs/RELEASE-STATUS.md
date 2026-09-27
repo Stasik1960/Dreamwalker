@@ -44,5 +44,6 @@ JAR остаются неразрешёнными. 6518 TEST3-history и 1979 di
 
 Счётчики до/после, таблица веток и объяснение расхождений: [AUDIT.md](release/AUDIT.md).
 Команды и дальнейшие проверки: [REPRODUCE.md](release/REPRODUCE.md).
+Отдельные выводы агента: [AGENT-COMMENTS.md](release/AGENT-COMMENTS.md).
 Публикация audit-коммита в отдельной ветке не является выпуском мода.
 Merge, release и новая массовая конвертация не выполнялись.
