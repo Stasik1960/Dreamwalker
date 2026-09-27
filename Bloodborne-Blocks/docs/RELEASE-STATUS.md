@@ -63,4 +63,6 @@ rc.1 получает собственную версию: эквивалент�
 См. [migration guide](release/MIGRATION.md), [воспроизведение](release/REPRODUCE.md)
 и [отдельный комментарий агента](release/AGENT-COMMENTS.md).
 
-Конвертация мира, merge в `main`, release tag и production-публикация не выполнялись.
+Карта rc.1 сконвертирована и добавлена в `main` коммитом `de7b1173f`;
+[каталог файлов](../../releases/Bloodborne-Blocks/README.md) содержит ссылку на архив.
+Это не production-сертификация: dedicated-server restart и client acceptance остаются NOT_RUN.

@@ -1,26 +1,25 @@
-# 2.1.0-rc.1 migration status
+# Карта rc.1: установка для проверки и границы миграции
 
-**No production migration is approved.** This is a verification candidate based
-on `b086e88929a971a2abd184629b3e7a59225304e5`. Only version metadata changes in
-the runtime resources; no registry aliases, NBT schema changes or repair
-converter/runtime port are included. Replacing a beta/legacy JAR with rc.1 is
-not a verified world upgrade.
+**Production-миграция не сертифицирована.** Кандидат `2.1.0-rc.1` основан на runtime
+`b086e88929a971a2abd184629b3e7a59225304e5`. Repair runtime в него не перенесён.
 
-Keep the original world archive and existing JAR unchanged. Do not open the
-legacy world with the candidate: unregistered IDs have no proven lossless
-runtime migration. Do not apply `--recover-city` to satisfy the current gate;
-it replaces unknown composites with a previous helper/air layout.
+## Что уже сделано
 
-Resume only after the authoritative source data for the 23 missing composite
-IDs is available. Validate that data against the exact frozen source, build
-real chunk/ItemStack fixtures, and prove load/place/break/use/save/restart
-compatibility. Then audit the full world read-only, convert a separate copy
-using whole-owner atomic transactions, and run the independent preservation
-and byte-identical second-pass checks. Keep player data and other-mod data
-unchanged. A failed attempt is abandoned in favour of another copy of the
-original archive; the original is never overwritten.
+В отдельной копии latest MODDED backup удалены 33 клетки с 23 отсутствующими
+composite ID по явно одобренной политике. Затем выполнены конвертация текущей сетки
+и полный офлайн-census. Исходный ZIP не изменён; прежний recovery не использовался.
+[Протокол и хэш карты](evidence/rc1/retired-composites-world.json).
 
-Dedicated and client acceptance, including resource reload, chunk boundaries
-and performance measurements, are required before a release. The current
-[status](../RELEASE-STATUS.md) records the actual gates and required input.
-The locally verified artifact hashes are in [SHA256SUMS.txt](SHA256SUMS.txt).
+Требование ждать данные этих 23 ID относится к прежнему этапу и больше не является
+текущим блокером выбранной политики. Это не доказательство восстановления утраченных объектов.
+
+## Проверить готовую копию
+
+1. Сохраните прежние мир и JAR отдельно.
+2. Получите соответствующие rc.1 JAR и карту из [каталога](../../../releases/Bloodborne-Blocks/README.md).
+3. Разверните карту в отдельной игровой папке или отдельном сервере. Не открывайте старый мир новым JAR как способ миграции.
+4. Проверьте загрузку и повторный запуск dedicated server, затем клиентский вход, отображение, взаимодействия и сохранение мира.
+
+Замена JAR сама по себе не является подтверждённым обновлением старых registry IDs/NBT.
+Исторические beta/repair галереи требуют собственных комплектов.
+Полный статус gates: [RELEASE-STATUS](../RELEASE-STATUS.md).

@@ -4,6 +4,8 @@
 1.20.1 / Java 17. В исходном JAR внутренняя версия указана как 2.4.1;
 имя полученного файла — 2.4.3. Текущая версия порта — `2.4.3-backport.2`.
 
+[Скачать JAR](../releases/Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar) · [Сборка репозитория](../CONTRIBUTING.md) · [Все проекты](../README.md)
+
 ## Установка
 
 Готовый файл: [dannys-aot-1.20.1-2.4.3-backport.2.jar](../releases/Danny-AOT/dannys-aot-1.20.1-2.4.3-backport.2.jar).
@@ -20,8 +22,6 @@ Fabric Loader 0.16.10 или новее и Fabric API для 1.20.1
 Отдельная Player Animation Library также не требуется. Старую библиотеку
 с mod ID `player_animation_library` нельзя оставлять рядом с этим портом.
 Другие библиотеки анимации с иными mod ID этим указанием не затрагиваются.
-
-Исходные файлы в вашей папке `.minecraft/mods` не изменялись.
 
 ## Что находится внутри
 
@@ -118,8 +118,8 @@ JDK **21** для инструментов, `--release 17` для выходны
 Linux/macOS:
 
 ```sh
-./player-animation-backport/gradlew -p player-animation-backport build
-./gradlew build
+bash player-animation-backport/gradlew -p player-animation-backport build
+bash gradlew build
 ```
 
 Результат: `build/libs/dannys-aot-1.20.1-2.4.3-backport.2.jar`.

@@ -1,6 +1,10 @@
-# DW Languages — Fabric 1.20.1
+# DW Languages
 
 Система языков для Dreamwalker. Java 17. Мод работает на сервере; клиентам DW Languages не нужен. В одиночной игре установите его в свою папку `mods`.
+
+**Версия 0.1.0 · Minecraft 1.20.1 · Fabric · Java 17.**
+
+[Скачать JAR](../releases/DW_Languages/dw-languages-0.1.0.jar) · [Настройка языков](LANGUAGE-GUIDE.md) · [Все проекты](../README.md)
 
 ## Установка
 
@@ -58,3 +62,5 @@ gradle -p DW_Magic_Connect build
 ```
 
 Готовые JAR — в `build/libs/` соответствующих папок (без суффикса `-sources`). Автоматическая сборка трёх модов: GitHub Actions → **DW Languages build** → артефакт `dw-languages-bundle`.
+
+[Общие инструкции сборки](../CONTRIBUTING.md). Авторство и лицензия — в [метаданных](src/main/resources/fabric.mod.json).

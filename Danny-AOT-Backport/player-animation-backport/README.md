@@ -4,14 +4,16 @@
 `10e019f89fa25d0cd6f50fb8768586a969106911`, адаптированы к Fabric 1.20.1 / Java 17.
 Авторство и MIT-лицензия сохранены в `LICENSE`.
 
-Сборка из этой папки: `gradlew.bat build` (Windows) или `./gradlew build`
+Сборка из этой папки: `gradlew.bat build` (Windows) или `bash gradlew build`
 (Linux/macOS), с JAVA_HOME на JDK 21. Выходной JAR:
 `build/libs/PlayerAnimationLib-1.1.6-backport.1+mc.1.20.1.jar`.
 Затем соберите родительский проект AoT. Основной JAR включает эту библиотеку.
 
+[Родительский мод и установка](../README.md). Отдельно устанавливать библиотеку рядом с единым AoT JAR не требуется.
+
 ## Описание оригинального проекта
 
-A library that allows mods to animate the player, in a way that doesn't conflict with other mods. (and much more!)  
+A library that allows mods to animate the player, in a way that doesn't conflict with other mods. (and much more!)
 This mod is a library for mod developers, and does not do anything on it's own.
 
 Here are SOME of the features:
@@ -22,7 +24,7 @@ Here are SOME of the features:
 * Ability to add custom bones the location of which you can get in order to add custom particles.
 
 # Important links
-**Documentation:** https://docs.zigythebird.com/  
-**Modrinth:** https://modrinth.com/mod/player-animation-library  
-**CurseForge:** https://www.curseforge.com/minecraft/mc-mods/player-animation-library  
+**Documentation:** https://docs.zigythebird.com/
+**Modrinth:** https://modrinth.com/mod/player-animation-library
+**CurseForge:** https://www.curseforge.com/minecraft/mc-mods/player-animation-library
 **Maven Repository:** https://repo.redlance.org/#/public/com/zigythebird/playeranim
