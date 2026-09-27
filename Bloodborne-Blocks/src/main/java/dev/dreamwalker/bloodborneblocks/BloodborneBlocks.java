@@ -168,7 +168,8 @@ public final class BloodborneBlocks implements ModInitializer {
   PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,partCarriers.toArray(Block[]::new)).build(null));
   ArchitecturePartBlockEntity.registerValidation();
   LogicalAttachments.validateDefinitions(DATA.blocks);
-  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->ArchitectureCreativeCatalog.entries().forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->ArchitectureCreativeCatalog.mainEntries().forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture_technical"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture_technical")).icon(()->new ItemStack(CITY_BLOCKS.get(ReviewedWallConnections.ID))).entries((context,entries)->ArchitectureCreativeCatalog.technicalEntries().forEach(entries::add)).build());
   BloodborneCommands.register();
   System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" city_blocks="+CITY_BLOCKS.size()+" states="+allBlocks().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }

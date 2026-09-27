@@ -31,21 +31,23 @@ def translate(box: list[float], dx: float, dy: float, dz: float) -> list[float]:
             round(box[3] + dx, 6), round(box[4] + dy, 6), round(box[5] + dz, 6)]
 
 
-def rear_collision_boxes(facing: str) -> list[list[float]]:
-    """The exact two-cell rear-plane mask, expressed in the root frame."""
-    low = {
-        "north": [0.0, 0.0, .875, 1.0, 1.0, 1.0],
-        "east": [0.0, 0.0, 0.0, .125, 1.0, 1.0],
-        "south": [0.0, 0.0, 0.0, 1.0, 1.0, .125],
-        "west": [.875, 0.0, 0.0, 1.0, 1.0, 1.0],
-    }[facing]
-    return [low, [low[0], 1.0, low[2], low[3], 2.0, low[5]]]
+def full_collision_boxes() -> list[list[float]]:
+    """The approved two-cell physical volume, independent of decorative mesh bounds."""
+    return [[0.0, 0.0, 0.0, 1.0, 1.0, 1.0], [0.0, 1.0, 0.0, 1.0, 2.0, 1.0]]
 
 
 def patch_family(family) -> None:
     """Apply only the explicit mounting fields, preserving all source identities."""
     if family['id'] != WINDOW:
         raise ValueError('window-only patch')
+    # Raw bounds have independently been checked against the actual stationary
+    # sill polygons. Measure AFTER the existing transform: the current candidate
+    # already lands at y=0, so its family-wide delta is exactly zero.
+    current_sill_planes = {round(state['render_mesh']['bounds'][1] + state['render_mesh']['offset'][1], 6)
+                           for state in family['states'].values()}
+    if len(current_sill_planes) != 1:
+        raise ValueError('window poses disagree on the existing sill plane')
+    delta_y = -next(iter(current_sill_planes))
     for key, state in family["states"].items():
         facing = state_properties(key)["facing"]
         axis_x, axis_z = FACING_VECTORS[facing]
@@ -55,17 +57,12 @@ def patch_family(family) -> None:
         # lower edge is -.875, so the same fixed vertical offset lands it on
         # the full-block support plane.
         render_dx, render_dz = -.75 * axis_x, -.75 * axis_z
-        state["render_mesh"]["offset"] = [render_dx, .875, render_dz]
-        source_bounds = state["render_mesh"]["bounds"]
-        state["selection_footprint"] = {
-            "boxes": [translate(source_bounds, render_dx, .875, render_dz)]
-        }
-
-        # Collision is a distinct thin, cell-local slice at the rear boundary.
-        # Use its canonical absolute values rather than translating an already
-        # generated result, so a second run is byte-identical.
-        boxes = rear_collision_boxes(facing)
-        state["collision_footprint"] = {"boxes": boxes}
+        render_y = round(state['render_mesh']['offset'][1] + delta_y, 6)
+        state["render_mesh"]["offset"] = [render_dx, render_y, render_dz]
+        # Selection and collision deliberately use the approved two-cell volume.
+        # The decorative frame and 22.5-degree shutters remain render-only.
+        state["selection_footprint"] = {"boxes": [[0.0, 0.0, 0.0, 1.0, 2.0, 1.0]]}
+        state["collision_footprint"] = {"boxes": full_collision_boxes()}
 
 
 def patch() -> dict[str, object]:
@@ -88,7 +85,7 @@ def patch() -> dict[str, object]:
     physical_path.write_text(json.dumps(physical, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
     geometry_path.write_text(json.dumps(geometry, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
     return {"family": WINDOW, "states": len(family["states"]), "mesh_payload_changed": False,
-            "render_offset": "-.75*facing horizontal, +.875Y", "collision_offset": "-.875*facing horizontal"}
+            "render_offset": "-.75*facing horizontal, +.875Y", "physical_volume": "two full root/up cells"}
 
 
 def main() -> None:

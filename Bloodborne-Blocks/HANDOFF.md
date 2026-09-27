@@ -1,8 +1,19 @@
 # Bloodborne Blocks — beta continuation, 2026-09-25
 
-## TEST3 local continuation — 2026-09-27
+## REPAIR TEST 3 — 2026-09-27
 
-Read [TEST3 report](docs/window-creative-test3/REPAIR-TEST-3.md) and its archived user prompt before continuing. The full creative catalog and a small 24-position ordinary-wall/window stand are prepared locally on the existing repair branch. TEST3 is not released yet: the user is being asked to resolve the original open-shutter pose intersecting a solid backing after the required fixed-frame mount. Do not silently change hinge artwork or claim graphical client testing. Main and the full city remain unchanged. Current input checkpoint is `f80a7fe3bd87bd47ba649997fee5ebee95ab8ba2`; preserve all unrelated local user files.
+Final continuation follows [CONTINUE-TEST3](docs/window-creative-test3/input/CONTINUE-TEST3.md).
+Read the [TEST3 report](docs/window-creative-test3/REPAIR-TEST-3.md) and
+[release README](releases/repair-test-3/README-RU.md). Window physics/selection
+occupy exactly two full cells; original shutter artwork remains unchanged.
+Decorative open clipping is explicitly accepted and is not a release blocker.
+The creative inventory has construction and historical/technical tabs.
+Common resource grid audit, build and 56 dedicated-server GameTests pass;
+the small world is byte-idempotent. GUI/full application restart still require
+user acceptance. Main and the full city remain unchanged; old whole-world
+metrics were NOT recomputed. Do not start a new full conversion before that
+acceptance. The prior WIP is preserved in checkpoint `a43c1131fe` and local
+candidate backups. Preserve unrelated local user files.
 
 ## REPAIR TEST 2 continuation — 2026-09-26
 

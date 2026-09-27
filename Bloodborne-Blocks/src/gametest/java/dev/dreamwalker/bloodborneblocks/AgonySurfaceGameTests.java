@@ -47,7 +47,7 @@ public final class AgonySurfaceGameTests implements FabricGameTest {
   try{
    world.setBlockState(wall,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);ItemStack stack=new ItemStack(window);context.assertTrue(use(window,world,player,stack,wall,Direction.NORTH).isAccepted(),"ordinary shutter placement succeeds");
    BlockState state=world.getBlockState(root);Set<BlockPos> cells=GeometryRuntime.state(state).parsedCells.keySet();context.assertTrue(cells.equals(Set.of(BlockPos.ORIGIN,BlockPos.ORIGIN.up())),"shutter physical ownership is exactly one block wide and two blocks high");
-   for(BlockPos offset:cells){VoxelShape shape=GeometryRuntime.cellShape(state,offset,false);Box bounds=shape.getBoundingBox();context.assertTrue(!shape.isEmpty()&&bounds.minX>=0&&bounds.maxX<=1&&bounds.minY>=0&&bounds.maxY<=1&&bounds.minZ>=0&&bounds.maxZ<=1,"shutter collision stays cell-local "+offset);context.assertTrue(bounds.maxX-bounds.minX<.2||bounds.maxZ-bounds.minZ<.2,"shutter collision remains a thin plane "+offset);}
+   for(BlockPos offset:cells){VoxelShape collision=GeometryRuntime.cellShape(state,offset,false),selection=GeometryRuntime.cellShape(state,offset,true);context.assertTrue(box(collision.getBoundingBox(),1)&&box(selection.getBoundingBox(),1),"shutter collision and selection are full local cells "+offset);}context.assertTrue(box(GeometryRuntime.rootShape(state,true).getBoundingBox(),2),"shutter global selection is exactly root plus upper cell");
    BlockPos left=root.west(),right=root.east();world.setBlockState(left,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(right,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);
    context.assertTrue(world.getBlockState(left).isOf(Blocks.WHITE_CONCRETE)&&world.getBlockState(right).isOf(Blocks.WHITE_CONCRETE),"ordinary blocks remain placeable on both sides of the shutter");context.complete();
   }finally{clearArea(context);player.discard();}
@@ -111,6 +111,7 @@ public final class AgonySurfaceGameTests implements FabricGameTest {
   }finally{clearArea(context);player.discard();}
  }
 
+ private static boolean box(Box box,double height){return Math.abs(box.minX)<1e-6&&Math.abs(box.minY)<1e-6&&Math.abs(box.minZ)<1e-6&&Math.abs(box.maxX-1)<1e-6&&Math.abs(box.maxY-height)<1e-6&&Math.abs(box.maxZ-1)<1e-6;}
  private static ActionResult use(ArchitectureBlock block,ServerWorld world,PlayerEntity player,ItemStack stack,BlockPos pos,Direction side){return ((ArchitectureBlockItem)block.asItem()).useOnBlock(new ItemUsageContext(world,player,Hand.MAIN_HAND,stack,new BlockHitResult(Vec3d.ofCenter(pos),side,pos,false)));}
  private static boolean roots(ServerWorld world,ArchitectureBlock ladder,BlockPos... roots){for(BlockPos root:roots)if(!world.getBlockState(root).isOf(ladder))return false;return true;}
  private static void backing(ServerWorld world,BlockPos root,Direction side){Direction back=side.getOpposite();world.setBlockState(root.down().offset(back),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(root.offset(back),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);}

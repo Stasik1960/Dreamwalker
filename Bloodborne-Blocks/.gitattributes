@@ -1,0 +1,4 @@
+releases/repair-test-3/* text eol=lf
+releases/repair-test-3/*.gz -text
+releases/repair-test-3/*.jar filter=lfs diff=lfs merge=lfs -text
+releases/repair-test-3/*.zip filter=lfs diff=lfs merge=lfs -text
