@@ -1,0 +1,17 @@
+{
+  "command": [
+    "C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    "tools/release_gates.py",
+    "docs/release/status.json",
+    "--evidence-root",
+    "..",
+    "--require-ready"
+  ],
+  "exitCode": 1,
+  "expectedExitCode": 1,
+  "reason": "Production release must remain blocked",
+  "checkedUtc": "2026-09-27T15:46:45.518216+00:00"
+}

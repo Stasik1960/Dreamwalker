@@ -1,0 +1,21 @@
+{
+  "kind": "historical-test-kit-scope-correction",
+  "original": {
+    "path": "Bloodborne-Blocks/docs/release/evidence/repair-test3/verification.json",
+    "sha256": "543384800a86f232d6454100de9297b96405fbd1673e03ff3f7ee310d624e567"
+  },
+  "originalUnmodified": true,
+  "testKitStatus": "PASS for recorded 228 Python tests / 56 GameTests / small-world checks only",
+  "productionStatus": "BLOCKED",
+  "knownReleaseBlockers": [
+    {
+      "scope": "full-city",
+      "reason": "TEST3 did not recompute historical 6518 protected failures; static grid scan skipped unproven IDs/states."
+    },
+    {
+      "scope": "full-city",
+      "reason": "Actual client, dedicated restart and full-city acceptance NOT_RUN."
+    }
+  ],
+  "interpretation": "Historical knownReleaseBlockers: [] cannot mean no production blockers. Only this scoped correction and current release status govern readiness."
+}

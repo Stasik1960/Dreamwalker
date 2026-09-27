@@ -1,0 +1,23 @@
+{
+  "command": [
+    "C:\\Windows\\system32\\cmd.exe",
+    "/d",
+    "/c",
+    "gradlew.bat",
+    "--offline",
+    "--no-daemon",
+    "--console=plain",
+    "-I",
+    "tools/verification-direct-resources.init.gradle",
+    "-PbloodbornePython=C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+    "test_release_gates",
+    "test_release_package",
+    "checkReleaseVersion",
+    "--max-workers=1"
+  ],
+  "startedUtc": "2026-09-27T15:35:59.692226+00:00",
+  "scope": "release-report and package verification; no gameplay/world changes",
+  "exitCode": 0,
+  "seconds": 22.52
+}

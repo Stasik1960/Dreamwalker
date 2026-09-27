@@ -125,6 +125,21 @@ tasks.named('processResources') { dependsOn 'normalizeSupportContracts' }
 tasks.named('check') { dependsOn 'normalizeSupportContracts' }
 tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
 
+// File-backed release evidence checks; these never publish or mark a release ready.
+['test_release_gates', 'test_release_package'].each { name ->
+ tasks.register(name, Exec) {
+  group = 'verification'
+  commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${name}.py"
+ }
+ tasks.named('check') { dependsOn name }
+}
+tasks.register('checkReleaseVersion', Exec) {
+ group = 'verification'
+ dependsOn 'remapJar', 'remapSourcesJar'
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/check_release_package.py', "build/libs/bloodborne-blocks-${project.version}.jar", "build/libs/bloodborne-blocks-${project.version}-sources.jar", '--packaged-resources'
+}
+
 // Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
 // These tests need numpy (same dependency as the existing world converter).
 // Historical Nightmare/QA2 compiler checks intentionally do not run against

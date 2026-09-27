@@ -1,0 +1,170 @@
+EEEEEEE.FFFFFFFFF
+======================================================================
+ERROR: test_frozen_poc_projection_preserved (test_contract_v2.ContractTests.test_frozen_poc_projection_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_contract_v2.py", line 145, in test_frozen_poc_projection_preserved
+    definition, contract = visual_base_projection(definitions[ident], pre_support[ident])
+                                                  ~~~~~~~~~~~^^^^^^^
+KeyError: 'o_dead_tree_planter'
+
+======================================================================
+ERROR: test_regeneration_preserves_ids_numbers_and_authority (test_manual_review.ManualReviewTests.test_regeneration_preserves_ids_numbers_and_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_manual_review.py", line 27, in test_regeneration_preserves_ids_numbers_and_authority
+    generated = refresh_manifest(edited)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\manual_review.py", line 243, in refresh_manifest
+    proposed = proposed_record(definition, [r for r in rules if r['target']['id'] == definition['id']], curated, contracts, geometry, names)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\manual_review.py", line 90, in proposed_record
+    if not source: raise ValueError('Missing provenance: ' + ident)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Missing provenance: o_books
+
+======================================================================
+ERROR: test_source_drift_covers_rules_members_contract_patterns_and_railing_expansion (test_manual_review.ManualReviewTests.test_source_drift_covers_rules_members_contract_patterns_and_railing_expansion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_manual_review.py", line 51, in test_source_drift_covers_rules_members_contract_patterns_and_railing_expansion
+    self.assertFalse(existing_row_has_source_drift(copy.deepcopy(planter), definitions[planter['logical_id']], planter_rules,
+                                                                           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'o_dead_tree_planter'
+
+======================================================================
+ERROR: test_source_drift_does_not_erase_authority (test_manual_review.ManualReviewTests.test_source_drift_does_not_erase_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_manual_review.py", line 165, in test_source_drift_does_not_erase_authority
+    next(d for d in changed if d['id'] == first_id)['semantic'] = 'ornament'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+======================================================================
+ERROR: test_contract_scope_includes_every_contract_state_and_hidden_family (test_nightmare_gallery.NightmareGalleryTests.test_contract_scope_includes_every_contract_state_and_hidden_family)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_nightmare_gallery.py", line 66, in test_contract_scope_includes_every_contract_state_and_hidden_family
+    specimens, definitions, contracts = specimens_for_scope(CONTRACT_V2_SCOPE)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\build_nightmare_gallery.py", line 248, in specimens_for_scope
+    for definition, state, properties, purpose in visual_proof_states(visible):
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\build_nightmare_gallery.py", line 137, in visual_proof_states
+    raise ValueError(f"visual proof requires {ident} with base/alt states")
+ValueError: visual proof requires o_c282_a with base/alt states
+
+======================================================================
+ERROR: test_generated_manifest_converts_all_eight_old_states (test_old_logical_migrations.OldLogicalC654Tests.test_generated_manifest_converts_all_eight_old_states)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_old_logical_migrations.py", line 37, in test_generated_manifest_converts_all_eight_old_states
+    rules, defaults = parse_rules(RES, 'legacy')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\convert_logical_world.py", line 332, in parse_rules
+    rules.extend(parse_old_logical_c654_rules(resources, defaults, geometry, len(rules)))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\convert_logical_world.py", line 399, in parse_old_logical_c654_rules
+    raise ValueError("old logical C654 table must map all four facings and two variants exactly once")
+ValueError: old logical C654 table must map all four facings and two variants exactly once
+
+======================================================================
+ERROR: test_stale_owned_and_foreign_destination_cells_reject_without_mutation (test_old_logical_migrations.OldLogicalC654Tests.test_stale_owned_and_foreign_destination_cells_reject_without_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_old_logical_migrations.py", line 59, in test_stale_owned_and_foreign_destination_cells_reject_without_mutation
+    rules, defaults = parse_rules(RES, 'legacy')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\convert_logical_world.py", line 332, in parse_rules
+    rules.extend(parse_old_logical_c654_rules(resources, defaults, geometry, len(rules)))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\convert_logical_world.py", line 399, in parse_old_logical_c654_rules
+    raise ValueError("old logical C654 table must map all four facings and two variants exactly once")
+ValueError: old logical C654 table must map all four facings and two variants exactly once
+
+======================================================================
+FAIL: test_direct_migration_fixture (test_contract_v2.ContractTests.test_direct_migration_fixture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_contract_v2.py", line 244, in test_direct_migration_fixture
+    self.assertTrue(any(x["reason"]=="target_would_overwrite_foreign_block" for x in report["rejected"]))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_shared_vectors_and_all_family_origins (test_contract_v2.ContractTests.test_shared_vectors_and_all_family_origins)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_contract_v2.py", line 89, in test_shared_vectors_and_all_family_origins
+    self.assertEqual(len(self.families),47)
+AssertionError: 49 != 47
+
+======================================================================
+FAIL: test_generated_contract (test_logical_objects.LogicalObjectTests.test_generated_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_logical_objects.py", line 265, in test_generated_contract
+    self.assertTrue({"o_ladder_03", "o_books_test", "o_wooden_box", "o_tombstone_gathered_8"} <= ids)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_compiler_is_idempotent (test_qa2_trees.WholeTreeTests.test_compiler_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_qa2_trees.py", line 297, in test_compiler_is_idempotent
+    self.assertEqual(len(models), 24)
+AssertionError: 0 != 24
+
+======================================================================
+FAIL: test_one_active_item_with_compatibility_inventory_redirects (test_qa2_trees.WholeTreeTests.test_one_active_item_with_compatibility_inventory_redirects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_qa2_trees.py", line 65, in test_one_active_item_with_compatibility_inventory_redirects
+    self.assertIn(ident, hidden)
+AssertionError: 'o_c001_a' not found in set()
+
+======================================================================
+FAIL: test_all_reviewed_families_have_proven_rule_or_documented_alias (test_reviewed_migration.ReviewedMigrationTests.test_all_reviewed_families_have_proven_rule_or_documented_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_reviewed_migration.py", line 98, in test_all_reviewed_families_have_proven_rule_or_documented_alias
+    self.assertTrue(self.covered | set(ALIASES) >= self.expected)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_reviewed_atomic_output_contract_is_independent_of_generated_report (test_reviewed_migration.ReviewedMigrationTests.test_reviewed_atomic_output_contract_is_independent_of_generated_report)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_reviewed_migration.py", line 110, in test_reviewed_atomic_output_contract_is_independent_of_generated_report
+    self.assertEqual(expected_outputs, output_counts(rule), (old_id, rule.number))
+AssertionError: Counter({'o_c008_3': 2, 'o_c008_1': 1, 'o_c008_2': 1, 'o_c[21 chars]: 1}) != Counter({'o_c008_2': 2, 'o_c008_3': 2, 'o_c008_1': 1, 'o_c008_5': 1}) : ('o_c008', 239)
+
+======================================================================
+FAIL: test_exact_source_examples_convert_without_context_effects (test_reviewed_source_examples.ReviewedSourceExamples.test_exact_source_examples_convert_without_context_effects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_reviewed_source_examples.py", line 231, in test_exact_source_examples_convert_without_context_effects
+    self.assertFalse(failures, "\n".join(failures))
+AssertionError: ['o_c003/A: o_c003/A has 0 eligible direct rules', 'o_c046/A: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 0, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [90], "rejectionReasons": []}', 'o_c1962/A: o_c1962/A has 0 eligible direct rules', 'o_c561/A: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 0, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [90], "rejectionReasons": []}', 'o_c561/B: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 2, "forced": 0, "rejected": 1, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [30, 87], "rejectionReasons": ["different_source_weighted_visual"]}', 'o_c561/C: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 0, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [88], "rejectionReasons": []}', 'o_c561/D: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 2, "forced": 0, "rejected": 1, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [31, 89], "rejectionReasons": ["different_source_weighted_visual"]}', "o_c654/A: 0 != 1 : [{'rule': 202, 'mode': 'legacy', 'dimension': 'minecraft:overworld', 'origin': [-458, 37, -322], 'targetRoot': [-458, 37, -322], 'originalReference': None, 'delta': [0, 0, 0], 'decision': 'converted', 'reason': 'exact_mapping', 'conflictingCells': [], 'tp': '/execute in minecraft:overworld run tp @s -458 37 -322', 'source': [[-458, 37, -322]], 'staleRemoved': [], 'changes': [{'position': [-458, 37, -322], 'before': 'minecraft:mossy_cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,west=tall]', 'after': 'bloodborne_blocks:o_stone_railing[east=false,facing=north,north=false,south=false,up=true,visual=base,west=true]'}], 'helpers': []}]", "o_c654/B: 0 != 1 : [{'rule': 217, 'mode': 'legacy', 'dimension': 'minecraft:overworld', 'origin': [-464, 37, -322], 'targetRoot': [-464, 37, -322], 'originalReference': None, 'delta': [0, 0, 0], 'decision': 'converted', 'reason': 'exact_mapping', 'conflictingCells': [], 'tp': '/execute in minecraft:overworld run tp @s -464 37 -322', 'source': [[-464, 37, -322]], 'staleRemoved': [], 'changes': [{'position': [-464, 37, -322], 'before': 'minecraft:mossy_cobblestone_wall[east=tall,north=none,south=none,up=true,waterlogged=false,west=none]', 'after': 'bloodborne_blocks:o_stone_railing[east=true,facing=north,north=false,south=false,up=true,visual=base,west=false]'}], 'helpers': []}]", 'o_c1319/A: {"expected": "o_c1319", "target": "o_books", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 1, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [30], "rejectionReasons": ["different_source_weighted_visual"]}'] is not false : o_c003/A: o_c003/A has 0 eligible direct rules
+o_c046/A: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 0, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [90], "rejectionReasons": []}
+o_c1962/A: o_c1962/A has 0 eligible direct rules
+o_c561/A: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 0, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [90], "rejectionReasons": []}
+o_c561/B: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 2, "forced": 0, "rejected": 1, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [30, 87], "rejectionReasons": ["different_source_weighted_visual"]}
+o_c561/C: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 0, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [88], "rejectionReasons": []}
+o_c561/D: {"expected": "o_c046", "target": "o_cases_0", "counts": {"rules": 248, "converted": 2, "forced": 0, "rejected": 1, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [31, 89], "rejectionReasons": ["different_source_weighted_visual"]}
+o_c654/A: 0 != 1 : [{'rule': 202, 'mode': 'legacy', 'dimension': 'minecraft:overworld', 'origin': [-458, 37, -322], 'targetRoot': [-458, 37, -322], 'originalReference': None, 'delta': [0, 0, 0], 'decision': 'converted', 'reason': 'exact_mapping', 'conflictingCells': [], 'tp': '/execute in minecraft:overworld run tp @s -458 37 -322', 'source': [[-458, 37, -322]], 'staleRemoved': [], 'changes': [{'position': [-458, 37, -322], 'before': 'minecraft:mossy_cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,west=tall]', 'after': 'bloodborne_blocks:o_stone_railing[east=false,facing=north,north=false,south=false,up=true,visual=base,west=true]'}], 'helpers': []}]
+o_c654/B: 0 != 1 : [{'rule': 217, 'mode': 'legacy', 'dimension': 'minecraft:overworld', 'origin': [-464, 37, -322], 'targetRoot': [-464, 37, -322], 'originalReference': None, 'delta': [0, 0, 0], 'decision': 'converted', 'reason': 'exact_mapping', 'conflictingCells': [], 'tp': '/execute in minecraft:overworld run tp @s -464 37 -322', 'source': [[-464, 37, -322]], 'staleRemoved': [], 'changes': [{'position': [-464, 37, -322], 'before': 'minecraft:mossy_cobblestone_wall[east=tall,north=none,south=none,up=true,waterlogged=false,west=none]', 'after': 'bloodborne_blocks:o_stone_railing[east=true,facing=north,north=false,south=false,up=true,visual=base,west=false]'}], 'helpers': []}]
+o_c1319/A: {"expected": "o_c1319", "target": "o_books", "counts": {"rules": 248, "converted": 1, "forced": 0, "rejected": 1, "unresolvedV2": 0, "unmatchedModules": 0, "registryIncompatibleBlocks": 0, "mappingGaps": 0, "legacyCarrierRules": 0}, "convertedRules": [30], "rejectionReasons": ["different_source_weighted_visual"]}
+
+======================================================================
+FAIL: test_published_inventory_partitions_all_exact_patterns (test_source_assembly_pipeline.PipelineTests.test_published_inventory_partitions_all_exact_patterns)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\ChatGPT\New project\Dreamwalker-beta-20260925\Bloodborne-Blocks\build\grid-baseline-tests\Bloodborne-Blocks\tools\test_source_assembly_pipeline.py", line 86, in test_published_inventory_partitions_all_exact_patterns
+    self.assertTrue(all(rows[r]['user_decision']==DECISIONS[r] for r in manifest['batch_review_ids']))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 17 tests in 19.425s
+
+FAILED (failures=9, errors=7)

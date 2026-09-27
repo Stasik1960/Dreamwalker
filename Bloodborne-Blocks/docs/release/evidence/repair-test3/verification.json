@@ -1,0 +1,197 @@
+{
+  "status": "READY_FOR_USER_ACCEPTANCE",
+  "baseline": "f80a7fe3bd87bd47ba649997fee5ebee95ab8ba2",
+  "checkpoint": "a43c1131fe478a337118edbef0dcbaeb459eb017",
+  "branch": "repair/composite-preserving-grid",
+  "instructions": "input/CONTINUE-TEST3.md",
+  "checkBuild": "PASS",
+  "pythonTests": 228,
+  "pythonSuites": 43,
+  "dedicatedGameTests": {
+    "passed": 56,
+    "failed": 0
+  },
+  "itemModelSelectionCheck": "PASS",
+  "creativeCoverage": {
+    "mainBlockItems": 50,
+    "mainArtEntries": 139,
+    "technicalBlockItems": 3777,
+    "technicalArtEntries": 46530,
+    "technicalEntriesByType": {
+      "main": 139,
+      "technical.1": 863,
+      "technical.2": 49,
+      "technical.3": 45618
+    },
+    "registeredBlockItems": 3827,
+    "coverage": "PASS",
+    "graphicalClient": "NOT_RUN"
+  },
+  "collisionGrid": {
+    "city_ids": 3778,
+    "city_profiles": 28866,
+    "city_states": 52212,
+    "errors": 0,
+    "logical_families": 49,
+    "logical_states": 1788,
+    "protected_city_ids": 67,
+    "protected_city_states": 392,
+    "protected_logical_families": 48,
+    "protected_logical_states": 1772,
+    "resource_states_changed": 0,
+    "states_needing_storage_normalization": 0,
+    "unique_city_geometry_states_checked": 32446,
+    "unproven_city_ids_skipped_for_repair": 3711,
+    "unproven_city_states_skipped_for_repair": 51820
+  },
+  "gridReport": "collision-grid-report.json.gz",
+  "window": {
+    "changedFamily": "o_shuttered_window",
+    "states": 16,
+    "ownedCells": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ]
+    ],
+    "collisionPerCell": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    "selection": [
+      0,
+      0,
+      0,
+      1,
+      2,
+      1
+    ],
+    "existingRenderY": 0.875,
+    "additionalDeltaY": 0,
+    "horizontalOffset": "-.75*facing",
+    "meshByteIdenticalToTEST2": true,
+    "decorativeOpenClipping": "ACCEPTED_BY_CONTINUE_TEST3"
+  },
+  "packagedResourceByteParity": {
+    "status": "PASS",
+    "files": [
+      "bloodborne_blocks/logical/contracts-v2.json",
+      "bloodborne_blocks/logical/geometry.json",
+      "bloodborne_blocks/logical/physical-footprints.json",
+      "bloodborne_blocks/logical/meshes.json.gz",
+      "bloodborne_blocks/logical/definitions.json",
+      "bloodborne_blocks/city/definitions.json",
+      "bloodborne_blocks/city/geometry.json",
+      "bloodborne_blocks/city/reviewed-wall-family.json",
+      "assets/bloodborne_blocks/lang/en_us.json",
+      "assets/bloodborne_blocks/lang/ru_ru.json"
+    ]
+  },
+  "preservedPayloads": {
+    "src/main/resources/bloodborne_blocks/logical/meshes.json.gz": {
+      "unchanged_from_test2": true,
+      "sha256": "9d91a736b95cbce4313ec7b782f7bb33cf392f8ca6cf4d8ebedb9b8593c08808"
+    },
+    "src/main/resources/bloodborne_blocks/logical/definitions.json": {
+      "unchanged_from_test2": true,
+      "sha256": "c54e165d4f7fc75eb7b4ed718889294e20431519389f31ffee23dc808bd88aab"
+    },
+    "src/main/resources/bloodborne_blocks/city/geometry.json": {
+      "unchanged_from_test2": true,
+      "sha256": "b1ed401a27f8cacf734d3241729cb470cc10bdd6f6758f2959d18cc715536630"
+    },
+    "src/main/resources/bloodborne_blocks/city/definitions.json": {
+      "unchanged_from_test2": true,
+      "sha256": "91254f20b5bcdb17a7b10510aaddae62034c0baef6b6684e17a30ce5ac3285cd"
+    },
+    "src/main/resources/bloodborne_blocks/city/reviewed-wall-family.json": {
+      "unchanged_from_test2": true,
+      "sha256": "99c8506ea3c8f78c2827a0675ff32cf3ccec6cc6c11b2d6f69970c307c326864"
+    }
+  },
+  "smallWorld": {
+    "counts": {
+      "converted": 5
+    },
+    "helperAudit": {
+      "checked": 47,
+      "orphans": [],
+      "ok": true
+    },
+    "secondPassChanges": 0,
+    "secondPassByteIdentical": true,
+    "unknownModPaletteIds": 0
+  },
+  "independentReview": "PASS; see INDEPENDENT-REVIEW.md",
+  "graphicalClient": "NOT_RUN",
+  "actualClientRestart": "NOT_RUN",
+  "actualDedicatedServerRestart": "NOT_RUN; server GameTests and NBT encode/decode passed",
+  "fullCityConversion": "NOT_RUN",
+  "oldCityMetricsRecomputed": false,
+  "oldCityMetrics": {
+    "protectedFailures": 6518,
+    "atomicGroupsPassed": 355,
+    "atomicGroupsTotal": 3238,
+    "earlierUnprovedMemberships": 933,
+    "note": "Different overlapping units, not unique broken models; not recomputed in TEST3"
+  },
+  "knownReleaseBlockers": [],
+  "checks": [
+    {
+      "command": [
+        "C:\\Windows\\system32\\cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        "-I",
+        "tools/verification-direct-resources.init.gradle",
+        "-PbloodbornePython=C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+        "test_window_test3",
+        "test_collision_grid",
+        "logicalContractV2Check",
+        "geometryCheck",
+        "itemModelSelectionCheck",
+        "compileGametestJava"
+      ],
+      "seconds": 62.0,
+      "exitCode": 0,
+      "log": "C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\test3-verification\\targeted-final-window-grid.log"
+    },
+    {
+      "command": [
+        "C:\\Windows\\system32\\cmd.exe",
+        "/d",
+        "/c",
+        "gradlew.bat",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        "-I",
+        "tools/verification-direct-resources.init.gradle",
+        "-PbloodbornePython=C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+        "check",
+        "build",
+        "logicalGameTest"
+      ],
+      "seconds": 389.9,
+      "exitCode": 0,
+      "log": "C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\test3-verification\\final-test3.log"
+    }
+  ],
+  "smallWorldCommand": "python -B -X utf8 tools/build_repair_test_kit.py build/repair-test3-final-20260927 --edition 3"
+}

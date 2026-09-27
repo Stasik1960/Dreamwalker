@@ -1,0 +1,5 @@
+# Preserve recorded evidence bytes and hashes across Windows/Linux checkouts.
+docs/release/** -text whitespace=cr-at-eol
+docs/history/main-b086e8892/** -text whitespace=cr-at-eol
+# Captured process output is verbatim evidence, including its trailing spaces.
+docs/release/evidence/**/*.log -whitespace

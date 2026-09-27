@@ -1,0 +1,311 @@
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :compileJava UP-TO-DATE
+
+> Task :normalizeSupportContracts
+{"support_normalization": {"families": 49, "states": 1644, "ground_families": 43, "below_support_families": 0, "automatically_corrected_families": 0, "ambiguous_mount_families": 6, "old_collision_boxes": 1812, "new_collision_boxes": 1812, "max_ordinary_collision_boxes": 3, "families_with_old_helpers_below": 0, "families_with_helpers_below": 0, "fail_families": 0}, "changed": false}
+
+> Task :processResources SKIPPED
+> Task :classes UP-TO-DATE
+> Task :jar
+> Task :sourcesJar
+> Task :remapSourcesJar
+
+> Task :check_contract_orientation
+{"result": "PASS", "rotation_checks": 6576, "symmetric": 2, "facing": 47, "connected": 6}
+
+> Task :check_grid_physics
+{'result': 'PASS', 'protected_states': 1644, 'city_profiles': 28866}
+
+> Task :check_logical_resources
+{"ok": true, "logicalObjects": 49, "states": 1644, "meshes": 722, "textures": 33, "migrationRules": 0, "hiddenLegacyItems": 0, "maximumFootprintCells": 49}
+
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :remapJar
+
+> Task :cityCompatibilityCheck
+[11:50:28] [main/INFO]: [STDOUT]: CITY COMPATIBILITY CHECKS PASSED: blocks=2914 pages=2865 native=49 states=48632
+
+> Task :assemble
+
+> Task :geometryCheck
+[11:50:32] [main/INFO]: [STDOUT]: GEOMETRY CHECKS PASSED: states=1644 unique=1644 cells=6452
+
+> Task :logicalContractV2Check
+[11:50:36] [main/INFO]: [STDOUT]: LOGICAL CONTRACT V2 CHECKS PASSED
+
+> Task :logicalObjectCheck
+[11:50:41] [main/INFO]: [STDOUT]: LOGICAL OBJECT CHECKS PASSED: definitions=49 meshes=722
+
+> Task :logicalRegistryCheck
+[11:50:45] [main/INFO]: [STDOUT]: LOGICAL REGISTRY CHECKS PASSED: production=49
+
+> Task :logicalVisualModelsCheck
+
+> Task :modularDataCheck
+[11:50:50] [main/INFO]: [STDOUT]: PRODUCTION MESH CHECKS PASSED: referenced=722 available=722
+
+> Task :production_coverage
+{"result": "PASS", "required_count": 49, "source_world_sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51", "runtime_registry_boundary": "definitions.json feeds Java registry; live registry requires GameTests", "manifest_count": 49, "gallery_checked": false, "gallery_count": null, "errors": []}
+
+> Task :test
+
+> Task :test_agony_patch
+......
+----------------------------------------------------------------------
+Ran 6 tests in 2.070s
+
+OK
+
+> Task :test_beta_client_qa
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 1.853s
+
+OK
+
+> Task :test_build_nightmare_contracts
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+OK
+
+> Task :test_build_production_gallery
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.131s
+
+OK
+
+> Task :test_city_palette
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.108s
+
+OK
+
+> Task :test_city_recovery
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.336s
+
+OK
+
+> Task :test_compare_modded_reference
+..
+----------------------------------------------------------------------
+Ran 2 tests in 1.489s
+
+OK
+
+..
+----------------------------------------------------------------------
+> Task :test_export_alt_visual_starter
+Ran 2 tests in 0.046s
+
+OK
+
+> Task :test_fixture_level_metadata
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+OK
+
+> Task :test_grid_physics
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.510s
+
+OK
+
+> Task :test_logical_world
+{"ok": true, "converted": 6, "rejected": 15, "dimensions": 2}
+
+> Task :test_modded_preservation
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.068s
+
+OK
+
+> Task :test_modded_world_adapter
+......
+----------------------------------------------------------------------
+Ran 6 tests in 6.219s
+
+OK
+
+> Task :test_nightmare_composition_recipes
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 1.189s
+
+OK
+
+> Task :test_nightmare_functional_recipes
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.606s
+
+OK
+
+> Task :test_nightmare_geometry_recipes
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.021s
+
+OK
+
+> Task :test_preserved_semantics
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.486s
+
+OK
+
+> Task :test_production_coverage
+............
+----------------------------------------------------------------------
+Ran 12 tests in 10.330s
+
+OK
+
+> Task :test_production_door
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.007s
+
+OK
+
+> Task :test_production_exact_duplicates
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 9.748s
+
+OK
+
+> Task :test_production_fingerprints
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 17.198s
+
+OK
+
+> Task :test_production_gallery
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_production_geometry
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+
+> Task :test_production_inventory
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+
+> Task :test_production_palette
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 1.148s
+
+OK
+........
+----------------------------------------------------------------------
+
+> Task :test_region_padding
+Ran 8 tests in 0.002s
+
+OK
+
+> Task :test_restore_c003
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.375s
+
+OK
+
+> Task :test_restore_functional
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 1.729s
+
+OK
+
+> Task :test_restored_migration
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.406s
+
+OK
+
+> Task :test_source_review_decisions
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.011s
+
+OK
+
+> Task :test_source_variant_rng
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_split_transactions
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 1.277s
+
+OK
+
+> Task :test_support_collision
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.006s
+
+OK
+
+> Task :test_support_normalization
+............
+----------------------------------------------------------------------
+Ran 12 tests in 3.055s
+
+OK
+
+> Task :test_visual_slots
+Visual slots: 1 families, 4 states
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.049s
+
+OK
+Visual slots: 1 families, 4 states
+
+> Task :validateAccessWidener NO-SOURCE
+> Task :check
+> Task :build
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 7s
+54 actionable tasks: 52 executed, 2 up-to-date

@@ -1,0 +1,53 @@
+name: Bloodborne Blocks verification
+permissions: {contents: read}
+on:
+  push:
+    paths: ['Bloodborne-Blocks/**', '.github/workflows/bloodborne-blocks.yml']
+  pull_request:
+    paths: ['Bloodborne-Blocks/**', '.github/workflows/bloodborne-blocks.yml']
+jobs:
+  static-and-gametests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: Bloodborne-Blocks
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 1, lfs: false}
+      - run: git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**' --exclude=''
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python -m pip install --disable-pip-version-check numpy
+      - id: metadata
+        run: echo "version=$(python tools/check_release_package.py --version-only)" >> "$GITHUB_OUTPUT"
+      - run: |
+          mkdir -p build
+          set -o pipefail
+          bash ./gradlew --version 2>&1 | tee build/ci-gradle-version.log
+      - run: |
+          set -o pipefail
+          bash ./gradlew --no-daemon --console=plain check build logicalGameTest checkReleaseVersion --max-workers=1 2>&1 | tee build/ci-gradle.log
+      - run: sha256sum "build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}.jar" "build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}-sources.jar" > build/release-artifact-sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bloodborne-static-and-gametests
+          path: |
+            Bloodborne-Blocks/build/ci-gradle*.log
+            Bloodborne-Blocks/build/test-results/**
+            Bloodborne-Blocks/build/gametest/logs/**
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: bloodborne-verified-build-not-production-release
+          path: |
+            Bloodborne-Blocks/build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}.jar
+            Bloodborne-Blocks/build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}-sources.jar
+            Bloodborne-Blocks/build/release-artifact-sha256.txt
+          if-no-files-found: error
+      - run: |
+          echo 'CI result: static and GameTests only; this is not RELEASE_READY.'

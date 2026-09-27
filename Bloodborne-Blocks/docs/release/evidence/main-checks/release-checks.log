@@ -1,0 +1,43 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :test_release_gates
+................
+----------------------------------------------------------------------
+Ran 16 tests in 1.641s
+
+OK
+
+> Task :test_release_package
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.110s
+
+OK
+
+> Task :compileJava UP-TO-DATE
+
+> Task :normalizeSupportContracts
+{"support_normalization": {"families": 49, "states": 1644, "ground_families": 43, "below_support_families": 0, "automatically_corrected_families": 0, "ambiguous_mount_families": 6, "old_collision_boxes": 1812, "new_collision_boxes": 1812, "max_ordinary_collision_boxes": 3, "families_with_old_helpers_below": 0, "families_with_helpers_below": 0, "fail_families": 0}, "changed": false}
+
+> Task :processResources SKIPPED
+> Task :classes UP-TO-DATE
+> Task :jar UP-TO-DATE
+> Task :remapJar UP-TO-DATE
+> Task :sourcesJar UP-TO-DATE
+> Task :remapSourcesJar UP-TO-DATE
+
+> Task :checkReleaseVersion
+{"version": "2.1.0-beta.3", "jar": {"path": "bloodborne-blocks-2.1.0-beta.3.jar", "sha256": "31a9c5a21a33b4999e05e8faf74238e62af2e6ddd2f96f9712bb73566280482b"}, "sourceJar": {"path": "bloodborne-blocks-2.1.0-beta.3-sources.jar", "sha256": "891e0335604bab64d3002e3c80278909f62d790f80887b0f27e3671f1ee8fe44"}, "sourceJavaFiles": 25, "resources": {"ok": true, "version": "2.1.0-beta.3", "resources": 13969, "loomMixinConfigs": ["bloodborne_blocks.mixins.json"], "manifestSha256": "6a1e28b40c1280fc1a5b461b07b7cf0bfa8b97383e3eb9bd586a3177101e2010", "jarSha256": "31a9c5a21a33b4999e05e8faf74238e62af2e6ddd2f96f9712bb73566280482b"}}
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 22s
+9 actionable tasks: 4 executed, 5 up-to-date
