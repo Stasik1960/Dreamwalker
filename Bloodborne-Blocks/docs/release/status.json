@@ -263,14 +263,49 @@
     "sha256": "8651a3aeffe346da7488600e0c38770afbbb1f1714a45c0f11195b17d1b70545"
   },
   "phaseState": {
-    "A": "Local check/build/GameTests/version/package PASS; GitHub CI pending process-branch push.",
+    "A": "PASS: local and GitHub check/build/GameTests/version/package; the candidate has a new artifact identity.",
     "B": "BLOCKED at authoritative current composite source data; no guessed aliases or destructive recovery.",
     "C": "NOT_RUN after B blocker; user authorized copy-only conversion once compatibility and whole-owner prerequisites are met.",
     "D": "NOT_RUN after B blocker; startup/RAM/reload/FPS/TPS NOT_MEASURED.",
     "E": "Candidate artifact only; no main merge, release tag or production publication."
   },
   "ci": {
-    "status": "PENDING",
-    "reason": "Process branch push not yet performed for this candidate."
-  }
+    "id": 36336948341,
+    "headSha": "782473a7c57e8cd303de57223f9c3f3e075b5d26",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341",
+    "startedAt": "2026-09-27T17:26:35Z",
+    "updatedAt": "2026-09-27T17:31:51Z",
+    "jobId": 108669502886,
+    "scope": "static/build/GameTests/version/package only; not production readiness",
+    "pythonTests": 202,
+    "pythonRuns": 36,
+    "gameTests": 37,
+    "package": {
+      "version": "2.1.0-rc.1",
+      "jar": {
+        "path": "bloodborne-blocks-2.1.0-rc.1.jar",
+        "sha256": "a27a25b5a07bcf723b55d631004f62c52a5957e6feac3c1ba14c289252b8f7f6"
+      },
+      "sourceJar": {
+        "path": "bloodborne-blocks-2.1.0-rc.1-sources.jar",
+        "sha256": "339ca4d7802d667925badacd870c830b725ee2538d4e003ea63c17bffd54f903"
+      },
+      "sourceJavaFiles": 25,
+      "resources": {
+        "ok": true,
+        "version": "2.1.0-rc.1",
+        "resources": 13969,
+        "loomMixinConfigs": [
+          "bloodborne_blocks.mixins.json"
+        ],
+        "manifestSha256": "80b126bd40334a78f99aa8184d46e981f9916a1e32f467de0f33ee4222b6a136",
+        "jarSha256": "a27a25b5a07bcf723b55d631004f62c52a5957e6feac3c1ba14c289252b8f7f6"
+      }
+    },
+    "artifactUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341/artifacts/10937273847",
+    "artifactNote": "Linux CI artifact has its own SHA; do not substitute the local Windows JAR hash."
+  },
+  "candidateCommit": "782473a7c57e8cd303de57223f9c3f3e075b5d26"
 }

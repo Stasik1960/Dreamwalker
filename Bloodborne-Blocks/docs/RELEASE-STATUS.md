@@ -15,7 +15,10 @@
 | FULL_CITY_PASS | BLOCKED | Неизвестные текущие composite states нельзя заменять прежней раскладкой |
 | RELEASE_READY | FAIL | Compatibility input отсутствует; последующие gates не выполнены |
 
-GitHub Actions: ожидается запуск после push текущего проверочного коммита.
+GitHub Actions: **PASS**, [run 36336948341](https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341)
+для commit `782473a7c57e8cd303de57223f9c3f3e075b5d26`: 202 Python tests / 36 запусков,
+37/37 GameTests, build/version/package PASS. Результат относится к проверкам кода
+и пакета; production gates выше остаются открытыми.
 Workflow теперь получает полную Git-историю и устанавливает NumPy 1.26.4 /
 Pillow 10.4.0; выполняет check/build/GameTests/version/package checks.
 
@@ -45,6 +48,12 @@ ownership. Минимальный следующий шаг — сверить �
   `fc1e6b7509c83241e3b226bb5d92ce8da8af62b17b4529ae987f3dfeb232d8a9`.
 - MODDED ZIP не изменён: SHA-256
   `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
+
+Linux CI [artifact](https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341/artifacts/10937273847)
+содержит отдельную CI-сборку того же rc.1: JAR SHA-256
+`a27a25b5a07bcf723b55d631004f62c52a5957e6feac3c1ba14c289252b8f7f6`.
+Его SHA нельзя подменять SHA локального Windows JAR; Linux resource manifest и
+sources JAR SHA записаны отдельно в `status.json.ci.package`.
 
 rc.1 получает собственную версию: эквивалентность опубликованному beta.3 JAR
 не заявляется. Пять class differences и старый repair delta 355/356 сохранены
