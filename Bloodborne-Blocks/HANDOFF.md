@@ -1,5 +1,13 @@
 # Bloodborne Blocks handoff
 
+**New task, 2026-09-29:** [historical whole-model consolidation](docs/whole-models-handoff/TASK.md).
+Start there: compare historical JAR/full-city pairs, select the best base, reuse
+the existing manual complex models, resolve visual/physics conflicts with the
+user using images, and deliver one complete pair plus a verified Blockbench kit.
+It supersedes the old fixed-base/frozen-scope strategy. Preservation requirements
+still apply. The following describes the last delivered rc.3 checkpoint, not
+the outcome or scope of the new task.
+
 Current work branch: `codex/bloodborne-complete-accepted-repair`.
 Runtime/source commit: `9f32ff5ad2c2c8ecace8533749794da3d12aa36b`.
 Main remains rc.2 at `6bca311b87856ee251cc1d88f94ba6071ae231cf`.
