@@ -18,6 +18,7 @@ import gzip
 import hashlib
 import json
 import subprocess
+import tempfile
 import zipfile
 from pathlib import Path
 
@@ -27,6 +28,13 @@ RC1 = "90a4e051a71ecc7b3156802c54dbfd8219789469"
 PROJECT = "Bloodborne-Blocks"
 LOGICAL = "src/main/resources/bloodborne_blocks/logical"
 CITY = "src/main/resources/bloodborne_blocks/city"
+# The accepted continuation has two narrowly reviewed Java semantic patches.
+# Every other runtime source remains byte-for-byte pinned to TEST3.
+ALLOWED_JAVA_AMENDMENTS = {
+    "src/main/java/dev/dreamwalker/bloodborneblocks/LogicalContractV2.java",
+    "src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVariantProperty.java",
+    "src/main/java/dev/dreamwalker/bloodborneblocks/ReviewedWallConnections.java",
+}
 
 
 def _canonical(value):
@@ -69,15 +77,54 @@ def _accepted_logical(root: Path, repo: Path) -> list[str]:
     expected = _tree(repo, ACCEPTED, LOGICAL)
     actual = [path.relative_to(root).as_posix() for path in (root / LOGICAL).rglob("*") if path.is_file()]
     _require(set(actual) == set(expected), "LOGICAL_RESOURCE_INVENTORY_CHANGED")
-    for path in expected:
-        _require(_semantic((root / path).read_bytes(), path) == _semantic(_git(repo, ACCEPTED, path), path),
-                 "ACCEPTED_LOGICAL_RESOURCE_CHANGED: " + path)
+    # Reconstruct the narrowly amended baseline; no current-file hash can
+    # silently bless changes to another family or to TEST3 render/selection.
     palette = _json_file(root, f"{LOGICAL}/production-palette.json")
-    _require(len(palette.get("objects", ())) == 49, "ACCEPTED_LOGICAL_PALETTE_MUST_HAVE_49_OBJECTS")
+    has_grass = any(row['id']=='o_grass_0' for row in palette['objects'])
+    grass = None
+    if has_grass:
+        from build_accepted_bush_extension import build
+        with tempfile.TemporaryDirectory() as temporary:
+            grass = build(Path(temporary)/'grass.json')
+    for path in expected:
+        baseline = _semantic(_git(repo, ACCEPTED, path), path)
+        if path.endswith(('.json','.json.gz')):
+            baseline = _canonical(_logical_amendment(json.loads(baseline),Path(path).name,grass))
+        _require(_semantic((root / path).read_bytes(), path) == baseline,
+                 "ACCEPTED_LOGICAL_RESOURCE_CHANGED: " + path)
+    _require(len(palette.get("objects", ())) == 49+int(has_grass), "ACCEPTED_LOGICAL_PALETTE_COUNT_CHANGED")
     ids = [row.get("id") for row in palette["objects"]]
     _require(len(ids) == len(set(ids)) and {"o_c001", "o_books", "o_shuttered_window"} <= set(ids),
              "ACCEPTED_LOGICAL_PALETTE_INVALID")
     return expected
+
+
+def _logical_amendment(value, name, grass):
+    window='o_shuttered_window'; ident='o_grass_0'
+    if name=='contracts-v2.json':
+        for family in value['families']:
+            if family['id']==window:
+                for key,spec in family['states'].items():
+                    if 'open=true' in key:spec['collision_footprint']['boxes']=[]
+        if grass:value['families'].append(grass['currentContracts']['families'][0]);value['families'].sort(key=lambda r:r['id'])
+    elif name=='physical-footprints.json':
+        for key,spec in value['families'].get(window,{}).items():
+            if 'open=true' in key:spec['boxes']=[]
+        if grass:value['families'][ident]=grass['physical']['families'][ident]
+    elif name=='geometry.json':
+        for key,spec in value['blocks'].get(window,{}).get('states',{}).items():
+            if 'open=true' in key:
+                for cell in spec['cells'].values():cell['collision']=[]
+        if grass:
+            value['blocks'].update(grass['geometry']['blocks']);value['profiles'].update(grass['geometry']['profiles'])
+    elif grass and name=='definitions.json':
+        value['blocks'].extend(grass['definitions']['blocks']);value['blocks'].sort(key=lambda r:r['id'])
+    elif grass and name=='meshes.json.gz':value.update(grass['meshes'])
+    elif grass and name=='production-palette.json':
+        value['objects'].append(grass['productionPaletteEntry']);value['objects'].sort(key=lambda r:r['id'])
+    elif grass and name=='visual-slots.json':
+        value['families'].append({'id':ident,'states':8,'base_states':4});value['families'].sort(key=lambda r:r['id'])
+    return value
 
 
 def _accepted_java(root: Path, repo: Path) -> list[str]:
@@ -86,6 +133,12 @@ def _accepted_java(root: Path, repo: Path) -> list[str]:
     actual = [path.relative_to(root).as_posix() for path in (root / prefix).rglob("*.java")]
     _require(set(actual) == set(expected), "RUNTIME_JAVA_INVENTORY_CHANGED")
     for path in expected:
+        if path in ALLOWED_JAVA_AMENDMENTS:
+            _require((root / path).is_file(), "RUNTIME_JAVA_AMENDMENT_MISSING: " + path)
+            digest = hashlib.sha256(_text_semantic((root / path).read_bytes())).hexdigest()
+            amendment = _json_file(root,'docs/accepted-restore/runtime-amendments.json')
+            _require(digest == amendment['java'][path], "REVIEWED_RUNTIME_JAVA_CHANGED: " + path)
+            continue
         _require(_text_semantic((root / path).read_bytes()) == _text_semantic(_git(repo, ACCEPTED, path)),
                  "ACCEPTED_RUNTIME_JAVA_CHANGED: " + path)
     return expected
@@ -151,8 +204,18 @@ def _accepted_owner_contracts(root: Path, repo: Path) -> list[str]:
     for name in names:
         path = f"{CITY}/{name}"
         _require((root / path).is_file(), "ACCEPTED_OWNER_CONTRACT_MISSING: " + name)
-        _require(_semantic((root / path).read_bytes(), path) == _semantic(_git(repo, ACCEPTED, path), path),
-                 "ACCEPTED_OWNER_CONTRACT_CHANGED: " + name)
+        old=json.loads(_semantic(_git(repo,ACCEPTED,path),path))
+        now=json.loads(_semantic((root/path).read_bytes(),path))
+        if name=='owner-runtime-mappings.json':
+            _require({k:v for k,v in now.items() if k not in ('states','rejected')}=={k:v for k,v in old.items() if k not in ('states','rejected')}
+                and sorted(map(_canonical,now.get('rejected',[])))==sorted(map(_canonical,old.get('rejected',[]))),'OWNER_MAPPING_METADATA_CHANGED')
+            _require(all(now['states'].get(k)==v for k,v in old['states'].items()),'ACCEPTED_OWNER_MAPPING_CHANGED')
+        elif name=='owner-meshes.json.gz':
+            _require(all(now.get(k)==v for k,v in old.items()),'ACCEPTED_OWNER_MESH_CHANGED')
+        else:
+            _require(all(now.get(k)==v for k,v in old.items() if k not in ('connections','scope','sourceMappingsSha256')),
+                'ACCEPTED_WALL_BASELINE_CHANGED')
+            _require(all(now['connections'].get(k)==v for k,v in old.get('connections',{}).items()),'ACCEPTED_CANONICAL_WALL_CHANGED')
     return list(names)
 
 
@@ -162,12 +225,70 @@ def _accepted_added_city(root: Path, repo: Path) -> dict:
     current_definitions = _by_id(_json_file(root, f"{CITY}/definitions.json")["blocks"])
     added = {ident: value for ident, value in accepted_definitions.items() if ident not in rc1_definitions}
     for ident, value in added.items():
+        if ident=='building_stone_brick_wall':continue
         _require(current_definitions.get(ident) is not None, "ACCEPTED_OWNER_DEFINITION_MISSING: " + ident)
         _require(_canonical(current_definitions[ident]) == _canonical(value), "ACCEPTED_OWNER_DEFINITION_CHANGED: " + ident)
     accepted_geometry = json.loads(_git(repo, ACCEPTED, f"{CITY}/geometry.json"))
     current_geometry = _json_file(root, f"{CITY}/geometry.json")
-    profiles = _compare_city_geometry(added, accepted_geometry, current_geometry, "ACCEPTED_OWNER")
+    profiles = _compare_city_geometry(set(added)-{'building_stone_brick_wall'}, accepted_geometry, current_geometry, "ACCEPTED_OWNER")
     return {"definitions": len(added), "profiles": profiles}
+
+
+def _reviewed_extensions(root, repo):
+    current=_by_id(_json_file(root,f'{CITY}/definitions.json')['blocks'])
+    wall='building_stone_brick_wall'
+    if wall not in current:
+        return {}  # Small baseline-only unit fixture.
+    amendment=_json_file(root,'docs/accepted-restore/runtime-amendments.json')
+    _require(amendment.get('acceptedBaseline')==ACCEPTED,'AMENDMENT_BASELINE_CHANGED')
+    digest=lambda value:hashlib.sha256(_canonical(value)).hexdigest()
+    baseline=_by_id(json.loads(_git(repo,ACCEPTED,f'{CITY}/definitions.json'))['blocks'])
+    old_mapping=json.loads(_git(repo,ACCEPTED,f'{CITY}/owner-runtime-mappings.json'))['states']
+    now_mapping=_json_file(root,f'{CITY}/owner-runtime-mappings.json')['states']
+    added=amendment['ownerAdditions']
+    _require(set(now_mapping)-set(old_mapping)==set(added),'REVIEWED_OWNER_ADDITIONS_CHANGED')
+    from complete_owner_bridge import load_additional_proof
+    traces=load_additional_proof(root/'docs/accepted-restore/complete-owner-closures.json.gz')
+    proved={o['state'] for t in traces if t.get('result') not in ('UNRESOLVED','REFER_TO_PROVEN_CLOSURE') for o in t['objects']}
+    _require(set(added)<=proved,'NEW_OWNER_WITHOUT_SOURCE_PROOF')
+    geometry=_json_file(root,f'{CITY}/geometry.json')
+    old_geometry=json.loads(_git(repo,ACCEPTED,f'{CITY}/geometry.json'))
+    meshes=json.loads(gzip.decompress((root/f'{CITY}/owner-meshes.json.gz').read_bytes()))
+    old_meshes=json.loads(gzip.decompress(_git(repo,ACCEPTED,f'{CITY}/owner-meshes.json.gz')))
+    new_ids=set();new_meshes=set()
+    for source,record in added.items():
+        ident='owner_'+hashlib.sha256(source.encode()).hexdigest()[:20]
+        new_ids.add(ident);mapping=now_mapping[source]
+        _require(mapping['id']=='bloodborne_blocks:'+ident and mapping['properties']=={'facing':'north'},'NEW_OWNER_IDENTITY_CHANGED')
+        _require(digest(mapping)==record['mapping'] and digest(current[ident])==record['definition'] and
+            digest(geometry['blocks'][ident])==record['geometry'],'REVIEWED_OWNER_CONTRACT_CHANGED: '+source)
+        for name,wanted in record['meshes'].items():
+            _require(name in meshes and digest(meshes[name])==wanted,'REVIEWED_NEW_OWNER_MESH_CHANGED: '+name)
+            new_meshes.add(name)
+    _require(set(current)-set(baseline)==new_ids,'UNREVIEWED_CITY_DEFINITION_ADDED')
+    _require(set(geometry['blocks'])-set(old_geometry['blocks'])==new_ids,'UNREVIEWED_CITY_GEOMETRY_ADDED')
+    _require(set(meshes)-set(old_meshes)==new_meshes,'UNREVIEWED_OWNER_MESH_ADDED')
+    _require(digest(current[wall])==amendment['wall'],'REVIEWED_WALL_DEFINITION_CHANGED')
+    manifest=_json_file(root,f'{CITY}/reviewed-wall-family.json')
+    aliases=manifest['aliases']
+    sides=['north','east','south','west']
+    def signature(ident,key):
+        spec=geometry['blocks'][ident]['states'][key]
+        return current[ident]['models'][key],current[ident]['states'][key],geometry['profiles'].get(spec.get('ref'),spec)
+    for key,spec in old_geometry['blocks'][wall]['states'].items():
+        _require(geometry['blocks'][wall]['states'].get(key)==spec,'CANONICAL_WALL_PHYSICS_CHANGED')
+    for connection,row in manifest['connections'].items():
+        _require(row['owner'] in aliases,'WALL_ALIAS_NOT_REVIEWED')
+        turn=sides.index(row['facing'])
+        for n,facing in enumerate(sides):
+            _require(signature(wall,'connection='+connection+',facing='+facing)==
+                signature(row['owner'],'facing='+sides[(turn+n)%4]),'WALL_SUCCESSOR_ART_OR_PHYSICS_CHANGED')
+    _require(set(manifest['aliasStates'])=={ident+'|facing='+f for ident in aliases for f in sides},'WALL_ALIAS_COVERAGE_CHANGED')
+    for alias,target in manifest['aliasStates'].items():
+        ident,key=alias.split('|')
+        _require(signature(ident,key)==signature(wall,'connection='+target['connection']+',facing='+target['facing']),
+            'WALL_ALIAS_SUCCESSOR_CHANGED')
+    return {'addedOwners':len(added),'wallAliasStates':len(manifest['aliasStates'])}
 
 
 def _jar_resources(jar: Path, root: Path) -> None:
@@ -215,9 +336,10 @@ def validate_sources(root: Path = ROOT, repo: Path | None = None) -> dict:
     rc1_city = _rc1_city_physics(root, repo)
     owner_contracts = _accepted_owner_contracts(root, repo)
     accepted_owners = _accepted_added_city(root, repo)
+    extensions = _reviewed_extensions(root, repo)
     return {"result": "PASS", "acceptedCheckpoint": ACCEPTED, "rc1PhysicsBaseline": RC1,
             "logicalResources": len(logical), "runtimeJava": len(java), "rc1City": rc1_city,
-            "acceptedOwnerContracts": owner_contracts, "acceptedOwners": accepted_owners}
+            "acceptedOwnerContracts": owner_contracts, "acceptedOwners": accepted_owners, "reviewedExtensions":extensions}
 
 
 def validate(runtime_jar: Path, named_sources_jar: Path, root: Path = ROOT, repo: Path | None = None) -> dict:

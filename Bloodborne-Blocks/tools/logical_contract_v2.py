@@ -132,7 +132,8 @@ def load_contracts(resources):
             if len(render["bounds"]) != 6 or len(render["offset"]) != 3 or any(not math.isfinite(n) or abs(n)>64 for n in render["bounds"]+render["offset"]):
                 raise ValueError("invalid render metadata")
             selection, collision = state["selection_footprint"]["boxes"], state["collision_footprint"]["boxes"]
-            if len(selection) != 1 or len(collision) > budget:
+            selection_budget = 4 if ident == "o_grass_0" else 1
+            if not selection or len(selection) > selection_budget or len(collision) > budget:
                 raise ValueError("primitive budget exceeded")
             for box in selection+collision:
                 check_box(box)

@@ -13,6 +13,34 @@ import check_accepted_runtime as gate
 
 
 class AcceptedRuntimeTests(unittest.TestCase):
+    def test_window_amendment_changes_only_open_collision(self):
+        value={'families':[{'id':'o_shuttered_window','states':{
+            'open=true':{'collision_footprint':{'boxes':[[0,0,0,1,2,1]]},'render_mesh':{'id':'frozen'}},
+            'open=false':{'collision_footprint':{'boxes':[[0,0,0,1,2,1]]}}}}]}
+        result=gate._logical_amendment(value,'contracts-v2.json',None)['families'][0]['states']
+        self.assertEqual([],result['open=true']['collision_footprint']['boxes'])
+        self.assertEqual({'id':'frozen'},result['open=true']['render_mesh'])
+        self.assertEqual([[0,0,0,1,2,1]],result['open=false']['collision_footprint']['boxes'])
+
+    def test_reviewed_java_hash_rejects_an_extra_line(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);name=next(iter(gate.ALLOWED_JAVA_AMENDMENTS))
+            path=root/name;path.parent.mkdir(parents=True);path.write_text('class Reviewed {}\n')
+            manifest=root/'docs/accepted-restore/runtime-amendments.json';manifest.parent.mkdir(parents=True)
+            manifest.write_text(json.dumps({'java':{name:hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()}}))
+            with patch.object(gate,'_tree',return_value=[name]):
+                self.assertEqual([name],gate._accepted_java(root,root))
+                path.write_text('class Reviewed {}\n// unreviewed\n')
+                with self.assertRaisesRegex(AssertionError,'REVIEWED_RUNTIME_JAVA_CHANGED'):gate._accepted_java(root,root)
+
+    def test_old_owner_mesh_cannot_be_amended(self):
+        root,jar,sources,baseline=self.fixture()
+        name=gate.CITY+'/owner-meshes.json.gz'
+        baseline[name]=gzip.compress(b'{"old":{"polygons":[]}}')
+        (root/name).write_bytes(gzip.compress(b'{"old":{"polygons":[1]}}'))
+        with patch.object(gate,'_git',self._git(baseline)):
+            with self.assertRaisesRegex(AssertionError,'ACCEPTED_OWNER_MESH_CHANGED'):gate._accepted_owner_contracts(root,root)
     def test_mcmeta_provenance_ignores_checkout_line_endings_only_semantically(self):
         left=gate._semantic(b'{\r\n"animation":{}\r\n}', 'lantern.png.mcmeta')
         self.assertEqual(left,gate._semantic(b'{\n"animation":{}\n}', 'lantern.png.mcmeta'))

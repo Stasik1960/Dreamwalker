@@ -206,13 +206,17 @@ def verify(*, root: Path = ROOT, baseline_path: Path = DEFAULT_BASELINE,
     actual = collect(root)
     expected_ids = set(expected.get("family_ids", [])); actual_ids = set(actual["family_ids"])
     removed, added = expected_ids - actual_ids, actual_ids - expected_ids
+    amendment=root/'docs/accepted-restore/runtime-amendments.json'
+    additions=read(amendment).get('logicalAdditions',{}) if amendment.is_file() else {}
+    approved_added={ident for ident in added if ident in additions and
+        digest_bytes(canonical(actual['families'][ident]))==additions[ident]}
     allowed_families, allowed_labels = allowlist(allowlist_path, actual_ids, retired_ids(root))
     # A baseline family may disappear only when the caller explicitly accepts
     # that named, documented retirement.  Never infer approval from the
     # current palette and never allow additions through this mechanism.
     unapproved_removed = removed - allowed_families
-    if unapproved_removed or added:
-        raise ValueError(f"family IDs changed; removed={sorted(unapproved_removed)}, added={sorted(added)}")
+    if unapproved_removed or added-approved_added:
+        raise ValueError(f"family IDs changed; removed={sorted(unapproved_removed)}, added={sorted(added-approved_added)}")
     expected_runtime = expected.get("runtime_java_sha256", {})
     actual_runtime = actual["runtime_java_sha256"]
     runtime_changed = sorted({*expected_runtime, *actual_runtime}
@@ -221,13 +225,14 @@ def verify(*, root: Path = ROOT, baseline_path: Path = DEFAULT_BASELINE,
                     if expected["families"].get(ident, {}).get("core") != actual["families"][ident]["core"]]
     changed_labels = [ident for ident in sorted(actual_ids)
                       if expected["families"].get(ident, {}).get("display_names") != actual["families"][ident]["display_names"]]
-    forbidden_core = sorted(set(changed_core) - allowed_families)
-    forbidden_labels = sorted(set(changed_labels) - allowed_labels - allowed_families)
+    forbidden_core = sorted(set(changed_core) - allowed_families - approved_added)
+    forbidden_labels = sorted(set(changed_labels) - allowed_labels - allowed_families - approved_added)
     if forbidden_core or forbidden_labels:
         raise ValueError(f"unexpected fingerprint changes; families={forbidden_core}, display_names={forbidden_labels}")
     return {"result": "PASS", "source_commit": baseline["source_commit"], "baseline_sha256": baseline.get("sha256"),
             "allowed_families": sorted(allowed_families), "allowed_display_names": sorted(allowed_labels),
             "approved_retired_removals": sorted(removed),
+            "approved_additions":sorted(approved_added),
             "changed_families": changed_core, "changed_display_names": changed_labels,
             "runtime_java_metadata": {"changed": runtime_changed, "baseline_sha256": digest_bytes(canonical(expected_runtime)),
                                       "current_sha256": digest_bytes(canonical(actual_runtime))}}

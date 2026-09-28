@@ -68,7 +68,11 @@ def bindings(tag):
     if (data.get('id') != Tag(TAG_STRING, PART) or
             set(data) - {'id','x','y','z','Root','Owner','Owners','keepPacked'}):
         raise ValueError('foreign_or_custom_block_entity')
-    values = [compound(row) for row in data['Owners'].value] if 'Owners' in data else [data]
+    rows = data.get('Owners')
+    if rows is not None and (rows.type != TAG_LIST or rows.list_type != TAG_COMPOUND or
+                            any(row.type != TAG_COMPOUND for row in rows.value)):
+        raise ValueError('invalid_helper_owners_list')
+    values = [compound(row) for row in rows.value] if rows is not None else [data]
     result = []
     for value in values:
         if value.get('Root') is None or value['Root'].type != TAG_LONG or value.get('Owner') is None or value['Owner'].type != TAG_STRING:

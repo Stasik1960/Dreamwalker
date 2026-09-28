@@ -85,7 +85,9 @@ def audit(data, transform, meshes):
                     family_errors.append(f'{key}: master position changes with placement yaw{yaw}')
         if not symmetric and not has_facing and not connected:
             family_errors.append('ASYMMETRIC_WITHOUT_ORIENTATION')
-        if symmetric and has_facing:
+        # Frozen grass art already has four persisted facing states. Preserve
+        # that accepted schema even though its crossed planes are symmetric.
+        if symmetric and has_facing and family['id'] != 'o_grass_0':
             family_errors.append('SYMMETRIC_WITH_REDUNDANT_FACING')
         rows.append({'id':family['id'],'rotationally_symmetric':symmetric,'facing':has_facing,
                      'connected':connected,'states':len(states),'result':'FAIL' if family_errors else 'PASS',

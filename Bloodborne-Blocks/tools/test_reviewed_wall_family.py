@@ -17,14 +17,18 @@ class ReviewedWallTests(unittest.TestCase):
         cls.meshes=json.loads(gzip.decompress((ROOT/'owner-meshes.json.gz').read_bytes()))
 
     def test_aliases_are_exact_source_family_not_visual_similarity(self):
-        expected={v['id'].split(':')[1]:s for s,v in self.mapping.items() if s.startswith('minecraft:stone_brick_wall[')}
+        from build_reviewed_wall_family import accepted_aliases
+        expected=accepted_aliases()
         self.assertEqual(expected,self.proof['aliases'])
         self.assertEqual(66,len(expected))
+        for ident, source in expected.items():
+            self.assertEqual('bloodborne_blocks:'+ident,self.mapping[source]['id'])
         self.assertEqual({'bloodborne_blocks:block/stone_brick_wall_'+p for p in ('post','side','side_tall')},set(self.proof['artProof']['models']))
 
     def test_all_building_states_reuse_exact_art_and_collision(self):
         new=self.defs[self.proof['id']]
-        self.assertEqual(128,len(new['states']))
+        self.assertEqual(set(self.proof['connections']),set(new['properties']['connection']))
+        self.assertEqual(len(self.proof['connections'])*4,len(new['states']))
         for connection,row in self.proof['connections'].items():
             for turn,facing in enumerate(DIRS):
                 oldkey='facing='+DIRS[(DIRS.index(row['facing'])+turn)%4]
@@ -34,6 +38,19 @@ class ReviewedWallTests(unittest.TestCase):
                 self.assertIn(new['models'][key],self.meshes)
                 self.assertEqual(self.geometry[owner]['states'][oldkey],self.geometry[new['id']]['states'][key])
                 self.assertEqual({'0,0,0'},set(self.geometry[new['id']]['states'][key]['cells']))
+
+    def test_every_alias_state_has_one_exact_successor_including_retained_art(self):
+        expected={ident+'|facing='+facing for ident in self.proof['aliases'] for facing in DIRS}
+        self.assertEqual(expected,set(self.proof['aliasStates']))
+        for alias_state,successor in self.proof['aliasStates'].items():
+            owner,oldkey=alias_state.split('|',1);key='connection='+successor['connection']+',facing='+successor['facing']
+            self.assertEqual(self.defs[owner]['models'][oldkey],self.defs[self.proof['id']]['models'][key],alias_state)
+            self.assertEqual(self.geometry[owner]['states'][oldkey],self.geometry[self.proof['id']]['states'][key],alias_state)
+        retained=set(self.proof['retainedConnections'])
+        self.assertEqual(len(self.proof['aliases'])-len({row['owner'] for key,row in self.proof['connections'].items() if key in self.proof['canonicalConnections']}),len(retained))
+        for connection in retained:
+            self.assertTrue(connection.startswith('retained_'))
+            self.assertEqual('north',self.proof['connections'][connection]['facing'])
 
     def test_pair_corner_t_cross_are_proved_not_invented(self):
         from atomic_owner_groups import state

@@ -1,0 +1,16 @@
+{
+  "format": "complete-owner-evidence-v1",
+  "scope": "Exact source-owner evidence; current-city/NBT preflight mandatory; unresolved traces never authorize writes",
+  "proofs": [
+    {
+      "path": "docs/accepted-restore/complete-owner-closures.json.gz",
+      "sha256": "29b410503916c1ceb20cf0b338c99edfbe557c23b61bf4cc8877bda2c5621906",
+      "results": {
+        "HISTORICAL_OWNER_CLOSURE_WITH_PRESERVED_CONTEXT": 87,
+        "UNRESOLVED": 804,
+        "REFER_TO_PROVEN_CLOSURE": 147
+      },
+      "generation": "trace_many for unproven source roots of all known residual occurrences, positional_variants/documented_omissions/retained_contexts enabled, radius3/node_limit256"
+    }
+  ]
+}

@@ -23,7 +23,7 @@ class AgonyPatchTests(unittest.TestCase):
         self.assertEqual(sorted(set(MERGES)|CONTEXT),result['approved_retired_removals'])
 
     def test_retired_rules_resolve_or_are_unconsumed_context(self):
-        self.assertEqual(49,len(self.ds))
+        self.assertEqual(50,len(self.ds))
         rules,_=direct_rules(LOGICAL)
         targets={t[0].split(':')[1] for r in rules for t in [r.target]+[o.target for o in r.outputs]}
         self.assertFalse(targets&(set(MERGES)|CONTEXT|{'o_c003'}))
@@ -97,7 +97,9 @@ class AgonyPatchTests(unittest.TestCase):
         a=f['states'][key({'facing':'north','open':'false','visual':'base'})]
         b=f['states'][key({'facing':'north','open':'true','visual':'base'})]
         self.assertEqual(a['rotation'],b['rotation'])
-        self.assertEqual(a['collision_footprint'],b['collision_footprint'])
+        self.assertEqual(2,len(a['collision_footprint']['boxes']))
+        self.assertEqual([],b['collision_footprint']['boxes'])
+        self.assertEqual(a['selection_footprint'],b['selection_footprint'])
         self.assertEqual([[0,0,0],[0,1,0]],a['interaction_footprint']['cells'])
 
 if __name__=='__main__':unittest.main()

@@ -155,6 +155,13 @@ class SupportNormalizationTests(unittest.TestCase):
         with gzip.open(PRODUCTION_INPUTS,'rt',encoding='utf8') as stream:
             frozen = json.load(stream)
         frozen_by_id = {family['id']:family for family in frozen['contracts']['families']}
+        # Grass was retained as authored geometry in the frozen input, but had
+        # no V2 contract there. Its bounded adapter proves the exact source art.
+        from build_accepted_bush_extension import build
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as directory:
+            frozen_by_id['o_grass_0'] = build(Path(directory)/'grass.json')['currentContracts']['families'][0]
         required = json.loads((ROOT/'docs/required-production-families.json').read_text(encoding='utf8'))
         reauthored = {row['id'] for row in required['restorations']} | set(required['c003_production_ids'])
         redirected = {'o_c046', 'o_c1319', 'o_c1962_a', 'o_c1962_b'}

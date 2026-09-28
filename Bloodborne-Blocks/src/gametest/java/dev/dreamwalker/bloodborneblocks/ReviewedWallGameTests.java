@@ -84,4 +84,16 @@ public final class ReviewedWallGameTests implements FabricGameTest {
    c.complete();
   }finally{player.discard();}
  }
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=120,batchId="reviewed_wall")
+ public void retainedMixedAliasKeepsExactArtThenJoinsConnectionsWithoutDroppingGuest(TestContext c){
+  floor(c);PlayerEntity player=c.createMockSurvivalPlayer();ArchitectureBlock old=BloodborneBlocks.CITY_BLOCKS.get("owner_00a8d7060c9254d1f7b6"),window=BloodborneBlocks.BLOCKS.get("o_shuttered_window");
+  try{for(Direction facing:Direction.Type.HORIZONTAL){
+   BlockState oldState=old.getDefaultState().with(Properties.HORIZONTAL_FACING,facing);String retained=ReviewedWallConnections.retainedSuccessor(old,facing);BlockState retainedState=BloodborneBlocks.set(wall().getDefaultState().with(Properties.HORIZONTAL_FACING,facing),wall().getStateManager().getProperty("connection"),retained);c.assertTrue(retained.startsWith("retained_")&&old.definition.models.get(BloodborneBlocks.key(oldState)).equals(wall().definition.models.get(BloodborneBlocks.key(retainedState)))&&GeometryRuntime.cellShape(oldState,BlockPos.ORIGIN,false).getBoundingBoxes().equals(GeometryRuntime.cellShape(retainedState,BlockPos.ORIGIN,false).getBoundingBoxes()),"retained alias preserves exact model and collision "+facing);
+   // Insert the carrier through the real item path, then restore its retained
+   // state without neighbor updates, as when loading the converted world.
+   place(c,player,window,ROOT,facing);place(c,player,wall(),ROOT.up(),facing);c.getWorld().setBlockState(c.getAbsolutePos(ROOT.up()),retainedState,Block.NOTIFY_LISTENERS);BlockPos carrier=c.getAbsolutePos(ROOT.up()),windowRoot=c.getAbsolutePos(ROOT);var part=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(part!=null&&part.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"retained wall accepts existing window guest "+facing);
+   c.setBlockState(ROOT.up().east(),Blocks.WHITE_CONCRETE);connection(c,ROOT.up(),"low_"+switch(facing){case NORTH->2;case EAST->1;case SOUTH->8;case WEST->4;default->throw new AssertionError();});part=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(part!=null&&part.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"retained neighbor update keeps guest binding "+facing);c.getWorld().breakBlock(carrier,false);c.assertTrue(c.getBlockState(ROOT).isOf(window),"breaking transitioned wall preserves window guest root "+facing);c.getWorld().breakBlock(windowRoot,false);c.setBlockState(ROOT.up().east(),Blocks.AIR);
+  }c.complete();
+  }finally{player.discard();}
+ }
 }

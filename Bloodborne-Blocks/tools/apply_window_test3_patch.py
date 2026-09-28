@@ -31,8 +31,8 @@ def translate(box: list[float], dx: float, dy: float, dz: float) -> list[float]:
             round(box[3] + dx, 6), round(box[4] + dy, 6), round(box[5] + dz, 6)]
 
 
-def full_collision_boxes() -> list[list[float]]:
-    """The approved two-cell physical volume, independent of decorative mesh bounds."""
+def closed_collision_boxes() -> list[list[float]]:
+    """The approved closed two-cell physical volume, independent of decorative mesh bounds."""
     return [[0.0, 0.0, 0.0, 1.0, 1.0, 1.0], [0.0, 1.0, 0.0, 1.0, 2.0, 1.0]]
 
 
@@ -59,10 +59,12 @@ def patch_family(family) -> None:
         render_dx, render_dz = -.75 * axis_x, -.75 * axis_z
         render_y = round(state['render_mesh']['offset'][1] + delta_y, 6)
         state["render_mesh"]["offset"] = [render_dx, render_y, render_dz]
-        # Selection and collision deliberately use the approved two-cell volume.
-        # The decorative frame and 22.5-degree shutters remain render-only.
+        # Selection remains the full two-cell object in either pose.  Closing
+        # blocks the aperture; opening keeps both root/helper cells owned while
+        # making their collision empty so a player can pass through it.
+        closed = state_properties(key)["open"] == "false"
         state["selection_footprint"] = {"boxes": [[0.0, 0.0, 0.0, 1.0, 2.0, 1.0]]}
-        state["collision_footprint"] = {"boxes": full_collision_boxes()}
+        state["collision_footprint"] = {"boxes": closed_collision_boxes() if closed else []}
 
 
 def patch() -> dict[str, object]:
@@ -85,7 +87,7 @@ def patch() -> dict[str, object]:
     physical_path.write_text(json.dumps(physical, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
     geometry_path.write_text(json.dumps(geometry, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
     return {"family": WINDOW, "states": len(family["states"]), "mesh_payload_changed": False,
-            "render_offset": "-.75*facing horizontal, +.875Y", "physical_volume": "two full root/up cells"}
+            "render_offset": "-.75*facing horizontal, +.875Y", "physical_volume": "closed: two full root/up cells; open: empty aperture"}
 
 
 def main() -> None:

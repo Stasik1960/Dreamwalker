@@ -11,10 +11,13 @@ public final class CityCompatibilityChecks {
  public static void main(String[] args){
   SharedConstants.createGameVersion();Bootstrap.initialize();
   BloodborneBlocks.Data production=BloodborneBlocks.loadDefinitions();
-  check(production.blocks.size()==49,"production membership remains 49");
+  check(production.blocks.size()==50,"production membership includes the reviewed grass family");
   GeometryRuntime.loadAndValidate(production);
   BloodborneBlocks.Data city=BloodborneBlocks.loadCityDefinitions();
   GeometryRuntime.loadCityAndValidate(city);
+  rejectsVariants("variant",java.util.stream.IntStream.range(0,65).mapToObj(i->"v_"+i).toList());
+  rejectsVariants("connection",java.util.stream.IntStream.range(0,88).mapToObj(i->"c_"+i).toList());
+  rejectsVariants("connection",java.util.List.of("low_0","low_0"));
   int pages=0,nativeBlocks=0,states=0;
   var meshes=ModularMeshData.loadCityIfPresent();
   for(BloodborneBlocks.Definition definition:city.blocks){
@@ -24,7 +27,8 @@ public final class CityCompatibilityChecks {
    if(ReviewedWallConnections.ID.equals(definition.id)){
     ReviewedWallConnections.validate(definition,city);
     check(block instanceof SharedArchitectureBlock,"reviewed building retains shared ownership");
-    check(block.getStateManager().getStates().size()==128,"reviewed building exact supported states");
+    check(definition.properties.get("connection").size()==87,"reviewed wall retains 32 canonical and 55 authored connections");
+    check(block.getStateManager().getStates().size()==348,"reviewed building exact supported states");
     for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"reviewed wall existing mesh: "+mesh);
     for(var state:block.getStateManager().getStates())check(GeometryRuntime.state(state).parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"reviewed wall remains one physical cell");
    }else if(definition.whole_owner){
@@ -51,4 +55,5 @@ public final class CityCompatibilityChecks {
   System.out.println("CITY COMPATIBILITY CHECKS PASSED: blocks="+city.blocks.size()+" pages="+pages+" native="+nativeBlocks+" states="+states);
  }
  private static void check(boolean value,String message){if(!value)throw new AssertionError(message);}
+ private static void rejectsVariants(String name,java.util.List<String> values){try{new LogicalVariantProperty(name,values);}catch(IllegalArgumentException expected){return;}throw new AssertionError("variant budget/uniqueness must reject "+name+" with "+values.size()+" values");}
 }

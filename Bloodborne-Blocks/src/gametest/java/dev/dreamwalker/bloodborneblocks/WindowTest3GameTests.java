@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
@@ -87,6 +88,19 @@ public final class WindowTest3GameTests implements FabricGameTest {
   }context.complete();}finally{clear(context);}
  }
 
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=600,batchId="window_test3")
+ public void openApertureLetsPlayerCrossBothOwnedCellsButClosedWindowBlocks(TestContext context){
+  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock window=required();
+  try{for(Direction face:Direction.Type.HORIZONTAL)for(String visual:List.of("base","alt")){
+   clear(context);BlockPos wall=context.getAbsolutePos(BASE.offset(face,5)),root=wall.offset(face);world.setBlockState(wall,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);ItemStack stack=new ItemStack(window);if(visual.equals("alt"))stack.getOrCreateSubNbt("BlockStateTag").putString("visual","alt");context.assertTrue(use(player,stack,wall,face).isAccepted(),"window movement fixture places "+face+" "+visual);BlockState closed=world.getBlockState(root);assertCells(context,world,root,closed,"closed movement fixture "+face+" "+visual);
+   Vec3d start=new Vec3d(root.getX()+.5+face.getOffsetX(),root.getY(),root.getZ()+.5+face.getOffsetZ()),through=new Vec3d(-2*face.getOffsetX(),0,-2*face.getOffsetZ());player.refreshPositionAndAngles(start.x,start.y,start.z,0,0);player.move(MovementType.SELF,through);context.assertTrue(progress(player,start,face)<.75,"closed window blocks player before the root cell "+face+" "+visual);
+   player.refreshPositionAndAngles(start.x,start.y,start.z,0,0);player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);context.assertTrue(closed.onUse(world,player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(root),face,root,true)).isAccepted(),"movement fixture opens "+face+" "+visual);BlockState open=world.getBlockState(root);assertCells(context,world,root,open,"open movement fixture "+face+" "+visual);
+   player.move(MovementType.SELF,through);context.assertTrue(progress(player,start,face)>1&&progress(player,start,face)<1.9,"open aperture crosses root and upper helper but backing wall still blocks "+face+" "+visual);
+   player.refreshPositionAndAngles(start.x,start.y,start.z,0,0);BlockState helper=world.getBlockState(root.up());context.assertTrue(helper.onUse(world,player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(root.up()),face,root.up(),true)).isAccepted()&&!world.getBlockState(root).get(Properties.OPEN),"helper use closes the shutter "+face+" "+visual);context.assertTrue(box(GeometryRuntime.guestShape(world,root.up(),false).getBoundingBox(),1),"closed shutter collision remains in the helper guest union "+face+" "+visual);player.move(MovementType.SELF,through);context.assertTrue(progress(player,start,face)<.75,"helper-closed window blocks the same player again "+face+" "+visual);
+  }context.complete();
+  }finally{clear(context);player.discard();}
+ }
+
  private static void placeBackPair(TestContext context,PlayerEntity player,BlockPos back,Block block,String label){placeVanilla(context,player,back,block);placeVanilla(context,player,back.up(),block);context.assertTrue(context.getWorld().getBlockState(back).isOf(block)&&context.getWorld().getBlockState(back.up()).isOf(block),"ordinary items place both backing cells "+label);}
  private static void removeAndRestoreBackPair(TestContext context,PlayerEntity player,BlockPos root,BlockPos back,Block block,String label){ServerWorld world=context.getWorld();BlockState before=world.getBlockState(root);NbtCompound nbt=GeometryRuntime.part(world,root.up()).createNbt();ItemStack sentinel=new ItemStack(Blocks.GLASS,3);player.setStackInHand(Hand.MAIN_HAND,sentinel);world.breakBlock(back,false,player);world.breakBlock(back.up(),false,player);context.assertTrue(world.getBlockState(back).isAir()&&world.getBlockState(back.up()).isAir()&&sentinel.getCount()==3,"both ordinary backing cells can be removed without consuming held items while "+label);assertCells(context,world,root,before,label+" backing removed");placeBackPair(context,player,back,block,label+" restore");assertCells(context,world,root,before,label+" backing restored");context.assertTrue(nbt.equals(GeometryRuntime.part(world,root.up()).createNbt()),"backing edits preserve exact helper NBT "+label);}
  private static float yawFor(Direction facing){return switch(facing){case NORTH->0F;case EAST->90F;case SOUTH->180F;case WEST->270F;default->throw new AssertionError(facing);};}
@@ -101,13 +115,14 @@ public final class WindowTest3GameTests implements FabricGameTest {
   context.assertTrue(NbtHelper.toBlockState(world.getRegistryManager().getWrapperOrThrow(RegistryKeys.BLOCK),NbtHelper.fromBlockState(state)).equals(state),"facing/open/art state survives NBT read/write "+label);
   context.assertTrue(GeometryRuntime.state(state).parsedCells.keySet().equals(Set.of(BlockPos.ORIGIN,BlockPos.ORIGIN.up())),"only root and upper helper are owned "+label);
   Box outline=GeometryRuntime.rootShape(state,true).getBoundingBox();context.assertTrue(box(outline,2),"selection is exactly the two physical cells "+label);
-  for(BlockPos offset:Set.of(BlockPos.ORIGIN,BlockPos.ORIGIN.up())){VoxelShape collision=GeometryRuntime.cellShape(state,offset,false),selection=GeometryRuntime.cellShape(state,offset,true);context.assertTrue(box(collision.getBoundingBox(),1)&&box(selection.getBoundingBox(),1),"collision and selection are full local cells "+label+" "+offset);}
+  boolean open=state.get(Properties.OPEN);for(BlockPos offset:Set.of(BlockPos.ORIGIN,BlockPos.ORIGIN.up())){VoxelShape collision=GeometryRuntime.cellShape(state,offset,false),selection=GeometryRuntime.cellShape(state,offset,true);context.assertTrue((open?collision.isEmpty():box(collision.getBoundingBox(),1))&&box(selection.getBoundingBox(),1),"selection stays full while collision follows shutter pose "+label+" "+offset);}
  }
  private static void assertMounted(TestContext context,BlockState state,Direction facing,String label){
   double[] offset=GeometryRuntime.renderOffset("o_shuttered_window",BloodborneBlocks.key(state));context.assertTrue(offset!=null&&Math.abs(offset[1]-.875)<1e-6,"all shutter poses retain the measured sill offset "+label);
   context.assertTrue(box(GeometryRuntime.rootShape(state,true).getBoundingBox(),2),"render decoration cannot expand interaction volume "+label);
  }
  private static boolean box(Box box,double height){return Math.abs(box.minX)<1e-6&&Math.abs(box.minY)<1e-6&&Math.abs(box.minZ)<1e-6&&Math.abs(box.maxX-1)<1e-6&&Math.abs(box.maxY-height)<1e-6&&Math.abs(box.maxZ-1)<1e-6;}
+ private static double progress(PlayerEntity player,Vec3d start,Direction face){return (start.x-player.getX())*face.getOffsetX()+(start.z-player.getZ())*face.getOffsetZ();}
  private static ActionResult use(PlayerEntity player,ItemStack stack,BlockPos clicked,Direction side){player.setStackInHand(Hand.MAIN_HAND,stack);return stack.useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(clicked),side,clicked,false)));}
  @SuppressWarnings({"rawtypes","unchecked"}) private static String visual(BlockState state){var property=state.getBlock().getStateManager().getProperty("visual");return BloodborneBlocks.value((net.minecraft.state.property.Property)property,(Comparable)state.get((net.minecraft.state.property.Property)property));}
  private static BlockState withVisual(BlockState state,String visual){return BloodborneBlocks.set(state,state.getBlock().getStateManager().getProperty("visual"),visual);}

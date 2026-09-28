@@ -22,9 +22,9 @@ def state(value):
     return name, tuple(sorted(tuple(p.split('=', 1)) for p in tail.rstrip(']').split(',') if p))
 
 
-def connected_groups(evidence, oracle):
+def connected_groups(evidence, oracle, accepted_results=POSITIVE):
     """Union by source owner AND shared observed cell, never by proximity."""
-    traces = [t for t in evidence['closures'] if t.get('result') in POSITIVE]
+    traces = [t for t in evidence['closures'] if t.get('result') in accepted_results]
     parent = list(range(len(traces)))
     def find(i):
         while parent[i] != i:
@@ -60,7 +60,24 @@ def connected_groups(evidence, oracle):
                 if previous and (previous['state'] != item['state'] if field == 'objects'
                                  else previous['actual'] != item['actual']):
                     raise ValueError('OWNER_GRAPH_CONTRADICTORY_EVIDENCE')
-                group[field][key] = item
+                if previous and field == 'cells':
+                    # Preservation is monotonic across overlapping traces.
+                    # An exact trace cannot erase another trace's proof that
+                    # this cell contains independently retained context.
+                    merged = {**previous, **item}
+                    for marker in ('preservedOmissions',):
+                        witnesses = previous.get(marker, []) + item.get(marker, [])
+                        if witnesses:
+                            merged[marker] = list({json.dumps(v,sort_keys=True):v for v in witnesses}.values())
+                    if previous.get('preservedOccluder') and item.get('preservedOccluder') and previous['preservedOccluder'] != item['preservedOccluder']:
+                        raise ValueError('OWNER_GRAPH_CONTRADICTORY_OCCLUDER')
+                    merged['preservedOccluder'] = previous.get('preservedOccluder') or item.get('preservedOccluder')
+                    merged['owners'] = sorted({tuple(p) for c in (previous,item) for p in c.get('owners',[])})
+                    group[field][key] = merged
+                elif previous and field == 'objects' and {tuple(p) for p in previous['cells']} != {tuple(p) for p in item['cells']}:
+                    raise ValueError('OWNER_GRAPH_CONTRADICTORY_OWNER_CELLS')
+                else:
+                    group[field][key] = item
     for row in oracle['occurrences']:
         indices = [seen[('owner', tuple(c['position']))] for c in row['source_cells']
                    if ('owner', tuple(c['position'])) in seen]
@@ -86,6 +103,8 @@ def compile_groups(rules, resources):
         raise ValueError('OWNER_GRAPH_ORACLE_HASH_MISMATCH')
     oracle = json.loads(oracle_bytes)
     raw_rules, _ = direct_rules(resources)
+    from complete_accepted_restore import census_rule_index, census_rule
+    raw_index = census_rule_index(raw_rules)
     contracts, _ = load_contracts(resources)
     families = {f['id']: f for f in contracts['families']}
     runtime_path = resources.parent / 'city/owner-runtime-mappings.json'
@@ -119,7 +138,7 @@ def compile_groups(rules, resources):
             if any(group['objects'][tuple(c['position'])]['state'] != c['state'] for c in row['source_cells']):
                 errors.append({'reason': 'protected_source_state_mismatch', 'origin': row['origin']})
                 continue
-            raw = raw_rules[row['rule']]
+            raw = census_rule(row, raw_index)
             for output in raw.outputs or (Output(raw.target, raw.root_offset, raw.shape),):
                 root = add(tuple(row['origin']), output.root_offset)
                 target, shape = output.target, output.shape

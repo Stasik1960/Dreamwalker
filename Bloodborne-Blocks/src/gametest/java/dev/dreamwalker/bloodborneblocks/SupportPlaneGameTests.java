@@ -26,6 +26,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.ChunkPos;
@@ -130,6 +131,10 @@ public final class SupportPlaneGameTests implements FabricGameTest {
   context.assertTrue(anchor.add(contract.technicalRootOffset).equals(family.anchor),"canonical anchor/source coordinates preserved: "+family.id+"["+contract.key+"]");
   context.assertTrue(runtime.placementPolicy.equals("FLOOR"),"runtime placement policy remains FLOOR: "+family.id+"["+contract.key+"]");
   double[] expectedRender=contract.renderOffset.clone(),expectedSelection=contract.selection.clone();for(int axis=0;axis<3;axis++){int shift=axis==0?contract.technicalRootOffset.getX():axis==1?contract.technicalRootOffset.getY():contract.technicalRootOffset.getZ();expectedRender[axis]-=shift;expectedSelection[axis]-=shift;expectedSelection[axis+3]-=shift;}
+  VoxelShape expectedOutline=VoxelShapes.empty();
+  for(double[] box:contract.selectionBoxes)expectedOutline=VoxelShapes.union(expectedOutline,VoxelShapes.cuboid(box[0],box[1],box[2],box[3],box[4],box[5]));
+  expectedOutline=expectedOutline.offset(-contract.technicalRootOffset.getX(),-contract.technicalRootOffset.getY(),-contract.technicalRootOffset.getZ());
+  context.assertTrue(!VoxelShapes.matchesAnywhere(GeometryRuntime.rootShape(state,true),expectedOutline,BooleanBiFunction.NOT_SAME),"selection preserves every authored box: "+family.id+"["+contract.key+"]");
   context.assertTrue(equal(runtime.render_offset,expectedRender),"runtime render offset matches authored contract: "+family.id+"["+contract.key+"]");
   for(BlockPos offset:runtime.parsedCells.keySet())context.assertTrue(offset.getY()+contract.technicalRootOffset.getY()>=0,"FLOOR state has no helper below canonical support: "+family.id+"["+contract.key+"] "+offset);
   Box selection=GeometryRuntime.rootShape(state,true).getBoundingBox();assertBox(context,selection,expectedSelection,"selection footprint remains raised with render: "+family.id+"["+contract.key+"]");
@@ -187,8 +192,8 @@ public final class SupportPlaneGameTests implements FabricGameTest {
   ContractFamily(JsonObject raw){id=raw.get("id").getAsString();collisionPolicy=raw.get("collision_policy").getAsString();JsonArray cell=raw.getAsJsonObject("canonical_anchor").getAsJsonArray("cell");anchor=new BlockPos(cell.get(0).getAsInt(),cell.get(1).getAsInt(),cell.get(2).getAsInt());for(var entry:raw.getAsJsonObject("states").entrySet())states.put(entry.getKey(),new ContractState(entry.getKey(),entry.getValue().getAsJsonObject()));}
  }
  private static final class ContractState {
-  final String key,meshId;final double[] renderOffset,selection;final BlockPos technicalRootOffset;final List<double[]> collisionBoxes=new ArrayList<>();
-  ContractState(String key,JsonObject raw){this.key=key;JsonArray technical=raw.getAsJsonArray("technical_root_offset");technicalRootOffset=technical==null?BlockPos.ORIGIN:new BlockPos(technical.get(0).getAsInt(),technical.get(1).getAsInt(),technical.get(2).getAsInt());JsonObject render=raw.getAsJsonObject("render_mesh");meshId=render.get("id").getAsString();renderOffset=doubles(render.getAsJsonArray("offset"));JsonArray selectionBoxes=raw.getAsJsonObject("selection_footprint").getAsJsonArray("boxes");selection=doubles(selectionBoxes.get(0).getAsJsonArray());for(JsonElement box:raw.getAsJsonObject("collision_footprint").getAsJsonArray("boxes"))collisionBoxes.add(doubles(box.getAsJsonArray()));}
+  final String key,meshId;final double[] renderOffset,selection;final BlockPos technicalRootOffset;final List<double[]> collisionBoxes=new ArrayList<>(),selectionBoxes=new ArrayList<>();
+  ContractState(String key,JsonObject raw){this.key=key;JsonArray technical=raw.getAsJsonArray("technical_root_offset");technicalRootOffset=technical==null?BlockPos.ORIGIN:new BlockPos(technical.get(0).getAsInt(),technical.get(1).getAsInt(),technical.get(2).getAsInt());JsonObject render=raw.getAsJsonObject("render_mesh");meshId=render.get("id").getAsString();renderOffset=doubles(render.getAsJsonArray("offset"));for(JsonElement box:raw.getAsJsonObject("selection_footprint").getAsJsonArray("boxes"))selectionBoxes.add(doubles(box.getAsJsonArray()));selection=selectionBoxes.get(0).clone();for(double[] box:selectionBoxes)for(int axis=0;axis<3;axis++){selection[axis]=Math.min(selection[axis],box[axis]);selection[axis+3]=Math.max(selection[axis+3],box[axis+3]);}for(JsonElement box:raw.getAsJsonObject("collision_footprint").getAsJsonArray("boxes"))collisionBoxes.add(doubles(box.getAsJsonArray()));}
  }
  private static double[] doubles(JsonArray raw){double[] result=new double[raw.size()];for(int index=0;index<result.length;index++)result[index]=raw.get(index).getAsDouble();return result;}
 }

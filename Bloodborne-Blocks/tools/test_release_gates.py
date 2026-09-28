@@ -77,12 +77,36 @@ class ReleaseGatesTests(unittest.TestCase):
             **identities, "kind": "gametest-report", "result": "PASS", "tests": 1,
             "junit": self.artifact("gametest.xml", b'<testsuite><testcase name="synthetic"/></testsuite>'),
             "log": self.artifact("gametest.log", b'1 GAME TESTS COMPLETE\nAll 1 required tests passed')})
+        gates["COVERAGE_COMPLETENESS_PASS"]["evidence"]["sourceCoverage"] = self.artifact("coverage.json", {
+            "candidateScopeComplete": True, "coverageCompleteness": "PASS",
+            "counts": {"candidates": 1, "unresolvedKnown": 0, "genuinelyUnknown": 0},
+            "helperBindingErrors": []})
         return {**identities, "schemaVersion": 1, "scope": "full-city", "provenance": {
             "sourceSnapshot": source_manifest, "resourceManifest": resource_manifest, "inputWorld": world},
             "gates": gates, "knownReleaseBlockers": [], "unresolvedDiscrepancies": []}
 
     def test_complete_evidence_and_explicit_ready(self):
         self.assertEqual(validate(self.fixture(), self.root), {"schemaValid": True, "releaseReady": True, "errors": []})
+
+    def test_coverage_requires_nonempty_candidates_and_complete_scope(self):
+        for field, value in (("candidates", 0), ("candidateScopeComplete", False), ("coverageCompleteness", "FAIL")):
+            with self.subTest(field=field):
+                document = self.fixture()
+                coverage = json.loads((self.root / "coverage.json").read_bytes())
+                if field == "candidates":
+                    coverage["counts"][field] = value
+                else:
+                    coverage[field] = value
+                document["gates"]["COVERAGE_COMPLETENESS_PASS"]["evidence"]["sourceCoverage"] = self.artifact("coverage.json", coverage)
+                self.assertFalse(validate(document, self.root)["schemaValid"])
+
+    def test_subset_pass_never_substitutes_for_coverage_completeness(self):
+        document = self.fixture()
+        document["gates"]["COVERAGE_COMPLETENESS_PASS"] = {
+            "status": "NOT_RUN", "scope": "full-city", "evidence": {}, "plannedCommands": []}
+        result = validate(document, self.root)
+        self.assertFalse(result["schemaValid"], result)
+        self.assertFalse(result["releaseReady"], result)
 
     def test_blocked_document_is_valid_but_never_ready(self):
         document = self.fixture()

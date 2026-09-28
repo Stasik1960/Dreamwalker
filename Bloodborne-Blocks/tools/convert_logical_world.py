@@ -1340,7 +1340,21 @@ def main() -> None:
     parser.add_argument("--expected-source-sha256", help="required for a MODDED ZIP; refuses a mismatched immutable input")
     parser.add_argument("--restore-accepted-objects", action="store_true", help="addressed whole-transaction repair of a copy of the published RC1 city")
     parser.add_argument("--restore-source-tree-sha256", help="explicit tree hash for a repeat addressed repair of its previous output")
+    parser.add_argument('--complete-accepted-objects', action='store_true', help='complete source-census repair on a new copy of the pinned rc.2 city')
+    parser.add_argument('--repeat-check', action='store_true', help='verify a second complete-repair pass on another copy, with byte identity')
     args = parser.parse_args()
+    if args.complete_accepted_objects:
+        if (args.restore_accepted_objects or args.recover_city or args.city_compat or args.allow_unresolved_city or
+                args.conflict_policy != 'conservative' or args.atomic_owner_groups or args.source_mode != 'legacy'):
+            parser.error('complete accepted restoration cannot combine with another conversion mode or fallback')
+        from complete_accepted_restore import run_with_repeat
+        proofs = [Path(__file__).resolve().parents[1]/'docs/accepted-restore/complete-owner-closures.json.gz']
+        report = run_with_repeat(args.source,args.output,resources=args.resources,report_path=args.report,
+            dry_run=args.dry_run,progress=args.progress,owner_proofs=proofs,repeat_check=args.repeat_check)
+        print(json.dumps(report['counts']))
+        return
+    if args.repeat_check:
+        parser.error('--repeat-check requires --complete-accepted-objects')
     if args.restore_accepted_objects:
         if (args.recover_city or args.city_compat or args.allow_unresolved_city or
                 args.conflict_policy != 'conservative' or args.atomic_owner_groups or args.source_mode != 'legacy'):

@@ -23,12 +23,17 @@ import modular_mesh as mm
 import numpy as np
 
 
-def trace_many(origins, radius=3, node_limit=128):
+def trace_many(origins, radius=3, node_limit=128, *, positional_variants=False, documented_omissions=False,
+               retained_contexts=False):
     paths = [ROOT/'reference-inputs/source-world.zip', ROOT/'reference-inputs/latest-modded-world.zip']
     for path, sha in zip(paths, (SOURCE_SHA, MODDED_SHA)):
         if hashlib.sha256(path.read_bytes()).hexdigest() != sha: raise ValueError('IMMUTABLE_INPUT_HASH_MISMATCH')
     source, current = (EvidenceReader(p) for p in paths)
     migration = archive()['v2\\migration.json']
+    legacy = {d['id']:d for d in archive()['definitions.json']['blocks']}
+    if documented_omissions:
+        from historical_omission_evidence import OmissionEvidence
+        omission_evidence = OmissionEvidence()
     try:
         with historical_art() as jar:
             meshes = json.loads(gzip.decompress(jar.read('bloodborne_blocks/v2/meshes.json.gz')))
@@ -38,7 +43,7 @@ def trace_many(origins, radius=3, node_limit=128):
                 return frozenset(signature(rotated_mesh(meshes[ident], ('north','east','south','west').index(facing))['polygons']))
 
             @functools.lru_cache(None)
-            def template(state):
+            def template(state, position=None):
                 if not state: return {}, 'missing source'
                 name, _, suffix = state.partition('['); ident = name.removeprefix('minecraft:')
                 if ident not in migration: return {}, 'not an archived carrier'
@@ -52,7 +57,7 @@ def trace_many(origins, radius=3, node_limit=128):
                         cells[tuple(part['offset'])].update(module(part['id'], part.get('properties',{}).get('facing','north')))
                     return {p:frozenset(v) for p,v in cells.items()}, 'frozen forward mapping'
                 if not isinstance(parts, dict) or not parts.get('keep'): return {}, 'no frozen source state'
-                try: cells = carrier_cells(jar, ident, props)
+                try: cells = carrier_cells(jar, ident, props, position)
                 except (KeyError, ValueError) as exc: return {}, str(exc)
                 return {p:frozenset(signature(v)) for p,v in cells.items()}, 'historical retained carrier model'
 
@@ -68,9 +73,35 @@ def trace_many(origins, radius=3, node_limit=128):
             @functools.lru_cache(maxsize=65536)
             def producer(point):
                 state = source.state('eh_s2:yharnam', point)[1]
-                parts, provenance = template(state)
+                parts, provenance = template(state, point if positional_variants else None)
                 cells = {tuple(point[i]+p[i] for i in range(3)): v for p,v in parts.items() if v}
                 return state, cells, provenance
+
+            @functools.lru_cache(maxsize=65536)
+            def omission(root, point):
+                if not documented_omissions and not retained_contexts: return None
+                source_state, cells, _ = producer(root)
+                actual = current.state('minecraft:overworld', point)[1]
+                if documented_omissions:
+                    witness = omission_evidence.witness(root, point, source_state, actual, cells.get(point),
+                        lambda ident, facing: module(ident, facing) if ident in meshes else None)
+                    if witness is not None: return witness
+                if retained_contexts:
+                    # This proves ONLY that the cell is independent, preserved
+                    # context. It never becomes a removable member of root.
+                    original = source.state('eh_s2:yharnam', point)[1]
+                    if not original or not actual or tuple(root) == tuple(point): return None
+                    name, _, suffix = original.partition('[')
+                    ident = name.removeprefix('minecraft:')
+                    definition = legacy.get(ident)
+                    if definition is None: return None
+                    props = {**definition.get('default', {}), **dict(v.split('=',1) for v in suffix.rstrip(']').split(',') if v)}
+                    key = ','.join(k+'='+str(v) for k,v in sorted(props.items()))
+                    expected = 'bloodborne_blocks:'+ident+'['+key+']'
+                    if actual == expected and key in definition['states']:
+                        return {'position':list(point),'sourceState':original,'preserveState':actual,
+                            'policy':'Exact unchanged retained source carrier; preserve entire cell/NBT, never authorize removal or helper overwrite.'}
+                return None
 
             @functools.lru_cache(maxsize=65536)
             def occluder(point):
@@ -103,9 +134,11 @@ def trace_many(origins, radius=3, node_limit=128):
                     nodes[root] = (state, cells, provenance)
                     for point, own in cells.items():
                         actual = observed(point)
-                        if actual is None or (not own <= actual and occluder(point) is None):
+                        if (actual is None or (not own <= actual and occluder(point) is None)) and omission(root, point) is None:
                             errors.append({'reason':'source_geometry_not_present','root':list(root),'cell':list(point),
                                            'missing':None if actual is None else len(own-actual)}); continue
+                        if omission(root, point) is not None:
+                            continue
                         if not own <= actual and occluder(point) is not None:
                             queue.append(point)
                         if point in examined: continue
@@ -123,7 +156,7 @@ def trace_many(origins, radius=3, node_limit=128):
                             # Every cell of this source object must remain present.
                             absent = [{'position':list(p), 'actual':current.state('minecraft:overworld',p)[1],
                                        'missing':None if observed(p) is None else len(faces-observed(p))}
-                                      for p,faces in parts.items() if observed(p) is None or (not faces <= observed(p) and occluder(p) is None)]
+                                      for p,faces in parts.items() if (observed(p) is None or (not faces <= observed(p) and occluder(p) is None)) and omission(candidate,p) is None]
                             if absent:
                                 rejected[candidate] = {'sourceRoot':list(candidate),'state':producer(candidate)[0],
                                                        'explainsCell':list(point),'missingComponents':absent}
@@ -138,15 +171,21 @@ def trace_many(origins, radius=3, node_limit=128):
                     missing = None if actual is None else len(faces-actual)
                     extra = None if actual is None else len(actual-faces)
                     witness = occluder(point) if missing else None
+                    omitted_owners = [r for r,(_,parts,_) in nodes.items() if point in parts and
+                                      (actual is None or not parts[point] <= actual)]
+                    omission_witnesses = [omission(r,point) for r in omitted_owners]
+                    proven_omission = bool(omission_witnesses) and all(omission_witnesses)
                     if witness is not None and point not in nodes:
                         errors.append({'reason':'occluder_owner_not_closed','cell':list(point)})
-                    if (missing or extra or actual is None) and witness is None:
+                    if (extra or ((missing or actual is None) and not proven_omission)) and witness is None:
                         errors.append({'reason':'owner_union_not_exact','cell':list(point),'missing':missing,'extra':extra})
                     cell_rows.append({'position':list(point),'actual':current.state('minecraft:overworld',point)[1],
                                       'owners':[list(r) for r,(_,parts,_) in nodes.items() if point in parts],
-                                      'missing':missing,'extra':extra,'preservedOccluder':witness})
+                                      'missing':missing,'extra':extra,'preservedOccluder':witness,
+                                      **({'preservedOmissions':omission_witnesses} if proven_omission else {})})
                 has_occlusion = any(c['preservedOccluder'] for c in cell_rows)
-                return {'result':'UNRESOLVED' if errors or not nodes else 'HISTORICAL_OWNER_CLOSURE_WITH_OCCLUSION' if has_occlusion else 'EXACT_HISTORICAL_OWNER_CLOSURE',
+                has_context = any(c.get('preservedOmissions') for c in cell_rows)
+                return {'result':'UNRESOLVED' if errors or not nodes else 'HISTORICAL_OWNER_CLOSURE_WITH_PRESERVED_CONTEXT' if has_context else 'HISTORICAL_OWNER_CLOSURE_WITH_OCCLUSION' if has_occlusion else 'EXACT_HISTORICAL_OWNER_CLOSURE',
                         'scope':'Historical source membership only; not runtime/conversion/world PASS',
                         'sourceSha256':SOURCE_SHA,'moddedSha256':MODDED_SHA,
                         'seed':list(origin),'searchRadius':radius,'nodeLimit':node_limit,

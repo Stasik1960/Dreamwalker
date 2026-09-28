@@ -18,6 +18,7 @@ LOGICAL = ROOT / "src/main/resources/bloodborne_blocks/logical"
 WINDOW = "o_shuttered_window"
 FACING = {"north": (0.0, -1.0), "east": (1.0, 0.0), "south": (0.0, 1.0), "west": (-1.0, 0.0)}
 CHECKPOINT = "a43c1131f"
+RC2 = "6bca311b8"
 sys.path.insert(0, str(ROOT / "tools"))
 
 
@@ -46,27 +47,38 @@ class WindowTest3Contracts(unittest.TestCase):
             vertices = [v for polygon in self.meshes[self.definitions[WINDOW]["models"][key]]["polygons"] for v in polygon["vertices"]]
             self.assertEqual(0.0, round(min(v[1] for v in vertices) + state["render_mesh"]["offset"][1], 6), key)
 
-    def test_all_states_use_fixed_two_cell_selection_and_collision(self) -> None:
-        expected = [[0.0, 0.0, 0.0, 1.0, 1.0, 1.0], [0.0, 1.0, 0.0, 1.0, 2.0, 1.0]]
+    def test_all_states_keep_fixed_selection_but_only_closed_states_collide(self) -> None:
+        closed = [[0.0, 0.0, 0.0, 1.0, 1.0, 1.0], [0.0, 1.0, 0.0, 1.0, 2.0, 1.0]]
         for key, state in self.window["states"].items():
             facing = props(key)["facing"]
             vector_x, vector_z = FACING[facing]
             self.assertEqual([round(-.75 * vector_x, 6), .875, round(-.75 * vector_z, 6)], state["render_mesh"]["offset"], key)
             self.assertEqual([[0, 0, 0], [0, 1, 0]], state["interaction_footprint"]["cells"], key)
             self.assertEqual([[0.0, 0.0, 0.0, 1.0, 2.0, 1.0]], state["selection_footprint"]["boxes"], key)
+            expected = closed if props(key)["open"] == "false" else []
             self.assertEqual(expected, state["collision_footprint"]["boxes"], key)
             self.assertEqual(expected, self.physical_doc["families"][WINDOW][key]["boxes"], key)
             self.assertEqual([[0, 0, 0], [0, 1, 0]], self.physical_doc["families"][WINDOW][key]["cells"], key)
 
-    def test_legacy_profile_has_only_the_two_simple_cells(self) -> None:
+    def test_legacy_profile_has_two_owned_cells_with_pose_specific_collision(self) -> None:
         states = self.geometry_doc["blocks"][WINDOW]["states"]
         self.assertEqual(set(self.window["states"]), set(states))
         for key, generated in states.items():
             self.assertEqual([0.0, 0.0, 0.0, 1.0, 2.0, 1.0], generated["globalOutline"], key)
             self.assertEqual({"0,0,0", "0,1,0"}, set(generated["cells"]), key)
             for cell in generated["cells"].values():
-                self.assertEqual([[0.0, 0.0, 0.0, 1.0, 1.0, 1.0]], cell["collision"], key)
+                expected = [[0.0, 0.0, 0.0, 1.0, 1.0, 1.0]] if props(key)["open"] == "false" else []
+                self.assertEqual(expected, cell["collision"], key)
                 self.assertEqual([[0.0, 0.0, 0.0, 1.0, 1.0, 1.0]], cell["outline"], key)
+
+    def test_frozen_rc2_wrongly_left_open_aperture_solid(self) -> None:
+        raw = subprocess.check_output(["git", "show", f"{RC2}:Bloodborne-Blocks/src/main/resources/bloodborne_blocks/logical/contracts-v2.json"], cwd=ROOT.parent)
+        frozen = next(row for row in json.loads(raw)["families"] if row["id"] == WINDOW)
+        closed = [[0.0, 0.0, 0.0, 1.0, 1.0, 1.0], [0.0, 1.0, 0.0, 1.0, 2.0, 1.0]]
+        for key, state in frozen["states"].items():
+            if props(key)["open"] == "true": self.assertEqual(closed, state["collision_footprint"]["boxes"], key)
+        for key, state in self.window["states"].items():
+            if props(key)["open"] == "true": self.assertEqual([], state["collision_footprint"]["boxes"], key)
 
     def test_patch_family_normalizes_old_and_new_window_equally(self) -> None:
         import apply_window_test3_patch as compiler
@@ -77,8 +89,13 @@ class WindowTest3Contracts(unittest.TestCase):
         self.assertEqual(old_window, new_window)
 
     def test_non_window_generated_families_match_checkpoint(self) -> None:
+        from build_accepted_bush_extension import build
+        from check_accepted_runtime import _logical_amendment
+        with tempfile.TemporaryDirectory() as directory:
+            grass = build(Path(directory)/'grass.json')
         for name, key in (("contracts-v2.json", "families"), ("geometry.json", "blocks"), ("physical-footprints.json", "families")):
             before = json.loads(subprocess.check_output(["git", "show", f"{CHECKPOINT}:Bloodborne-Blocks/src/main/resources/bloodborne_blocks/logical/{name}"], cwd=ROOT.parent))
+            before = _logical_amendment(before, name, grass)
             after = json.loads((LOGICAL / name).read_text())
             if name == "contracts-v2.json":
                 before = {row["id"]: row for row in before[key] if row["id"] != WINDOW}

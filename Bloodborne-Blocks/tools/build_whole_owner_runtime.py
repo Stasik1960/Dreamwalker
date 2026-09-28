@@ -52,7 +52,7 @@ def rotate_geometry(geometry, n):
     return result
 
 
-def build(*, storage_root_only=False):
+def build(*, storage_root_only=False, extend_proven_closures=None):
     evidence = json.loads(gzip.decompress(EVIDENCE.read_bytes()))
     oracle = json.loads(ORACLE.read_bytes())
     groups = connected_groups(evidence, oracle)
@@ -63,7 +63,8 @@ def build(*, storage_root_only=False):
     mapping_path = CITY/'owner-runtime-mappings.json'
     old_mapping_bytes = mapping_path.read_bytes()
     previous = json.loads(old_mapping_bytes)
-    if storage_root_only:
+    extending = storage_root_only or extend_proven_closures is not None
+    if extending:
         # Extend only the explicitly rejected missing-root cases. Preserve all
         # accepted owner and reviewed-wall definitions, models and mappings.
         if previous['evidenceSha256'] != hashlib.sha256(EVIDENCE.read_bytes()).hexdigest():
@@ -75,8 +76,25 @@ def build(*, storage_root_only=False):
         old_mapping_lf = old_mapping_bytes.replace(b'\r\n', b'\n')
         if wall['sourceMappingsSha256'] not in {hashlib.sha256(old_mapping_bytes).hexdigest(), hashlib.sha256(old_mapping_lf).hexdigest()}:
             raise ValueError('REVIEWED_WALL_MAPPING_PROOF_STALE')
-        selected = {row['source'] for row in previous['rejected'] if row['reason']=='historical root lacks physical cell'}
-        if not selected <= set(required): raise ValueError('STORAGE_ROOT_SOURCE_NOT_PROVEN')
+        if extend_proven_closures is None:
+            selected = {row['source'] for row in previous['rejected'] if row['reason']=='historical root lacks physical cell'}
+            if not selected <= set(required): raise ValueError('STORAGE_ROOT_SOURCE_NOT_PROVEN')
+        else:
+            from composite_world_oracle import SOURCE_SHA
+            from audit_remaining_membership_meshes import MODDED_SHA
+            from complete_owner_bridge import load_additional_proof
+            traces = load_additional_proof(extend_proven_closures)
+            selected = set()
+            for trace in traces:
+                if trace['result'] == 'REFER_TO_PROVEN_CLOSURE':
+                    continue
+                if trace['result'] == 'UNRESOLVED':
+                    continue
+                if (trace.get('errors') or trace.get('sourceSha256') != SOURCE_SHA or
+                        trace.get('moddedSha256') != MODDED_SHA):
+                    raise ValueError('ADDITIONAL_OWNER_EVIDENCE_MISMATCH')
+                selected.update(row['state'] for row in trace['objects']
+                    if tuple(row['sourceRoot']) not in protected and row['state'] not in previous['states'])
         required = sorted(selected)
         meshes = json.loads(gzip.decompress((CITY/'owner-meshes.json.gz').read_bytes()))
         mappings = copy.deepcopy(previous['states'])
@@ -166,10 +184,10 @@ def build(*, storage_root_only=False):
     write_json(CITY/'definitions.json',definitions);write_json(CITY/'geometry.json',geometry)
     (CITY/'owner-meshes.json.gz').write_bytes(gzip.compress(serial(meshes),mtime=0))
     result={'evidenceSha256':hashlib.sha256(EVIDENCE.read_bytes()).hexdigest(),'states':mappings,'rejected':rejected}
-    if storage_root_only and any(mappings.get(key)!=value for key,value in previous['states'].items()):
+    if extending and any(mappings.get(key)!=value for key,value in previous['states'].items()):
         raise ValueError('EXISTING_OWNER_MAPPING_CHANGED')
     write_json(mapping_path,result)
-    if storage_root_only:
+    if extending:
         wall['sourceMappingsSha256'] = hashlib.sha256(mapping_path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
         write_json(wall_path,wall)
     lang_path=RES/'assets/bloodborne_blocks/lang/ru_ru.json'
@@ -181,4 +199,5 @@ if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--add-empty-storage-roots',action='store_true',help='extend only proven missing-root mappings, preserving all existing runtime entries')
-    args=parser.parse_args();build(storage_root_only=args.add_empty_storage_roots)
+    parser.add_argument('--extend-proven-closures',type=Path,help='add only missing complete source owners from pinned positive evidence; retain every existing runtime entry')
+    args=parser.parse_args();build(storage_root_only=args.add_empty_storage_roots, extend_proven_closures=args.extend_proven_closures)

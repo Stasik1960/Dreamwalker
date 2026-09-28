@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+import subprocess
 import zipfile
 from pathlib import Path
 from atomic_owner_groups import state
@@ -11,6 +12,16 @@ RES=ROOT/'src/main/resources'
 CITY=RES/'bloodborne_blocks/city'
 ID='building_stone_brick_wall'
 DIRS=('north','east','south','west')
+ACCEPTED='41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a'
+
+def accepted_aliases():
+    """The reviewed TEST1 adapter covers the 66 accepted aliases only.
+
+    Additional raw source owners can be compiled for closure proofs without
+    silently broadening this already accepted functional family.
+    """
+    path='Bloodborne-Blocks/src/main/resources/bloodborne_blocks/city/reviewed-wall-family.json'
+    return json.loads(subprocess.check_output(['git','show',ACCEPTED+':'+path],cwd=ROOT.parent))['aliases']
 
 def write(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
@@ -34,15 +45,18 @@ def build():
     definitions=json.loads((CITY/'definitions.json').read_bytes())
     geometry=json.loads((CITY/'geometry.json').read_bytes())
     old={d['id']:d for d in definitions['blocks'] if d['id']!=ID}
-    lookup={};aliases={}
+    lookup={};aliases={};approved=accepted_aliases()
     for source,mapping in sorted(mappings.items()):
         if not source.startswith('minecraft:stone_brick_wall['):continue
         props=dict(state(source)[1]);ident=mapping['id'].split(':')[1]
+        if ident not in approved:continue
+        assert approved[ident]==source,('accepted wall source changed',ident)
         aliases[ident]=source
         assert old[ident]['source']=='minecraft:stone_brick_wall' and old[ident]['whole_owner']
         for turn,facing in enumerate(DIRS):
             key=tuple(props[DIRS[(i-turn)%4]] for i in range(4))+(props['up'],)
             lookup.setdefault(key,(ident,facing))
+    assert aliases==approved, 'accepted wall aliases missing'
     chosen={}
     for level in ('low','tall'):
         for mask in range(16):
@@ -51,12 +65,22 @@ def build():
             key=tuple(level if mask&(1<<i) else 'none' for i in range(4))+(up,)
             assert key in lookup,('unsupported',key)
             chosen[level+'_'+str(mask)]=lookup[key]
+    # The canonical low/tall connections cover the 11 aliases which exactly
+    # express vanilla wall masks.  Every other accepted alias is retained as
+    # an explicit property value, rather than approximated by a new mesh or a
+    # nearest connection state.  Neighbor updates deliberately leave those
+    # retained appearances and enter the canonical mask/level state machine.
+    used={ident for ident,_ in chosen.values()}
+    retained={'retained_'+ident.removeprefix('owner_'):(ident,'north')
+              for ident in sorted(set(aliases)-used)}
+    connections={**chosen,**retained}
     definition=copy.deepcopy(old[chosen['low_0'][0]])
     definition.update(id=ID,creative=True,behavior='reviewed_wall',connection_family='reviewed_stone_brick_wall',
                       default={'facing':'north','connection':'low_0'},
-                      properties={'facing':list(DIRS),'connection':list(chosen)},states={},models={})
+                      properties={'facing':list(DIRS),'connection':list(connections)},states={},models={})
     states={};variants={};proof={}
-    for connection,(ident,base_facing) in chosen.items():
+    alias_states={}
+    for connection,(ident,base_facing) in connections.items():
         proof[connection]={'owner':ident,'facing':base_facing,'source':aliases[ident]}
         for turn,facing in enumerate(DIRS):
             target_facing=DIRS[(DIRS.index(base_facing)+turn)%4]
@@ -68,13 +92,27 @@ def build():
             definition['models'][key]=old[ident]['models'][oldkey]
             states[key]=copy.deepcopy(profile)
             variants[key]={'model':'bloodborne_blocks:block/city/'+ident}
-    definitions['blocks']=[d for d in definitions['blocks'] if d['id']!=ID]+[definition]
+            alias_key=ident+'|'+oldkey
+            successor={'connection':connection,'facing':facing}
+            # A few canonical mask rotations deliberately reuse one exact old
+            # owner pose.  A source state still has one deterministic successor;
+            # the retained/canonical connection value then recomputes normally
+            # on its first neighbour update.
+            alias_states.setdefault(alias_key,successor)
+    expected_alias_states={ident+'|facing='+facing for ident in aliases for facing in DIRS}
+    assert set(alias_states)==expected_alias_states,('missing alias states',expected_alias_states-set(alias_states))
+    # Preserve registry order when updating an existing accepted family.
+    if any(d['id']==ID for d in definitions['blocks']):
+        definitions['blocks']=[definition if d['id']==ID else d for d in definitions['blocks']]
+    else:
+        definitions['blocks'].append(definition)
     geometry['blocks'][ID]={'states':states}
     write(CITY/'definitions.json',definitions);write(CITY/'geometry.json',geometry)
-    write(CITY/'reviewed-wall-family.json',{'id':ID,'aliases':aliases,'connections':proof,'artProof':art_proof,
+    write(CITY/'reviewed-wall-family.json',{'id':ID,'aliases':aliases,'connections':proof,
+          'canonicalConnections':list(chosen),'retainedConnections':list(retained),'aliasStates':alias_states,'artProof':art_proof,
           'sourceMappingsSha256':hashlib.sha256((CITY/'owner-runtime-mappings.json').read_bytes()).hexdigest(),
           'unsupported':['low four-way junction WITH central post; existing postless cross used'],
-          'scope':'Only stone_brick_wall from REPAIR TEST1. Existing owner IDs/models remain unchanged.'})
+          'scope':'Only stone_brick_wall from REPAIR TEST1. Existing owner IDs/models remain unchanged; retained aliases preserve existing art until a neighbor update.'})
     write(RES/f'assets/bloodborne_blocks/blockstates/{ID}.json',{'variants':variants})
     write(RES/f'assets/bloodborne_blocks/models/item/{ID}.json',{'parent':'bloodborne_blocks:block/city/'+chosen['low_0'][0]})
     write(RES/f'data/bloodborne_blocks/loot_tables/blocks/{ID}.json',{'type':'minecraft:block','pools':[{'rolls':1,'entries':[{'type':'minecraft:item','name':'bloodborne_blocks:'+ID}],'conditions':[{'condition':'minecraft:survives_explosion'}]}]})
@@ -82,6 +120,6 @@ def build():
         path=RES/f'assets/bloodborne_blocks/lang/{language}.json'
         data=json.loads(path.read_bytes()) if path.exists() else {}
         data['block.bloodborne_blocks.'+ID]=label;write(path,data)
-    print('Existing source aliases:',len(aliases),'building states:',len(states),'new meshes: 0')
+    print('Existing source aliases:',len(aliases),'canonical connections:',len(chosen),'retained connections:',len(retained),'building states:',len(states),'new meshes: 0')
 
 if __name__=='__main__':build()

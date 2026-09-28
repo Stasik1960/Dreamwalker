@@ -92,6 +92,9 @@ def validate_accepted_city(root):
     The supplied full city is independently verified on every package check;
     a stale PASS report, registry census or protected-ID list is insufficient.
     """
+    complete = root/'docs/complete-accepted-repair/delivery.json'
+    if complete.is_file():
+        return validate_complete_city(root,complete)
     import gzip
     from verify_accepted_restore import verify, RC1
     manifest = json.loads((root / 'docs/accepted-restore/delivery.json').read_bytes())
@@ -119,6 +122,34 @@ def validate_accepted_city(root):
         proof.get('result') != 'PASS' or proof.get('outputTreeSha256') != result['outputTreeSha256']):
         raise ValueError('Accepted city idempotence proof failed')
     return {k: v for k, v in result.items() if k != 'families'}
+
+
+def validate_complete_city(root, manifest_path):
+    from verify_complete_accepted_repair import verify,read,RESOURCES
+    manifest=read(manifest_path)
+    if manifest.get('version')!=version(root) or manifest.get('scope')!='complete-accepted-checkpoint' or manifest.get('releaseReady') is not False:
+        raise ValueError('Complete city delivery identity differs')
+    paths={}
+    for name in ('jar','sourcesJar','world','conversion','independent','secondConversion'):
+        record=manifest[name];path=(root/record['path']).resolve()
+        if not path.is_relative_to(root.resolve()) or not path.is_file() or sha(path)!=record['sha256']:
+            raise ValueError('Complete delivery artifact changed: '+name)
+        paths[name]=path
+    from check_accepted_runtime import validate as accepted_runtime
+    accepted_runtime(paths['jar'],paths['sourcesJar'],root)
+    first,second=read(paths['conversion']),read(paths['secondConversion'])
+    if (second.get('subsetResult')!='APPLIED' or second.get('ledger') or
+            second['outputFiles']!=first['outputFiles'] or second['source']['hashes']!=first['outputFiles'] or
+            first.get('secondPass',{}).get('result')!='PASS' or first['secondPass'].get('transactions')!=0):
+        raise ValueError('Complete city repeat-pass evidence differs')
+    baseline=root/'releases/Bloodborne-Blocks/2.1.0-rc.2/Bloodborne-City-2.1.0-rc.2.zip'
+    result=verify(baseline,paths['world'],first,resources=root/'src/main/resources/bloodborne_blocks/logical')
+    recorded=read(paths['independent'])
+    if recorded.get('secondPass')!={'result':'PASS','byteIdentical':True}:
+        raise ValueError('Complete city actual second pass was not verified')
+    if {k:v for k,v in result.items() if k!='secondPass'}!={k:v for k,v in recorded.items() if k!='secondPass'}:
+        raise ValueError('Supplied complete city differs from independent verification')
+    return {k:v for k,v in result.items() if k!='coverage'}
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0, lfs: false}
-      - run: git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**,Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/**' --exclude=''
+      - run: git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**,Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/**,Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.3/**' --exclude=''
       - uses: actions/setup-java@v4
         with: {distribution: temurin, java-version: '17'}
       - uses: actions/setup-python@v5

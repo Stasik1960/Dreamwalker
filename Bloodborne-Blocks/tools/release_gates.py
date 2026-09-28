@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 import zlib
 from pathlib import Path, PureWindowsPath
 
-GATES = ("TEST_SCOPE_PASS", "STATIC_PASS", "GAMETEST_PASS",
+GATES = ("TEST_SCOPE_PASS", "SUBSET_PASS", "COVERAGE_COMPLETENESS_PASS", "STATIC_PASS", "GAMETEST_PASS",
          "DEDICATED_RESTART_PASS", "CLIENT_VISUAL_PASS", "FULL_CITY_PASS", "RELEASE_READY")
 STATUSES = {"PASS", "FAIL", "NOT_RUN", "BLOCKED"}
 SCOPES = {"test-kit", "full-city"}
@@ -222,7 +222,7 @@ def validate(document, root=None):
     raw_gates = document.get("gates")
     raw_gates = raw_gates if isinstance(raw_gates, dict) else {}
     if set(raw_gates) != set(GATES):
-        error("exactly seven named gates are required")
+        error("exact named gates are required")
     gates = {}
     for name in GATES:
         gate = raw_gates.get(name)
@@ -286,6 +286,29 @@ def validate(document, root=None):
                     error("GameTest log disagrees with XML")
             except (OSError, ET.ParseError):
                 error("unreadable GameTest XML/log")
+
+    coverage_gate = gates["COVERAGE_COMPLETENESS_PASS"]
+    if coverage_gate.get("status") == "PASS" and isinstance(coverage_gate.get("evidence"), dict):
+        coverage = json_artifact(coverage_gate["evidence"].get("sourceCoverage"), "source coverage report")
+        if coverage is not None:
+            if coverage.get("candidateScopeComplete") is not True:
+                error("source coverage report: candidate scope is incomplete")
+            if coverage.get("coverageCompleteness") != "PASS":
+                error("source coverage report: coverage completeness is not PASS")
+            counts = coverage.get("counts")
+            if not isinstance(counts, dict) or type(counts.get("candidates")) is not int or counts["candidates"] <= 0:
+                error("source coverage report: candidates must be nonempty")
+            else:
+                for key in ("unresolvedKnown", "unknown", "genuinelyUnknown"):
+                    if type(counts.get(key, 0)) is not int or counts.get(key, 0) != 0:
+                        error("source coverage report: " + key + " must be zero")
+            helpers = coverage.get("helperBindingErrors")
+            if not isinstance(helpers, list) or helpers:
+                error("source coverage report: helper binding errors must be empty")
+            if "helpererrors" in coverage and (type(coverage["helpererrors"]) is not int or coverage["helpererrors"] != 0):
+                error("source coverage report: helpererrors must be zero")
+            if any(key in coverage for key in ("ledger", "writerLedger", "successLedger")):
+                error("source coverage report: writer ledger is not coverage evidence")
 
     full = gates["FULL_CITY_PASS"].get("evidence", {})
     if gates["FULL_CITY_PASS"].get("status") == "PASS" and isinstance(full, dict):

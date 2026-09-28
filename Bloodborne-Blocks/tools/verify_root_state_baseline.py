@@ -18,6 +18,11 @@ def verify():
     baseline_contracts=json.loads(subprocess.run(['git','show',BASELINE+':Bloodborne-Blocks/src/main/resources/bloodborne_blocks/logical/contracts-v2.json'],cwd=ROOT.parent,check=True,capture_output=True).stdout)
     mounted_window=copy.deepcopy(next(f for f in baseline_contracts['families'] if f['id']==WINDOW))
     patch_family(mounted_window)
+    from check_accepted_runtime import _logical_amendment
+    from build_accepted_bush_extension import build as grass_bundle
+    import tempfile
+    with tempfile.TemporaryDirectory() as temporary:
+        grass=grass_bundle(Path(temporary)/'grass.json')
     paths=['bloodborne_blocks/logical/'+name for name in ('definitions.json','contracts-v2.json','geometry.json')]
     paths += [f'assets/bloodborne_blocks/blockstates/{family}.json' for family in sorted(FAMILIES)]
     checked=[]
@@ -41,6 +46,8 @@ def verify():
             original['blocks'][WINDOW]=profile(mounted_window)
             for family in FAMILIES:current['blocks'][family]['states']=collapse(current['blocks'][family]['states'])
         else:current['variants']=collapse(current['variants'])
+        if suffix.startswith('bloodborne_blocks/logical/'):
+            original=_logical_amendment(original,Path(suffix).name,grass)
         if current!=original:raise AssertionError('CANONICAL_BASELINE_CHANGED: '+suffix)
         checked.append(suffix)
     return {'result':'PASS','baseline':BASELINE,'files':checked,'canonical_root_states_changed':0,

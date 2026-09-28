@@ -24,7 +24,13 @@ public final class GeometryChecks {
    for(var entry:block.states.entrySet()){
     states++;GeometryRuntime.GeometryState state=entry.getValue();check(state!=null&&state.parsedCells!=null&&!state.parsedCells.isEmpty(),"prepared geometry: "+definition.id+"["+entry.getKey()+"]");
     if(!unique.add(state))continue;
-    for(GeometryRuntime.GeometryCell cell:state.parsedCells.values()){cells++;checkShape(cell.collisionShape);checkShape(cell.outlineShape);check(cell.outline.size()<=1,"one selection box per cell");check(cell.collision.size()<=5,"bounded collision boxes per cell");}
+    for(GeometryRuntime.GeometryCell cell:state.parsedCells.values()){
+     cells++;checkShape(cell.collisionShape);checkShape(cell.outlineShape);
+     boolean grass="o_grass_0".equals(definition.id);
+     check(cell.outline.size()<=(grass?2:1),"bounded selection boxes per cell: "+definition.id);
+     check(cell.collision.size()<=5,"bounded collision boxes per cell");
+     if(grass)check(cell.collisionShape.isEmpty()&&!cell.outlineShape.isEmpty(),"grass remains selectable without collision");
+    }
    }
   }
   check(blocks.keySet().containsAll(BloodborneBlocks.productionPalette().keySet()),"geometry includes every production object");

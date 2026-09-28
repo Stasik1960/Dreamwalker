@@ -10,7 +10,9 @@ final class LogicalVariantProperty extends Property<String> {
  private final List<String> values;
  LogicalVariantProperty(String name,List<String> values) {
   super(name, String.class);
-  if(values==null||values.isEmpty()||values.size()>64||values.stream().distinct().count()!=values.size()
+  // prepareDefinition permits connection only for the manifest-validated reviewed wall.
+  int maximum="connection".equals(name)?87:64;
+  if(values==null||values.isEmpty()||values.size()>maximum||values.stream().distinct().count()!=values.size()
     ||values.stream().anyMatch(v->v==null||!v.matches("[a-z0-9_]+")))throw new IllegalArgumentException("Invalid logical variants");
   this.values=List.copyOf(values);
  }

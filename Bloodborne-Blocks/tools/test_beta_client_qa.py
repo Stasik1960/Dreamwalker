@@ -137,7 +137,7 @@ class BetaClientQaTests(unittest.TestCase):
             self.assertEqual({(0, 0, 0), (0, 1, 0)},
                              {tuple(cell) for cell in state["interaction_footprint"]["cells"]}, state_key)
             boxes = state["collision_footprint"]["boxes"]
-            self.assertEqual(2, len(boxes), state_key)
+            self.assertEqual(0 if properties(state_key)['open']=='true' else 2, len(boxes), state_key)
             for box in boxes:
                 self.assertEqual(1, len(occupied_cells(box)), (state_key, box))
                 self.assertGreaterEqual(min(box[0], box[2]), -EPSILON)

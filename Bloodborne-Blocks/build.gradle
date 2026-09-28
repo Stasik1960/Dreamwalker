@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '2.1.0-rc.2'
+version = '2.1.0-rc.3'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -125,7 +125,10 @@ tasks.named('check') { dependsOn 'itemModelSelectionCheck' }
 
 // Keep the release version/resource closure checks alongside the repair gates.
 ['test_release_gates', 'test_release_package', 'test_accepted_runtime',
- 'test_accepted_objects_restore', 'test_accepted_restore_verifier'].each { name ->
+ 'test_accepted_objects_restore', 'test_accepted_restore_verifier',
+ 'test_complete_accepted_restore', 'test_complete_owner_bridge',
+ 'test_accepted_repair_coverage', 'test_accepted_bush_extension',
+ 'test_complete_repair_verifier'].each { name ->
  tasks.register(name, Exec) {
   group = 'verification'
   commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8', "tools/${name}.py"

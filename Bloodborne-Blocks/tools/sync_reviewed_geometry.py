@@ -87,7 +87,7 @@ def profile(family):
             cells[name]={'outline':clip_cell(state['selection_footprint']['boxes'],cell),'collision':collision[name]}
         result[key]={'cells':cells,'anchor':family['canonical_anchor']['cell'],
                      'render_offset':state['render_mesh']['offset'],
-                     'globalOutline':state['selection_footprint']['boxes'][0]}
+                     'globalOutline':state['selection_footprint']['boxes'][0] if len(state['selection_footprint']['boxes'])==1 else None}
     return {'states':result}
 
 
