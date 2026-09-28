@@ -1,34 +1,36 @@
-# Bloodborne Architecture — сборки
+# Bloodborne Architecture — единый комплект 2.1.0-rc.2
 
-[Проект](../../Bloodborne-Blocks/README.md) · [Статус проверки](../../Bloodborne-Blocks/docs/RELEASE-STATUS.md) · [Общий каталог](../README.md)
+Принятые TEST3 и локальное продолжение repair объединены. Используйте **эти JAR
+и полную карту вместе**, на отдельной копии. Графический клиент ещё не принят;
+комплект не объявлен production RELEASE_READY или исправлением всех исторических объектов.
 
-## Текущий кандидат: 2.1.0-rc.1
+| Файл | Скачать |
+|---|---|
+| Игровой JAR rc.2 | [bloodborne-blocks-2.1.0-rc.2.jar](https://media.githubusercontent.com/media/Stasik1960/Dreamwalker/main/Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/bloodborne-blocks-2.1.0-rc.2.jar) |
+| Полный город rc.2 | [Bloodborne-City-2.1.0-rc.2.zip](https://media.githubusercontent.com/media/Stasik1960/Dreamwalker/main/Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/Bloodborne-City-2.1.0-rc.2.zip) |
+| SHA-256 | [SHA256SUMS.txt](../../Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/SHA256SUMS.txt) |
+| Source commit и первичные доказательства | [delivery.json](../../Bloodborne-Blocks/docs/accepted-restore/delivery.json) |
 
-**Для проверки на отдельной копии мира. Production-приёмка не завершена.**
+74 подтверждённых дерева, 34 стопки книг и 411 окон восстановлены вместе с
+остальными принятыми семействами и строительными адаптерами. Всего 6 507 групп
+восстановлены, 20 474 уже корректны. [Полная таблица, координаты и ограничения](../../Bloodborne-Blocks/docs/accepted-restore/REPORT.md).
+Всё вне доказанных транзакций сохранено; повторный ремонт даёт побайтно ту же карту.
 
-| Файл / документ | Где получить |
-| --- | --- |
-| JAR rc.1 | [Проверенный CI artifact](https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341/artifacts/10937273847) — внутри обычный JAR и sources; для игры нужен обычный |
-| Карта города rc.1 | [Bloodborne-City-2.1.0-rc.1.zip](../../Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.1/Bloodborne-City-2.1.0-rc.1.zip) |
-| Хэши JAR и результаты | [RELEASE-STATUS](../../Bloodborne-Blocks/docs/RELEASE-STATUS.md) |
-| Хэш карты и протокол конвертации | [retired-composites-world.json](../../Bloodborne-Blocks/docs/release/evidence/rc1/retired-composites-world.json) |
+Minecraft **1.20.1**, Java **17**, Fabric Loader **0.16.10**, Fabric API
+**0.92.9+1.20.1**. Перед обновлением обязателен backup.
+Остальные моды исходной сборки нужно сохранить: архив содержит их исходные
+данные, а серверный smoke-test охватывал только Bloodborne/Fabric API.
+[Миграция/rollback](../../Bloodborne-Blocks/docs/accepted-restore/MIGRATION.md) ·
+[Все gates](../../Bloodborne-Blocks/docs/RELEASE-STATUS.md) ·
+[Комментарии агента](../../Bloodborne-Blocks/docs/accepted-restore/AGENT-COMMENTS.md).
 
-Карта физически хранится во вложенной папке `Bloodborne-Blocks/releases/`;
-ссылка выше ведёт именно к отслеживаемому файлу. Перемещения архивов в этой уборке не выполнялись.
-CI artifact может требовать входа в GitHub и имеет срок хранения. Если он недоступен,
-используйте [сборку из исходников](../../Bloodborne-Blocks/README.md#разработка-и-документация),
-а не JAR старой beta под новую карту.
+Для разработчиков отдельно сохранён sources JAR с исходными Yarn-именами;
+устанавливать его в `mods` не нужно. Файлы хранятся в
+[`Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2`](../../Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2).
 
-Копия MODDED-карты переведена в текущую сетку. По одобренной политике удалены
-33 клетки с 23 отсутствующими composite ID. В итоговом census не осталось старых
-`m_*` и неизвестных ID. Это офлайн-результат; реальный запуск/перезапуск сервера
-и визуальная клиентская приёмка ещё нужны. Не заменяйте этими файлами единственную копию рабочего мира.
+## Исторические комплекты
 
-## Архив и отдельная repair-линия
-
-- [Исторические описания и ссылки](HISTORY.md) — alpha, «Агония», галереи и прежние этапы.
-- [beta.1](2.1.0-beta.1/README.md), [beta.2](2.1.0-beta.2/README.md), [beta.2 recovery](2.1.0-beta.2-city-recovery/README.md), [beta.3](2.1.0-beta.3-grid-physics/README.md) — исторические пакеты, не актуальная рекомендация.
-- [Архив документации](../../Bloodborne-Blocks/docs/history/README.md) — исходные отчёты без переоценки их статуса.
-- [repair/composite-preserving-grid](https://github.com/Stasik1960/Dreamwalker/tree/repair/composite-preserving-grid) — отдельные REPAIR TEST-сборки; не включены в `main` и не являются обновлением rc.1.
-
-Мир, галерея и JAR должны относиться к одному проверяемому комплекту.
+**rc.1 не содержит принятые repair-исправления.** Его JAR и карта оставлены как
+историческая база, не как текущая рекомендация. Старые beta, REPAIR TEST и
+`repair-catalog.1` diagnostic world также не заменяют комплект выше.
+[История](HISTORY.md). Никогда не смешивайте их JAR и карты с rc.2.

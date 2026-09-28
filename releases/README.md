@@ -24,7 +24,7 @@ DW Languages предоставлены пользователем и опубл
 
 | Проект | Сборки и статус |
 | --- | --- |
-| Bloodborne Architecture 2.1.0-rc.1 | [JAR, карта и ограничения](Bloodborne-Blocks/README.md). Офлайн-проверки прошли; серверный перезапуск и клиентская приёмка ещё не подтверждены |
+| Bloodborne Architecture 2.1.0-rc.2 | [Единый JAR + полный город](Bloodborne-Blocks/README.md). Объединены принятые repair-исправления; комплект для проверки, графическая приёмка не завершена |
 | Danny’s AoT 2.4.3-backport.2 | [Единый JAR и установка](Danny-AOT/README.md). Неофициальный тестовый порт |
 | Immersive Engineering через Kilt | [Описание адаптера 0.2.0](ImmersiveEngineering-Fabric/README.md). Только документация: JAR и установщика в `main` нет |
 

@@ -1,68 +1,48 @@
-# Bloodborne Blocks — RELEASE_READY: NOT YET CERTIFIED
+# Bloodborne Blocks 2.1.0-rc.2 — комплект для проверки
 
-2026-09-27. Проверочный кандидат: **2.1.0-rc.1**. Runtime baseline —
-`b086e88929a971a2abd184629b3e7a59225304e5`; процессная ветка —
-`codex/bloodborne-release-audit`. Из repair runtime ничего не перенесено.
-Проверяемая карта создана отдельно от неизменного MODDED-входа; это ещё не
-production-сертификация без реального сервера и клиента.
+Принятые TEST3 и настоящее локальное продолжение repair объединены с полным
+городом rc.1. [Единый каталог JAR + карта](../../releases/Bloodborne-Blocks/README.md).
+Source commit runtime: `fcff3c5004520778b79c45c887b2ba1a715e99d0`; accepted checkpoint:
+`41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a`. Графическая приёмка не выполнена.
 
-| Gate | Фактический статус | Доказательство / ограничение |
+| Проверка | Статус | Доказательство / граница |
 |---|---|---|
-| TEST_SCOPE_PASS | PASS | 202 Python tests / 36 запусков и Java/data checks; только объявленный [scope](release/evidence/rc1/test-scope.json) |
-| STATIC_PASS | PASS | Локальные `check build checkReleaseVersion`; [лог](release/evidence/rc1/check-build-gametest.log), [package](release/evidence/rc1/package.json) |
-| GAMETEST_PASS | PASS | 37/37, 0 failures; [свежий XML](release/evidence/rc1/TEST-logical-gametest.xml) |
-| DEDICATED_RESTART_PASS | NOT_RUN | Нужен запуск итоговой карты на dedicated server и повторный запуск |
-| CLIENT_VISUAL_PASS | NOT_RUN | Нужна визуальная проверка: startup/RAM/reload/FPS/TPS не измерены |
-| FULL_CITY_OFFLINE_PASS | PASS | 23 ID / 33 клетки удалены в копии, затем 22 366 групп сконвертированы; полный census: 0 `m_*`, 0 unknown ID |
-| RELEASE_READY | NOT_YET_CERTIFIED | Остались реальные dedicated-server и client gates |
+| STATIC_PASS | PASS | `check build checkReleaseVersion`, 283 Python tests / 49 запусков плюс Java/data checks |
+| GAMETEST_PASS | PASS | Свежие 57/57, 0 failures |
+| ACCEPTED_RUNTIME_PASS | PASS | 30 Java файлов, 49 logical-контрактов, TEST3 и owner/GUI продолжение; физика 2 914 RC1 compatibility-блоков / 28 866 профилей сохранена |
+| ACCEPTED_CITY_PASS | PASS | 6 507 групп восстановлены; 20 474 уже корректны; 0 целевых конфликтов и остаточных фрагментов |
+| WHOLE_WORLD_COMPATIBILITY | PASS | 10 009 чанков; 0 unknown/invalid/helper errors; 170 non-terrain файлов побайтно неизменны |
+| SECOND_PASS | PASS | 0 изменений; все 186 файлов побайтно идентичны |
+| PACKAGED_DEDICATED_SMOKE | PASS | Упакованный JAR + Fabric API: запуск, save-all flush, stop, повторный запуск/сохранение/stop; контрольные чанки |
+| DEDICATED_RESTART_PASS (полная сборка) | BLOCKED | Сторонние моды отсутствовали в QA; их runtime-данные на тестовой копии пропускались |
+| CLIENT_VISUAL_PASS | NOT_RUN | Ручной client startup/reload/restart, interactions, FPS/RAM не измерены |
+| FULL_CITY_PASS (глобальная история) | BLOCKED / вне задачи | Неподтверждённые исторические сборки не реконструировались |
+| RELEASE_READY | BLOCKED | Разрешён проверочный комплект, без production-сертификации и release tag |
 
-GitHub Actions: **PASS**, [run 36336948341](https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341)
-для commit `782473a7c57e8cd303de57223f9c3f3e075b5d26`: 202 Python tests / 36 запусков,
-37/37 GameTests, build/version/package PASS. Результат относится к проверкам кода
-и пакета; production gates выше остаются открытыми.
-Workflow теперь получает полную Git-историю и устанавливает NumPy 1.26.4 /
-Pillow 10.4.0; выполняет check/build/GameTests/version/package checks.
+Dedicated world startup: 6,989 / 5,371 секунды (лог `Done`), localhost only.
+36 контрольных чанков принудительно загружены и сохранены после restart;
+замер без игроков: 21,06 секунды / 429 ticks / 20,37 TPS. Peak RAM не измерен.
+Это не оценка производительности production и не визуальная проверка.
+Публикуемый архив не проходил через сервер QA: данные остальных модов в нём
+побайтно сохранены. Для игры необходима остальная исходная сборка модов.
+GitHub CI: **ожидает запуска**; локальный итоговый check завершён успешно.
 
-**BB-COMPOSITE-INPUT закрыт по явно одобренной политике удаления.** Для 23
-`m_*` ID в 33 клетках не нашлось authoritative definitions, моделей, коллизий
-или ownership/composition mapping. Вместо подстановки старой раскладки создана
-новая копия: все 33 исходных состояния были сверены, проверены на отсутствие
-block entity/tick и заменены на воздух. Затем карта переведена в текущий grid.
-Полное доказательство и SHA приведены в
-[retired-composites-world.json](release/evidence/rc1/retired-composites-world.json).
+- JAR SHA-256: `1ce7f8a57dbbeaf6c0d913daf6e02a4ad1fe63fceac78cdd26773dd5615d1f56`.
+- Город SHA-256: `f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c`.
+- Входной rc.1 SHA-256: `749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9`.
 
-Старый [recovery](city-compat/RECOVERY.md) не использовался: он восстанавливает
-предыдущую раскладку, а не неизвестные transient composites.
+Точные команды, source manifest, хэши и результаты:
+[status.json](release/status.json), [delivery](accepted-restore/delivery.json),
+[итоговый лог](accepted-restore/final-check.log),
+[XML](accepted-restore/TEST-logical-gametest.xml),
+[полная таблица/координаты](accepted-restore/REPORT.md),
+[комментарии агента](accepted-restore/AGENT-COMMENTS.md).
 
-Следующие обязательные действия — dedicated-server загрузка и перезапуск с
-итоговой картой, затем клиентская визуальная проверка. Их отсутствие не
-означает успеха.
+23 неизвестных composite ID не восстанавливались. Все 33 прежние retired-позиции
+сохранены как в rc.1, включая 20 уже занятых клеток. Исходные ZIP не изменены.
+Точка реквизита `(-332,77,-137)` не имеет готового доказательства целой стопки;
+оставлена без изменения. 34 подтверждённые стопки восстановлены в других точках.
+Перед обновлением обязателен backup: [migration guide](accepted-restore/MIGRATION.md).
 
-Артефакты локальной **проверочной сборки**, не production package:
-
-- `build/libs/bloodborne-blocks-2.1.0-rc.1.jar` — SHA-256
-  `dec76327fba9db0e699aff75168ce1d533e34bd5da5c7fca98437008d846505d`.
-- `build/libs/bloodborne-blocks-2.1.0-rc.1-sources.jar` — SHA-256
-  `fc1e6b7509c83241e3b226bb5d92ce8da8af62b17b4529ae987f3dfeb232d8a9`.
-- MODDED ZIP не изменён: SHA-256
-  `c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9`.
-
-Linux CI [artifact](https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341/artifacts/10937273847)
-содержит отдельную CI-сборку того же rc.1: JAR SHA-256
-`a27a25b5a07bcf723b55d631004f62c52a5957e6feac3c1ba14c289252b8f7f6`.
-Его SHA нельзя подменять SHA локального Windows JAR; Linux resource manifest и
-sources JAR SHA записаны отдельно в `status.json.ci.package`.
-
-rc.1 получает собственную версию: эквивалентность опубликованному beta.3 JAR
-не заявляется. Пять class differences и старый repair delta 355/356 сохранены
-как история; они не подменяют доказательства нового кандидата.
-
-Точные команды, fingerprints и разделение TEST/full-city:
-[status.json](release/status.json). Старое evidence не перезаписано:
-[beta.3 status](release/evidence/status-beta3.json), [аудит](release/AUDIT.md).
-См. [migration guide](release/MIGRATION.md), [воспроизведение](release/REPRODUCE.md)
-и [отдельный комментарий агента](release/AGENT-COMMENTS.md).
-
-Карта rc.1 сконвертирована и добавлена в `main` коммитом `de7b1173f`;
-[каталог файлов](../../releases/Bloodborne-Blocks/README.md) содержит ссылку на архив.
-Это не production-сертификация: dedicated-server restart и client acceptance остаются NOT_RUN.
+Старый rc.1 **не содержит принятых repair-исправлений**. Его прежний
+[status](release/evidence/status-rc1.json) сохранён как история.

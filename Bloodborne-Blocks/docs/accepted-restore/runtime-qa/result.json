@@ -1,0 +1,39 @@
+{
+  "status": "PASS_PACKAGED_DEDICATED_LIFECYCLE",
+  "fresh_start": "PASS",
+  "fresh_save_all": "PASS",
+  "fresh_stop": "PASS",
+  "restart_start": "PASS",
+  "restart_save_all": "PASS",
+  "restart_stop": "PASS",
+  "successful_server_starts": 2,
+  "startup_durations_seconds": [
+    6.989,
+    5.371
+  ],
+  "bind": "127.0.0.1",
+  "port": 25580,
+  "java": "17.0.20.1",
+  "launcher_endpoint": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.16.10/1.1.2/server/jar",
+  "mods": [
+    {
+      "name": "bloodborne-blocks-2.1.0-rc.2.jar",
+      "sha256": "1CE7F8A57DBBEAF6C0D913DAF6E02A4AD1FE63FCEAC78CDD26773DD5615D1F56",
+      "length": 37915221
+    },
+    {
+      "name": "fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979CCAA1012354DFFF14F39FDB085AEFB3F1E0224FF45C3AF41E4FFED5FD",
+      "length": 2111565
+    }
+  ],
+  "world_source_file_count": 186,
+  "teleport_chunk_load": "NOT_RUN_NO_PLAYER",
+  "peak_ram": "not captured",
+  "tick_measurement": "startup region only",
+  "no_server_process_left": true,
+  "logs": [
+    "fresh.log.gz",
+    "restart.log"
+  ]
+}

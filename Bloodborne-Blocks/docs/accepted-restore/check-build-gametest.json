@@ -1,0 +1,25 @@
+{
+  "command": [
+    "C:\\Windows\\system32\\cmd.exe",
+    "/d",
+    "/c",
+    "gradlew.bat",
+    "--offline",
+    "--no-daemon",
+    "--console=plain",
+    "-I",
+    "tools/verification-direct-resources.init.gradle",
+    "-PbloodbornePython=C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\rc1-verification\\venv\\Scripts\\python.exe",
+    "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+    "check",
+    "build",
+    "logicalGameTest",
+    "checkReleaseVersion",
+    "--max-workers=1"
+  ],
+  "startedUtc": "2026-09-28T10:13:26.349745+00:00",
+  "scope": "accepted repair integration; no graphical client claim",
+  "pid": 26916,
+  "exitCode": 0,
+  "seconds": 580.67
+}

@@ -1,0 +1,294 @@
+{
+  "sourceCommit": "56d1c914dd888f5e824e982f9f223bb2c2972636",
+  "sourceSnapshotSha256": "84a6287870c1203223203ad17d0dddd6865baa8816bfadfff736fe1244941c9b",
+  "resourceSha256": "914f20cd88c6e4e16ac9c3f5c51481f54e2da6e16542f4c3df44c6367cd65278",
+  "inputSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+  "schemaVersion": 1,
+  "scope": "full-city",
+  "branch": "codex/bloodborne-release-audit",
+  "version": "2.1.0-rc.1",
+  "runtimeBaselineCommit": "b086e88929a971a2abd184629b3e7a59225304e5",
+  "workingTree": "Captured from the run-start parent commit plus exact rc.1 version/CI changes identified by source and resource manifests; no repair runtime port.",
+  "provenance": {
+    "sourceSnapshot": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/rc1/source-snapshot.json",
+      "sha256": "84a6287870c1203223203ad17d0dddd6865baa8816bfadfff736fe1244941c9b"
+    },
+    "resourceManifest": {
+      "path": "Bloodborne-Blocks/docs/release/evidence/rc1/resource-manifest.json",
+      "sha256": "914f20cd88c6e4e16ac9c3f5c51481f54e2da6e16542f4c3df44c6367cd65278"
+    },
+    "inputWorld": {
+      "path": "Bloodborne-Blocks/reference-inputs/latest-modded-world.zip",
+      "sha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9"
+    }
+  },
+  "gates": {
+    "TEST_SCOPE_PASS": {
+      "status": "PASS",
+      "scope": "test-kit",
+      "evidence": {
+        "sourceCommit": "56d1c914dd888f5e824e982f9f223bb2c2972636",
+        "sourceSnapshotSha256": "84a6287870c1203223203ad17d0dddd6865baa8816bfadfff736fe1244941c9b",
+        "resourceSha256": "914f20cd88c6e4e16ac9c3f5c51481f54e2da6e16542f4c3df44c6367cd65278",
+        "inputSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+        "artifacts": [
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/check-build-gametest.log",
+            "sha256": "12e8afd20e000b133f04108287e4faad46deddf3d63d6164f15062baf3a47d82"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/test-scope.json",
+            "sha256": "57e04a919dc3c2bd76e7baaf07bdb122b5b3a48d9bd06b64285599707924a665"
+          }
+        ],
+        "commands": [
+          {
+            "argv": [
+              "C:\\Windows\\system32\\cmd.exe",
+              "/d",
+              "/c",
+              "gradlew.bat",
+              "--offline",
+              "--no-daemon",
+              "--console=plain",
+              "-I",
+              "tools/verification-direct-resources.init.gradle",
+              "-PbloodbornePython=C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\rc1-verification\\venv\\Scripts\\python.exe",
+              "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+              "check",
+              "build",
+              "logicalGameTest",
+              "checkReleaseVersion",
+              "--max-workers=1"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/release/evidence/rc1/check-build-gametest.json",
+              "sha256": "37972228305b4b01ebd1604423817982543afd3e03358ec669be334586733505"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/release/evidence/rc1/test-scope.json",
+          "sha256": "57e04a919dc3c2bd76e7baaf07bdb122b5b3a48d9bd06b64285599707924a665"
+        }
+      }
+    },
+    "STATIC_PASS": {
+      "status": "PASS",
+      "scope": "full-city",
+      "evidence": {
+        "sourceCommit": "56d1c914dd888f5e824e982f9f223bb2c2972636",
+        "sourceSnapshotSha256": "84a6287870c1203223203ad17d0dddd6865baa8816bfadfff736fe1244941c9b",
+        "resourceSha256": "914f20cd88c6e4e16ac9c3f5c51481f54e2da6e16542f4c3df44c6367cd65278",
+        "inputSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+        "artifacts": [
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/check-build-gametest.log",
+            "sha256": "12e8afd20e000b133f04108287e4faad46deddf3d63d6164f15062baf3a47d82"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/static.json",
+            "sha256": "636106f43a4251b8b4584dc1f4e7e88e2d09f306deda956d0f383a4232d0b9a5"
+          },
+          {
+            "path": "Bloodborne-Blocks/build/libs/bloodborne-blocks-2.1.0-rc.1.jar",
+            "sha256": "dec76327fba9db0e699aff75168ce1d533e34bd5da5c7fca98437008d846505d"
+          },
+          {
+            "path": "Bloodborne-Blocks/build/libs/bloodborne-blocks-2.1.0-rc.1-sources.jar",
+            "sha256": "fc1e6b7509c83241e3b226bb5d92ce8da8af62b17b4529ae987f3dfeb232d8a9"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/package.json",
+            "sha256": "1a074e15a6b3b1bd92683bfe4cef2cee4461679414391b56d166a2a390a48b6a"
+          }
+        ],
+        "commands": [
+          {
+            "argv": [
+              "C:\\Windows\\system32\\cmd.exe",
+              "/d",
+              "/c",
+              "gradlew.bat",
+              "--offline",
+              "--no-daemon",
+              "--console=plain",
+              "-I",
+              "tools/verification-direct-resources.init.gradle",
+              "-PbloodbornePython=C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\rc1-verification\\venv\\Scripts\\python.exe",
+              "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+              "check",
+              "build",
+              "logicalGameTest",
+              "checkReleaseVersion",
+              "--max-workers=1"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/release/evidence/rc1/check-build-gametest.json",
+              "sha256": "37972228305b4b01ebd1604423817982543afd3e03358ec669be334586733505"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/release/evidence/rc1/static.json",
+          "sha256": "636106f43a4251b8b4584dc1f4e7e88e2d09f306deda956d0f383a4232d0b9a5"
+        }
+      }
+    },
+    "GAMETEST_PASS": {
+      "status": "PASS",
+      "scope": "full-city",
+      "evidence": {
+        "sourceCommit": "56d1c914dd888f5e824e982f9f223bb2c2972636",
+        "sourceSnapshotSha256": "84a6287870c1203223203ad17d0dddd6865baa8816bfadfff736fe1244941c9b",
+        "resourceSha256": "914f20cd88c6e4e16ac9c3f5c51481f54e2da6e16542f4c3df44c6367cd65278",
+        "inputSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+        "artifacts": [
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/check-build-gametest.log",
+            "sha256": "12e8afd20e000b133f04108287e4faad46deddf3d63d6164f15062baf3a47d82"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/release/evidence/rc1/gametest.json",
+            "sha256": "b28909e337e0c35a52f2b6837188890f8b7d86bef44e25984698cefb07f4576b"
+          }
+        ],
+        "commands": [
+          {
+            "argv": [
+              "C:\\Windows\\system32\\cmd.exe",
+              "/d",
+              "/c",
+              "gradlew.bat",
+              "--offline",
+              "--no-daemon",
+              "--console=plain",
+              "-I",
+              "tools/verification-direct-resources.init.gradle",
+              "-PbloodbornePython=C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-release-audit\\DW\\Bloodborne-Blocks\\build\\rc1-verification\\venv\\Scripts\\python.exe",
+              "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+              "check",
+              "build",
+              "logicalGameTest",
+              "checkReleaseVersion",
+              "--max-workers=1"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/release/evidence/rc1/check-build-gametest.json",
+              "sha256": "37972228305b4b01ebd1604423817982543afd3e03358ec669be334586733505"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/release/evidence/rc1/gametest.json",
+          "sha256": "b28909e337e0c35a52f2b6837188890f8b7d86bef44e25984698cefb07f4576b"
+        }
+      }
+    },
+    "DEDICATED_RESTART_PASS": {
+      "status": "NOT_RUN",
+      "scope": "full-city",
+      "plannedCommands": [],
+      "reason": "The offline final world is ready; dedicated-server load and restart have not yet been run."
+    },
+    "CLIENT_VISUAL_PASS": {
+      "status": "NOT_RUN",
+      "scope": "full-city",
+      "plannedCommands": [],
+      "reason": "The offline final world is ready; graphical-client acceptance has not yet been run."
+    },
+    "FULL_CITY_PASS": {
+      "status": "OFFLINE_PASS",
+      "scope": "full-city",
+      "plannedCommands": [],
+      "reason": "A new copied world retired exactly 23 unrecoverable IDs in 33 verified cells, then full-grid conversion and the whole-world census passed (0 old modules, unknown IDs or invalid states). See retired-composites-world.json."
+    },
+    "RELEASE_READY": {
+      "status": "NOT_YET_CERTIFIED",
+      "scope": "full-city",
+      "plannedCommands": [],
+      "reason": "Offline world compatibility now passes, but dedicated-server restart and graphical-client acceptance are still not run."
+    }
+  },
+  "knownReleaseBlockers": [
+    {
+      "id": "BB-RUNTIME-ACCEPTANCE",
+      "scope": "full-city",
+      "reason": "The offline release world is verified, but dedicated-server restart and graphical-client acceptance are not run.",
+      "nextStep": "Load the released world on a dedicated server, restart it, then complete client visual/performance acceptance.",
+      "evidence": [
+        {
+          "path": "Bloodborne-Blocks/docs/release/evidence/rc1/retired-composites-world.json",
+          "sha256": "b4f063af2bf07c50259de45d4af607e06e6b366c1489e36331f498f0bddaeca4"
+        }
+      ]
+    }
+  ],
+  "unresolvedDiscrepancies": [],
+  "historicalDiscrepancies": [
+    {
+      "reason": "Five published/rebuilt beta.3 class differences remain unclassified; rc.1 has a new version and artifact identity instead of asserting equivalence.",
+      "source": {
+        "path": "Bloodborne-Blocks/docs/release/evidence/published-local-jar-comparison.json",
+        "sha256": "d6a6a262c840a1ac8ec1c28f4c7b5787d9e8a582847bb50f75f306a2dcdf3397"
+      }
+    },
+    {
+      "reason": "355/356 historical repair payload delta remains unresolved; no repair runtime/evidence is adopted as rc.1 production proof."
+    }
+  ],
+  "historicalStatus": {
+    "path": "Bloodborne-Blocks/docs/release/evidence/status-beta3.json",
+    "sha256": "8651a3aeffe346da7488600e0c38770afbbb1f1714a45c0f11195b17d1b70545"
+  },
+  "phaseState": {
+    "A": "PASS: local and GitHub check/build/GameTests/version/package; the candidate has a new artifact identity.",
+    "B": "BLOCKED at authoritative current composite source data; no guessed aliases or destructive recovery.",
+    "C": "NOT_RUN after B blocker; user authorized copy-only conversion once compatibility and whole-owner prerequisites are met.",
+    "D": "NOT_RUN after B blocker; startup/RAM/reload/FPS/TPS NOT_MEASURED.",
+    "E": "Candidate artifact only; no main merge, release tag or production publication."
+  },
+  "ci": {
+    "id": 36336948341,
+    "headSha": "782473a7c57e8cd303de57223f9c3f3e075b5d26",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341",
+    "startedAt": "2026-09-27T17:26:35Z",
+    "updatedAt": "2026-09-27T17:31:51Z",
+    "jobId": 108669502886,
+    "scope": "static/build/GameTests/version/package only; not production readiness",
+    "pythonTests": 202,
+    "pythonRuns": 36,
+    "gameTests": 37,
+    "package": {
+      "version": "2.1.0-rc.1",
+      "jar": {
+        "path": "bloodborne-blocks-2.1.0-rc.1.jar",
+        "sha256": "a27a25b5a07bcf723b55d631004f62c52a5957e6feac3c1ba14c289252b8f7f6"
+      },
+      "sourceJar": {
+        "path": "bloodborne-blocks-2.1.0-rc.1-sources.jar",
+        "sha256": "339ca4d7802d667925badacd870c830b725ee2538d4e003ea63c17bffd54f903"
+      },
+      "sourceJavaFiles": 25,
+      "resources": {
+        "ok": true,
+        "version": "2.1.0-rc.1",
+        "resources": 13969,
+        "loomMixinConfigs": [
+          "bloodborne_blocks.mixins.json"
+        ],
+        "manifestSha256": "80b126bd40334a78f99aa8184d46e981f9916a1e32f467de0f33ee4222b6a136",
+        "jarSha256": "a27a25b5a07bcf723b55d631004f62c52a5957e6feac3c1ba14c289252b8f7f6"
+      }
+    },
+    "artifactUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36336948341/artifacts/10937273847",
+    "artifactNote": "Linux CI artifact has its own SHA; do not substitute the local Windows JAR hash."
+  },
+  "candidateCommit": "782473a7c57e8cd303de57223f9c3f3e075b5d26"
+}
