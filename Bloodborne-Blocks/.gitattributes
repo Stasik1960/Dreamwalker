@@ -1,4 +1,6 @@
 # Preserve recorded evidence bytes and hashes across Windows/Linux checkouts.
+# Frozen owner evidence hashes this oracle with its original CRLF terminator.
+docs/composite-grid-repair/protected-world-oracle.json text eol=crlf
 docs/release/** -text whitespace=cr-at-eol
 docs/history/main-b086e8892/** -text whitespace=cr-at-eol
 # Captured process output is verbatim evidence, including its trailing spaces.
