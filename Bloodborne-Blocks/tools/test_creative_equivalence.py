@@ -41,6 +41,17 @@ def main() -> None:
         proof = ModelEvidence(resources, meshes, {})
         assert proof.mesh("a") != proof.mesh("b"), "texture animation is visible behavior"
         assert proof.visual("example:base", "a") != proof.visual("example:alt", "a"), "changed inherited texture creates distinct art on a new build"
+        metadata = texture_root / "b.png.mcmeta"
+        crlf = b'{\r\n "animation": {"frametime": 2}\r\n}\r\n'
+        metadata.write_bytes(crlf)
+        windows = ModelEvidence(resources, meshes, {})
+        windows_mesh = windows.mesh("b")
+        metadata.write_bytes(crlf.replace(b'\r\n', b'\n'))
+        linux = ModelEvidence(resources, meshes, {})
+        assert linux.mesh("b") == windows_mesh, "checkout line endings cannot change animation evidence"
+        assert linux.source_hashes == windows.source_hashes
+        metadata.write_bytes(crlf.replace(b': 2', b': 3'))
+        assert ModelEvidence(resources, meshes, {}).mesh("b") != windows_mesh, "animation timing remains part of the proof"
         (texture_root / "b.png.mcmeta").unlink()
         mesh_b["polygons"][0]["vertices"][1][0] = 0.75
         proof = ModelEvidence(resources, meshes, {})

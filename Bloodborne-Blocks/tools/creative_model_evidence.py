@@ -69,7 +69,7 @@ class ModelEvidence:
             # Unbundled vanilla textures remain distinct opaque identifiers.
             self._textures[cache_key] = {
                 'png': hashlib.sha256(png).hexdigest() if png is not None else None,
-                'mcmeta': hashlib.sha256(metadata).hexdigest() if metadata is not None else None,
+                'mcmeta': hashlib.sha256(metadata.replace(b'\r\n', b'\n')).hexdigest() if metadata is not None else None,
                 'external': name if png is None else None,
             }
             if emissive:
