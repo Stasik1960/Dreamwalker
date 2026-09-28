@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import sys
 import unittest
+import tempfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -61,6 +62,13 @@ def group(desired=None, helpers=None, outputs=None):
 
 
 class AcceptedObjectsRestoreTests(unittest.TestCase):
+    def test_existing_output_is_rejected_before_reading_inputs(self):
+        with tempfile.TemporaryDirectory() as temp:
+            base=Path(temp);out=base/'existing';out.mkdir()
+            with self.assertRaisesRegex(ValueError,'output must be a new directory'):
+                restore.restore(base/'source.zip',out,resources=base/'resources',
+                    report_path=base/'reports/result.json',report_root=base/'reports')
+
     def test_already_correct_with_scheduled_tick_is_not_accepted(self):
         world=MemoryWorld({(DIM,(0,64,0)):TARGET},{(DIM,(0,64,0))})
         self.assertEqual((None,'scheduled_tick_at_target'),restore.plan_group(group(),world,world,{},{},{},set()))

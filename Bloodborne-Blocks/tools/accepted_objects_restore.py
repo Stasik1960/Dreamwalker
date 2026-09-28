@@ -410,6 +410,7 @@ def restore(source, output, *, resources, report_path, report_root, dry_run=Fals
     report_path=Path(report_path or ROOT/'build/accepted-restore/restore.json').resolve()
     report_root=Path(report_root or ROOT/'build').resolve()
     validate_paths(source,output,resources,report_path,report_root)
+    if output.exists():raise ValueError('output must be a new directory outside the source')
     for path,digest in ((reference,RC1_SHA),(modded,MODDED_SHA),(accepted,ACCEPTED_SHA)):
         if sha(path)!=digest: raise ValueError('accepted bridge input SHA-256 mismatch: '+str(path))
     if source.is_file():
