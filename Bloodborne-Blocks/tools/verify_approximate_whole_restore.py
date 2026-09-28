@@ -16,7 +16,8 @@ RES=ROOT/'src/main/resources/bloodborne_blocks/logical'
 
 
 def run(source,output,ledger_path,result_path):
-    ledger=json.loads(ledger_path.read_bytes())
+    raw=ledger_path.read_bytes()
+    ledger=json.loads(gzip.decompress(raw) if ledger_path.suffix=='.gz' else raw)
     with tempfile.TemporaryDirectory(prefix='approximate-verification-') as temp:
         before=safe_extract(source,Path(temp)/'before')
         if output.is_file():output=safe_extract(output,Path(temp)/'after')

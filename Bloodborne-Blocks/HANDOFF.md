@@ -1,5 +1,15 @@
 # Bloodborne Blocks handoff
 
+Latest output: `releases/Bloodborne-Blocks/2.1.0-rc.4/README.md`, branch
+`codex/whole-models-final`. User explicitly authorized approximate replacements,
+then requested final assembly without further checks on their computer.
+Known census 34233/34233, integrity/preservation/repeat PASS were obtained before
+that cancellation. Final client/dedicated/full-check gates are NOT passed;
+no automatic main merge. Seven authored grass alternatives added, original rc.3
+unchanged. See rc.4 delivery.json and decisions/APPROXIMATION.json.
+
+The following is historical handoff context, not the current delivery status.
+
 **New task, 2026-09-29:** [historical whole-model consolidation](docs/whole-models-handoff/TASK.md).
 Start there: compare historical JAR/full-city pairs, select the best base, reuse
 the existing manual complex models, resolve visual/physics conflicts with the
