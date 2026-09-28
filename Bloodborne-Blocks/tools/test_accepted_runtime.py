@@ -13,6 +13,11 @@ import check_accepted_runtime as gate
 
 
 class AcceptedRuntimeTests(unittest.TestCase):
+    def test_mcmeta_provenance_ignores_checkout_line_endings_only_semantically(self):
+        left=gate._semantic(b'{\r\n"animation":{}\r\n}', 'lantern.png.mcmeta')
+        self.assertEqual(left,gate._semantic(b'{\n"animation":{}\n}', 'lantern.png.mcmeta'))
+        self.assertNotEqual(left,gate._semantic(b'{"animation":{"frametime":5}}', 'lantern.png.mcmeta'))
+
     def refresh_runtime_jar(self, root, jar):
         with zipfile.ZipFile(jar, "w") as archive:
             metadata = json.loads((root / "src/main/resources/fabric.mod.json").read_text())

@@ -37,7 +37,7 @@ def _semantic(data: bytes, name: str) -> bytes:
     if name.endswith(".json.gz"):
         data = gzip.decompress(data)
         name = name[:-3]
-    return _canonical(json.loads(data)) if name.endswith(".json") else data
+    return _canonical(json.loads(data)) if name.endswith((".json", ".mcmeta")) else data
 
 
 def _text_semantic(data: bytes) -> bytes:
