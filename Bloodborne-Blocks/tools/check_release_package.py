@@ -92,6 +92,9 @@ def validate_accepted_city(root):
     The supplied full city is independently verified on every package check;
     a stale PASS report, registry census or protected-ID list is insufficient.
     """
+    approximate = root/'releases/Bloodborne-Blocks'/version(root)/'delivery.json'
+    if approximate.is_file():
+        return validate_approximate_city(root,approximate)
     complete = root/'docs/complete-accepted-repair/delivery.json'
     if complete.is_file():
         return validate_complete_city(root,complete)
@@ -122,6 +125,39 @@ def validate_accepted_city(root):
         proof.get('result') != 'PASS' or proof.get('outputTreeSha256') != result['outputTreeSha256']):
         raise ValueError('Accepted city idempotence proof failed')
     return {k: v for k, v in result.items() if k != 'families'}
+
+
+def validate_approximate_city(root, manifest_path):
+    """Verify the explicitly approximate delivery without relabeling it exact."""
+    import tempfile
+    from verify_approximate_whole_restore import run
+    from verify_complete_accepted_repair import read
+    manifest=read(manifest_path)
+    if (manifest.get('version')!=version(root) or
+            manifest.get('scope')!='user-approved-approximate-known-census' or
+            manifest.get('releaseReady') is not False):
+        raise ValueError('Approximate delivery identity differs')
+    paths={}
+    for name in ('jar','sourcesJar','world','conversion','independent','repeat','artistKit'):
+        record=manifest[name];path=(root/record['path']).resolve()
+        if not path.is_relative_to(root.resolve()) or not path.is_file() or sha(path)!=record['sha256']:
+            raise ValueError('Approximate artifact changed: '+name)
+        paths[name]=path
+    from check_accepted_runtime import validate as accepted_runtime
+    accepted_runtime(paths['jar'],paths['sourcesJar'],root)
+    repeat=read(paths['repeat']);first=read(paths['conversion'])
+    if (repeat.get('result')!='PASS' or repeat.get('transactions')!=0 or
+            repeat.get('byteIdentical') is not True or repeat.get('outputTreeSha256')!=first.get('outputTreeSha256')):
+        raise ValueError('Approximate repeat proof differs')
+    baseline=root/'releases/Bloodborne-Blocks/2.1.0-rc.3/Bloodborne-City-2.1.0-rc.3-checkpoint.zip'
+    with tempfile.TemporaryDirectory(prefix='package-approximate-') as folder:
+        result=run(baseline,paths['world'],paths['conversion'],Path(folder)/'verification.json')
+    if result!=read(paths['independent']):
+        raise ValueError('Approximate independent result differs')
+    if result['integrity']['result']!='PASS' or result['preservation']['result']!='PASS' or result['coverage']['knownCensusCoverage']!='PASS':
+        raise ValueError('Approximate city integrity or known coverage failed')
+    return {'scope':manifest['scope'],'integrity':result['integrity'],'knownCensus':result['coverage']['counts'],
+            'releaseReady':False,'runtimeAcceptance':'not run at user request'}
 
 
 def validate_complete_city(root, manifest_path):

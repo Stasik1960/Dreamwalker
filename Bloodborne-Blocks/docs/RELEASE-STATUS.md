@@ -1,4 +1,37 @@
-# Bloodborne Blocks 2.1.0-rc.3 — checkpoint
+# Bloodborne Blocks 2.1.0-rc.4 — сборка с пропущенной финальной приёмкой
+
+Последнее решение пользователя: закончить сборку **без дальнейших проверок на его
+компьютере**. Активный check остановлен; новые client/dedicated запуски отменены.
+Результат и ограничения: [rc.4 README](../releases/Bloodborne-Blocks/2.1.0-rc.4/README.md).
+Добавлены 7 авторских трав. Новая карта: 2 725 приблизительных групп, 27 339
+изменённых клеток; independent known census 34 233/34 233, full-world integrity PASS,
+preservation PASS, repeat 0 changes / byte-identical. RELEASE_READY не объявлен;
+полнота вне известного census и полная игровая приёмка не доказаны. В main не слито.
+
+## История до разрешения приблизительной замены
+
+## Whole-models continuation (2026-09-29)
+
+Рабочая ветка: `codex/whole-models-final`. Это **не новая релизная пара**:
+производственная карта и runtime-ресурсы rc.3 пока не изменены.
+Исправлен Blockbench bridge (порядок faces, texture indices, sidecar metadata,
+точность после сохранения редактором, отказ при неподдерживаемых transforms),
+добавлен единый редакторский экспорт. `check build logicalGameTest checkReleaseVersion`
+прошёл локально; 59 GameTests PASS. Проверки выполнены на JDK 21 с target 17,
+а не на требуемом отдельном JDK 17.
+
+Настоящий клиент загрузил расходную копию города и выполнил resource reload.
+Blockbench 5.2.1 открыл/сохранил составной mesh с сохранением геометрии/UV;
+контролируемая правка высоты импортирована в отдельный ALT QA-ресурс-пак.
+Это частичная проверка, не полный CLIENT_VISUAL_PASS или редакторский gate.
+Полнота города по-прежнему FAIL: 4 453 известных остатка и неполный общий охват.
+Выбор книг **B: цельная композиция без коллизии** записан, но не разрешает
+удалять shared fragments без доказательства принадлежности.
+Подробности: [EXECUTION](whole-models-handoff/EXECUTION.md),
+[решение](whole-models-handoff/decisions/DECISIONS.md),
+[редактор](whole-models-handoff/BLOCKBENCH.md).
+
+## Ранее опубликованный rc.3
 
 Source commit: `9f32ff5ad2c2c8ecace8533749794da3d12aa36b`. Пара JAR + полная новая копия rc.2:
 [каталог](../../releases/Bloodborne-Blocks/README.md). Рабочая ветка

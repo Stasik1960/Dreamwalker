@@ -17,7 +17,7 @@ class ProductionGallerySpecimenTests(unittest.TestCase):
 
     def test_final_manifest_has_the_49_accepted_families_and_frozen_grass(self):
         ids = {row["id"] for row in self.objects}
-        self.assertEqual(len(ids), 50)
+        self.assertEqual(len(ids), 57)
         self.assertIn('o_grass_0', ids)
         self.assertFalse({"o_c561", "o_c1319", "o_c1962_a", "o_c1962_b", "o_bench_rotate", "o_ladder_02", "o_iron_railing"} & ids)
 

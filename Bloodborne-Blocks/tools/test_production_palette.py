@@ -27,7 +27,7 @@ class ProductionPaletteTests(unittest.TestCase):
 
     def test_exact_manifest_registry_and_no_superseded_members(self):
         ids={o['id'] for o in self.manifest['objects']}
-        self.assertEqual(50,self.required['expected_production_count']);self.assertEqual(50,len(self.required_ids));self.assertEqual(ids,self.required_ids);self.assertEqual(ids,set(self.blocks));self.assertEqual(ids,set(self.families))
+        self.assertEqual(57,self.required['expected_production_count']);self.assertEqual(57,len(self.required_ids));self.assertEqual(ids,self.required_ids);self.assertEqual(ids,set(self.blocks));self.assertEqual(ids,set(self.families))
         self.assertTrue(all(o['status']=='PRODUCTION' for o in self.manifest['objects']))
         self.assertFalse(ids & {x['id'] for x in self.manifest['excluded']})
         self.assertFalse(ids & set(self.required['forbidden_production_ids']))

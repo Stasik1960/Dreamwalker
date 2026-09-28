@@ -8,6 +8,8 @@ import hashlib
 import json
 import tempfile
 import zipfile
+import subprocess
+from collections import defaultdict
 from pathlib import Path
 
 from blockbench_mesh_bridge import json_bytes, mesh_to_bbmodel
@@ -44,39 +46,51 @@ def iter_meshes(path: Path):
             done = not piece
         def token():
             nonlocal offset
+            whitespace()
             while True:
                 try:
                     return decoder.raw_decode(buffer, offset)
                 except json.JSONDecodeError:
                     if done: raise
                     more()
+        def whitespace():
+            nonlocal offset
+            while True:
+                while offset < len(buffer) and buffer[offset].isspace():
+                    offset += 1
+                if offset < len(buffer):
+                    return
+                if done:
+                    raise ValueError('truncated mesh JSON')
+                more()
         more()
+        whitespace()
+        if buffer[offset] != '{':
+            raise ValueError('mesh file is not a JSON object')
+        offset += 1
+        seen = set()
         while True:
-            while offset >= len(buffer) or buffer[offset].isspace():
-                if offset >= len(buffer):
-                    if done: return
-                    more()
-                else: offset += 1
-            if buffer[offset] == "{": offset += 1; break
-            raise ValueError("mesh file is not a JSON object")
-        while True:
-            while offset >= len(buffer) or buffer[offset].isspace():
-                if offset >= len(buffer): more()
-                else: offset += 1
-            if buffer[offset] == "}": return
+            whitespace()
+            if buffer[offset] == "}":
+                if seen:
+                    raise ValueError('trailing comma in mesh JSON')
+                break
             mesh_id, offset = token()
-            while offset >= len(buffer): more()
+            if not isinstance(mesh_id, str) or mesh_id in seen:
+                raise ValueError('invalid or duplicate mesh ID')
+            seen.add(mesh_id)
+            whitespace()
             if buffer[offset] != ":": raise ValueError("invalid mesh map")
             offset += 1
             mesh, offset = token()
             yield mesh_id, mesh
             buffer, offset = buffer[offset:], 0
-            while offset >= len(buffer) or buffer[offset].isspace():
-                if offset >= len(buffer): more()
-                else: offset += 1
+            whitespace()
             if buffer[offset] == ",": offset += 1; continue
-            if buffer[offset] == "}": return
+            if buffer[offset] == "}": break
             raise ValueError("invalid mesh separator")
+        if (buffer[offset + 1:] + stream.read()).strip():
+            raise ValueError('trailing data after mesh JSON')
 
 
 def export(resources: Path, output: Path, force: bool = False) -> dict:
@@ -84,6 +98,15 @@ def export(resources: Path, output: Path, force: bool = False) -> dict:
         raise ValueError(f"output already exists: {output} (pass --force to replace it)")
     resources = resources.resolve()
     sources = {"logical": resources / "bloodborne_blocks/logical/meshes.json.gz", "city": resources / "bloodborne_blocks/city/meshes.json.gz", "owner": resources / "bloodborne_blocks/city/owner-meshes.json.gz"}
+    uses = defaultdict(list)
+    for kind in ('logical', 'city'):
+        definition_path = resources / f'bloodborne_blocks/{kind}/definitions.json'
+        for definition in json.loads(definition_path.read_bytes())['blocks']:
+            for state, mesh_id in (definition.get('models') or {}).items():
+                layer = 'owner' if kind == 'city' and mesh_id.startswith('owner_') else kind
+                uses[(layer, mesh_id)].append({'family': definition['id'], 'state': state,
+                    'visual_model': (definition.get('visual_models') or {}).get(state),
+                    'definition': definition_path.relative_to(resources).as_posix()})
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(dir=output.parent, prefix=output.name + ".", suffix=".tmp", delete=False) as handle:
         temporary = Path(handle.name)
@@ -97,17 +120,37 @@ def export(resources: Path, output: Path, force: bool = False) -> dict:
                         texture["path"] = "../../" + texture["relative_path"]
                         texture["relative_path"] = texture["path"]
                     name = f"models/{layer}/{mesh_id}.bbmodel"
-                    manifest_rows.append(add_zip(archive, name, json_bytes(document)))
+                    row = add_zip(archive, name, json_bytes(document))
+                    row.update({'mesh_id': mesh_id, 'runtime': source.relative_to(resources).as_posix(),
+                                'uses': uses.get((layer, mesh_id), []), 'bridge': name.replace('.bbmodel', '.bridge.json')})
+                    manifest_rows.append(row)
+                    manifest_rows.append(add_zip(archive, name.replace('.bbmodel', '.bridge.json'), json_bytes(document['bloodborne_mesh_bridge'])))
                     texture_ids.update(polygon["texture"] for polygon in mesh["polygons"])
             missing = []
             for identifier in sorted(texture_ids):
                 path = texture_path(resources, identifier)
                 if path is None:
+                    if not identifier.startswith('minecraft:'):
+                        raise ValueError('missing bundled texture: ' + identifier)
                     missing.append(identifier)
                     continue
                 namespace, _, value = identifier.partition(":")
                 manifest_rows.append(add_zip(archive, f"textures/{namespace}/{value}.png", path.read_bytes()))
-            manifest_rows.append(add_zip(archive, "mesh-manifest.json", json_bytes({"schema_version": 1, "position_scale": 16, "models": manifest_rows[:], "unbundled_vanilla_textures": missing, "runtime_import": "tools/blockbench_mesh_bridge.py:bbmodel_to_mesh"})))
+                metadata = path.with_suffix('.png.mcmeta')
+                if metadata.is_file():
+                    manifest_rows.append(add_zip(archive, f"textures/{namespace}/{value}.png.mcmeta", metadata.read_bytes()))
+            for tool in ('blockbench_mesh_bridge.py',):
+                manifest_rows.append(add_zip(archive, 'tools/' + tool, (ROOT / 'tools' / tool).read_bytes()))
+            for relative in ('ASSET-NOTICE.md', 'docs/whole-models-handoff/BLOCKBENCH.md'):
+                path = ROOT / relative
+                if path.is_file():
+                    manifest_rows.append(add_zip(archive, path.name, path.read_bytes()))
+            commit = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, check=True, capture_output=True, text=True).stdout.strip()
+            dirty = bool(subprocess.run(['git', 'status', '--porcelain'], cwd=ROOT, check=True, capture_output=True, text=True).stdout.strip())
+            manifest_rows.append(add_zip(archive, "mesh-manifest.json", json_bytes({"schema_version": 2,
+                "source_commit": commit, "source_dirty": dirty, "position_scale": 16, "files": manifest_rows[:],
+                "sources": {layer: {'path': path.relative_to(resources).as_posix(), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} for layer,path in sources.items()},
+                "unbundled_vanilla_textures": missing, "runtime_import": "tools/blockbench_mesh_bridge.py", "editor_qa": "See BLOCKBENCH.md; export alone is not client acceptance"})))
         temporary.replace(output)
     finally:
         if temporary.exists():

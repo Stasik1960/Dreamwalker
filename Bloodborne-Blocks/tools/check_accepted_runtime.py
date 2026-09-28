@@ -81,6 +81,11 @@ def _accepted_logical(root: Path, repo: Path) -> list[str]:
     # silently bless changes to another family or to TEST3 render/selection.
     palette = _json_file(root, f"{LOGICAL}/production-palette.json")
     has_grass = any(row['id']=='o_grass_0' for row in palette['objects'])
+    extensions = {f'o_grass_{n}' for n in range(1,8)}
+    present_extensions = extensions & {row['id'] for row in palette['objects']}
+    if present_extensions:
+        _require(present_extensions == extensions, 'INCOMPLETE_AUTHORED_GRASS_EXTENSION')
+        _validate_whole_grass(root)
     grass = None
     if has_grass:
         from build_accepted_bush_extension import build
@@ -90,13 +95,58 @@ def _accepted_logical(root: Path, repo: Path) -> list[str]:
         baseline = _semantic(_git(repo, ACCEPTED, path), path)
         if path.endswith(('.json','.json.gz')):
             baseline = _canonical(_logical_amendment(json.loads(baseline),Path(path).name,grass))
-        _require(_semantic((root / path).read_bytes(), path) == baseline,
+        actual_value = _semantic((root / path).read_bytes(), path)
+        if present_extensions and path.endswith(('.json','.json.gz')):
+            actual_value = _canonical(_without_whole_grass(json.loads(actual_value),Path(path).name,extensions))
+        _require(actual_value == baseline,
                  "ACCEPTED_LOGICAL_RESOURCE_CHANGED: " + path)
-    _require(len(palette.get("objects", ())) == 49+int(has_grass), "ACCEPTED_LOGICAL_PALETTE_COUNT_CHANGED")
+    _require(len(palette.get("objects", ())) == 49+int(has_grass)+len(present_extensions), "ACCEPTED_LOGICAL_PALETTE_COUNT_CHANGED")
     ids = [row.get("id") for row in palette["objects"]]
     _require(len(ids) == len(set(ids)) and {"o_c001", "o_books", "o_shuttered_window"} <= set(ids),
              "ACCEPTED_LOGICAL_PALETTE_INVALID")
     return expected
+
+
+def _without_whole_grass(value, name, identifiers):
+    """Keep the old fifty-family equality gate; only subtract validated additions."""
+    if name in ('definitions.json','contracts-v2.json','production-palette.json','visual-slots.json'):
+        key = {'definitions.json':'blocks','contracts-v2.json':'families',
+               'production-palette.json':'objects','visual-slots.json':'families'}[name]
+        value[key] = [row for row in value[key] if row['id'] not in identifiers]
+    elif name in ('geometry.json','physical-footprints.json'):
+        key = 'blocks' if name == 'geometry.json' else 'families'
+        value[key] = {k:v for k,v in value[key].items() if k not in identifiers}
+    elif name == 'meshes.json.gz':
+        value = {k:v for k,v in value.items() if not any(k.startswith(i+'_') for i in identifiers)}
+    return value
+
+
+def _validate_whole_grass(root):
+    """Independent source-art reconstruction, not a hash of mutable output."""
+    from source_assembly_visuals import source_polys
+    definitions = _by_id(_json_file(root,f'{LOGICAL}/definitions.json')['blocks'])
+    meshes = json.loads(_semantic((root/f'{LOGICAL}/meshes.json.gz').read_bytes(),'meshes.json.gz'))
+    contracts = _by_id(_json_file(root,f'{LOGICAL}/contracts-v2.json')['families'])
+    used = set()
+    for number in range(1,8):
+        ident = f'o_grass_{number}'; definition = definitions[ident]; contract = contracts[ident]
+        _require(contract['collision_policy']=='NONE' and contract['placement_policy']=='FLOOR', 'GRASS_PHYSICS_POLICY_CHANGED')
+        _require(definition['behavior']=='static' and definition['layer']=='cutout','GRASS_RUNTIME_POLICY_CHANGED')
+        for rotation,facing in enumerate(('north','east','south','west')):
+            polygons,_ = source_polys([{'model':f'minecraft:block/addon/grass_{number}','y':rotation*90}])
+            polygons=[{**p,'texture':'bloodborne_blocks:'+p['texture'].split(':',1)[-1],
+                       'vertices':[[round(v,6) for v in vertex] for vertex in p['vertices']]} for p in polygons]
+            lift=max(0,-min(v[1] for p in polygons for v in p['vertices']))
+            for p in polygons:
+                for vertex in p['vertices']:vertex[1]=round(vertex[1]+lift,6)
+            for visual in ('base','alt'):
+                key=f'facing={facing},visual={visual}'; mesh=definition['models'][key];used.add(mesh)
+                _require(mesh.startswith(ident+'_') and meshes[mesh]=={'polygons':polygons},'SOURCE_AUTHORED_GRASS_CHANGED: '+key)
+                _require(not contract['states'][key]['collision_footprint']['boxes'],'GRASS_COLLISION_ADDED')
+        pattern=contract['states']['facing=north,visual=base']['migration_source_pattern']
+        _require(len(pattern)==1 and pattern[0]['variant_guards'][0]['indices']==[number],'GRASS_SOURCE_RNG_CHANGED')
+    added={k for k in meshes if any(k.startswith(f'o_grass_{n}_') for n in range(1,8))}
+    _require(added==used,'UNREFERENCED_GRASS_MESH')
 
 
 def _logical_amendment(value, name, grass):

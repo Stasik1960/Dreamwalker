@@ -11,7 +11,7 @@ public final class CityCompatibilityChecks {
  public static void main(String[] args){
   SharedConstants.createGameVersion();Bootstrap.initialize();
   BloodborneBlocks.Data production=BloodborneBlocks.loadDefinitions();
-  check(production.blocks.size()==50,"production membership includes the reviewed grass family");
+  check(production.blocks.size()==57,"production membership includes all eight authored grass alternatives");
   GeometryRuntime.loadAndValidate(production);
   BloodborneBlocks.Data city=BloodborneBlocks.loadCityDefinitions();
   GeometryRuntime.loadCityAndValidate(city);

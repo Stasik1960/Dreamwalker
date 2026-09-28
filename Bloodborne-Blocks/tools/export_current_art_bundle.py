@@ -15,11 +15,11 @@ import hashlib
 import io
 import json
 import tempfile
+import zipfile
 from pathlib import Path
 
 from export_alt_visual_starter import json_bytes, write_zip
 from export_alt_artist_kit import export_artist
-from blockbench_mesh_bridge import json_bytes as bbmodel_bytes, mesh_to_bbmodel
 
 ROOT = Path(__file__).resolve().parents[1]
 RESOURCES = ROOT / "src/main/resources"
@@ -101,42 +101,6 @@ def runtime_entries(resources: Path) -> dict[str, bytes]:
                 for path in sorted(item for item in root.rglob("*") if item.is_file() and (path_suffix(item) in suffixes)):
                     add(entries, "runtime/" + path.relative_to(resources).as_posix(), path.read_bytes())
     return entries
-
-
-def blockbench_entries(entries: dict[str, bytes], resources: Path, collections: dict[str, dict]) -> dict:
-    """Add one generic Blockbench mesh per runtime custom mesh and shared PNGs.
-
-    The generated documents deliberately contain only visual mesh data.  Their
-    accompanying bridge manifest points back to collision/placement references
-    instead of pretending that a Blockbench file is a gameplay definition.
-    """
-    texture_ids: set[str] = set()
-    models = []
-    for layer, meshes in collections.items():
-        for mesh_id in sorted(meshes):
-            document = mesh_to_bbmodel(mesh_id, meshes[mesh_id])
-            model_path = f"blockbench/models/{layer}/{mesh_id}.bbmodel"
-            # Paths are relative to a model two directories below blockbench/.
-            for texture in document["textures"]:
-                relative = "../../" + texture["relative_path"]
-                texture["path"] = relative
-                texture["relative_path"] = relative
-            add(entries, model_path, bbmodel_bytes(document))
-            identifiers = sorted({polygon["texture"] for polygon in meshes[mesh_id]["polygons"]})
-            texture_ids.update(identifiers)
-            models.append({"layer": layer, "mesh_id": mesh_id, "file": model_path, "textures": identifiers})
-    missing = []
-    for identifier in sorted(texture_ids):
-        source = texture_path(resources, identifier)
-        if source is None:
-            missing.append(identifier)
-            continue
-        if not source.is_file():
-            raise ValueError("Blockbench missing texture " + identifier)
-        namespace, _, value = identifier.partition(":")
-        add(entries, f"blockbench/textures/{namespace}/{value}.png", source.read_bytes())
-    add(entries, "blockbench/mesh-manifest.json", json_bytes({"schema_version": 1, "position_scale": 16, "models": models, "unbundled_vanilla_textures": missing, "runtime_import": "tools/blockbench_mesh_bridge.py:bbmodel_to_mesh"}))
-    return {"models": len(models), "textures": len(texture_ids) - len(missing), "unbundled_vanilla_textures": missing}
 
 
 def path_suffix(path: Path) -> str:
@@ -225,8 +189,39 @@ def main() -> None:
     parser.add_argument("output", type=Path, help="new current-art ZIP")
     parser.add_argument("--resources", type=Path, default=RESOURCES)
     parser.add_argument("--force", action="store_true", help="explicitly replace output")
+    parser.add_argument("--with-blockbench", action="store_true", help="include streamed editable meshes and their import sidecars")
     args = parser.parse_args()
-    print(json.dumps(export_bundle(args.resources, args.output, args.force), ensure_ascii=False, sort_keys=True))
+    exporter = export_full_bundle if args.with_blockbench else export_bundle
+    print(json.dumps(exporter(args.resources, args.output, args.force), ensure_ascii=False, sort_keys=True))
+
+
+def export_full_bundle(resources: Path, output: Path, force: bool = False) -> dict:
+    """Combine the established art/ALT kit and editable meshes without buffering meshes."""
+    from export_blockbench_mesh_bundle import export as export_meshes, add_zip
+    output = output.resolve()
+    if output.exists() and not force:
+        raise ValueError('output already exists: ' + str(output))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='whole-model-kit-', dir=output.parent) as directory:
+        folder = Path(directory)
+        reference = export_bundle(resources, folder/'reference.zip')
+        meshes = export_meshes(resources, folder/'meshes.zip')
+        combined = folder/'combined.zip'
+        with zipfile.ZipFile(combined, 'w', compression=zipfile.ZIP_DEFLATED) as target:
+            rows = []
+            for path, prefix in ((folder/'reference.zip', ''), (folder/'meshes.zip', 'blockbench/')):
+                with zipfile.ZipFile(path) as source:
+                    for entry in source.infolist():
+                        rows.append(add_zip(target, prefix+entry.filename, source.read(entry)))
+            for name, path in (('tools/blockbench_mesh_bridge.py', ROOT/'tools/blockbench_mesh_bridge.py'),
+                               ('BLOCKBENCH.md', ROOT/'docs/whole-models-handoff/BLOCKBENCH.md')):
+                rows.append(add_zip(target, name, path.read_bytes()))
+            add_zip(target, 'combined-manifest.json', json_bytes({'schema_version': 1,
+                'reference_sha256': reference['sha256'], 'blockbench_sha256': meshes['sha256'], 'files': rows}))
+        combined.replace(output)
+    with output.open('rb') as stream:
+        sha = hashlib.file_digest(stream, 'sha256').hexdigest()
+    return {'output': str(output), 'sha256': sha, 'files': len(rows)+1}
 
 
 if __name__ == "__main__":

@@ -317,7 +317,7 @@ def alias_candidates(world, resources, defs):
     return seeds, residuals
 
 
-def close_group(seed, world, entities, owners, shapes, defs):
+def close_group(seed, world, entities, owners, shapes, defs, *, preserve_single_cells=False):
     """Close actual NBT owner edges, preserving every foreign owner as a whole."""
     dim = seed['dimension']
     consume = set(seed['consume'])
@@ -370,6 +370,8 @@ def close_group(seed, world, entities, owners, shapes, defs):
                 continue
             value = normalized(before, defs)
             if value in shapes and (shapes[value] != {(0, 0, 0)} or value[0].startswith(('bloodborne_blocks:o_', 'bloodborne_blocks:owner_'))):
+                include(p, value[0])
+            elif preserve_single_cells and value in shapes:
                 include(p, value[0])
             elif outputs.get(p) != value:
                 raise ValueError('foreign_block_in_target_footprint: '+str(p)+' '+str(text_state(before)))
@@ -428,9 +430,9 @@ def close_group(seed, world, entities, owners, shapes, defs):
             'helpers': helpers, 'sharedPreservedContexts': shared_contexts, 'errors': sorted(set(errors))}
 
 
-def closed_groups(seeds, world, entities, owners, shapes, defs):
+def closed_groups(seeds, world, entities, owners, shapes, defs, *, preserve_single_cells=False):
     while True:
-        groups = [close_group(s, world, entities, owners, shapes, defs) for s in seeds]
+        groups = [close_group(s, world, entities, owners, shapes, defs, preserve_single_cells=preserve_single_cells) for s in seeds]
         parent = list(range(len(groups)))
         def find(i):
             while parent[i] != i:

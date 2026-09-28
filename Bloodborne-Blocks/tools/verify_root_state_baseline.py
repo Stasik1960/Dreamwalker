@@ -18,7 +18,11 @@ def verify():
     baseline_contracts=json.loads(subprocess.run(['git','show',BASELINE+':Bloodborne-Blocks/src/main/resources/bloodborne_blocks/logical/contracts-v2.json'],cwd=ROOT.parent,check=True,capture_output=True).stdout)
     mounted_window=copy.deepcopy(next(f for f in baseline_contracts['families'] if f['id']==WINDOW))
     patch_family(mounted_window)
-    from check_accepted_runtime import _logical_amendment
+    from check_accepted_runtime import _logical_amendment, _without_whole_grass, _validate_whole_grass
+    extensions={f'o_grass_{n}' for n in range(1,8)}
+    current_ids={b['id'] for b in json.loads((ROOT/'src/main/resources/bloodborne_blocks/logical/definitions.json').read_bytes())['blocks']}
+    has_extension=bool(current_ids & extensions)
+    if has_extension:_validate_whole_grass(ROOT)
     from build_accepted_bush_extension import build as grass_bundle
     import tempfile
     with tempfile.TemporaryDirectory() as temporary:
@@ -48,6 +52,7 @@ def verify():
         else:current['variants']=collapse(current['variants'])
         if suffix.startswith('bloodborne_blocks/logical/'):
             original=_logical_amendment(original,Path(suffix).name,grass)
+            if has_extension:current=_without_whole_grass(current,Path(suffix).name,extensions)
         if current!=original:raise AssertionError('CANONICAL_BASELINE_CHANGED: '+suffix)
         checked.append(suffix)
     return {'result':'PASS','baseline':BASELINE,'files':checked,'canonical_root_states_changed':0,
