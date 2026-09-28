@@ -156,7 +156,6 @@ def export_bundle(resources: Path, output: Path, force: bool = False) -> dict:
     logical_coverage = validate(logical_definitions, logical_meshes, resources, "logical")
     city_coverage = validate(city_definitions, combined_city_meshes, resources, "city")
     entries = runtime_entries(resources)
-    blockbench_coverage = blockbench_entries(entries, resources, {"logical": logical_meshes, "city": city_meshes, "owner": owner_meshes})
     del combined_city_meshes, logical_meshes, city_meshes, owner_meshes
     gc.collect()
     reference_files = [
@@ -190,7 +189,6 @@ def export_bundle(resources: Path, output: Path, force: bool = False) -> dict:
         "city_whole_owner_families": len(owner_definitions),
         "canonical_wall_families": len(canonical_wall),
         "artist_kit": artist_summary,
-        "blockbench": blockbench_coverage,
         "runtime_assets": {"models": sum(1 for name in entries if "/models/" in name), "textures_or_metadata": sum(1 for name in entries if "/textures/" in name)},
         "reference_files": included_references,
     }
@@ -210,7 +208,7 @@ README = """# Bloodborne Blocks — current art reference
 
 Это снимок всех сохранённых logical/city/whole-owner/canonical-wall предметов, а не ресурс-пак для прямой установки. `runtime/assets/**` содержит точные текущие JSON-модели, PNG и PNG.mcmeta. В `reference/**` находятся definitions и распакованные meshes для чтения художником.
 
-`blockbench/models/**` — редактируемые generic `.bbmodel` для каждого custom mesh, а `blockbench/textures/**` — их общие PNG. Мост сохраняет позиции (масштаб ×16) и UV без преобразования. `blockbench/mesh-manifest.json` связывает файл с mesh ID и перечисляет vanilla-текстуры, которые намеренно не копируются из Minecraft. Обратно в runtime-форму mesh документ читает `tools/blockbench_mesh_bridge.py:bbmodel_to_mesh`; collision, state/placement и owner mappings остаются в `reference/**` и не импортируются из Blockbench.
+Для полного набора редактируемых generic `.bbmodel` используйте отдельный потоковый экспортёр `tools/export_blockbench_mesh_bundle.py`. Он не пытается держать десятки тысяч городских моделей в памяти одновременно. Мост сохраняет позиции (масштаб ×16) и UV без преобразования; обратно в runtime-форму mesh документ читает `tools/blockbench_mesh_bridge.py:bbmodel_to_mesh`. Collision, state/placement и owner mappings остаются в `reference/**` и не импортируются из Blockbench.
 
 ## Важно
 
