@@ -1,54 +1,45 @@
-# Bloodborne Blocks 2.1.0-rc.2 — комплект для проверки
+# Bloodborne Blocks 2.1.0-rc.3 — checkpoint
 
-Принятые TEST3 и настоящее локальное продолжение repair объединены с полным
-городом rc.1. [Единый каталог JAR + карта](../../releases/Bloodborne-Blocks/README.md).
-Source commit runtime: `fcff3c5004520778b79c45c887b2ba1a715e99d0`; accepted checkpoint:
-`41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a`. Графическая приёмка не выполнена.
+Source commit: `9f32ff5ad2c2c8ecace8533749794da3d12aa36b`. Пара JAR + полная новая копия rc.2:
+[каталог](../../releases/Bloodborne-Blocks/README.md). Рабочая ветка
+`codex/bloodborne-complete-accepted-repair`; в main комплект не объединён,
+release tag не создан. Известные остатки не позволяют объявить полное завершение.
 
-| Проверка | Статус | Доказательство / граница |
+| Gate | Статус | Доказательство / граница |
 |---|---|---|
-| STATIC_PASS | PASS | `check build checkReleaseVersion`, 285 Python tests / 49 запусков в Linux CI плюс Java/data checks |
-| GAMETEST_PASS | PASS | Свежие 57/57, 0 failures |
-| ACCEPTED_RUNTIME_PASS | PASS | 30 Java файлов, 49 logical-контрактов, TEST3 и owner/GUI продолжение; физика 2 914 RC1 compatibility-блоков / 28 866 профилей сохранена |
-| ACCEPTED_CITY_PASS | PASS | 6 507 групп восстановлены; 20 474 уже корректны; 0 целевых конфликтов и остаточных фрагментов |
-| WHOLE_WORLD_COMPATIBILITY | PASS | 10 009 чанков; 0 unknown/invalid/helper errors; 170 non-terrain файлов побайтно неизменны |
-| SECOND_PASS | PASS | 0 изменений; все 186 файлов побайтно идентичны |
-| PACKAGED_DEDICATED_SMOKE | PASS | Упакованный JAR + Fabric API: запуск, save-all flush, stop, повторный запуск/сохранение/stop; контрольные чанки |
-| DEDICATED_RESTART_PASS (полная сборка) | BLOCKED | Сторонние моды отсутствовали в QA; их runtime-данные на тестовой копии пропускались |
-| CLIENT_VISUAL_PASS | NOT_RUN | Ручной client startup/reload/restart, interactions, FPS/RAM не измерены |
-| FULL_CITY_PASS (глобальная история) | BLOCKED / вне задачи | Неподтверждённые исторические сборки не реконструировались |
-| RELEASE_READY | BLOCKED | Разрешён проверочный комплект, без production-сертификации и release tag |
+| STATIC_PASS | PASS | check/build, Java/data checks, 333 Python unittest tests / 54 запусков; проверка упакованного JAR, sources и полной карты |
+| GAMETEST_PASS | PASS | 59/59, ноль failures/errors/skips |
+| SUBSET_PASS | PASS | 989 whole-owner групп; независимые terrain/NBT/non-terrain и repeat проверки |
+| COVERAGE_COMPLETENESS_PASS | FAIL | 4 453 known residuals; дополнительный source scope неполон |
+| DEDICATED_RESTART_PASS | BLOCKED | Отсутствует полный исходный modpack и настоящая player movement/use приёмка |
+| CLIENT_VISUAL_PASS | NOT_RUN | Настоящий клиент, reload/restart, interactions, FPS/RAM не проверены |
+| FULL_CITY_PASS | FAIL | Полнота применения ещё не подтверждена |
+| RELEASE_READY | BLOCKED | Разрешён checkpoint рабочей ветки, не полный выпуск |
 
-Dedicated world startup: 6,989 / 5,371 секунды (лог `Done`), localhost only.
-36 контрольных чанков принудительно загружены и сохранены после restart;
-замер без игроков: 21,06 секунды / 429 ticks / 20,37 TPS. Peak RAM не измерен.
-Это не оценка производительности production и не визуальная проверка.
-Публикуемый архив не проходил через сервер QA: данные остальных модов в нём
-побайтно сохранены. Для игры необходима остальная исходная сборка модов.
-GitHub CI: **PASS**, [run 36415497358](https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358)
-для `ae8150f7250f7810ffb836ae9eb922a67e3ead55`: 285 Python tests / 49 запусков,
-57/57 GameTests, сборка и независимая перепроверка поставляемого ZIP.
-[Результат и хеши CI](accepted-restore/ci.json), [полный лог](accepted-restore/ci-36415497358.log.gz).
-В каталоге остаётся именно JAR, проверенный packaged dedicated smoke; Linux CI
-проверил и его, и собственную сборку. Финальный commit публикации меняет только
-документацию/доказательства, без изменения проверенного кода или артефактов.
+Два чистых запуска упакованного JAR, save-all flush, stop/restart и те же пять точных контрольных block states: PASS. От запуска процесса до Done: 44.391 / 40.266 s. Peak working set: 2533613568 / 2536697856 bytes. Native server Done: 10.307 / 8.565 s. Короткий no-player debug: 20.73 / 20.72 ticks/s (403/404 ticks; это округлённое окно измерения около номинальных 20 TPS). [Логи и manifest](complete-accepted-repair/dedicated/result.json).
+Серверная QA работает на отдельной копии с Bloodborne + Fabric API; отсутствующие
+сторонние моды не получают runtime PASS. TPS без игроков не означает production
+производительность. Публикуемый ZIP не берётся из сохранённого QA-мира.
 
-- JAR SHA-256: `1ce7f8a57dbbeaf6c0d913daf6e02a4ad1fe63fceac78cdd26773dd5615d1f56`.
-- Город SHA-256: `f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c`.
-- Входной rc.1 SHA-256: `749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9`.
+Независимый census: 36 795 кандидатов; 29 194 уже correct, 3 148 restored,
+4 453 unresolved known. 7 207 изменённых клеток, 415 изменённых чанков;
+9 594 чанка и 170 non-terrain файлов побайтно сохранены. Unknown/invalid IDs,
+orphan helpers, потери чужих roots/block entities: 0. Второй настоящий проход:
+0 изменений и все 186 файлов побайтно идентичны.
 
-Точные команды, source manifest, хэши и результаты:
-[status.json](release/status.json), [delivery](accepted-restore/delivery.json),
-[итоговый лог](accepted-restore/final-check.log),
-[XML](accepted-restore/TEST-logical-gametest.xml),
-[полная таблица/координаты](accepted-restore/REPORT.md),
-[комментарии агента](accepted-restore/AGENT-COMMENTS.md).
+Принятый runtime и физика 2 914 rc.1 compatibility-блоков сохранены с явными
+open-window/grass/retained-wall дополнениями. 23 прежних неизвестных ID не
+восстанавливались; ни одна из 33 retired-позиций не менялась этим проходом.
 
-23 неизвестных composite ID не восстанавливались. Все 33 прежние retired-позиции
-сохранены как в rc.1, включая 20 уже занятых клеток. Исходные ZIP не изменены.
-Точка реквизита `(-332,77,-137)` не имеет готового доказательства целой стопки;
-оставлена без изменения. 34 подтверждённые стопки восстановлены в других точках.
-Перед обновлением обязателен backup: [migration guide](accepted-restore/MIGRATION.md).
+- JAR SHA-256: `a1f306e9e7447090bd07818194eb1c7a579fbd1740cc9f5adbb2d61e8e528213`.
+- Новый город SHA-256: `111253971789feea9c016c693c4122a7faee6952c11102c092d73f3475df6150`.
+- Входной rc.2 SHA-256: `f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c`.
 
-Старый rc.1 **не содержит принятых repair-исправлений**. Его прежний
-[status](release/evidence/status-rc1.json) сохранён как история.
+CI текущей ветки: PENDING. Предыдущий rc.2 run не считается проверкой rc.3.
+
+[status.json](release/status.json) · [delivery](complete-accepted-repair/delivery.json) ·
+[сборка](complete-accepted-repair/final-check.log) · [package proof](complete-accepted-repair/package-check.json) ·
+[GameTest XML](complete-accepted-repair/TEST-logical-gametest.xml) ·
+[таблица семейств/координаты](complete-accepted-repair/REPORT.md) ·
+[комментарии агента](complete-accepted-repair/AGENT-COMMENTS.md) ·
+[миграция/rollback](complete-accepted-repair/MIGRATION.md).

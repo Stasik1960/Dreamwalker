@@ -1,0 +1,29 @@
+{
+  "command": [
+    ".\\gradlew.bat",
+    "--offline",
+    "--no-daemon",
+    "--continue",
+    "--console=plain",
+    "-I",
+    "tools/verification-direct-resources.init.gradle",
+    "-PbloodbornePython=C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+    "-Dorg.gradle.java.installations.paths=C:/Users/vakir/Documents/ChatGPT/DW/Bloodborne-Blocks/build/toolchain/jdk-17.0.20.1",
+    "logicalGameTest",
+    "assemble",
+    "check",
+    "build",
+    "--max-workers=1"
+  ],
+  "exitCode": 0,
+  "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+  "log": {
+    "path": "Bloodborne-Blocks/docs/complete-accepted-repair/final-check.log",
+    "sha256": "026179ba8b8221268e9174835d6440329582a20ef089425372ff53081b1f8ec0"
+  },
+  "environment": {
+    "JAVA_HOME": "C:/Users/vakir/Documents/ChatGPT/DW/Bloodborne-Blocks/build/toolchain/jdk-17.0.20.1",
+    "python": "C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe"
+  },
+  "note": "Observed completed command. Source commit names identical runtime/build inputs; documentation/artifacts are committed afterward."
+}

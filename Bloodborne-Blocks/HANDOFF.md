@@ -1,32 +1,28 @@
 # Bloodborne Blocks handoff
 
-## Current disposition
+Current work branch: `codex/bloodborne-complete-accepted-repair`.
+Runtime/source commit: `9f32ff5ad2c2c8ecace8533749794da3d12aa36b`.
+Main remains rc.2 at `6bca311b87856ee251cc1d88f94ba6071ae231cf`.
+The accepted TEST3 and local continuation are already integrated; do not
+repeat the obsolete explanation that repair was never merged.
 
-See [RELEASE-STATUS.md](docs/RELEASE-STATUS.md). Verification candidate
-`2.1.0-rc.1` uses the selected runtime
-baseline is `origin/main` at
-`b086e88929a971a2abd184629b3e7a59225304e5`
-(`origin/archive/beta3-grid-fragmentation-broken`). The 23 unavailable
-composites were intentionally retired from a copied input world and the copy
-was converted to the current grid. It is still **not** certified for production:
-dedicated-server restart and graphical-client acceptance remain required.
+The rc.3 checkpoint is one matched JAR/full new rc.2 city copy. Local check,
+build and 59 GameTests pass. Independent subset preservation and real repeat
+pass; full coverage fails: 4,453 known candidates remain unresolved and
+additional source scope is incomplete. The clean packaged-server fresh/save/
+restart smoke passes with Bloodborne/Fabric API only. Client interactions and
+full-modpack acceptance are not complete. No main merge or release tag.
 
-No certified stable commit is known. The candidate has a new JAR identity;
-equivalence to the published beta.3 binary is not claimed. Do not infer that beta.3 artifacts, its
-offline checks, or earlier repair diagnostics establish full city, protected
-object, graphical-client or restart coverage.
+Use [RELEASE-STATUS](docs/RELEASE-STATUS.md) for current gates and CI, and
+[REPORT](docs/complete-accepted-repair/REPORT.md) for the independent family
+table and exact restored/residual coordinates. The separate
+[AGENT-COMMENTS](docs/complete-accepted-repair/AGENT-COMMENTS.md) explains the
+build/coverage bugs. [REPRODUCE](docs/complete-accepted-repair/REPRODUCE.md)
+records commands. Artifacts and hashes are in
+[delivery.json](docs/complete-accepted-repair/delivery.json).
 
-## Separate work
-
-Repair checkpoint `3d07` and local catalog WIP are separate, unmerged work.
-They must be reviewed against the selected baseline and complete release gates
-before they can affect a release decision.
-
-## Next owner
-
-Use the release status as the authority for required evidence. Keep generated
-runtime resources and historical source material intact. Do not replace the
-frozen input archive; use only the release-world copy and its ledger.
-
-Older detailed handoffs are preserved under
-[docs/history/main-b086e8892](docs/history/main-b086e8892/).
+Continue only from proved source-to-current owner relationships and accepted
+contracts. Do not infer ownership from proximity or overwrite foreign roots,
+NBT, helpers or other-mod data. Existing archives and the original user
+checkout/WIP remain untouched. Do not interpret checkpoint publication or
+SUBSET_PASS as full repair or RELEASE_READY.

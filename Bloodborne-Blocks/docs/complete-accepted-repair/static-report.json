@@ -1,0 +1,60 @@
+{
+  "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+  "sourceSnapshotSha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04",
+  "resourceSha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d",
+  "inputSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
+  "kind": "static-checks-report",
+  "result": "PASS",
+  "checks": {
+    "compile": "PASS",
+    "check": "PASS",
+    "build": "PASS",
+    "versions": "PASS",
+    "package": "PASS"
+  },
+  "pythonTests": 333,
+  "pythonUnittestRuns": 54,
+  "commands": [
+    {
+      "argv": [
+        ".\\gradlew.bat",
+        "--offline",
+        "--no-daemon",
+        "--continue",
+        "--console=plain",
+        "-I",
+        "tools/verification-direct-resources.init.gradle",
+        "-PbloodbornePython=C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+        "-Dorg.gradle.java.installations.paths=C:/Users/vakir/Documents/ChatGPT/DW/Bloodborne-Blocks/build/toolchain/jdk-17.0.20.1",
+        "logicalGameTest",
+        "assemble",
+        "check",
+        "build",
+        "--max-workers=1"
+      ],
+      "exitCode": 0,
+      "record": {
+        "path": "Bloodborne-Blocks/docs/complete-accepted-repair/build-command.json",
+        "sha256": "79fe675e42f94bf360656d48f99dbea5c7505d0d60716776bfaded93d22a92be"
+      }
+    },
+    {
+      "argv": [
+        "C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+        "tools/check_release_package.py",
+        "build/libs/bloodborne-blocks-2.1.0-rc.3.jar",
+        "build/devlibs/bloodborne-blocks-2.1.0-rc.3-sources.jar",
+        "--packaged-resources"
+      ],
+      "exitCode": 0,
+      "record": {
+        "path": "Bloodborne-Blocks/docs/complete-accepted-repair/package-command.json",
+        "sha256": "c4950bea12bbfc287a82f04fa6db69490021807505aa915d9678aec1dd551122"
+      }
+    }
+  ],
+  "package": {
+    "path": "Bloodborne-Blocks/docs/complete-accepted-repair/package-check.json",
+    "sha256": "08fd276a59056e5e616c6ec763ca0820d5a5d0c0da59fe82432c93c48a7dc5be"
+  }
+}

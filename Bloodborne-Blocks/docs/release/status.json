@@ -1,238 +1,331 @@
 {
   "schemaVersion": 1,
-  "version": "2.1.0-rc.2",
-  "branch": "main",
-  "scope": "test-kit",
-  "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-  "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-  "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-  "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
+  "version": "2.1.0-rc.3",
+  "branch": "codex/bloodborne-complete-accepted-repair",
+  "scope": "full-city",
+  "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+  "sourceSnapshotSha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04",
+  "resourceSha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d",
+  "inputSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
   "runtimeBaselineCommit": "41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a",
-  "workingTree": "Accepted TEST3/continuation merged with rc.1 compatibility physics; checked runtime source unchanged since fcff3c500. Linux CI PASS at ae8150f72 includes cross-platform evidence fixes.",
   "provenance": {
     "sourceSnapshot": {
-      "path": "Bloodborne-Blocks/docs/accepted-restore/source-snapshot.json",
-      "sha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897"
+      "path": "Bloodborne-Blocks/docs/complete-accepted-repair/source-snapshot.json",
+      "sha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04"
     },
     "resourceManifest": {
-      "path": "Bloodborne-Blocks/docs/accepted-restore/resource-manifest.json",
-      "sha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a"
+      "path": "Bloodborne-Blocks/docs/complete-accepted-repair/resource-manifest.json",
+      "sha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d"
+    },
+    "inputWorld": {
+      "path": "Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/Bloodborne-City-2.1.0-rc.2.zip",
+      "sha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c"
     },
     "delivery": {
-      "path": "Bloodborne-Blocks/docs/accepted-restore/delivery.json",
-      "sha256": "976072805981035bd5cef033ebec460ba8eeb44a232fce7c5d03590316de126d"
+      "path": "Bloodborne-Blocks/docs/complete-accepted-repair/delivery.json",
+      "sha256": "383a1bf45362580e89626197e62aa7079346bda8e0dac6ea0ab0f1596cb69a20"
     }
   },
   "gates": {
     "TEST_SCOPE_PASS": {
       "status": "PASS",
       "scope": "test-kit",
-      "reason": "Accepted object/runtime tests plus independently verified addressed city.",
       "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
+        "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+        "sourceSnapshotSha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04",
+        "resourceSha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d",
+        "inputSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
         "artifacts": [
           {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/final-check.log",
-            "sha256": "6dcb41296a041e6d96cae750af5586422412506ed848b94173a14c7646bc172f"
-          },
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/independent.json",
-            "sha256": "4c94786c69c1f7e87a0b02d80ef7dffc1114bb2f8c2736e5c799ac59e00dd169"
-          },
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/second-independent.json",
-            "sha256": "3aa565a90c7d84bbfbe8ddf7e4259405f66a932828e19e194fafbdcf0ac7baa1"
-          },
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
-            "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/test-scope-report.json",
+            "sha256": "574067f048af429bf02804d90b3cdc1c698e52d77adc54d63d0068cb6de8a59e"
           }
-        ]
+        ],
+        "commands": [
+          {
+            "argv": [
+              ".\\gradlew.bat",
+              "--offline",
+              "--no-daemon",
+              "--continue",
+              "--console=plain",
+              "-I",
+              "tools/verification-direct-resources.init.gradle",
+              "-PbloodbornePython=C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+              "-Dorg.gradle.java.installations.paths=C:/Users/vakir/Documents/ChatGPT/DW/Bloodborne-Blocks/build/toolchain/jdk-17.0.20.1",
+              "logicalGameTest",
+              "assemble",
+              "check",
+              "build",
+              "--max-workers=1"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/complete-accepted-repair/build-command.json",
+              "sha256": "79fe675e42f94bf360656d48f99dbea5c7505d0d60716776bfaded93d22a92be"
+            }
+          },
+          {
+            "argv": [
+              "C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+              "tools/check_release_package.py",
+              "build/libs/bloodborne-blocks-2.1.0-rc.3.jar",
+              "build/devlibs/bloodborne-blocks-2.1.0-rc.3-sources.jar",
+              "--packaged-resources"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/complete-accepted-repair/package-command.json",
+              "sha256": "c4950bea12bbfc287a82f04fa6db69490021807505aa915d9678aec1dd551122"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/complete-accepted-repair/test-scope-report.json",
+          "sha256": "574067f048af429bf02804d90b3cdc1c698e52d77adc54d63d0068cb6de8a59e"
+        }
       }
+    },
+    "SUBSET_PASS": {
+      "status": "PASS",
+      "scope": "full-city",
+      "evidence": {
+        "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+        "sourceSnapshotSha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04",
+        "resourceSha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d",
+        "inputSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
+        "artifacts": [
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/independent.json.gz",
+            "sha256": "b843674791001b2693d66fb9fa2b9a2b5665f2f99a000ca5411d039664255f28"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/conversion.json.gz",
+            "sha256": "f198568c87389e92179dd9945af99cb803c6a9ac92ecf4eef8a0d2f32bb35295"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/second-conversion.json.gz",
+            "sha256": "af09725d08fcafed79fc1d6d591b9b3c5e14be8bfb4fd45f028e2d253724fa5d"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/first-world-manifest.json",
+            "sha256": "f0cfa6075ac87862bc1cd346564701be05f6be29b5fe839196cbac815d8a7b0e"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/second-world-manifest.json",
+            "sha256": "f0cfa6075ac87862bc1cd346564701be05f6be29b5fe839196cbac815d8a7b0e"
+          }
+        ],
+        "commands": [
+          {
+            "argv": [
+              "C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+              "tools/check_release_package.py",
+              "build/libs/bloodborne-blocks-2.1.0-rc.3.jar",
+              "build/devlibs/bloodborne-blocks-2.1.0-rc.3-sources.jar",
+              "--packaged-resources"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/complete-accepted-repair/package-command.json",
+              "sha256": "c4950bea12bbfc287a82f04fa6db69490021807505aa915d9678aec1dd551122"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/complete-accepted-repair/independent.json.gz",
+          "sha256": "b843674791001b2693d66fb9fa2b9a2b5665f2f99a000ca5411d039664255f28"
+        }
+      }
+    },
+    "COVERAGE_COMPLETENESS_PASS": {
+      "status": "FAIL",
+      "scope": "full-city",
+      "reason": "Independent census: 4453 unresolved known candidates; additional vegetation/grave/whole-lantern source scope remains incomplete.",
+      "evidence": {},
+      "plannedCommands": []
     },
     "STATIC_PASS": {
       "status": "PASS",
       "scope": "full-city",
-      "reason": null,
       "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
+        "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+        "sourceSnapshotSha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04",
+        "resourceSha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d",
+        "inputSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
         "artifacts": [
           {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/final-check.log",
-            "sha256": "6dcb41296a041e6d96cae750af5586422412506ed848b94173a14c7646bc172f"
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/static-report.json",
+            "sha256": "a0ed647950dcce0314d166ea52c843461b68c66aa5599feabbc1de7fe6e1a209"
           },
           {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/final-check.json",
-            "sha256": "f1c72fbcbb1e557652c11d7e8a8a520815dbf039ed1a6cb4f62702d6a2b28f81"
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/final-check.log",
+            "sha256": "026179ba8b8221268e9174835d6440329582a20ef089425372ff53081b1f8ec0"
           },
           {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/runtime-package.json",
-            "sha256": "59715899e688b6fbf101bc21f28cfcffaf5e92ccdab44131da36ae9b95eb39ac"
-          },
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
-            "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/runtime-package.json",
+            "sha256": "7be3255bb2d19c61dbca45acc94d5348d320d36a107cb7fe124b177ab458bff9"
           }
-        ]
+        ],
+        "commands": [
+          {
+            "argv": [
+              ".\\gradlew.bat",
+              "--offline",
+              "--no-daemon",
+              "--continue",
+              "--console=plain",
+              "-I",
+              "tools/verification-direct-resources.init.gradle",
+              "-PbloodbornePython=C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+              "-Dorg.gradle.java.installations.paths=C:/Users/vakir/Documents/ChatGPT/DW/Bloodborne-Blocks/build/toolchain/jdk-17.0.20.1",
+              "logicalGameTest",
+              "assemble",
+              "check",
+              "build",
+              "--max-workers=1"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/complete-accepted-repair/build-command.json",
+              "sha256": "79fe675e42f94bf360656d48f99dbea5c7505d0d60716776bfaded93d22a92be"
+            }
+          },
+          {
+            "argv": [
+              "C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+              "tools/check_release_package.py",
+              "build/libs/bloodborne-blocks-2.1.0-rc.3.jar",
+              "build/devlibs/bloodborne-blocks-2.1.0-rc.3-sources.jar",
+              "--packaged-resources"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/complete-accepted-repair/package-command.json",
+              "sha256": "c4950bea12bbfc287a82f04fa6db69490021807505aa915d9678aec1dd551122"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/complete-accepted-repair/static-report.json",
+          "sha256": "a0ed647950dcce0314d166ea52c843461b68c66aa5599feabbc1de7fe6e1a209"
+        }
       }
     },
     "GAMETEST_PASS": {
       "status": "PASS",
       "scope": "full-city",
-      "reason": "57/57; actual fresh server GameTests, not graphical QA.",
       "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
+        "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+        "sourceSnapshotSha256": "b7ef1742d0f31771b976c96f38f6f90713546c8a86495be8923f8b013e61bd04",
+        "resourceSha256": "5ac2fae072df003aee06f145ca1c6d3c645ba98bf7b0dca3c3552ca68a403d0d",
+        "inputSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
         "artifacts": [
           {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/TEST-logical-gametest.xml",
-            "sha256": "f1271b9d648d7912da854f6d8f1786bafabc77e44374512cfd17a5c65fa8da1c"
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/gametest-report.json",
+            "sha256": "baeb4f1788f7028841672f49e264c09d5d696950f4e8e5aeaf64c2f83819bdde"
           },
           {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
-            "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/TEST-logical-gametest.xml",
+            "sha256": "b088c4e487aa345c6630234d2ec156973635195223ec89a0a85d81bd7a39aa59"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/final-check.log",
+            "sha256": "026179ba8b8221268e9174835d6440329582a20ef089425372ff53081b1f8ec0"
           }
-        ]
+        ],
+        "commands": [
+          {
+            "argv": [
+              ".\\gradlew.bat",
+              "--offline",
+              "--no-daemon",
+              "--continue",
+              "--console=plain",
+              "-I",
+              "tools/verification-direct-resources.init.gradle",
+              "-PbloodbornePython=C:/Users/vakir/.codex/worktrees/bloodborne-release-audit/DW/Bloodborne-Blocks/build/rc1-verification/venv/Scripts/python.exe",
+              "-Dorg.gradle.java.installations.paths=C:/Users/vakir/Documents/ChatGPT/DW/Bloodborne-Blocks/build/toolchain/jdk-17.0.20.1",
+              "logicalGameTest",
+              "assemble",
+              "check",
+              "build",
+              "--max-workers=1"
+            ],
+            "exitCode": 0,
+            "record": {
+              "path": "Bloodborne-Blocks/docs/complete-accepted-repair/build-command.json",
+              "sha256": "79fe675e42f94bf360656d48f99dbea5c7505d0d60716776bfaded93d22a92be"
+            }
+          }
+        ],
+        "report": {
+          "path": "Bloodborne-Blocks/docs/complete-accepted-repair/gametest-report.json",
+          "sha256": "baeb4f1788f7028841672f49e264c09d5d696950f4e8e5aeaf64c2f83819bdde"
+        }
       }
     },
     "DEDICATED_RESTART_PASS": {
       "status": "BLOCKED",
       "scope": "full-city",
-      "reason": "Packaged Bloodborne/API lifecycle PASS, but full modpack is absent. QA copy skipped external-mod entities; full-world runtime preservation is not certified.",
-      "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
-        "artifacts": [
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/runtime-qa/result.json",
-            "sha256": "29eba6db420879871070294d846b498dd04c192fda8cac4877aecd36e7eb58df"
-          },
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/runtime-qa/fresh.log.gz",
-            "sha256": "81dfd49696e16d6805faf97180b6082a92f78dcceca4dda912ef3b62bf5ddf85"
-          },
-          {
-            "path": "Bloodborne-Blocks/docs/accepted-restore/runtime-qa/restart.log",
-            "sha256": "254484b3be6897f7b68dd09853f86b9dfec64f6711ed40b7cddc969ad1020564"
-          }
-        ]
-      }
+      "reason": "The isolated packaged-server smoke uses only Bloodborne/Fabric API. Full source modpack and actual player movement/use acceptance remain unverified.",
+      "evidence": {},
+      "plannedCommands": []
     },
     "CLIENT_VISUAL_PASS": {
       "status": "NOT_RUN",
       "scope": "full-city",
-      "reason": "No graphical client QA: resource reload, manual interactions, movement, FPS and client RAM not measured.",
-      "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
-        "artifacts": []
-      }
+      "reason": "Actual client fresh/reload/restart, pick/place/break/use, stairs/chunk movement, FPS and peak RAM were not run.",
+      "evidence": {},
+      "plannedCommands": []
     },
     "FULL_CITY_PASS": {
-      "status": "BLOCKED",
+      "status": "FAIL",
       "scope": "full-city",
-      "reason": "Global historical reconstruction is outside this task. ACCEPTED_CITY_PASS separately proves every confirmed target and whole-world palette/helper/preservation checks.",
-      "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
-        "artifacts": []
-      }
+      "reason": "Whole-world preservation of the applied subset passes; accepted-family coverage completeness fails.",
+      "evidence": {},
+      "plannedCommands": []
     },
     "RELEASE_READY": {
       "status": "BLOCKED",
       "scope": "full-city",
-      "reason": "This is the user-authorized accepted-repair test kit; no production certification or release tag.",
-      "evidence": {
-        "sourceCommit": "fcff3c5004520778b79c45c887b2ba1a715e99d0",
-        "sourceSnapshotSha256": "47517cacd1b596a2ca0642620c0515915db36767d5d39ea0968a925ed24e2897",
-        "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
-        "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
-        "artifacts": []
-      }
+      "reason": "Known coverage residuals and missing full runtime/client acceptance; checkpoint publication only.",
+      "evidence": {},
+      "plannedCommands": []
     }
-  },
-  "acceptedRepair": {
-    "status": "PASS",
-    "independentReport": {
-      "path": "Bloodborne-Blocks/docs/accepted-restore/independent.json",
-      "sha256": "4c94786c69c1f7e87a0b02d80ef7dffc1114bb2f8c2736e5c799ac59e00dd169"
-    },
-    "repeatReport": {
-      "path": "Bloodborne-Blocks/docs/accepted-restore/second-independent.json",
-      "sha256": "3aa565a90c7d84bbfbe8ddf7e4259405f66a932828e19e194fafbdcf0ac7baa1"
-    },
-    "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
-    "world": {
-      "path": "releases/Bloodborne-Blocks/2.1.0-rc.2/Bloodborne-City-2.1.0-rc.2.zip",
-      "sha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
-      "bytes": 20247544
-    },
-    "jar": {
-      "path": "releases/Bloodborne-Blocks/2.1.0-rc.2/bloodborne-blocks-2.1.0-rc.2.jar",
-      "sha256": "1ce7f8a57dbbeaf6c0d913daf6e02a4ad1fe63fceac78cdd26773dd5615d1f56",
-      "bytes": 37915221
-    },
-    "namedSourcesJar": {
-      "path": "releases/Bloodborne-Blocks/2.1.0-rc.2/bloodborne-blocks-2.1.0-rc.2-sources.jar",
-      "sha256": "8bc4d5ca88693f10f5227548862c82d8dbfd040dcaffe76399f02ed2da74d874",
-      "bytes": 73127
-    }
-  },
-  "ci": {
-    "status": "PASS",
-    "workflow": "Bloodborne Blocks verification",
-    "runUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358",
-    "commit": "ae8150f7250f7810ffb836ae9eb922a67e3ead55",
-    "pythonTests": 285,
-    "pythonSuites": 49,
-    "gameTests": {
-      "passed": 57,
-      "failed": 0
-    },
-    "evidence": {
-      "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
-      "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
-    },
-    "publicationDelta": "Subsequent publication commit updates only documentation/evidence; checked runtime, tools, workflow and delivered artifacts are unchanged."
   },
   "knownReleaseBlockers": [
     {
-      "id": "BB-CLIENT-VISUAL",
-      "reason": "Graphical client acceptance not performed."
+      "id": "BB-ACCEPTED-COVERAGE",
+      "scope": "full-city",
+      "reason": "4453 known residuals and incomplete additional source composition scope."
     },
     {
-      "id": "BB-FULL-MODPACK-RUNTIME",
-      "reason": "Only Bloodborne/API runtime exercised; third-party mods missing from QA environment."
+      "id": "BB-FULL-MODPACK-QA",
+      "scope": "full-city",
+      "reason": "Full modpack and actual player runtime acceptance not completed."
+    },
+    {
+      "id": "BB-CLIENT-QA",
+      "scope": "full-city",
+      "reason": "Interactive client acceptance not performed."
     }
   ],
   "unresolvedDiscrepancies": [
-    {
-      "scope": "outside-confirmed-restoration",
-      "position": [
-        -332,
-        77,
-        -137
-      ],
-      "reason": "Historical props occurrence lacks a proved accepted book-stack transaction; preserved as rc.1."
-    }
+    "SUBSET_PASS is not coverage completeness or production acceptance."
   ],
-  "notes": [
-    "BB-COMPOSITE-INPUT retirement is unchanged; no unknown family reconstructed.",
-    "All 33 retired positions preserve exact published rc.1 states/NBT; 20 were already non-air.",
-    "No claim to restore unproved historical 933 memberships/112 groups."
-  ]
+  "publication": {
+    "kind": "authorized-work-branch-checkpoint",
+    "mainMerged": false,
+    "releaseTagCreated": false,
+    "ci": "PENDING"
+  },
+  "packagedDedicatedSmoke": {
+    "status": "PASS",
+    "scope": "Bloodborne/Fabric API only, no players; not the full DEDICATED_RESTART_PASS",
+    "evidence": {
+      "path": "Bloodborne-Blocks/docs/complete-accepted-repair/dedicated/result.json",
+      "sha256": "b3841b0146960a3b77bb80b1321a8ebe1b11909fbabab49ca70988ce21f1c069"
+    }
+  }
 }
