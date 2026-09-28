@@ -8,7 +8,7 @@
   "resourceSha256": "228603cfbdf46888a5af2ba056a80e822c9d7c0a066a32dfc89092d41897401a",
   "inputSha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
   "runtimeBaselineCommit": "41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a",
-  "workingTree": "Accepted TEST3/continuation merged with rc.1 compatibility physics; output guard additionally checked in 7abb93855.",
+  "workingTree": "Accepted TEST3/continuation merged with rc.1 compatibility physics; checked runtime source unchanged since fcff3c500. Linux CI PASS at ae8150f72 includes cross-platform evidence fixes.",
   "provenance": {
     "sourceSnapshot": {
       "path": "Bloodborne-Blocks/docs/accepted-restore/source-snapshot.json",
@@ -45,6 +45,10 @@
           {
             "path": "Bloodborne-Blocks/docs/accepted-restore/second-independent.json",
             "sha256": "3aa565a90c7d84bbfbe8ddf7e4259405f66a932828e19e194fafbdcf0ac7baa1"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
+            "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
           }
         ]
       }
@@ -70,6 +74,10 @@
           {
             "path": "Bloodborne-Blocks/docs/accepted-restore/runtime-package.json",
             "sha256": "59715899e688b6fbf101bc21f28cfcffaf5e92ccdab44131da36ae9b95eb39ac"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
+            "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
           }
         ]
       }
@@ -87,6 +95,10 @@
           {
             "path": "Bloodborne-Blocks/docs/accepted-restore/TEST-logical-gametest.xml",
             "sha256": "f1271b9d648d7912da854f6d8f1786bafabc77e44374512cfd17a5c65fa8da1c"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
+            "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
           }
         ]
       }
@@ -181,8 +193,21 @@
     }
   },
   "ci": {
-    "status": "PENDING",
-    "workflow": "Bloodborne Blocks verification"
+    "status": "PASS",
+    "workflow": "Bloodborne Blocks verification",
+    "runUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358",
+    "commit": "ae8150f7250f7810ffb836ae9eb922a67e3ead55",
+    "pythonTests": 285,
+    "pythonSuites": 49,
+    "gameTests": {
+      "passed": 57,
+      "failed": 0
+    },
+    "evidence": {
+      "path": "Bloodborne-Blocks/docs/accepted-restore/ci.json",
+      "sha256": "41969f89fe1f21b520ba731099f33d2dbfc2b6850e0749d8c6b6c7f67e99a4c2"
+    },
+    "publicationDelta": "Subsequent publication commit updates only documentation/evidence; checked runtime, tools, workflow and delivered artifacts are unchanged."
   },
   "knownReleaseBlockers": [
     {

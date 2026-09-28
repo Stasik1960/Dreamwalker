@@ -7,7 +7,7 @@ Source commit runtime: `fcff3c5004520778b79c45c887b2ba1a715e99d0`; accepted chec
 
 | Проверка | Статус | Доказательство / граница |
 |---|---|---|
-| STATIC_PASS | PASS | `check build checkReleaseVersion`, 283 Python tests / 49 запусков плюс Java/data checks |
+| STATIC_PASS | PASS | `check build checkReleaseVersion`, 285 Python tests / 49 запусков в Linux CI плюс Java/data checks |
 | GAMETEST_PASS | PASS | Свежие 57/57, 0 failures |
 | ACCEPTED_RUNTIME_PASS | PASS | 30 Java файлов, 49 logical-контрактов, TEST3 и owner/GUI продолжение; физика 2 914 RC1 compatibility-блоков / 28 866 профилей сохранена |
 | ACCEPTED_CITY_PASS | PASS | 6 507 групп восстановлены; 20 474 уже корректны; 0 целевых конфликтов и остаточных фрагментов |
@@ -25,7 +25,13 @@ Dedicated world startup: 6,989 / 5,371 секунды (лог `Done`), localhost
 Это не оценка производительности production и не визуальная проверка.
 Публикуемый архив не проходил через сервер QA: данные остальных модов в нём
 побайтно сохранены. Для игры необходима остальная исходная сборка модов.
-GitHub CI: **ожидает запуска**; локальный итоговый check завершён успешно.
+GitHub CI: **PASS**, [run 36415497358](https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358)
+для `ae8150f7250f7810ffb836ae9eb922a67e3ead55`: 285 Python tests / 49 запусков,
+57/57 GameTests, сборка и независимая перепроверка поставляемого ZIP.
+[Результат и хеши CI](accepted-restore/ci.json), [полный лог](accepted-restore/ci-36415497358.log.gz).
+В каталоге остаётся именно JAR, проверенный packaged dedicated smoke; Linux CI
+проверил и его, и собственную сборку. Финальный commit публикации меняет только
+документацию/доказательства, без изменения проверенного кода или артефактов.
 
 - JAR SHA-256: `1ce7f8a57dbbeaf6c0d913daf6e02a4ad1fe63fceac78cdd26773dd5615d1f56`.
 - Город SHA-256: `f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c`.

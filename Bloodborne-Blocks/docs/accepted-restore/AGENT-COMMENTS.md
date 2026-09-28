@@ -54,3 +54,11 @@ orphan PART без NBT и scheduled tick у якобы уже корректно
 отчёт доказательств: canonical IDs, source states, redirects и runtime JSON
 остались точными; JAR и карта прежние. CI продолжает независимые задачи после
 ошибки, чтобы собрать все отказы за один запуск, сохраняя общий failed exit.
+
+Итоговый [Linux CI](https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358)
+на `ae8150f7250f7810ffb836ae9eb922a67e3ead55` завершился успешно: 285 Python
+тестов, 57/57 GameTests, JAR gate и независимая проверка полного поставляемого
+города. Сохранены [результат](ci.json), [история двух переносимых дефектов](ci-platform-review.json)
+и [SHA скачанных с GitHub файлов](remote-download-check.json). Проверочный
+комплект остаётся тем же; ограничения графического клиента и полного модпака
+не снимаются результатом CI.

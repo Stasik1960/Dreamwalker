@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "workflow": "Bloodborne Blocks verification",
+  "runId": 36415497358,
+  "runUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358",
+  "commit": "ae8150f7250f7810ffb836ae9eb922a67e3ead55",
+  "jobId": 108905546137,
+  "startedAt": "2026-09-28T11:24:49Z",
+  "completedAt": "2026-09-28T11:39:53Z",
+  "command": "bash ./gradlew --no-daemon --continue --console=plain check build logicalGameTest checkReleaseVersion --max-workers=1",
+  "pythonTests": 285,
+  "pythonSuites": 49,
+  "gameTests": {
+    "passed": 57,
+    "failed": 0
+  },
+  "packageChecks": {
+    "acceptedRuntime": {
+      "result": "PASS",
+      "acceptedCheckpoint": "41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a",
+      "rc1PhysicsBaseline": "90a4e051a71ecc7b3156802c54dbfd8219789469",
+      "logicalResources": 11,
+      "runtimeJava": 30,
+      "rc1City": {
+        "definitions": 2914,
+        "profiles": 28866
+      },
+      "acceptedOwnerContracts": [
+        "owner-runtime-mappings.json",
+        "owner-meshes.json.gz",
+        "reviewed-wall-family.json"
+      ],
+      "acceptedOwners": {
+        "definitions": 868,
+        "profiles": 0
+      },
+      "runtimeJarSha256": "fea20755b4de45126012b06812255622cbb7bb2b32574187754222a3b392b2fe"
+    },
+    "acceptedCity": {
+      "result": "PASS",
+      "acceptedTransactions": 26804,
+      "existingRc1Owners": 211,
+      "groups": 26981,
+      "restored": 6507,
+      "alreadyCorrect": 20474,
+      "conflicts": 0,
+      "verifiedRoots": 50589,
+      "verifiedCells": 101722,
+      "independentResidualFragments": 0,
+      "targetConflicts": 0,
+      "retiredPositionsUnchanged": 33,
+      "publishedRc1RetiredPositionsNonAir": 20,
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 71343,
+        "ledger_cells": 79197,
+        "changed_chunks": 769,
+        "unchanged_chunks": 9240,
+        "preserved_nonterrain_files": 170,
+        "errors": []
+      },
+      "fullWorld": {
+        "result": "PASS",
+        "chunks": 10009,
+        "modCells": 27667715,
+        "ownerRoots": 50950,
+        "helpers": 53677,
+        "unknownIds": {},
+        "invalidStates": {},
+        "helperErrors": 0,
+        "examples": []
+      },
+      "inputs": {
+        "rc1Sha256": "749853aeb19ba8ea823bf1f683476985b74e2fce2746143eeacc3225eb0ed0a9",
+        "moddedSha256": "c517dfeb52c4d13bdbe90e02a93ac00416354eb89313a9d1377f24823af6d0e9",
+        "acceptedLedgerSha256": "f69063bec68ac19642582824b0f13f5e084daebd6da9e6c6d0c5eed3a8c7352e"
+      },
+      "outputTreeSha256": "b859d1e7e9ecc7df03937ff50ad987dcb249d43c4faa5041c4fea47ddc62cbd8",
+      "scope": "Complete accepted transactions, known RC1 production owners with changed accepted masks and exact linked dependencies; excludes unproved historical occurrences."
+    }
+  },
+  "builtRuntimeJar": {
+    "path": "bloodborne-blocks-2.1.0-rc.2.jar",
+    "sha256": "fea20755b4de45126012b06812255622cbb7bb2b32574187754222a3b392b2fe"
+  },
+  "builtNamedSourcesJar": {
+    "path": "bloodborne-blocks-2.1.0-rc.2-sources.jar",
+    "sha256": "32bef258fe17625ed4960427c9803a6d84d4c3ca27cdb46201c6ace71dce3dfa"
+  },
+  "artifacts": [
+    {
+      "id": 10967701353,
+      "name": "bloodborne-static-and-gametests",
+      "digest": "sha256:dc59a5ad5f7698b389f4539fb52fbf71bbf72c62081b82fc389d2aedbb50af97",
+      "url": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358/artifacts/10967701353"
+    },
+    {
+      "id": 10967311423,
+      "name": "bloodborne-verified-build-not-production-release",
+      "digest": "sha256:1d0f0ee1fc6e5d96ec0c253a3ecdf817580c22455ffe573869409cf417bf772b",
+      "url": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36415497358/artifacts/10967311423"
+    }
+  ],
+  "note": "CI verifies both its Linux build and the committed delivery JAR/world. The download kit remains the exact Windows-built JAR exercised by packaged-server QA; CI artifacts do not replace it.",
+  "log": {
+    "path": "ci-36415497358.log.gz",
+    "sha256": "4e5c5c3858852d00e31138468d64e38207a2f75416292f61e1fe027c0ecfc23e"
+  }
+}

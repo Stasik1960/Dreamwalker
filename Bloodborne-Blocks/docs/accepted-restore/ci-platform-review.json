@@ -1,0 +1,25 @@
+{
+  "failedAttempts": [
+    {
+      "runUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36413734236",
+      "commit": "29a924059eb51f39e8ee10444a8665fb66622b85",
+      "result": "FAIL",
+      "reason": "OWNER_GRAPH_ORACLE_HASH_MISMATCH: frozen CRLF oracle checked out as LF",
+      "fixedBy": "e2d6ecdd9c6ef198bb4a584615f8fa78081f59cf",
+      "log": "ci-36413734236.log.gz",
+      "logSha256": "840b5b5b29f50cae794e25558d471905b689d9090ef00b32e0e3087be9c3b765"
+    },
+    {
+      "runUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36414488232",
+      "commit": "e2d6ecdd9c6ef198bb4a584615f8fa78081f59cf",
+      "result": "FAIL",
+      "reason": "creative equivalence report changed because MCMeta proof used raw CRLF/LF bytes",
+      "fixedBy": "ae8150f7250f7810ffb836ae9eb922a67e3ead55",
+      "log": "ci-36414488232.log.gz",
+      "logSha256": "53bf80438cb3478ca95df7d33d4167439026e78ea7d7d3cef69fd90026db0a5a"
+    }
+  ],
+  "independentReview": "No actionable findings; all243 redirect endpoint pairs unchanged; seven animation proof hashes and ordering changed only.",
+  "runtimeSourcesAndArtifactsUnchanged": true,
+  "lfSimulationMatchesGeneratedReport": true
+}
