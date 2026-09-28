@@ -100,13 +100,17 @@ class ModdedWorldAdapterTests(unittest.TestCase):
             self.assertTrue(check(source, output, report_root / "report.json", DEFAULT_RESOURCES)["ok"])
 
     def test_owned_helper_dependency_reaches_fixed_point_in_one_atomic_output(self):
-        dependent = self.rules[86]
+        # Bag reservations are now intentionally reduced to one cell. Use a
+        # still-multicell balustrade so this tests a real helper dependency.
+        dependent = self.rules[176]
         remover = self.rules[120]
         self.assertIn("legacy carriers", dependent.source_reference)
         self.assertIn("legacy carriers", remover.source_reference)
         dependent_origin = (8, 64, 8)
         remover_origin = (9, 64, 6)
-        blocker = (8, 64, 7)
+        blocker = (8, 66, 8)
+        self.assertIn((0,2,0),dependent.shape)
+        self.assertNotEqual(blocker,add(dependent_origin,dependent.source.offset))
         blocks = {
             add(dependent_origin, dependent.source.offset): (dependent.source.state[0], dict(dependent.source.state[1])),
             add(remover_origin, remover.source.offset): (remover.source.state[0], dict(remover.source.state[1])),

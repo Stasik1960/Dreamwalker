@@ -39,19 +39,19 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
  public void registryExactlyMatchesProductionPaletteAndPart(TestContext context){
   Set<Identifier> expected=new LinkedHashSet<>();
   for(String objectId:BloodborneBlocks.productionPalette().keySet())expected.add(BloodborneBlocks.id(objectId));
-  for(String cityId:BloodborneBlocks.CITY_BLOCKS.keySet())expected.add(BloodborneBlocks.id(cityId));
+  context.assertTrue(BloodborneBlocks.BLOCKS.keySet().equals(BloodborneBlocks.productionPalette().keySet()),"production registry exactly matches production palette");
+  for(BloodborneBlocks.Definition definition:BloodborneBlocks.CITY_DATA.blocks)expected.add(BloodborneBlocks.id(definition.id));
   expected.add(BloodborneBlocks.id("architecture_part"));
   Set<Identifier> actual=new LinkedHashSet<>();
   for(Identifier id:Registries.BLOCK.getIds())if(BloodborneBlocks.ID.equals(id.getNamespace()))actual.add(id);
-  Set<Identifier> missing=new LinkedHashSet<>(expected);missing.removeAll(actual);Set<Identifier> unexpected=new LinkedHashSet<>(actual);unexpected.removeAll(expected);
-  context.assertTrue(actual.equals(expected),"registered Bloodborne blocks match production + city definitions: actual="+actual.size()+" expected="+expected.size()+" missing="+missing+" unexpected="+unexpected);
+  context.assertTrue(actual.equals(expected),"registered blocks exactly match production and declared city definitions plus part");
   for(String restored:List.of("o_acacia_door","o_birch_door","o_dark_oak_door","o_shuttered_window","o_stone_railing","o_ornate_balustrade","o_carved_balustrade","o_stepped_balustrade","o_high_balustrade","o_stone_curb","o_ladder_01","o_ladder_03","o_candles_0","o_lanterns","o_wall_lantern","o_lantern","o_lightning_rod","o_oak_wood","o_bench","o_barrel","o_books","o_bag","o_cases_0"))context.assertTrue(BloodborneBlocks.BLOCKS.containsKey(restored),"required restored production ID: "+restored);
   context.assertTrue(!BloodborneBlocks.BLOCKS.containsKey("o_c003"),"retired C003 composite must not return through production selection");
   for(String obsolete:List.of("o_c001_a","o_c001_b","o_c009_a","o_c009_b","o_c282_a","o_c282_b","o_c008_4","o_bench_rotate","o_ladder_02"))context.assertTrue(!BloodborneBlocks.BLOCKS.containsKey(obsolete)&&!Registries.BLOCK.containsId(BloodborneBlocks.id(obsolete)),"obsolete fragment is not registered: "+obsolete);
   context.complete();
  }
 
- @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="production_palette_door")
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=160,batchId="production_palette_door")
  public void c282IsOneDoubleLeafDoorAcrossFacings(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock door=required("o_c282");BlockPos root=context.getAbsolutePos(ROOT);
   try{
@@ -74,7 +74,7 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
   }finally{clear(context,door);player.discard();}
  }
 
- @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="production_palette_door")
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=100,batchId="production_palette_door")
  public void c282OpenIsAtomicWhenAnOuterLeafCellIsBlocked(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock door=required("o_c282");BlockPos root=context.getAbsolutePos(ROOT);
   try{
@@ -93,7 +93,7 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
   }finally{clear(context,door);player.discard();}
  }
 
- @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=140,batchId="production_palette_door")
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=140,batchId="production_palette_door")
  public void c282AuthenticSourcePaneContextIsNeverClaimed(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock door=required("o_c282");
   try{
@@ -126,15 +126,15 @@ public final class ProductionPaletteGameTests implements FabricGameTest {
  public void c001PlacesAndBreaksAsOneWholeTreeItem(TestContext context){
   floor(context);ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();ArchitectureBlock tree=required("o_c001");
   try{
-   moveOutside(context,player);context.useStackOnBlock(player,new ItemStack(tree),CLICK,Direction.UP);BlockPos root=find(context,tree);
-   context.assertTrue(root!=null,"whole C001 tree item places one master");
-   for(BlockPos pos:fixtureCells(context)){
-    BlockState state=world.getBlockState(pos);if(state.getBlock() instanceof ArchitectureBlock block)context.assertTrue(block==tree,"tree placement never creates a branch/fragment architecture block");
-   }
+   moveOutside(context,player);context.useStackOnBlock(player,new ItemStack(tree),CLICK,Direction.UP);BlockPos root=context.getAbsolutePos(CLICK.up());
+   context.assertTrue(world.getBlockState(root).isOf(tree),"whole C001 tree item places one master");BlockState firstState=world.getBlockState(root);Set<BlockPos> firstCells=new LinkedHashSet<>(GeometryRuntime.state(firstState).parsedCells.keySet());
+   for(BlockPos offset:firstCells){BlockState cell=world.getBlockState(root.add(offset));context.assertTrue(offset.equals(BlockPos.ORIGIN)?cell.isOf(tree):cell.isOf(BloodborneBlocks.PART_BLOCK),"tree placement uses only its master and authored helpers: "+offset);}
+   var treeId=Registries.BLOCK.getId(tree);for(BlockPos pos:fixtureCells(context)){ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);if(part!=null&&part.hasBinding(root,treeId))context.assertTrue(firstCells.contains(pos.subtract(root)),"C001 has no owned helper binding outside its authored footprint: "+pos.subtract(root));}
    clearDrops(world,root,tree);world.breakBlock(root,true,player);context.assertTrue(world.getBlockState(root).isAir(),"breaking the C001 master removes the whole tree");
-   for(BlockPos pos:fixtureCells(context))context.assertTrue(!world.getBlockState(pos).isOf(BloodborneBlocks.PART_BLOCK),"tree break removes every owned helper");
+   for(BlockPos offset:firstCells)context.assertTrue(world.getBlockState(root.add(offset)).isAir(),"tree break removes every authored owned cell: "+offset);
+   for(BlockPos pos:fixtureCells(context)){ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);context.assertTrue(part==null||!part.hasBinding(root,treeId),"tree break leaves no C001 helper binding: "+pos.subtract(root));}
    context.assertTrue(dropCount(world,root,tree)==1,"breaking the C001 master drops exactly one whole-tree item");clearDrops(world,root,tree);
-   context.useStackOnBlock(player,new ItemStack(tree),CLICK,Direction.UP);root=find(context,tree);context.assertTrue(root!=null,"whole C001 tree item re-places one master");
+   context.useStackOnBlock(player,new ItemStack(tree),CLICK,Direction.UP);root=context.getAbsolutePos(CLICK.up());context.assertTrue(world.getBlockState(root).isOf(tree),"whole C001 tree item re-places one master");
    BlockPos helper=firstHelper(root,world.getBlockState(root));context.assertTrue(helper!=null,"whole C001 tree has an owned helper to break");
    world.breakBlock(helper,true,player);context.assertTrue(world.getBlockState(root).isAir(),"breaking an owned C001 helper removes its master");
    context.assertTrue(dropCount(world,root,tree)==1,"breaking an owned C001 helper drops exactly one whole-tree item");

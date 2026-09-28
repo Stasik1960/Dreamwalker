@@ -4,14 +4,18 @@ import hashlib
 import json
 from collections import Counter
 from pathlib import Path
-from world_io import compound, block_state_key, section_blocks, TAG_LIST, TAG_COMPOUND, Tag
+from world_io import compound, block_state_key, section_blocks, TAG_LIST, TAG_COMPOUND, TAG_LONG, TAG_STRING, Tag
 
 DEFAULT_CITY = Path(__file__).resolve().parents[1]/'src/main/resources/bloodborne_blocks/city'
 
 def audit_helpers(world, city):
     from convert_logical_world import PART, unpack_pos_long
-    geometries={}
+    geometries={};root_carriers=set()
     for resource in (city,city.parent/'logical'):
+        definitions=resource/'definitions.json'
+        if definitions.exists():
+            root_carriers.update('bloodborne_blocks:'+d['id'] for d in json.loads(definitions.read_bytes())['blocks']
+                                 if d.get('logical') or d.get('whole_owner'))
         data=json.loads((resource/'geometry.json').read_bytes())
         for ident,block in data['blocks'].items():
             geometries['bloodborne_blocks:'+ident]={key:data.get('profiles',{}).get(value.get('ref'),value)
@@ -25,16 +29,21 @@ def audit_helpers(world, city):
             point=tuple(int(data[a].value) for a in ('x','y','z'))
             seen.add((chunk.dimension,*point))
             reason=None
-            if 'Root' not in data or 'Owner' not in data:reason='missing_owner'
-            else:
-                root=unpack_pos_long(data['Root'].value);owner=data['Owner'].value
+            try:bindings=helper_bindings(data)
+            except ValueError:reason='malformed_owner_bindings';bindings=[]
+            for root,owner in bindings:
                 state=world.get(chunk.dimension,root)
                 key=','.join(k+'='+v for k,v in state[1]) if state else ''
                 geometry=geometries.get(owner,{}).get(key)
                 offset=','.join(str(point[i]-root[i]) for i in range(3))
                 if not state or state[0]!=owner:reason='owner_block_missing'
                 elif not geometry or offset not in geometry['cells'] or point==root:reason='outside_owner_geometry'
-                elif world.get(chunk.dimension,point)!=(PART,()):reason='entity_without_part_block'
+                if reason:break
+            carrier=world.get(chunk.dimension,point)
+            if not reason and carrier!=(PART,()):
+                carrier_key=','.join(k+'='+v for k,v in carrier[1]) if carrier else ''
+                if not carrier or carrier[0] not in root_carriers or carrier_key not in geometries.get(carrier[0],{}):
+                    reason='entity_without_supported_carrier'
             if reason:errors.append({'dimension':chunk.dimension,'position':list(point),'reason':reason})
     for chunk in world.chunks.values():
         for section in chunk.root().get('sections',Tag(TAG_LIST,[],TAG_COMPOUND)).value:
@@ -56,6 +65,25 @@ def audit_helpers(world, city):
                 if (chunk.dimension,*point) not in seen:
                     errors.append({'dimension':chunk.dimension,'position':list(point),'reason':'part_without_entity'})
     return {'checked':count,'orphans':errors,'ok':not errors}
+
+
+def helper_bindings(data):
+    """Strict disk-schema validation; metadata is never itself ownership proof."""
+    from convert_logical_world import unpack_pos_long
+    def pair(row):
+        if row.get('Root',Tag(TAG_LIST,[])).type!=TAG_LONG or row.get('Owner',Tag(TAG_LIST,[])).type!=TAG_STRING:
+            raise ValueError('invalid owner fields')
+        return unpack_pos_long(row['Root'].value),row['Owner'].value
+    first=pair(data)
+    if 'Owners' not in data:return [first]
+    raw=data['Owners']
+    if raw.type!=TAG_LIST or not 2<=len(raw.value)<=16:raise ValueError('invalid owner count')
+    result=[]
+    for entry in raw.value:
+        if entry.type!=TAG_COMPOUND or set(compound(entry))!={'Root','Owner'}:raise ValueError('invalid owner record')
+        result.append(pair(compound(entry)))
+    if result!=sorted(set(result)) or result[0]!=first:raise ValueError('noncanonical owner list')
+    return result
 
 def load(city=DEFAULT_CITY, declared=None):
     from convert_logical_world import state_tag

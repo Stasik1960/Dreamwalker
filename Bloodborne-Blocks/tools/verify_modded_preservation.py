@@ -45,6 +45,8 @@ def verify(source:Path,output:Path,report:dict):
                 allowed[key]={'before':allowed[key]['before'],'after':c['after']}
             else:allowed[key]={'before':c['before'],'after':c['after']}
     allowed_chunks={(dim,p[0]//16,p[2]//16) for dim,p in allowed}
+    allowed_by_chunk={key:[] for key in allowed_chunks}
+    for (dim,p),change in allowed.items():allowed_by_chunk[(dim,p[0]//16,p[2]//16)].append((p,change))
     seen_allowed=set()
     changed_cells=0;changed_chunks=0;unchanged_chunks=0
     source_files={p.relative_to(source).as_posix():p for p in source.rglob('*') if p.is_file()}
@@ -65,14 +67,30 @@ def verify(source:Path,output:Path,report:dict):
             if a.timestamp!=b.timestamp:errors.append('chunk timestamp changed: '+str((name,key)))
             if a.compression==b.compression and a.compressed_payload==b.compressed_payload:
                 # Decode unchanged chunks as well, to validate NBT integrity.
-                b.nbt();unchanged_chunks+=1;continue
+                data=compound(b.nbt().root)
+                cx,cz=int(data['xPos'].value),int(data['zPos'].value)
+                sections={int(compound(s)['Y'].value):s for s in data.get('sections',Tag(TAG_LIST,[],TAG_COMPOUND)).value}
+                for pos,change in allowed_by_chunk.get((dim,cx,cz),[]):
+                    section=sections.get(pos[1]//16)
+                    values=section_blocks(section) if section else None
+                    if values:
+                        palette,indices=values
+                        index=(pos[1]&15)*256+(pos[2]&15)*16+(pos[0]&15)
+                        actual=block_state_key(palette[indices[index]])
+                    else:actual='minecraft:air'
+                    if change['before']!=actual or city_mapping.get(change['after'],change['after'])!=actual:
+                        errors.append('unchanged chunk cell does not match ledger: '+str((dim,pos)))
+                    seen_allowed.add((dim,pos))
+                unchanged_chunks+=1;continue
             changed_chunks+=1
             ar=compound(a.nbt().root);br=compound(b.nbt().root);cx=int(ar['xPos'].value);cz=int(ar['zPos'].value)
             from city_palette import chunk_has_mapping
             if (dim,cx,cz) not in allowed_chunks and not chunk_has_mapping(ar,city_mapping):errors.append('chunk changed without ledger cells: '+str((name,cx,cz)))
             asec={int(compound(s)['Y'].value):s for s in ar.get('sections',Tag(TAG_LIST,[],TAG_COMPOUND)).value}
             bsec={int(compound(s)['Y'].value):s for s in br.get('sections',Tag(TAG_LIST,[],TAG_COMPOUND)).value}
-            for sy in asec.keys()|bsec.keys():
+            # Whole-owner ledgers also contain air -> air in absent sections.
+            # Verify those cells as air, without manufacturing section NBT.
+            for sy in asec.keys()|bsec.keys()|{p[1]//16 for p,_ in allowed_by_chunk.get((dim,cx,cz),[])}:
                 def states(s):
                     data=section_blocks(s) if s else None
                     if data is None:return ['minecraft:air'],[0]*4096

@@ -32,10 +32,9 @@ public final class FunctionalFurniture {
 
  static boolean isClimbable(World world,BlockPos pos){
   if(!world.isChunkLoaded(pos))return false;BlockState state=world.getBlockState(pos);
-  if(state.getBlock() instanceof ArchitectureBlock)return isLadderRoot(state);
-  if(!state.isOf(BloodborneBlocks.PART_BLOCK))return false;
-  ArchitecturePartBlockEntity part=GeometryRuntime.part(world,pos);if(part==null||!world.isChunkLoaded(part.rootPos()))return false;
-  BlockState root=world.getBlockState(part.rootPos());return GeometryRuntime.ownsHelper(root,part.rootPos(),pos,part.ownerId())&&isLadderRoot(root);
+  if(isLadderRoot(state))return true;
+  if(!state.isOf(BloodborneBlocks.PART_BLOCK)&&!(state.getBlock() instanceof SharedArchitectureBlock))return false;
+  return GeometryRuntime.ownedRoots(world,pos).stream().anyMatch(root->isLadderRoot(root.state()));
  }
 
  public static BlockPos climbablePos(LivingEntity entity){
@@ -140,7 +139,9 @@ public final class FunctionalFurniture {
   for(double[] anchor:block.definition.seat_anchors){
    if(anchor==null||anchor.length!=3)throw new IllegalStateException("Invalid authored seat anchor "+block.definition.id);
    double x=anchor[0]-.5,z=anchor[2]-.5;
-   points.add(new Vec3d(root.getX()+.5+x*cos-z*sin,root.getY()+anchor[1],root.getZ()+.5+x*sin+z*cos));
+   GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);
+   int rootShift=geometry==null?0:geometry.technical_root_offset[1];
+   points.add(new Vec3d(root.getX()+.5+x*cos-z*sin,root.getY()+anchor[1]-rootShift,root.getZ()+.5+x*sin+z*cos));
   }
   return List.copyOf(points);
  }

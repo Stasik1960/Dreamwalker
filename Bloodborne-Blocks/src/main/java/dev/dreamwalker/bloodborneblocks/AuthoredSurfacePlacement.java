@@ -21,7 +21,7 @@ final class AuthoredSurfacePlacement {
   if(!java.util.Set.of("o_lantern","o_ladder_03").contains(id))return null;
   World world=use.getWorld();PlayerEntity player=use.getPlayer();BlockPos clicked=use.getBlockPos();
   if(player==null||!world.isChunkLoaded(clicked))return ActionResult.FAIL;
-  BlockPos owner=owner(world,clicked);BlockState ownerState=world.getBlockState(owner);
+  BlockPos owner=owner(world,clicked);if(owner==null)return ActionResult.FAIL;BlockState ownerState=world.getBlockState(owner);
   // Sneaking bypasses vanilla Block.onUse; it must still attach, not place a block into a helper.
   if(ownerState.getBlock() instanceof ArchitectureBlock target&&target.definition.attachment_item!=null
     &&target.definition.attachment_item.equals(((ArchitectureBlock)item.getBlock()).definition.id)){
@@ -39,7 +39,9 @@ final class AuthoredSurfacePlacement {
   return null;
  }
  private static BlockPos owner(World world,BlockPos pos){
+  if(world.getBlockState(pos).getBlock() instanceof ArchitectureBlock)return pos;
   var part=GeometryRuntime.part(world,pos);
+  if(part!=null&&part.bindings().size()!=1)return null;
   if(part!=null&&world.isChunkLoaded(part.rootPos())&&GeometryRuntime.ownsHelper(world.getBlockState(part.rootPos()),part.rootPos(),pos,part.ownerId()))return part.rootPos();
   return pos;
  }

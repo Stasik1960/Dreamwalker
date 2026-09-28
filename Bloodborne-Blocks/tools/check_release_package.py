@@ -78,7 +78,47 @@ def main():
         return
     if args.jar is None or args.source_jar is None:
         parser.error("runtime and sources JARs are required")
-    print(json.dumps(validate(args.jar, args.source_jar, args.root, args.packaged_resources)))
+    result = validate(args.jar, args.source_jar, args.root, args.packaged_resources)
+    if args.packaged_resources:
+        from check_accepted_runtime import validate as accepted_runtime
+        result['acceptedRuntime'] = accepted_runtime(args.jar, args.source_jar, args.root)
+        result['acceptedCity'] = validate_accepted_city(args.root)
+    print(json.dumps(result))
+
+
+def validate_accepted_city(root):
+    """An old runtime renamed as a newer candidate cannot pass release checks.
+
+    The supplied full city is independently verified on every package check;
+    a stale PASS report, registry census or protected-ID list is insufficient.
+    """
+    import gzip
+    from verify_accepted_restore import verify, RC1
+    manifest = json.loads((root / 'docs/accepted-restore/delivery.json').read_bytes())
+    if manifest.get('version') != version(root):
+        raise ValueError('Accepted city version differs from runtime')
+    paths = {}
+    for name in ('jar', 'sourcesJar', 'world', 'conversion', 'independent', 'secondConversion', 'secondIndependent'):
+        item = manifest[name]
+        path = (root / item['path']).resolve()
+        if not path.is_relative_to(root.resolve()) or sha(path) != item['sha256']:
+            raise ValueError('Accepted delivery artifact changed: ' + name)
+        paths[name] = path
+    from check_accepted_runtime import validate as accepted_runtime
+    accepted_runtime(paths['jar'], paths['sourcesJar'], root)
+    def read(path):
+        raw = path.read_bytes()
+        return json.loads(gzip.decompress(raw) if path.suffix == '.gz' else raw)
+    report = read(paths['conversion'])
+    result = verify(RC1, paths['world'], report, root/'src/main/resources/bloodborne_blocks/logical')
+    if result['result'] != 'PASS' or read(paths['independent']) != result:
+        raise ValueError('Supplied city differs from independently accepted restoration')
+    second, proof = read(paths['secondConversion']), read(paths['secondIndependent'])
+    if (second.get('result') != 'PASS' or second['counts']['restored'] != 0 or second.get('ledger') or
+        second['outputFiles'] != report['outputFiles'] or second['source']['hashes'] != report['outputFiles'] or
+        proof.get('result') != 'PASS' or proof.get('outputTreeSha256') != result['outputTreeSha256']):
+        raise ValueError('Accepted city idempotence proof failed')
+    return {k: v for k, v in result.items() if k != 'families'}
 
 
 if __name__ == "__main__":

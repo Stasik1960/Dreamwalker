@@ -38,7 +38,7 @@ public final class BloodborneBlocks implements ModInitializer {
   /** Three canonical north-facing seat contact points, never inferred per tick. */
   public double[][] seat_anchors;
   public float hardness,resistance,slipperiness,velocity,jump;
-  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat;
+  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat,whole_owner;
   public Map<String,List<String>> properties;
   /** State values forced only while a logical item is being placed. */
   public Map<String,String> placement_properties;
@@ -72,7 +72,11 @@ public final class BloodborneBlocks implements ModInitializer {
   for(Definition definition:city.blocks){
    if(definition==null||!definition.city_compat||definition.logical||definition.id==null||Identifier.tryParse(ID+":"+definition.id)==null||!ids.add(definition.id))throw new IllegalStateException("Invalid city definition "+(definition==null?"null":definition.id));
    if(definition.properties==null||definition.states==null)throw new IllegalStateException("Incomplete city definition "+definition.id);
-   if(definition.models!=null){
+   if(ReviewedWallConnections.ID.equals(definition.id)){
+    ReviewedWallConnections.validate(definition,city);
+   }else if(definition.whole_owner){
+    if(!definition.id.startsWith("owner_")||!definition.modular||!"generic".equals(definition.kind)||!definition.extra_facing||definition.models==null||!definition.properties.keySet().equals(Set.of("facing"))||!new HashSet<>(definition.properties.get("facing")).equals(Set.of("north","east","south","west"))||definition.states.size()!=4||!definition.states.keySet().equals(definition.models.keySet())||definition.models.values().stream().anyMatch(name->!name.startsWith(definition.id+"_")))throw new IllegalStateException("Invalid whole owner definition "+definition.id);
+   }else if(definition.models!=null){
     List<String> variants=definition.properties.get("variant");
     if(!definition.modular||!"generic".equals(definition.kind)||!"minecraft:stone".equals(definition.source)||definition.properties.size()!=1||variants==null||variants.isEmpty()||variants.size()>16||new HashSet<>(variants).size()!=variants.size())throw new IllegalStateException("Invalid city module page "+definition.id);
     if(!definition.states.keySet().equals(definition.models.keySet()))throw new IllegalStateException("City module state/model mismatch "+definition.id);
@@ -110,6 +114,8 @@ public final class BloodborneBlocks implements ModInitializer {
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
    if(p==null&&(d.logical||d.city_compat)&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&d.logical&&name.equals("root_anchor")&&Set.of("o_bench","o_high_balustrade").contains(d.id)&&d.properties.get(name).equals(List.of("canonical","upper")))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&ReviewedWallConnections.ID.equals(d.id)&&name.equals("connection"))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
    if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
@@ -131,7 +137,6 @@ public final class BloodborneBlocks implements ModInitializer {
   for(var entry:definition.placement_properties.entrySet())state=set(state,(Property)definition.propertyObjects.get(entry.getKey()),entry.getValue());
   return state;
  }
- static boolean creativeVisible(Definition definition){return definition.logical&&definition.creative;}
  static Collection<ArchitectureBlock> allBlocks(){List<ArchitectureBlock> result=new ArrayList<>(BLOCKS.size()+CITY_BLOCKS.size());result.addAll(BLOCKS.values());result.addAll(CITY_BLOCKS.values());return Collections.unmodifiableList(result);}
  static ArchitectureBlock registeredBlock(String id){ArchitectureBlock block=BLOCKS.get(id);return block!=null?block:CITY_BLOCKS.get(id);}
  static String cityVariantModelKey(Definition definition,String variant){
@@ -150,8 +155,6 @@ public final class BloodborneBlocks implements ModInitializer {
   CITY_DATA=loadCityDefinitions();
   GeometryRuntime.loadCityAndValidate(CITY_DATA);
   Registry.register(Registries.BLOCK,id("architecture_part"),PART_BLOCK);
-  PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,PART_BLOCK).build(null));
-  ArchitecturePartBlockEntity.registerValidation();
   SEAT_ENTITY=Registry.register(Registries.ENTITY_TYPE,id("seat"),EntityType.Builder.<ArchitectureSeatEntity>create(ArchitectureSeatEntity::new,SpawnGroup.MISC).setDimensions(.01F,.01F).maxTrackingRange(8).trackingTickInterval(20).disableSaving().disableSummon().build(ID+":seat"));
   for(Definition d:DATA.blocks){
    prepareDefinition(d);
@@ -161,8 +164,12 @@ public final class BloodborneBlocks implements ModInitializer {
    prepareDefinition(d);
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));CITY_BLOCKS.put(d.id,block);
   }
+  List<Block> partCarriers=new ArrayList<>();partCarriers.add(PART_BLOCK);allBlocks().stream().filter(block->block instanceof BlockEntityProvider).forEach(partCarriers::add);
+  PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,partCarriers.toArray(Block[]::new)).build(null));
+  ArchitecturePartBlockEntity.registerValidation();
   LogicalAttachments.validateDefinitions(DATA.blocks);
-  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->BLOCKS.values().stream().filter(b->creativeVisible(b.definition)).filter(b->!GeometryRuntime.state(b.getDefaultState()).parsedCells.isEmpty()).map(BloodborneBlocks::creativeStack).forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture")).icon(()->new ItemStack(BLOCKS.get("o_c001"))).entries((context,entries)->ArchitectureCreativeCatalog.mainEntries().forEach(entries::add)).build());
+  Registry.register(Registries.ITEM_GROUP,id("architecture_technical"),FabricItemGroup.builder().displayName(Text.translatable("itemGroup.bloodborne_blocks.architecture_technical")).icon(()->new ItemStack(CITY_BLOCKS.get(ReviewedWallConnections.ID))).entries((context,entries)->ArchitectureCreativeCatalog.technicalEntries().forEach(entries::add)).build());
   BloodborneCommands.register();
   System.out.println("BLOODBORNE_BLOCKS_REGISTERED blocks="+BLOCKS.size()+" city_blocks="+CITY_BLOCKS.size()+" states="+allBlocks().stream().mapToInt(b->b.getStateManager().getStates().size()).sum());
  }

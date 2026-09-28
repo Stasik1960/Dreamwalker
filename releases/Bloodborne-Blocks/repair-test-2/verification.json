@@ -1,0 +1,28 @@
+{
+  "edition": "REPAIR TEST 2",
+  "branch": "repair/composite-preserving-grid",
+  "preChangeCheckpoint": "cf25cbf1f",
+  "gameTests": {
+    "passed": 50,
+    "failed": 0,
+    "mechanism": "Fabric dedicated-server GameTests, real item useOnBlock"
+  },
+  "cityCompatibilityCheck": "PASS",
+  "reviewedWallProofTests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "existingDefinitionsGeometryTranslations": "unchanged; only one proved building type appended",
+  "remapJar": "PASS",
+  "jarEmbeddedResources": "exact source bytes",
+  "isolatedWorld": {
+    "transactions": 5,
+    "helperCarriers": 27,
+    "orphanHelpers": 0,
+    "secondPassChanges": 0
+  },
+  "exactUserRefusal": "NOT_REPRODUCED in unchanged TEST1 side-wall scene; separate valid shared helper case tested",
+  "graphicalClient": "NOT_RUN; user test required",
+  "fullApplicationRestart": "NOT_RUN; ownership NBT roundtrip only",
+  "wholeWorldGates": "FAIL / UNFINISHED, no mass conversion or main integration"
+}

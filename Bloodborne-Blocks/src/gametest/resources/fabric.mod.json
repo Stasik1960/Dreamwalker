@@ -6,6 +6,7 @@
   "environment": "server",
   "entrypoints": {
     "fabric-gametest": [
+      "dev.dreamwalker.bloodborneblocks.ExplicitRootGameTests",
       "dev.dreamwalker.bloodborneblocks.LogicalDebugGameTests",
       "dev.dreamwalker.bloodborneblocks.LogicalVisualGameTests",
       "dev.dreamwalker.bloodborneblocks.SupportPlaneGameTests",
@@ -15,7 +16,11 @@
       "dev.dreamwalker.bloodborneblocks.AgonyAttachmentGameTests",
       "dev.dreamwalker.bloodborneblocks.AgonyFurnitureGameTests",
       "dev.dreamwalker.bloodborneblocks.AgonySurfaceGameTests",
-      "dev.dreamwalker.bloodborneblocks.GridPhysicsGameTests"
+      "dev.dreamwalker.bloodborneblocks.SharedPhysicalGameTests",
+      "dev.dreamwalker.bloodborneblocks.PracticalTestKitGameTests",
+      "dev.dreamwalker.bloodborneblocks.ReviewedWallGameTests",
+      "dev.dreamwalker.bloodborneblocks.CreativeCatalogGameTests",
+      "dev.dreamwalker.bloodborneblocks.WindowTest3GameTests"
     ]
   },
   "depends": {

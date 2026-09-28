@@ -354,11 +354,120 @@ def run(resources=RES, *, apply=False, report_path=None, baseline_path=None):
     return report
 
 
+def audit_grid(resources=RES):
+    """Bounded resource audit, separate from support/art normalization and worlds.
+
+    Reuse the same storage splitter as the legacy geometry compiler. Contract V2
+    and its approved physical sidecar supply explicit masks. City profiles are
+    validated structurally, but do not supply independent repair authority.
+    """
+    from sync_reviewed_geometry import normalize_collision_cells, split_collision
+    resources=Path(resources)
+    contracts=read(resources/'contracts-v2.json')
+    physical=read(resources/'physical-footprints.json')['families']
+    legacy=read(resources/'geometry.json')['blocks']
+    definitions={d['id']:d for d in read(resources/'definitions.json')['blocks']}
+    city=read(resources.parent/'city/geometry.json')
+    city_definitions={d['id']:d for d in read(resources.parent/'city/definitions.json')['blocks']}
+    wall=read(resources.parent/'city/reviewed-wall-family.json')
+    # Conservatively freeze the entire accepted production baseline, not only
+    # the subset in individual review allowlists. Window is the sole exception.
+    protected={f['id'] for f in contracts['families']} - {'o_shuttered_window'}
+    protected.update(wall['aliases']);protected.add(wall['id'])
+    rows=[];skipped=[];errors=[];changed=[];cache={}
+
+    def local_errors(state):
+        issues=[]
+        if not state.get('cells'):return ['MISSING_EXPLICIT_CELLS']
+        for name,data in state['cells'].items():
+            try:
+                c=tuple(map(int,name.split(',')))
+                if len(c)!=3:raise ValueError()
+            except (ValueError,TypeError):issues.append('INVALID_CELL_KEY: '+str(name));continue
+            for kind in ('collision','outline'):
+                for box in data.get(kind,[]):
+                    if (len(box)!=6 or any(type(v) not in (int,float) or not math.isfinite(v) or v<0 or v>1 for v in box)
+                            or any(box[i]>=box[i+3] for i in range(3))):
+                        issues.append('INVALID_CELL_LOCAL_'+kind.upper()+': '+name+' '+str(box))
+        return issues
+
+    if set(definitions)!=set(legacy) or set(definitions)!=set(physical):
+        errors.append({'id':'logical','state':'*','reason':'DEFINITION_GEOMETRY_PHYSICAL_COVERAGE'})
+    for family in contracts['families']:
+        ident=family['id']
+        if set(family['states'])!=set(definitions[ident]['states']) or set(family['states'])!=set(physical[ident]):
+            errors.append({'id':ident,'state':'*','reason':'STATE_COVERAGE'})
+        for key,state in family['states'].items():
+            row={'id':ident,'state':key,'protected':ident in protected,'status':'PASS'}
+            try:
+                # Independently prove authored and reduced runtime masks. The
+                # explicit technical-root rebase remains in the existing loader.
+                split_collision(state['collision_footprint']['boxes'],state['interaction_footprint']['cells'])
+                mask=physical[ident][key]
+                slices=split_collision(mask['boxes'],mask['cells'])
+                row.update(physical_cells=len(mask['cells']),global_primitives=len(mask['boxes']),
+                           local_slices=sum(map(len,slices.values())),union_preserved=True,
+                           volume_proof='partition of each original box into disjoint declared cells')
+                old=union_volume(mask['boxes'])
+                volumes=[union_volume(boxes) for boxes in slices.values()]
+                new=math.fsum(volumes) if all(v is not None for v in volumes) else None
+                row.update(union_volume_before=old,union_volume_after=new)
+                if old is not None and new is not None and not math.isclose(old,new,rel_tol=1e-10,abs_tol=1e-10):
+                    raise ValueError('UNION_VOLUME_CHANGED')
+                compiled=legacy[ident]['states'][key]
+                normalized,reason=normalize_collision_cells(compiled,state['interaction_footprint']['cells'],protected=ident in protected)
+                row['normalization']=reason
+                if normalized!=compiled:changed.append({'id':ident,'state':key})
+                for reason in local_errors(compiled):raise ValueError(reason)
+                if reason not in ('PROTECTED','ALREADY_CELL_LOCAL','NORMALIZED'):raise ValueError(reason)
+            except (ValueError,KeyError,TypeError) as error:
+                row.update(status='SKIPPED',reason=str(error))
+                errors.append({'id':ident,'state':key,'reason':str(error),'unchanged':True})
+            rows.append(row)
+    city_states=0;city_protected=0
+    if set(city_definitions)!=set(city['blocks']):
+        errors.append({'id':'city','state':'*','reason':'DEFINITION_GEOMETRY_COVERAGE'})
+    for ident,definition in sorted(city_definitions.items()):
+        states=city['blocks'][ident]['states'];keys=sorted(states);city_states+=len(keys)
+        if set(keys)!=set(definition['states']) or definition.get('models') is not None and set(keys)!=set(definition['models']):
+            errors.append({'id':ident,'state':'*','reason':'STATE_MODEL_COVERAGE'})
+        reason='PROTECTED' if ident in protected else 'UNPROVEN_PHYSICAL_MASK_FOR_REPAIR'
+        if ident in protected:city_protected+=len(keys)
+        skipped.append({'id':ident,'states':keys,'reason':reason,'unchanged':True})
+        for key,state in states.items():
+            ref=state.get('ref');identity=('profile',ref) if ref else (ident,key)
+            if identity not in cache:
+                resolved=city['profiles'].get(ref) if ref else state
+                cache[identity]=(['MISSING_OR_NESTED_PROFILE'] if resolved is None or resolved.get('ref') else local_errors(resolved))
+            for issue in cache[identity]:errors.append({'id':ident,'state':key,'reason':issue,'unchanged':True})
+    summary={'logical_families':len(contracts['families']),'logical_states':len(rows),
+             'protected_logical_families':len({r['id'] for r in rows if r['protected']}),
+             'protected_logical_states':sum(r['protected'] for r in rows),
+             'city_ids':len(city_definitions),'city_states':city_states,
+             'city_profiles':len(city['profiles']),'unique_city_geometry_states_checked':len(cache),
+             'protected_city_ids':sum(ident in protected for ident in city_definitions),'protected_city_states':city_protected,
+             'unproven_city_ids_skipped_for_repair':sum(ident not in protected for ident in city_definitions),
+             'unproven_city_states_skipped_for_repair':city_states-city_protected,
+             'states_needing_storage_normalization':len(changed),'resource_states_changed':0,'errors':len(errors)}
+    return {'schemaVersion':1,'scope':'existing resource definitions only; no world scan or membership inference',
+            'status':'PASS' if not errors and not changed else 'FAIL','summary':summary,
+            'protected_policy':'Freeze all production families except the explicitly approved TEST3 window; freeze reviewed wall and its aliases.',
+            'protected_ids':sorted(protected),'logical_states':rows,'city_normalization_skips':skipped,
+            'needs_normalization':changed,'errors':errors}
+
+
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--resources', type=Path, default=RES)
     parser.add_argument('--write', action='store_true')
     parser.add_argument('--report', type=Path)
     parser.add_argument('--baseline', type=Path, help='optional immutable input snapshot for this explicit audit pass')
+    parser.add_argument('--grid', action='store_true', help='audit explicit masks, lossless collision partition and all compiled cell-local shapes; no art/world changes')
     args = parser.parse_args()
-    run(args.resources, apply=args.write, report_path=args.report, baseline_path=args.baseline)
+    if args.grid:
+        if args.write or args.baseline:parser.error('--grid is read-only; existing compiler performs approved storage splitting')
+        report=audit_grid(args.resources)
+        if args.report:write(args.report,report)
+        print(json.dumps({'collision_grid':report['summary'],'status':report['status']}))
+        if report['status']!='PASS':raise SystemExit(1)
+    else:run(args.resources, apply=args.write, report_path=args.report, baseline_path=args.baseline)

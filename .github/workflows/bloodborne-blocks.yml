@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0, lfs: false}
-      - run: git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**' --exclude=''
+      - run: git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**,Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/**' --exclude=''
       - uses: actions/setup-java@v4
         with: {distribution: temurin, java-version: '17'}
       - uses: actions/setup-python@v5
@@ -30,7 +30,7 @@ jobs:
       - run: |
           set -o pipefail
           bash ./gradlew --no-daemon --console=plain check build logicalGameTest checkReleaseVersion --max-workers=1 2>&1 | tee build/ci-gradle.log
-      - run: sha256sum "build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}.jar" "build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}-sources.jar" > build/release-artifact-sha256.txt
+      - run: sha256sum "build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}.jar" "build/devlibs/bloodborne-blocks-${{ steps.metadata.outputs.version }}-sources.jar" > build/release-artifact-sha256.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -46,7 +46,7 @@ jobs:
           name: bloodborne-verified-build-not-production-release
           path: |
             Bloodborne-Blocks/build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}.jar
-            Bloodborne-Blocks/build/libs/bloodborne-blocks-${{ steps.metadata.outputs.version }}-sources.jar
+            Bloodborne-Blocks/build/devlibs/bloodborne-blocks-${{ steps.metadata.outputs.version }}-sources.jar
             Bloodborne-Blocks/build/release-artifact-sha256.txt
           if-no-files-found: error
       - run: |

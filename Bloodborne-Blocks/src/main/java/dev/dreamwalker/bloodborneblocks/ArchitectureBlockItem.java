@@ -14,6 +14,10 @@ import net.minecraft.text.Text;
 public final class ArchitectureBlockItem extends BlockItem {
  public ArchitectureBlockItem(ArchitectureBlock block,Settings settings){super(block,settings);}
 
+ @Override public void appendTooltip(ItemStack stack,net.minecraft.world.World world,java.util.List<Text> tooltip,net.minecraft.client.item.TooltipContext context){
+  super.appendTooltip(stack,world,tooltip,context);ArchitectureCreativeCatalog.tooltip(this,stack,tooltip);
+ }
+
  @Override public Text getName(ItemStack stack){
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
   if(!block.definition.city_compat||block.definition.models==null)return super.getName(stack);
@@ -51,21 +55,22 @@ public final class ArchitectureBlockItem extends BlockItem {
    @Override public BlockPos getBlockPos(){return root;}
    @Override public Vec3d getHitPos(){return original.getHitPos().add(delta);}
    @Override public ItemStack getStack(){return original.getStack();}
-   @Override public boolean canPlace(){return AuthoredSurfacePlacement.mayReplace(original,root)||getWorld().getBlockState(root).canReplace(this);}
+   @Override public boolean canPlace(){return GeometryRuntime.isRootInsertionCarrier(getWorld(),root,block)||AuthoredSurfacePlacement.mayReplace(original,root)||getWorld().getBlockState(root).canReplace(this);}
   };
-  if(!shifted.canPlace())return ActionResult.FAIL;
   BlockState base=block.getPlacementState(shifted);if(base==null)return ActionResult.FAIL;
   normalizePlacementTag(original.getStack(),block,base);
   BlockState finalState=applyStateTag(base,original.getStack());
+  java.util.List<ArchitecturePartBlockEntity.Binding> guests=GeometryRuntime.rootInsertionGuests(original.getWorld(),root,finalState);
+  if(guests==null&&!shifted.canPlace())return ActionResult.FAIL;
   if(!AuthoredSurfacePlacement.validate(block,original,root,finalState))return ActionResult.FAIL;
-  if(!GeometryRuntime.canPlace(original.getWorld(),root,finalState)||!block.canPlaceConventionalDoor(original.getWorld(),root,finalState))return ActionResult.FAIL;
-  return super.place(shifted);
+  if((guests==null&&!GeometryRuntime.canPlace(original.getWorld(),root,finalState))||!block.canPlaceConventionalDoor(original.getWorld(),root,finalState))return ActionResult.FAIL;
+  return guests==null?super.place(shifted):GeometryRuntime.placeRootIntoHelper(original.getWorld(),root,finalState,guests,()->super.place(shifted));
  }
 
  @Override protected BlockState getPlacementState(ItemPlacementContext context){
   BlockState base=getBlock().getPlacementState(context);if(base==null)return null;
   normalizePlacementTag(context.getStack(),(ArchitectureBlock)getBlock(),base);
-  BlockState state=applyStateTag(base,context.getStack());return canPlace(context,state)?state:null;
+  BlockState state=applyStateTag(base,context.getStack());return GeometryRuntime.rootInsertionGuests(context.getWorld(),context.getBlockPos(),state)!=null||canPlace(context,state)?state:null;
  }
 
  static void normalizePlacementTag(ItemStack stack,ArchitectureBlock block,BlockState placement){

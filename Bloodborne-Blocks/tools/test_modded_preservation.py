@@ -14,6 +14,30 @@ from verify_modded_preservation import verify
 
 
 class ModdedPreservationTests(unittest.TestCase):
+    def test_changed_chunk_ledger_can_include_absent_air_section(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base=Path(temporary);source=base/'source';output=base/'copy'
+            assembly_source(source,{(5,64,5):('minecraft:stone',{})})
+            shutil.copytree(source,output)
+            world=World(output,{});world.set('minecraft:overworld',(5,64,5),('minecraft:dirt',()));world.save()
+            changes=[{'position':[5,64,5],'before':'minecraft:stone','after':'minecraft:dirt'},
+                     {'position':[5,16,5],'before':'minecraft:air','after':'minecraft:air'}]
+            report={'ledger':[{'dimension':'minecraft:overworld','changes':changes}]}
+            self.assertEqual('PASS',verify(source,output,report)['result'])
+            changes[1]['after']='minecraft:stone'
+            self.assertEqual('FAIL',verify(source,output,report)['result'])
+
+    def test_unchanged_chunk_in_whole_owner_ledger_is_still_verified(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base=Path(temporary);source=base/'source';output=base/'copy'
+            assembly_source(source,{(5,64,5):('minecraft:stone',{})})
+            shutil.copytree(source,output)
+            report={'ledger':[{'dimension':'minecraft:overworld','changes':[
+                {'position':[5,64,5],'before':'minecraft:stone','after':'minecraft:stone'}]}]}
+            self.assertEqual('PASS',verify(source,output,report)['result'])
+            report['ledger'][0]['changes'][0]['after']='minecraft:air'
+            self.assertEqual('FAIL',verify(source,output,report)['result'])
+
     def test_actual_ledger_states_metadata_and_outside_ledger_mutation(self):
         with tempfile.TemporaryDirectory(prefix="modded-preservation-test-") as temporary:
             base = Path(temporary)

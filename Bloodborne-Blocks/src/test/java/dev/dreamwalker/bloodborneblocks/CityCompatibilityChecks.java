@@ -16,12 +16,27 @@ public final class CityCompatibilityChecks {
   BloodborneBlocks.Data city=BloodborneBlocks.loadCityDefinitions();
   GeometryRuntime.loadCityAndValidate(city);
   int pages=0,nativeBlocks=0,states=0;
+  var meshes=ModularMeshData.loadCityIfPresent();
   for(BloodborneBlocks.Definition definition:city.blocks){
    BloodborneBlocks.prepareDefinition(definition);
    ArchitectureBlock block=ArchitectureBlock.create(definition);
    check(definition.city_compat&&!definition.logical,"city marker: "+definition.id);
-   if(definition.models!=null){
+   if(ReviewedWallConnections.ID.equals(definition.id)){
+    ReviewedWallConnections.validate(definition,city);
+    check(block instanceof SharedArchitectureBlock,"reviewed building retains shared ownership");
+    check(block.getStateManager().getStates().size()==128,"reviewed building exact supported states");
+    for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"reviewed wall existing mesh: "+mesh);
+    for(var state:block.getStateManager().getStates())check(GeometryRuntime.state(state).parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"reviewed wall remains one physical cell");
+   }else if(definition.whole_owner){
+    check(definition.models!=null&&definition.id.startsWith("owner_"),"whole owner art: "+definition.id);
+    check(GeometryRuntime.usesHelpers(block),"whole owner helper lifecycle: "+definition.id);
+    check(GeometryRuntime.rebuildsHelperTransitions(block),"whole owner helper state transitions: "+definition.id);
+    check(block.getStateManager().getStates().size()==4,"whole owner rotation states: "+definition.id);
+    check(block.getStateManager().getProperty("facing")!=null,"whole owner pivot rotation: "+definition.id);
+    for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"whole owner complete mesh: "+mesh);
+   }else if(definition.models!=null){
     pages++;check(definition.modular&&block.getStateManager().getProperty("facing")==null,"module page is cell-local without facing: "+definition.id);
+    check(!GeometryRuntime.usesHelpers(block),"module page remains cell-local: "+definition.id);
     check(block.getStateManager().getStates().size()<=16,"module page state bound: "+definition.id);
     for(String variant:definition.properties.get("variant"))check(("variant="+variant).equals(BloodborneBlocks.cityVariantModelKey(definition,variant)),"item variant resolves its baked state: "+definition.id+"/"+variant);
     check(BloodborneBlocks.cityVariantModelKey(definition,"invalid")==null,"invalid item variant falls back: "+definition.id);
@@ -29,8 +44,7 @@ public final class CityCompatibilityChecks {
    for(var state:block.getStateManager().getStates()){
     states++;GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);
     check(geometry!=null&&geometry.parsedCells!=null&&!geometry.parsedCells.isEmpty(),"prepared city geometry: "+state);
-    check(geometry.parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"every city state has no helper cells: "+state);
-    check(geometry.physical_footprint!=null&&geometry.physical_footprint.size()==1&&java.util.Arrays.equals(geometry.physical_footprint.get(0),new int[]{0,0,0}),"every city state declares an origin-only physical footprint: "+state);
+    if(definition.models!=null&&!definition.whole_owner)check(geometry.parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"module page has no helper cells: "+state);
    }
   }
   check(pages>0&&nativeBlocks>0,"city registry contains module pages and native blocks");

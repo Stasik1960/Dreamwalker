@@ -72,14 +72,31 @@ def rule_outputs(rule, origin):
 
 
 def output_writes(rule, origin):
-    writes = {}
+    cells = {}
     for root, target, shape in rule_outputs(rule, origin):
         for offset in shape:
             point = tuple(root[i] + offset[i] for i in range(3))
-            if point in writes:
-                raise AssertionError("rule has overlapping transaction outputs")
-            writes[point] = target if offset == (0, 0, 0) else (PART, ())
+            cells.setdefault(point, []).append((root, target))
+    writes = {}
+    for point, contributors in cells.items():
+        roots = [target for root, target in contributors if root == point]
+        if len(contributors) > 1 and not (rule.atomic_owner_group and rule.shared_physics):
+            raise AssertionError('rule has overlapping transaction outputs')
+        if len(roots) > 1 or len(contributors) > 16:
+            raise AssertionError('shared cell has conflicting roots or too many owners')
+        writes[point] = roots[0] if roots else (PART, ())
     return writes
+
+
+def helper_entity_data(point, helper):
+    data = {'id': Tag(TAG_STRING, PART), 'x': Tag(TAG_INT, point[0]),
+            'y': Tag(TAG_INT, point[1]), 'z': Tag(TAG_INT, point[2]),
+            'Root': Tag(TAG_LONG, helper['Root']), 'Owner': Tag(TAG_STRING, helper['Owner'])}
+    if 'Owners' in helper:
+        data['Owners'] = Tag(TAG_LIST, [Tag(TAG_COMPOUND, {
+            'Root': Tag(TAG_LONG, row['Root']), 'Owner': Tag(TAG_STRING, row['Owner'])
+        }) for row in helper['Owners']], TAG_COMPOUND)
+    return data
 
 
 def explicitly_supersedes(large, small):
@@ -127,14 +144,20 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
     The first member is sufficient to discover every *complete* group. This
     verifier intentionally has a different scanning strategy from conversion.
     """
+    from atomic_owner_groups import reservations
+    reserved = reservations(rules)
     starts = {}
     for rule in rules:
+        if rule.allowed_origins:continue
         starts.setdefault(rule.source.state, []).append((rule, rule.source_mode, rule.source.offset))
         if rule.components:
             first = rule.components[0]
             starts.setdefault(first.state, []).append((rule, "v2", first.offset))
     scheduled = set()
     proposals = {}
+    for rule in rules:
+        for dim,origin in rule.allowed_origins:
+            if rule.accepts_origin(dim,origin):proposals[(rule.number,rule.source_mode,dim,origin)]=rule
     for chunk in before.chunks.values():
         for name in ("block_ticks", "TileTicks", "fluid_ticks", "LiquidTicks"):
             ticks = chunk.root().get(name)
@@ -158,9 +181,12 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
                     pos = (chunk.x * 16 + (cell & 15), sy * 16 + (cell >> 8), chunk.z * 16 + ((cell >> 4) & 15))
                     for rule, mode, offset in choices:
                         origin = tuple(pos[i] - offset[i] for i in range(3))
+                        if not rule.accepts_origin(chunk.dimension,origin):continue
                         proposals[(rule.number, mode, chunk.dimension, origin)] = rule
     effects = {}
     for (_, mode, dim, origin), rule in proposals.items():
+        if rule.preflight_error: continue
+        if any(before.get(dim,tuple(origin[i]+p.offset[i] for i in range(3)))!=p.state for p in rule.required_context):continue
         pieces = (rule.source,) + rule.members if mode in ("legacy", "modded") else rule.components
         source = {tuple(origin[i] + part.offset[i] for i in range(3)) for part in pieces}
         if len(source) != len(pieces) or any(before.get(dim, tuple(origin[i] + part.offset[i] for i in range(3))) != part.state for part in pieces):
@@ -169,10 +195,12 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
             from source_variant_rng import guards_match
             if not guards_match(rule.variant_guards,origin): continue
         root = rule_outputs(rule, origin)[0][0]
-        writes = output_writes(rule, origin)
+        try: writes = output_writes(rule, origin)
+        except AssertionError: continue
         helpers = proved_transaction_helpers(before, dim, origin, rule, pieces, owned, mode)
         stale = helpers - set(writes)
         touched = source | stale | set(writes)
+        if any(reserved.get((dim,p),rule.transaction_id)!=rule.transaction_id for p in touched):continue
         valid = True
         for point in touched:
             old = before.get(dim, point)
@@ -181,7 +209,7 @@ def independently_accepted_effects(before, rules, old_entities, owned, conflict_
                     (point in stale and not is_owned) or
                     ((dim, *point) in old_entities and not is_owned) or
                     (point in writes and point not in source and old[0] not in AIR_NAMES and not is_owned and
-                     not (conflict_policy == "aggressive" and old[0].startswith("bloodborne_blocks:") and
+                     not (conflict_policy == "aggressive" and not rule.atomic_owner_group and old[0].startswith("bloodborne_blocks:") and
                           old[0] != PART and not owned.get((dim, old[0], block_pos_long(*point)))))):
                 valid = False
                 break
@@ -257,19 +285,11 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         for helper in entry["helpers"]:
             entity_overlay[(entry["dimension"], *helper["position"])] = helper_tag(helper)
 
-    pre_entries=report.get('gridPreReconciliation',{}).get('entries',[])
-    if 'gridPreReconciliation' in report:
-        from grid_world_reconciliation import plan
-        if plan(view,entity_overlay)!=pre_entries:raise AssertionError('GRID_PRE_RECONCILIATION_NOT_AUTHORIZED')
-        for entry in pre_entries:
-            for change in entry['changes']:
-                point=tuple(change['position']);view.states[(entry['dimension'],point)]=parse_state(change['after'])
-                entity_overlay.pop((entry['dimension'],*point),None)
     def current_owned():
         result = {}
         for (dim, x, y, z), entity in entity_overlay.items():
             data = compound(entity)
-            if (data.get("id") == Tag(TAG_STRING, PART) and
+            if ('Owners' not in data and data.get("id") == Tag(TAG_STRING, PART) and
                     data.get("Owner", Tag(TAG_LIST, [])).type == TAG_STRING and
                     data.get("Root", Tag(TAG_LIST, [])).type == TAG_LONG and
                     view.get(dim, (x, y, z)) == (PART, ())):
@@ -288,7 +308,7 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         previous_pass = pass_number
     if not groups:
         groups = [(1, [])]
-    touched_all = {(entry["dimension"], *change["position"]) for entry in list(recovery_entries)+pre_entries for change in entry["changes"]}
+    touched_all = {(entry["dimension"], *change["position"]) for entry in recovery_entries for change in entry["changes"]}
     for pass_number, entries in groups:
         owned = current_owned()
         expected_effects = independently_accepted_effects(view, rules, entity_overlay, owned, conflict_policy)
@@ -382,11 +402,16 @@ def validate_ledger(before, report, rules, recovery_entries=()):
                 if entry.get("decision") != ("forced" if expected_conflicts else "converted"):
                     raise AssertionError("ledger decision does not match conflicts")
             expected_helpers = {}
+            helper_bindings = {}
             for output_root, target, shape in outputs:
                 for offset in shape:
                     point = tuple(output_root[i] + offset[i] for i in range(3))
                     if point != output_root:
-                        expected_helpers[point] = {"position": list(point), "id": PART, "Root": block_pos_long(*output_root), "Owner": target[0]}
+                        helper_bindings.setdefault(point, set()).add((output_root, target[0]))
+            for point, bindings in helper_bindings.items():
+                ordered = [{'Root': block_pos_long(*root), 'Owner': owner} for root, owner in sorted(bindings)]
+                expected_helpers[point] = {'position': list(point), 'id': PART, **ordered[0]}
+                if len(ordered) > 1: expected_helpers[point]['Owners'] = ordered
             actual_helpers = {tuple(helper["position"]): helper for helper in entry["helpers"]}
             if len(actual_helpers) != len(entry["helpers"]) or actual_helpers != expected_helpers:
                 raise AssertionError("ledger helper data does not match target geometry")
@@ -394,11 +419,7 @@ def validate_ledger(before, report, rules, recovery_entries=()):
                 view.states[(dim, point)] = writes.get(point, AIR)
                 entity_overlay.pop((dim, *point), None)
             for point, helper in actual_helpers.items():
-                entity_overlay[(dim, *point)] = Tag(TAG_COMPOUND, {
-                    "id": Tag(TAG_STRING, PART), "x": Tag(TAG_INT, point[0]),
-                    "y": Tag(TAG_INT, point[1]), "z": Tag(TAG_INT, point[2]),
-                    "Root": Tag(TAG_LONG, helper["Root"]), "Owner": Tag(TAG_STRING, helper["Owner"]),
-                })
+                entity_overlay[(dim, *point)] = Tag(TAG_COMPOUND, helper_entity_data(point, helper))
         if reported_effects != expected_effects:
             raise AssertionError(f"pass {pass_number} ledger differs from independently accepted groups: "
                                  f"missing={len(expected_effects - reported_effects)}, unexpected={len(reported_effects - expected_effects)}")
@@ -413,13 +434,6 @@ def validate_ledger(before, report, rules, recovery_entries=()):
         for summary in summaries:
             if summary.get("converted") and actual_counts.get(summary.get("pass")) != summary["converted"]:
                 raise AssertionError("MODDED pass summary differs from ledger")
-    if 'gridReconciliation' in report:
-        from grid_world_reconciliation import plan,ROOT as grid_root
-        if hashlib.sha256((grid_root/'src/main/resources/bloodborne_blocks/logical/physical-footprints.json').read_bytes()).hexdigest()!=report['gridReconciliation']['physicalFootprintsSha256']:raise AssertionError('GRID_PHYSICS_HASH_CHANGED')
-        expected=plan(view,entity_overlay)
-        if expected!=report['gridReconciliation']['entries']:raise AssertionError('GRID_RECONCILIATION_NOT_AUTHORIZED')
-        for entry in expected:
-            for change in entry['changes']:touched_all.add((entry['dimension'],*change['position']))
     return {(dim, x // 16, z // 16) for dim, x, y, z in touched_all}
 
 
@@ -441,12 +455,18 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
     for name, path in (("legacy", resources.parent / "definitions.json"), ("logical", resources / "definitions.json"),
                        ("legacyGeometry", resources.parent / "geometry.json")):
         definitions_hashes[name] = hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
-    for name in ("contracts-v2.json", "transform-v2.json"):
+    for name in ("contracts-v2.json", "transform-v2.json", "physical-footprints.json"):
         if (resources / name).is_file():
             definitions_hashes[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
+    for name in ('definitions.json','geometry.json','owner-runtime-mappings.json','owner-meshes.json.gz'):
+        path=resources.parent/'city'/name
+        if path.is_file():definitions_hashes['city/'+name]=hashlib.sha256(path.read_bytes()).hexdigest()
     if definitions_hashes != report.get("resources", {}).get("definitionsSha256"):
         raise AssertionError("resource definitions changed since conversion")
     rules, defaults = parse_rules(resources, report.get("sourceMode", "legacy"))
+    if report.get('atomicOwnerGroups'):
+        from atomic_owner_groups import compile_groups
+        rules, _ = compile_groups(rules, resources)
     city_mapping, city_transform = {}, {}
     if "cityPaletteMigration" in report:
         from city_palette import load as load_city
@@ -493,7 +513,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
         allowed = {}
         allowed_sections = {}
         expected_helpers = {}
-        for entry in recovery_entries + report.get("gridPreReconciliation",{}).get("entries",[]) + report["ledger"] + report.get("gridReconciliation",{}).get("entries",[]):
+        for entry in recovery_entries + report["ledger"]:
             dim = entry["dimension"]
             for change in entry["changes"]:
                 x, y, z = change["position"]
@@ -552,9 +572,7 @@ def check(source: Path, converted: Path, report_path: Path, resources: Path) -> 
                     seen_helpers.add(point)
                     data = compound(new_entities.get(point, Tag(TAG_COMPOUND, {})))
                     expected = expected_helpers[point]
-                    if data != {"id": Tag(TAG_STRING, PART), "x": Tag(TAG_INT, point[1]),
-                                "y": Tag(TAG_INT, point[2]), "z": Tag(TAG_INT, point[3]),
-                                "Root": Tag(TAG_LONG, expected["Root"]), "Owner": Tag(TAG_STRING, expected["Owner"])}:
+                    if data != helper_entity_data(point[1:], expected):
                         raise AssertionError(f"bad helper entity at {point}")
                 elif point not in allowed and old_entities.get(point) != new_entities.get(point):
                     raise AssertionError(f"block entity changed outside ledger at {point}")

@@ -78,6 +78,11 @@ def load_contracts(resources):
     elif not POC_FAMILIES <= {f["id"] for f in data["families"]}:
         raise ValueError("schema-v2 must preserve the approved POC families")
     definitions = {d["id"]: d for d in json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
+    physical_path = resources / 'physical-footprints.json'
+    physical = json.loads(physical_path.read_text(encoding='utf-8')) if physical_path.exists() else None
+    if physical is not None and (physical.get('schemaVersion') != 1 or
+            set(physical.get('families', {})) != {f['id'] for f in data['families']}):
+        raise ValueError('physical footprint family coverage')
     seen = set()
     split_patterns = {}
     for family in data["families"]:
@@ -100,7 +105,27 @@ def load_contracts(resources):
             raise ValueError("multiple primitive policy needs justification")
         if set(family["states"]) != set(definitions[ident]["states"]):
             raise ValueError("contract must describe all existing family states")
+        if physical is not None and set(physical['families'][ident]) != set(family['states']):
+            raise ValueError('physical footprint state coverage')
         for key, state in family["states"].items():
+            mask = physical['families'][ident][key] if physical is not None else {
+                'cells': state['interaction_footprint']['cells'], 'boxes': state['collision_footprint']['boxes']}
+            physical_cells = [cell(c) for c in mask['cells']]
+            if len(physical_cells) != len(set(physical_cells)) or (0,0,0) not in physical_cells or len(physical_cells)>512:
+                raise ValueError('invalid physical footprint')
+            if len(mask['boxes']) > budget * len(physical_cells):
+                raise ValueError('physical collision budget exceeded')
+            for box in mask['boxes']:
+                check_box(box)
+                if not box_cells(box) <= set(physical_cells):
+                    raise ValueError('COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT')
+            for physical_cell in physical_cells:
+                if sum(all(max(box[i],physical_cell[i]) < min(box[i+3],physical_cell[i]+1)
+                           for i in range(3)) for box in mask['boxes']) > budget:
+                    raise ValueError('PHYSICAL_CELL_PRIMITIVE_BUDGET')
+            if family['placement_policy']=='FLOOR' and any(c[1]<0 for c in physical_cells):
+                raise ValueError('physical helper below floor anchor')
+            state['physical_footprint'] = mask
             if state["rotation"] not in family["rotations"] or state["render_mesh"]["id"] != definitions[ident]["models"][key]:
                 raise ValueError("state/mesh mismatch")
             render = state["render_mesh"]
@@ -121,6 +146,20 @@ def load_contracts(resources):
                     raise ValueError('RENDER_BELOW_SUPPORT_PLANE: '+ident)
             if any(not box_cells(b) <= set(cells) for b in collision):
                 raise ValueError("COLLISION_OUTSIDE_OWNED_CELLS: "+ident+"["+key+"]")
+            upper=dict(p.split('=',1) for p in key.split(',')).get('root_anchor')=='upper'
+            shift=state.get('technical_root_offset')
+            if upper != (shift is not None) or upper and (ident not in {'o_bench','o_high_balustrade'} or shift!=[0,1,0] or state['migration_source_pattern']):
+                raise ValueError('UNAPPROVED_TECHNICAL_ROOT')
+            if upper:
+                if (0,1,0) not in physical_cells:raise ValueError('UPPER_ROOT_NOT_OWNED')
+                kept=[c for c in physical_cells if c!=(0,0,0)]
+                boxes=[]
+                for c in kept:
+                    for b in mask['boxes']:
+                        clipped=[max(b[i],c[i]) for i in range(3)]+[min(b[i+3],c[i]+1) for i in range(3)]
+                        if all(clipped[i]<clipped[i+3] for i in range(3)):
+                            clipped[1]-=1;clipped[4]-=1;boxes.append(clipped)
+                state['physical_footprint']={'cells':[[x,y-1,z] for x,y,z in kept],'boxes':boxes}
             for pattern in state["migration_source_pattern"]:
                 components = pattern["components"]
                 positions = [cell(c["offset"]) for c in components]
@@ -178,10 +217,6 @@ def direct_rules(resources, *, poc_only=False):
     from convert_logical_world import Expected, Output, Rule, add, load_defaults, make_state
     data, transform = load_contracts(resources)
     defaults = load_defaults(resources)
-    physical_path=Path(resources)/'physical-footprints.json'
-    physical=json.loads(physical_path.read_bytes())['families'] if physical_path.exists() else None
-    def physical_cells(ident,key,state):
-        return physical[ident][key]['cells'] if physical is not None else state['interaction_footprint']['cells']
     rules = []
     split = {}
     for family in data["families"]:
@@ -208,7 +243,7 @@ def direct_rules(resources, *, poc_only=False):
                 # explicit-anchor transform used by item placement (zero relative shift).
                 anchor = rotate_cell(family["canonical_anchor"]["cell"], state["rotation"], transform)
                 shift = master_origin(anchor, family["canonical_anchor"]["cell"], state["rotation"], transform)
-                shape = frozenset(cell(c) for c in physical_cells(family["id"],key,state))
+                shape = frozenset(cell(c) for c in state["physical_footprint"]["cells"])
                 transaction = pattern.get("split_transaction")
                 if transaction is None:
                     rules.append(Rule(len(rules), first, target, shift, tuple(pieces[1:]), None, shape,
@@ -238,7 +273,7 @@ def direct_rules(resources, *, poc_only=False):
             props={**dict(base[1][1]),**dict(override)}
             target_state=make_state({'id':family,'properties':props},defaults)
             state_key=','.join(f'{k}={v}' for k,v in sorted(props.items()))
-            target_shape=frozenset(cell(c) for c in physical_cells(family,state_key,family_map[family]['states'][state_key]))
+            target_shape=frozenset(cell(c) for c in family_map[family]['states'][state_key]['physical_footprint']['cells'])
             outputs_list.append(Output(target_state,add(base[2],root_offset),target_shape))
         outputs=tuple(outputs_list)
         occupied = set()

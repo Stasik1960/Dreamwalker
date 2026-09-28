@@ -181,9 +181,12 @@ def definition_hashes(resources: Path) -> dict[str, str | None]:
     result = {"legacy": hashlib.sha256((resources.parent / "definitions.json").read_bytes()).hexdigest() if (resources.parent / "definitions.json").is_file() else None,
             "logical": hashlib.sha256((resources / "definitions.json").read_bytes()).hexdigest() if (resources / "definitions.json").is_file() else None,
             "legacyGeometry": hashlib.sha256((resources.parent / "geometry.json").read_bytes()).hexdigest() if (resources.parent / "geometry.json").is_file() else None}
-    for name in ("contracts-v2.json", "transform-v2.json"):
+    for name in ("contracts-v2.json", "transform-v2.json", "physical-footprints.json"):
         if (resources / name).is_file():
             result[name] = hashlib.sha256((resources / name).read_bytes()).hexdigest()
+    for name in ('definitions.json','geometry.json','owner-runtime-mappings.json','owner-meshes.json.gz'):
+        path=resources.parent/'city'/name
+        if path.is_file():result['city/'+name]=hashlib.sha256(path.read_bytes()).hexdigest()
     return result
 
 
@@ -235,6 +238,16 @@ class Rule:
     outputs: tuple["Output", ...] = ()
     source_mode: str = "legacy"
     source_reference: str | None = None
+    allowed_origins: tuple[tuple[str, tuple[int, int, int]], ...] = ()
+    excluded_origins: tuple[tuple[str, tuple[int, int, int]], ...] = ()
+    required_context: tuple[Expected, ...] = ()
+    atomic_owner_group: bool = False
+    preflight_error: str | None = None
+    shared_physics: bool = False
+
+    def accepts_origin(self,dimension,origin):
+        point=(dimension,tuple(origin))
+        return (not self.allowed_origins or point in self.allowed_origins) and point not in self.excluded_origins
 
 
 @dataclass(frozen=True)
@@ -275,7 +288,7 @@ def parse_rules(resources: Path, source_mode: str = "legacy") -> tuple[list[Rule
         for family in contracts["families"]:
             for key, state in family["states"].items():
                 target = make_state({"id": family["id"], "properties": dict(p.split("=", 1) for p in key.split(",") if p)}, defaults)
-                geometry[target] = {tuple(c) for c in state["interaction_footprint"]["cells"]}
+                geometry[target] = {tuple(c) for c in state["physical_footprint"]["cells"]}
     legacy_geometry = parse_geometry(resources.parent, defaults) if (resources.parent / "geometry.json").is_file() else {}
     def legacy_shape(state: tuple[str, tuple[tuple[str, str], ...]]) -> frozenset[tuple[int, int, int]]:
         shape = set(legacy_geometry.get(state, ()))
@@ -678,6 +691,21 @@ class World:
         chunk.root()[key] = Tag(TAG_LIST, entries, TAG_COMPOUND)
         chunk.changed = True
 
+    def add_shared_helper(self, dim, pos, owners):
+        """Same persistent helper type; a root carrier stores guest bindings only."""
+        owners = sorted(set(owners), key=lambda entry: (entry[1], entry[0]))
+        if not owners or len(owners) > 16 or any(root == pos for _, root in owners):
+            raise ValueError('invalid shared helper owners')
+        self.add_helper(dim, pos, owners[0][1], owners[0][0])
+        row = {'position': list(pos), 'id': PART, 'Root': block_pos_long(*owners[0][1]), 'Owner': owners[0][0]}
+        if len(owners) > 1:
+            row['Owners'] = [{'Root': block_pos_long(*root), 'Owner': owner} for owner, root in owners]
+            chunk = self.chunk(dim, pos[0], pos[2])
+            compound(chunk.entities()[1][-1])['Owners'] = Tag(TAG_LIST, [Tag(TAG_COMPOUND, {
+                'Root': Tag(TAG_LONG, entry['Root']), 'Owner': Tag(TAG_STRING, entry['Owner'])
+            }) for entry in row['Owners']], TAG_COMPOUND)
+        return row
+
     def save(self) -> None:
         for chunk in self.chunks.values():
             chunk.finish()
@@ -718,6 +746,13 @@ class Candidate:
                 return output.target[0], root
         return None
 
+    def helper_owners_at(self, point):
+        outputs = self.rule.outputs or (Output(self.rule.target, self.rule.root_offset, self.rule.shape),)
+        return sorted({(output.target[0], add(self.origin, output.root_offset)) for output in outputs
+                       if point != add(self.origin, output.root_offset) and
+                       tuple(point[i]-self.origin[i]-output.root_offset[i] for i in range(3)) in output.shape},
+                      key=lambda entry: (entry[1], entry[0]))
+
 
 def add(a: tuple[int, int, int], b: tuple[int, int, int]) -> tuple[int, int, int]:
     return a[0] + b[0], a[1] + b[1], a[2] + b[2]
@@ -726,7 +761,7 @@ def add(a: tuple[int, int, int], b: tuple[int, int, int]) -> tuple[int, int, int
 def owned_part(current: tuple[str, tuple[tuple[str, str], ...]] | None, entity: Tag | None, owner_name: str, root_pos: tuple[int, int, int]) -> bool:
     data = compound(entity) if entity is not None else {}
     entity_id, owner, root = data.get("id"), data.get("Owner"), data.get("Root")
-    return (current == (PART, ()) and entity_id is not None and entity_id.type == TAG_STRING and entity_id.value == PART and
+    return ('Owners' not in data and current == (PART, ()) and entity_id is not None and entity_id.type == TAG_STRING and entity_id.value == PART and
             owner is not None and owner.type == TAG_STRING and owner.value == owner_name and
             root is not None and root.type == TAG_LONG and root.value == block_pos_long(*root_pos))
 
@@ -736,8 +771,11 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                registered_ids: set[str] | None = None) -> tuple[list[Candidate], dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]], list[dict[str, Any]]]:
     if conflict_policy not in ("conservative", "aggressive"):
         raise ValueError("conflict policy must be conservative or aggressive")
+    from atomic_owner_groups import reservations
+    reserved = reservations(rules)
     inverse: dict[tuple[str, tuple[tuple[str, str], ...]], list[tuple[Rule, str, tuple[int, int, int]]]] = defaultdict(list)
     for rule in rules:
+        if rule.allowed_origins: continue
         inverse[rule.source.state].append((rule, rule.source_mode, rule.source.offset))
         if rule.components:
             for component in rule.components:
@@ -745,6 +783,18 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
     found: dict[tuple[str, tuple[int, int, int]], tuple[str, tuple[tuple[str, str], ...]]] = {}
     unmatched: dict[tuple[str, tuple[str, tuple[tuple[str, str], ...]]], dict[str, Any]] = {}
     result: dict[tuple[int, str, str, tuple[int, int, int]], Candidate] = {}
+    # Coordinate-scoped groups must not fan out through every matching palette
+    # cell in the city. Their permitted origins are explicit evidence data.
+    for rule in rules:
+        for dim,origin in rule.allowed_origins:
+            if not rule.accepts_origin(dim,origin):continue
+            matches=False
+            for piece in (rule.source,)+rule.members:
+                point=add(origin,piece.offset)
+                if world.get(dim,point)==piece.state:
+                    found[(dim,point)]=piece.state;matches=True
+            if matches or rule.atomic_owner_group:
+                result[(rule.number,rule.source_mode,dim,origin)]=Candidate(rule,rule.source_mode,dim,origin,set(),(0,0,0),{})
     if progress:
         progress(f"scan start: chunks={len(world.chunks)}, inverseStates={len(inverse)}")
     for chunk in world.chunks.values():
@@ -767,6 +817,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                 found[(chunk.dimension, pos)] = state
                 for rule, mode, offset in inverse.get(state, ()):
                     origin = (pos[0] - offset[0], pos[1] - offset[1], pos[2] - offset[2])
+                    if not rule.accepts_origin(chunk.dimension,origin):continue
                     key = (rule.number, mode, chunk.dimension, origin)
                     result.setdefault(key, Candidate(rule, mode, chunk.dimension, origin, set(), (0, 0, 0), {}))
             palette_counts = np.bincount(index_array, minlength=len(states))
@@ -798,6 +849,17 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
             if owned_part(world.get(dim, (x, y, z)), entity, str(owner.value), unpack_pos_long(int(root.value))):
                 owned_parts[(dim, str(owner.value), int(root.value))].add((x, y, z))
     for item in result.values():
+        declared_source = {add(item.origin, p.offset) for p in (item.rule.source,) + item.rule.members}
+        if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
+               for p in declared_source):
+            item.reason = 'reserved_by_atomic_owner_group'
+            continue
+        if item.rule.preflight_error:
+            item.reason = item.rule.preflight_error
+            continue
+        if any(world.get(item.dimension,add(item.origin,p.offset))!=p.state for p in item.rule.required_context):
+            item.reason='explicit_root_context_mismatch'
+            continue
         pieces = ((item.rule.source,) + item.rule.members) if item.mode in ("legacy", "modded") else item.rule.components or ()
         actual: set[tuple[int, int, int]] = set()
         for piece in pieces:
@@ -821,20 +883,38 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         item.target_root = add(item.origin, outputs[0].root_offset)
         item.output_roots = tuple((add(item.origin, output.root_offset), output.target) for output in outputs)
         item.writes = {}
+        root_cells = set()
+        occupancy = {}
         for output in outputs:
             root = add(item.origin, output.root_offset)
             for offset in output.shape:
                 point = add(root, offset)
+                occupancy[point] = occupancy.get(point, 0) + 1
                 if point in item.writes:
-                    item.reason = "overlapping_transaction_outputs"
-                    break
-                item.writes[point] = (PART, ()) if offset != (0, 0, 0) else output.target
+                    if not (item.rule.atomic_owner_group and item.rule.shared_physics):
+                        item.reason = "overlapping_transaction_outputs"
+                        break
+                    if offset == (0, 0, 0) and point in root_cells:
+                        item.reason = 'shared_root_conflict'
+                        break
+                    if occupancy[point] > 16:
+                        item.reason = 'shared_owner_limit'
+                        break
+                if offset == (0, 0, 0):
+                    root_cells.add(point)
+                    item.writes[point] = output.target
+                elif point not in item.writes:
+                    item.writes[point] = (PART, ())
             if item.reason:
                 break
         if item.reason:
             continue
-        if len(item.writes) != sum(len(output.shape) for output in outputs):
+        if not item.rule.shared_physics and len(item.writes) != sum(len(output.shape) for output in outputs):
             item.reason = "duplicate_target_geometry"
+            continue
+        if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
+               for p in item.touched):
+            item.reason = 'reserved_by_atomic_owner_group'
             continue
         try:
             min_y, max_y = world.build_height(item.dimension)
@@ -870,7 +950,7 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
                 item.existing_helpers.add(point)
             if point in item.writes and point not in item.source and current is not None and current[0] not in AIR_NAMES and not owned:
                 blocker_helpers = owned_parts.get((item.dimension, current[0], block_pos_long(*point)), ())
-                if (conflict_policy == "aggressive" and current[0].startswith(NS) and
+                if (conflict_policy == "aggressive" and not item.rule.atomic_owner_group and current[0].startswith(NS) and
                         current[0] != PART and not blocker_helpers):
                     item.conflicts.append({"position": list(point), "before": block_state_key(as_tag_state(current)),
                                            "reason": "forced_target_overwrites_bloodborne_state"})
@@ -901,6 +981,9 @@ def candidates(world: World, rules: list[Rule], progress: Callable[[str], None] 
         if world.ticks_at(item.dimension, item.touched):
             item.conflicts.append({"reason": "scheduled_tick_at_changed_position"})
             item.reason = "scheduled_tick_at_changed_position"
+        if any(reserved.get((item.dimension, p), item.rule.transaction_id) != item.rule.transaction_id
+               for p in item.touched):
+            item.reason = 'reserved_by_atomic_owner_group'
     return list(result.values()), found, list(unmatched.values())
 
 
@@ -991,12 +1074,9 @@ def apply(world: World, items: Iterable[Candidate]) -> list[dict[str, Any]]:
         world.remove_entities(item.dimension, item.touched)
         helpers = []
         for point, state in item.writes.items():
-            if state[0] == PART:
-                owner = item.owner_at(point)
-                if owner is None:
-                    raise ValueError("helper has no transaction output owner")
-                world.add_helper(item.dimension, point, owner[1], owner[0])
-                helpers.append({"position": list(point), "id": PART, "Root": block_pos_long(*owner[1]), "Owner": owner[0]})
+            owners = item.helper_owners_at(point)
+            if owners:
+                helpers.append(world.add_shared_helper(item.dimension, point, owners))
         ledger.append({
             "rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
             "origin": list(item.origin), "targetRoot": list(item.target_root),
@@ -1089,7 +1169,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             report_path: Path | None = None, dry_run: bool = False, progress: bool = False,
             report_root: Path | None = None, source_mode: str = "legacy",
             conflict_policy: str = "conservative", inventory_path: Path | None = None,
-            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False, full_grid: bool = False) -> dict[str, Any]:
+            expected_source_sha256: str | None = None, city_compat: bool = False, allow_unresolved_city: bool = False, recover_city: bool = False,
+            atomic_owner_groups: bool = False) -> dict[str, Any]:
     def status(message: str) -> None:
         if progress:
             print(f"logical-world: {message}", file=sys.stderr, flush=True)
@@ -1111,8 +1192,6 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
     validate_paths(source, output, resources, report_path, report_root)
     if source_mode == "legacy" and legacy_migration_is_empty(resources) and has_contract_v2_patterns(resources):
         raise ValueError("legacy migration.json has no rules while Contract V2 source patterns exist; use --source-mode original-v2")
-    if full_grid and (not city_compat or source_mode!='modded' or not (resources/'physical-footprints.json').exists()):
-        raise ValueError('Full grid requires MODDED input, city compatibility and explicit physical masks')
     if city_compat and source_mode != "modded":
         raise ValueError("city compatibility requires the MODDED source adapter")
     if recover_city and (not city_compat or source_mode != "modded"):
@@ -1122,8 +1201,14 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         from modded_world_adapter import compile_modded_rules
         resolved_inventory = inventory_path.resolve() if inventory_path is not None else None
         rules, defaults, mapping_diagnostics = compile_modded_rules(resources, resolved_inventory)
+        if atomic_owner_groups:
+            from atomic_owner_groups import compile_groups
+            rules, mapping_diagnostics['atomicOwnerGroups'] = compile_groups(rules, resources)
     else:
         rules, defaults = parse_rules(resources, source_mode)
+        if atomic_owner_groups: raise ValueError('Atomic owner graphs require MODDED input')
+    if city_compat and (atomic_owner_groups or (resources.parent/'city/owner-runtime-mappings.json').exists()):
+        raise ValueError('Independent city palette is forbidden until all composite ownership is resolved')
     definitions = definition_hashes(resources)
     status(f"rules parsed: rules={len(rules)}")
     with tempfile.TemporaryDirectory(prefix="logical-world-", dir=str(output.parent)) as temporary:
@@ -1139,14 +1224,12 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             recovery = prepare_recovery(world, resources)
             apply_recovery(world, recovery)
             status(f"historical recovery: {len(recovery['entries'])} cells")
-        grid_pre = None
-        if full_grid:
-            from grid_world_reconciliation import apply as reconcile_grid
-            grid_pre = reconcile_grid(world)
-            status(f"pre-conversion grid helpers released: {grid_pre['helperChanges']}")
         registered_ids = ({PART} | {full_id(row["id"]) for row in
                           json.loads((resources / "definitions.json").read_text(encoding="utf-8"))["blocks"]}
                           if source_mode == "modded" else None)
+        if atomic_owner_groups:
+            registered_ids.update(full_id(b['id']) for b in json.loads(
+                (resources.parent/'city/definitions.json').read_bytes())['blocks'] if b.get('whole_owner'))
         ledger = []
         pass_summaries = []
         previous_source_cells = None
@@ -1179,14 +1262,10 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             previous_source_cells = source_cells
             pass_number += 1
         city_report = None
-        grid_report = None
         if city_compat:
             from city_palette import apply as apply_city
             status("applying cell-preserving city palette")
             city_report = apply_city(world, resources.parent / "city", allow_unresolved=allow_unresolved_city)
-            if (resources / 'physical-footprints.json').exists():
-                from grid_world_reconciliation import apply as reconcile_grid
-                grid_report = reconcile_grid(world)
             from city_palette import audit_helpers
             city_report['helpers'] = audit_helpers(world, resources.parent / "city")
             if not city_report['helpers']['ok']:
@@ -1194,14 +1273,12 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
             city_report['retainedAssemblies'] = dict(Counter(item.reason for item in items if item.reason))
             unmatched_modules = [{"state": state, "count": count, "reason": "historical_city_model_missing"}
                                  for state,count in city_report["unknownStates"].items()]
-        if full_grid:
-            city_report['fullGrid'] = True
-            city_report['fallbackPolicy'] = 'Exact cell-preserving current compatibility states, no legacy module retention'
         registry_incompatible = sum(group["count"] for group in unmatched_modules)
         forced = sum(summary["forced"] for summary in pass_summaries)
         report = {
             "format": "bloodborne-logical-world-conversion-v2" if source_mode == "modded" else "bloodborne-logical-world-conversion-v1",
             "dryRun": dry_run, "sourceMode": source_mode,
+            "atomicOwnerGroups": atomic_owner_groups,
             "conflictPolicy": conflict_policy,
             "source": {"path": str(source), "kind": source_kind, "hashes": source_hashes},
             "resources": {"path": str(resources), "migrationSha256": hashlib.sha256((resources / "migration.json").read_bytes()).hexdigest(),
@@ -1213,12 +1290,10 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
                        "legacyCarrierRules": mapping_diagnostics.get("compiledLegacyCarrierRules", 0) if mapping_diagnostics else 0},
             **({"passes": pass_summaries} if source_mode == "modded" else {}),
             **({"cityPaletteMigration": city_report} if city_report is not None else {}),
-            **({"gridPreReconciliation": grid_pre} if grid_pre is not None else {}),
-            **({"gridReconciliation": grid_report} if grid_report is not None else {}),
             **({"cityRecovery": recovery} if recovery is not None else {}),
             "ledger": ledger,
             "rejected": [{"rule": item.rule.number, "mode": item.mode, "dimension": item.dimension,
-                          "origin": list(item.origin), "reason": item.reason, "decision": "current_compatibility_fallback" if full_grid else "untouched",
+                          "origin": list(item.origin), "reason": item.reason, "decision": "untouched",
                           "conflictingCells": item.conflicts,
                           "tp": f"/execute in {item.dimension} run tp @s {item.origin[0]} {item.origin[1]} {item.origin[2]}"}
                          for item in items if item.reason],
@@ -1257,16 +1332,30 @@ def main() -> None:
     parser.add_argument("--source-mode", choices=("legacy", "original-v2-poc", "original-v2", "modded"), default="legacy",
                         help="modded composes frozen m_* and Bloodborne carrier mappings with current Contract V2; original-v2 reads raw vanilla carriers")
     parser.add_argument("--conflict-policy", choices=("conservative", "aggressive"), default="conservative")
-    parser.add_argument("--full-grid", action="store_true", help="authoritative current one-cell compatibility fallback for terminal legacy architecture")
     parser.add_argument("--allow-unresolved-city", action="store_true", help="diagnostic output only: preserve missing city IDs and mark registry QA FAIL")
     parser.add_argument("--recover-city", action="store_true", help="restore exact missing cells from verified historical MODDED reference before conversion")
     parser.add_argument("--city-compat", action="store_true", help="map remaining historical module palettes to the compact city registry")
+    parser.add_argument("--atomic-owner-groups", action="store_true", help="reserve and convert proven historical owner graphs atomically")
     parser.add_argument("--inventory", type=Path, help="trusted inspection inventory used only to select rare exact MODDED anchors")
     parser.add_argument("--expected-source-sha256", help="required for a MODDED ZIP; refuses a mismatched immutable input")
+    parser.add_argument("--restore-accepted-objects", action="store_true", help="addressed whole-transaction repair of a copy of the published RC1 city")
+    parser.add_argument("--restore-source-tree-sha256", help="explicit tree hash for a repeat addressed repair of its previous output")
     args = parser.parse_args()
+    if args.restore_accepted_objects:
+        if (args.recover_city or args.city_compat or args.allow_unresolved_city or
+                args.conflict_policy != 'conservative' or args.atomic_owner_groups or args.source_mode != 'legacy'):
+            parser.error('accepted restoration cannot combine with historical recovery, fallback, or another conversion mode')
+        from accepted_objects_restore import restore
+        report = restore(args.source,args.output,resources=args.resources,report_path=args.report,
+                         report_root=args.report_root,dry_run=args.dry_run,progress=args.progress,
+                         expected_source_tree_sha256=args.restore_source_tree_sha256)
+        print(json.dumps(report['counts']))
+        if report['result']=='FAIL':raise SystemExit(1)
+        return
     report = convert(args.source, args.output, resources=args.resources, report_path=args.report, dry_run=args.dry_run, progress=args.progress, report_root=args.report_root, source_mode=args.source_mode,
                      conflict_policy=args.conflict_policy, inventory_path=args.inventory,
-                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city, full_grid=args.full_grid)
+                     expected_source_sha256=args.expected_source_sha256, city_compat=args.city_compat, allow_unresolved_city=args.allow_unresolved_city, recover_city=args.recover_city,
+                     atomic_owner_groups=args.atomic_owner_groups)
     print(json.dumps(report["counts"], ensure_ascii=False))
 
 

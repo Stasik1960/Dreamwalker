@@ -43,7 +43,7 @@ public final class SupportPlaneGameTests implements FabricGameTest {
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=600,batchId="support_plane")
  public void everyFloorContractStateKeepsSupportPlaneAndOwnership(TestContext context){
-  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();BlockPos root=context.getAbsolutePos(ROOT);List<ForcedChunk> forced=forceRelevantChunks(world,root);
+  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();BlockPos baseRoot=context.getAbsolutePos(ROOT),root=baseRoot;List<ForcedChunk> forced=forceRelevantChunks(world,root);
   try{
    Map<String,ContractFamily> families=floorFamilies();
    Map<String,ModularMeshData.Mesh> meshes=ModularMeshData.loadLogicalAndValidate();
@@ -58,7 +58,7 @@ public final class SupportPlaneGameTests implements FabricGameTest {
      if(state.contains(Properties.HORIZONTAL_FACING))facings.add(state.get(Properties.HORIZONTAL_FACING));
      var visual=state.getBlock().getStateManager().getProperty("visual");if(visual!=null)visuals.add(String.valueOf(state.getEntries().get(visual)));
      assertContractGeometry(context,family,contract,state,meshes);
-     clearRoot(world,root);moveOutside(context,player);assertPlatform(context,ROOT.down(),platformRadius,family.id+" before "+key);
+     clearRoot(world,root);root=baseRoot.add(contract.technicalRootOffset);moveOutside(context,player);assertPlatform(context,ROOT.down(),platformRadius,family.id+" before "+key);
      world.setBlockState(root,state,Block.NOTIFY_ALL);
      context.assertTrue(GeometryRuntime.rebuild(world,root,state),"FLOOR state rebuilds on white concrete: "+family.id+"["+key+"]");
      context.assertTrue(world.getBlockState(root).equals(state),"rebuild preserves every state property: "+family.id+"["+key+"]");
@@ -125,17 +125,20 @@ public final class SupportPlaneGameTests implements FabricGameTest {
 
  private static void assertContractGeometry(TestContext context,ContractFamily family,ContractState contract,BlockState state,Map<String,ModularMeshData.Mesh> meshes){
   GeometryRuntime.GeometryState runtime=GeometryRuntime.state(state);BlockPos anchor=GeometryRuntime.anchor(state);
-  context.assertTrue(anchor.equals(family.anchor),"canonical anchor/source coordinates preserved: "+family.id+"["+contract.key+"]");
+  BlockPos permittedTechnical=Set.of("o_bench","o_high_balustrade").contains(family.id)&&contract.key.contains("root_anchor=upper")?new BlockPos(0,1,0):BlockPos.ORIGIN;
+  context.assertTrue(contract.technicalRootOffset.equals(permittedTechnical),"only the two explicit upper-root families may compensate the support origin");
+  context.assertTrue(anchor.add(contract.technicalRootOffset).equals(family.anchor),"canonical anchor/source coordinates preserved: "+family.id+"["+contract.key+"]");
   context.assertTrue(runtime.placementPolicy.equals("FLOOR"),"runtime placement policy remains FLOOR: "+family.id+"["+contract.key+"]");
-  context.assertTrue(equal(runtime.render_offset,contract.renderOffset),"runtime render offset matches authored contract: "+family.id+"["+contract.key+"]");
-  for(BlockPos offset:runtime.parsedCells.keySet())context.assertTrue(offset.getY()>=0,"FLOOR state has no helper below root: "+family.id+"["+contract.key+"] "+offset);
-  Box selection=GeometryRuntime.rootShape(state,true).getBoundingBox();assertBox(context,selection,contract.selection,"selection footprint remains raised with render: "+family.id+"["+contract.key+"]");
-  context.assertTrue(selection.minY>=-EPSILON,"selection does not bury FLOOR object: "+family.id+"["+contract.key+"]");
+  double[] expectedRender=contract.renderOffset.clone(),expectedSelection=contract.selection.clone();for(int axis=0;axis<3;axis++){int shift=axis==0?contract.technicalRootOffset.getX():axis==1?contract.technicalRootOffset.getY():contract.technicalRootOffset.getZ();expectedRender[axis]-=shift;expectedSelection[axis]-=shift;expectedSelection[axis+3]-=shift;}
+  context.assertTrue(equal(runtime.render_offset,expectedRender),"runtime render offset matches authored contract: "+family.id+"["+contract.key+"]");
+  for(BlockPos offset:runtime.parsedCells.keySet())context.assertTrue(offset.getY()+contract.technicalRootOffset.getY()>=0,"FLOOR state has no helper below canonical support: "+family.id+"["+contract.key+"] "+offset);
+  Box selection=GeometryRuntime.rootShape(state,true).getBoundingBox();assertBox(context,selection,expectedSelection,"selection footprint remains raised with render: "+family.id+"["+contract.key+"]");
+  context.assertTrue(selection.minY+contract.technicalRootOffset.getY()>=-EPSILON,"selection does not bury FLOOR object: "+family.id+"["+contract.key+"]");
   if(!FUNCTIONAL_COLLISION_POLICIES.contains(family.collisionPolicy))context.assertTrue(contract.collisionBoxes.size()<=3,"ordinary collision uses at most three authored global boxes: "+family.id+"["+contract.key+"]");
   for(double[] box:contract.collisionBoxes)context.assertTrue(box[1]>=-EPSILON,"authored collision does not extend below support plane: "+family.id+"["+contract.key+"]");
-  VoxelShape collision=wholeCollision(state);if(!collision.isEmpty())context.assertTrue(collision.getBoundingBox().minY>=-EPSILON,"runtime collision does not extend below support plane: "+family.id+"["+contract.key+"]");
+  VoxelShape collision=wholeCollision(state);if(!collision.isEmpty())context.assertTrue(collision.getBoundingBox().minY+contract.technicalRootOffset.getY()>=-EPSILON,"runtime collision does not extend below support plane: "+family.id+"["+contract.key+"]");
   ModularMeshData.Mesh mesh=meshes.get(contract.meshId);context.assertTrue(mesh!=null,"contract mesh resolves: "+family.id+"["+contract.key+"]");
-  for(ModularMeshData.Polygon polygon:mesh.polygons)for(int vertex=0;vertex<polygon.vertexCount();vertex++)context.assertTrue(polygon.vertices[vertex*5+1]+contract.renderOffset[1]>=-EPSILON,"rendered mesh vertex stays above support plane: "+family.id+"["+contract.key+"]");
+  for(ModularMeshData.Polygon polygon:mesh.polygons)for(int vertex=0;vertex<polygon.vertexCount();vertex++)context.assertTrue(polygon.vertices[vertex*5+1]+runtime.render_offset[1]+contract.technicalRootOffset.getY()>=-EPSILON,"rendered mesh vertex stays above support plane: "+family.id+"["+contract.key+"]");
  }
 
  private static void assertOwnedCells(TestContext context,BlockPos root,BlockState state,String label){
@@ -184,8 +187,8 @@ public final class SupportPlaneGameTests implements FabricGameTest {
   ContractFamily(JsonObject raw){id=raw.get("id").getAsString();collisionPolicy=raw.get("collision_policy").getAsString();JsonArray cell=raw.getAsJsonObject("canonical_anchor").getAsJsonArray("cell");anchor=new BlockPos(cell.get(0).getAsInt(),cell.get(1).getAsInt(),cell.get(2).getAsInt());for(var entry:raw.getAsJsonObject("states").entrySet())states.put(entry.getKey(),new ContractState(entry.getKey(),entry.getValue().getAsJsonObject()));}
  }
  private static final class ContractState {
-  final String key,meshId;final double[] renderOffset,selection;final List<double[]> collisionBoxes=new ArrayList<>();
-  ContractState(String key,JsonObject raw){this.key=key;JsonObject render=raw.getAsJsonObject("render_mesh");meshId=render.get("id").getAsString();renderOffset=doubles(render.getAsJsonArray("offset"));JsonArray selectionBoxes=raw.getAsJsonObject("selection_footprint").getAsJsonArray("boxes");selection=doubles(selectionBoxes.get(0).getAsJsonArray());for(JsonElement box:raw.getAsJsonObject("collision_footprint").getAsJsonArray("boxes"))collisionBoxes.add(doubles(box.getAsJsonArray()));}
+  final String key,meshId;final double[] renderOffset,selection;final BlockPos technicalRootOffset;final List<double[]> collisionBoxes=new ArrayList<>();
+  ContractState(String key,JsonObject raw){this.key=key;JsonArray technical=raw.getAsJsonArray("technical_root_offset");technicalRootOffset=technical==null?BlockPos.ORIGIN:new BlockPos(technical.get(0).getAsInt(),technical.get(1).getAsInt(),technical.get(2).getAsInt());JsonObject render=raw.getAsJsonObject("render_mesh");meshId=render.get("id").getAsString();renderOffset=doubles(render.getAsJsonArray("offset"));JsonArray selectionBoxes=raw.getAsJsonObject("selection_footprint").getAsJsonArray("boxes");selection=doubles(selectionBoxes.get(0).getAsJsonArray());for(JsonElement box:raw.getAsJsonObject("collision_footprint").getAsJsonArray("boxes"))collisionBoxes.add(doubles(box.getAsJsonArray()));}
  }
  private static double[] doubles(JsonArray raw){double[] result=new double[raw.size()];for(int index=0;index<result.length;index++)result[index]=raw.get(index).getAsDouble();return result;}
 }
