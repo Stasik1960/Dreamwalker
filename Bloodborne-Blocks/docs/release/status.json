@@ -39,6 +39,10 @@
           {
             "path": "Bloodborne-Blocks/docs/complete-accepted-repair/test-scope-report.json",
             "sha256": "574067f048af429bf02804d90b3cdc1c698e52d77adc54d63d0068cb6de8a59e"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/ci.json",
+            "sha256": "5548dfc408b1ae074d49391c5e9f46f43ac8c51e99da8deededb2dc746528443"
           }
         ],
         "commands": [
@@ -165,6 +169,10 @@
           {
             "path": "Bloodborne-Blocks/docs/complete-accepted-repair/runtime-package.json",
             "sha256": "7be3255bb2d19c61dbca45acc94d5348d320d36a107cb7fe124b177ab458bff9"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/ci.json",
+            "sha256": "5548dfc408b1ae074d49391c5e9f46f43ac8c51e99da8deededb2dc746528443"
           }
         ],
         "commands": [
@@ -232,6 +240,10 @@
           {
             "path": "Bloodborne-Blocks/docs/complete-accepted-repair/final-check.log",
             "sha256": "026179ba8b8221268e9174835d6440329582a20ef089425372ff53081b1f8ec0"
+          },
+          {
+            "path": "Bloodborne-Blocks/docs/complete-accepted-repair/ci.json",
+            "sha256": "5548dfc408b1ae074d49391c5e9f46f43ac8c51e99da8deededb2dc746528443"
           }
         ],
         "commands": [
@@ -318,7 +330,20 @@
     "kind": "authorized-work-branch-checkpoint",
     "mainMerged": false,
     "releaseTagCreated": false,
-    "ci": "PENDING"
+    "ci": "PASS",
+    "artifactCommit": "95892241bc7fb58f24de509c2d44e26c98ed78c2",
+    "ciRunUrl": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36444685868",
+    "ciCheckedCommit": "95892241bc7fb58f24de509c2d44e26c98ed78c2",
+    "pushConfirmed": true,
+    "ciEvidence": {
+      "path": "Bloodborne-Blocks/docs/complete-accepted-repair/ci.json",
+      "sha256": "5548dfc408b1ae074d49391c5e9f46f43ac8c51e99da8deededb2dc746528443"
+    },
+    "downloadVerification": {
+      "path": "Bloodborne-Blocks/docs/complete-accepted-repair/remote-download-verification.json",
+      "sha256": "f5ebb1db451c30a0c2a582e817b93acef101184504f3d0c8caae3a2753d19014"
+    },
+    "finalPublicationDelta": "Documentation/evidence only after the CI-checked artifact commit; runtime, sources and map unchanged."
   },
   "packagedDedicatedSmoke": {
     "status": "PASS",

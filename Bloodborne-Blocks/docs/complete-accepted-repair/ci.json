@@ -1,0 +1,220 @@
+{
+  "id": 36444685868,
+  "status": "completed",
+  "conclusion": "success",
+  "head_sha": "95892241bc7fb58f24de509c2d44e26c98ed78c2",
+  "html_url": "https://github.com/Stasik1960/Dreamwalker/actions/runs/36444685868",
+  "created_at": "2026-09-28T15:35:03Z",
+  "updated_at": "2026-09-28T15:47:56Z",
+  "run_started_at": "2026-09-28T15:35:03Z",
+  "run_attempt": 1,
+  "jobs": [
+    {
+      "id": 109003796497,
+      "name": "static-and-gametests",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 36444685868,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run git lfs pull --include='Bloodborne-Blocks/src/main/resources/**,Bloodborne-Blocks/reference-inputs/**,Bloodborne-Blocks/tools/**,Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/**,Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.3/**' --exclude=''",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run python -m pip install --disable-pip-version-check -r tools/requirements-ci.txt",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Run echo \"version=$(python tools/check_release_package.py --version-only)\" >> \"$GITHUB_OUTPUT\"",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Run mkdir -p build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Run set -o pipefail",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Run sha256sum \"build/libs/bloodborne-blocks-2.1.0-rc.3.jar\" \"build/devlibs/bloodborne-blocks-2.1.0-rc.3-sources.jar\" > build/release-artifact-sha256.txt",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Run echo 'CI result: static and GameTests only; this is not RELEASE_READY.'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Post Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27
+        }
+      ]
+    }
+  ],
+  "result": "PASS",
+  "sourceCommit": "9f32ff5ad2c2c8ecace8533749794da3d12aa36b",
+  "pythonUnittestTests": 333,
+  "pythonUnittestRuns": 54,
+  "gametests": 59,
+  "log": {
+    "path": "Bloodborne-Blocks/docs/complete-accepted-repair/ci-36444685868.log.gz",
+    "sha256": "be017c56f7f96a2ac2d7e9096f804ab7dc40d902bdecc4a3aa9939b21d34aa3a"
+  },
+  "builtArtifacts": {
+    "version": "2.1.0-rc.3",
+    "jar": {
+      "path": "bloodborne-blocks-2.1.0-rc.3.jar",
+      "sha256": "d9b48f3095c858c57755181551cbb5037305620df85459d2baf5d0fff532d409"
+    },
+    "sourceJar": {
+      "path": "bloodborne-blocks-2.1.0-rc.3-sources.jar",
+      "sha256": "3df25e000ed3b471a03b4b37022e67f98920c3e232f09a97b01d04ace9b96d9d"
+    },
+    "sourceJavaFiles": 30,
+    "resources": {
+      "ok": true,
+      "version": "2.1.0-rc.3",
+      "resources": 17739,
+      "loomMixinConfigs": [
+        "bloodborne_blocks.mixins.json"
+      ],
+      "manifestSha256": "8f99508705f21e29f843baf1aa0fbe81db972f0aeec08ad44f0b12c6cb565ada",
+      "jarSha256": "d9b48f3095c858c57755181551cbb5037305620df85459d2baf5d0fff532d409"
+    },
+    "acceptedRuntime": {
+      "result": "PASS",
+      "acceptedCheckpoint": "41c20ee8b730c2d1567b2ab5a3d579d51bdbea1a",
+      "rc1PhysicsBaseline": "90a4e051a71ecc7b3156802c54dbfd8219789469",
+      "logicalResources": 11,
+      "runtimeJava": 30,
+      "rc1City": {
+        "definitions": 2914,
+        "profiles": 28866
+      },
+      "acceptedOwnerContracts": [
+        "owner-runtime-mappings.json",
+        "owner-meshes.json.gz",
+        "reviewed-wall-family.json"
+      ],
+      "acceptedOwners": {
+        "definitions": 868,
+        "profiles": 0
+      },
+      "reviewedExtensions": {
+        "addedOwners": 71,
+        "wallAliasStates": 264
+      },
+      "runtimeJarSha256": "d9b48f3095c858c57755181551cbb5037305620df85459d2baf5d0fff532d409"
+    },
+    "acceptedCity": {
+      "format": "bloodborne-complete-repair-verification-v1",
+      "subsetResult": "PASS",
+      "coverageCompleteness": "FAIL",
+      "releaseReady": false,
+      "sourceSha256": "f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c",
+      "outputTreeSha256": "986a9e5e4422be5e18147de2a128afd4aae56d17dd6f316b9a32b25729d39413",
+      "authority": {
+        "result": "PASS",
+        "transactions": 989,
+        "changedRoots": 4771,
+        "foreignBlockEntityLoss": 0,
+        "foreignRootLoss": 0
+      },
+      "fullWorld": {
+        "result": "PASS",
+        "chunks": 10009,
+        "modCells": 27666664,
+        "ownerRoots": 53133,
+        "helpers": 55684,
+        "unknownIds": {},
+        "invalidStates": {},
+        "helperErrors": 0,
+        "examples": []
+      },
+      "preservation": {
+        "result": "PASS",
+        "changed_cells": 7207,
+        "ledger_cells": 17603,
+        "changed_chunks": 415,
+        "unchanged_chunks": 9594,
+        "preserved_nonterrain_files": 170,
+        "errors": []
+      },
+      "secondPass": {
+        "result": "NOT_RUN"
+      }
+    }
+  },
+  "scope": "Static checks, GameTests, new Linux build and independent validation of the published pair. Not graphical-client/full-modpack acceptance."
+}

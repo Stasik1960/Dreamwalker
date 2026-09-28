@@ -35,7 +35,15 @@ open-window/grass/retained-wall дополнениями. 23 прежних не
 - Новый город SHA-256: `111253971789feea9c016c693c4122a7faee6952c11102c092d73f3475df6150`.
 - Входной rc.2 SHA-256: `f4b9ef510e2aacade80bb11f95cd82fe17eaed56e118280e8e055dd4aecd133c`.
 
-CI текущей ветки: PENDING. Предыдущий rc.2 run не считается проверкой rc.3.
+GitHub CI: **PASS**, [run 36444685868](https://github.com/Stasik1960/Dreamwalker/actions/runs/36444685868) для
+`95892241bc7fb58f24de509c2d44e26c98ed78c2`: 333 Python tests / 54 запусков, 59/59 GameTests,
+Linux build и независимая перепроверка опубликованной пары JAR+карта.
+[CI evidence](complete-accepted-repair/ci.json) ·
+[полный лог](complete-accepted-repair/ci-36444685868.log.gz).
+Все три опубликованных файла скачаны заново; SHA-256 совпали:
+[проверка скачивания](complete-accepted-repair/remote-download-verification.json).
+Финальный commit отчёта меняет только документацию/доказательства;
+проверенные runtime/resources, JAR и карта не изменены.
 
 [status.json](release/status.json) · [delivery](complete-accepted-repair/delivery.json) ·
 [сборка](complete-accepted-repair/final-check.log) · [package proof](complete-accepted-repair/package-check.json) ·
