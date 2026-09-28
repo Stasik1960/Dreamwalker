@@ -54,7 +54,7 @@ class AtomicOwnerGroupsTests(unittest.TestCase):
                 self.assertEqual(set(),independently_accepted_effects(world,rules,{}, {},'aggressive'))
 
     def test_missing_runtime_owner_reserves_all_cells(self):
-        world,rules=self.fixture();rules[0]=replace(rules[0],preflight_error='whole_owner_runtime_mapping_missing')
+        world,rules=self.fixture();rules[0]=replace(rules[0],shared_physics=True,preflight_error='whole_owner_runtime_mapping_missing')
         items,_,_=candidates(world,rules);reject_overlaps(items)
         self.assertEqual([],apply(world,items))
         self.assertTrue(all(i.reason for i in items))
@@ -126,7 +126,11 @@ class AtomicOwnerGroupsTests(unittest.TestCase):
         self.assertGreater(len(reserved),5315)
         high=[]
         for r in rules:
+            self.assertEqual(r.atomic_owner_group,r.shared_physics,
+                             'only compiled, coordinate-guarded atomic graphs opt into shared physics')
             if not r.atomic_owner_group:continue
+            self.assertEqual(1,len(r.allowed_origins))
+            self.assertEqual(DIM,r.allowed_origins[0][0])
             origin=r.allowed_origins[0][1]
             for out in r.outputs:
                 root=tuple(origin[i]+out.root_offset[i] for i in range(3))

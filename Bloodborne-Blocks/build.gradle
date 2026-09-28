@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '2.1.0-repair-test.3'
+version = '2.1.0-repair-catalog.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -156,7 +156,7 @@ tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
  'test_production_gallery', 'test_build_production_gallery', 'test_production_palette',
  'test_restore_functional', 'test_restore_c003', 'test_restored_migration', 'test_preserved_semantics', 'test_production_coverage', 'production_coverage',
  'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch', 'test_beta_client_qa', 'test_city_palette', 'test_city_recovery', 'test_modded_world_adapter', 'test_modded_preservation', 'test_compare_modded_reference',
- 'test_composite_repair', 'test_root_exception_evidence', 'test_explicit_root_exceptions', 'test_historical_wall_mappings', 'test_composite_owner_closure', 'test_historical_omission_evidence', 'test_atomic_owner_groups', 'test_reviewed_wall_family', 'test_window_test3', 'test_collision_grid', 'verify_composite_overlap_evidence'].each { testName ->
+ 'test_composite_repair', 'test_root_exception_evidence', 'test_explicit_root_exceptions', 'test_historical_wall_mappings', 'test_composite_owner_closure', 'test_historical_omission_evidence', 'test_atomic_owner_groups', 'test_whole_owner_storage', 'test_reviewed_wall_family', 'test_window_test3', 'test_collision_grid', 'test_creative_equivalence', 'verify_composite_overlap_evidence'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   dependsOn 'normalizeSupportContracts'

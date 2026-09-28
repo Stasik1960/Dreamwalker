@@ -57,6 +57,9 @@ public final class BloodborneClient implements ClientModInitializer {
    // Scoped to one model-loader generation, so a resource reload never reuses stale sprites.
    Map<String,ModularBakedModel.Parts> modularQuads=new HashMap<>();
    Map<String,Map<String,net.minecraft.client.render.model.BakedModel>> cityItemVariants=new ConcurrentHashMap<>();
+   GuiItemBounds.Cache guiBounds=new GuiItemBounds.Cache();
+   Map<net.minecraft.client.render.model.BakedModel,net.minecraft.client.render.model.BakedModel> guiModels=new IdentityHashMap<>();
+   java.util.function.Function<net.minecraft.client.render.model.BakedModel,net.minecraft.client.render.model.BakedModel> gui=model->guiModels.computeIfAbsent(model,key->new GuiItemModel(key,guiBounds.get(key)));
    ModularBakedModel.QuadPool sharedFaces=new ModularBakedModel.QuadPool();
    context.modifyModelAfterBake().register((model,bake)->{
    Identifier id=bake.id();if(!(id instanceof ModelIdentifier modelId)||!id.getNamespace().equals(BloodborneBlocks.ID))return model;
@@ -65,7 +68,7 @@ public final class BloodborneClient implements ClientModInitializer {
    if(block==null&&id.getPath().startsWith("block/logical/")){
     String meshKey=id.getPath().substring("block/logical/".length());ModularMeshData.Mesh mesh=allMeshes.get(meshKey);
     if(mesh==null)return model;String cacheKey="logical-item:"+meshKey;
-    return ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),model);
+    return gui.apply(ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),model));
    }
    if(block==null)return model;
    net.minecraft.client.render.model.BakedModel result=model;
@@ -100,9 +103,9 @@ public final class BloodborneClient implements ClientModInitializer {
    if(offset!=null&&(offset[0]!=0||offset[1]!=0||offset[2]!=0))result=new TranslatedBakedModel(result,offset);
    if(block.definition.models!=null&&(block.definition.properties.containsKey("variant")||block.definition.properties.containsKey("visual"))){
     Map<String,net.minecraft.client.render.model.BakedModel> variants=cityItemVariants.computeIfAbsent(block.definition.id,key->new ConcurrentHashMap<>());
-    if(modelId.getVariant().equals("inventory"))result=new CityVariantItemModel(result,block,variants);
+    if(modelId.getVariant().equals("inventory"))result=new CityVariantItemModel(result,block,variants,guiBounds);
     else variants.put(modelId.getVariant(),result);
-   }
+   }else if(modelId.getVariant().equals("inventory"))result=gui.apply(result);
    return result;
   });});
  }

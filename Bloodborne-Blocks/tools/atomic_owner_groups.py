@@ -160,7 +160,10 @@ def compile_groups(rules, resources):
         compiled.append(Rule(len(compiled), pieces[0], target, first_offset,
             pieces[1:], None, first_shape, transaction_id=ident, outputs=outputs,
             source_mode='modded', source_reference='frozen historical owner graph',
-            allowed_origins=((DIM, origin),), atomic_owner_group=True,
+            # Only this explicit diagnostic mode has complete, frozen owner
+            # graphs. Reuse the verified shared helper/root-carrier path while
+            # retaining all preflight, foreign-context and root/root checks.
+            allowed_origins=((DIM, origin),), atomic_owner_group=True, shared_physics=True,
             preflight_error=errors[0]['reason'] if errors else None))
         diagnostics.append({'transaction': ident, 'origin': origin, 'owners': len(group['objects']),
             'cells': len(pieces), 'outputs': len(outputs), 'errors': errors,

@@ -1,8 +1,12 @@
 package dev.dreamwalker.bloodborneblocks;
 
+import com.google.gson.Gson;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItem;
@@ -25,10 +29,36 @@ final class ArchitectureCreativeCatalog {
  }
  static List<ItemStack> mainEntries(){return entries(true);}
  static List<ItemStack> technicalEntries(){return entries(false);}
+ static Map<String,String> redirects(){return Equivalents.REDIRECTS;}
+ static String canonicalKey(String candidate){return redirects().getOrDefault(candidate,candidate);}
+ /** Stable keys shared with the content/behavior proof generator; absent axes stay empty. */
+ static String candidateKey(ItemStack stack){
+  StringBuilder key=new StringBuilder(Registries.ITEM.getId(stack.getItem()).getPath());
+  BlockState state=stack.getItem() instanceof BlockItem item?ArchitectureBlockItem.applyStateTag(item.getBlock().getDefaultState(),stack):null;
+  for(String name:ART_PROPERTIES){key.append('|').append(name).append('=');if(state!=null){var property=state.getBlock().getStateManager().getProperty(name);if(property!=null)key.append(value(state,property));}}
+  return key.toString();
+ }
+ @SuppressWarnings({"rawtypes","unchecked"}) private static String value(BlockState state,net.minecraft.state.property.Property property){return property.name(state.get(property));}
+ private static final class Equivalents {
+  static final Map<String,String> REDIRECTS=load();
+  private static Map<String,String> load(){
+   try(var stream=ArchitectureCreativeCatalog.class.getResourceAsStream("/bloodborne_blocks/creative-equivalence.json")){
+    if(stream==null)throw new IllegalStateException("Missing creative equivalence proof");
+    var document=new Gson().fromJson(new InputStreamReader(stream,StandardCharsets.UTF_8),com.google.gson.JsonObject.class);
+    if(document.get("schemaVersion").getAsInt()!=1)throw new IllegalStateException("Unsupported creative equivalence proof");
+    Map<String,String> redirects=new java.util.LinkedHashMap<>();document.getAsJsonObject("redirects").entrySet().forEach(entry->redirects.put(entry.getKey(),entry.getValue().getAsString()));
+    for(var entry:redirects.entrySet())if(entry.getKey().equals(entry.getValue())||redirects.containsKey(entry.getValue()))throw new IllegalStateException("Non-canonical creative redirect: "+entry.getKey());
+    return Map.copyOf(redirects);
+   }catch(java.io.IOException error){throw new IllegalStateException("Cannot read creative equivalence proof",error);}
+  }
+ }
  static Set<String> mainIds(){
   java.util.LinkedHashSet<String> ids=new java.util.LinkedHashSet<>(BloodborneBlocks.productionPalette().keySet());ids.add(ReviewedWallConnections.ID);return Set.copyOf(ids);
  }
  private static List<ItemStack> entries(boolean mainTab){
+  return candidateEntries(mainTab).stream().filter(stack->!redirects().containsKey(candidateKey(stack))).toList();
+ }
+ static List<ItemStack> candidateEntries(boolean mainTab){
   List<BlockItem> items=Registries.ITEM.stream().filter(BlockItem.class::isInstance).map(BlockItem.class::cast)
    .filter(item->Registries.ITEM.getId(item).getNamespace().equals(BloodborneBlocks.ID)).filter(item->main(item)==mainTab)
    .sorted(Comparator.comparingInt(ArchitectureCreativeCatalog::section).thenComparing(item->Registries.ITEM.getId(item).toString())).toList();

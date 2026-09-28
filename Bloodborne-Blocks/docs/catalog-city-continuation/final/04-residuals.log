@@ -1,0 +1,19 @@
+{
+  "scope": "Post-integration scan; no gate bypass or ledger replay",
+  "convertedAtomicGroups": 3126,
+  "remainingAtomicGroups": 112,
+  "atomicGroupCategories": {
+    "exact owner closure; converter/runtime group support incomplete": 41,
+    "shared-cell / root conflict": 71
+  },
+  "membershipCategories": {
+    "insufficient evidence": 931,
+    "historical omission with proven current owner": 2
+  },
+  "fragmentedProtectedObjects": 1979,
+  "omissionCurrentOwnerProof": {
+    "no_current_helper_owner": 316,
+    "proven": 6,
+    "current_owner_closure_incomplete": 15
+  }
+}

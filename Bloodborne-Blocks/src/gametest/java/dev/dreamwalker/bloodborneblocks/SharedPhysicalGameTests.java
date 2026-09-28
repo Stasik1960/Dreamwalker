@@ -127,6 +127,20 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
  }
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
+ public void storageRootOwnersUseEmptyRootAndCleanEveryOwnedHelper(TestContext context){
+  ServerWorld world=context.getWorld();BlockPos root=context.getAbsolutePos(new BlockPos(8,4,8));
+  for(String id:List.of("owner_0afae65ab577cf2ac96f","owner_110a574aebe8f2b33067","owner_5071a02a3096d9d9820f","owner_c130a81530121df11bd7")){
+   ArchitectureBlock owner=requiredCity(id);BlockState state=owner.getDefaultState();var geometry=GeometryRuntime.state(state);context.assertTrue(geometry.parsedCells.containsKey(BlockPos.ORIGIN)&&GeometryRuntime.cellShape(state,BlockPos.ORIGIN,false).isEmpty()&&GeometryRuntime.cellShape(state,BlockPos.ORIGIN,true).isEmpty(),id+" stores its root in an intentionally empty cell");
+   BlockPos physical=geometry.parsedCells.entrySet().stream().filter(entry->!entry.getKey().equals(BlockPos.ORIGIN)&&(!entry.getValue().collisionShape.isEmpty()||!entry.getValue().outlineShape.isEmpty())).map(Map.Entry::getKey).findFirst().orElseThrow(()->new AssertionError(id+" has no physical neighbor cell"));
+   clear(world,root,state);world.setBlockState(root,state,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,state),id+" rebuilds from its empty storage root");Identifier ownerId=Registries.BLOCK.getId(owner);
+   for(BlockPos offset:helperOffsets(state)){ArchitecturePartBlockEntity helper=GeometryRuntime.part(world,root.add(offset));context.assertTrue(helper!=null&&helper.hasBinding(root,ownerId),id+" helper owns the storage root at "+offset);}
+   context.assertTrue(!GeometryRuntime.guestShape(world,root.add(physical),false).isEmpty()||!GeometryRuntime.guestShape(world,root.add(physical),true).isEmpty(),id+" exposes physics through a non-root cell");
+   world.breakBlock(root,false);context.assertTrue(world.getBlockState(root).isAir(),id+" root breaks normally");for(BlockPos offset:helperOffsets(state))context.assertTrue(world.getBlockState(root.add(offset)).isAir()&&GeometryRuntime.part(world,root.add(offset))==null,id+" break leaves no orphan helper at "+offset);
+  }
+  context.complete();
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
  public void foreignReplacementNeverGetsOverwrittenAndGuestIsRemovedWhole(TestContext context){
   Fixture fixture=fixture(context,new BlockPos(4,4,4)),ordinaryRemoval=fixture(context,new BlockPos(12,4,12)),nativeReplacement=fixture(context,new BlockPos(4,4,12));ServerWorld world=context.getWorld();ArchitectureBlock nativeBlock=BloodborneBlocks.CITY_BLOCKS.values().stream().filter(block->!(block instanceof SharedArchitectureBlock)).findFirst().orElseThrow();BlockState nativeState=nativeBlock.getDefaultState();world.breakBlock(ordinaryRemoval.carrier,false);world.setBlockState(fixture.carrier,Blocks.DIAMOND_BLOCK.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(nativeReplacement.carrier,nativeState,Block.NOTIFY_ALL);
   context.runAtTick(4,()->{

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "C:\\Windows\\system32\\cmd.exe",
+    "/d",
+    "/c",
+    "gradlew.bat",
+    "--offline",
+    "--no-daemon",
+    "--console=plain",
+    "-I",
+    "tools/verification-direct-resources.init.gradle",
+    "-PbloodbornePython=C:\\Users\\vakir\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-Dorg.gradle.java.installations.paths=C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\toolchain\\jdk-17.0.20.1",
+    "check",
+    "build",
+    "logicalGameTest",
+    "--max-workers=1"
+  ],
+  "seconds": 491.0,
+  "exitCode": 0,
+  "log": "C:\\Users\\vakir\\Documents\\ChatGPT\\DW\\Bloodborne-Blocks\\build\\test3-verification\\catalog-city-check-build.log"
+}
