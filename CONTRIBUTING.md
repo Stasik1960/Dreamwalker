@@ -19,6 +19,7 @@ Repair-ветки Bloodborne содержат отдельные экспери�
 | Проекты | JDK для сборки | Gradle | Примечание |
 | --- | --- | --- | --- |
 | RP-Chat, RP-Chat-UI, MC-Pool, DW_Languages, DW_Magic_Connect | 17 | 8.10.2, установленный отдельно | Версия используется в CI; wrapper в этих проектах отсутствует |
+| Model-Props | 17 | Wrapper 8.6 | Содержит собственный wrapper и собирается независимо |
 | Bloodborne-Blocks | 17 | Wrapper 8.8 | Для проверок нужен Python 3.11+ и `tools/requirements-ci.txt` |
 | Danny-AOT-Backport и вложенная Player Animation Library | 21 | Wrapper 8.12.1 | Выходные классы совместимы с Java 17 |
 
@@ -41,6 +42,14 @@ gradle -p DW_Magic_Connect build
 DW Languages и DW Magic Connect подключают соседний RP-Chat через composite build.
 Сохраняйте расположение этих папок. Результат каждого проекта — `build/libs/`;
 для игры выбирайте обычный JAR, без `-sources` и `-dev`.
+
+Model Props использует собственный wrapper. Из `Model-Props`, PowerShell:
+
+```powershell
+.\gradlew.bat clean check build --no-daemon
+```
+
+В Linux/macOS используйте `chmod +x gradlew && ./gradlew clean check build --no-daemon`.
 
 ## Bloodborne
 
