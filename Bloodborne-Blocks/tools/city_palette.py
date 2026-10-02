@@ -15,7 +15,7 @@ def audit_helpers(world, city):
         definitions=resource/'definitions.json'
         if definitions.exists():
             root_carriers.update('bloodborne_blocks:'+d['id'] for d in json.loads(definitions.read_bytes())['blocks']
-                                 if d.get('logical') or d.get('whole_owner'))
+                                 if d.get('logical') or d.get('whole_owner') or d.get('city_compat'))
         data=json.loads((resource/'geometry.json').read_bytes())
         for ident,block in data['blocks'].items():
             geometries['bloodborne_blocks:'+ident]={key:data.get('profiles',{}).get(value.get('ref'),value)

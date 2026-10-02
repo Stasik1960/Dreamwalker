@@ -19,6 +19,18 @@ RES = ROOT / 'src/main/resources'
 CITY = RES / 'bloodborne_blocks/city'
 
 
+def storage_root_geometry(physics):
+    """Return an owner-storage copy with an explicit empty frozen root cell."""
+    result = copy.deepcopy(physics)
+    if any(result.get('render_offset', [0, 0, 0])):
+        raise ValueError('nonzero historical render offset')
+    cells = result.get('cells', {})
+    if any(len(cell.get('collision', [])) > 4 for cell in cells.values()):
+        raise ValueError('historical physics requires reviewed simplification')
+    cells.setdefault('0,0,0', {'collision': [], 'outline': []})
+    return result
+
+
 def turn(x, z, n):
     return ((x,z), (1-z,x), (1-x,1-z), (z,1-x))[n]
 
@@ -40,7 +52,7 @@ def rotate_geometry(geometry, n):
     return result
 
 
-def build():
+def build(*, storage_root_only=False):
     evidence = json.loads(gzip.decompress(EVIDENCE.read_bytes()))
     oracle = json.loads(ORACLE.read_bytes())
     groups = connected_groups(evidence, oracle)
@@ -48,10 +60,32 @@ def build():
     required = sorted({o['state'] for g in groups for p,o in g['objects'].items() if p not in protected})
     definitions = json.loads((CITY/'definitions.json').read_bytes())
     geometry = json.loads((CITY/'geometry.json').read_bytes())
-    # Rebuilding this extension never repages or alters existing compatibility.
-    definitions['blocks'] = [b for b in definitions['blocks'] if not b.get('whole_owner')]
-    geometry['blocks'] = {k:v for k,v in geometry['blocks'].items() if not k.startswith('owner_')}
-    meshes, mappings, rejected = {}, {}, []
+    mapping_path = CITY/'owner-runtime-mappings.json'
+    old_mapping_bytes = mapping_path.read_bytes()
+    previous = json.loads(old_mapping_bytes)
+    if storage_root_only:
+        # Extend only the explicitly rejected missing-root cases. Preserve all
+        # accepted owner and reviewed-wall definitions, models and mappings.
+        if previous['evidenceSha256'] != hashlib.sha256(EVIDENCE.read_bytes()).hexdigest():
+            raise ValueError('WHOLE_OWNER_RUNTIME_EVIDENCE_MISMATCH')
+        wall_path = CITY/'reviewed-wall-family.json'
+        wall = json.loads(wall_path.read_bytes())
+        # Git's Windows checkout can change LF to CRLF without changing JSON.
+        # The frozen proof hashes the repository's LF bytes, not checkout EOLs.
+        old_mapping_lf = old_mapping_bytes.replace(b'\r\n', b'\n')
+        if wall['sourceMappingsSha256'] not in {hashlib.sha256(old_mapping_bytes).hexdigest(), hashlib.sha256(old_mapping_lf).hexdigest()}:
+            raise ValueError('REVIEWED_WALL_MAPPING_PROOF_STALE')
+        selected = {row['source'] for row in previous['rejected'] if row['reason']=='historical root lacks physical cell'}
+        if not selected <= set(required): raise ValueError('STORAGE_ROOT_SOURCE_NOT_PROVEN')
+        required = sorted(selected)
+        meshes = json.loads(gzip.decompress((CITY/'owner-meshes.json.gz').read_bytes()))
+        mappings = copy.deepcopy(previous['states'])
+        rejected = [row for row in previous['rejected'] if row['source'] not in selected]
+    else:
+        # Rebuilding this extension never repages existing compatibility.
+        definitions['blocks'] = [b for b in definitions['blocks'] if not b.get('whole_owner')]
+        geometry['blocks'] = {k:v for k,v in geometry['blocks'].items() if not k.startswith('owner_')}
+        meshes, mappings, rejected = {}, {}, []
     translations = {}
     catalog = json.loads((ROOT/'docs/semantic-catalog-v2.json').read_text(encoding='utf-8-sig'))
     catalog = catalog.get('blocks',catalog)
@@ -69,10 +103,7 @@ def build():
                 if 'assembled' in complete: complete['assembled'] = 'false'
                 old_key = ','.join(k+'='+v for k,v in sorted(complete.items()))
                 physics = resolved_geometry(old_geometry, carrier, old_key)
-                if any(physics.get('render_offset', [0,0,0])): raise ValueError('nonzero historical render offset')
-                if '0,0,0' not in physics['cells']: raise ValueError('historical root lacks physical cell')
-                if any(len(c['collision']) > 4 for c in physics['cells'].values()):
-                    raise ValueError('historical physics requires reviewed simplification')
+                physics = storage_root_geometry(physics)
                 entry = migration[carrier]
                 source_props = {**entry['default'], **props}
                 parts = entry['states'][','.join(k+'='+v for k,v in sorted(source_props.items()))]
@@ -135,10 +166,19 @@ def build():
     write_json(CITY/'definitions.json',definitions);write_json(CITY/'geometry.json',geometry)
     (CITY/'owner-meshes.json.gz').write_bytes(gzip.compress(serial(meshes),mtime=0))
     result={'evidenceSha256':hashlib.sha256(EVIDENCE.read_bytes()).hexdigest(),'states':mappings,'rejected':rejected}
-    write_json(CITY/'owner-runtime-mappings.json',result)
+    if storage_root_only and any(mappings.get(key)!=value for key,value in previous['states'].items()):
+        raise ValueError('EXISTING_OWNER_MAPPING_CHANGED')
+    write_json(mapping_path,result)
+    if storage_root_only:
+        wall['sourceMappingsSha256'] = hashlib.sha256(mapping_path.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+        write_json(wall_path,wall)
     lang_path=RES/'assets/bloodborne_blocks/lang/ru_ru.json'
     lang=json.loads(lang_path.read_bytes());lang.update(translations);write_json(lang_path,lang)
     print('Whole owner runtime states:',len(mappings),'unsupported:',len(rejected),flush=True)
 
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--add-empty-storage-roots',action='store_true',help='extend only proven missing-root mappings, preserving all existing runtime entries')
+    args=parser.parse_args();build(storage_root_only=args.add_empty_storage_roots)

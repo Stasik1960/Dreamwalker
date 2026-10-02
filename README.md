@@ -13,10 +13,10 @@
 | [RP Chat UI](RP-Chat-UI/README.md) | 0.3.7 | Перемещаемые окна, вкладки, поиск, избранное, оформление и редактор сообщений | Интерфейс на клиенте; серверная часть для дополнительных функций |
 | [DW Magic Connect](DW_Magic_Connect/README.md) | 0.4.3 | Магические рации, частоты на часах, громкая связь, интеграция с RP Chat и языками | Сервер и клиенты; RP Chat 0.1.16+ |
 | [DW Languages](DW_Languages/README.md) | 0.1.0 | Языки персонажей, знания игроков, настраиваемые преобразования речи | Сервер; RP Chat 0.1.16+ |
-| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-beta.2 preview | 49 production-предметов и компактная совместимость старой архитектуры; восстановленная карта без неизвестных ID, ожидает игровой проверки | Сервер и клиенты; beta |
+| [Bloodborne Architecture](Bloodborne-Blocks/README.md) | 2.1.0-repair-catalog.1 | Пересобранная основная карта, галерея на утверждение, пятизначные ID и три осенних палитры; остаются спорные сборки и проверка памяти | Сервер и клиенты; тестовая основа |
 | [Danny’s AoT — неофициальный порт](Danny-AOT-Backport/README.md) | 2.4.3-backport.2 | Порт с 1.21.1; GeckoLib, AAA Particles и Player Animation Library внутри одного JAR | Сервер и клиенты; тестовая сборка |
 
-Восстановленная карта Bloodborne: [основной комплект и ALT](releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md). Прежние карты `UNRESOLVED` заменены этим комплектом; JAR beta.2 прежний.
+Текущая основа Bloodborne: [карта, мод, галерея, материалы художника и осенние палитры](releases/Bloodborne-Blocks/launch-base-2026-10-01/README.md). Исторический комплект beta.2: [основная карта и ALT](releases/Bloodborne-Blocks/2.1.0-beta.2-city-recovery/README.md).
 
 ### MC-Pool
 

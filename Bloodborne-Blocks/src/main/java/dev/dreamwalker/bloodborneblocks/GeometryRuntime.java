@@ -8,6 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -29,7 +30,7 @@ final class GeometryRuntime {
  private static final ThreadLocal<Boolean> MUTATING=ThreadLocal.withInitial(()->false);
  private static final ThreadLocal<RootInsertion> ROOT_INSERTION=new ThreadLocal<>();
  private static final int MAX_PENDING_GUEST_RECOVERIES=4096;
- private static final int GUEST_RECOVERIES_PER_TICK=256;
+ static final int GUEST_RECOVERIES_PER_TICK=256;
  private static final Map<ServerWorld,LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>>> GUEST_RECOVERIES=Collections.synchronizedMap(new WeakHashMap<>());
 
  static final class FileData {Map<String,GeometryState> profiles;Map<String,GeometryBlock> blocks;}
@@ -50,8 +51,11 @@ final class GeometryRuntime {
  }
  static final class GeometryCell {
   List<double[]> collision=List.of();
+  /** Optional per-cell ordinary-placement footprint; omitted generated geometry uses collision. */
+  List<double[]> placement;
   List<double[]> outline=List.of();
   transient VoxelShape collisionShape;
+  transient VoxelShape placementShape;
   transient VoxelShape outlineShape;
  }
  record RepairResult(int roots,int repaired,int conflicts,int orphans) {}
@@ -120,8 +124,10 @@ final class GeometryRuntime {
    catch(NumberFormatException e){throw new IllegalStateException("Invalid cell key "+entry.getKey(),e);}
    GeometryCell cell=entry.getValue();if(cell==null)throw new IllegalStateException("Null cell "+entry.getKey());
    validateBoxes(blockId,stateKey,entry.getKey(),"collision",cell.collision);
+   if(cell.placement==null)cell.placement=cell.collision;
+   validateBoxes(blockId,stateKey,entry.getKey(),"placement",cell.placement);
    validateBoxes(blockId,stateKey,entry.getKey(),"outline",cell.outline);
-   cell.collisionShape=shape(cell.collision);cell.outlineShape=sameBoxes(cell.collision,cell.outline)?cell.collisionShape:shape(cell.outline);
+   cell.collisionShape=shape(cell.collision);cell.placementShape=sameBoxes(cell.collision,cell.placement)?cell.collisionShape:shape(cell.placement);cell.outlineShape=sameBoxes(cell.collision,cell.outline)?cell.collisionShape:shape(cell.outline);
    state.parsedCells.put(offset.toImmutable(),cell);
   }
   if(state.globalOutline!=null){validateGlobalBox(blockId,stateKey,state.globalOutline);state.wholeOutline=VoxelShapes.cuboid(state.globalOutline[0],state.globalOutline[1],state.globalOutline[2],state.globalOutline[3],state.globalOutline[4],state.globalOutline[5]);}
@@ -197,6 +203,10 @@ final class GeometryRuntime {
   GeometryCell cell=geometry.parsedCells.get(offset);if(cell==null)return VoxelShapes.empty();
   return outline?cell.outlineShape:cell.collisionShape;
  }
+ static VoxelShape placementShape(BlockState rootState,BlockPos offset){
+  GeometryState geometry=state(rootState);if(geometry==null)return VoxelShapes.empty();
+  GeometryCell cell=geometry.parsedCells.get(offset);return cell==null?VoxelShapes.empty():cell.placementShape;
+ }
 
  static List<OwnedRoot> ownedRoots(BlockView world,BlockPos carrier){
   ArchitecturePartBlockEntity part=part(world,carrier);if(part==null)return List.of();List<OwnedRoot> roots=new ArrayList<>();
@@ -213,8 +223,9 @@ final class GeometryRuntime {
  }
 
  static boolean canPlace(World world,BlockPos root,BlockState state){
-  return canOccupy(world,root,state,null);
+  return canPlace(world,root,state,null);
  }
+ private static boolean canPlace(World world,BlockPos root,BlockState state,BlockPos ownedRoot){return canOccupy(world,root,state,ownedRoot)&&!placementIntersects(world,root,state);}
 
  /**
   * Admits one existing helper carrier as the root cell of another complete
@@ -227,7 +238,7 @@ final class GeometryRuntime {
   ArchitecturePartBlockEntity part=part(world,root);if(part==null||part.isEmpty())return null;List<ArchitecturePartBlockEntity.Binding> guests=part.bindings();
   if(!hasRootInsertionCapacity(guests.size()))return null;
   for(var binding:guests)if(!world.isChunkLoaded(binding.root())||!ownsHelper(world.getBlockState(binding.root()),binding.root(),root,binding.owner()))return null;
-  return canOccupy(world,root,state,root)?guests:null;
+  return canPlace(world,root,state,root)?guests:null;
  }
 
  static boolean isRootInsertionCarrier(World world,BlockPos root,ArchitectureBlock block){
@@ -268,6 +279,33 @@ final class GeometryRuntime {
    if(!collision.isEmpty()&&!world.doesNotIntersectEntities(null,collision.offset(target.getX(),target.getY(),target.getZ())))return false;
   }
   return true;
+ }
+ /**
+  * Ordinary item placement may share a carrier cell only when the authored
+  * placement footprints are disjoint. Rebuild, load repair, and in-place
+  * transitions intentionally continue to use {@link #canOccupy} instead.
+  */
+ private static boolean placementIntersects(World world,BlockPos root,BlockState state){
+  GeometryState geometry=required(state);
+  for(BlockPos offset:geometry.parsedCells.keySet()){
+   VoxelShape candidate=placementShape(state,offset);if(candidate.isEmpty())continue;
+   VoxelShape resident=residentPlacementShape(world,root.add(offset));
+   if(!resident.isEmpty()&&VoxelShapes.matchesAnywhere(candidate,resident,BooleanBiFunction.AND))return true;
+  }
+  return false;
+ }
+ private static VoxelShape residentPlacementShape(World world,BlockPos carrier){
+  BlockState resident=world.getBlockState(carrier);VoxelShape shape=placementShape(resident,BlockPos.ORIGIN);
+  for(OwnedRoot guest:ownedRoots(world,carrier))shape=VoxelShapes.union(shape,placementShape(guest.state(),guest.offset()));
+  for(ArchitecturePartBlockEntity.Binding binding:pendingGuests(world,carrier)){
+   if(!world.isChunkLoaded(binding.root()))return VoxelShapes.fullCube();
+   BlockState rootState=world.getBlockState(binding.root());if(ownsHelper(rootState,binding.root(),carrier,binding.owner()))shape=VoxelShapes.union(shape,placementShape(rootState,carrier.subtract(binding.root())));
+  }
+  return shape;
+ }
+ private static List<ArchitecturePartBlockEntity.Binding> pendingGuests(World world,BlockPos carrier){
+  if(!(world instanceof ServerWorld server))return List.of();
+  synchronized(GUEST_RECOVERIES){LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> pending=GUEST_RECOVERIES.get(server);if(pending==null)return List.of();List<ArchitecturePartBlockEntity.Binding> guests=pending.get(carrier.asLong());return guests==null?List.of():List.copyOf(guests);}
  }
  /**
   * Preflight for an in-place logical state transition.  Entity intersection
@@ -403,7 +441,9 @@ final class GeometryRuntime {
   LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> deferred=new LinkedHashMap<>();int processed=0;
   for(var entry:queued.entrySet()){
    BlockPos carrier=BlockPos.fromLong(entry.getKey());List<ArchitecturePartBlockEntity.Binding> snapshot=entry.getValue();
-   if(processed++>=GUEST_RECOVERIES_PER_TICK||!server.isChunkLoaded(carrier)){deferred.put(entry.getKey(),snapshot);continue;}
+   if(!server.isChunkLoaded(carrier)){deferred.put(entry.getKey(),snapshot);continue;}
+   if(processed++>=GUEST_RECOVERIES_PER_TICK){deferred.put(entry.getKey(),snapshot);continue;}
+   List<ArchitecturePartBlockEntity.Binding> valid=validPendingGuests(server,carrier,snapshot);if(valid==null){deferred.put(entry.getKey(),snapshot);continue;}if(valid.isEmpty())continue;snapshot=valid;
    BlockState current=server.getBlockState(carrier);
    if(current.isAir()){
     boolean previous=MUTATING.get();MUTATING.set(true);try{server.setBlockState(carrier,BloodborneBlocks.PART_BLOCK.getDefaultState(),Block.NOTIFY_ALL);}finally{MUTATING.set(previous);}
@@ -415,6 +455,9 @@ final class GeometryRuntime {
    List<ArchitecturePartBlockEntity.Binding> unresolved=breakLoadedGuests(server,carrier,snapshot);if(!unresolved.isEmpty())deferred.put(entry.getKey(),unresolved);
   }
   if(!deferred.isEmpty())synchronized(GUEST_RECOVERIES){LinkedHashMap<Long,List<ArchitecturePartBlockEntity.Binding>> pending=GUEST_RECOVERIES.computeIfAbsent(server,key->new LinkedHashMap<>());for(var entry:deferred.entrySet())if(pending.size()<MAX_PENDING_GUEST_RECOVERIES||pending.containsKey(entry.getKey()))pending.putIfAbsent(entry.getKey(),entry.getValue());}
+ }
+ private static List<ArchitecturePartBlockEntity.Binding> validPendingGuests(ServerWorld server,BlockPos carrier,List<ArchitecturePartBlockEntity.Binding> bindings){
+  List<ArchitecturePartBlockEntity.Binding> valid=new ArrayList<>();for(var binding:bindings){if(!server.isChunkLoaded(binding.root()))return null;if(ownsHelper(server.getBlockState(binding.root()),binding.root(),carrier,binding.owner()))valid.add(binding);}return valid;
  }
 
  private static List<ArchitecturePartBlockEntity.Binding> breakLoadedGuests(ServerWorld server,BlockPos carrier,List<ArchitecturePartBlockEntity.Binding> bindings){

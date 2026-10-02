@@ -22,6 +22,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import java.util.*;
 
 /** Headless lifecycle proof for bounded helper bindings carried by a real root cell. */
@@ -51,9 +54,9 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
 
  @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=120,batchId="shared_physical_root_insertion")
  public void validHelperAcceptsAtomicItemRootInsertionInBothOrdersAndCycles(TestContext context){
-  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();ArchitectureBlock guest=wholeOwner(),inserted=carrier();BlockState guestState=guest.getDefaultState(),insertedState=inserted.getDefaultState();BlockPos guestRoot=context.getAbsolutePos(new BlockPos(10,8,10));BlockPos offset=helperOffsets(guestState).iterator().next(),carrier=guestRoot.add(offset);Identifier guestId=Registries.BLOCK.getId(guest);
-   clear(world,guestRoot,guestState);world.setBlockState(guestRoot,guestState,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,guestRoot,guestState),"guest-first fixture creates its helper");ArchitecturePartBlockEntity helper=GeometryRuntime.part(world,carrier);context.assertTrue(helper!=null&&helper.hasBinding(guestRoot,guestId),"guest-first helper stores exact binding");NbtCompound saved=helper.createNbt();
-   Direction side=supportSide(guestRoot,guestState,carrier);BlockPos support=carrier.offset(side.getOpposite());world.setBlockState(support,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);ItemStack first=new ItemStack(inserted,2);ActionResult placed=useItem(player,first,support,side);
+  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();RootInsertionFixture fixture=nonIntersectingRootInsertionFixture(context,new BlockPos(10,8,10));ArchitectureBlock guest=fixture.guest,inserted=fixture.inserted;BlockState guestState=fixture.guestState;BlockPos guestRoot=fixture.guestRoot,carrier=fixture.carrier,support=fixture.support;Direction side=fixture.side;Identifier guestId=Registries.BLOCK.getId(guest);
+   ArchitecturePartBlockEntity helper=GeometryRuntime.part(world,carrier);context.assertTrue(helper!=null&&helper.hasBinding(guestRoot,guestId),"guest-first fixture stores exact binding on a disjoint placement footprint");NbtCompound saved=helper.createNbt();
+   ItemStack first=new ItemStack(inserted,2);ActionResult placed=useItem(player,first,support,side);
    context.assertTrue(placed.isAccepted()&&first.getCount()==1&&world.getBlockState(carrier).isOf(inserted),"real item inserts a complete root into an existing valid helper");ArchitecturePartBlockEntity shared=GeometryRuntime.part(world,carrier);context.assertTrue(shared!=null&&shared.createNbt().equals(saved),"root insertion preserves exact guest helper NBT");
    world.removeBlockEntity(carrier);ArchitecturePartBlockEntity reloaded=new ArchitecturePartBlockEntity(carrier,world.getBlockState(carrier));reloaded.readNbt(saved);world.addBlockEntity(reloaded);context.assertTrue(reloaded.hasBinding(guestRoot,guestId),"inserted root carrier survives block-entity save/load");
    world.breakBlock(guestRoot,false);context.assertTrue(world.getBlockState(carrier).isOf(inserted)&&GeometryRuntime.part(world,carrier)==null,"independent guest break preserves inserted root and removes its last guest BE");
@@ -76,6 +79,16 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
    helper.unbind(unloaded,Registries.BLOCK.getId(guest));world.setBlockState(carrier,inserted.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(support,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);ItemStack second=new ItemStack(inserted,2);BlockState occupied=world.getBlockState(carrier);ActionResult rootRoot=useItem(player,second,support,side);context.assertTrue(!rootRoot.isAccepted()&&second.getCount()==2&&world.getBlockState(carrier).equals(occupied),"root-root item insertion remains rejected without changing item or root");context.complete();
   }finally{player.discard();}
  }
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=80,batchId="shared_physical_root_insertion")
+ public void intersectingRootInsertionRejectsRealItemWithoutChangingGuest(TestContext context){
+  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();RootInsertionFixture fixture=intersectingRootInsertionFixture(context,new BlockPos(10,8,10));
+  try{
+   ArchitecturePartBlockEntity helper=GeometryRuntime.part(world,fixture.carrier);NbtCompound before=helper.createNbt();BlockState beforeState=world.getBlockState(fixture.carrier);ItemStack stack=new ItemStack(fixture.inserted,2);stack.getOrCreateNbt().putString("TestSentinel","intersecting-root");NbtCompound itemBefore=stack.getNbt().copy();
+   context.assertTrue(GeometryRuntime.rootInsertionGuests(world,fixture.carrier,fixture.insertedState)==null,"loaded guest collision rejects root-insertion preflight");ActionResult result=useItem(player,stack,fixture.support,fixture.side);
+   context.assertTrue(!result.isAccepted()&&stack.getCount()==2&&stack.getNbt().equals(itemBefore),"intersecting root item is rejected without consuming or rewriting its stack");helper=GeometryRuntime.part(world,fixture.carrier);context.assertTrue(world.getBlockState(fixture.carrier).equals(beforeState)&&helper!=null&&helper.createNbt().equals(before)&&world.getBlockState(fixture.guestRoot).equals(fixture.guestState),"intersecting root item leaves the carrier, guest root, and exact ownership NBT unchanged");context.complete();
+  }finally{player.discard();}
+ }
+
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
  public void guestFirstAndCarrierFirstRemovalPreserveCompleteObjects(TestContext context){
   Fixture first=fixture(context,new BlockPos(4,4,4));ServerWorld world=context.getWorld();
@@ -118,6 +131,44 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
  }
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
+ public void ordinaryPlacementRejectsIntersectingSharedFootprintsButKeepsExistingOwner(TestContext context){
+  ServerWorld world=context.getWorld();SharedFixture fixture=placementOverlapFixture(context,new BlockPos(8,5,8));Identifier owner=Registries.BLOCK.getId(fixture.block);ArchitecturePartBlockEntity before=GeometryRuntime.part(world,fixture.sharedCell);
+  context.assertTrue(before!=null&&before.hasBinding(fixture.firstRoot,owner)&&before.hasBinding(fixture.secondRoot,owner),"forced overlapping roots retain both valid helper bindings before removal");NbtCompound saved=before.createNbt();world.removeBlockEntity(fixture.sharedCell);ArchitecturePartBlockEntity reloaded=new ArchitecturePartBlockEntity(fixture.sharedCell,world.getBlockState(fixture.sharedCell));reloaded.readNbt(saved);world.addBlockEntity(reloaded);
+  world.breakBlock(fixture.firstRoot,false);ArchitecturePartBlockEntity remaining=GeometryRuntime.part(world,fixture.sharedCell);
+  context.assertTrue(world.getBlockState(fixture.secondRoot).equals(fixture.block.getDefaultState())&&remaining!=null&&remaining.hasBinding(fixture.secondRoot,owner),"removing one forced overlap preserves the other complete object");
+  context.assertTrue(GeometryRuntime.canOccupy(world,fixture.firstRoot,fixture.block.getDefaultState(),null),"ordinary preflight still admits a valid shared carrier before shape guard");context.assertTrue(!GeometryRuntime.canPlace(world,fixture.firstRoot,fixture.block.getDefaultState()),"ordinary placement rejects the remaining intersecting shared footprint");context.complete();
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
+ public void cityModuleCarrierPreservesImportedWindowGuestAndRejectsOverlap(TestContext context){
+  ServerWorld world=context.getWorld();PlayerEntity player=context.createMockSurvivalPlayer();ArchitectureBlock window=required("o_shuttered_window"),city=cityModuleCarrier();BlockState windowState=state(window,Map.of("facing","north","open","false","visual","base")),cityState=city.getDefaultState();BlockPos root=context.getAbsolutePos(new BlockPos(8,5,8)),carrier=root.up();Identifier windowId=Registries.BLOCK.getId(window);
+  try{
+   clear(world,root,windowState);world.setBlockState(root,windowState,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,windowState),"window fixture rebuilds its upper helper");ArchitecturePartBlockEntity original=GeometryRuntime.part(world,carrier);context.assertTrue(original!=null&&original.hasBinding(root,windowId),"window helper owns the exact root before city import");context.assertTrue(!GeometryRuntime.guestShape(world,carrier,false).isEmpty()&&!GeometryRuntime.guestShape(world,carrier,true).isEmpty(),"window helper exposes collision and outline before city import");NbtCompound saved=original.createNbt();
+   world.removeBlockEntity(carrier);world.setBlockState(carrier,cityState,Block.NOTIFY_ALL);context.assertTrue(city instanceof SharedArchitectureBlock&&GeometryRuntime.part(world,carrier)==null,"ordinary city module is a lazy guest carrier without an initial block entity");ArchitecturePartBlockEntity imported=new ArchitecturePartBlockEntity(carrier,cityState);imported.readNbt(saved);world.addBlockEntity(imported);context.assertTrue(imported.hasBinding(root,windowId),"city module accepts imported window binding");context.assertTrue(!city.getCollisionShape(cityState,world,carrier,net.minecraft.block.ShapeContext.absent()).isEmpty()&&!city.getOutlineShape(cityState,world,carrier,net.minecraft.block.ShapeContext.absent()).isEmpty(),"city carrier includes imported guest collision and outline");NbtCompound roundTrip=imported.createNbt();world.removeBlockEntity(carrier);ArchitecturePartBlockEntity loaded=new ArchitecturePartBlockEntity(carrier,cityState);loaded.readNbt(roundTrip);world.addBlockEntity(loaded);context.assertTrue(loaded.createNbt().equals(roundTrip)&&!city.getCollisionShape(cityState,world,carrier,net.minecraft.block.ShapeContext.absent()).isEmpty()&&!city.getOutlineShape(cityState,world,carrier,net.minecraft.block.ShapeContext.absent()).isEmpty(),"city guest NBT round-trip retains collision and outline");world.breakBlock(carrier,false);
+   context.runAtTick(2,()->{ArchitecturePartBlockEntity restored=GeometryRuntime.part(world,carrier);BlockState restoredState=world.getBlockState(carrier);context.assertTrue(world.getBlockState(root).equals(windowState)&&restoredState.isOf(BloodborneBlocks.PART_BLOCK)&&restored!=null&&restored.hasBinding(root,windowId)&&!restoredState.getCollisionShape(world,carrier,net.minecraft.block.ShapeContext.absent()).isEmpty()&&!restoredState.getOutlineShape(world,carrier,net.minecraft.block.ShapeContext.absent()).isEmpty(),"breaking city carrier preserves the window root, helper, collision, and outline");Direction side=supportSide(root,windowState,carrier);BlockPos support=carrier.offset(side.getOpposite());world.setBlockState(support,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);ItemStack rejected=new ItemStack(city);ActionResult result=useItem(player,rejected,support,side);ArchitecturePartBlockEntity after=GeometryRuntime.part(world,carrier);context.assertTrue(!result.isAccepted()&&rejected.getCount()==1&&world.getBlockState(root).equals(windowState)&&world.getBlockState(carrier).isOf(BloodborneBlocks.PART_BLOCK)&&after!=null&&after.hasBinding(root,windowId),"ordinary city replacement rejects the overlapping window guest without changing ownership");player.discard();context.complete();});
+  }catch(Throwable error){player.discard();throw error;}
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=40,batchId="shared_physical")
+ public void unloadedRecoveryCarriersDoNotStarveLoadedGuestRecovery(TestContext context){
+  ServerWorld world=context.getWorld();ArchitectureBlock window=required("o_shuttered_window");BlockState windowState=state(window,Map.of("facing","north","open","false","visual","base"));BlockPos root=context.getAbsolutePos(new BlockPos(8,5,8)),carrier=root.up();Identifier windowId=Registries.BLOCK.getId(window);
+  clear(world,root,windowState);world.setBlockState(root,windowState,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,windowState),"loaded recovery fixture creates its window helper");ArchitecturePartBlockEntity helper=GeometryRuntime.part(world,carrier);context.assertTrue(helper!=null&&helper.hasBinding(root,windowId),"loaded recovery fixture has an exact guest binding");List<ArchitecturePartBlockEntity.Binding> binding=helper.bindings();world.removeBlockEntity(carrier);world.removeBlock(carrier,false);
+  for(int index=0;index<=GeometryRuntime.GUEST_RECOVERIES_PER_TICK;index++){BlockPos unloaded=new BlockPos(1_000_000+index*16,carrier.getY(),1_000_000);context.assertTrue(!world.isChunkLoaded(unloaded),"recovery-budget fixture carrier remains unloaded "+index);GeometryRuntime.preserveGuestsAfterCarrierRemoval(world,unloaded,binding);}
+  GeometryRuntime.preserveGuestsAfterCarrierRemoval(world,carrier,binding);
+  context.runAtTick(2,()->{ArchitecturePartBlockEntity restored=GeometryRuntime.part(world,carrier);context.assertTrue(world.getBlockState(carrier).isOf(BloodborneBlocks.PART_BLOCK)&&restored!=null&&restored.hasBinding(root,windowId),"more than one loaded-recovery budget of unloaded carriers does not starve the later loaded guest");context.complete();});
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=40,batchId="shared_physical")
+ public void placementFootprintsSupportFallbackEmptyAndCenterOverrides(TestContext context){
+  PlacementCell fallback=fallbackPlacementCell(),rotated=rotatedPlacementCell();
+  context.assertTrue(fallback.cell.placementShape==fallback.cell.collisionShape,"omitted placement footprint falls back to the physical collision shape");context.assertTrue(!rotated.state.equals(rotated.block.getDefaultState())&&rotated.cell.placementShape==rotated.cell.collisionShape,"rotated state also preserves omitted placement-footprint fallback");
+  PlacementOverride saved=PlacementOverride.capture(rotated.cell);try{
+   rotated.cell.placement=List.of();rotated.cell.placementShape=VoxelShapes.empty();context.assertTrue(!rotated.cell.collisionShape.isEmpty()&&GeometryRuntime.placementShape(rotated.state,rotated.offset).isEmpty(),"explicit empty placement footprint leaves entity collision while permitting shape-less placement sharing");
+   VoxelShape center=VoxelShapes.cuboid(.25,.25,.25,.75,.75,.75);rotated.cell.placement=List.of(new double[]{.25,.25,.25,.75,.75,.75});rotated.cell.placementShape=center;context.assertTrue(VoxelShapes.matchesAnywhere(GeometryRuntime.placementShape(rotated.state,rotated.offset),center,BooleanBiFunction.AND),"explicit center-only placement footprint stays cell-local on a rotated state");
+  }finally{saved.restore(rotated.cell);}context.complete();
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
  public void sameBlockRotationRebuildsWholeOwnerHelpers(TestContext context){
   ServerWorld world=context.getWorld();ArchitectureBlock owner=wholeOwner();BlockState before=owner.getDefaultState();BlockPos root=context.getAbsolutePos(new BlockPos(7,4,7));clear(world,root,before);world.setBlockState(root,before,Block.NOTIFY_ALL);
   context.assertTrue(GeometryRuntime.rebuild(world,root,before),"whole owner initial helper rebuild succeeds");Set<BlockPos> old=helperOffsets(before);BlockState after=owner.rotate(before,BlockRotation.CLOCKWISE_90);context.assertTrue(!after.equals(before),"whole owner rotation changes state");
@@ -127,13 +178,27 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
  }
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
+ public void storageRootOwnersUseEmptyRootAndCleanEveryOwnedHelper(TestContext context){
+  ServerWorld world=context.getWorld();BlockPos root=context.getAbsolutePos(new BlockPos(8,4,8));
+  for(String id:List.of("owner_0afae65ab577cf2ac96f","owner_110a574aebe8f2b33067","owner_5071a02a3096d9d9820f","owner_c130a81530121df11bd7")){
+   ArchitectureBlock owner=requiredCity(id);BlockState state=owner.getDefaultState();var geometry=GeometryRuntime.state(state);context.assertTrue(geometry.parsedCells.containsKey(BlockPos.ORIGIN)&&GeometryRuntime.cellShape(state,BlockPos.ORIGIN,false).isEmpty()&&GeometryRuntime.cellShape(state,BlockPos.ORIGIN,true).isEmpty(),id+" stores its root in an intentionally empty cell");
+   BlockPos physical=geometry.parsedCells.entrySet().stream().filter(entry->!entry.getKey().equals(BlockPos.ORIGIN)&&(!entry.getValue().collisionShape.isEmpty()||!entry.getValue().outlineShape.isEmpty())).map(Map.Entry::getKey).findFirst().orElseThrow(()->new AssertionError(id+" has no physical neighbor cell"));
+   clear(world,root,state);world.setBlockState(root,state,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,state),id+" rebuilds from its empty storage root");Identifier ownerId=Registries.BLOCK.getId(owner);
+   for(BlockPos offset:helperOffsets(state)){ArchitecturePartBlockEntity helper=GeometryRuntime.part(world,root.add(offset));context.assertTrue(helper!=null&&helper.hasBinding(root,ownerId),id+" helper owns the storage root at "+offset);}
+   context.assertTrue(!GeometryRuntime.guestShape(world,root.add(physical),false).isEmpty()||!GeometryRuntime.guestShape(world,root.add(physical),true).isEmpty(),id+" exposes physics through a non-root cell");
+   world.breakBlock(root,false);context.assertTrue(world.getBlockState(root).isAir(),id+" root breaks normally");for(BlockPos offset:helperOffsets(state))context.assertTrue(world.getBlockState(root.add(offset)).isAir()&&GeometryRuntime.part(world,root.add(offset))==null,id+" break leaves no orphan helper at "+offset);
+  }
+  context.complete();
+ }
+
+ @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="shared_physical")
  public void foreignReplacementNeverGetsOverwrittenAndGuestIsRemovedWhole(TestContext context){
-  Fixture fixture=fixture(context,new BlockPos(4,4,4)),ordinaryRemoval=fixture(context,new BlockPos(12,4,12)),nativeReplacement=fixture(context,new BlockPos(4,4,12));ServerWorld world=context.getWorld();ArchitectureBlock nativeBlock=BloodborneBlocks.CITY_BLOCKS.values().stream().filter(block->!(block instanceof SharedArchitectureBlock)).findFirst().orElseThrow();BlockState nativeState=nativeBlock.getDefaultState();world.breakBlock(ordinaryRemoval.carrier,false);world.setBlockState(fixture.carrier,Blocks.DIAMOND_BLOCK.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(nativeReplacement.carrier,nativeState,Block.NOTIFY_ALL);
+  Fixture fixture=fixture(context,new BlockPos(4,4,4)),ordinaryRemoval=fixture(context,new BlockPos(12,4,12)),nativeReplacement=fixture(context,new BlockPos(4,4,12));ServerWorld world=context.getWorld();ArchitectureBlock nativeBlock=cityModuleCarrier();BlockState nativeState=nativeBlock.getDefaultState();world.breakBlock(ordinaryRemoval.carrier,false);world.setBlockState(fixture.carrier,Blocks.DIAMOND_BLOCK.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(nativeReplacement.carrier,nativeState,Block.NOTIFY_ALL);
   context.runAtTick(4,()->{
    context.assertTrue(world.getBlockState(ordinaryRemoval.carrier).isOf(BloodborneBlocks.PART_BLOCK)&&GeometryRuntime.part(world,ordinaryRemoval.carrier)!=null,"one recovery does not skip the next queued carrier");
    context.assertTrue(world.getBlockState(fixture.carrier).isOf(Blocks.DIAMOND_BLOCK),"foreign replacement is never overwritten by helper restoration");
    context.assertTrue(world.getBlockState(fixture.guestRoot).isAir(),"foreign replacement removes the complete loaded guest object");
-   context.assertTrue(world.getBlockState(nativeReplacement.carrier).equals(nativeState)&&world.getBlockState(nativeReplacement.guestRoot).isAir(),"non-carrier architecture replacement stays intact and removes its loaded guest whole");
+    ArchitecturePartBlockEntity imported=GeometryRuntime.part(world,nativeReplacement.carrier);context.assertTrue(world.getBlockState(nativeReplacement.carrier).equals(nativeState)&&world.getBlockState(nativeReplacement.guestRoot).equals(nativeReplacement.guestState)&&imported!=null&&imported.hasBinding(nativeReplacement.guestRoot,nativeReplacement.guestOwner),"city module replacement stays intact and preserves its loaded guest");
    for(BlockPos offset:GeometryRuntime.state(fixture.guestState).parsedCells.keySet())if(!offset.equals(BlockPos.ORIGIN))context.assertTrue(!world.getBlockState(fixture.guestRoot.add(offset)).isOf(BloodborneBlocks.PART_BLOCK),"foreign replacement leaves no guest fragment "+offset);
    context.complete();
   });
@@ -175,7 +240,56 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
   }
   throw new IllegalStateException("No helper-helper fixture found");
  }
+ private static SharedFixture placementOverlapFixture(TestContext context,BlockPos relativeRoot){
+  ServerWorld world=context.getWorld();
+  for(ArchitectureBlock block:BloodborneBlocks.CITY_BLOCKS.values())if(block.definition.whole_owner){
+   BlockState state=block.getDefaultState();Set<BlockPos> cells=GeometryRuntime.state(state).parsedCells.keySet();List<BlockPos> helpers=cells.stream().filter(p->!p.equals(BlockPos.ORIGIN)).toList();
+   for(BlockPos first:helpers)for(BlockPos second:helpers){
+    BlockPos delta=first.subtract(second);if(delta.equals(BlockPos.ORIGIN)||cells.contains(delta)||cells.contains(delta.multiply(-1))||!VoxelShapes.matchesAnywhere(GeometryRuntime.placementShape(state,first),GeometryRuntime.placementShape(state,second),BooleanBiFunction.AND))continue;
+    BlockPos firstRoot=context.getAbsolutePos(relativeRoot),secondRoot=firstRoot.add(delta);Set<BlockPos> occupied=new HashSet<>();for(BlockPos cell:cells){occupied.add(firstRoot.add(cell));occupied.add(secondRoot.add(cell));}for(BlockPos cell:occupied)world.removeBlock(cell,false);
+    world.setBlockState(firstRoot,state,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,firstRoot,state),"first forced-overlap root rebuild succeeds");world.setBlockState(secondRoot,state,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,secondRoot,state),"second forced-overlap root rebuild succeeds");return new SharedFixture(block,firstRoot,secondRoot,firstRoot.add(first));
+   }
+  }
+  throw new IllegalStateException("No intersecting helper-sharing fixture found");
+ }
+ private static RootInsertionFixture intersectingRootInsertionFixture(TestContext context,BlockPos relativeRoot){
+  ServerWorld world=context.getWorld();
+  for(ArchitectureBlock guest:allArchitectureBlocks())if(guest.definition.whole_owner)for(BlockState guestState:guest.getStateManager().getStates()){
+   for(BlockPos offset:helperOffsets(guestState))if(!GeometryRuntime.placementShape(guestState,offset).isEmpty())for(ArchitectureBlock inserted:allArchitectureBlocks())if(inserted instanceof SharedArchitectureBlock&&GeometryRuntime.state(inserted.getDefaultState()).parsedCells.keySet().equals(Set.of(BlockPos.ORIGIN))&&!GeometryRuntime.hasExplicitAnchor(inserted.getDefaultState())&&GeometryRuntime.anchor(inserted.getDefaultState(),Direction.UP).equals(BlockPos.ORIGIN)){
+    boolean everyPlacementStateIntersects=inserted.getStateManager().getStates().stream().allMatch(state->!GeometryRuntime.placementShape(state,BlockPos.ORIGIN).isEmpty()&&VoxelShapes.matchesAnywhere(GeometryRuntime.placementShape(state,BlockPos.ORIGIN),GeometryRuntime.placementShape(guestState,offset),BooleanBiFunction.AND));if(!everyPlacementStateIntersects)continue;
+    BlockPos guestRoot=context.getAbsolutePos(relativeRoot),carrier=guestRoot.add(offset);clear(world,guestRoot,guestState);world.setBlockState(guestRoot,guestState,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,guestRoot,guestState),"intersecting item fixture rebuilds guest");ArchitecturePartBlockEntity part=GeometryRuntime.part(world,carrier);if(part==null)continue;
+    Direction side=supportSide(guestRoot,guestState,carrier);BlockPos support=carrier.offset(side.getOpposite());world.setBlockState(support,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);return new RootInsertionFixture(guest,guestState,inserted,inserted.getDefaultState(),guestRoot,carrier,support,side);
+   }
+  }
+  throw new IllegalStateException("No loaded helper guest intersects every state of a one-cell shared root");
+ }
+ private static RootInsertionFixture nonIntersectingRootInsertionFixture(TestContext context,BlockPos relativeRoot){
+  ServerWorld world=context.getWorld();
+  for(ArchitectureBlock guest:allArchitectureBlocks())if(guest.definition.whole_owner)for(BlockState guestState:guest.getStateManager().getStates()){
+   for(BlockPos offset:helperOffsets(guestState))for(ArchitectureBlock inserted:allArchitectureBlocks())if(inserted instanceof SharedArchitectureBlock&&GeometryRuntime.state(inserted.getDefaultState()).parsedCells.keySet().equals(Set.of(BlockPos.ORIGIN))&&!GeometryRuntime.hasExplicitAnchor(inserted.getDefaultState())&&GeometryRuntime.anchor(inserted.getDefaultState(),Direction.UP).equals(BlockPos.ORIGIN)){
+    boolean everyPlacementStateIsDisjoint=inserted.getStateManager().getStates().stream().allMatch(state->!VoxelShapes.matchesAnywhere(GeometryRuntime.placementShape(state,BlockPos.ORIGIN),GeometryRuntime.placementShape(guestState,offset),BooleanBiFunction.AND));if(!everyPlacementStateIsDisjoint)continue;
+    BlockPos guestRoot=context.getAbsolutePos(relativeRoot),carrier=guestRoot.add(offset);clear(world,guestRoot,guestState);world.setBlockState(guestRoot,guestState,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,guestRoot,guestState),"disjoint item fixture rebuilds guest");ArchitecturePartBlockEntity part=GeometryRuntime.part(world,carrier);if(part==null)continue;
+    Direction side=supportSide(guestRoot,guestState,carrier);BlockPos support=carrier.offset(side.getOpposite());world.setBlockState(support,Blocks.WHITE_CONCRETE.getDefaultState(),Block.NOTIFY_ALL);return new RootInsertionFixture(guest,guestState,inserted,inserted.getDefaultState(),guestRoot,carrier,support,side);
+   }
+  }
+  throw new IllegalStateException("No loaded helper guest is disjoint from every state of a one-cell shared root");
+ }
+ private static PlacementCell fallbackPlacementCell(){
+  for(ArchitectureBlock block:allArchitectureBlocks())for(BlockState state:block.getStateManager().getStates()){
+   GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);for(var entry:geometry.parsedCells.entrySet())if(!entry.getValue().collisionShape.isEmpty()&&entry.getValue().placementShape==entry.getValue().collisionShape)return new PlacementCell(block,state,entry.getKey(),entry.getValue());
+  }
+  throw new IllegalStateException("No default placement-footprint fallback cell");
+ }
+ private static PlacementCell rotatedPlacementCell(){
+  for(ArchitectureBlock block:allArchitectureBlocks()){
+   BlockState state=block.rotate(block.getDefaultState(),BlockRotation.CLOCKWISE_90);if(state.equals(block.getDefaultState()))continue;GeometryRuntime.GeometryState geometry=GeometryRuntime.state(state);
+   for(var entry:geometry.parsedCells.entrySet())if(!entry.getValue().collisionShape.isEmpty()&&entry.getValue().placementShape==entry.getValue().collisionShape)return new PlacementCell(block,state,entry.getKey(),entry.getValue());
+  }
+  throw new IllegalStateException("No rotated default placement-footprint fallback cell");
+ }
+ private static Set<ArchitectureBlock> allArchitectureBlocks(){Set<ArchitectureBlock> blocks=new LinkedHashSet<>();blocks.addAll(BloodborneBlocks.BLOCKS.values());blocks.addAll(BloodborneBlocks.CITY_BLOCKS.values());return blocks;}
  private static ArchitectureBlock wholeOwner(){return BloodborneBlocks.CITY_BLOCKS.values().stream().filter(block->block.definition.whole_owner&&!helperOffsets(block.getDefaultState()).isEmpty()&&helperOffsets(block.getDefaultState()).stream().allMatch(p->Math.abs(p.getX())<=2&&Math.abs(p.getY())<=2&&Math.abs(p.getZ())<=2)).findFirst().orElseThrow();}
+ private static ArchitectureBlock cityModuleCarrier(){return BloodborneBlocks.CITY_BLOCKS.values().stream().filter(block->!block.definition.whole_owner&&GeometryRuntime.state(block.getDefaultState()).parsedCells.keySet().equals(Set.of(BlockPos.ORIGIN))&&block.getStateManager().getStates().stream().allMatch(state->!GeometryRuntime.placementShape(state,BlockPos.ORIGIN).isEmpty())).findFirst().orElseThrow();}
  private static ArchitectureBlock carrier(){return BloodborneBlocks.BLOCKS.values().stream().filter(block->block instanceof SharedArchitectureBlock&&GeometryRuntime.state(block.getDefaultState()).parsedCells.keySet().equals(Set.of(BlockPos.ORIGIN))).findFirst().orElseThrow();}
  private static ArchitectureBlock required(String id){ArchitectureBlock block=BloodborneBlocks.BLOCKS.get(id);if(block==null)throw new AssertionError("missing shared fixture "+id);return block;}
  private static ArchitectureBlock requiredCity(String id){ArchitectureBlock block=BloodborneBlocks.CITY_BLOCKS.get(id);if(block==null)throw new AssertionError("missing city shared fixture "+id);return block;}
@@ -187,4 +301,10 @@ public final class SharedPhysicalGameTests implements FabricGameTest {
  private static void clear(ServerWorld world,BlockPos root,BlockState state){for(BlockPos offset:GeometryRuntime.state(state).parsedCells.keySet())world.removeBlock(root.add(offset),false);}
  private record Fixture(BlockPos guestRoot,BlockState guestState,Identifier guestOwner,BlockPos carrier,BlockState carrierState) {}
  private record SharedFixture(ArchitectureBlock block,BlockPos firstRoot,BlockPos secondRoot,BlockPos sharedCell) {}
+ private record RootInsertionFixture(ArchitectureBlock guest,BlockState guestState,ArchitectureBlock inserted,BlockState insertedState,BlockPos guestRoot,BlockPos carrier,BlockPos support,Direction side) {}
+ private record PlacementCell(ArchitectureBlock block,BlockState state,BlockPos offset,GeometryRuntime.GeometryCell cell) {}
+ private record PlacementOverride(List<double[]> placement,VoxelShape placementShape) {
+  static PlacementOverride capture(GeometryRuntime.GeometryCell cell){return new PlacementOverride(cell.placement,cell.placementShape);}
+  void restore(GeometryRuntime.GeometryCell cell){cell.placement=placement;cell.placementShape=placementShape;}
+ }
 }

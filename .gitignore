@@ -2,3 +2,9 @@
 **/.gradle/
 **/build/
 **/logs/
+# Local task state and generated handoffs are published through releases/ only.
+.codex/
+output/
+tools/autumn-client-dependencies.json
+Bloodborne-Blocks/tools/autumn-client-dependencies.json
+Bloodborne-Blocks/local/autumn-dependencies/

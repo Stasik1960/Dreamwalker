@@ -58,13 +58,15 @@ final class LogicalTargetDebug {
  }
 
  private static String rootOrOrdinary(BlockPos root,BlockState state,String target,BlockPos helperOffset){
-  if(!(state.getBlock() instanceof ArchitectureBlock block)||!block.definition.logical)return ordinary(root,state,null);
+  if(!(state.getBlock() instanceof ArchitectureBlock block))return ordinary(root,state,null);
+  String numeric=numeric(state);
+  if(!block.definition.logical)return "Registry ID: "+Registries.BLOCK.getId(state.getBlock())+"\nNumeric ID: "+numeric+"\nPosition: "+coordinates(root)+"\nTarget: "+target;
   BloodborneBlocks.ProductionEntry production=BloodborneBlocks.productionEntry(block.definition.id);
   if(production==null)return ordinary(root,state,"production palette metadata unavailable");
   String stateKey=BloodborneBlocks.key(state);
   String facing=state.contains(Properties.HORIZONTAL_FACING)?state.get(Properties.HORIZONTAL_FACING).asString():"none";
   StringBuilder report=new StringBuilder("Source Review: ").append(String.join(", ",production.source_reviews()))
-   .append("\nLogical/Object ID: ").append(BloodborneBlocks.id(block.definition.id)).append("\nSemantic part: ").append(production.semantic_label())
+   .append("\nLogical/Object ID: ").append(BloodborneBlocks.id(block.definition.id)).append("\nNumeric ID: ").append(numeric).append("\nSemantic part: ").append(production.semantic_label())
    .append("\nMaster: ").append(coordinates(root))
    .append("\nTarget: ").append(target);
   if(helperOffset!=null)report.append("\nHelper offset: ").append(coordinates(helperOffset));
@@ -73,8 +75,9 @@ final class LogicalTargetDebug {
  }
 
  private static String ordinary(BlockPos pos,BlockState state,String detail){
-  String result="Registry ID: "+Registries.BLOCK.getId(state.getBlock())+"\nPosition: "+coordinates(pos)+"\nTarget: NON-LOGICAL";
+  String result="Registry ID: "+Registries.BLOCK.getId(state.getBlock())+"\nNumeric ID: "+numeric(state)+"\nPosition: "+coordinates(pos)+"\nTarget: NON-LOGICAL";
   return detail==null?result:result+"\n"+detail;
  }
+ private static String numeric(BlockState state){String id=NumericDebugIds.forBlock(state.getBlock());return id==null?"unavailable":id;}
  private static String coordinates(BlockPos pos){return pos.getX()+" "+pos.getY()+" "+pos.getZ();}
 }

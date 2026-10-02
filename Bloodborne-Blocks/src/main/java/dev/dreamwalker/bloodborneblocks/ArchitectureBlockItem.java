@@ -45,7 +45,7 @@ public final class ArchitectureBlockItem extends BlockItem {
  private ActionResult placePrepared(ItemPlacementContext original){
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
   BlockState tentative=block.getPlacementState(original);if(tentative==null)return ActionResult.FAIL;
-  normalizePlacementTag(original.getStack(),block,tentative);tentative=applyStateTag(tentative,original.getStack());
+  normalizePlacementTag(original.getStack(),block,tentative);tentative=DocumentOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(tentative,original.getStack()));
   BlockPos anchor=GeometryRuntime.anchor(tentative,original.getSide());
   BlockPos root=GeometryRuntime.hasExplicitAnchor(tentative)
    ?LogicalTransform.masterOrigin(original.getBlockPos(),new int[]{anchor.getX(),anchor.getY(),anchor.getZ()},GeometryRuntime.rotation(tentative))
@@ -59,7 +59,7 @@ public final class ArchitectureBlockItem extends BlockItem {
   };
   BlockState base=block.getPlacementState(shifted);if(base==null)return ActionResult.FAIL;
   normalizePlacementTag(original.getStack(),block,base);
-  BlockState finalState=applyStateTag(base,original.getStack());
+  BlockState finalState=DocumentOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(base,original.getStack()));
   java.util.List<ArchitecturePartBlockEntity.Binding> guests=GeometryRuntime.rootInsertionGuests(original.getWorld(),root,finalState);
   if(guests==null&&!shifted.canPlace())return ActionResult.FAIL;
   if(!AuthoredSurfacePlacement.validate(block,original,root,finalState))return ActionResult.FAIL;
@@ -70,7 +70,7 @@ public final class ArchitectureBlockItem extends BlockItem {
  @Override protected BlockState getPlacementState(ItemPlacementContext context){
   BlockState base=getBlock().getPlacementState(context);if(base==null)return null;
   normalizePlacementTag(context.getStack(),(ArchitectureBlock)getBlock(),base);
-  BlockState state=applyStateTag(base,context.getStack());return GeometryRuntime.rootInsertionGuests(context.getWorld(),context.getBlockPos(),state)!=null||canPlace(context,state)?state:null;
+  BlockState state=DocumentOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(base,context.getStack()));return GeometryRuntime.rootInsertionGuests(context.getWorld(),context.getBlockPos(),state)!=null||canPlace(context,state)?state:null;
  }
 
  static void normalizePlacementTag(ItemStack stack,ArchitectureBlock block,BlockState placement){

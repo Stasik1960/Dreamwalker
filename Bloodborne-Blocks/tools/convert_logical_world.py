@@ -1194,8 +1194,8 @@ def convert(source: Path, output: Path, *, resources: Path = DEFAULT_RESOURCES,
         raise ValueError("legacy migration.json has no rules while Contract V2 source patterns exist; use --source-mode original-v2")
     if city_compat and source_mode != "modded":
         raise ValueError("city compatibility requires the MODDED source adapter")
-    if recover_city and (not city_compat or source_mode != "modded"):
-        raise ValueError("city recovery requires MODDED city compatibility")
+    if recover_city and (not (city_compat or atomic_owner_groups) or source_mode != "modded"):
+        raise ValueError("city recovery requires MODDED city compatibility or atomic owner groups")
     mapping_diagnostics = None
     if source_mode == "modded":
         from modded_world_adapter import compile_modded_rules

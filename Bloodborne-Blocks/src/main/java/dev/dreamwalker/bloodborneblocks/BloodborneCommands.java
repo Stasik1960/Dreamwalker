@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodborneblocks;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -17,7 +18,7 @@ final class BloodborneCommands {
   CommandRegistrationCallback.EVENT.register((dispatcher,registryAccess,environment)->dispatcher.register(literal("bloodborne").requires(source->source.hasPermissionLevel(2)).then(literal("repair").then(argument("radius",IntegerArgumentType.integer(1,32))
    .then(literal("preview").executes(context->run(context.getSource(),IntegerArgumentType.getInteger(context,"radius"),false)))
    .then(literal("apply").executes(context->run(context.getSource(),IntegerArgumentType.getInteger(context,"radius"),true)))))
-   .then(literal("debug").executes(context->debug(context.getSource())).then(literal("target").executes(context->debug(context.getSource()))))
+   .then(literal("debug").executes(context->debug(context.getSource())).then(literal("target").executes(context->debug(context.getSource()))).then(literal("id").then(argument("numericId",StringArgumentType.word()).executes(context->debugId(context.getSource(),StringArgumentType.getString(context,"numericId"))))))
    .then(LogicalVisualCommands.command())));
   LogicalVisualCommands.registerLifecycle();
  }
@@ -31,5 +32,11 @@ final class BloodborneCommands {
   String report=LogicalTargetDebug.inspect(player);
   source.sendFeedback(()->Text.literal(report).styled(style->style.withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD,report))),false);
   return report.startsWith("Bloodborne debug:")?0:1;
+ }
+ private static int debugId(ServerCommandSource source,String numericId){
+  if(!numericId.matches("[0-9]{5}")){source.sendError(Text.literal("Bloodborne debug: numeric ID must be five digits."));return 0;}
+  String registryId=NumericDebugIds.lookup(numericId);
+  if(registryId==null){source.sendError(Text.literal("Bloodborne debug: unknown numeric ID "+numericId+"."));return 0;}
+  source.sendFeedback(()->Text.literal("Numeric ID: "+numericId+"\nRegistry ID: "+registryId),false);return 1;
  }
 }

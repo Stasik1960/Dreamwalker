@@ -34,6 +34,8 @@ public final class BloodborneBlocks implements ModInitializer {
  public static final class Data {public List<Definition> blocks;public List<List<double[]>> shapes;public Map<String,String> emissive_textures;public Map<String,String> compat_layers;}
  public static final class Definition {
   public String id,source,layer,kind,offset,behavior,connection_family,attachment_item;
+  /** Stable manual-document entry for the final whole-owner import set; zero is historical data. */
+  public int document_item;
   public String semantic;
   /** Three canonical north-facing seat contact points, never inferred per tick. */
   public double[][] seat_anchors;
@@ -74,6 +76,8 @@ public final class BloodborneBlocks implements ModInitializer {
    if(definition.properties==null||definition.states==null)throw new IllegalStateException("Incomplete city definition "+definition.id);
    if(ReviewedWallConnections.ID.equals(definition.id)){
     ReviewedWallConnections.validate(definition,city);
+   }else if(DocumentOwnerDefinitions.manual(definition)){
+    DocumentOwnerDefinitions.validate(definition);
    }else if(definition.whole_owner){
     if(!definition.id.startsWith("owner_")||!definition.modular||!"generic".equals(definition.kind)||!definition.extra_facing||definition.models==null||!definition.properties.keySet().equals(Set.of("facing"))||!new HashSet<>(definition.properties.get("facing")).equals(Set.of("north","east","south","west"))||definition.states.size()!=4||!definition.states.keySet().equals(definition.models.keySet())||definition.models.values().stream().anyMatch(name->!name.startsWith(definition.id+"_")))throw new IllegalStateException("Invalid whole owner definition "+definition.id);
    }else if(definition.models!=null){
@@ -82,6 +86,7 @@ public final class BloodborneBlocks implements ModInitializer {
     if(!definition.states.keySet().equals(definition.models.keySet()))throw new IllegalStateException("City module state/model mismatch "+definition.id);
    }else if(definition.modular)throw new IllegalStateException("Native city block cannot be modular "+definition.id);
   }
+  DocumentOwnerDefinitions.validateMembership(city.blocks);
   return city;
  }
  private static Data readDefinitions(Gson gson,String path){
@@ -114,11 +119,11 @@ public final class BloodborneBlocks implements ModInitializer {
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
    if(p==null&&(d.logical||d.city_compat)&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
-   if(p==null&&d.logical&&name.equals("root_anchor")&&Set.of("o_bench","o_high_balustrade").contains(d.id)&&d.properties.get(name).equals(List.of("canonical","upper")))p=new LogicalVariantProperty(name,d.properties.get(name));
+   if(p==null&&((d.logical&&Set.of("o_bench","o_high_balustrade").contains(d.id)&&d.properties.get(name).equals(List.of("canonical","upper")))||DocumentOwnerDefinitions.manual(d))&&name.equals("root_anchor"))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&ReviewedWallConnections.ID.equals(d.id)&&name.equals("connection"))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&d.logical&&name.equals("lit"))p=net.minecraft.state.property.Properties.LIT;
    if(p==null&&name.equals("facing"))p=net.minecraft.state.property.Properties.HORIZONTAL_FACING;
-   if(p==null&&d.logical&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
+   if(p==null&&(d.logical||DocumentOwnerDefinitions.manual(d))&&name.equals("face"))p=net.minecraft.state.property.Properties.WALL_MOUNT_LOCATION;
    if(p==null&&name.equals("open"))p=net.minecraft.state.property.Properties.OPEN;
    if(p==null&&name.equals("waterlogged"))p=net.minecraft.state.property.Properties.WATERLOGGED;
    if(p==null&&name.equals("assembled"))p=ASSEMBLED;
@@ -164,6 +169,7 @@ public final class BloodborneBlocks implements ModInitializer {
    prepareDefinition(d);
    ArchitectureBlock block=ArchitectureBlock.create(d);Registry.register(Registries.BLOCK,id(d.id),block);Registry.register(Registries.ITEM,id(d.id),new ArchitectureBlockItem(block,new Item.Settings()));CITY_BLOCKS.put(d.id,block);
   }
+  List<String> debugIds=new ArrayList<>();debugIds.add("architecture_part");debugIds.addAll(BLOCKS.keySet());debugIds.addAll(CITY_BLOCKS.keySet());NumericDebugIds.loadAndValidate(debugIds);
   List<Block> partCarriers=new ArrayList<>();partCarriers.add(PART_BLOCK);allBlocks().stream().filter(block->block instanceof BlockEntityProvider).forEach(partCarriers::add);
   PART_BLOCK_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("architecture_part"),BlockEntityType.Builder.create(ArchitecturePartBlockEntity::new,partCarriers.toArray(Block[]::new)).build(null));
   ArchitecturePartBlockEntity.registerValidation();

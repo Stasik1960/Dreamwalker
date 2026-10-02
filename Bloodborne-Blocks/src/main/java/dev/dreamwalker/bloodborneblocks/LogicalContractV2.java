@@ -13,7 +13,7 @@ final class LogicalContractV2 {
  static final class Data {int schemaVersion;String transform_contract;List<Family> families;}
  static final class Family {String id,placement_policy,mirror_policy,collision_policy,selection_policy,collision_justification,review_id,authority;Anchor canonical_anchor;List<Integer> rotations;Map<String,State> states;List<Pattern> migration_source_pattern,review_source_patterns;}
  static final class Anchor {int[] cell;double[] pivot;}
- static final class State {int rotation;int[] technical_root_offset;Render render_mesh;Footprint selection_footprint,collision_footprint,interaction_footprint,physical_footprint;List<Pattern> migration_source_pattern;}
+ static final class State {int rotation;int[] technical_root_offset;Render render_mesh;Footprint selection_footprint,collision_footprint,interaction_footprint,physical_footprint,placement_footprint;List<Pattern> migration_source_pattern;}
  static final class PhysicalData {int schemaVersion;Map<String,Map<String,Footprint>> families;}
  static final class Render {String id;double[] bounds,offset;}
  static final class Footprint {List<double[]> boxes,cells;}
@@ -46,6 +46,10 @@ final class LogicalContractV2 {
     state.physical_footprint=masks.get(key);checkCells(state.physical_footprint);checkBoxes(state.physical_footprint,"physical collision",budget(family)*state.physical_footprint.cells.size());
     for(double[] cell:state.physical_footprint.cells)if(clip(state.physical_footprint.boxes,(int)cell[0],(int)cell[1],(int)cell[2]).size()>budget(family))throw fail("PHYSICAL_CELL_PRIMITIVE_BUDGET "+family.id+"["+key+"]");
     for(double[] box:state.physical_footprint.boxes)if(!covered(box,state.physical_footprint.cells))throw fail("COLLISION_OUTSIDE_PHYSICAL_FOOTPRINT "+family.id+"["+key+"]");
+    // Optional authored placement footprint controls only ordinary item
+    // placement. Omission deliberately preserves the physical collision
+    // footprint; an explicit empty box list permits shape-less sharing.
+    if(state.placement_footprint!=null){checkCells(state.placement_footprint);checkBoxes(state.placement_footprint,"placement",budget(family)*state.placement_footprint.cells.size());for(double[] cell:state.placement_footprint.cells)if(!state.physical_footprint.cells.stream().anyMatch(physicalCell->Arrays.equals(cell,physicalCell)))throw fail("PLACEMENT_CELL_NOT_PHYSICAL "+family.id+"["+key+"]");for(double[] box:state.placement_footprint.boxes)if(!covered(box,state.placement_footprint.cells))throw fail("PLACEMENT_OUTSIDE_FOOTPRINT "+family.id+"["+key+"]");}
     if("FLOOR".equals(family.placement_policy)){
      if(state.render_mesh.bounds[1]+state.render_mesh.offset[1]<-1e-6)throw fail("RENDER_BELOW_SUPPORT_PLANE "+family.id+"["+key+"]");
      for(double[] cell:state.interaction_footprint.cells)if(cell[1]<0)throw fail("GROUND_OBJECT_HAS_HELPER_BELOW_ANCHOR "+family.id+"["+key+"]");
@@ -106,7 +110,8 @@ final class LogicalContractV2 {
  private static GeometryRuntime.GeometryState geometry(Family family,State state){
   GeometryRuntime.GeometryState geometry=new GeometryRuntime.GeometryState();geometry.anchor=family.canonical_anchor.cell.clone();geometry.rotation=state.rotation;geometry.render_offset=state.render_mesh.offset.clone();geometry.cells=new LinkedHashMap<>();
   geometry.placementPolicy=family.placement_policy;geometry.mirrorPolicy=family.mirror_policy;
-  for(double[] cell:state.physical_footprint.cells){int x=(int)cell[0],y=(int)cell[1],z=(int)cell[2];GeometryRuntime.GeometryCell part=new GeometryRuntime.GeometryCell();part.collision=clip(state.physical_footprint.boxes,x,y,z);part.outline=clip(state.selection_footprint.boxes,x,y,z);geometry.cells.put(x+","+y+","+z,part);}
+  Footprint placement=state.placement_footprint==null?state.physical_footprint:state.placement_footprint;
+  for(double[] cell:state.physical_footprint.cells){int x=(int)cell[0],y=(int)cell[1],z=(int)cell[2];GeometryRuntime.GeometryCell part=new GeometryRuntime.GeometryCell();part.collision=clip(state.physical_footprint.boxes,x,y,z);part.placement=clip(placement.boxes,x,y,z);part.outline=clip(state.selection_footprint.boxes,x,y,z);geometry.cells.put(x+","+y+","+z,part);}
   geometry.globalOutline=state.selection_footprint.boxes.get(0).clone();geometry.gameplayBoxes=state.physical_footprint.boxes;
   if(state.technical_root_offset!=null){
    // Only a vertical one-cell rebase: it commutes with every supported rotation.

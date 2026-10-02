@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_visual_capture",
+  "version": "1.0.0-local",
+  "name": "Disposable autumn screenshots",
+  "environment": "client",
+  "entrypoints": {"client": ["dev.dreamwalker.capture.AutumnCapture"]},
+  "depends": {"minecraft": "1.20.1", "fabric-api": "*", "bloodborne_blocks": "*"}
+}

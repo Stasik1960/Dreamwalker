@@ -3,6 +3,7 @@ package dev.dreamwalker.bloodborneblocks;
 import net.minecraft.Bootstrap;
 import net.minecraft.SharedConstants;
 import net.minecraft.util.math.BlockPos;
+import java.util.List;
 
 /** Bootstrap-only gate for the bounded city compatibility registry. */
 public final class CityCompatibilityChecks {
@@ -27,6 +28,14 @@ public final class CityCompatibilityChecks {
     check(block.getStateManager().getStates().size()==128,"reviewed building exact supported states");
     for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"reviewed wall existing mesh: "+mesh);
     for(var state:block.getStateManager().getStates())check(GeometryRuntime.state(state).parsedCells.keySet().equals(java.util.Set.of(BlockPos.ORIGIN)),"reviewed wall remains one physical cell");
+   }else if(DocumentOwnerDefinitions.manual(definition)){
+    check(definition.models!=null&&DocumentOwnerDefinitions.ids().contains(definition.id),"documented whole owner art: "+definition.id);
+    check(GeometryRuntime.usesHelpers(block),"documented whole owner helper lifecycle: "+definition.id);
+    check(GeometryRuntime.rebuildsHelperTransitions(block),"documented whole owner helper state transitions: "+definition.id);
+    int product=definition.properties.values().stream().mapToInt(List::size).reduce(1,Math::multiplyExact);
+    check(product<=4*2*3*9&&block.getStateManager().getStates().size()==product,"documented whole owner Cartesian states: "+definition.id);
+    check(block.getStateManager().getProperty("facing")!=null,"documented whole owner pivot rotation: "+definition.id);
+    for(String mesh:definition.models.values())check(meshes.containsKey(mesh)&&!meshes.get(mesh).polygons.isEmpty(),"documented whole owner complete mesh: "+mesh);
    }else if(definition.whole_owner){
     check(definition.models!=null&&definition.id.startsWith("owner_"),"whole owner art: "+definition.id);
     check(GeometryRuntime.usesHelpers(block),"whole owner helper lifecycle: "+definition.id);

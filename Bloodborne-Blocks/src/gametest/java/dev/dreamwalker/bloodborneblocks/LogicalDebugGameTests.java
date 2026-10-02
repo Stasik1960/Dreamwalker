@@ -22,11 +22,12 @@ public final class LogicalDebugGameTests implements FabricGameTest {
  public void commandTreeAliasesPermissionAndNonPlayer(TestContext context) throws Exception {
   ServerCommandSource source=context.getWorld().getServer().getCommandSource();
   CommandNode<ServerCommandSource> bloodborne=context.getWorld().getServer().getCommandManager().getDispatcher().getRoot().getChild("bloodborne");
-  context.assertTrue(bloodborne!=null&&bloodborne.getChild("debug")!=null&&bloodborne.getChild("debug").getChild("target")!=null,"debug command and target alias are registered");
+  context.assertTrue(bloodborne!=null&&bloodborne.getChild("debug")!=null&&bloodborne.getChild("debug").getChild("target")!=null&&bloodborne.getChild("debug").getChild("id")!=null,"debug command, target alias, and numeric lookup are registered");
   context.assertTrue(bloodborne.getRequirement().test(source)&&!bloodborne.getRequirement().test(source.withLevel(1)),"debug inherits the level-2 command permission");
   int direct=context.getWorld().getServer().getCommandManager().getDispatcher().execute("bloodborne debug",source);
   int alias=context.getWorld().getServer().getCommandManager().getDispatcher().execute("bloodborne debug target",source);
-  context.assertTrue(direct==0&&alias==0,"non-player debug calls fail safely");context.complete();
+  int numeric=context.getWorld().getServer().getCommandManager().getDispatcher().execute("bloodborne debug id "+NumericDebugIds.all().get("architecture_part"),source);
+  context.assertTrue(direct==0&&alias==0&&numeric==1,"non-player target debug fails safely while numeric lookup is read-only");context.complete();
  }
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=40, batchId="logical_debug")
@@ -34,11 +35,13 @@ public final class LogicalDebugGameTests implements FabricGameTest {
   ServerWorld world=context.getWorld();BlockPos ordinary=context.getAbsolutePos(new BlockPos(1,2,1));world.setBlockState(ordinary,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
   String normal=LogicalTargetDebug.inspectTarget(world,ordinary);
   context.assertTrue(normal.contains("Registry ID: minecraft:stone")&&normal.contains("Target: NON-LOGICAL"),"ordinary block diagnostic is non-logical");
+  ArchitectureBlock city=BloodborneBlocks.CITY_BLOCKS.values().iterator().next();BlockPos cityTarget=context.getAbsolutePos(new BlockPos(2,2,1));world.setBlockState(cityTarget,city.getDefaultState(),Block.NOTIFY_ALL);
+  context.assertTrue(LogicalTargetDebug.inspectTarget(world,cityTarget).contains("Numeric ID: "+NumericDebugIds.forBlock(city)),"city target reports its display-only numeric ID");
   ArchitectureBlock block=BloodborneBlocks.BLOCKS.get("o_c001");context.assertTrue(block!=null,"logical debug fixture exists");
   BlockPos root=context.getAbsolutePos(ROOT);BlockState state=block.getDefaultState();world.setBlockState(root,state,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,root,state),"logical debug fixture rebuilds");
   String master=LogicalTargetDebug.inspectTarget(world,root);
   BloodborneBlocks.ProductionEntry production=BloodborneBlocks.productionEntry("o_c001");
-  context.assertTrue(production!=null&&master.contains("Logical/Object ID: bloodborne_blocks:o_c001")&&master.contains("Source Review: "+String.join(", ",production.source_reviews()))&&master.contains("Semantic part: "+production.semantic_label())&&master.contains("Target: MASTER")&&master.contains("Facing: north")&&master.contains("\n")&&!master.contains(" | "),"master reports manifest-backed, copyable production metadata");
+  context.assertTrue(production!=null&&master.contains("Logical/Object ID: bloodborne_blocks:o_c001")&&master.contains("Numeric ID: "+NumericDebugIds.forBlock(block))&&master.contains("Source Review: "+String.join(", ",production.source_reviews()))&&master.contains("Semantic part: "+production.semantic_label())&&master.contains("Target: MASTER")&&master.contains("Facing: north")&&master.contains("\n")&&!master.contains(" | "),"master reports manifest-backed, copyable production metadata");
   BlockPos helper=helper(world,root,state);context.assertTrue(helper!=null,"logical debug fixture has an owned helper");
   String helperReport=LogicalTargetDebug.inspectTarget(world,helper);
   context.assertTrue(helperReport.contains("Target: HELPER")&&helperReport.contains("Helper offset: "),"helper resolves to its master");
@@ -49,7 +52,7 @@ public final class LogicalDebugGameTests implements FabricGameTest {
   ArchitecturePartBlockEntity unloadedPart=GeometryRuntime.part(world,unloadedHelper);context.assertTrue(unloadedPart!=null&&!world.isChunkLoaded(unloadedRoot),"unloaded root fixture remains unloaded");unloadedPart.bind(unloadedRoot,BloodborneBlocks.id(block.definition.id));
   String unloaded=LogicalTargetDebug.inspectTarget(world,unloadedHelper);
   context.assertTrue(unloaded.contains("Target: NON-LOGICAL")&&unloaded.contains("root chunk unloaded"),"unloaded helper root is never loaded for diagnostics");
-  world.removeBlock(root,false);world.removeBlock(helper,false);world.removeBlock(ordinary,false);world.removeBlock(unloadedHelper,false);context.complete();
+  world.removeBlock(root,false);world.removeBlock(helper,false);world.removeBlock(ordinary,false);world.removeBlock(cityTarget,false);world.removeBlock(unloadedHelper,false);context.complete();
  }
 
  @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE, tickLimit=40, batchId="logical_debug")

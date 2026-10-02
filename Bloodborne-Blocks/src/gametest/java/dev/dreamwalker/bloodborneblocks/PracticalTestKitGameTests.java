@@ -14,6 +14,10 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResult;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
@@ -62,19 +66,19 @@ public final class PracticalTestKitGameTests implements FabricGameTest {
     useStackOnBlock(context,player,picked.copy(),CLICK.offset(direction),Direction.UP);BooleanProperty toward=(BooleanProperty)curb.getStateManager().getProperty(direction.asString()),back=(BooleanProperty)curb.getStateManager().getProperty(direction.getOpposite().asString());
     context.assertTrue(world.getBlockState(other).isOf(curb)&&world.getBlockState(root).get(toward)&&world.getBlockState(other).get(back),"curb joins item-placed neighbor "+direction);world.breakBlock(other,false);context.assertTrue(!world.getBlockState(root).get(toward),"curb disconnects after neighbor whole break "+direction);world.breakBlock(root,false);
    }
-   acceptedRootHelperGroupKeepsBothRealOwnersIntact(context);
+   importedRootHelperGroupKeepsBothRealOwnersIntact(context);
    context.complete();
   }finally{clear(world,root);clearFloor(context);player.discard();}
  }
 
- private static void acceptedRootHelperGroupKeepsBothRealOwnersIntact(TestContext context){
+ private static void importedRootHelperGroupKeepsBothRealOwnersIntact(TestContext context){
   ServerWorld world=context.getWorld();PlayerEntity player=context.createMockCreativePlayer();ArchitectureBlock railing=required("o_stone_railing"),upper=BloodborneBlocks.CITY_BLOCKS.get("owner_7995b1c8c5cc537f41cf");context.assertTrue(upper!=null,"accepted shared owner ID is registered");BlockPos relativeRoot=new BlockPos(6,4,6),root=context.getAbsolutePos(relativeRoot),upperRoot=root.up();
   BlockState railingState=railing.getDefaultState();for(var entry:java.util.Map.of("east","true","north","false","south","true","up","true","west","false","facing","north","visual","base").entrySet()){var property=railing.getStateManager().getProperty(entry.getKey());context.assertTrue(property!=null,"accepted railing property exists: "+entry.getKey());railingState=BloodborneBlocks.set(railingState,property,entry.getValue());}
   BlockState upperState=upper.getDefaultState();clear(world,root);
   try{
-   int convertedLoadFlags=Block.NOTIFY_LISTENERS|Block.FORCE_STATE;world.setBlockState(root,railingState,convertedLoadFlags);context.assertTrue(GeometryRuntime.rebuild(world,root,railingState),"accepted railing root rebuilds whole");face(context,player,Direction.SOUTH);useStackOnBlock(context,player,new ItemStack(upper),relativeRoot,Direction.UP);
-   ArchitecturePartBlockEntity carrier=GeometryRuntime.part(world,root);var upperId=Registries.BLOCK.getId(upper);BlockState connected=world.getBlockState(root),placedUpper=world.getBlockState(upperRoot);context.assertTrue(connected.isOf(railing)&&placedUpper.isOf(upper)&&placedUpper.get(Properties.HORIZONTAL_FACING)==Direction.NORTH,"manual pair placement keeps both accepted registry owners and upper facing intact");for(String side:List.of("east","north","south","west")){BooleanProperty property=(BooleanProperty)railing.getStateManager().getProperty(side);context.assertTrue(!connected.get(property),"manual pair correctly recalculates absent horizontal neighbor "+side);}context.assertTrue(connected.get((BooleanProperty)railing.getStateManager().getProperty("up")),"manual pair connects railing upward to placed owner");context.assertTrue(carrier!=null&&carrier.hasBinding(upperRoot,upperId),"manually placed upper owner stores its exact guest binding on the railing root");
-   world.breakBlock(upperRoot,false);context.assertTrue(world.getBlockState(root).isOf(railing)&&GeometryRuntime.part(world,root)==null,"removing the upper owner preserves the accepted railing root");
+   int convertedLoadFlags=Block.NOTIFY_LISTENERS|Block.FORCE_STATE;world.setBlockState(root,railingState,convertedLoadFlags);context.assertTrue(GeometryRuntime.rebuild(world,root,railingState),"accepted railing root rebuilds whole");world.setBlockState(upperRoot,upperState,Block.NOTIFY_ALL);context.assertTrue(GeometryRuntime.rebuild(world,upperRoot,upperState),"imported upper owner rebuilds across the existing railing");
+   ArchitecturePartBlockEntity carrier=GeometryRuntime.part(world,root);var upperId=Registries.BLOCK.getId(upper);BlockState connected=world.getBlockState(root),placedUpper=world.getBlockState(upperRoot);context.assertTrue(connected.isOf(railing)&&placedUpper.isOf(upper)&&placedUpper.get(Properties.HORIZONTAL_FACING)==Direction.NORTH,"imported pair keeps both accepted registry owners and upper facing intact");for(String side:List.of("east","north","south","west")){BooleanProperty property=(BooleanProperty)railing.getStateManager().getProperty(side);context.assertTrue(!connected.get(property),"imported pair correctly recalculates absent horizontal neighbor "+side);}context.assertTrue(connected.get((BooleanProperty)railing.getStateManager().getProperty("up")),"imported pair connects railing upward to placed owner");context.assertTrue(carrier!=null&&carrier.hasBinding(upperRoot,upperId),"imported upper owner stores its exact guest binding on the railing root");
+   world.breakBlock(upperRoot,false);context.assertTrue(world.getBlockState(root).isOf(railing)&&GeometryRuntime.part(world,root)==null,"removing the imported upper owner preserves the accepted railing root");ItemStack rejected=new ItemStack(upper);NbtCompound itemBefore=rejected.getOrCreateNbt().copy();player.setStackInHand(Hand.MAIN_HAND,rejected);ActionResult result=rejected.useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(root),Direction.UP,root,false)));context.assertTrue(!result.isAccepted()&&rejected.getCount()==1&&rejected.getNbt().equals(itemBefore)&&world.getBlockState(root).isOf(railing)&&world.getBlockState(upperRoot).isAir(),"overlapping upper item reinsert is denied without changing the railing or target");
   }finally{clear(world,root);player.discard();}
  }
 

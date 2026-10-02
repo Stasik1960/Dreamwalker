@@ -22,6 +22,7 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 
 public final class BloodborneClient implements ClientModInitializer {
+ private record ReloadAppearance(LogicalVisualModels visuals,AutumnAppearance autumn) {}
  static int facingTurns(String variant){
   for(String entry:variant.split(",")){
    int separator=entry.indexOf('=');
@@ -38,8 +39,8 @@ public final class BloodborneClient implements ClientModInitializer {
   EntityRendererRegistry.register(BloodborneBlocks.SEAT_ENTITY,EmptyEntityRenderer::new);
   for(ArchitectureBlock block:BloodborneBlocks.allBlocks()){
    String layer=block.definition.layer;BlockRenderLayerMap.INSTANCE.putBlock(block,layer.equals("translucent")?RenderLayer.getTranslucent():layer.equals("cutout")?RenderLayer.getCutout():RenderLayer.getSolid());
-   ColorProviderRegistry.BLOCK.register((state,view,pos,index)->MinecraftClient.getInstance().getBlockColors().getColor(block.original(state),view,pos,index),block);
-   ColorProviderRegistry.ITEM.register((stack,index)->{var provider=ColorProviderRegistry.ITEM.get(block.definition.sourceBlock.asItem());return provider==null?-1:provider.getColor(new ItemStack(block.definition.sourceBlock),index);},block.asItem());
+   ColorProviderRegistry.BLOCK.register((state,view,pos,index)->ModularBakedModel.isAutumnTint(index)?ModularBakedModel.tintColor(index):MinecraftClient.getInstance().getBlockColors().getColor(block.original(state),view,pos,index),block);
+   ColorProviderRegistry.ITEM.register((stack,index)->{if(ModularBakedModel.isAutumnTint(index))return ModularBakedModel.tintColor(index);var provider=ColorProviderRegistry.ITEM.get(block.definition.sourceBlock.asItem());return provider==null?-1:provider.getColor(new ItemStack(block.definition.sourceBlock),index);},block.asItem());
   }
   PreparableModelLoadingPlugin.register((manager,executor)->CompletableFuture.supplyAsync(()->{
    Map<String,JsonObject> resources=new HashMap<>();
@@ -52,11 +53,14 @@ public final class BloodborneClient implements ClientModInitializer {
    }),logicalMeshes);
    for(ArchitectureBlock block:BloodborneBlocks.allBlocks())if(block.definition.visual_models!=null)
     for(String path:new HashSet<>(block.definition.visual_models.values()))visuals.resolve(path);
-   return visuals;
+   return new ReloadAppearance(visuals,AutumnAppearance.load(manager));
   },executor),(visuals,context)->{
    // Scoped to one model-loader generation, so a resource reload never reuses stale sprites.
    Map<String,ModularBakedModel.Parts> modularQuads=new HashMap<>();
    Map<String,Map<String,net.minecraft.client.render.model.BakedModel>> cityItemVariants=new ConcurrentHashMap<>();
+   GuiItemBounds.Cache guiBounds=new GuiItemBounds.Cache();
+   Map<net.minecraft.client.render.model.BakedModel,net.minecraft.client.render.model.BakedModel> guiModels=new IdentityHashMap<>();
+   java.util.function.Function<net.minecraft.client.render.model.BakedModel,net.minecraft.client.render.model.BakedModel> gui=model->guiModels.computeIfAbsent(model,key->new GuiItemModel(key,guiBounds.get(key)));
    ModularBakedModel.QuadPool sharedFaces=new ModularBakedModel.QuadPool();
    context.modifyModelAfterBake().register((model,bake)->{
    Identifier id=bake.id();if(!(id instanceof ModelIdentifier modelId)||!id.getNamespace().equals(BloodborneBlocks.ID))return model;
@@ -65,7 +69,7 @@ public final class BloodborneClient implements ClientModInitializer {
    if(block==null&&id.getPath().startsWith("block/logical/")){
     String meshKey=id.getPath().substring("block/logical/".length());ModularMeshData.Mesh mesh=allMeshes.get(meshKey);
     if(mesh==null)return model;String cacheKey="logical-item:"+meshKey;
-    return ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),model);
+    return gui.apply(ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),model));
    }
    if(block==null)return model;
    net.minecraft.client.render.model.BakedModel result=model;
@@ -77,12 +81,13 @@ public final class BloodborneClient implements ClientModInitializer {
    ModularMeshData.Mesh mesh=allMeshes.get(meshKey);if(mesh==null)throw new IllegalStateException("Missing logical/city mesh "+meshKey+" for "+block.definition.id);
     // Logical meshes are generated in their complete state orientation; do not rotate them again.
     String visualPath=block.definition.visual_models==null?null:block.definition.visual_models.get(modelId.getVariant().equals("inventory")?inventoryKey:modelId.getVariant());
-    Optional<ModularMeshData.Mesh> appearance=visualPath==null?Optional.of(mesh):visuals.resolve(visualPath);
+    Optional<ModularMeshData.Mesh> appearance=visualPath==null?Optional.of(mesh):visuals.visuals().resolve(visualPath);
     // A resource-pack model with normal elements keeps Minecraft's baked model.
     // Only our explicit mesh/polygon JSON extension uses the static quad adapter.
     if(appearance.isPresent()){
-     String cacheKey=visualPath==null?"logical:"+meshKey:"visual:"+visualPath;
-     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,block.definition.city_compat&&!block.definition.whole_owner)),result);
+     boolean cellLocal=block.definition.city_compat&&!block.definition.whole_owner;String category=AutumnAppearance.category(block.definition);
+     String cacheKey=(visualPath==null?"logical:"+meshKey:"visual:"+visualPath)+":autumn="+category+":"+cellLocal;
+     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,cellLocal,visuals.autumn().color(block.definition),visuals.autumn().foliage(block.definition),visuals.autumn().leafTexture())),result);
     }
    }
    if(block.definition.emissive){
@@ -100,9 +105,9 @@ public final class BloodborneClient implements ClientModInitializer {
    if(offset!=null&&(offset[0]!=0||offset[1]!=0||offset[2]!=0))result=new TranslatedBakedModel(result,offset);
    if(block.definition.models!=null&&(block.definition.properties.containsKey("variant")||block.definition.properties.containsKey("visual"))){
     Map<String,net.minecraft.client.render.model.BakedModel> variants=cityItemVariants.computeIfAbsent(block.definition.id,key->new ConcurrentHashMap<>());
-    if(modelId.getVariant().equals("inventory"))result=new CityVariantItemModel(result,block,variants);
+    if(modelId.getVariant().equals("inventory"))result=new CityVariantItemModel(result,block,variants,guiBounds);
     else variants.put(modelId.getVariant(),result);
-   }
+   }else if(modelId.getVariant().equals("inventory"))result=gui.apply(result);
    return result;
   });});
  }

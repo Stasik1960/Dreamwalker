@@ -1,5 +1,8 @@
 # Latest beta
 
+Текущий комплект от 01.10.2026: [Bloodborne: основная карта, галерея и осенние палитры](launch-base-2026-10-01/README.md).
+Графическая приёмка и проверка памяти полной пользовательской сборки остаются необходимы.
+
 [2.1.0-beta.1 — JAR, gallery, ALT kit and world reports](2.1.0-beta.1/README.md). Graphical acceptance pending. Both converted city copies are **UNRESOLVED / NOT BETA READY**; see their explicit registry incompatibility and preservation reports.
 
 # Historical: Bloodborne Architecture — cumulative Агония, 2026-09-25

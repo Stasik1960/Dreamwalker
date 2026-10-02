@@ -1,0 +1,18 @@
+// Isolated smoke run; points only at build/launch-server-smoke, never production.
+import groovy.json.JsonSlurper
+gradle.beforeProject { p ->
+ p.plugins.withId('fabric-loom') {
+    def deps = new JsonSlurper().parse(p.file('tools/autumn-client-dependencies.json'))
+    deps.paths.findAll { !it.contains('sodium-fabric') && !it.contains('indium-') }.each {
+        p.dependencies.add('modLocalRuntime', p.files(it))
+    }
+    deps.libraries.each { p.dependencies.add('runtimeOnly', p.files(it)) }
+    p.loom.runs.create('launchServerSmoke') {
+        inherit p.loom.runs.getByName('server')
+        name 'Launch city dedicated smoke'
+        runDir 'build/launch-server-smoke'
+        vmArg '-Xmx6G'
+        programArg 'nogui'
+    }
+ }
+}

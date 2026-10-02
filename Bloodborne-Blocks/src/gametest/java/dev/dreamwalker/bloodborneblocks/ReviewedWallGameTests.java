@@ -6,12 +6,17 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.state.property.Properties;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import java.util.List;
 
 public final class ReviewedWallGameTests implements FabricGameTest {
@@ -24,6 +29,7 @@ public final class ReviewedWallGameTests implements FabricGameTest {
   var result=stack.useOnBlock(new net.minecraft.item.ItemUsageContext(p,Hand.MAIN_HAND,new net.minecraft.util.hit.BlockHitResult(net.minecraft.util.math.Vec3d.ofCenter(clicked),Direction.UP,clicked,false)));
   c.assertTrue(result.isAccepted()&&c.getBlockState(root).isOf(block),"actual item placed "+block.definition.id+" at "+root+" result="+result+" target="+c.getBlockState(root));
  }
+ private static ActionResult use(PlayerEntity player,ItemStack stack,BlockPos clicked,Direction side){player.setStackInHand(Hand.MAIN_HAND,stack);return stack.useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(clicked),side,clicked,false)));}
  private static void connection(TestContext c,BlockPos p,String value){
   BlockState state=c.getBlockState(p);c.assertTrue(state.isOf(wall())&&state.get(wall().getStateManager().getProperty("connection")).equals(value),"exact supported connection "+value+" at "+p+" actual="+state);
  }
@@ -64,24 +70,33 @@ public final class ReviewedWallGameTests implements FabricGameTest {
  public void connectionTransitionKeepsWindowGuestBinding(TestContext c){
   floor(c);PlayerEntity player=c.createMockSurvivalPlayer();ArchitectureBlock window=BloodborneBlocks.BLOCKS.get("o_shuttered_window");
   try{
-   place(c,player,window,ROOT,Direction.NORTH);place(c,player,wall(),ROOT.up(),Direction.NORTH);
+   place(c,player,window,ROOT,Direction.NORTH);
    BlockPos carrier=c.getAbsolutePos(ROOT.up()),windowRoot=c.getAbsolutePos(ROOT);
-   var part=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(part!=null&&part.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"wall root admits existing whole window guest");
+   var windowBinding=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(windowBinding!=null,"window helper binding exists before imported wall");NbtCompound importedBindings=windowBinding.createNbt();BlockState imported=wall().getDefaultState();c.getWorld().removeBlockEntity(carrier);c.getWorld().setBlockState(carrier,imported,Block.NOTIFY_ALL);var importedCarrier=new ArchitecturePartBlockEntity(carrier,imported);importedCarrier.readNbt(importedBindings);c.getWorld().addBlockEntity(importedCarrier);c.assertTrue(GeometryRuntime.rebuild(c.getWorld(),carrier,imported),"imported wall rebuild preserves the pre-existing window overlap");
+   var part=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(part!=null&&part.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"imported wall root retains existing whole window guest");
    c.setBlockState(ROOT.east(),Blocks.WHITE_CONCRETE);place(c,player,wall(),ROOT.east().up(),Direction.NORTH);connection(c,ROOT.up(),"low_2");
    part=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(part!=null&&part.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"connection update retains exact window owner");
    c.getWorld().breakBlock(c.getAbsolutePos(ROOT.east().up()),false);connection(c,ROOT.up(),"low_0");
-   for(int cycle=0;cycle<3;cycle++){
-    c.getWorld().breakBlock(carrier,false);c.assertTrue(c.getBlockState(ROOT).isOf(window),"breaking wall keeps window root");
-    place(c,player,wall(),ROOT.up(),Direction.NORTH);
-    c.getWorld().breakBlock(windowRoot,false);c.assertTrue(c.getBlockState(ROOT.up()).isOf(wall()),"breaking window keeps wall root");
-    place(c,player,window,ROOT,Direction.NORTH);
-    part=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(part!=null&&part.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"both item orders restore guest on cycle "+cycle);
-   }
    var saved=part.createNbt();c.getWorld().removeBlockEntity(carrier);
    var loaded=new ArchitecturePartBlockEntity(carrier,c.getWorld().getBlockState(carrier));loaded.readNbt(saved);c.getWorld().addBlockEntity(loaded);
    c.assertTrue(loaded.createNbt().equals(saved),"window/wall exact ownership NBT round trip");
-   c.getWorld().breakBlock(carrier,false);c.assertTrue(c.getBlockState(ROOT).isOf(window),"breaking reloaded wall preserves window");
-   c.complete();
-  }finally{player.discard();}
+   c.getWorld().breakBlock(carrier,false);c.assertTrue(c.getBlockState(ROOT).isOf(window),"breaking reloaded wall preserves window before queued helper recovery");
+   ItemStack immediate=new ItemStack(wall());ActionResult immediateResult=use(player,immediate,c.getAbsolutePos(ROOT),Direction.UP);
+   c.assertTrue(!immediateResult.isAccepted()&&immediate.getCount()==1&&c.getBlockState(ROOT).isOf(window),"pending window guest denies an immediate overlapping wall item before recovery drains");
+   c.runAtTick(2,()->{try{
+    var preserved=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(c.getBlockState(ROOT.up()).isOf(BloodborneBlocks.PART_BLOCK)&&preserved!=null&&preserved.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"queued helper recovery restores exact window binding");
+    ItemStack rejected=new ItemStack(wall());ActionResult result=use(player,rejected,c.getAbsolutePos(ROOT),Direction.UP);var after=GeometryRuntime.part(c.getWorld(),carrier);
+    c.assertTrue(!result.isAccepted()&&rejected.getCount()==1&&c.getBlockState(ROOT).isOf(window)&&after!=null&&after.hasBinding(windowRoot,BloodborneBlocks.id("o_shuttered_window")),"overlapping wall item remains denied after helper recovery");c.complete();
+   }finally{player.discard();}});
+  }catch(Throwable error){player.discard();throw error;}
+ }
+ @GameTest(templateName="bloodborne_blocks:practical_test_kit",tickLimit=60,batchId="reviewed_wall")
+ public void pendingDeletedGuestDoesNotBlockFreeWallPlacement(TestContext c){
+  floor(c);PlayerEntity player=c.createMockSurvivalPlayer();ArchitectureBlock window=BloodborneBlocks.BLOCKS.get("o_shuttered_window");
+  try{
+   place(c,player,window,ROOT,Direction.NORTH);BlockPos carrier=c.getAbsolutePos(ROOT.up()),windowRoot=c.getAbsolutePos(ROOT);ArchitecturePartBlockEntity helper=GeometryRuntime.part(c.getWorld(),carrier);c.assertTrue(helper!=null,"window helper exists before stale-pending fixture");NbtCompound saved=helper.createNbt();BlockState imported=wall().getDefaultState();c.getWorld().removeBlockEntity(carrier);c.getWorld().setBlockState(carrier,imported,Block.NOTIFY_ALL);ArchitecturePartBlockEntity importedCarrier=new ArchitecturePartBlockEntity(carrier,imported);importedCarrier.readNbt(saved);c.getWorld().addBlockEntity(importedCarrier);
+   c.getWorld().breakBlock(carrier,false);c.getWorld().breakBlock(windowRoot,false);c.assertTrue(!c.getBlockState(ROOT).isOf(window)&&GeometryRuntime.canPlace(c.getWorld(),carrier,imported),"a deleted pending guest contributes no resident placement footprint");
+   c.runAtTick(2,()->{try{c.assertTrue(GeometryRuntime.part(c.getWorld(),carrier)==null,"stale pending guest is discarded instead of recreating a helper");c.complete();}finally{player.discard();}});
+  }catch(Throwable error){player.discard();throw error;}
  }
 }

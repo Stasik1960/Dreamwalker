@@ -1,0 +1,29 @@
+// Disposable local visual verification. This source set is never packaged in the mod.
+import groovy.json.JsonSlurper
+gradle.beforeProject { p ->
+ p.plugins.withId('fabric-loom') {
+    def deps = new JsonSlurper().parse(p.file('tools/autumn-client-dependencies.json'))
+    deps.paths.each { path -> p.dependencies.add('modLocalRuntime', p.files(path)) }
+    deps.libraries.each { path -> p.dependencies.add('runtimeOnly', p.files(path)) }
+    def capture = p.sourceSets.create('autumnCapture') {
+        java.srcDir 'tools/autumn-capture/java'
+        resources.srcDir 'tools/autumn-capture/resources'
+        compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
+        runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
+    }
+    p.loom.mods.create('bloodborne_visual_capture') { sourceSet capture }
+    p.loom.runs.create('autumnClient') {
+        inherit p.loom.runs.getByName('client')
+        source capture
+        name 'Autumn visual verification'
+        runDir 'build/autumn-client-verified'
+        vmArg '-Xmx6G'
+        programArg '--username'
+        programArg 'AutumnReview'
+        programArg '--quickPlaySingleplayer'
+        programArg 'AutumnCityVerified'
+        programArg '--width'; programArg '1600'
+        programArg '--height'; programArg '900'
+    }
+ }
+}

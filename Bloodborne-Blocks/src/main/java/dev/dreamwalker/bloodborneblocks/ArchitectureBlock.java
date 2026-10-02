@@ -27,13 +27,13 @@ public class ArchitectureBlock extends Block implements Waterloggable {
  private static final ThreadLocal<BloodborneBlocks.Definition> CONSTRUCTING=new ThreadLocal<>();
  public final BloodborneBlocks.Definition definition;
  private final Map<BlockState,BlockState> originals=new IdentityHashMap<>();
- public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return d.logical||d.whole_owner?new SharedArchitectureBlock(d):new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
+ public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return d.logical||d.city_compat||d.whole_owner?new SharedArchitectureBlock(d):new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
  private static Settings settings(BloodborneBlocks.Definition d){
   Block material=semanticMaterial(d);BlockState materialState=material.getDefaultState();
   Settings s=Settings.create().strength(semanticHardness(d),semanticResistance(d)).sounds(material.getSoundGroup(materialState)).mapColor(materialState.getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
   if(!d.full_cube||d.custom_geometry)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
   if(!d.offset.equals("none"))s.offset(d.offset.equals("xyz")?OffsetType.XYZ:OffsetType.XZ).dynamicBounds();
-  return d.logical||d.whole_owner?s.dynamicBounds():s;
+  return d.logical||d.city_compat||d.whole_owner?s.dynamicBounds():s;
  }
  private static Block semanticMaterial(BloodborneBlocks.Definition d){
   if(!d.modular||d.semantic==null)return d.sourceBlock;
@@ -97,7 +97,11 @@ public class ArchitectureBlock extends Block implements Waterloggable {
   }
   if(result.contains(BloodborneBlocks.ASSEMBLED))result=result.with(BloodborneBlocks.ASSEMBLED,true);
   if(definition.extra_facing&&!definition.logical)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
-  if(definition.logical){result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());result=GeometryRuntime.applyPlacementPolicy(result,ctx.getSide());}
+  if(definition.logical||DocumentOwnerDefinitions.manual(definition))result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());
+  if(DocumentOwnerDefinitions.manual(definition)){
+   Property<?> rootAnchor=getStateManager().getProperty("root_anchor");if(rootAnchor!=null)result=BloodborneBlocks.set(result,rootAnchor,"canonical");
+  }
+  if(definition.logical)result=GeometryRuntime.applyPlacementPolicy(result,ctx.getSide());
   if(result.contains(Properties.WATERLOGGED))result=result.with(Properties.WATERLOGGED,ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid()==Fluids.WATER);
   if(definition.seat_anchors!=null&&getStateManager().getProperty("diagonal") instanceof BooleanProperty diagonal){
    int eighth=Math.floorMod(Math.round(ctx.getPlayerYaw()/45F),8);
@@ -197,9 +201,10 @@ public class ArchitectureBlock extends Block implements Waterloggable {
   GeometryRuntime.rebuild(world,pos,state);refreshEditedNeighbors(world,pos);
  }
  @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
-  if(!GeometryRuntime.usesHelpers(this)){super.onStateReplaced(state,world,pos,next,moved);return;}
+  ArchitecturePartBlockEntity carrier=GeometryRuntime.part(world,pos);java.util.List<ArchitecturePartBlockEntity.Binding> existingGuests=carrier==null?java.util.List.of():carrier.bindings();
+  if(!GeometryRuntime.usesHelpers(this)&&existingGuests.isEmpty()){super.onStateReplaced(state,world,pos,next,moved);return;}
   if(!next.isOf(this)&&!world.isClient&&!GeometryRuntime.isMutating()){
-   ArchitecturePartBlockEntity carrier=GeometryRuntime.part(world,pos);java.util.List<ArchitecturePartBlockEntity.Binding> guests=carrier==null?java.util.List.of():carrier.bindings();
+   java.util.List<ArchitecturePartBlockEntity.Binding> guests=existingGuests;
    if(GeometryRuntime.hasUnloadedGuest(world,guests)){GeometryRuntime.restoreCarrier(world,pos,state,guests);return;}
    GeometryRuntime.removeOwnedParts(world,pos,state);if(!guests.isEmpty())GeometryRuntime.preserveGuestsAfterCarrierRemoval(world,pos,guests);
   }
