@@ -40,7 +40,7 @@ public final class BloodborneBlocks implements ModInitializer {
   /** Three canonical north-facing seat contact points, never inferred per tick. */
   public double[][] seat_anchors;
   public float hardness,resistance,slipperiness,velocity,jump;
-  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat,whole_owner;
+  public boolean extra_facing,custom_geometry,full_cube,emissive,animated,orphan,modular,creative,logical,city_compat,whole_owner,unified,cell_local;
   public Map<String,List<String>> properties;
   /** State values forced only while a logical item is being placed. */
   public Map<String,String> placement_properties;
@@ -56,7 +56,8 @@ public final class BloodborneBlocks implements ModInitializer {
  }
  public static Identifier id(String path){return new Identifier(ID,path);}
  @SuppressWarnings({"rawtypes","unchecked"}) public static String value(Property p,Comparable v){return p.name(v);}
- public static String key(BlockState state){List<String> entries=new ArrayList<>();state.getEntries().forEach((p,v)->entries.add(p.getName()+"="+value(p,v)));Collections.sort(entries);return String.join(",",entries);}
+ public static String key(BlockState state){return key(state,state.getBlock() instanceof ArchitectureBlock block?block.definition:null);}
+ static String key(BlockState state,Definition definition){Map<String,String> values=new java.util.TreeMap<>();state.getEntries().forEach((p,v)->values.put(p.getName(),value(p,v)));return UnifiedOwnerDefinitions.resourceKey(definition,values);}
  @SuppressWarnings({"rawtypes","unchecked"}) public static BlockState set(BlockState state,Property property,String value){Optional<?> parsed=property.parse(value);if(parsed.isEmpty())throw new IllegalArgumentException("Invalid state value "+property+"="+value);return state.with(property,(Comparable)parsed.get());}
  static Data loadDefinitions(){
   Gson gson=new Gson();Data logical=readDefinitions(gson,"/bloodborne_blocks/logical/definitions.json");
@@ -74,7 +75,9 @@ public final class BloodborneBlocks implements ModInitializer {
   for(Definition definition:city.blocks){
    if(definition==null||!definition.city_compat||definition.logical||definition.id==null||Identifier.tryParse(ID+":"+definition.id)==null||!ids.add(definition.id))throw new IllegalStateException("Invalid city definition "+(definition==null?"null":definition.id));
    if(definition.properties==null||definition.states==null)throw new IllegalStateException("Incomplete city definition "+definition.id);
-   if(ReviewedWallConnections.ID.equals(definition.id)){
+   if(definition.unified){
+    UnifiedOwnerDefinitions.validate(definition);
+   }else if(ReviewedWallConnections.ID.equals(definition.id)){
     ReviewedWallConnections.validate(definition,city);
    }else if(DocumentOwnerDefinitions.manual(definition)){
     DocumentOwnerDefinitions.validate(definition);
@@ -112,12 +115,16 @@ public final class BloodborneBlocks implements ModInitializer {
  static void prepareDefinition(Definition d){
   Identifier source=new Identifier(d.source);if(!Registries.BLOCK.containsId(source))throw new IllegalStateException("Missing source block "+source);d.sourceBlock=Registries.BLOCK.get(source);d.propertyObjects.clear();
   for(String name:d.properties.keySet()){
+   // Minecraft state properties require at least two values. Constants stay
+   // in the authored resource key, without creating a runtime property.
+   if(d.unified&&d.properties.get(name).size()==1)continue;
    Property<?>p;
    if(name.equals("embedded")||name.equals("lantern")||name.equals("diagonal")){
     List<String> values=d.properties.get(name);
     if(!d.logical||values==null||values.size()!=2||!new HashSet<>(values).equals(Set.of("false","true")))throw new IllegalStateException("Invalid logical boolean property "+d.id+"."+name);
     p=BooleanProperty.of(name);
    }else p=d.sourceBlock.getStateManager().getProperty(name);
+   if(p==null&&UnifiedOwnerDefinitions.matches(d)&&Set.of("variant","root_anchor").contains(name))p=UnifiedOwnerDefinitions.property(name,d.properties.get(name));
    if(p==null&&(d.logical||d.city_compat)&&Set.of("variant","visual","hand_lantern").contains(name))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&((d.logical&&Set.of("o_bench","o_high_balustrade").contains(d.id)&&d.properties.get(name).equals(List.of("canonical","upper")))||DocumentOwnerDefinitions.manual(d))&&name.equals("root_anchor"))p=new LogicalVariantProperty(name,d.properties.get(name));
    if(p==null&&ReviewedWallConnections.ID.equals(d.id)&&name.equals("connection"))p=new LogicalVariantProperty(name,d.properties.get(name));
@@ -134,12 +141,12 @@ public final class BloodborneBlocks implements ModInitializer {
   if(d.placement_properties!=null)for(var entry:d.placement_properties.entrySet()){
    Property<?> property=d.propertyObjects.get(entry.getKey());
    List<String> values=d.properties.get(entry.getKey());
-   if(!d.logical||property==null||entry.getValue()==null||values==null||!values.contains(entry.getValue())||property.parse(entry.getValue()).isEmpty())throw new IllegalStateException("Invalid placement property "+d.id+"."+entry.getKey()+"="+entry.getValue());
+   if(!(d.logical||d.unified)||entry.getValue()==null||values==null||!values.contains(entry.getValue())||(property==null?!(d.unified&&values.size()==1):property.parse(entry.getValue()).isEmpty()))throw new IllegalStateException("Invalid placement property "+d.id+"."+entry.getKey()+"="+entry.getValue());
   }
  }
  @SuppressWarnings({"rawtypes","unchecked"}) static BlockState applyPlacementProperties(Definition definition,BlockState state){
-  if(!definition.logical||definition.placement_properties==null)return state;
-  for(var entry:definition.placement_properties.entrySet())state=set(state,(Property)definition.propertyObjects.get(entry.getKey()),entry.getValue());
+  if(!(definition.logical||definition.unified)||definition.placement_properties==null)return state;
+  for(var entry:definition.placement_properties.entrySet()){Property property=definition.propertyObjects.get(entry.getKey());if(property!=null)state=set(state,property,entry.getValue());}
   return state;
  }
  static Collection<ArchitectureBlock> allBlocks(){List<ArchitectureBlock> result=new ArrayList<>(BLOCKS.size()+CITY_BLOCKS.size());result.addAll(BLOCKS.values());result.addAll(CITY_BLOCKS.values());return Collections.unmodifiableList(result);}
@@ -151,7 +158,7 @@ public final class BloodborneBlocks implements ModInitializer {
  }
  static ItemStack creativeStack(ArchitectureBlock block){
   ItemStack stack=new ItemStack(block);
-  if(block.definition.logical&&block.definition.placement_properties!=null)block.definition.placement_properties.forEach(stack.getOrCreateSubNbt("BlockStateTag")::putString);
+  if((block.definition.logical||block.definition.unified)&&block.definition.placement_properties!=null)block.definition.placement_properties.forEach(stack.getOrCreateSubNbt("BlockStateTag")::putString);
   return stack;
  }
  public void onInitialize(){

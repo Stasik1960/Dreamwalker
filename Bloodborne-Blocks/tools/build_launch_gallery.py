@@ -27,6 +27,68 @@ def load_json(path):
     return json.loads(path.read_bytes())
 
 
+def load_mesh_bounds(path):
+    """Read compressed mesh records one at a time, retaining bounds only."""
+    bounds = {}
+    decoder = json.JSONDecoder()
+    with gzip.open(path, 'rt', encoding='utf8') as source:
+        buffer = source.read(65536)
+        offset = 0
+
+        def next_character():
+            nonlocal buffer, offset
+            while offset >= len(buffer):
+                chunk = source.read(65536)
+                if not chunk:
+                    raise ValueError(f'unexpected end of mesh file: {path}')
+                buffer = buffer[offset:] + chunk
+                offset = 0
+            return buffer[offset]
+
+        def skip_whitespace():
+            nonlocal offset
+            while next_character().isspace():
+                offset += 1
+
+        def decode():
+            nonlocal buffer, offset
+            while True:
+                try:
+                    value, offset = decoder.raw_decode(buffer, offset)
+                    return value
+                except json.JSONDecodeError as error:
+                    chunk = source.read(65536)
+                    if not chunk:
+                        raise ValueError(f'invalid mesh file: {path}') from error
+                    buffer = buffer[offset:] + chunk
+                    offset = 0
+
+        skip_whitespace()
+        if next_character() != '{':
+            raise ValueError(f'mesh file is not an object: {path}')
+        offset += 1
+        while True:
+            skip_whitespace()
+            if next_character() == '}':
+                return bounds
+            name = decode()
+            if not isinstance(name, str):
+                raise ValueError(f'mesh identifier is not a string: {path}')
+            skip_whitespace()
+            if next_character() != ':':
+                raise ValueError(f'mesh value is missing: {path}')
+            offset += 1
+            skip_whitespace()
+            bounds[name] = mesh_bounds(decode())
+            skip_whitespace()
+            separator = next_character()
+            if separator == '}':
+                return bounds
+            if separator != ',':
+                raise ValueError(f'mesh separator is invalid: {path}')
+            offset += 1
+
+
 def load_data(city=CITY):
     resources = city.parent
     doc = load_json(city / 'document-final.json')
@@ -40,7 +102,7 @@ def load_data(city=CITY):
         geometry['profiles'].update(g.get('profiles', {}))
         for name in ('meshes.json.gz', 'owner-meshes.json.gz'):
             if (folder / name).is_file():
-                meshes.update(json.loads(gzip.decompress((folder / name).read_bytes())))
+                meshes.update(load_mesh_bounds(folder / name))
     contracts = {d['id']: d for d in load_json(resources / 'logical/contracts-v2.json')['families']}
     ids = load_json(resources / 'debug-ids.json')['ids']
     return doc, definitions, geometry, meshes, contracts, ids, [d['id'] for d in logical]
@@ -68,7 +130,7 @@ def specimens(data):
         g = geometry['blocks'][ident]['states'][key]
         g = geometry['profiles'].get(g.get('ref'), g)
         offset = render['offset'] if render else g.get('render_offset', [0, 0, 0])
-        raw = mesh_bounds(meshes[mesh_id])
+        raw = meshes[mesh_id]
         bounds = [raw[i] + offset[i % 3] for i in range(6)]
         footprint = geometry_cells(ident, key, contracts, geometry) if d.get('whole_owner') or ident in logical_ids else [(0, 0, 0)]
         if (0, 0, 0) not in footprint:
@@ -80,6 +142,12 @@ def specimens(data):
     for ident in sorted(set(logical_ids) | {d['id'] for d in defs.values() if d.get('whole_owner') and not d.get('document_item')}):
         d = defs[ident]
         base = canonical(d)
+        # Unified owners encode their selectable private meshes in `variant`.
+        # The gallery is a public review surface, so show only their explicit
+        # canonical placement instead of expanding every implementation variant.
+        if d.get('unified'):
+            add(ident, base, 'historical')
+            continue
         # Preserve actual artistic alternatives and open states, without yaw duplicates.
         for key in d['models']:
             props = dict(part.split('=', 1) for part in key.split(','))

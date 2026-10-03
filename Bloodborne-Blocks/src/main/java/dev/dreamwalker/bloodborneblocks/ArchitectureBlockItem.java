@@ -20,7 +20,7 @@ public final class ArchitectureBlockItem extends BlockItem {
 
  @Override public Text getName(ItemStack stack){
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
-  if(!block.definition.city_compat||block.definition.models==null)return super.getName(stack);
+  if(!block.definition.city_compat||block.definition.models==null||block.definition.unified)return super.getName(stack);
   String variant=block.definition.defaultProperties==null?null:block.definition.defaultProperties.get("variant");
   NbtCompound tag=stack.getSubNbt("BlockStateTag");if(tag!=null&&tag.contains("variant",8))variant=tag.getString("variant");
   return variant==null?super.getName(stack):Text.translatable("city."+BloodborneBlocks.ID+"."+block.definition.id+"."+variant);
@@ -45,7 +45,7 @@ public final class ArchitectureBlockItem extends BlockItem {
  private ActionResult placePrepared(ItemPlacementContext original){
   ArchitectureBlock block=(ArchitectureBlock)getBlock();
   BlockState tentative=block.getPlacementState(original);if(tentative==null)return ActionResult.FAIL;
-  normalizePlacementTag(original.getStack(),block,tentative);tentative=DocumentOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(tentative,original.getStack()));
+  normalizePlacementTag(original.getStack(),block,tentative);tentative=UnifiedOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(tentative,original.getStack()));
   BlockPos anchor=GeometryRuntime.anchor(tentative,original.getSide());
   BlockPos root=GeometryRuntime.hasExplicitAnchor(tentative)
    ?LogicalTransform.masterOrigin(original.getBlockPos(),new int[]{anchor.getX(),anchor.getY(),anchor.getZ()},GeometryRuntime.rotation(tentative))
@@ -59,7 +59,7 @@ public final class ArchitectureBlockItem extends BlockItem {
   };
   BlockState base=block.getPlacementState(shifted);if(base==null)return ActionResult.FAIL;
   normalizePlacementTag(original.getStack(),block,base);
-  BlockState finalState=DocumentOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(base,original.getStack()));
+  BlockState finalState=UnifiedOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(base,original.getStack()));
   java.util.List<ArchitecturePartBlockEntity.Binding> guests=GeometryRuntime.rootInsertionGuests(original.getWorld(),root,finalState);
   if(guests==null&&!shifted.canPlace())return ActionResult.FAIL;
   if(!AuthoredSurfacePlacement.validate(block,original,root,finalState))return ActionResult.FAIL;
@@ -70,7 +70,7 @@ public final class ArchitectureBlockItem extends BlockItem {
  @Override protected BlockState getPlacementState(ItemPlacementContext context){
   BlockState base=getBlock().getPlacementState(context);if(base==null)return null;
   normalizePlacementTag(context.getStack(),(ArchitectureBlock)getBlock(),base);
-  BlockState state=DocumentOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(base,context.getStack()));return GeometryRuntime.rootInsertionGuests(context.getWorld(),context.getBlockPos(),state)!=null||canPlace(context,state)?state:null;
+  BlockState state=UnifiedOwnerDefinitions.canonicalItemRootAnchor(applyStateTag(base,context.getStack()));return GeometryRuntime.rootInsertionGuests(context.getWorld(),context.getBlockPos(),state)!=null||canPlace(context,state)?state:null;
  }
 
  static void normalizePlacementTag(ItemStack stack,ArchitectureBlock block,BlockState placement){
@@ -95,8 +95,8 @@ public final class ArchitectureBlockItem extends BlockItem {
    }
    if(placement.contains(net.minecraft.state.property.Properties.OPEN))properties.putString("open","false");
    Property<?> lit=block.getStateManager().getProperty("lit");if(lit instanceof net.minecraft.state.property.BooleanProperty value)properties.putString("lit",Boolean.toString(placement.get(value)));
-   if(block.definition.placement_properties!=null)block.definition.placement_properties.forEach(properties::putString);
   }
+  if((block.definition.logical||block.definition.unified)&&block.definition.placement_properties!=null)block.definition.placement_properties.forEach(properties::putString);
   if(block.definition.kind.equals("door")){
    if(placement.contains(net.minecraft.state.property.Properties.DOUBLE_BLOCK_HALF))properties.putString("half","lower");
    if(placement.contains(net.minecraft.state.property.Properties.OPEN))properties.putString("open","false");

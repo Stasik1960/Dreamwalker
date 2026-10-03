@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "version": "2.1.0-unified-gallery.2",
+  "java": "17.0.20.1",
+  "gradle": "8.8",
+  "finalCommand": "gradlew.bat --offline --no-daemon --console=plain -I tools/verification-direct-resources.init.gradle check build",
+  "fullCheckBuildSucceeded": true,
+  "initialCountAndSourceIdentityTestsCorrected": [
+    "test_build_production_gallery",
+    "test_collision_grid",
+    "test_support_normalization"
+  ],
+  "initialLogSha256": "e0dea586937813d42e64073e9b50d20801868aabd7ff23c32d688a8e7cd9ee98",
+  "finalLogSha256": "5b11f3c6d172acf5cb7db9b35ef6c2fbf136c252a88702433aa6f3b1ffea7eb0"
+}

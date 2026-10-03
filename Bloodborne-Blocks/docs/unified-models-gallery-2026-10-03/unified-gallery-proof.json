@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "readOnly": true,
+  "passed": true,
+  "worlds": {
+    "city": "output/Bloodborne-Unified-City-Corrected-2026-10-03",
+    "gallery": "output/Bloodborne-Unified-City-Gallery-Corrected-2026-10-03",
+    "cutoffExclusive": 228
+  },
+  "registry": {
+    "cityDefinitions": 3554,
+    "logicalDefinitions": 50,
+    "serviceIds": 1,
+    "activeIds": 3605,
+    "debugIds": 3605,
+    "retiredNumericIds": 4099,
+    "retiredNumericIdsUsed": 0,
+    "usedActiveIds": 3605,
+    "unregisteredOrRetiredUsed": {}
+  },
+  "manifest": {
+    "schemaVersion": 2,
+    "coverage": 3605,
+    "specimens": 3605,
+    "editable": 3604,
+    "service": 1,
+    "stableKeys": 3605,
+    "baselineHashesChecked": 3605,
+    "baselineHashErrors": 0,
+    "sourceFilesHashed": 48,
+    "sourceHashErrors": 0,
+    "immutableCopyErrors": 0
+  },
+  "treeBush": {
+    "treeIds": [
+      "o_c001"
+    ],
+    "bushIds": [
+      "o_dry_bush"
+    ],
+    "treeCanonicalVariant": "tree_254d81d6bf3e",
+    "treePublicPlacementProperties": {
+      "variant": "tree_254d81d6bf3e"
+    },
+    "treeSpecimens": 1,
+    "bushSpecimens": 1
+  },
+  "inspection": {
+    "specimens": 3605,
+    "classifications": {
+      "unchanged": 3604,
+      "service-unchanged": 1
+    },
+    "changedSpecimens": 0,
+    "actualConstructionCells": 3605
+  },
+  "belowCutoff": {
+    "cutoffExclusive": 228,
+    "regionsCity": 16,
+    "regionsGallery": 16,
+    "cityChunks": 10009,
+    "galleryChunks": 10009,
+    "sharedChunks": 10009,
+    "cityOnlyChunks": 0,
+    "galleryOnlyChunks": 0,
+    "blockPositionsCompared": 748192768,
+    "blockMismatches": 0,
+    "blockEntityMismatches": 0,
+    "tickMismatches": 0,
+    "heightmapInvalidations": 587,
+    "unexpectedMetadataMismatches": 0,
+    "city": {
+      "nonAir": 34278771,
+      "bloodborne": 27673420,
+      "foreign": 6605351,
+      "yuushya": 416
+    },
+    "gallery": {
+      "nonAir": 34278771,
+      "bloodborne": 27673420,
+      "foreign": 6605351,
+      "yuushya": 416
+    },
+    "highestCityNonAirY": 224
+  },
+  "galleryBand": {
+    "manifest": {
+      "minY": 228,
+      "maxY": 319,
+      "columns": 61,
+      "bounds": [
+        -793,
+        228,
+        -469,
+        -58,
+        319,
+        227
+      ]
+    },
+    "supportExpected": 284611,
+    "supportSeen": 284611,
+    "expectedCells": 5153,
+    "seenCells": 5153,
+    "expectedHelpers": 1548,
+    "seenHelpers": 1548,
+    "markers": 3605,
+    "seenMarkers": 3605,
+    "seenSigns": 3605,
+    "expectedNonAir": 293369,
+    "actualNonAir": 293369,
+    "foreignBlocks": 288216,
+    "yuushyaBlocks": 0,
+    "unexpectedExamples": [],
+    "stateMismatchExamples": []
+  },
+  "helpers": {
+    "entitiesChecked": 147318,
+    "orphanCount": 0,
+    "bindingsChecked": 157297,
+    "unregisteredOwners": {}
+  },
+  "errorCount": 0,
+  "errors": []
+}

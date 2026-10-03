@@ -97,9 +97,16 @@ def compile_groups(rules, resources):
     for mapping in runtime['states'].values():
         ident=mapping['id'].split(':')[1]
         definition=runtime_definitions.get(ident,{})
-        if not definition.get('whole_owner') or mapping['properties']!={'facing':'north'}:
+        # Unified owners retain canonical/variant identity; resolve the exact
+        # registered state instead of assuming the pre-unification north pose.
+        if not definition.get('whole_owner'):
             raise ValueError('WHOLE_OWNER_RUNTIME_IDENTITY_MISMATCH')
-        actual=runtime_geometry['blocks'][ident]['states']['facing=north']
+        state_key = ','.join(k+'='+str(v) for k,v in sorted(mapping['properties'].items()))
+        actual=runtime_geometry['blocks'][ident]['states'].get(state_key)
+        if actual is None:
+            raise ValueError('WHOLE_OWNER_RUNTIME_STATE_MISSING')
+        if 'ref' in actual:
+            actual = runtime_geometry.get('profiles', {}).get(actual['ref'], actual)
         if {tuple(map(int,p.split(','))) for p in actual['cells']} != {tuple(p) for p in mapping['shape']}:
             raise ValueError('WHOLE_OWNER_RUNTIME_SHAPE_MISMATCH')
     compiled = list(rules)

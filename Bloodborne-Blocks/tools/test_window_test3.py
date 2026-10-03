@@ -86,6 +86,9 @@ class WindowTest3Contracts(unittest.TestCase):
             else:
                 before = before[key]; after = after[key]
                 before.pop(WINDOW, None); after.pop(WINDOW, None)
+            # The dry bush is a separate, explicitly approved construction.
+            # Every pre-existing family, including all tree states, remains exact.
+            after.pop('o_dry_bush', None)
             self.assertEqual(before, after, name)
 
     def test_generator_is_byte_identical_when_reapplied(self) -> None:

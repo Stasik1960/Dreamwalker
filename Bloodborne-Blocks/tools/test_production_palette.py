@@ -27,7 +27,7 @@ class ProductionPaletteTests(unittest.TestCase):
 
     def test_exact_manifest_registry_and_no_superseded_members(self):
         ids={o['id'] for o in self.manifest['objects']}
-        self.assertEqual(49,self.required['expected_production_count']);self.assertEqual(49,len(self.required_ids));self.assertEqual(ids,self.required_ids);self.assertEqual(ids,set(self.blocks));self.assertEqual(ids,set(self.families))
+        self.assertEqual(50,self.required['expected_production_count']);self.assertEqual(50,len(self.required_ids));self.assertEqual(ids,self.required_ids);self.assertEqual(ids,set(self.blocks));self.assertEqual(ids,set(self.families))
         self.assertTrue(all(o['status']=='PRODUCTION' for o in self.manifest['objects']))
         self.assertFalse(ids & {x['id'] for x in self.manifest['excluded']})
         self.assertFalse(ids & set(self.required['forbidden_production_ids']))
@@ -36,7 +36,7 @@ class ProductionPaletteTests(unittest.TestCase):
         self.assertFalse((RES/'bloodborne_blocks/v2/definitions.json').exists())
 
     def test_tree_and_semantic_supersession(self):
-        self.assertIn('o_c001',self.blocks)
+        self.assertIn('o_c001',self.blocks);self.assertIn('o_dry_bush',self.blocks)
         for ident in ('o_c001_a','o_c001_b','o_c009_a','o_c009_b','o_dead_tree_planter','o_c008','o_c008_4','o_c282_a','o_c282_b','o_c654'):
             self.assertNotIn(ident,self.blocks)
             self.assertFalse((RES/f'assets/bloodborne_blocks/models/item/{ident}.json').exists())

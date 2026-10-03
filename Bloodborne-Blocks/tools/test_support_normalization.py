@@ -158,6 +158,10 @@ class SupportNormalizationTests(unittest.TestCase):
         required = json.loads((ROOT/'docs/required-production-families.json').read_text(encoding='utf8'))
         reauthored = {row['id'] for row in required['restorations']} | set(required['c003_production_ids'])
         redirected = {'o_c046', 'o_c1319', 'o_c1962_a', 'o_c1962_b'}
+        bush_id = required['tree_bush_correction']['bushId']
+        self.assertEqual({bush_id}, {family['id'] for family in data['families']
+            if family['id'] not in frozen_by_id and family['id'] not in reauthored | redirected})
+        reauthored.add(bush_id)
         manifest = json.loads((ROOT/'docs/production-logical-palette.json').read_text(encoding='utf8'))
         expected_ids = {row['id'] for row in manifest['objects']}
         self.assertEqual({family['id'] for family in data['families']},expected_ids)

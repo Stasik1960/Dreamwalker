@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "old-registry-count",
+      "rejected": true,
+      "reason": "registry proof does not match the packaged JAR"
+    },
+    {
+      "case": "wrong-gallery-world",
+      "rejected": true,
+      "reason": "gallery proof does not match the packaged world"
+    },
+    {
+      "case": "old-city-count",
+      "rejected": true,
+      "reason": "city proof does not match the packaged registry"
+    },
+    {
+      "case": "restored-removed-blocks",
+      "rejected": true,
+      "reason": "invalid protected model dependency proof"
+    },
+    {
+      "case": "missing-wall-model",
+      "rejected": true,
+      "reason": "invalid protected model dependency proof"
+    },
+    {
+      "case": "wrong-client-version",
+      "rejected": true,
+      "reason": "client or build proof belongs to another version"
+    }
+  ]
+}

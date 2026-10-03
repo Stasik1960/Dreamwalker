@@ -23,7 +23,7 @@ class AgonyPatchTests(unittest.TestCase):
         self.assertEqual(sorted(set(MERGES)|CONTEXT),result['approved_retired_removals'])
 
     def test_retired_rules_resolve_or_are_unconsumed_context(self):
-        self.assertEqual(49,len(self.ds))
+        self.assertEqual(50,len(self.ds))
         rules,_=direct_rules(LOGICAL)
         targets={t[0].split(':')[1] for r in rules for t in [r.target]+[o.target for o in r.outputs]}
         self.assertFalse(targets&(set(MERGES)|CONTEXT|{'o_c003'}))

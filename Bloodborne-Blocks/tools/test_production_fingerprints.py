@@ -122,6 +122,20 @@ class ProductionFingerprintTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, r"added=\['o_unapproved_new'\]"):
                 verify(root=ROOT, baseline_path=baseline, allowlist_path=allow)
 
+    def test_additions_need_an_explicit_named_allowlist_entry(self):
+        baseline = Path(self.temp.name) / "before-dry-bush.json"
+        data = read(self.base)
+        data["fingerprints"]["family_ids"].remove("o_dry_bush")
+        data["fingerprints"]["families"].pop("o_dry_bush")
+        payload = {key: value for key, value in data.items() if key != "sha256"}
+        data["sha256"] = fingerprints.digest_bytes(fingerprints.canonical(payload)); write(baseline, data)
+        with patch.object(fingerprints, "collect", return_value=self.snapshot):
+            with self.assertRaisesRegex(ValueError, r"added=\['o_dry_bush'\]"):
+                verify(root=ROOT, baseline_path=baseline)
+            allow = Path(self.temp.name) / "dry-bush.allow.json"; write(allow, {"additions": ["o_dry_bush"]})
+            report = verify(root=ROOT, baseline_path=baseline, allowlist_path=allow)
+        self.assertEqual(["o_dry_bush"], report["approved_additions"])
+
     def test_runtime_java_hashes_are_reported_without_exempting_family_changes(self):
         current = dict(self.snapshot); current["runtime_java_sha256"] = dict(self.snapshot["runtime_java_sha256"])
         current["runtime_java_sha256"]["src/main/java/example/Changed.java"] = "changed"

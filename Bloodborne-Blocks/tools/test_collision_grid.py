@@ -67,7 +67,7 @@ class CollisionGridTests(unittest.TestCase):
         self.assertEqual('PASS',report['status'],report['errors'][:5])
         self.assertEqual([],report['needs_normalization'])
         self.assertEqual(0,report['summary']['resource_states_changed'])
-        self.assertEqual(48,report['summary']['protected_logical_families'])
+        self.assertEqual(49,report['summary']['protected_logical_families'])
         self.assertTrue(all(row['union_preserved'] for row in report['logical_states']))
         self.assertEqual(report['summary']['city_states'],sum(len(row['states']) for row in report['city_normalization_skips']))
         self.assertTrue(all(row['unchanged'] and row['reason'] for row in report['city_normalization_skips']))

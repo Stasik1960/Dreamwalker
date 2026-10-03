@@ -181,17 +181,17 @@ def capture(*, root: Path = ROOT, output: Path = DEFAULT_BASELINE) -> dict[str, 
     return baseline
 
 
-def allowlist(path: Path | None, family_ids: set[str], retired: set[str]) -> tuple[set[str], set[str]]:
+def allowlist(path: Path | None, family_ids: set[str], retired: set[str]) -> tuple[set[str], set[str], set[str]]:
     if path is None:
-        return set(), set()
+        return set(), set(), set()
     data = read(path)
-    if set(data) - {"families", "display_names"}:
-        raise ValueError("allowlist supports only families and display_names")
-    families = set(data.get("families", [])); labels = set(data.get("display_names", []))
-    if (not all(isinstance(value, str) for value in families | labels)
-            or not families <= family_ids | retired or not labels <= family_ids | retired):
+    if set(data) - {"families", "display_names", "additions"}:
+        raise ValueError("allowlist supports only families, display_names and additions")
+    families = set(data.get("families", [])); labels = set(data.get("display_names", [])); additions = set(data.get("additions", []))
+    if (not all(isinstance(value, str) for value in families | labels | additions)
+            or not families <= family_ids | retired or not labels <= family_ids | retired or not additions <= family_ids):
         raise ValueError("allowlist contains an unknown family ID")
-    return families, labels
+    return families, labels, additions
 
 
 def verify(*, root: Path = ROOT, baseline_path: Path = DEFAULT_BASELINE,
@@ -206,20 +206,22 @@ def verify(*, root: Path = ROOT, baseline_path: Path = DEFAULT_BASELINE,
     actual = collect(root)
     expected_ids = set(expected.get("family_ids", [])); actual_ids = set(actual["family_ids"])
     removed, added = expected_ids - actual_ids, actual_ids - expected_ids
-    allowed_families, allowed_labels = allowlist(allowlist_path, actual_ids, retired_ids(root))
+    allowed_families, allowed_labels, allowed_additions = allowlist(allowlist_path, actual_ids, retired_ids(root))
     # A baseline family may disappear only when the caller explicitly accepts
     # that named, documented retirement.  Never infer approval from the
-    # current palette and never allow additions through this mechanism.
+    # current palette. Additions require their own explicit, named field.
     unapproved_removed = removed - allowed_families
-    if unapproved_removed or added:
-        raise ValueError(f"family IDs changed; removed={sorted(unapproved_removed)}, added={sorted(added)}")
+    unapproved_added = added - allowed_additions
+    stale_additions = allowed_additions - added
+    if unapproved_removed or unapproved_added or stale_additions:
+        raise ValueError(f"family IDs changed; removed={sorted(unapproved_removed)}, added={sorted(unapproved_added)}, stale_additions={sorted(stale_additions)}")
     expected_runtime = expected.get("runtime_java_sha256", {})
     actual_runtime = actual["runtime_java_sha256"]
     runtime_changed = sorted({*expected_runtime, *actual_runtime}
                              - {path for path in expected_runtime if expected_runtime.get(path) == actual_runtime.get(path)})
-    changed_core = [ident for ident in sorted(actual_ids)
+    changed_core = [ident for ident in sorted(actual_ids & expected_ids)
                     if expected["families"].get(ident, {}).get("core") != actual["families"][ident]["core"]]
-    changed_labels = [ident for ident in sorted(actual_ids)
+    changed_labels = [ident for ident in sorted(actual_ids & expected_ids)
                       if expected["families"].get(ident, {}).get("display_names") != actual["families"][ident]["display_names"]]
     forbidden_core = sorted(set(changed_core) - allowed_families)
     forbidden_labels = sorted(set(changed_labels) - allowed_labels - allowed_families)
@@ -227,7 +229,7 @@ def verify(*, root: Path = ROOT, baseline_path: Path = DEFAULT_BASELINE,
         raise ValueError(f"unexpected fingerprint changes; families={forbidden_core}, display_names={forbidden_labels}")
     return {"result": "PASS", "source_commit": baseline["source_commit"], "baseline_sha256": baseline.get("sha256"),
             "allowed_families": sorted(allowed_families), "allowed_display_names": sorted(allowed_labels),
-            "approved_retired_removals": sorted(removed),
+            "approved_retired_removals": sorted(removed), "approved_additions": sorted(added),
             "changed_families": changed_core, "changed_display_names": changed_labels,
             "runtime_java_metadata": {"changed": runtime_changed, "baseline_sha256": digest_bytes(canonical(expected_runtime)),
                                       "current_sha256": digest_bytes(canonical(actual_runtime))}}

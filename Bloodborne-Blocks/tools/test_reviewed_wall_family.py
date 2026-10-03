@@ -12,14 +12,18 @@ class ReviewedWallTests(unittest.TestCase):
     def setUpClass(cls):
         cls.proof=json.loads((ROOT/'reviewed-wall-family.json').read_bytes())
         cls.defs={d['id']:d for d in json.loads((ROOT/'definitions.json').read_bytes())['blocks']}
-        cls.geometry=json.loads((ROOT/'geometry.json').read_bytes())['blocks']
+        geo=json.loads((ROOT/'geometry.json').read_bytes());cls.geometry=geo['blocks'];cls.profiles=geo.get('profiles',{})
         cls.mapping=json.loads((ROOT/'owner-runtime-mappings.json').read_bytes())['states']
         cls.meshes=json.loads(gzip.decompress((ROOT/'owner-meshes.json.gz').read_bytes()))
 
     def test_aliases_are_exact_source_family_not_visual_similarity(self):
-        expected={v['id'].split(':')[1]:s for s,v in self.mapping.items() if s.startswith('minecraft:stone_brick_wall[')}
-        self.assertEqual(expected,self.proof['aliases'])
-        self.assertEqual(66,len(expected))
+        self.assertEqual(66,len(self.proof['aliases']))
+        for owner,raw in self.proof['aliases'].items():
+            self.assertTrue(raw.startswith('minecraft:stone_brick_wall['))
+            if 'unifiedAliases'in self.proof:
+                expected=self.proof['unifiedAliases'][owner]['facing=north'];actual=self.mapping[raw]
+                self.assertEqual(expected['id'],actual['id']);self.assertEqual(expected['properties'],actual['properties'])
+            else:self.assertEqual('bloodborne_blocks:'+owner,self.mapping[raw]['id'])
         self.assertEqual({'bloodborne_blocks:block/stone_brick_wall_'+p for p in ('post','side','side_tall')},set(self.proof['artProof']['models']))
 
     def test_all_building_states_reuse_exact_art_and_collision(self):
@@ -30,9 +34,13 @@ class ReviewedWallTests(unittest.TestCase):
                 oldkey='facing='+DIRS[(DIRS.index(row['facing'])+turn)%4]
                 key='connection='+connection+',facing='+facing
                 owner=row['owner']
-                self.assertEqual(self.defs[owner]['models'][oldkey],new['models'][key])
+                if 'unifiedAliases'in self.proof:
+                    self.assertEqual(self.proof['legacyModels'][owner][oldkey],new['models'][key])
+                    target=self.proof['unifiedAliases'][owner][oldkey];owner=target['id'].split(':')[1];oldkey=','.join(k+'='+v for k,v in sorted(target['properties'].items()))
+                else:self.assertEqual(self.defs[owner]['models'][oldkey],new['models'][key])
                 self.assertIn(new['models'][key],self.meshes)
-                self.assertEqual(self.geometry[owner]['states'][oldkey],self.geometry[new['id']]['states'][key])
+                g=self.geometry[owner]['states'][oldkey];g=self.profiles.get(g.get('ref'),g)
+                self.assertEqual(g['cells'],self.geometry[new['id']]['states'][key]['cells'])
                 self.assertEqual({'0,0,0'},set(self.geometry[new['id']]['states'][key]['cells']))
 
     def test_pair_corner_t_cross_are_proved_not_invented(self):

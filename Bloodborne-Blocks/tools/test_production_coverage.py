@@ -49,14 +49,14 @@ class ProductionCoverageTests(unittest.TestCase):
         return resources, manifest
 
     def test_handwritten_union_is_fixed(self):
-        self.assertEqual(len(required_ids(read(DEFAULT_REQUIRED))), 49)
+        self.assertEqual(len(required_ids(read(DEFAULT_REQUIRED))), 50)
         for old, new in [('o_barrel_0','o_barrel'),('o_books_0','o_books'),('o_bag_0','o_bag')]:
             self.assertEqual(read(DEFAULT_REQUIRED)['successors'][old], {'status':'MERGED_WITH_SUCCESSOR','ids':[new]})
 
     def test_live_complete_palette_passes(self):
         report = validate(required_path=DEFAULT_REQUIRED, resources=DEFAULT_RESOURCES, manifest_path=DEFAULT_MANIFEST)
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["required_count"], 49)
+        self.assertEqual(report["required_count"], 50)
 
     def test_required_spec_catches_id_removed_from_every_production_input(self):
         with tempfile.TemporaryDirectory() as folder:

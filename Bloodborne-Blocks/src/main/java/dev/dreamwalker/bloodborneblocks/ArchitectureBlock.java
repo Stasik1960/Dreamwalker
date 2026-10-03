@@ -30,7 +30,7 @@ public class ArchitectureBlock extends Block implements Waterloggable {
  public static ArchitectureBlock create(BloodborneBlocks.Definition d){CONSTRUCTING.set(d);try{return d.logical||d.city_compat||d.whole_owner?new SharedArchitectureBlock(d):new ArchitectureBlock(d);}finally{CONSTRUCTING.remove();}}
  private static Settings settings(BloodborneBlocks.Definition d){
   Block material=semanticMaterial(d);BlockState materialState=material.getDefaultState();
-  Settings s=Settings.create().strength(semanticHardness(d),semanticResistance(d)).sounds(material.getSoundGroup(materialState)).mapColor(materialState.getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
+  Settings s=Settings.create().strength(semanticHardness(d),semanticResistance(d)).sounds(material.getSoundGroup(materialState)).mapColor(materialState.getMapColor(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)).slipperiness(d.slipperiness).velocityMultiplier(d.velocity).jumpVelocityMultiplier(d.jump).luminance(state->d.states.get(BloodborneBlocks.key(state,d))[2]).pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK);
   if(!d.full_cube||d.custom_geometry)s.nonOpaque().solidBlock((state,world,pos)->false).suffocates((state,world,pos)->false).blockVision((state,world,pos)->false);
   if(!d.offset.equals("none"))s.offset(d.offset.equals("xyz")?OffsetType.XYZ:OffsetType.XZ).dynamicBounds();
   return d.logical||d.city_compat||d.whole_owner?s.dynamicBounds():s;
@@ -48,7 +48,7 @@ public class ArchitectureBlock extends Block implements Waterloggable {
  private static float semanticResistance(BloodborneBlocks.Definition d){return !d.modular||d.semantic==null?d.resistance:switch(d.semantic){case "window"->.3F;case "tree","bush","plant","floor_decoration"->.2F;case "ladder"->.4F;case "wood","container","bench"->3F;default->d.resistance;};}
  protected ArchitectureBlock(BloodborneBlocks.Definition d){
   super(settings(d));definition=d;BlockState defaultState=getStateManager().getDefaultState();
-  for(var e:d.defaultProperties.entrySet())defaultState=BloodborneBlocks.set(defaultState,d.propertyObjects.get(e.getKey()),e.getValue());setDefaultState(defaultState);
+  for(var e:d.defaultProperties.entrySet()){Property<?> property=d.propertyObjects.get(e.getKey());if(property!=null)defaultState=BloodborneBlocks.set(defaultState,property,e.getValue());}setDefaultState(defaultState);
   for(BlockState state:getStateManager().getStates()){
    if(!d.states.containsKey(BloodborneBlocks.key(state)))throw new IllegalStateException("Unmapped state "+state);
    BlockState original=d.sourceBlock.getDefaultState();for(var e:state.getEntries().entrySet())if(original.contains(e.getKey()))original=BloodborneBlocks.set(original,e.getKey(),BloodborneBlocks.value(e.getKey(),e.getValue()));originals.put(state,original);
@@ -98,7 +98,7 @@ public class ArchitectureBlock extends Block implements Waterloggable {
   if(result.contains(BloodborneBlocks.ASSEMBLED))result=result.with(BloodborneBlocks.ASSEMBLED,true);
   if(definition.extra_facing&&!definition.logical)result=result.with(Properties.HORIZONTAL_FACING,ctx.getHorizontalPlayerFacing().getOpposite());
   if(definition.logical||DocumentOwnerDefinitions.manual(definition))result=logicalMountPlacement(result,ctx.getSide(),ctx.getHorizontalPlayerFacing());
-  if(DocumentOwnerDefinitions.manual(definition)){
+  if(DocumentOwnerDefinitions.manual(definition)||UnifiedOwnerDefinitions.matches(definition)){
    Property<?> rootAnchor=getStateManager().getProperty("root_anchor");if(rootAnchor!=null)result=BloodborneBlocks.set(result,rootAnchor,"canonical");
   }
   if(definition.logical)result=GeometryRuntime.applyPlacementPolicy(result,ctx.getSide());

@@ -33,7 +33,7 @@ public final class ItemModelSelectionChecks {
   BloodborneBlocks.Definition productionArt=production.blocks.stream().filter(d->d.properties.containsKey("variant")&&d.properties.containsKey("visual")).findFirst().orElseThrow();
   ArchitectureBlock productionBlock=register(productionArt,false);
   ArchitectureBlock window=register(find(production.blocks,"o_shuttered_window"),false);
-  BloodborneBlocks.Definition cityArt=city.blocks.stream().filter(d->d.models!=null&&!d.whole_owner&&d.properties.containsKey("variant")).findFirst().orElseThrow();
+  BloodborneBlocks.Definition cityArt=city.blocks.stream().filter(d->d.models!=null&&d.properties.containsKey("variant")&&d.properties.get("variant").size()>1).findFirst().orElseThrow();
   ArchitectureBlock cityBlock=register(cityArt,true);
 
   checkProductionVariantAndVisual(productionBlock,productionArt);
@@ -42,7 +42,29 @@ public final class ItemModelSelectionChecks {
   checkCityVariant(cityBlock,cityArt);
   checkGuiBoundsMathAndCache();
   checkAutumnQuadPoolPalette();
+  checkSeparateTreeAndBush(production,productionBlock);
   System.out.println("ITEM MODEL SELECTION CHECKS PASSED");
+ }
+
+ private static void checkSeparateTreeAndBush(BloodborneBlocks.Data production,ArchitectureBlock registeredArt){
+  ArchitectureBlock tree=registeredArt.definition.id.equals("o_c001")?registeredArt:register(find(production.blocks,"o_c001"),false);
+  ArchitectureBlock bush=register(find(production.blocks,"o_dry_bush"),false);
+  check(tree!=bush&&!Registries.BLOCK.getId(tree).equals(Registries.BLOCK.getId(bush)),"tree and bush have separate registry IDs");
+  check(!bush.definition.properties.containsKey("variant")&&bush.getStateManager().getProperty("variant")==null,"bush has no tree or alternate-construction selector");
+  check(tree.definition.properties.get("variant").stream().noneMatch(v->v.startsWith("bush_")),"tree has no bush model state");
+  for(String facing:List.of("north","east","south","west")){
+   ItemStack oldTree=stack(tree);put(oldTree,"variant",nonDefault(tree.definition,"variant"));put(oldTree,"facing","south");
+   var placement=BloodborneBlocks.set(tree.getDefaultState(),tree.getStateManager().getProperty("facing"),facing);
+   ArchitectureBlockItem.normalizePlacementTag(oldTree,tree,placement);var placed=ArchitectureBlockItem.applyStateTag(placement,oldTree);
+   check(BloodborneBlocks.key(placed).contains("variant="+tree.definition.defaultProperties.get("variant")),"tree placement always chooses its one public construction");
+   check(BloodborneBlocks.key(placed).contains("facing="+facing),"tree placement preserves player-facing direction");
+   ItemStack oldBush=stack(bush);put(oldBush,"variant",tree.definition.defaultProperties.get("variant"));put(oldBush,"facing","south");
+   var bushPlacement=BloodborneBlocks.set(bush.getDefaultState(),bush.getStateManager().getProperty("facing"),facing);
+   ArchitectureBlockItem.normalizePlacementTag(oldBush,bush,bushPlacement);
+   check(BloodborneBlocks.key(ArchitectureBlockItem.applyStateTag(bushPlacement,oldBush)).equals("facing="+facing+",visual=base"),"bush placement chooses only its own model and player direction");
+  }
+  check(ArchitectureCreativeCatalog.mainEntries().stream().filter(s->s.getItem() instanceof net.minecraft.item.BlockItem i&&i.getBlock()==tree).count()==1,"one public tree catalog entry");
+  check(ArchitectureCreativeCatalog.mainEntries().stream().filter(s->s.getItem() instanceof net.minecraft.item.BlockItem i&&i.getBlock()==bush).count()==1,"one public bush catalog entry");
  }
 
  private static void checkProductionVariantAndVisual(ArchitectureBlock block,BloodborneBlocks.Definition definition) {
@@ -67,7 +89,15 @@ public final class ItemModelSelectionChecks {
  private static void checkCityVariant(ArchitectureBlock block,BloodborneBlocks.Definition definition) {
   ItemStack stack=stack(block);put(stack,"variant",nonDefault(definition,"variant"));String key=ArchitectureCreativeCatalog.itemModelKey(block,stack);
   Counter fallback=new Counter("city fallback"),selected=new Counter("city "+key);Map<String,BakedModel> variants=new HashMap<>();CityVariantItemModel wrapper=new CityVariantItemModel(fallback.model(),block,variants,new GuiItemBounds.Cache());variants.put(key,selected.model());
-  emit(wrapper,stack);selected.only(fallback,selected);put(stack,"variant","invalid");emit(wrapper,stack);fallback.only(fallback,selected);
+  emit(wrapper,stack);selected.only(fallback,selected);put(stack,"variant","invalid");emit(wrapper,stack);
+  if(definition.unified){
+   selected.only(fallback,selected);
+   put(stack,"variant",nonDefault(definition,"variant"));put(stack,"facing","west");
+   var placement=BloodborneBlocks.set(block.getDefaultState(),block.getStateManager().getProperty("facing"),"south");
+   ArchitectureBlockItem.normalizePlacementTag(stack,block,placement);
+   var normalized=UnifiedOwnerDefinitions.canonicalItemRootAnchor(ArchitectureBlockItem.applyStateTag(placement,stack));
+   check(BloodborneBlocks.key(normalized).equals("facing=south,root_anchor=canonical,variant=0"),"unified placement resets private pose while retaining player facing");
+  }else fallback.only(fallback,selected);
  }
 
  private static void checkGuiBoundsMathAndCache(){

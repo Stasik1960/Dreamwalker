@@ -15,7 +15,12 @@ import java.util.Set;
 final class ReviewedWallConnections {
  static final String ID="building_stone_brick_wall";
  private static final com.google.gson.JsonObject MANIFEST=loadManifest();
- private static final Set<String> ALIASES=Set.copyOf(MANIFEST.getAsJsonObject("aliases").keySet());
+ private static final Set<String> ALIASES=aliases();
+ private static Set<String> aliases(){
+  var result=new java.util.HashSet<>(MANIFEST.getAsJsonObject("aliases").keySet());
+  if(MANIFEST.has("unifiedAliases"))for(var owner:MANIFEST.getAsJsonObject("unifiedAliases").entrySet())for(var state:owner.getValue().getAsJsonObject().entrySet())result.add(state.getValue().getAsJsonObject().get("id").getAsString().replace("bloodborne_blocks:",""));
+  return Set.copyOf(result);
+ }
  private static final Direction[] SIDES={Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST};
  private static com.google.gson.JsonObject loadManifest(){
   try(var stream=ReviewedWallConnections.class.getResourceAsStream("/bloodborne_blocks/city/reviewed-wall-family.json")){
@@ -31,11 +36,19 @@ final class ReviewedWallConnections {
   if(proof.size()!=32||!Set.copyOf(d.properties.get("connection")).equals(proof.keySet()))throw new IllegalStateException("Invalid reviewed wall connections");
   for(String level:java.util.List.of("low","tall"))for(int mask=0;mask<16;mask++){
    String connection=level+"_"+mask;var row=proof.getAsJsonObject(connection);String owner=row.get("owner").getAsString();
-   var original=definitions.get(owner);if(original==null||!ALIASES.contains(owner)||!original.whole_owner||!"minecraft:stone_brick_wall".equals(original.source))throw new IllegalStateException("Unproved wall owner "+owner);
+   var original=definitions.get(owner);if(!ALIASES.contains(owner)||original!=null&&(!original.whole_owner||!"minecraft:stone_brick_wall".equals(original.source)))throw new IllegalStateException("Unproved wall owner "+owner);
    int base=java.util.List.of("north","east","south","west").indexOf(row.get("facing").getAsString());
    for(int turn=0;turn<4;turn++){
     String key="connection="+connection+",facing="+SIDES[turn].asString(),old="facing="+SIDES[(base+turn)%4].asString();
-    if(!java.util.Objects.equals(d.models.get(key),original.models.get(old))||!java.util.Arrays.equals(d.states.get(key),original.states.get(old)))throw new IllegalStateException("Reviewed wall must reuse exact existing state/model "+key);
+    if(original!=null){
+     if(!java.util.Objects.equals(d.models.get(key),original.models.get(old))||!java.util.Arrays.equals(d.states.get(key),original.states.get(old)))throw new IllegalStateException("Reviewed wall must reuse exact existing state/model "+key);
+    }else{
+     var mapping=MANIFEST.getAsJsonObject("unifiedAliases").getAsJsonObject(owner).getAsJsonObject(old);
+     var target=definitions.get(mapping.get("id").getAsString().replace("bloodborne_blocks:",""));
+     String targetKey=mapping.getAsJsonObject("properties").entrySet().stream().sorted(java.util.Map.Entry.comparingByKey()).map(e->e.getKey()+"="+e.getValue().getAsString()).collect(java.util.stream.Collectors.joining(","));
+     String authoredMesh=MANIFEST.getAsJsonObject("legacyModels").getAsJsonObject(owner).get(old).getAsString();
+     if(target==null||!target.unified||!target.models.containsKey(targetKey)||!java.util.Objects.equals(d.models.get(key),authoredMesh)||!java.util.Arrays.equals(d.states.get(key),target.states.get(targetKey)))throw new IllegalStateException("Invalid unified reviewed-wall proof "+key);
+    }
    }
   }
  }
