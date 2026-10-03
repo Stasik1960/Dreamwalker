@@ -3,6 +3,7 @@
 Дата проверки: 2026-10-03. Исследованы 16 предоставленных файлов: шесть миров, четыре ресурспака, Bloodborne Forge JAR, GeckoLib, Oculus, Rubidium, Kappa и текстовый shader preset.
 
 - [Полное мнение, полезные вещи и приоритеты](OPINION.md).
+- [Уточнения: условия клиента, рост миров и извлечённые модели](FOLLOWUP.md).
 - [Полный технический список](FULL-INVENTORY.md): все 98 entity IDs, 121 item ID, 51 sound events, 32 animation files, новые/изменённые модели и размещения сущностей по картам.
 - [Все asset-изменения: CSV](resource-deltas-full.csv), [JSON](resource-deltas-full.json).
 - [Машинный инвентарь модовых assets и registry](mod-inventory-full.json).

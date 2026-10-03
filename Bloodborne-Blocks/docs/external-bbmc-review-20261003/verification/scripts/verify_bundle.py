@@ -21,6 +21,17 @@ for a in maps['archives']:
     assert all(c['chunks']==c['decoded_chunks'] for c in a['containers'].values())
     assert sum(a['block_state_counts'].values())==a['explicit_section_cells']
     assert len(a['block_counts'])==a['actual_unique_blocks']
+growth=read('map-growth.json')
+assert growth['valid'] and growth['selective_parser_comparison_chunks']==12
+assert growth['input_sha256_verified'] and growth['archive_measurements_match_reference']
+assert len(growth['archives'])==5
+for g in growth['archives']:
+    m=next(m for m in maps['archives'] if m['file']==g['file'])
+    assert g['overworld_terrain_chunks']==m['containers']['region']['decoded_chunks']
+    assert sum(g['heightmap_sources'].values())+g['heightmap_missing_chunks']==g['overworld_terrain_chunks']
+assert growth['archives'][0]['columns_with_surface_above_y0']==229485
+assert growth['archives'][-1]['columns_with_surface_above_y0']==748683
+assert growth['archives'][-1]['chunks_with_surface_above_y0']==3446
 inventory=read('mod-inventory-full.json')
 assert len(inventory['entities'])==len({e['id'] for e in inventory['entities']})==98
 assert sum(e['category']=='MONSTER' for e in inventory['entities'])==21

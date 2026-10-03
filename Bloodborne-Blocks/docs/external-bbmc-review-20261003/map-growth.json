@@ -1,0 +1,133 @@
+{
+  "valid": true,
+  "method": "Stored WORLD_SURFACE heightmaps, fallback MOTION_BLOCKING, overworld only; surface block y>0. Selective NBT reader checked against world_io on 12 chunks; v16 occupied chunk count matches previous heightmap render (same packing formula; reproducibility cross-check).",
+  "limitations": "Heightmaps may be stale after external edits. Includes natural terrain and foundations, excludes low terrain/underground, model overhang and entity geometry. This is not semantic architectural area or count of locations. Chunks without stored heightmaps are excluded; coverage differs by version. Coordinates largely differ, so this does not measure enlargement of the same named locations.",
+  "archives": [
+    {
+      "file": "bbmc_v1_map (2).zip",
+      "overworld_terrain_chunks": 17970,
+      "heightmap_missing_chunks": 5085,
+      "heightmap_sources": {
+        "WORLD_SURFACE": 12885
+      },
+      "chunks_with_surface_above_y0": 1043,
+      "columns_with_surface_above_y0": 229485,
+      "occupied_chunk_bbox": {
+        "x_min": -848,
+        "x_max_exclusive": -32,
+        "z_min": -480,
+        "z_max_exclusive": 96,
+        "width_blocks": 816,
+        "length_blocks": 576
+      }
+    },
+    {
+      "file": "bbmc_v13_map.zip",
+      "overworld_terrain_chunks": 35890,
+      "heightmap_missing_chunks": 8654,
+      "heightmap_sources": {
+        "WORLD_SURFACE": 27236
+      },
+      "chunks_with_surface_above_y0": 2464,
+      "columns_with_surface_above_y0": 513920,
+      "occupied_chunk_bbox": {
+        "x_min": -320,
+        "x_max_exclusive": 1200,
+        "z_min": -1264,
+        "z_max_exclusive": 272,
+        "width_blocks": 1520,
+        "length_blocks": 1536
+      },
+      "versus_v1": {
+        "occupied_chunk_overlap": 75,
+        "occupied_chunk_added": 2389,
+        "occupied_chunk_removed": 968,
+        "column_overlap": 13041,
+        "new_above_y0_columns": 500879,
+        "lost_above_y0_columns": 216444
+      }
+    },
+    {
+      "file": "bbmc_v14_map.zip",
+      "overworld_terrain_chunks": 35890,
+      "heightmap_missing_chunks": 8654,
+      "heightmap_sources": {
+        "WORLD_SURFACE": 27236
+      },
+      "chunks_with_surface_above_y0": 3447,
+      "columns_with_surface_above_y0": 748684,
+      "occupied_chunk_bbox": {
+        "x_min": -320,
+        "x_max_exclusive": 1200,
+        "z_min": -1264,
+        "z_max_exclusive": 288,
+        "width_blocks": 1520,
+        "length_blocks": 1552
+      },
+      "versus_v1": {
+        "occupied_chunk_overlap": 244,
+        "occupied_chunk_added": 3203,
+        "occupied_chunk_removed": 799,
+        "column_overlap": 46702,
+        "new_above_y0_columns": 701982,
+        "lost_above_y0_columns": 182783
+      }
+    },
+    {
+      "file": "bbmc_v15_map.zip",
+      "overworld_terrain_chunks": 35890,
+      "heightmap_missing_chunks": 8654,
+      "heightmap_sources": {
+        "WORLD_SURFACE": 27236
+      },
+      "chunks_with_surface_above_y0": 3446,
+      "columns_with_surface_above_y0": 748683,
+      "occupied_chunk_bbox": {
+        "x_min": -320,
+        "x_max_exclusive": 1200,
+        "z_min": -1264,
+        "z_max_exclusive": 288,
+        "width_blocks": 1520,
+        "length_blocks": 1552
+      },
+      "versus_v1": {
+        "occupied_chunk_overlap": 244,
+        "occupied_chunk_added": 3202,
+        "occupied_chunk_removed": 799,
+        "column_overlap": 46702,
+        "new_above_y0_columns": 701981,
+        "lost_above_y0_columns": 182783
+      }
+    },
+    {
+      "file": "bbmc_v16_map (1).zip",
+      "overworld_terrain_chunks": 35890,
+      "heightmap_missing_chunks": 8654,
+      "heightmap_sources": {
+        "WORLD_SURFACE": 27236
+      },
+      "chunks_with_surface_above_y0": 3446,
+      "columns_with_surface_above_y0": 748683,
+      "occupied_chunk_bbox": {
+        "x_min": -320,
+        "x_max_exclusive": 1200,
+        "z_min": -1264,
+        "z_max_exclusive": 288,
+        "width_blocks": 1520,
+        "length_blocks": 1552
+      },
+      "versus_v1": {
+        "occupied_chunk_overlap": 244,
+        "occupied_chunk_added": 3202,
+        "occupied_chunk_removed": 799,
+        "column_overlap": 46702,
+        "new_above_y0_columns": 701981,
+        "lost_above_y0_columns": 182783
+      }
+    }
+  ],
+  "elapsed_seconds": 47.3,
+  "selective_parser_comparison_chunks": 12,
+  "input_sha256_verified": true,
+  "archive_measurements_match_reference": true
+}

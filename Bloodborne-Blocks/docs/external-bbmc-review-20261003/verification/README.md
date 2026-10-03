@@ -84,3 +84,15 @@ python "$bbmcScripts\smoke.py" --work-root "$bbmcRuntime" --java "$bbmcJava" --i
 5. Только после baseline подключить optional renderer/shader profile и сравнить FPS/внешний вид. Условия лицензий и аппаратный профиль записать отдельно.
 
 Это будущий тест-план, а не список уже пройденных проверок. В нашей Fabric 1.20.1 сборке иностранные Forge JAR не устанавливались.
+
+## Дополнительное сравнение надземного footprint
+
+[map-growth.json](../map-growth.json) и [интерпретация](../FOLLOWUP.md) получены read-only scan пяти BBMC миров. Heightmaps не пересчитывались; отсутствие массива учитывается явно. `audit_growth.py` требует Python/NumPy и наш `tools/world_io.py`. Фактический исходный scan: Python -X utf8 fast_map_growth.py; 48,53 секунды. Публичный параметризованный вариант повторён на тех же пяти ZIP и сравнен по всем archive fields. Пример из корня Bloodborne-Blocks с ранее заданными scratch-путями:
+
+```powershell
+python -X utf8 "$bbmcScripts\audit_growth.py" --inputs "$bbmcInputs" --output "$bbmcOutput\growth" --project .
+```
+
+Графический клиент и просмотр анимаций в редакторе в этой дополнительной проверке не запускались. CRC/hash export выполнен локально; assets export не распространяется в этом каталоге.
+
+Итоговый portable run занял 47,30 секунды. Скрипт сверяет размер и SHA-256 каждого из пяти входов с manifest до scan и все archive fields с опубликованным reference до `valid=true`; обе проверки прошли. Неполные промежуточные данные записываются только в progress JSON.
