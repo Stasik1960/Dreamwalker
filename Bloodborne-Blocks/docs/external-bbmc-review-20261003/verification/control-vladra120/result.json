@@ -1,0 +1,28 @@
+{
+  "name": "control-vladra120",
+  "minecraft": "1.20.1",
+  "gecko": false,
+  "bloodborne": false,
+  "map": "<input-dir>\\VladraCastle (1).zip",
+  "command": [
+    "<java17-runtime>\\java.exe",
+    "-Xms256M",
+    "-Xmx2G",
+    "-jar",
+    "<audit-root>\\runtime\\vanilla-1.20.1-server.jar",
+    "nogui"
+  ],
+  "ready": true,
+  "exit_code": 0,
+  "timeout": false,
+  "elapsed_seconds": 19.59,
+  "log": "<audit-root>\\runtime\\control-vladra120\\console.log",
+  "commands": [
+    "list",
+    "save-all flush"
+  ],
+  "diagnostics": [
+    "[09:51:04] [Server thread/INFO]: Done (4.336s)! For help, type \"help\"",
+    "[09:51:06] [Server thread/INFO]: Stopping server"
+  ]
+}

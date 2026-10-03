@@ -1,0 +1,26 @@
+{
+  "name": "control-v14",
+  "gecko": false,
+  "bloodborne": false,
+  "map": null,
+  "command": [
+    "<java17-runtime>\\java.exe",
+    "-Xms256M",
+    "-Xmx2G",
+    "@libraries/net/minecraftforge/forge/1.18.2-40.2.21/win_args.txt",
+    "nogui"
+  ],
+  "ready": true,
+  "exit_code": 0,
+  "timeout": false,
+  "elapsed_seconds": 44.28,
+  "log": "<audit-root>\\runtime\\control-v14\\restart.log",
+  "commands": [
+    "list",
+    "save-all flush"
+  ],
+  "diagnostics": [
+    "[09:46:30] [Server thread/INFO] [minecraft/DedicatedServer]: Done (5.972s)! For help, type \"help\"",
+    "[09:46:31] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server"
+  ]
+}

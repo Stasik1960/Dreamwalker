@@ -1,0 +1,829 @@
+[
+  {
+    "file": "<input-dir>\\bbmc_v1_resource (2).zip",
+    "unresolved_reference_occurrences": 18,
+    "unique_targets": 13,
+    "references": [
+      {
+        "source": "assets/minecraft/models/block/blue_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_7.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/blue_stained_glass_pane_side.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/blue_stained_glass.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/brown_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_5.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/diorite_wall_side_tall.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/template_wall_tall.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/flower_pot.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/unlit_lantern.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/green_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_3.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_bottom.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_open.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_down.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/pressure_plate_inventory.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/polished_diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/purple_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_8.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/red_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_4.png"
+      },
+      {
+        "source": "assets/minecraft/blockstates/acacia_planks.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/bell.json"
+      }
+    ],
+    "note": "Static graph after Minecraft1.18.2 vanilla fallback. Some entries may be unused/intentional; no full texture bake or client visual verification."
+  },
+  {
+    "file": "<input-dir>\\bbmc_v13_resource (1).zip",
+    "unresolved_reference_occurrences": 53,
+    "unique_targets": 24,
+    "references": [
+      {
+        "source": "assets/minecraft/models/block/diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/diorite_wall_side_tall.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/template_wall_tall.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/flower_pot.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/unlit_lantern.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_bottom.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_open.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_down.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/pressure_plate_inventory.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/polished_diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/red_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_4.png"
+      },
+      {
+        "source": "assets/minecraft/blockstates/acacia_planks.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/bell.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_4.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_5.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_6.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_7.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_8.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_9.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_10.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_11.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_12.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_13.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_14.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_15.json"
+      }
+    ],
+    "note": "Static graph after Minecraft1.18.2 vanilla fallback. Some entries may be unused/intentional; no full texture bake or client visual verification."
+  },
+  {
+    "file": "<input-dir>\\bbmc_v14_resource (1).zip",
+    "unresolved_reference_occurrences": 44,
+    "unique_targets": 15,
+    "references": [
+      {
+        "source": "assets/minecraft/models/block/diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/diorite_wall_side_tall.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/template_wall_tall.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/flower_pot.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/unlit_lantern.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_bottom.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_open.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_down.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/pressure_plate_inventory.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/polished_diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/red_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_4.png"
+      },
+      {
+        "source": "assets/minecraft/blockstates/acacia_planks.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/bell.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/window_end_7.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_14.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_15.json"
+      }
+    ],
+    "note": "Static graph after Minecraft1.18.2 vanilla fallback. Some entries may be unused/intentional; no full texture bake or client visual verification."
+  },
+  {
+    "file": "<input-dir>\\bbmc_v15_resource (1).zip",
+    "unresolved_reference_occurrences": 44,
+    "unique_targets": 15,
+    "references": [
+      {
+        "source": "assets/minecraft/models/block/diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/diorite_wall_side_tall.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/template_wall_tall.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/flower_pot.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/unlit_lantern.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_bottom.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/jungle_trapdoor_open.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/texture.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_down.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "parent",
+        "target": "assets/minecraft/models/block/pressure_plate_inventory.json"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/light_weighted_pressure_plate_inventory.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/light_pressure_plate.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/polished_diorite_slab.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/polished_diorite.png"
+      },
+      {
+        "source": "assets/minecraft/models/block/red_stained_glass.json",
+        "kind": "texture",
+        "target": "assets/minecraft/textures/block/model_false/window_4.png"
+      },
+      {
+        "source": "assets/minecraft/blockstates/acacia_planks.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/bell.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/dark_oak_button.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/buttons/acacia/acacia_button_on.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_top.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/iron_door.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/addon/iron_door_open_bottom.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/window_end_7.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_14.json"
+      },
+      {
+        "source": "assets/minecraft/blockstates/light_weighted_pressure_plate.json",
+        "kind": "blockstate-model",
+        "target": "assets/minecraft/models/block/pressure_plate/light_weighted_pressure_plate_15.json"
+      }
+    ],
+    "note": "Static graph after Minecraft1.18.2 vanilla fallback. Some entries may be unused/intentional; no full texture bake or client visual verification."
+  }
+]

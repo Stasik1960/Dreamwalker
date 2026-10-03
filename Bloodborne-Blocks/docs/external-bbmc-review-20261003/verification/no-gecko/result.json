@@ -1,0 +1,36 @@
+{
+  "name": "no-gecko",
+  "gecko": false,
+  "map": null,
+  "command": [
+    "<java17-runtime>\\java.exe",
+    "-Xms256M",
+    "-Xmx2G",
+    "@libraries/net/minecraftforge/forge/1.18.2-40.2.21/win_args.txt",
+    "nogui"
+  ],
+  "ready": false,
+  "exit_code": 0,
+  "timeout": false,
+  "elapsed_seconds": 22.38,
+  "log": "<audit-root>\\runtime\\no-gecko\\console.log",
+  "commands": [
+    "list",
+    "save-all flush"
+  ],
+  "diagnostics": [
+    "[09:40:55] [modloading-worker-0/ERROR] [ne.mi.fm.ja.FMLModContainer/LOADING]: Failed to create mod instance. ModID: bloodborne, class com.potomy.bloodborne.BloodborneMod",
+    "java.lang.reflect.InvocationTargetException: null",
+    "Caused by: java.lang.NoClassDefFoundError: software/bernie/geckolib3/GeckoLib",
+    "Caused by: java.lang.ClassNotFoundException: software.bernie.geckolib3.GeckoLib",
+    "java.lang.Exception: Mod Loading has failed",
+    "Caused by 0: java.lang.reflect.InvocationTargetException",
+    "Caused by 1: java.lang.NoClassDefFoundError: software/bernie/geckolib3/GeckoLib",
+    "java.lang.reflect.InvocationTargetException: null",
+    "Exception message: java.lang.ClassNotFoundException: software.bernie.geckolib3.GeckoLib",
+    "bloodborne.jar                                    |Example Mod                   |bloodborne                    |1.0                 |ERROR     |Manifest: NOSIGNATURE",
+    "Forge: net.minecraftforge:40.2.21[09:40:57] [main/ERROR] [minecraft/Main]: Failed to start the minecraft server",
+    "net.minecraftforge.fml.LoadingFailedException: Loading errors encountered: [",
+    "�7java.lang.reflect.InvocationTargetException: null"
+  ]
+}

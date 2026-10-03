@@ -1,0 +1,28 @@
+{
+  "name": "control-vladra120",
+  "minecraft": "1.20.1",
+  "gecko": false,
+  "bloodborne": false,
+  "map": null,
+  "command": [
+    "<java17-runtime>\\java.exe",
+    "-Xms256M",
+    "-Xmx2G",
+    "-jar",
+    "<audit-root>\\runtime\\vanilla-1.20.1-server.jar",
+    "nogui"
+  ],
+  "ready": true,
+  "exit_code": 0,
+  "timeout": false,
+  "elapsed_seconds": 17.56,
+  "log": "<audit-root>\\runtime\\control-vladra120\\restart.log",
+  "commands": [
+    "list",
+    "save-all flush"
+  ],
+  "diagnostics": [
+    "[09:54:32] [Server thread/INFO]: Done (4.134s)! For help, type \"help\"",
+    "[09:54:33] [Server thread/INFO]: Stopping server"
+  ]
+}

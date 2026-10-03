@@ -1,0 +1,34 @@
+{
+  "name": "gecko-v16",
+  "gecko": true,
+  "map": "<input-dir>\\bbmc_v16_map (1).zip",
+  "command": [
+    "<java17-runtime>\\java.exe",
+    "-Xms256M",
+    "-Xmx2G",
+    "@libraries/net/minecraftforge/forge/1.18.2-40.2.21/win_args.txt",
+    "nogui"
+  ],
+  "ready": false,
+  "exit_code": 0,
+  "timeout": false,
+  "elapsed_seconds": 21.97,
+  "log": "<audit-root>\\runtime\\gecko-v16\\console.log",
+  "commands": [
+    "list",
+    "save-all flush"
+  ],
+  "diagnostics": [
+    "[09:41:48] [modloading-worker-0/ERROR] [ne.mi.fm.ja.FMLModContainer/LOADING]: Failed to register automatic subscribers. ModID: bloodborne, class com.potomy.bloodborne.BloodborneMod",
+    "java.lang.NoClassDefFoundError: com/mojang/blaze3d/vertex/PoseStack",
+    "Caused by: java.lang.ClassNotFoundException: com.mojang.blaze3d.vertex.PoseStack",
+    "java.lang.Exception: Mod Loading has failed",
+    "Caused by 0: java.lang.NoClassDefFoundError: com/mojang/blaze3d/vertex/PoseStack",
+    "java.lang.NoClassDefFoundError: com/mojang/blaze3d/vertex/PoseStack",
+    "Exception message: java.lang.ClassNotFoundException: com.mojang.blaze3d.vertex.PoseStack",
+    "bloodborne.jar                                    |Example Mod                   |bloodborne                    |1.0                 |ERROR     |Manifest: NOSIGNATURE",
+    "Forge: net.minecraftforge:40.2.21[09:41:50] [main/ERROR] [minecraft/Main]: Failed to start the minecraft server",
+    "net.minecraftforge.fml.LoadingFailedException: Loading errors encountered: [",
+    "�7java.lang.NoClassDefFoundError: com/mojang/blaze3d/vertex/PoseStack"
+  ]
+}
