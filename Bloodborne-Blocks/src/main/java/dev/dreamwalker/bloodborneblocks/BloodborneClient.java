@@ -72,22 +72,25 @@ public final class BloodborneClient implements ClientModInitializer {
     return gui.apply(ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(mesh,0,bake.textureGetter(),sharedFaces,false)),model));
    }
    if(block==null)return model;
+   String stateKey=UnifiedOwnerDefinitions.resourceKey(block.definition,modelId.getVariant());
    net.minecraft.client.render.model.BakedModel result=model;
    if(block.definition.models!=null){
    String inventoryKey=BloodborneBlocks.key(BloodborneBlocks.applyPlacementProperties(block.definition,block.getDefaultState()));
-   String meshKey=block.definition.models.get(modelId.getVariant());
+   String meshKey=block.definition.models.get(stateKey);
    if(meshKey==null&&modelId.getVariant().equals("inventory"))meshKey=block.definition.models.get(inventoryKey);
    if(meshKey==null)throw new IllegalStateException("Missing logical mesh state "+block.definition.id+"["+modelId.getVariant()+"]");
    ModularMeshData.Mesh mesh=allMeshes.get(meshKey);if(mesh==null)throw new IllegalStateException("Missing logical/city mesh "+meshKey+" for "+block.definition.id);
-    // Logical meshes are generated in their complete state orientation; do not rotate them again.
-    String visualPath=block.definition.visual_models==null?null:block.definition.visual_models.get(modelId.getVariant().equals("inventory")?inventoryKey:modelId.getVariant());
+    // Unified owners deliberately share one canonical mesh across their facing states.
+    // Older logical and compatibility meshes remain pre-rotated authored geometry.
+    int turns=block.definition.unified?facingTurns(modelId.getVariant().equals("inventory")?inventoryKey:modelId.getVariant()):0;
+    String visualPath=block.definition.visual_models==null?null:block.definition.visual_models.get(modelId.getVariant().equals("inventory")?inventoryKey:stateKey);
     Optional<ModularMeshData.Mesh> appearance=visualPath==null?Optional.of(mesh):visuals.visuals().resolve(visualPath);
     // A resource-pack model with normal elements keeps Minecraft's baked model.
     // Only our explicit mesh/polygon JSON extension uses the static quad adapter.
     if(appearance.isPresent()){
-     boolean cellLocal=block.definition.city_compat&&!block.definition.whole_owner;String category=AutumnAppearance.category(block.definition);
-     String cacheKey=(visualPath==null?"logical:"+meshKey:"visual:"+visualPath)+":autumn="+category+":"+cellLocal;
-     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),0,bake.textureGetter(),sharedFaces,cellLocal,visuals.autumn().color(block.definition),visuals.autumn().foliage(block.definition),visuals.autumn().leafTexture())),result);
+     boolean cellLocal=block.definition.city_compat&&(!block.definition.whole_owner||block.definition.cell_local);String category=AutumnAppearance.category(block.definition);
+     String cacheKey=(visualPath==null?"logical:"+meshKey:"visual:"+visualPath)+":turns="+turns+":autumn="+category+":"+cellLocal;
+     result=ModularBakedModel.withDelegate(modularQuads.computeIfAbsent(cacheKey,key->ModularBakedModel.bake(appearance.get(),turns,bake.textureGetter(),sharedFaces,cellLocal,visuals.autumn().color(block.definition),visuals.autumn().foliage(block.definition),visuals.autumn().leafTexture())),result);
     }
    }
    if(block.definition.emissive){
@@ -101,12 +104,12 @@ public final class BloodborneClient implements ClientModInitializer {
     }
     result=new EmissiveModel(result,pairs);
    }
-   double[] offset=GeometryRuntime.renderOffset(id.getPath(),modelId.getVariant());
+   double[] offset=GeometryRuntime.renderOffset(id.getPath(),stateKey);
    if(offset!=null&&(offset[0]!=0||offset[1]!=0||offset[2]!=0))result=new TranslatedBakedModel(result,offset);
    if(block.definition.models!=null&&(block.definition.properties.containsKey("variant")||block.definition.properties.containsKey("visual"))){
     Map<String,net.minecraft.client.render.model.BakedModel> variants=cityItemVariants.computeIfAbsent(block.definition.id,key->new ConcurrentHashMap<>());
     if(modelId.getVariant().equals("inventory"))result=new CityVariantItemModel(result,block,variants,guiBounds);
-    else variants.put(modelId.getVariant(),result);
+    else variants.put(stateKey,result);
    }else if(modelId.getVariant().equals("inventory"))result=gui.apply(result);
    return result;
   });});

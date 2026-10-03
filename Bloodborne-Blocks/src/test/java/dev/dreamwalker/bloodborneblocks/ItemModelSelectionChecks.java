@@ -33,7 +33,7 @@ public final class ItemModelSelectionChecks {
   BloodborneBlocks.Definition productionArt=production.blocks.stream().filter(d->d.properties.containsKey("variant")&&d.properties.containsKey("visual")).findFirst().orElseThrow();
   ArchitectureBlock productionBlock=register(productionArt,false);
   ArchitectureBlock window=register(find(production.blocks,"o_shuttered_window"),false);
-  BloodborneBlocks.Definition cityArt=city.blocks.stream().filter(d->d.models!=null&&!d.whole_owner&&d.properties.containsKey("variant")).findFirst().orElseThrow();
+  BloodborneBlocks.Definition cityArt=city.blocks.stream().filter(d->d.models!=null&&d.properties.containsKey("variant")&&d.properties.get("variant").size()>1).findFirst().orElseThrow();
   ArchitectureBlock cityBlock=register(cityArt,true);
 
   checkProductionVariantAndVisual(productionBlock,productionArt);
@@ -67,7 +67,15 @@ public final class ItemModelSelectionChecks {
  private static void checkCityVariant(ArchitectureBlock block,BloodborneBlocks.Definition definition) {
   ItemStack stack=stack(block);put(stack,"variant",nonDefault(definition,"variant"));String key=ArchitectureCreativeCatalog.itemModelKey(block,stack);
   Counter fallback=new Counter("city fallback"),selected=new Counter("city "+key);Map<String,BakedModel> variants=new HashMap<>();CityVariantItemModel wrapper=new CityVariantItemModel(fallback.model(),block,variants,new GuiItemBounds.Cache());variants.put(key,selected.model());
-  emit(wrapper,stack);selected.only(fallback,selected);put(stack,"variant","invalid");emit(wrapper,stack);fallback.only(fallback,selected);
+  emit(wrapper,stack);selected.only(fallback,selected);put(stack,"variant","invalid");emit(wrapper,stack);
+  if(definition.unified){
+   selected.only(fallback,selected);
+   put(stack,"variant",nonDefault(definition,"variant"));put(stack,"facing","west");
+   var placement=BloodborneBlocks.set(block.getDefaultState(),block.getStateManager().getProperty("facing"),"south");
+   ArchitectureBlockItem.normalizePlacementTag(stack,block,placement);
+   var normalized=UnifiedOwnerDefinitions.canonicalItemRootAnchor(ArchitectureBlockItem.applyStateTag(placement,stack));
+   check(BloodborneBlocks.key(normalized).equals("facing=south,root_anchor=canonical,variant=0"),"unified placement resets private pose while retaining player facing");
+  }else fallback.only(fallback,selected);
  }
 
  private static void checkGuiBoundsMathAndCache(){

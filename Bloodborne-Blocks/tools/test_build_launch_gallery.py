@@ -1,3 +1,4 @@
+import gzip
 import json
 import tempfile
 import unittest
@@ -38,6 +39,24 @@ class GalleryTests(unittest.TestCase):
                 self.assertIn(unpack_pos_long(d['Root'].value), root_positions)
                 p = tuple(d[a].value for a in ('x','y','z'))
                 self.assertEqual(PART, cells[p][0])
+
+    def test_unified_owners_have_one_canonical_public_specimen(self):
+        definitions = self.data[1]
+        unified_ids = {ident for ident, definition in definitions.items() if definition.get('unified')}
+        self.assertTrue(unified_ids)
+        for ident in unified_ids:
+            rows = [row for row in self.rows if row['id'] == ident and row['role'] == 'historical']
+            self.assertEqual(1, len(rows), ident)
+            self.assertEqual(g.canonical(definitions[ident]), rows[0]['properties'])
+
+    def test_mesh_bounds_are_read_without_retaining_mesh_geometry(self):
+        mesh = {'polygons': [{'vertices': [[0, 0, 0], [2, 3, 4]]}]}
+        with tempfile.TemporaryDirectory() as t:
+            path = Path(t) / 'meshes.json.gz'
+            with gzip.open(path, 'wt', encoding='utf8') as output:
+                json.dump({'first': mesh, 'second': mesh}, output)
+            self.assertEqual({'first': (0, 0, 0, 2, 3, 4), 'second': (0, 0, 0, 2, 3, 4)},
+                             g.load_mesh_bounds(path))
 
     def test_variable_pads_have_exact_three_block_gaps_and_contain_specimens(self):
         rows = copy.deepcopy(self.rows)

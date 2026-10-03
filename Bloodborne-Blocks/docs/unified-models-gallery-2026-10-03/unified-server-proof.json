@@ -1,0 +1,43 @@
+{
+  "heap": "5G",
+  "world": "Bloodborne-Unified-City-Gallery-2026-10-03",
+  "runs": [
+    {
+      "run": 1,
+      "ready": true,
+      "exitCode": 0,
+      "seconds": 60.3,
+      "saved": true,
+      "log": "unified-server-smoke-1.log"
+    },
+    {
+      "run": 2,
+      "ready": true,
+      "exitCode": 0,
+      "seconds": 58.1,
+      "saved": true,
+      "log": "unified-server-smoke-2.log"
+    }
+  ],
+  "passed": true,
+  "environment": {
+    "os": "Windows",
+    "java": "17.0.20.1",
+    "headlessDedicated": true,
+    "fabricLoader": "0.16.10",
+    "localBindOnly": true,
+    "productionUnchanged": true
+  },
+  "galleryAfterRestart": {
+    "classifications": {
+      "unchanged": 3373,
+      "service-unchanged": 1
+    },
+    "changedCells": 0,
+    "inspectionSha256": "fab35f9305fe3f0877d3f91aef102f8f4adf427751dce7f802216bf246bd3710"
+  },
+  "existingNonFatalDiagnostics": [
+    "Yuushya ride_entity has no data fixer",
+    "Source level.dat lacks optional DragonFight; absent on second server load"
+  ]
+}

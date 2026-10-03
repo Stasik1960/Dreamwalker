@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "readOnly": true,
+  "passed": true,
+  "worlds": {
+    "city": "output/Bloodborne-Unified-City-2026-10-03",
+    "gallery": "output/Bloodborne-Unified-City-Gallery-2026-10-03",
+    "cutoffExclusive": 228
+  },
+  "manifest": {
+    "schemaVersion": 2,
+    "registeredDefinitions": 3374,
+    "coverageCount": 3374,
+    "coverageUnique": 3374,
+    "specimens": 3374,
+    "specimenIdsUnique": 3374,
+    "stableKeysUnique": 3374,
+    "editable": 3373,
+    "service": 1,
+    "retiredNumericIdsDeclared": 3732,
+    "retiredNumericIdsUsed": 0,
+    "baselineHashesChecked": 3374,
+    "baselineHashErrors": 0,
+    "sourceFilesHashed": 48,
+    "sourceHashErrors": 0,
+    "immutableCopiedFileErrors": 0,
+    "registryConstants": 3251,
+    "registryConstantsExact": true,
+    "currentManifestErrors": []
+  },
+  "inspection": {
+    "specimens": 3374,
+    "classifications": {
+      "unchanged": 3373,
+      "service-unchanged": 1
+    },
+    "changedSpecimens": 0,
+    "actualConstructionCells": 3374,
+    "constantPropertiesNormalized": true
+  },
+  "belowCutoff": {
+    "cutoffExclusive": 228,
+    "regionsSource": 16,
+    "regionsGallery": 16,
+    "regionsCompared": 16,
+    "sourceChunks": 10009,
+    "galleryChunks": 10009,
+    "sharedChunks": 10009,
+    "sourceOnlyChunks": 0,
+    "galleryOnlyChunks": 0,
+    "blockPositionsCompared": 748192768,
+    "blockMismatches": 0,
+    "blockEntityMismatches": 0,
+    "tickMismatches": 0,
+    "metadataMismatches": 0,
+    "source": {
+      "nonAir": 34278771,
+      "bloodborne": 27673420,
+      "foreign": 6605351,
+      "yuushya": 416
+    },
+    "gallery": {
+      "nonAir": 34278771,
+      "bloodborne": 27673420,
+      "foreign": 6605351,
+      "yuushya": 416
+    },
+    "highestSourceNonAirY": 224,
+    "rawChunkMetadataDifferences": 491,
+    "heightmapInvalidations": 491,
+    "unexpectedMetadataMismatches": 0,
+    "metadataDifferenceSignatures": [
+      {
+        "fields": [
+          "Heightmaps"
+        ],
+        "sourcePresent": true,
+        "galleryPresent": false,
+        "count": 491
+      }
+    ]
+  },
+  "galleryBand": {
+    "manifest": {
+      "bounds": [
+        -778,
+        228,
+        -462,
+        -72,
+        319,
+        220
+      ],
+      "columns": 59,
+      "maxY": 319,
+      "minY": 228
+    },
+    "supportCellsExpected": 268990,
+    "supportCellsSeen": 268990,
+    "expectedCells": 4776,
+    "seenCells": 4776,
+    "expectedHelpers": 1402,
+    "seenHelpers": 1402,
+    "markers": 3374,
+    "seenMarkers": 3374,
+    "seenSignEntities": 3374,
+    "actualNonAir": 277140,
+    "expectedNonAir": 277140,
+    "foreignBlocks": 272364,
+    "yuushyaBlocks": 0,
+    "unexpectedExamples": [],
+    "stateMismatchExamples": []
+  },
+  "helpers": {
+    "entitiesChecked": 147172,
+    "orphanCount": 0,
+    "bindingsChecked": 157151,
+    "unregisteredOwners": {}
+  },
+  "registryWorldUse": {
+    "usedBloodborneIds": 3374,
+    "unregisteredOrRetiredUsed": {}
+  },
+  "errorCount": 0,
+  "errors": []
+}

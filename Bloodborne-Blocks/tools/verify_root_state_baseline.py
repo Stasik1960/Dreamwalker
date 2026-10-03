@@ -7,10 +7,15 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 BASELINE='419b85eeab56180f0e26272ffc2a2136f6a05a18'
 FAMILIES={'o_bench','o_high_balustrade'}
+ALLOW_FAMILY='o_c001'
+ALLOW_STATES={f'facing={f},variant=bush_asset_e,visual={v}'for f in ('north','east','south','west')for v in ('base','alt')}
 
 def collapse(states):
     return {','.join(p for p in key.split(',') if not p.startswith('root_anchor=')):value
             for key,value in states.items() if 'root_anchor=upper' not in key}
+
+def remove_authorized_additions(states):
+    return {k:v for k,v in states.items() if k not in ALLOW_STATES}
 
 def verify():
     from apply_window_test3_patch import WINDOW, patch_family
@@ -28,19 +33,30 @@ def verify():
         current=json.loads((ROOT/'src/main/resources'/suffix).read_bytes())
         if suffix.endswith('/definitions.json'):
             for block in current['blocks']:
+                if block['id']==ALLOW_FAMILY:
+                    if 'bush_asset_e'in block['properties']['variant']:block['properties']['variant'].remove('bush_asset_e')
+                    for field in ('states','models','visual_models'):
+                        if block.get(field)is not None:block[field]=remove_authorized_additions(block[field])
                 if block['id'] not in FAMILIES:continue
                 assert block['properties'].pop('root_anchor')==['canonical','upper']
                 assert block['default'].pop('root_anchor')=='canonical'
                 for field in ('states','models','visual_models'):
-                    if block.get(field) is not None:block[field]=collapse(block[field])
+                    if block.get(field) is not None:
+                        block[field]=collapse(block[field])
+                        if block['id']==ALLOW_FAMILY: block[field]=remove_authorized_additions(block[field])
         elif suffix.endswith('/contracts-v2.json'):
             original['families']=[mounted_window if f['id']==WINDOW else f for f in original['families']]
             for family in current['families']:
                 if family['id'] in FAMILIES:family['states']=collapse(family['states'])
+                if family['id']==ALLOW_FAMILY: family['states']=remove_authorized_additions(family['states'])
         elif suffix.endswith('/geometry.json'):
             original['blocks'][WINDOW]=profile(mounted_window)
             for family in FAMILIES:current['blocks'][family]['states']=collapse(current['blocks'][family]['states'])
-        else:current['variants']=collapse(current['variants'])
+            if ALLOW_FAMILY in current['blocks']:
+                current['blocks'][ALLOW_FAMILY]['states']=remove_authorized_additions(current['blocks'][ALLOW_FAMILY]['states'])
+        else:
+            current['variants']=collapse(current['variants'])
+            if ALLOW_FAMILY in suffix: current['variants']=remove_authorized_additions(current['variants'])
         if current!=original:raise AssertionError('CANONICAL_BASELINE_CHANGED: '+suffix)
         checked.append(suffix)
     return {'result':'PASS','baseline':BASELINE,'files':checked,'canonical_root_states_changed':0,

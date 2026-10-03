@@ -86,6 +86,12 @@ class WindowTest3Contracts(unittest.TestCase):
             else:
                 before = before[key]; after = after[key]
                 before.pop(WINDOW, None); after.pop(WINDOW, None)
+            # The user explicitly approved appending the historical dry bush
+            # to this ID. All older tree states and all other families remain exact.
+            if name=='physical-footprints.json':
+                after['o_c001']={k:v for k,v in after['o_c001'].items()if 'variant=bush_asset_e,'not in k}
+            else:
+                after['o_c001']['states']={k:v for k,v in after['o_c001']['states'].items()if 'variant=bush_asset_e,'not in k}
             self.assertEqual(before, after, name)
 
     def test_generator_is_byte_identical_when_reapplied(self) -> None:

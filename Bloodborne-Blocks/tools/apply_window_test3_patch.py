@@ -81,9 +81,8 @@ def patch() -> dict[str, object]:
         mask["boxes"] = state['collision_footprint']['boxes']
 
     geometry["blocks"][WINDOW] = profile(family)
-    contracts_path.write_text(json.dumps(contracts, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
-    physical_path.write_text(json.dumps(physical, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
-    geometry_path.write_text(json.dumps(geometry, separators=(",", ":"), sort_keys=True) + "\n", encoding="utf-8")
+    for path,value in ((contracts_path,contracts),(physical_path,physical),(geometry_path,geometry)):
+        if json.loads(path.read_bytes())!=value:path.write_text(json.dumps(value,separators=(",", ":"),sort_keys=True)+"\n",encoding="utf-8")
     return {"family": WINDOW, "states": len(family["states"]), "mesh_payload_changed": False,
             "render_offset": "-.75*facing horizontal, +.875Y", "physical_volume": "two full root/up cells"}
 
