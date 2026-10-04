@@ -1,7 +1,9 @@
-# Latest beta
+# Актуальный выпуск
 
-Текущий комплект от 01.10.2026: [Bloodborne: основная карта, галерея и осенние палитры](launch-base-2026-10-01/README.md).
-Графическая приёмка и проверка памяти полной пользовательской сборки остаются необходимы.
+Текущий комплект от 04.10.2026: [Bloodborne 2.1.0-compact-gallery.1: компактный мод, город и редактируемая галерея](compact-gallery-2026-10-04/README.md).
+1 825 публичных блоков, 12 791 состояние; весь город преобразован, над ним по одной площадке на каждый ID, промежутки три блока. Build/check и ограниченные client/server-запуски пройдены. Для установки используйте согласованные JAR и карту этого выпуска; ограничения памяти указаны в README.
+
+Предыдущий комплект от 01.10.2026: [основная карта, галерея и осенние палитры](launch-base-2026-10-01/README.md).
 
 [2.1.0-beta.1 — JAR, gallery, ALT kit and world reports](2.1.0-beta.1/README.md). Graphical acceptance pending. Both converted city copies are **UNRESOLVED / NOT BETA READY**; see their explicit registry incompatibility and preservation reports.
 

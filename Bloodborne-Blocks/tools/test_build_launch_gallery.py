@@ -123,15 +123,28 @@ class GalleryTests(unittest.TestCase):
         decisions = [r for r in self.rows if r.get('_decision')]
         self.assertTrue(decisions)
         source = next(r for r in decisions if r['decision'].get('_source_components'))
-        self.assertTrue(source['source_rows'])
+        if source['decision'].get('_archived_source_components'):
+            self.assertTrue(source['decision']['_source_status'])
+            self.assertEqual(source['decision']['_source_components'],source['decision']['_archived_source_components'])
+            self.assertFalse(source['source_rows'])
+        else:self.assertTrue(source['source_rows'])
         self.assertTrue(all(r['properties'] for r in source['source_rows']))
         self.assertTrue(source['debug_id'].isdigit() and len(source['debug_id']) == 5)
         with tempfile.TemporaryDirectory() as t:
             manifest = g.build(Path(t) / 'gallery', source=None, selected={source['id'].split('__decision_')[0]})
             choice = next(c for c in manifest['choices'] if c['document'] == source['decision']['_document_id'])
             self.assertTrue(choice['decision_ref'])
-            self.assertTrue(choice['sourceTps'])
+            if not source['decision'].get('_archived_source_components'):self.assertTrue(choice['sourceTps'])
             self.assertIn('candidates', choice)
+
+    def test_retired_fragments_are_archival_links_not_public_specimens(self):
+        retired=set(self.data[0].get('_retiredRegistryIds',[]))
+        if not retired:self.skipTest('legacy catalog')
+        self.assertTrue(retired)
+        self.assertFalse(retired & {r['id']for r in self.rows})
+        broken=copy.deepcopy(self.data)
+        broken[0]['objects'][0]['components'][0]['id']='bloodborne_blocks:missing_unproved'
+        with self.assertRaisesRegex(ValueError,'unregistered source component'):g.specimens(broken)
 
     def test_select_document_keeps_actual_historical_candidate_references(self):
         rows = g.select_rows(copy.deepcopy(self.rows), {'owner_final_13'})

@@ -92,6 +92,8 @@ def load_mesh_bounds(path):
 def load_data(city=CITY):
     resources = city.parent
     doc = load_json(city / 'document-final.json')
+    if (city/'compact-catalog.json').exists():
+        doc['_retiredRegistryIds']=load_json(city/'compact-catalog.json')['retiredRegistryIds']
     logical = load_json(resources / 'logical/definitions.json')['blocks']
     definitions = {d['id']: d for d in logical + load_json(city / 'definitions.json')['blocks']}
     geometry = {'blocks': {}, 'profiles': {}}
@@ -119,6 +121,12 @@ def canonical(d):
 def specimens(data):
     doc, defs, geometry, meshes, contracts, ids, logical_ids = data
     rows = []
+    retired=set(doc.get('_retiredRegistryIds',[]))
+    def archived(component):
+        ident=component['id'].split(':')[-1]
+        if ident in defs:return False
+        if ident not in retired:raise ValueError('unregistered source component: '+ident)
+        return True
 
     def add(ident, props, role, item=None):
         d = defs[ident]
@@ -164,26 +172,34 @@ def specimens(data):
             for face in ('floor', 'ceiling'):
                 add(ident, {**base, 'face': face}, 'document_mount', item)
         for n, component in enumerate(recipe['components']):
+            if archived(component):continue
             d = defs[component['id'].split(':')[1]]
             # Each source part is exhibited independently; no guessed owner closure.
             add(d['id'], component['properties'], f'source_part_{n+1}', item)['_review_document']=recipe['id']
         for choice_index, choice in enumerate(recipe['choices']):
             candidate_rows = []
             source_rows = []
+            archived_sources=[]
             for component in choice.get('sourceComponents', []):
+                if archived(component):
+                    archived_sources.append(component);continue
                 ident = component['id'].split(':')[-1]
                 if ident not in defs:
                     raise ValueError(f'unregistered source component: {ident}')
                 specimen=add(ident, component['properties'], 'decision_source_component', item)
                 specimen['_review_document']=recipe['id'];source_rows.append(specimen)
             if choice.get('candidates') and choice.get('id'):
-                d = defs[choice['id']]
-                base_candidate = canonical(d)
-                for key in choice['candidates']:
-                    props = dict(part.split('=', 1) for part in key.split(','))
-                    if all(props[k] == base_candidate[k] for k in props if k in {'facing', 'root_anchor', 'face'}):
-                        specimen=add(d['id'], props, 'unproven_source_variant', item)
-                        specimen['_review_document']=recipe['id'];candidate_rows.append(specimen)
+                candidate_id=choice['id'].split(':')[-1]
+                if candidate_id not in defs:
+                    if candidate_id not in retired:raise ValueError('unregistered decision candidate: '+candidate_id)
+                else:
+                    d = defs[candidate_id]
+                    base_candidate = canonical(d)
+                    for key in choice['candidates']:
+                        props = dict(part.split('=', 1) for part in key.split(','))
+                        if all(props[k] == base_candidate[k] for k in props if k in {'facing', 'root_anchor', 'face'}):
+                            specimen=add(d['id'], props, 'unproven_source_variant', item)
+                            specimen['_review_document']=recipe['id'];candidate_rows.append(specimen)
             historical={'owner_final_13':'o_shuttered_window','owner_final_16':'o_balustrade'}.get(recipe['id'])
             if historical and choice.get('reason')=='additional-or-historical-art-needs-gallery-review':
                 candidate_rows.extend(r for r in rows if r['id']==historical and r['role']=='historical')
@@ -196,6 +212,8 @@ def specimens(data):
             decision['_decision'] = True
             decision['_decision_label'] = f"doc-{recipe['id']}-choice-{decision['_choice_index']+1}"
             decision['_source_components'] = choice.get('sourceComponents', [])
+            decision['_archived_source_components']=archived_sources
+            if archived_sources:decision['_source_status']='historical fragments retired; no invented replacement specimen'
             rows.append({'id': recipe['id'] + '__decision_' + str(choice_index + 1), 'debug_id': ids[recipe['id']],
                          'properties': {}, 'state': '', 'role': 'document_decision',
                          'item': item, 'bounds': [0, 0, 0, 0, 0, 0], 'footprint': [(0, 0, 0)],

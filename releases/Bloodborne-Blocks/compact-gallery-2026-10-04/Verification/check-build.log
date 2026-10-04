@@ -1,0 +1,554 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :normalizeSupportContracts
+{"support_normalization": {"families": 50, "states": 1796, "ground_families": 44, "below_support_families": 0, "automatically_corrected_families": 0, "ambiguous_mount_families": 6, "old_collision_boxes": 1988, "new_collision_boxes": 1988, "max_ordinary_collision_boxes": 3, "families_with_old_helpers_below": 0, "families_with_helpers_below": 0, "fail_families": 0}, "changed": false}
+
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :jar
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+
+> Task :itemModelSelectionCheck
+[14:07:07] [main/INFO]: [STDOUT]: ITEM MODEL SELECTION CHECKS PASSED
+
+> Task :remapJar
+
+> Task :check_contract_orientation
+{"result": "PASS", "rotation_checks": 7184, "symmetric": 2, "facing": 48, "connected": 6}
+
+> Task :check_logical_resources
+{"ok": true, "logicalObjects": 50, "states": 1796, "meshes": 726, "textures": 33, "migrationRules": 0, "hiddenLegacyItems": 0, "maximumFootprintCells": 49}
+
+> Task :cityCompatibilityCheck
+[14:07:44] [main/INFO]: [STDOUT]: CITY COMPATIBILITY CHECKS PASSED: blocks=1775 pages=0 unified=1702 native=49 states=10994
+
+> Task :cityVariantPruningCheck
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.603s
+
+OK
+
+> Task :collisionGridCheck
+{"collision_grid": {"logical_families": 50, "logical_states": 1796, "protected_logical_families": 49, "protected_logical_states": 1780, "city_ids": 1775, "city_states": 10994, "city_profiles": 1677, "unique_city_geometry_states_checked": 2849, "protected_city_ids": 1, "protected_city_states": 128, "unproven_city_ids_skipped_for_repair": 1774, "unproven_city_states_skipped_for_repair": 10866, "states_needing_storage_normalization": 0, "resource_states_changed": 0, "errors": 0}, "status": "PASS"}
+
+> Task :compactRegistryAssetsCheck
+compact registry asset boundary PASS: 1825 public IDs, no retired/prototype blockstate/item/loot assets
+
+> Task :geometryCheck
+[14:07:51] [main/INFO]: [STDOUT]: GEOMETRY CHECKS PASSED: states=1796 unique=1796 cells=6748
+
+> Task :logicalContractV2Check
+[14:07:57] [main/INFO]: [STDOUT]: LOGICAL CONTRACT V2 CHECKS PASSED
+
+> Task :logicalObjectCheck
+[14:08:02] [main/INFO]: [STDOUT]: LOGICAL OBJECT CHECKS PASSED: definitions=50 meshes=726
+
+> Task :logicalRegistryCheck
+[14:08:08] [main/INFO]: [STDOUT]: LOGICAL REGISTRY CHECKS PASSED: production=50
+
+> Task :logicalVisualModelsCheck
+
+> Task :modularDataCheck
+[14:08:14] [main/INFO]: [STDOUT]: PRODUCTION MESH CHECKS PASSED: referenced=726 available=726
+
+> Task :numericDebugIdsCheck
+[14:08:19] [main/INFO]: [STDOUT]: NUMERIC DEBUG ID CHECKS PASSED: blocks=1826
+
+> Task :persistedVariantAuditCheck
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.047s
+
+OK
+
+> Task :production_coverage
+{"result": "PASS", "required_count": 50, "source_world_sha256": "4353737d536677469d3b895e3515496ab64fab7b224e43428eb96e8c09724a51", "runtime_registry_boundary": "definitions.json feeds Java registry; live registry requires GameTests", "manifest_count": 50, "gallery_checked": false, "gallery_count": null, "errors": []}
+
+> Task :sourcesJar
+> Task :test
+
+> Task :test_add_unified_tree_variants
+Unified tree/bush tests PASS
+
+> Task :test_agony_patch
+......
+----------------------------------------------------------------------
+Ran 6 tests in 3.901s
+
+OK
+
+> Task :test_assemble_launch_package
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.058s
+
+OK
+
+> Task :test_atomic_owner_groups
+........
+----------------------------------------------------------------------
+Ran 8 tests in 6.515s
+
+OK
+
+> Task :test_beta_client_qa
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 3.190s
+
+OK
+
+> Task :test_build_compact_approval_gallery
+gallery platforms 0/3
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.133s
+
+OK
+
+> Task :test_build_editable_city_gallery
+gallery platforms 0/3
+gallery platforms 0/3
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.617s
+
+OK
+
+> Task :test_build_launch_gallery
+{"specimens": 5, "uniqueIds": 2, "helpers": 68, "cityFiles": 0, "cityCases": 0}
+{"specimens": 5, "uniqueIds": 1, "helpers": 10, "cityFiles": 1, "cityCases": 0}
+{"specimens": 13, "uniqueIds": 3, "helpers": 50, "cityFiles": 0, "cityCases": 0}
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 5.753s
+
+OK
+
+> Task :test_build_nightmare_contracts
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.015s
+
+OK
+
+> Task :test_build_production_gallery
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.229s
+
+OK
+
+> Task :test_build_unified_registry
+ok: unified registry fixture tests
+
+> Task :test_city_palette
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.179s
+
+OK
+
+> Task :test_city_recovery
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.463s
+
+OK
+
+> Task :test_collision_grid
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.480s
+
+OK
+
+> Task :test_compact_source_catalog
+ok: compact source catalog fixtures
+
+> Task :test_compare_modded_reference
+..
+----------------------------------------------------------------------
+Ran 2 tests in 2.999s
+
+OK
+
+> Task :test_composite_owner_closure
+owner closure audit 0 / 1
+owner closure audit 0 / 1
+owner closure audit 0 / 1
+...
+----------------------------------------------------------------------
+Ran 3 tests in 36.625s
+
+OK
+
+> Task :test_composite_repair
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 9.375s
+
+OK
+
+> Task :test_convert_compact_city
+cleaned region/r.0.0.mca 1
+converted region/r.0.0.mca owners 1
+cleaned region/r.0.0.mca 1
+converted region/r.0.0.mca owners 1
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.499s
+
+OK
+
+> Task :test_convert_document_world
+document 1: 1 assemblies
+document 7: 0 assemblies
+document 1: 1 assemblies
+document 1: 0 assemblies
+.....
+document 1: 0 assemblies
+document 1: 0 assemblies
+----------------------------------------------------------------------
+Ran 5 tests in 0.468s
+document 1: 0 assemblies
+document 1: 0 assemblies
+
+OK
+
+> Task :test_convert_unified_city
+region/r.0.0.mca: replaced 8 cells; regions 1
+region/r.0.0.mca: replaced 2 cells; regions 1
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.198s
+
+OK
+
+> Task :test_creative_equivalence
+creative equivalence PASS {"candidateArt": 1905, "excluded": {"service_architecture_part": 1, "source_depth": 12}, "hiddenEquivalent": 102, "redirects": 102, "registryIds": 1825, "visibleEntries": 1803}
+
+> Task :test_explicit_root_exceptions
+...
+----------------------------------------------------------------------
+Ran 3 tests in 6.669s
+
+OK
+
+> Task :test_export_alt_visual_starter
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.071s
+
+OK
+
+> Task :test_export_assembled_artist_kit
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.064s
+
+OK
+
+> Task :test_finalize_city_import
+minecraft:overworld r.0.0.mca: 1 changed chunks
+minecraft:overworld r.0.0.mca: 0 changed chunks
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.236s
+
+OK
+
+> Task :test_fixture_level_metadata
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.020s
+
+OK
+
+> Task :test_historical_omission_evidence
+....
+----------------------------------------------------------------------
+Ran 4 tests in 14.185s
+
+OK
+
+> Task :test_historical_wall_mappings
+....
+----------------------------------------------------------------------
+Ran 4 tests in 19.561s
+
+OK
+
+> Task :test_inspect_editable_city_gallery
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.059s
+
+OK
+
+> Task :test_logical_world
+{"ok": true, "converted": 6, "rejected": 15, "dimensions": 2}
+
+> Task :test_modded_preservation
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.122s
+
+OK
+
+> Task :test_modded_world_adapter
+......
+----------------------------------------------------------------------
+Ran 6 tests in 13.270s
+
+OK
+
+> Task :test_nightmare_composition_recipes
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 1.939s
+
+OK
+
+> Task :test_nightmare_functional_recipes
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.929s
+
+OK
+
+> Task :test_nightmare_geometry_recipes
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.031s
+
+OK
+
+> Task :test_preserved_semantics
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.743s
+
+OK
+
+> Task :test_production_coverage
+............
+----------------------------------------------------------------------
+Ran 12 tests in 15.710s
+
+OK
+
+> Task :test_production_door
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+OK
+
+> Task :test_production_exact_duplicates
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 16.433s
+
+OK
+
+> Task :test_production_fingerprints
+........
+----------------------------------------------------------------------
+Ran 8 tests in 40.745s
+
+OK
+
+> Task :test_production_gallery
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_production_geometry
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+
+> Task :test_production_inventory
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+OK
+
+> Task :test_production_palette
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 2.364s
+
+OK
+
+> Task :test_publish_launch_bundle
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.148s
+
+OK
+
+> Task :test_region_padding
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.004s
+
+OK
+
+> Task :test_restore_c003
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.808s
+
+OK
+
+> Task :test_restore_functional
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 3.367s
+
+OK
+
+> Task :test_restore_yuushya
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.121s
+
+OK
+
+> Task :test_restored_migration
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 1.133s
+
+OK
+
+> Task :test_reviewed_wall_family
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.421s
+
+OK
+
+> Task :test_root_exception_evidence
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.546s
+
+OK
+
+> Task :test_source_review_decisions
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.017s
+
+OK
+
+> Task :test_source_variant_rng
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_split_transactions
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 2.584s
+
+OK
+
+> Task :test_support_collision
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.016s
+
+OK
+
+> Task :test_support_normalization
+............
+----------------------------------------------------------------------
+Ran 12 tests in 6.480s
+
+OK
+
+> Task :test_sync_debug_ids
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.038s
+
+OK
+
+> Task :test_verify_launch_world
+verified region/r.0.0.mca: 1 chunks
+verified region/r.0.0.mca: 1 chunks
+verified region/r.0.0.mca: 1 chunks
+verified region/r.0.0.mca: 1 chunks
+verified region/r.0.0.mca: 1 chunks
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.257s
+
+OK
+
+> Task :test_visual_slots
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.212s
+
+OK
+Visual slots: 1 families, 4 states
+Visual slots: 1 families, 4 states
+
+> Task :test_whole_owner_storage
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+
+> Task :test_window_test3
+......
+----------------------------------------------------------------------
+Ran 6 tests in 1.008s
+
+OK
+
+> Task :validateAccessWidener NO-SOURCE
+
+> Task :verify_composite_overlap_evidence
+{"result": "PASS", "compositions": [{"target": ["bloodborne_blocks:m_273dc8f493026e61", [["facing", "east"]]], "polygons": 12, "missing": 0, "extra": 0}]}
+
+> Task :worldEditStateCompatibilityCheck
+> Task :check
+> Task :remapSourcesJar
+> Task :assemble
+> Task :build
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6m 59s
+90 actionable tasks: 88 executed, 2 up-to-date

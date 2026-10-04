@@ -36,7 +36,9 @@ final class ModularBakedModel extends BasicBakedModel {
  private static int autumnTint(int rgb){return AUTUMN_TINT_PREFIX|(rgb&0xFFFFFF);}
 
  private ModularBakedModel(Parts parts,BakedModel delegate){
-  super(parts.general,parts.faces,delegate.useAmbientOcclusion(),delegate.isSideLit(),delegate.hasDepth(),delegate.getParticleSprite(),delegate.getTransformation(),delegate.getOverrides());
+  // Vanilla and memory optimizers may replace entries in their face map.
+  // Keep the shared cached Parts immutable, with a private map for each model.
+  super(parts.general,new EnumMap<>(parts.faces),delegate.useAmbientOcclusion(),delegate.isSideLit(),delegate.hasDepth(),delegate.getParticleSprite(),delegate.getTransformation(),delegate.getOverrides());
  }
 
  static Parts bake(ModularMeshData.Mesh mesh,int clockwiseTurns,Function<SpriteIdentifier,Sprite> textures,QuadPool pool){

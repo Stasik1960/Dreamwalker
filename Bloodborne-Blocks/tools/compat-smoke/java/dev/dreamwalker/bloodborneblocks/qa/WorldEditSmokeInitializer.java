@@ -18,6 +18,7 @@ public final class WorldEditSmokeInitializer implements ModInitializer {
  private static volatile boolean serverStarted;
  private static int visibleTicks;
  private static boolean captured;
+ private static double[][] cameras;
  public void onInitialize(){
   register("net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents","SERVER_STARTED",
    "net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents$ServerStarted",()->serverStarted=true);
@@ -101,7 +102,28 @@ public final class WorldEditSmokeInitializer implements ModInitializer {
    if(clientClass.getField("field_1687").get(client)==null||clientClass.getField("field_1724").get(client)==null)return;
    if(clientClass.getField("field_1755").get(client)!=null)return;
    visibleTicks++;
-   if(visibleTicks==100){
+   if(visibleTicks==1)verifyClientModels(client);
+   if(visibleTicks==1&&Files.exists(Path.of("qa-cameras.json"))){
+    cameras=new Gson().fromJson(Files.readString(Path.of("qa-cameras.json")),double[][].class);
+   }
+   if(cameras!=null&&(visibleTicks-1)%400==0&&(visibleTicks-1)/400<cameras.length){
+    double[] pose=cameras[(visibleTicks-1)/400];
+    Object player=clientClass.getField("field_1724").get(client);
+    java.util.UUID uuid=(java.util.UUID)player.getClass().getMethod("method_5667").invoke(player);
+    Object server=clientClass.getMethod("method_1576").invoke(client);
+    ((java.util.concurrent.Executor)server).execute(()->{
+     try{
+      Object manager=server.getClass().getMethod("method_3760").invoke(server);
+      Object serverPlayer=manager.getClass().getMethod("method_14602",java.util.UUID.class).invoke(manager,uuid);
+      Class<?> gameMode=Class.forName("net.minecraft.class_1934");
+      serverPlayer.getClass().getMethod("method_7336",gameMode).invoke(serverPlayer,gameMode.getEnumConstants()[3]);
+      Object world=serverPlayer.getClass().getMethod("method_51469").invoke(serverPlayer);
+      serverPlayer.getClass().getMethod("method_14251",Class.forName("net.minecraft.class_3218"),double.class,double.class,double.class,float.class,float.class)
+       .invoke(serverPlayer,world,pose[0],pose[1],pose[2],(float)pose[3],(float)pose[4]);
+     }catch(ReflectiveOperationException error){throw new IllegalStateException("QA camera teleport failed",error);}
+    });
+   }
+   if((cameras==null&&visibleTicks==100)||(cameras!=null&&visibleTicks%400==260&&visibleTicks/400<cameras.length)){
     Class<?> recorder=Class.forName("net.minecraft.class_318");
     Object framebuffer=clientClass.getMethod("method_1522").invoke(client);
     for(Method method:recorder.getMethods())if(method.getName().equals("method_1659")&&method.getParameterCount()==3){
@@ -109,7 +131,27 @@ public final class WorldEditSmokeInitializer implements ModInitializer {
     }
     if(!captured)throw new IllegalStateException("Screenshot API signature changed");
    }
-   if(visibleTicks==160){System.out.println("FULL_PACK_CLIENT_WORLD_VISIBLE");clientClass.getMethod("method_1592").invoke(client);}
-  }catch(ReflectiveOperationException error){throw new IllegalStateException("Client QA callback failed",error);}
+   if(visibleTicks==Integer.getInteger("bloodborne.qa.visibleTicks",160)){System.out.println("FULL_PACK_CLIENT_WORLD_VISIBLE");clientClass.getMethod("method_1592").invoke(client);}
+  }catch(ReflectiveOperationException|java.io.IOException error){throw new IllegalStateException("Client QA callback failed",error);}
+ }
+ private static void verifyClientModels(Object client)throws ReflectiveOperationException,java.io.IOException{
+  Object manager=client.getClass().getMethod("method_1541").invoke(client);
+  Class<?> stateType=Class.forName("net.minecraft.class_2680"),direction=Class.forName("net.minecraft.class_2350"),randomType=Class.forName("net.minecraft.class_5819");
+  Method nativeState=Class.forName("com.sk89q.worldedit.fabric.FabricAdapter").getMethod("adapt",BlockState.class);
+  Method getModel=manager.getClass().getMethod("method_3349",stateType);
+  Method getQuads=Class.forName("net.minecraft.class_1087").getMethod("method_4707",stateType,direction,randomType);
+  Object random=randomType.getMethod("method_43047").invoke(null);
+  Map<String,Integer> counts=new LinkedHashMap<>();
+  for(String id:Files.readAllLines(Path.of("qa-block-ids.txt"))){
+   if(id.equals("architecture_part"))continue;
+   Object state=nativeState.invoke(null,BlockTypes.get("bloodborne_blocks:"+id).getDefaultState());
+   Object model=getModel.invoke(manager,state);
+   int count=((List<?>)getQuads.invoke(model,state,null,random)).size();
+   for(Object face:direction.getEnumConstants())count+=((List<?>)getQuads.invoke(model,state,face,random)).size();
+   counts.put(id,count);
+  }
+  Files.writeString(Path.of("client-model-proof.json"),new Gson().toJson(counts));
+  System.out.println("CLIENT_MODELS_CHECKED "+counts.size()+" TREE_QUADS "+counts.get("o_c001")+" BUSH_QUADS "+counts.get("o_dry_bush"));
+  if(counts.get("o_c001")==0||counts.get("o_dry_bush")==0)throw new IllegalStateException("Whole tree/bush model is invisible");
  }
 }

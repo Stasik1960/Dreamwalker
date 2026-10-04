@@ -18,7 +18,7 @@ final class ReviewedWallConnections {
  private static final Set<String> ALIASES=aliases();
  private static Set<String> aliases(){
   var result=new java.util.HashSet<>(MANIFEST.getAsJsonObject("aliases").keySet());
-  if(MANIFEST.has("unifiedAliases"))for(var owner:MANIFEST.getAsJsonObject("unifiedAliases").entrySet())for(var state:owner.getValue().getAsJsonObject().entrySet())result.add(state.getValue().getAsJsonObject().get("id").getAsString().replace("bloodborne_blocks:",""));
+  if(MANIFEST.has("unifiedAliases")&&!MANIFEST.has("compactStates"))for(var owner:MANIFEST.getAsJsonObject("unifiedAliases").entrySet())for(var state:owner.getValue().getAsJsonObject().entrySet())result.add(state.getValue().getAsJsonObject().get("id").getAsString().replace("bloodborne_blocks:",""));
   return Set.copyOf(result);
  }
  private static final Direction[] SIDES={Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST};
@@ -42,6 +42,13 @@ final class ReviewedWallConnections {
     String key="connection="+connection+",facing="+SIDES[turn].asString(),old="facing="+SIDES[(base+turn)%4].asString();
     if(original!=null){
      if(!java.util.Objects.equals(d.models.get(key),original.models.get(old))||!java.util.Arrays.equals(d.states.get(key),original.states.get(old)))throw new IllegalStateException("Reviewed wall must reuse exact existing state/model "+key);
+    }else if(MANIFEST.has("compactStates")){
+     var compact=MANIFEST.getAsJsonObject("compactStates");
+     if(compact==null||!compact.has(key)||!compact.get(key).isJsonObject())throw new IllegalStateException("Missing compact reviewed-wall proof "+key);
+     var state=compact.getAsJsonObject(key);
+     if(!state.has("mesh")||!state.has("state")||!state.get("state").isJsonArray())throw new IllegalStateException("Invalid compact reviewed-wall proof "+key);
+     var values=state.getAsJsonArray("state");int[] proofState=new int[values.size()];for(int index=0;index<values.size();index++)proofState[index]=values.get(index).getAsInt();
+     if(!java.util.Objects.equals(d.models.get(key),state.get("mesh").getAsString())||!java.util.Arrays.equals(d.states.get(key),proofState))throw new IllegalStateException("Invalid compact reviewed-wall proof "+key);
     }else{
      var mapping=MANIFEST.getAsJsonObject("unifiedAliases").getAsJsonObject(owner).getAsJsonObject(old);
      var target=definitions.get(mapping.get("id").getAsString().replace("bloodborne_blocks:",""));

@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '2.1.0-unified-gallery.3'
+version = '2.1.0-compact-gallery.1'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -164,6 +164,14 @@ tasks.register('normalizeSupportContracts', Exec) {
   'tools/normalize_support_contracts.py'
 }
 tasks.named('processResources') { dependsOn 'normalizeSupportContracts' }
+// Copy outputs may retain files removed from a generated catalog. Ship only
+// currently authored runtime assets, without deleting the world's build data.
+tasks.named('jar') {
+ eachFile { entry ->
+  if ((entry.path.startsWith('assets/bloodborne_blocks/') || entry.path.startsWith('data/bloodborne_blocks/'))
+      && !file('src/main/resources/' + entry.path).isFile()) entry.exclude()
+ }
+}
 tasks.named('check') { dependsOn 'normalizeSupportContracts' }
 
 tasks.register('collisionGridCheck', Exec) {
@@ -173,6 +181,12 @@ tasks.register('collisionGridCheck', Exec) {
 }
 
 tasks.named('check') { dependsOn 'collisionGridCheck' }
+tasks.register('compactRegistryAssetsCheck', Exec) {
+ group = 'verification'
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/test_compact_assets.py'
+}
+tasks.named('check') { dependsOn 'compactRegistryAssetsCheck' }
 tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
 
 // Override with -PbloodbornePython=/path/to/python when Python is not on PATH.
@@ -188,7 +202,7 @@ tasks.withType(JavaExec).configureEach { dependsOn 'normalizeSupportContracts' }
  'test_production_gallery', 'test_build_production_gallery', 'test_production_palette',
  'test_restore_functional', 'test_restore_c003', 'test_restored_migration', 'test_preserved_semantics', 'test_production_coverage', 'production_coverage',
  'test_production_fingerprints', 'test_production_exact_duplicates', 'test_agony_patch', 'test_beta_client_qa', 'test_city_palette', 'test_city_recovery', 'test_modded_world_adapter', 'test_modded_preservation', 'test_compare_modded_reference',
- 'test_composite_repair', 'test_root_exception_evidence', 'test_explicit_root_exceptions', 'test_historical_wall_mappings', 'test_composite_owner_closure', 'test_historical_omission_evidence', 'test_atomic_owner_groups', 'test_whole_owner_storage', 'test_reviewed_wall_family', 'test_window_test3', 'test_collision_grid', 'test_creative_equivalence', 'test_sync_debug_ids', 'test_restore_yuushya', 'verify_composite_overlap_evidence', 'test_build_unified_registry', 'test_add_unified_tree_variants', 'test_convert_unified_city', 'test_build_editable_city_gallery', 'test_inspect_editable_city_gallery'].each { testName ->
+ 'test_composite_repair', 'test_root_exception_evidence', 'test_explicit_root_exceptions', 'test_historical_wall_mappings', 'test_composite_owner_closure', 'test_historical_omission_evidence', 'test_atomic_owner_groups', 'test_whole_owner_storage', 'test_reviewed_wall_family', 'test_window_test3', 'test_collision_grid', 'test_creative_equivalence', 'test_sync_debug_ids', 'test_restore_yuushya', 'verify_composite_overlap_evidence', 'test_build_unified_registry', 'test_add_unified_tree_variants', 'test_convert_unified_city', 'test_build_editable_city_gallery', 'test_inspect_editable_city_gallery', 'test_compact_source_catalog', 'test_convert_compact_city', 'test_build_compact_approval_gallery'].each { testName ->
  tasks.register(testName, Exec) {
   group = 'verification'
   dependsOn 'normalizeSupportContracts'
