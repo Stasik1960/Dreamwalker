@@ -1,0 +1,8 @@
+{
+  "required": false,
+  "package": "dev.dreamwalker.bloodborneblocks.mixin",
+  "plugin": "dev.dreamwalker.bloodborneblocks.compat.WorldEditMixinPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": ["WorldEditBlockStateMixin"],
+  "injectors": {"defaultRequire": 1}
+}

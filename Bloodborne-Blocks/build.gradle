@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '2.1.0-unified-gallery.2'
+version = '2.1.0-unified-gallery.3'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-blocks' }
 repositories { mavenCentral() }
@@ -122,6 +122,27 @@ tasks.register('itemModelSelectionCheck', JavaExec) {
  maxHeapSize = '1G'
 }
 tasks.named('check') { dependsOn 'itemModelSelectionCheck' }
+
+tasks.register('worldEditStateCompatibilityCheck', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.output + sourceSets.main.output + sourceSets.test.compileClasspath
+ mainClass = 'dev.dreamwalker.bloodborneblocks.compat.WorldEditStateCompatibilityChecks'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+ maxHeapSize = '128M'
+}
+tasks.named('check') { dependsOn 'worldEditStateCompatibilityCheck' }
+
+tasks.register('cityVariantPruningCheck', Exec) {
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/test_prune_unused_city_variants.py'
+}
+tasks.named('check') { dependsOn 'cityVariantPruningCheck' }
+
+tasks.register('persistedVariantAuditCheck', Exec) {
+ commandLine providers.gradleProperty('bloodbornePython').getOrElse('python'), '-B', '-X', 'utf8',
+  'tools/test_audit_persisted_variants.py'
+}
+tasks.named('check') { dependsOn 'persistedVariantAuditCheck' }
 
 tasks.register('numericDebugIdsCheck', JavaExec) {
  dependsOn testClasses

@@ -49,7 +49,15 @@ final class UnifiedOwnerDefinitions {
 
  private static boolean variants(List<String> values){
   if(values==null||values.isEmpty()||values.size()>MAX_VARIANTS)return false;
-  for(int index=0;index<values.size();index++)if(!Integer.toString(index).equals(values.get(index)))return false;
+  // Keep surviving numeric names stable when unused private values are pruned.
+  // Renumbering would unnecessarily rewrite every saved city state afterward.
+  int previous=-1;
+  for(String value:values){
+   if(value==null||!value.matches("0|[1-9][0-9]*"))return false;
+   int number;try{number=Integer.parseInt(value);}catch(NumberFormatException invalid){return false;}
+   if(number<=previous||number>=MAX_VARIANTS)return false;
+   previous=number;
+  }
   return true;
  }
  private static boolean rootAnchors(List<String> values){

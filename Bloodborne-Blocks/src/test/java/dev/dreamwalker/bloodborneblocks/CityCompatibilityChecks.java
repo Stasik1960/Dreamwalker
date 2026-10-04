@@ -88,6 +88,8 @@ public final class CityCompatibilityChecks {
   BloodborneBlocks.Definition canonicalOnly=unifiedOwner(17);canonicalOnly.properties.put("root_anchor",List.of("canonical"));canonicalOnly.defaultProperties=Map.of("facing","north","variant","0","root_anchor","canonical");canonicalOnly.states.clear();canonicalOnly.models.clear();populateStates(canonicalOnly);UnifiedOwnerDefinitions.validate(canonicalOnly);
   BloodborneBlocks.prepareDefinition(canonicalOnly);
   check(!canonicalOnly.propertyObjects.containsKey("root_anchor"),"constant root anchor does not create an invalid one-value runtime property");
+  BloodborneBlocks.Definition pruned=unifiedOwner(3);pruned.properties.put("variant",List.of("0","2"));pruned.states.clear();pruned.models.clear();populateStates(pruned);UnifiedOwnerDefinitions.validate(pruned);BloodborneBlocks.prepareDefinition(pruned);
+  check(pruned.propertyObjects.get("variant").parse("2").isPresent()&&pruned.propertyObjects.get("variant").parse("1").isEmpty(),"pruning preserves saved numeric variant names without renumbering");
   check(Properties.HORIZONTAL_FACING.parse("north").map(facing->BlockRotation.CLOCKWISE_90.rotate(facing).asString()).orElseThrow().equals("east"),"unified owner facing uses vanilla view-angle rotation");
   definition.states.remove("facing=north,root_anchor=canonical,variant=0");
   expectInvalid(definition,"unified owner rejects state gaps");
