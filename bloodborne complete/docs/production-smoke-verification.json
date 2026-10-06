@@ -1,9 +1,9 @@
 {
-  "jar_sha256": "a7a3eb0b307f2dce508335316b8d967dcbce2a4e5e4136adfcf67bcc63644924",
+  "jar_sha256": "415ee371e252110fd4b6bddf91de0783b5e2a9be237383b4e669bd32c1a0ab43",
   "city": {
     "started": true,
     "exit_code": 0,
-    "log": "build\\production-smoke\\publish-city\\city-first.log",
+    "log": "build\\production-smoke\\weighted-city\\city-first.log",
     "gallery_root_marker": false,
     "verified_gallery_markers": {
       "BLOCK": [],
@@ -15,7 +15,7 @@
   "city-restart": {
     "started": true,
     "exit_code": 0,
-    "log": "build\\production-smoke\\publish-city\\city-restart.log",
+    "log": "build\\production-smoke\\weighted-city\\city-restart.log",
     "gallery_root_marker": false,
     "verified_gallery_markers": {
       "BLOCK": [],
@@ -27,7 +27,7 @@
   "gallery": {
     "started": true,
     "exit_code": 0,
-    "log": "build\\production-smoke\\publish-gallery\\gallery-first.log",
+    "log": "build\\production-smoke\\weighted-gallery\\gallery-first.log",
     "gallery_root_marker": true,
     "verified_gallery_markers": {
       "BLOCK": [
@@ -1209,7 +1209,7 @@
   "gallery-restart": {
     "started": true,
     "exit_code": 0,
-    "log": "build\\production-smoke\\publish-gallery\\gallery-restart.log",
+    "log": "build\\production-smoke\\weighted-gallery\\gallery-restart.log",
     "gallery_root_marker": false,
     "verified_gallery_markers": {
       "BLOCK": [

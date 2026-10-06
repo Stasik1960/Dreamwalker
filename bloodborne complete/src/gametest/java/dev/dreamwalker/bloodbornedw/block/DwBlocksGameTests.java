@@ -51,6 +51,15 @@ public final class DwBlocksGameTests implements FabricGameTest {
             context.assertTrue(DwBlocks.sourceState(entry.block().getDefaultState()).equals(entry.sourceBlock().getDefaultState()), "default differs for " + entry.identifier());
             context.assertTrue(entry.block().getLootTableId().toString().equals("bloodborne_dw:blocks/" + entry.id()), "loot table differs for " + entry.identifier());
             context.assertTrue(entry.block().getJumpVelocityMultiplier() == entry.sourceBlock().getJumpVelocityMultiplier(), "jump multiplier differs for " + entry.identifier());
+            if (entry.sourceBlock() instanceof net.minecraft.block.AbstractPressurePlateBlock) {
+                for (var field : net.minecraft.block.AbstractPressurePlateBlock.class.getDeclaredFields()) {
+                    if (field.getType() != net.minecraft.block.BlockSetType.class || java.lang.reflect.Modifier.isStatic(field.getModifiers())) continue;
+                    try {
+                        field.setAccessible(true);
+                        context.assertTrue(field.get(entry.sourceBlock()).equals(field.get(entry.block())), "native pressure plate sound/type differs for " + entry.identifier());
+                    } catch (IllegalAccessException exception) { throw new IllegalStateException(exception); }
+                }
+            }
             if (entry.sourceBlock() instanceof net.minecraft.block.Stainable stain) context.assertTrue(entry.block() instanceof net.minecraft.block.Stainable && ((net.minecraft.block.Stainable)entry.block()).getColor() == stain.getColor(), "native glass color lost for " + entry.identifier());
             Set<String> source = names(entry.sourceBlock().getStateManager().getProperties());
             Set<String> carrier = names(entry.block().getStateManager().getProperties());

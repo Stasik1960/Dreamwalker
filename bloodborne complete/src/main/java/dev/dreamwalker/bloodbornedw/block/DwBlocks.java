@@ -264,6 +264,8 @@ public final class DwBlocks {
 
     private static BlockSetType blockSetType(Identifier id) {
         String path = id.getPath();
+        if (path.equals("heavy_weighted_pressure_plate")) return BlockSetType.IRON;
+        if (path.equals("light_weighted_pressure_plate")) return BlockSetType.GOLD;
         if (path.startsWith("iron_")) return BlockSetType.IRON;
         if (path.startsWith("gold_")) return BlockSetType.GOLD;
         if (path.startsWith("stone_")) return BlockSetType.STONE;

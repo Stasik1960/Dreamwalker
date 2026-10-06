@@ -14,7 +14,7 @@
 
 Результат: BUILD SUCCESSFUL, 7 unit tests, 14/14 GameTests. Доказательство: `build/final-release-validation-command.log` и XML в `build/test-results`; сводка включена в release validation evidence. `coexistenceJar` и `worldEditJar` — необязательные локальные зависимости для проверок, они не нужны для обычной сборки проекта.
 
-GameTests проверяют все 580 native family defaults/schema, BASE/ALT collision каждой комбинации state, jump multiplier, loot identity, Stainable color; actual fence connection, двери, numeric plant/pot, покрытые path/farmland, powder рядом с водой, sponge, сохранение redstone tick. RP-тесты проверяют оружие, AI/HP, декорации/фонари и travel constraints. С реальным WorldEdit проверены отказ для незавершённого выделения без записи правила и успех для cuboid с проверкой внутри/снаружи.
+GameTests проверяют все 580 native family defaults/schema, BASE/ALT collision каждой комбинации state, jump multiplier, loot identity, Stainable color и native BlockSetType всех нажимных плит, включая IRON/GOLD для весовых; actual fence connection, двери, numeric plant/pot, покрытые path/farmland, powder рядом с водой, sponge, сохранение redstone tick. RP-тесты проверяют оружие, AI/HP, декорации/фонари и travel constraints. С реальным WorldEdit проверены отказ для незавершённого выделения без записи правила и успех для cuboid с проверкой внутри/снаружи.
 
 ## Клиент и внешние ресурсы
 
@@ -52,7 +52,7 @@ python tools/complete_validate_assets.py --vanilla-client 'C:\Users\vakir\.gradl
 Готовый remapped JAR, а не dev classpath, установлен в обычный Fabric-server 1.20.1 вместе с API, GeckoLib, Bloodborne-Blocks и WorldEdit. На временных копиях финальных worlds выполнено:
 
 ```powershell
-python tools/complete_smoke_runtime.py --java '<Java17>\bin\java.exe' --city build/publish-worlds/Bloodborne-DW-v16.zip --gallery build/publish-worlds/Bloodborne-DW-v16-gallery.zip --case-prefix publish-
+python tools/complete_smoke_runtime.py --java '<Java17>\bin\java.exe' --city build/publish-worlds/Bloodborne-DW-v16.zip --gallery build/publish-worlds/Bloodborne-DW-v16-gallery.zip --case-prefix weighted-
 ```
 
 В `build/production-smoke` предварительно подготовлены обычные Fabric server.jar/launcher/libraries. Helper работает только на 127.0.0.1 в ограниченных по времени процессах, посылает save-all/stop и завершает процесс при таймауте. Его пути локальных test dependencies следует адаптировать при запуске на другой машине. Никакой production deploy или смены Gravit auth не было.
