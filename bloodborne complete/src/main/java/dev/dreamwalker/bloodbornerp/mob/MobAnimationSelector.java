@@ -21,5 +21,16 @@ public final class MobAnimationSelector {
  public static String idle(AssetSpec spec) { return suffix(spec, "idle", "idle1", "idle2"); }
  public static String hit(AssetSpec spec) { return suffix(spec, "hit"); }
  public static String death(AssetSpec spec) { return suffix(spec, "death", "death_rifle", "death_saber"); }
+ public static String movement(AssetSpec spec,boolean moving,float speed) {
+  if(!moving)return idle(spec);
+  // Match the source controller's locomotion loop; some source JSON clips omit loop.
+  if(speed>.35f&&spec.clip("run")!=null)return "run";
+  return spec.clip("walk")!=null?"walk":idle(spec);
+ }
+ public static software.bernie.geckolib.core.animation.Animation.LoopType loopType(AssetSpec spec,String suffix){
+  if(suffix.equals("walk")||suffix.equals("run")||suffix.equals(idle(spec)))return software.bernie.geckolib.core.animation.Animation.LoopType.LOOP;
+  if(suffix.equals(death(spec)))return software.bernie.geckolib.core.animation.Animation.LoopType.HOLD_ON_LAST_FRAME;
+  return spec.clip(suffix).loopType();
+ }
  private static String suffix(AssetSpec spec, String... options) { for (String option : options) if (spec.clip(option) != null) return option; return ""; }
 }

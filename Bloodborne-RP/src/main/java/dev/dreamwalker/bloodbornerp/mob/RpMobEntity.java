@@ -64,7 +64,7 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
  private final String assetId;
  private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
  @Nullable private final ServerBossBar bossBar;
- private boolean frozen;
+ private static final TrackedData<Boolean> FROZEN=DataTracker.registerData(RpMobEntity.class,TrackedDataHandlerRegistry.BOOLEAN);
  private int animationTicks;
 
  public RpMobEntity(EntityType<? extends RpMobEntity> type, World world, String assetId) {
@@ -76,11 +76,11 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
 
  @Override public String assetId() { return assetId; }
  public AssetSpec asset() { return AssetCatalog.get(assetId); }
- public boolean getFrozen() { return frozen; }
- public boolean isFrozen() { return frozen; }
+ public boolean getFrozen() { return getDataTracker().get(FROZEN); }
+ public boolean isFrozen() { return getDataTracker().get(FROZEN); }
  public void setFrozen(boolean frozen) {
-  this.frozen = frozen;
-  if (frozen) {
+  getDataTracker().set(FROZEN,frozen);
+  if (isFrozen()) {
    getNavigation().stop();
    setVelocity(Vec3d.ZERO);
    setTarget(null);
@@ -114,25 +114,26 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
   goalSelector.add(2, new TelegraphedAttackGoal(this));
   goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
   targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, false,
-   player -> RpConfig.INSTANCE.monstersAttackPlayers && !frozen));
+   player -> RpConfig.INSTANCE.monstersAttackPlayers && !isFrozen()));
  }
 
  @Override protected void initDataTracker() {
   super.initDataTracker();
   getDataTracker().startTracking(ATTACK_VARIANT, 0);
+  getDataTracker().startTracking(FROZEN,false);
  }
 
  @Override public void tick() {
   super.tick();
   if (animationTicks > 0 && --animationTicks == 0) getDataTracker().set(ATTACK_VARIANT, 0);
-  if (frozen) {
+  if (isFrozen()) {
    getNavigation().stop();
    setVelocity(Vec3d.ZERO);
   }
   if (!getWorld().isClient && bossBar != null) bossBar.setPercent(MathHelper.clamp(getHealth() / getMaxHealth(), 0.0F, 1.0F));
  }
 
- @Override public boolean canMoveVoluntarily() { return !frozen && super.canMoveVoluntarily(); }
+ @Override public boolean canMoveVoluntarily() { return !isFrozen() && super.canMoveVoluntarily(); }
  @Override protected net.minecraft.sound.SoundEvent getAmbientSound() {
   return dev.dreamwalker.bloodbornerp.content.RpSounds.mob(assetId,"idle",SoundEvents.ENTITY_ZOMBIE_AMBIENT);
  }
@@ -142,21 +143,22 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
  @Override protected net.minecraft.sound.SoundEvent getDeathSound() {
   return dev.dreamwalker.bloodbornerp.content.RpSounds.mob(assetId,"death",SoundEvents.ENTITY_ZOMBIE_DEATH);
  }
- @Override public boolean isAiDisabled() { return frozen || super.isAiDisabled(); }
+ @Override public boolean isAiDisabled() { return isFrozen() || super.isAiDisabled(); }
  @Override public boolean canImmediatelyDespawn(double distanceSquared) { return false; }
  @Override public void onStartedTrackingBy(ServerPlayerEntity player) { super.onStartedTrackingBy(player); if (bossBar != null) bossBar.addPlayer(player); }
  @Override public void onStoppedTrackingBy(ServerPlayerEntity player) { super.onStoppedTrackingBy(player); if (bossBar != null) bossBar.removePlayer(player); }
  @Override public void onDeath(net.minecraft.entity.damage.DamageSource source) { if (bossBar != null) bossBar.clearPlayers(); super.onDeath(source); }
- @Override public void writeCustomDataToNbt(NbtCompound nbt) { super.writeCustomDataToNbt(nbt); nbt.putBoolean(FROZEN_NBT, frozen); }
+ @Override public void writeCustomDataToNbt(NbtCompound nbt) { super.writeCustomDataToNbt(nbt); nbt.putBoolean(FROZEN_NBT, isFrozen()); }
  @Override public void readCustomDataFromNbt(NbtCompound nbt) { super.readCustomDataFromNbt(nbt); setFrozen(nbt.getBoolean(FROZEN_NBT)); }
 
  @Override public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
   controllers.add(new AnimationController<>(this, "main", 0, state -> {
+   state.getController().setAnimationSpeed(isFrozen()?0:1);
    String suffix = deathTime > 0 ? MobAnimationSelector.death(asset()) : hurtTime > 0 ? MobAnimationSelector.hit(asset()) : attackAnimationSuffix();
-   if (suffix.isEmpty()) suffix = state.isMoving() && asset().clip("walk") != null ? "walk" : MobAnimationSelector.idle(asset());
+   if (suffix.isEmpty()) suffix = MobAnimationSelector.movement(asset(),state.isMoving(),state.getLimbSwingAmount());
    AssetSpec.Clip clip = asset().clip(suffix);
    if (clip == null || clip.name().isBlank()) return PlayState.STOP;
-   return state.setAndContinue(RawAnimation.begin().then(clip.name(), clip.loop() ? Animation.LoopType.LOOP : Animation.LoopType.PLAY_ONCE));
+   return state.setAndContinue(RawAnimation.begin().then(clip.name(),MobAnimationSelector.loopType(asset(),suffix)));
   }));
  }
  @Override public AnimatableInstanceCache getAnimatableInstanceCache() { return animationCache; }
@@ -184,8 +186,8 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
   private int windupTicks;
   private boolean ranged;
   TelegraphedAttackGoal(RpMobEntity ignored) { setControls(java.util.EnumSet.of(Control.MOVE, Control.LOOK)); }
-  @Override public boolean canStart() { return validTarget(getTarget()) && !frozen; }
-  @Override public boolean shouldContinue() { return validTarget(getTarget()) && !frozen; }
+  @Override public boolean canStart() { return validTarget(getTarget()) && !isFrozen(); }
+  @Override public boolean shouldContinue() { return validTarget(getTarget()) && !isFrozen(); }
    @Override public void start() { ticks = 0; windupTicks = 0; ranged = usesRangedAttack(); }
   @Override public void stop() { ticks = 0; windupTicks = 0; getNavigation().stop(); }
   @Override public void tick() {
@@ -204,7 +206,7 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
    }
   }
   private boolean validTarget(@Nullable LivingEntity target) {
-   return target instanceof PlayerEntity && target.isAlive() && RpConfig.INSTANCE.monstersAttackPlayers && !frozen;
+   return target instanceof PlayerEntity && target.isAlive() && RpConfig.INSTANCE.monstersAttackPlayers && !isFrozen();
   }
   private void strike(LivingEntity target) {
    if (canSee(target) && AttackRules.withinMeleeReach(squaredDistanceTo(target), getWidth(), target.getWidth())) {

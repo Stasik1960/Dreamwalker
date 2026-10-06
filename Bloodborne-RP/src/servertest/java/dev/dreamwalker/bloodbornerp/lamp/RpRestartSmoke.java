@@ -33,6 +33,7 @@ public final class RpRestartSmoke implements DedicatedServerModInitializer {
  private static final UUID LAMP_ONE=UUID.fromString("00000000-0000-0000-0000-000000000101");
  private static final UUID LAMP_TWO=UUID.fromString("00000000-0000-0000-0000-000000000102");
  private static final UUID ITEM=UUID.fromString("00000000-0000-0000-0000-000000000103");
+ private static final UUID DOOR=UUID.fromString("00000000-0000-0000-0000-000000000104"),LEVER=UUID.fromString("00000000-0000-0000-0000-000000000105");
  private static final UUID NODE_ONE=UUID.fromString("00000000-0000-0000-0000-000000000201");
  private static final UUID NODE_TWO=UUID.fromString("00000000-0000-0000-0000-000000000202");
  private static final BlockPos FLOOR=new BlockPos(0,75,0), BB_POS=new BlockPos(5,75,5), LAMP_ONE_POS=new BlockPos(1,76,1), LAMP_TWO_POS=new BlockPos(4,76,1), MOB_POS=new BlockPos(2,76,4);
@@ -51,6 +52,8 @@ public final class RpRestartSmoke implements DedicatedServerModInitializer {
   EntityType<RpMobEntity> mobType=required(MobRegistry.TYPES.get("huntsman_a"),"huntsman_a");RpMobEntity mob=required(mobType.create(world),"huntsman_a factory");mob.refreshPositionAndAngles(MOB_POS.getX()+.5,MOB_POS.getY(),MOB_POS.getZ()+.5,0,0);mob.setFrozen(true);require(world.spawnEntity(mob),"spawn frozen mob");
   ItemStack stack=WeaponRegistry.SAW_CLEAVER.getDefaultStack();TrickWeaponItem.setForm(stack,WeaponForm.EXTENDED);stack.setCustomName(net.minecraft.text.Text.literal("restart weapon"));stack.setDamage(13);stack.getOrCreateNbt().putString("RpRestartTag","present");ItemEntity item=new ItemEntity(world,3.5,76,3.5,stack);item.setUuid(ITEM);require(world.spawnEntity(item),"spawn transformed weapon item");
   Identifier bbId=new Identifier("bloodborne_blocks","o_barrel");require(Registries.BLOCK.containsId(bbId),"Bloodborne Blocks root unavailable");world.setBlockState(BB_POS,Registries.BLOCK.get(bbId).getDefaultState());
+  var door=ObjectRegistry.TYPES.get("door_1").create(world);door.setUuid(DOOR);door.refreshPositionAndAngles(7,76,1,45,0);door.setOpen(true);door.setLocked(true);door.setObjectScale(1.6f);require(world.spawnEntity(door),"spawn saved door");
+  var lever=ObjectRegistry.TYPES.get("lever_1").create(world);lever.setUuid(LEVER);lever.refreshPositionAndAngles(7,76,6,0,0);require(world.spawnEntity(lever)&&lever.addLink(door),"spawn saved linked lever");
  }
 
  private static void verifyPhaseTwo(MinecraftServer server) {
@@ -58,6 +61,9 @@ public final class RpRestartSmoke implements DedicatedServerModInitializer {
   RpMobEntity mob=world.getEntitiesByType(MobRegistry.TYPES.get("huntsman_a"),new net.minecraft.util.math.Box(MOB_POS).expand(2),candidate->true).stream().findFirst().orElseThrow(()->new IllegalStateException("frozen mob missing"));require(mob.isFrozen()&&mob.getHealth()==mob.getMaxHealth(),"frozen mob or vanilla health did not persist");
   Entity entity=world.getEntity(ITEM);require(entity instanceof ItemEntity,"weapon item missing");ItemStack stack=((ItemEntity)entity).getStack();require(stack.getItem()==WeaponRegistry.SAW_CLEAVER&&TrickWeaponItem.form(stack)==WeaponForm.EXTENDED&&stack.getDamage()==13&&stack.hasCustomName()&&stack.getName().getString().equals("restart weapon")&&"present".equals(stack.getNbt().getString("RpRestartTag")),"weapon stack form/name/durability/tag did not persist");
   Identifier bbId=new Identifier("bloodborne_blocks","o_barrel");require(Registries.BLOCK.containsId(bbId)&&world.getBlockState(BB_POS).isOf(Registries.BLOCK.get(bbId)),"Bloodborne Blocks root did not persist");
+  require(world.getEntity(DOOR) instanceof RpObjectEntity,"door missing after restart");var door=(RpObjectEntity)world.getEntity(DOOR);
+  require(door.isOpen()&&door.isLocked()&&door.objectScale()==1.6f&&door.getYaw()==45&&!door.isCollidable(),"door open/locked/Scale/yaw/collision did not persist");
+  require(world.getEntity(LEVER) instanceof RpObjectEntity,"lever missing after restart");var lever=(RpObjectEntity)world.getEntity(LEVER);require(lever.links().equals(java.util.List.of(DOOR)),"lever UUID link did not persist");
  }
 
  private static RpObjectEntity lamp(ServerWorld world,UUID id,BlockPos pos){EntityType<RpObjectEntity> type=required(ObjectRegistry.TYPES.get("hunterlamp"),"hunterlamp");RpObjectEntity lamp=required(type.create(world),"hunterlamp factory");lamp.setUuid(id);lamp.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+.5,0,0);require(world.spawnEntity(lamp),"spawn hunterlamp");return lamp;}

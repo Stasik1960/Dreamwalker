@@ -17,4 +17,13 @@ class MobAnimationSelectorTest {
   assertEquals("death_rifle", MobAnimationSelector.death(rifle));
  }
  private static AssetSpec.Clip clip() { return new AssetSpec.Clip("animation.test", 1, false); }
+ @Test void sourceLocomotionLoopsEvenWhenJsonOmitsLoopAndDeathHolds(){
+  var idle=new AssetSpec.Clip("animation.huntsman_a.idle",4,false,"once");
+  var death=new AssetSpec.Clip("animation.rabid_dog.death",3,false,"hold_on_last_frame");
+  var spec=new AssetSpec("huntsman_a","","","",1,1,1,"",Map.of("idle",idle,"death",death,"walk",clip(),"run",clip()));
+  assertEquals(software.bernie.geckolib.core.animation.Animation.LoopType.LOOP,MobAnimationSelector.loopType(spec,"idle"));
+  assertEquals(software.bernie.geckolib.core.animation.Animation.LoopType.HOLD_ON_LAST_FRAME,MobAnimationSelector.loopType(spec,"death"));
+  assertEquals("run",MobAnimationSelector.movement(spec,true,.5f));
+  assertEquals("idle",MobAnimationSelector.movement(spec,false,0));
+ }
 }

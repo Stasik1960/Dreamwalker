@@ -12,32 +12,38 @@
       "idle": {
         "name": "animation.cage_obj_1.idle",
         "seconds": 3,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.cage_obj_1.hit",
         "seconds": 0.5417,
-        "loop": false
+        "loop": false,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.cage_obj_1.attack1",
         "seconds": 2.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.cage_obj_1.attack2",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "death": {
         "name": "animation.cage_obj_1.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.cage_obj_1.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -54,32 +60,38 @@
       "idle": {
         "name": "animation.cage_obj_2.idle",
         "seconds": 3,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.cage_obj_2.hit",
         "seconds": 0.5417,
-        "loop": false
+        "loop": false,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.cage_obj_2.attack1",
         "seconds": 2.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.cage_obj_2.attack2",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "death": {
         "name": "animation.cage_obj_2.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.cage_obj_2.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -96,32 +108,38 @@
       "idle": {
         "name": "animation.cage_obj_3.idle",
         "seconds": 3,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.cage_obj_3.hit",
         "seconds": 0.5417,
-        "loop": false
+        "loop": false,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.cage_obj_3.attack1",
         "seconds": 2.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.cage_obj_3.attack2",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "death": {
         "name": "animation.cage_obj_3.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.cage_obj_3.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -132,48 +150,56 @@
     "animation": "animations/cleric_beast.animation.json",
     "width": 2.8,
     "height": 6.5,
-    "scale": 1,
+    "scale": 1.5,
     "displayName": "Cleric Beast",
     "clips": {
       "idle": {
         "name": "animation.cleric_beast.idle",
         "seconds": 5.54167,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.cleric_beast.walk",
         "seconds": 1.83333,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.cleric_beast.attack1",
         "seconds": 4.33333,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.cleric_beast.attack2",
         "seconds": 2.95833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack3": {
         "name": "animation.cleric_beast.attack3",
         "seconds": 2.83333,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "hit": {
         "name": "animation.cleric_beast.hit",
         "seconds": 0.625,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.cleric_beast.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "death": {
         "name": "animation.cleric_beast.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -184,58 +210,68 @@
     "animation": "animations/vicar_amelia.animation.json",
     "width": 2.8,
     "height": 4.5,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Vicar Amelia",
     "clips": {
       "idle": {
         "name": "animation.vicar_amelia.idle",
         "seconds": 4,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.vicar_amelia.walk",
         "seconds": 1.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.vicar_amelia.run",
         "seconds": 0.95,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.vicar_amelia.hit",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack1": {
         "name": "animation.vicar_amelia.attack1",
         "seconds": 4.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.vicar_amelia.attack2",
         "seconds": 3.6,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "static": {
         "name": "animation.vicar_amelia.static",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walkie2": {
         "name": "animation.vicar_amelia.walkie2",
         "seconds": 1.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "runrun": {
         "name": "animation.vicar_amelia.runrun",
         "seconds": 0.95,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "new": {
         "name": "animation.vicar_amelia.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -246,58 +282,68 @@
     "animation": "animations/scourge_beast.animation.json",
     "width": 2.5,
     "height": 2.0,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Scourge Beast",
     "clips": {
       "idle": {
         "name": "animation.scourge_beast.idle",
         "seconds": 5.41667,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.scourge_beast.walk",
         "seconds": 2,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.scourge_beast.run",
         "seconds": 0.5417,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.scourge_beast.attack1",
         "seconds": 2.20833,
-        "loop": true
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.scourge_beast.attack2",
         "seconds": 3,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "hit": {
         "name": "animation.scourge_beast.hit",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "left_turn": {
         "name": "animation.scourge_beast.left_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.scourge_beast.right_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.scourge_beast.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.scourge_beast.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -308,48 +354,56 @@
     "animation": "animations/blood_starved_beast.animation.json",
     "width": 2.5,
     "height": 3.25,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Blood Starved Beast",
     "clips": {
       "idle": {
         "name": "animation.blood_starved_beast.idle",
         "seconds": 7.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.blood_starved_beast.walk",
         "seconds": 2,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.blood_starved_beast.attack1",
         "seconds": 3,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack1_positioning": {
         "name": "animation.blood_starved_beast.attack1_positioning",
         "seconds": 3,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.blood_starved_beast.attack2",
         "seconds": 2.0417,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2_positioning": {
         "name": "animation.blood_starved_beast.attack2_positioning",
         "seconds": 2.0417,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "run": {
         "name": "animation.blood_starved_beast.run",
         "seconds": 0.875,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "new": {
         "name": "animation.blood_starved_beast.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -360,73 +414,86 @@
     "animation": "animations/executioner.animation.json",
     "width": 1.5,
     "height": 2.5,
-    "scale": 1,
+    "scale": 1.75,
     "displayName": "Executioner",
     "clips": {
       "idle": {
         "name": "animation.executioner.idle",
         "seconds": 2.75,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.executioner.walk",
         "seconds": 1.75,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "static": {
         "name": "animation.executioner.static",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.executioner.attack1",
         "seconds": 3.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.executioner.attack2",
         "seconds": 3.58333,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack3": {
         "name": "animation.executioner.attack3",
         "seconds": 4.45833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "hit": {
         "name": "animation.executioner.hit",
         "seconds": 0.5417,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack2_movetest": {
         "name": "animation.executioner.attack2_movetest",
         "seconds": 3,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "walkmovecombinetest": {
         "name": "animation.executioner.walkmovecombinetest",
         "seconds": 1.75,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.executioner.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.executioner.left_turn",
         "seconds": 1.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.executioner.right_turn",
         "seconds": 1.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.executioner.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -437,58 +504,68 @@
     "animation": "animations/huntsman_a.animation.json",
     "width": 1.0,
     "height": 2.5,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Huntsman A",
     "clips": {
       "idle": {
         "name": "animation.huntsman_a.idle",
         "seconds": 4,
-        "loop": false
+        "loop": false,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.huntsman_a.walk",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.huntsman_a.run",
         "seconds": 0.75,
-        "loop": false
+        "loop": false,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.huntsman_a.attack1",
         "seconds": 3,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.huntsman_a.attack2",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "hit": {
         "name": "animation.huntsman_a.hit",
         "seconds": 0.5417,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "left_turn": {
         "name": "animation.huntsman_a.left_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.huntsman_a.right_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.huntsman_a.death",
         "seconds": 5,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.huntsman_a.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -499,53 +576,62 @@
     "animation": "animations/huntsman_b.animation.json",
     "width": 1.0,
     "height": 2.5,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Huntsman B",
     "clips": {
       "walk": {
         "name": "animation.huntsman_b.walk",
         "seconds": 1.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "idle": {
         "name": "animation.huntsman_b.idle",
         "seconds": 2.625,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.huntsman_b.hit",
         "seconds": 0.4167,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack1": {
         "name": "animation.huntsman_b.attack1",
         "seconds": 3,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.huntsman_b.attack2",
         "seconds": 3.29167,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack1_movetest": {
         "name": "animation.huntsman_b.attack1_movetest",
         "seconds": 2.33333,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack2_movetest": {
         "name": "animation.huntsman_b.attack2_movetest",
         "seconds": 2.41667,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.huntsman_b.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "death": {
         "name": "animation.huntsman_b.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -556,63 +642,74 @@
     "animation": "animations/huntsman_c.animation.json",
     "width": 1.0,
     "height": 2.5,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Huntsman C",
     "clips": {
       "idle": {
         "name": "animation.huntsman_c.idle",
         "seconds": 2.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.huntsman_c.walk",
         "seconds": 1.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.huntsman_c.run",
         "seconds": 0.83333,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.huntsman_c.hit",
         "seconds": 0.58333,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "defend": {
         "name": "animation.huntsman_c.defend",
         "seconds": 2.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.huntsman_c.attack1",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.huntsman_c.attack2",
         "seconds": 1.95833,
-        "loop": true
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.huntsman_c.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.huntsman_c.left_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.huntsman_c.right_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.huntsman_c.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -623,78 +720,92 @@
     "animation": "animations/huntsman_d.animation.json",
     "width": 1.0,
     "height": 2.5,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Huntsman D",
     "clips": {
       "attack2": {
         "name": "animation.huntsman_d.attack2",
         "seconds": 3.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack1": {
         "name": "animation.huntsman_d.attack1",
         "seconds": 4.375,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "walk": {
         "name": "animation.huntsman_d.walk",
         "seconds": 1.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.huntsman_d.run",
         "seconds": 0.8333,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack_sword2": {
         "name": "animation.huntsman_d.attack_sword2",
         "seconds": 14.5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack_sword1": {
         "name": "animation.huntsman_d.attack_sword1",
         "seconds": 3.08333,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "change_weapon2": {
         "name": "animation.huntsman_d.change_weapon2",
         "seconds": 1.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "change_weapon1": {
         "name": "animation.huntsman_d.change_weapon1",
         "seconds": 1.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "idle1": {
         "name": "animation.huntsman_d.idle1",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "idle2": {
         "name": "animation.huntsman_d.idle2",
         "seconds": 2.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.huntsman_d.hit",
         "seconds": 0.5833,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.huntsman_d.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "death_rifle": {
         "name": "animation.huntsman_d.death_rifle",
         "seconds": 5,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "death_saber": {
         "name": "animation.huntsman_d.death_saber",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -705,58 +816,68 @@
     "animation": "animations/wheelchair.animation.json",
     "width": 0.8,
     "height": 2.0,
-    "scale": 1,
+    "scale": 0.9,
     "displayName": "Huntsman Wheelchair",
     "clips": {
       "idle": {
         "name": "animation.wheelchair.idle",
         "seconds": 6,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.wheelchair.walk",
         "seconds": 3.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.wheelchair.run",
         "seconds": 2.29167,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.wheelchair.hit",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack1": {
         "name": "animation.wheelchair.attack1",
         "seconds": 6.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.wheelchair.attack2",
         "seconds": 7.20833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.wheelchair.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.wheelchair.left_turn",
         "seconds": 1.75,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.wheelchair.right_turn",
         "seconds": 1.75,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.wheelchair.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -767,58 +888,68 @@
     "animation": "animations/large_huntsman.animation.json",
     "width": 1.25,
     "height": 3.75,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Large Huntsman",
     "clips": {
       "idle": {
         "name": "animation.large_huntsman.idle",
         "seconds": 2.375,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.large_huntsman.run",
         "seconds": 0.66667,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.large_huntsman.hit",
         "seconds": 1.54167,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack1": {
         "name": "animation.large_huntsman.attack1",
         "seconds": 3.83333,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.large_huntsman.attack2",
         "seconds": 3.83333,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack3": {
         "name": "animation.large_huntsman.attack3",
         "seconds": 3.83333,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "walk": {
         "name": "animation.large_huntsman.walk",
         "seconds": 1.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "new": {
         "name": "animation.large_huntsman.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "static2": {
         "name": "animation.large_huntsman.static2",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "death": {
         "name": "animation.large_huntsman.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -829,53 +960,62 @@
     "animation": "animations/carrion_crow.animation.json",
     "width": 1.5,
     "height": 1.0,
-    "scale": 1,
+    "scale": 1.4,
     "displayName": "Carrion Crow",
     "clips": {
       "walk": {
         "name": "animation.carrion_crow.walk",
         "seconds": 3,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "idle": {
         "name": "animation.carrion_crow.idle",
         "seconds": 4.79167,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.carrion_crow.attack1",
         "seconds": 2.79167,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.carrion_crow.attack2",
         "seconds": 2.33333,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "hit": {
         "name": "animation.carrion_crow.hit",
         "seconds": 0.4583,
-        "loop": false
+        "loop": false,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.carrion_crow.left_turn",
         "seconds": 1.9167,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.carrion_crow.right_turn",
         "seconds": 1.9167,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.carrion_crow.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.carrion_crow.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -886,48 +1026,56 @@
     "animation": "animations/giant_rat.animation.json",
     "width": 2.5,
     "height": 2.0,
-    "scale": 1,
+    "scale": 1.6,
     "displayName": "Giant Rat",
     "clips": {
       "idle": {
         "name": "animation.giant_rat.idle",
         "seconds": 4.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.giant_rat.walk",
         "seconds": 1.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.giant_rat.attack1",
         "seconds": 1.5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.giant_rat.attack2",
         "seconds": 1.625,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "left_turn": {
         "name": "animation.giant_rat.left_turn",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.giant_rat.right_turn",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.giant_rat.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.giant_rat.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -938,48 +1086,56 @@
     "animation": "animations/giant_rat.animation.json",
     "width": 1.5,
     "height": 1.5,
-    "scale": 0.6,
+    "scale": 1.1,
     "displayName": "Small Rat",
     "clips": {
       "idle": {
         "name": "animation.giant_rat.idle",
         "seconds": 4.5,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.giant_rat.walk",
         "seconds": 1.25,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.giant_rat.attack1",
         "seconds": 1.5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.giant_rat.attack2",
         "seconds": 1.625,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "left_turn": {
         "name": "animation.giant_rat.left_turn",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.giant_rat.right_turn",
         "seconds": 0.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.giant_rat.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.giant_rat.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -990,58 +1146,68 @@
     "animation": "animations/rabid_dog.animation.json",
     "width": 1.5,
     "height": 1.5,
-    "scale": 1,
+    "scale": 0.6,
     "displayName": "Rabid Dog",
     "clips": {
       "idle": {
         "name": "animation.rabid_dog.idle",
         "seconds": 3,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.rabid_dog.walk",
         "seconds": 1.5417,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.rabid_dog.hit",
         "seconds": 0.5417,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "run": {
         "name": "animation.rabid_dog.run",
         "seconds": 0.6667,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.rabid_dog.attack1",
         "seconds": 2.0833,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.rabid_dog.attack2",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "left_turn": {
         "name": "animation.rabid_dog.left_turn",
         "seconds": 1.375,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.rabid_dog.right_turn",
         "seconds": 1.375,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.rabid_dog.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.rabid_dog.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1052,58 +1218,68 @@
     "animation": "animations/maneater_boar.animation.json",
     "width": 3.5,
     "height": 4.0,
-    "scale": 1,
+    "scale": 1.4,
     "displayName": "Maneater Boar",
     "clips": {
       "idle": {
         "name": "animation.maneater_boar.idle",
         "seconds": 3,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.maneater_boar.walk",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "run": {
         "name": "animation.maneater_boar.run",
         "seconds": 0.6667,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.maneater_boar.hit",
         "seconds": 0.66667,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack1": {
         "name": "animation.maneater_boar.attack1",
         "seconds": 5,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.maneater_boar.attack2",
         "seconds": 5.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.maneater_boar.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.maneater_boar.left_turn",
         "seconds": 1.375,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.maneater_boar.right_turn",
         "seconds": 1.375,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.maneater_boar.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -1114,73 +1290,86 @@
     "animation": "animations/brick_troll.animation.json",
     "width": 1.5,
     "height": 2.5,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Brick Troll",
     "clips": {
       "idle": {
         "name": "animation.brick_troll.idle",
         "seconds": 2.375,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.brick_troll.walk",
         "seconds": 1.41667,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "attack1": {
         "name": "animation.brick_troll.attack1",
         "seconds": 6.70833,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2_old": {
         "name": "animation.brick_troll.attack2_old",
         "seconds": 5.625,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.brick_troll.attack2",
         "seconds": 5.625,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2_rotation": {
         "name": "animation.brick_troll.attack2_rotation",
         "seconds": 6.375,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2_continuation": {
         "name": "animation.brick_troll.attack2_continuation",
         "seconds": 2.25,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2_continuation_rotation": {
         "name": "animation.brick_troll.attack2_continuation_rotation",
         "seconds": 3.5,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "hit": {
         "name": "animation.brick_troll.hit",
         "seconds": 0.625,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.brick_troll.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.brick_troll.left_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.brick_troll.right_turn",
         "seconds": 1,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.brick_troll.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -1191,53 +1380,62 @@
     "animation": "animations/rotted_corpse.animation.json",
     "width": 2.5,
     "height": 2.0,
-    "scale": 1,
+    "scale": 1.2,
     "displayName": "Rotted Corpse",
     "clips": {
       "idle": {
         "name": "animation.rotted_corpse.idle",
         "seconds": 2,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "walk": {
         "name": "animation.rotted_corpse.walk",
         "seconds": 4,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "hit": {
         "name": "animation.rotted_corpse.hit",
         "seconds": 0.33333,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "attack1": {
         "name": "animation.rotted_corpse.attack1",
         "seconds": 7.125,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "attack2": {
         "name": "animation.rotted_corpse.attack2",
         "seconds": 2,
-        "loop": false
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "new": {
         "name": "animation.rotted_corpse.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "left_turn": {
         "name": "animation.rotted_corpse.left_turn",
         "seconds": 2,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "right_turn": {
         "name": "animation.rotted_corpse.right_turn",
         "seconds": 2,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "death": {
         "name": "animation.rotted_corpse.death",
         "seconds": 5,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -1342,27 +1540,32 @@
       "open": {
         "name": "animation.door.open",
         "seconds": 2.6,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "open_idle": {
         "name": "animation.door.open_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "close": {
         "name": "animation.door.close",
         "seconds": 3.08,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "closed_idle": {
         "name": "animation.door.closed_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "new": {
         "name": "animation.door.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1379,27 +1582,32 @@
       "open": {
         "name": "animation.door.open",
         "seconds": 2.6,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "close": {
         "name": "animation.door.close",
         "seconds": 3.08,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "closed_idle": {
         "name": "animation.door.closed_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "open_idle": {
         "name": "animation.door.open_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "new": {
         "name": "animation.door.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1416,22 +1624,26 @@
       "open": {
         "name": "animation.gate.open",
         "seconds": 8.16,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "close": {
         "name": "animation.gate.close",
         "seconds": 8.16,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "open_idle": {
         "name": "animation.gate.open_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "closed_idle": {
         "name": "animation.gate.closed_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1459,7 +1671,8 @@
       "idle": {
         "name": "animation.gate.idle",
         "seconds": 1.6,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1690,18 +1903,20 @@
     "animation": "animations/lever_1.animation.json",
     "width": 1.5,
     "height": 1.2,
-    "scale": 1,
+    "scale": 0.8,
     "displayName": "Lever 1",
     "clips": {
       "open": {
         "name": "animation.lever.open",
         "seconds": 3.72,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.lever.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1718,12 +1933,14 @@
       "open": {
         "name": "animation.lever.open",
         "seconds": 3.72,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "new": {
         "name": "animation.lever.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1828,22 +2045,26 @@
       "open": {
         "name": "animation.gate.open",
         "seconds": 8.16,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "close": {
         "name": "animation.gate.close",
         "seconds": 8.16,
-        "loop": false
+        "loop": false,
+        "loopMode": "once"
       },
       "open_idle": {
         "name": "animation.gate.open_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       },
       "closed_idle": {
         "name": "animation.gate.closed_idle",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -1948,27 +2169,32 @@
       "open": {
         "name": "animation.chest.open",
         "seconds": 1.68,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "opened": {
         "name": "animation.chest.opened",
         "seconds": 1,
-        "loop": true
+        "loop": false,
+        "loopMode": "loop"
       },
       "close": {
         "name": "animation.chest.close",
         "seconds": 0.72,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "closed": {
         "name": "animation.chest.closed",
         "seconds": 1,
-        "loop": true
+        "loop": false,
+        "loopMode": "loop"
       },
       "new": {
         "name": "animation.chest.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -2117,22 +2343,26 @@
       "up": {
         "name": "animation.elevator.up",
         "seconds": 23.04,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "up_idle": {
         "name": "animation.elevator.up_idle",
         "seconds": 1,
-        "loop": true
+        "loop": false,
+        "loopMode": "loop"
       },
       "down": {
         "name": "animation.elevator.down",
         "seconds": 21.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "down_idle": {
         "name": "animation.elevator.down_idle",
         "seconds": 1,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -2149,12 +2379,14 @@
       "true": {
         "name": "animation.ladder.true",
         "seconds": 2.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "false": {
         "name": "animation.ladder.false",
         "seconds": 1,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       }
     }
   },
@@ -2242,13 +2474,14 @@
     "animation": "animations/bullet.animation.json",
     "width": 0.1,
     "height": 0.1,
-    "scale": 1,
+    "scale": 0.2,
     "displayName": "Bullet",
     "clips": {
       "new": {
         "name": "animation.bullet.new",
         "seconds": 1,
-        "loop": true
+        "loop": true,
+        "loopMode": "loop"
       }
     }
   },
@@ -2265,52 +2498,62 @@
       "sawcleaver_true": {
         "name": "animation.weapons.sawcleaver_true",
         "seconds": 0.56,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_false": {
         "name": "animation.weapons.sawcleaver_false",
         "seconds": 0.44,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_true(old)": {
         "name": "animation.weapons.sawcleaver_true(old)",
         "seconds": 0.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawcleaver_false(old)": {
         "name": "animation.weapons.sawcleaver_false(old)",
         "seconds": 0.52,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_true": {
         "name": "animation.weapons.sawspear_true",
         "seconds": 0.48,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_false": {
         "name": "animation.weapons.sawspear_false",
         "seconds": 0.20833,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_true(old)": {
         "name": "animation.weapons.sawspear_true(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_false(old)": {
         "name": "animation.weapons.sawspear_false(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "boomhammer_true": {
         "name": "animation.weapons.boomhammer_true",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "boomhammer_false": {
         "name": "animation.weapons.boomhammer_false",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       }
     }
   },
@@ -2327,52 +2570,62 @@
       "sawcleaver_true": {
         "name": "animation.weapons.sawcleaver_true",
         "seconds": 0.56,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_false": {
         "name": "animation.weapons.sawcleaver_false",
         "seconds": 0.44,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_true(old)": {
         "name": "animation.weapons.sawcleaver_true(old)",
         "seconds": 0.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawcleaver_false(old)": {
         "name": "animation.weapons.sawcleaver_false(old)",
         "seconds": 0.52,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_true": {
         "name": "animation.weapons.sawspear_true",
         "seconds": 0.48,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_false": {
         "name": "animation.weapons.sawspear_false",
         "seconds": 0.20833,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_true(old)": {
         "name": "animation.weapons.sawspear_true(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_false(old)": {
         "name": "animation.weapons.sawspear_false(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "boomhammer_true": {
         "name": "animation.weapons.boomhammer_true",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "boomhammer_false": {
         "name": "animation.weapons.boomhammer_false",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       }
     }
   },
@@ -2389,52 +2642,62 @@
       "sawcleaver_true": {
         "name": "animation.weapons.sawcleaver_true",
         "seconds": 0.56,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_false": {
         "name": "animation.weapons.sawcleaver_false",
         "seconds": 0.44,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_true(old)": {
         "name": "animation.weapons.sawcleaver_true(old)",
         "seconds": 0.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawcleaver_false(old)": {
         "name": "animation.weapons.sawcleaver_false(old)",
         "seconds": 0.52,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_true": {
         "name": "animation.weapons.sawspear_true",
         "seconds": 0.48,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_false": {
         "name": "animation.weapons.sawspear_false",
         "seconds": 0.20833,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_true(old)": {
         "name": "animation.weapons.sawspear_true(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_false(old)": {
         "name": "animation.weapons.sawspear_false(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "boomhammer_true": {
         "name": "animation.weapons.boomhammer_true",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "boomhammer_false": {
         "name": "animation.weapons.boomhammer_false",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       }
     }
   },
@@ -2451,52 +2714,62 @@
       "sawcleaver_true": {
         "name": "animation.weapons.sawcleaver_true",
         "seconds": 0.56,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_false": {
         "name": "animation.weapons.sawcleaver_false",
         "seconds": 0.44,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_true(old)": {
         "name": "animation.weapons.sawcleaver_true(old)",
         "seconds": 0.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawcleaver_false(old)": {
         "name": "animation.weapons.sawcleaver_false(old)",
         "seconds": 0.52,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_true": {
         "name": "animation.weapons.sawspear_true",
         "seconds": 0.48,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_false": {
         "name": "animation.weapons.sawspear_false",
         "seconds": 0.20833,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_true(old)": {
         "name": "animation.weapons.sawspear_true(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_false(old)": {
         "name": "animation.weapons.sawspear_false(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "boomhammer_true": {
         "name": "animation.weapons.boomhammer_true",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "boomhammer_false": {
         "name": "animation.weapons.boomhammer_false",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       }
     }
   },
@@ -2513,52 +2786,62 @@
       "sawcleaver_true": {
         "name": "animation.weapons.sawcleaver_true",
         "seconds": 0.56,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_false": {
         "name": "animation.weapons.sawcleaver_false",
         "seconds": 0.44,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_true(old)": {
         "name": "animation.weapons.sawcleaver_true(old)",
         "seconds": 0.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawcleaver_false(old)": {
         "name": "animation.weapons.sawcleaver_false(old)",
         "seconds": 0.52,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_true": {
         "name": "animation.weapons.sawspear_true",
         "seconds": 0.48,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_false": {
         "name": "animation.weapons.sawspear_false",
         "seconds": 0.20833,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_true(old)": {
         "name": "animation.weapons.sawspear_true(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_false(old)": {
         "name": "animation.weapons.sawspear_false(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "boomhammer_true": {
         "name": "animation.weapons.boomhammer_true",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "boomhammer_false": {
         "name": "animation.weapons.boomhammer_false",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       }
     }
   },
@@ -2575,52 +2858,62 @@
       "sawcleaver_true": {
         "name": "animation.weapons.sawcleaver_true",
         "seconds": 0.56,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_false": {
         "name": "animation.weapons.sawcleaver_false",
         "seconds": 0.44,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawcleaver_true(old)": {
         "name": "animation.weapons.sawcleaver_true(old)",
         "seconds": 0.4,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawcleaver_false(old)": {
         "name": "animation.weapons.sawcleaver_false(old)",
         "seconds": 0.52,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_true": {
         "name": "animation.weapons.sawspear_true",
         "seconds": 0.48,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_false": {
         "name": "animation.weapons.sawspear_false",
         "seconds": 0.20833,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "sawspear_true(old)": {
         "name": "animation.weapons.sawspear_true(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "sawspear_false(old)": {
         "name": "animation.weapons.sawspear_false(old)",
         "seconds": 0.2,
-        "loop": true
+        "loop": false,
+        "loopMode": "hold_on_last_frame"
       },
       "boomhammer_true": {
         "name": "animation.weapons.boomhammer_true",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       },
       "boomhammer_false": {
         "name": "animation.weapons.boomhammer_false",
         "seconds": 0.12,
-        "loop": true
+        "loop": false,
+        "loopMode": "once"
       }
     }
   }

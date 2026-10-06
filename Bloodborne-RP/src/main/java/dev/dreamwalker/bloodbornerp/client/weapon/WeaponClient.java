@@ -23,6 +23,10 @@ public final class WeaponClient {
 
   public static void initialize() {
     TrickWeaponItem.clientRendererConsumer=WeaponClient::installRenderer;
+    for(var weapon:java.util.List.of(WeaponRegistry.SAW_CLEAVER,WeaponRegistry.SAW_SPEAR,WeaponRegistry.BOOM_HAMMER)){
+      net.fabricmc.fabric.api.object.builder.v1.client.model.FabricModelPredicateProviderRegistry.register(weapon,new net.minecraft.util.Identifier("bloodborne_rp","extended"),
+       (stack,world,entity,seed)->TrickWeaponItem.form(stack)==dev.dreamwalker.bloodbornerp.weapon.WeaponForm.EXTENDED?1f:0f);
+    }
     transformKey=KeyBindingHelper.registerKeyBinding(new KeyBinding("key.bloodborne_rp.transform_weapon",InputUtil.Type.KEYSYM,GLFW.GLFW_KEY_R,"category.bloodborne_rp"));
     ClientTickEvents.END_CLIENT_TICK.register(client -> {
       while(transformKey.wasPressed()) sendTransform(client.player==null ? null : handFor(client.player.getMainHandStack(),client.player.getOffHandStack()));

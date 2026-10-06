@@ -1,0 +1,16 @@
+allprojects {
+ plugins.withId('fabric-loom') {
+  def harness=sourceSets.create('regression') {
+   java.srcDir new File(project.projectDir,'tools/visual-regression/java')
+   resources.srcDir new File(project.projectDir,'tools/visual-regression/resources')
+   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+  }
+  configurations.named('regressionImplementation') { extendsFrom configurations.implementation }
+  configurations.named('regressionRuntimeOnly') { extendsFrom configurations.runtimeOnly }
+  loom {
+   mods { bloodborne_rp_regression { sourceSet harness } }
+   runs { regression { inherit client;source harness;runDir 'build/regression-client';vmArg '-Xmx4G' } }
+  }
+ }
+}

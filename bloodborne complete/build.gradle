@@ -1,5 +1,5 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '1.0.0-complete.1'
+version = '1.0.0-complete.2'
 group = 'dev.dreamwalker'
 base { archivesName = 'bloodborne-dw' }
 if (project.hasProperty('privateAssets')) { layout.buildDirectory = file('build-private') }

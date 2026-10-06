@@ -1,6 +1,7 @@
 plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
-version = '1.0.0-rp.1'
+version = '1.0.0-rp.2'
 group = 'dev.dreamwalker'
+def smokeRunDir=project.findProperty('smokeRunDir')?:'build/server-restart-verified'
 base { archivesName = 'bloodborne-rp' }
 if (project.hasProperty('privateAssets')) { layout.buildDirectory = file('build-private') }
 repositories {
@@ -68,7 +69,7 @@ loom {
    inherit server
    name 'RP dedicated server restart smoke test'
    source sourceSets.servertest
-   runDir 'build/server-restart-verified'
+   runDir smokeRunDir
    vmArg '-Xmx3G'
   }
   clientSmoke {
@@ -94,9 +95,9 @@ loom {
 tasks.register('rpGameTest') { group='verification'; dependsOn 'runGametest' }
 tasks.matching { it.name == 'runServerSmoke' }.configureEach {
  doLast {
-  def marker=file('build/server-restart-verified/rp-smoke-world/rp-restart-phase.txt')
+  def marker=file(smokeRunDir+'/rp-smoke-world/rp-restart-phase.txt')
   def expected=project.findProperty('restartExpected')?:'complete'
-  def log=file('build/server-restart-verified/logs/latest.log')
+  def log=file(smokeRunDir+'/logs/latest.log')
   if(!marker.exists() || marker.text.trim()!=expected || (log.exists()&&log.text.contains('BBRP_RESTART failed'))) {
    throw new GradleException('Dedicated restart smoke failed; inspect marker and latest.log')
   }

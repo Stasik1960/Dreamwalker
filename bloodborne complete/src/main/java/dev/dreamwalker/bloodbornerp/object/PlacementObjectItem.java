@@ -16,6 +16,9 @@ final class PlacementObjectItem extends Item {
  @Override public ActionResult useOnBlock(net.minecraft.item.ItemUsageContext context) {
   PlayerEntity player=context.getPlayer(); if(player==null || (!player.isCreative() && !player.hasPermissionLevel(2))) return ActionResult.FAIL;
   if(context.getWorld().isClient) return ActionResult.SUCCESS;
-  return ObjectRegistry.place(player,objectId,context.getBlockPos().offset(context.getSide()),player.getYaw()) ? ActionResult.CONSUME : ActionResult.FAIL;
+  var placement=new net.minecraft.item.ItemPlacementContext(context);
+  if(!placement.canPlace()||!ObjectRegistry.place(player,objectId,placement.getBlockPos(),context.getPlayerYaw(),context.getStack()))return ActionResult.FAIL;
+  if(!player.isCreative())context.getStack().decrement(1);
+  return ActionResult.CONSUME;
  }
 }

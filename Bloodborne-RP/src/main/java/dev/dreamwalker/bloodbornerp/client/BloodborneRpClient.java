@@ -12,7 +12,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public final class BloodborneRpClient implements ClientModInitializer {
  @Override public void onInitializeClient() {
   MobRegistry.TYPES.forEach((id,type)->EntityRendererRegistry.register(type,context->
-      new GeoEntityRenderer<>(context,new CatalogEntityModel<>()).withScale(AssetCatalog.get(id).scale())));
+      new CatalogMobRenderer(context,AssetCatalog.get(id).scale())));
   ObjectRegistry.TYPES.forEach((id,type)->EntityRendererRegistry.register(type,context->
       new CatalogObjectRenderer(context,AssetCatalog.get(id).scale())));
   WeaponClient.initialize();

@@ -15,6 +15,7 @@ lang={'itemGroup.bloodborne_rp.adventures':'Bloodborne RP','key.bloodborne_rp.tr
  'command.bloodborne_rp.lamp_rejected':'Lamp operation rejected. Check the lamp ID and route.',
  'item.bloodborne_rp.blood_vial':'Blood Vial (optional healing)'}
 models={}
+weapon_displays=json.loads((root/'weapon-display.json').read_text(encoding='utf-8'))
 for key,spec in catalog.items():
     lang['entity.bloodborne_rp.'+key]=spec['displayName']
     if key in mobs:
@@ -25,12 +26,11 @@ for key,spec in catalog.items():
         models[key+'_placer']={'parent':'minecraft:item/generated','textures':{'layer0':'minecraft:item/armor_stand'}}
 for key,name in [('saw_cleaver','Saw Cleaver'),('saw_spear','Saw Spear'),('boom_hammer','Boom Hammer')]:
     lang['item.bloodborne_rp.'+key]=name
-    # GeckoLib supplies geometry. These display transforms are independently chosen.
-    models[key]={'parent':'builtin/entity','display':{
-        'thirdperson_righthand':{'rotation':[0,90,0],'translation':[0,1,0],'scale':[1,1,1]},
-        'thirdperson_lefthand':{'rotation':[0,-90,0],'translation':[0,1,0],'scale':[1,1,1]},
-        'firstperson_righthand':{'rotation':[0,90,0],'translation':[1,1,0],'scale':[.8,.8,.8]},
-        'gui':{'rotation':[30,135,0],'translation':[0,0,0],'scale':[.65,.65,.65]}}}
+    # Original per-form display offsets; geometry remains supplied by GeckoLib.
+    family={'saw_cleaver':'sawcleaver','saw_spear':'sawspear','boom_hammer':'boomhammer'}[key]
+    models[key]={'parent':'builtin/entity','display':weapon_displays[family+'_false'],
+        'overrides':[{'predicate':{'bloodborne_rp:extended':1},'model':'bloodborne_rp:item/'+key+'_extended'}]}
+    models[key+'_extended']={'parent':'builtin/entity','display':weapon_displays[family+'_true']}
 (root/'lang').mkdir(exist_ok=True)
 (root/'lang/en_us.json').write_text(json.dumps(lang,indent=2)+'\n',encoding='utf-8')
 for key,model in models.items():

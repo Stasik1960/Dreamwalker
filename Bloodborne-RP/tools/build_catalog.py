@@ -15,6 +15,7 @@ registry=(base/'core/init/EntityInit.java').read_text(encoding='utf-8')
 renderer_registration=(base/'core/event/ClientListener.java').read_text(encoding='utf-8')
 renderers=dict(re.findall(r'EntityInit\.(\w+)\.get\(\), (\w+)::new',renderer_registration))
 catalog={}
+controller_loops=json.loads((Path(__file__).parent/"original-controller-loops.json").read_text())
 def add(identifier,model_class,width,height,scale=1):
  b=bindings[model_class]
  geometry=b['geo'][0];texture=b['texture'][0]
@@ -23,7 +24,9 @@ def add(identifier,model_class,width,height,scale=1):
  if anim:
   for c in files[anim].get('animations',[]):
    suffix=c['name'].split('.')[-1]
-   clips[suffix]={'name':c['name'],'seconds':c['length'] or 1,'loop':bool(c['loop'])}
+   loop=c['loop']
+   clips[suffix]={'name':c['name'],'seconds':c['length'] or 1,'loop':loop is True,
+                 'loopMode':controller_loops.get(c['name'],'hold_on_last_frame' if loop=='hold_on_last_frame' else 'loop' if loop is True else 'once')}
  strip=lambda path:path.removeprefix('assets/bloodborne/')
  catalog[identifier]={'id':identifier,'model':strip(geometry),'texture':strip(texture),
   'animation':strip(anim) if anim else 'animations/fallback.animation.json',
@@ -39,7 +42,10 @@ for line in registry.splitlines():
  renderer_text=classes[renderer].read_text(encoding='utf-8')
  model=re.search(r'new (\w+Model)\(',renderer_text)
  if not model:raise ValueError('Missing model for '+identifier)
- scale=0.6 if identifier=='small_rat' else 1
+ scales=re.findall(r'public float get(?:Width|Height)Scale\([^)]*\)\s*\{\s*return ([\d.]+)f',renderer_text)
+ if scales and len(set(scales))!=1:raise ValueError('Nonuniform renderer scale '+identifier)
+ render_scale=re.search(r'float scaleFactor = ([\d.]+)f',renderer_text)
+ scale=float(scales[0]) if scales else float(render_scale[1]) if render_scale else 1
  add(identifier,model.group(1),float(dimensions[1]),float(dimensions[2]),scale)
 for identifier,model in {'sawcleaver_false':'SawCleaverModel','sawcleaver_true':'SawCleaverExtendedModel',
  'sawspear_false':'SawSpearModel','sawspear_true':'SawSpearExtendedModel',
