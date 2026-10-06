@@ -1,0 +1,170 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "AND": [
+          {
+            "up": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/blackstone_wall_1"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "up": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00049/block/blackstone_wall_1"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/blackstone_wall_2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00049/block/blackstone_wall_2",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/blackstone_wall_2",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00049/block/blackstone_wall_2",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/blackstone_wall_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00049/block/blackstone_wall_2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/blackstone_wall_2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00049/block/blackstone_wall_2",
+        "y": 180
+      }
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "credit": "Made with Blockbench",
+  "texture_size": [
+    128,
+    128
+  ],
+  "textures": {
+    "0": "bloodborne_dw:block/addon/spirelamp_0010",
+    "1": "bloodborne_dw:block/addon/window_4",
+    "particle": "bloodborne_dw:block/addon/spirelamp_0010"
+  },
+  "elements": [
+    {
+      "from": [
+        -7.75,
+        0,
+        12
+      ],
+      "to": [
+        24.25,
+        16,
+        22
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            2.25,
+            11.375,
+            6.25,
+            13.375
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            6.375,
+            10,
+            7.625,
+            12
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            2.25,
+            11.375,
+            6.25,
+            13.375
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            7.625,
+            10,
+            6.375,
+            12
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        -8.75,
+        15,
+        10
+      ],
+      "to": [
+        25.25,
+        19,
+        24
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            6.375,
+            14,
+            10.625,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            6.625,
+            14,
+            8.375,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            6.375,
+            14,
+            10.625,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            7.875,
+            14,
+            9.625,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            6.25,
+            14.25,
+            10.5,
+            16
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            6.375,
+            14.25,
+            10.625,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        -2.75,
+        0,
+        16.5
+      ],
+      "to": [
+        18.25,
+        16,
+        21.5
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            4.125,
+            6.25,
+            6.75,
+            8.25
+          ],
+          "texture": "#1",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            4.125,
+            6.25,
+            4.75,
+            8.25
+          ],
+          "texture": "#1",
+          "cullface": "east"
+        },
+        "south": {
+          "uv": [
+            4.125,
+            6.25,
+            6.75,
+            8.25
+          ],
+          "texture": "#1",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            4.125,
+            6.25,
+            4.75,
+            8.25
+          ],
+          "texture": "#1",
+          "cullface": "west"
+        }
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "group",
+      "origin": [
+        8,
+        8,
+        8
+      ],
+      "color": 0,
+      "children": [
+        0,
+        1,
+        2
+      ]
+    }
+  ]
+}

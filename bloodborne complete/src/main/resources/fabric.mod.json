@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_dw",
+  "version": "${version}",
+  "name": "bloodborne-dw",
+  "description": "Dreamwalker architecture and roleplay adventures for Fabric 1.20.1",
+  "authors": [
+    "Dreamwalker project"
+  ],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.dreamwalker.bloodbornedw.BloodborneDw",
+      "dev.dreamwalker.bloodbornerp.BloodborneRp"
+    ],
+    "client": [
+      "dev.dreamwalker.bloodbornedw.client.BloodborneDwClient",
+      "dev.dreamwalker.bloodbornerp.client.BloodborneRpClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabric-api": ">=0.92.9+1.20.1",
+    "geckolib": ">=4.4.9 <5"
+  },
+  "provides": [
+    "bloodborne_rp"
+  ],
+  "mixins": [
+    "bloodborne-dw.mixins.json"
+  ]
+}

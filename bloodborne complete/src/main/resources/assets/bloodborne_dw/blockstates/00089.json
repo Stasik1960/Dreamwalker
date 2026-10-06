@@ -1,0 +1,130 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/dark_fence_post"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00089/block/dark_fence_post"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/dark_fence_post",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00089/block/dark_fence_post",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/dark_fence_post",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00089/block/dark_fence_post",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/dark_fence_post",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00089/block/dark_fence_post",
+        "y": 270
+      }
+    }
+  ]
+}

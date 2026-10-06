@@ -1,0 +1,146 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "visual": "base"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/birch_fence"
+      }
+    },
+    {
+      "when": {
+        "visual": "alt"
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00262/block/birch_fence"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/birch_fence"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00262/block/birch_fence"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/birch_fence",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00262/block/birch_fence",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/birch_fence",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00262/block/birch_fence",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/birch_fence",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00262/block/birch_fence",
+        "y": 270
+      }
+    }
+  ]
+}

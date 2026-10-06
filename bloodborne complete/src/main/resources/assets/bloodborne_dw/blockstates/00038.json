@@ -1,0 +1,154 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "visual": "base"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/nether_brick_fence_post"
+      }
+    },
+    {
+      "when": {
+        "visual": "alt"
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00038/block/nether_brick_fence_post"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/nether_brick_fence_side",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00038/block/nether_brick_fence_side",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/nether_brick_fence_side",
+        "uvlock": true,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00038/block/nether_brick_fence_side",
+        "uvlock": true,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/nether_brick_fence_side",
+        "uvlock": true,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00038/block/nether_brick_fence_side",
+        "uvlock": true,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/nether_brick_fence_side",
+        "uvlock": true,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00038/block/nether_brick_fence_side",
+        "uvlock": true,
+        "y": 270
+      }
+    }
+  ]
+}

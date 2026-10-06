@@ -1,0 +1,19 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.bullet.new": {
+      "loop": true,
+      "bones": {
+        "bullet": {
+          "rotation": {
+            "vector": [
+              "1000*query.anim_time",
+              "3*math.sin(query.anim_time*44)",
+              "10*math.cos(query.anim_time*44)"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "AND": [
+          {
+            "up": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_1",
+          "weight": 400
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_2",
+          "weight": 200
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_3",
+          "weight": 200
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "up": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_1",
+          "weight": 400
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_2",
+          "weight": 200
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_3",
+          "weight": 200
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 270
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 270
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 270
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 270
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 270
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 270
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 0
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 0
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 0
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 0
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 90
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 90
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 90
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 90
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 180
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 180
+        },
+        {
+          "model": "bloodborne_dw:block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 180
+        }
+      ]
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "tall",
+            "up": "false"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": [
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_1",
+          "weight": 400,
+          "y": 180
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_2",
+          "weight": 200,
+          "y": 180
+        },
+        {
+          "model": "bloodborne_dw:alt/00086/block/addon/nether_wall_3",
+          "weight": 200,
+          "y": 180
+        }
+      ]
+    }
+  ]
+}

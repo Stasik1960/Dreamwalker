@@ -1,0 +1,124 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "north": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00432/block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "east": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00432/block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "south": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00432/block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "base"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/red_mushroom_block"
+      }
+    },
+    {
+      "when": {
+        "AND": [
+          {
+            "west": "true"
+          },
+          {
+            "visual": "alt"
+          }
+        ]
+      },
+      "apply": {
+        "model": "bloodborne_dw:alt/00432/block/red_mushroom_block"
+      }
+    }
+  ]
+}

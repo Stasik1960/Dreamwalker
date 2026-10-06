@@ -1,0 +1,7 @@
+* text=auto eol=lf
+# Preserve imported artwork/metadata and the frozen catalog's exact bytes.
+src/main/resources/** -text
+*.png -text
+*.ogg -text
+*.jar -text
+*.zip -text

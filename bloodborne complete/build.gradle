@@ -1,0 +1,109 @@
+plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
+version = '1.0.0-complete.1'
+group = 'dev.dreamwalker'
+base { archivesName = 'bloodborne-dw' }
+if (project.hasProperty('privateAssets')) { layout.buildDirectory = file('build-private') }
+repositories {
+ mavenCentral()
+ maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'; content { includeGroup('software.bernie.geckolib'); includeGroup('com.eliotlash.mclib') } }
+}
+dependencies {
+ minecraft 'com.mojang:minecraft:1.20.1'
+ mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+ modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+ modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.9+1.20.1'
+ modImplementation 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.4.9'
+ implementation 'com.eliotlash.mclib:mclib:20'
+ if (project.hasProperty('coexistenceJar')) { modRuntimeOnly files(project.property('coexistenceJar')) }
+ if (project.hasProperty('worldEditJar')) { modRuntimeOnly files(project.property('worldEditJar')) }
+ testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8' }
+java { withSourcesJar() }
+tasks.withType(Test).configureEach { useJUnitPlatform() }
+tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
+tasks.named('processResources') {
+ inputs.property('version', project.version)
+ filesMatching('fabric.mod.json') { expand(version: project.version) }
+ if (project.hasProperty('privateAssets')) {
+  def privateDir=project.file(project.property('privateAssets'))
+  inputs.dir(privateDir)
+  doFirst {
+   if(destinationDir.canonicalFile != layout.buildDirectory.file('resources/main').get().asFile.canonicalFile) { throw new GradleException('Unexpected resource output directory') }
+   delete(destinationDir)
+  }
+  doLast { copy { from(privateDir); into(destinationDir) }; if(project.hasProperty('privatePack')) { copy { from(project.file(project.property('privatePack'))); into(destinationDir) } } }
+ }
+}
+tasks.named('sourcesJar') { exclude 'assets/**', 'data/**' }
+sourceSets {
+ servertest {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
+ clienttest {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
+ gametest {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
+}
+configurations {
+ servertestImplementation.extendsFrom implementation
+ servertestRuntimeOnly.extendsFrom runtimeOnly
+ clienttestImplementation.extendsFrom implementation
+ clienttestRuntimeOnly.extendsFrom runtimeOnly
+ gametestImplementation.extendsFrom implementation
+ gametestRuntimeOnly.extendsFrom runtimeOnly
+}
+loom {
+ mods {
+  bloodborne_rp_gametest { sourceSet sourceSets.gametest }
+  bloodborne_rp_clienttest { sourceSet sourceSets.clienttest }
+  bloodborne_rp_servertest { sourceSet sourceSets.servertest }
+ }
+ runs {
+  serverSmoke {
+   inherit server
+   name 'RP dedicated server restart smoke test'
+   source sourceSets.servertest
+   runDir 'build/server-restart-verified'
+   vmArg '-Xmx3G'
+  }
+  clientSmoke {
+   inherit client
+   name 'RP client resource smoke test'
+   source sourceSets.clienttest
+   runDir 'build/client-smoke'
+   vmArg '-Xmx4G'
+   vmArg '-Dbbrp.privateAssets.required=true'
+   if(project.hasProperty('smokeWorld')) { vmArg "-Ddw.smoke.world=${project.property('smokeWorld')}" }
+   if(project.hasProperty('smokeAlt')) { vmArg '-Ddw.smoke.alt=true' }
+  }
+  gametest {
+   inherit server
+   name 'RP mechanics GameTest server'
+   source sourceSets.gametest
+   runDir 'build/gametest'
+   vmArg '-Xmx2G'
+   vmArg '-Dfabric-api.gametest'
+   if(project.hasProperty('coexistenceJar')) { vmArg '-Dbbrp.coexistence.required=true' }
+   vmArg "-Dfabric-api.gametest.report-file=${file('build/test-results/gametest/results.xml').absolutePath}"
+  }
+ }
+}
+tasks.register('rpGameTest') { group='verification'; dependsOn 'runGametest' }
+tasks.matching { it.name == 'runServerSmoke' }.configureEach {
+ doLast {
+  def marker=file('build/server-restart-verified/rp-smoke-world/rp-restart-phase.txt')
+  def expected=project.findProperty('restartExpected')?:'complete'
+  def log=file('build/server-restart-verified/logs/latest.log')
+  if(!marker.exists() || marker.text.trim()!=expected || (log.exists()&&log.text.contains('BBRP_RESTART failed'))) {
+   throw new GradleException('Dedicated restart smoke failed; inspect marker and latest.log')
+  }
+ }
+}
+
+if(project.hasProperty('privatePack')) { tasks.named('processResources') { inputs.dir(project.file(project.property('privatePack'))) } }
