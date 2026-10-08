@@ -1,0 +1,90 @@
+plugins { id 'fabric-loom' version '1.6.12'; id 'maven-publish' }
+version = providers.gradleProperty('mod_version').get()
+group = 'dev.dreamwalker'
+base { archivesName = 'dreamwalker-bb-fabric-1.20.1' }
+repositories {
+ mavenCentral()
+ maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+}
+dependencies {
+ minecraft 'com.mojang:minecraft:1.20.1'
+ mappings 'net.fabricmc:yarn:1.20.1+build.10:v2'
+ modImplementation 'net.fabricmc:fabric-loader:0.16.10'
+ modImplementation 'net.fabricmc.fabric-api:fabric-api:0.92.9+1.20.1'
+ modImplementation 'software.bernie.geckolib:geckolib-fabric-1.20.1:4.4.9'
+ implementation 'com.eliotlash.mclib:mclib:20'
+}
+sourceSets {
+ main {
+  java.srcDirs = ['src/architecture/java', 'src/rp/java']
+  resources.srcDirs = ['src/architecture/resources']
+ }
+ test { java.srcDirs = ['src/test/java'] }
+ gametest {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
+ review {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
+}
+configurations {
+ gametestImplementation.extendsFrom implementation
+ gametestRuntimeOnly.extendsFrom runtimeOnly
+ reviewImplementation.extendsFrom implementation
+ reviewRuntimeOnly.extendsFrom runtimeOnly
+}
+tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8' }
+java { withSourcesJar() }
+processResources {
+ inputs.property 'version', project.version
+ filesMatching('fabric.mod.json') { expand 'version': project.version }
+ from('src/rp/resources') { exclude 'fabric.mod.json' }
+}
+tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
+tasks.named('sourcesJar') {
+ from('tools') { into 'tools' }; from('docs') { into 'docs' }; from('TASK.md','PROGRESS.md','INPUTS.json')
+ from('src/gametest') { into 'src/gametest' }
+ from('src/rp/tests') { into 'src/rp/tests' }
+ from('src/rp/resources') { into 'src/rp/resources' }
+ from('src/review') { into 'src/review' }
+}
+tasks.register('transactionCheck', JavaExec) {
+ dependsOn testClasses
+ classpath = sourceSets.test.runtimeClasspath
+ mainClass = 'dev.dreamwalker.bloodbornedw.runtime.TransactionChecks'
+}
+tasks.named('check') { dependsOn 'transactionCheck' }
+loom {
+ mods { bloodborne_dw_gametest { sourceSet sourceSets.gametest } }
+ runs {
+  client { runDir 'build/run-client'; vmArg '-Xmx3G' }
+  server { runDir 'build/run-server'; vmArg '-Xmx2G' }
+  gametest {
+   inherit server
+   name 'Dreamwalker first-set technical GameTests'
+   source sourceSets.gametest
+   runDir "build/gametest-${findProperty('gametest_run_name') ?: 'first-set'}"
+   vmArg '-Xmx2G'
+   vmArg '-Dfabric-api.gametest'
+   vmArg "-Dfabric-api.gametest.report-file=${file('build/test-results/gametest/TEST-' + (findProperty('gametest_run_name') ?: 'first-set') + '.xml').absolutePath}"
+  }
+ }
+}
+tasks.register('ladderGameTest') { group = 'verification'; dependsOn 'runGametest' }
+tasks.register('firstSetGameTest') { group = 'verification'; dependsOn 'runGametest' }
+tasks.register('reviewJar', Jar) {
+ dependsOn reviewClasses
+ from sourceSets.review.output
+ archiveBaseName = 'dreamwalker-first-set-review-qa'
+ archiveClassifier = 'dev'
+}
+tasks.register('remapReviewJar', net.fabricmc.loom.task.RemapJarTask) {
+ dependsOn reviewJar
+ inputFile.set(tasks.named('reviewJar', Jar).flatMap { it.archiveFile })
+ classpath.from(sourceSets.main.output, sourceSets.main.compileClasspath)
+ archiveBaseName = 'dreamwalker-first-set-review-qa'
+ archiveClassifier = ''
+ addNestedDependencies = false
+}

@@ -1,0 +1,258 @@
+{
+  "schema": "dreamwalker-v10-existing-construction-catalogue-duplicate-summary-v1",
+  "status": "READ_ONLY_STATIC_ALL_EXISTING_CONSTRUCTION_TYPES_AUDITED_NO_NEW_MERGES",
+  "productionJarSha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+  "scope": {
+    "architectureCanonical": 18,
+    "rpCanonical": 69,
+    "canonicalConstruction": 87,
+    "registeredConstructionIncludingRpAliases": 94,
+    "temporaryTableRows": 118,
+    "architecturePairs": 153,
+    "rpCanonicalPairs": 2346,
+    "crossCanonicalPairs": 1242,
+    "canonicalPairsTotal": 3741,
+    "rpRegisteredPairs": 2850,
+    "oldAliasCrossPairs": 126,
+    "registeredAllPairsTotal": 4371,
+    "oldAliasCrossBasis": "Seven source/shared-runtime aliases reduce to their canonical cross-contract. All76 share Creative-only attack and zero RP item drops, unlike architecture Survival break/one own item.",
+    "nonConstructionTableRows": "18mobs+4items+2tools roster only, not construction pair proof"
+  },
+  "confirmedAlreadyImplementedRpGroups": [
+    {
+      "left": "furniture_1",
+      "right": "furniture_8",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_10",
+      "right": "furniture_3",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_11",
+      "right": "furniture_4",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_12",
+      "right": "furniture_5",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_13",
+      "right": "furniture_6",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_14",
+      "right": "furniture_7",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_2",
+      "right": "furniture_9",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    }
+  ],
+  "removedIdToKeptIdAlreadyImplemented": [
+    {
+      "retiredTemporaryId": "91048",
+      "oldRegistry": "bloodborne_rp:furniture_3",
+      "canonicalRegistry": "bloodborne_rp:furniture_10",
+      "canonicalTemporaryId": "91040",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91049",
+      "oldRegistry": "bloodborne_rp:furniture_4",
+      "canonicalRegistry": "bloodborne_rp:furniture_11",
+      "canonicalTemporaryId": "91041",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91050",
+      "oldRegistry": "bloodborne_rp:furniture_5",
+      "canonicalRegistry": "bloodborne_rp:furniture_12",
+      "canonicalTemporaryId": "91042",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91051",
+      "oldRegistry": "bloodborne_rp:furniture_6",
+      "canonicalRegistry": "bloodborne_rp:furniture_13",
+      "canonicalTemporaryId": "91043",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91052",
+      "oldRegistry": "bloodborne_rp:furniture_7",
+      "canonicalRegistry": "bloodborne_rp:furniture_14",
+      "canonicalTemporaryId": "91044",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91053",
+      "oldRegistry": "bloodborne_rp:furniture_8",
+      "canonicalRegistry": "bloodborne_rp:furniture_1",
+      "canonicalTemporaryId": "91039",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91054",
+      "oldRegistry": "bloodborne_rp:furniture_9",
+      "canonicalRegistry": "bloodborne_rp:furniture_2",
+      "canonicalTemporaryId": "91047",
+      "numberNeverReuse": true
+    }
+  ],
+  "newConfirmedGroups": [],
+  "unresolvedPairs": [],
+  "preservedExceptions": [
+    {
+      "ids": [
+        "90010",
+        "90020"
+      ],
+      "request": {
+        "path": "reports/user-review-v9/request.txt",
+        "line": 62,
+        "token": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02.",
+        "sha256": "425df01a1f8f1ee67bf6bd50b9b2b996024fe4478bff175c7172764f931d01f9"
+      },
+      "quote": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02.",
+      "details": "same ownfrontUV andtexture, differentrawZby4/16; initialside/floor/ceilingseat can compensate, sneakgroundvertical keepsdifferent mounting depth; legacysource03 intrinsic-45 remains distinct. Explicit independenttype request controls even ifnew mountedposes lookidentical."
+    }
+  ],
+  "preservedAllArchitecture": [
+    {
+      "temporaryId": "90001",
+      "registryId": "bloodborne_dw:prototype_double_door"
+    },
+    {
+      "temporaryId": "90002",
+      "registryId": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof"
+    },
+    {
+      "temporaryId": "90004",
+      "registryId": "bloodborne_dw:prototype_thin_window"
+    },
+    {
+      "temporaryId": "90005",
+      "registryId": "bloodborne_dw:prototype_tree"
+    },
+    {
+      "temporaryId": "90006",
+      "registryId": "bloodborne_dw:prototype_ladder"
+    },
+    {
+      "temporaryId": "90007",
+      "registryId": "bloodborne_dw:prototype_wood_window"
+    },
+    {
+      "temporaryId": "90010",
+      "registryId": "bloodborne_dw:prototype_glass_window_02"
+    },
+    {
+      "temporaryId": "90011",
+      "registryId": "bloodborne_dw:prototype_wall_skin_0"
+    },
+    {
+      "temporaryId": "90012",
+      "registryId": "bloodborne_dw:prototype_wall_skin_1"
+    },
+    {
+      "temporaryId": "90013",
+      "registryId": "bloodborne_dw:prototype_wall_skin_2"
+    },
+    {
+      "temporaryId": "90014",
+      "registryId": "bloodborne_dw:prototype_wall_skin_3"
+    },
+    {
+      "temporaryId": "90015",
+      "registryId": "bloodborne_dw:prototype_wall_skin_4"
+    },
+    {
+      "temporaryId": "90016",
+      "registryId": "bloodborne_dw:prototype_wall_skin_5"
+    },
+    {
+      "temporaryId": "90017",
+      "registryId": "bloodborne_dw:prototype_wall_skin_7"
+    },
+    {
+      "temporaryId": "90018",
+      "registryId": "bloodborne_dw:prototype_ladder_art_1"
+    },
+    {
+      "temporaryId": "90019",
+      "registryId": "bloodborne_dw:prototype_ladder_art_2"
+    },
+    {
+      "temporaryId": "90020",
+      "registryId": "bloodborne_dw:prototype_glass_window_03"
+    }
+  ],
+  "evidence": {
+    "architecture": {
+      "path": "reports\\V10_ARCHITECTURE_DUPLICATE_AUDIT_CANDIDATE8.json",
+      "sha256": "d70281726a2e9ddb8080c6ef3b72893c788467c31e34f6bbf01e15a6c47e5902"
+    },
+    "rpFinal": {
+      "path": "reports\\RP_TYPE_DUPLICATE_AUDIT_V10_CANDIDATE8_FINAL.json",
+      "sha256": "f724f699f0e1b267e0a184df7ca3cb43abaaad9f01f37135249203c6087df4e8"
+    },
+    "cross": {
+      "path": "reports\\V10_CROSS_MODULE_DUPLICATE_AUDIT_CANDIDATE8.json",
+      "sha256": "0185c0443acc0fb72ee04c68aca152cee869b0e53b412e122b2400bc7e9d2801"
+    },
+    "freeze": {
+      "path": "build\\frozen-artifacts\\v10-attempt-8\\manifest.json",
+      "sha256": "fe8d065f7799a63653b29782afde57f5702220ffe5df8a928bae2500805aed49"
+    },
+    "unchangedArtResourceDelta": {
+      "path": "reports\\V10_FROZEN_RESOURCE_DELTA_CANDIDATE7_TO8.json",
+      "sha256": "f3ec794eed7318b1ae87ee8bdc2b67b30cc76e8742ac56db4dab50c6880a8a34"
+    }
+  },
+  "native": {
+    "methods": 133,
+    "failures": 0,
+    "coreChecks": 20,
+    "xml": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V10_ATTEMPT_8.xml",
+    "xmlSha256": "a0b4cd63139f30c88d5a07df9c3bf6bd1a4a63b209aafd2d2650776178b1c536"
+  },
+  "actualMiddleKeyAliasDiskAndCurrentRuntime": "PENDING_NEW_CURRENT_ARTIFACT_CLIENT_AND_SEPARATE_TYPED_DISK_PROOFS",
+  "runtimeBoundary": "Previous candidate native/client/server successes stay under their own SHA. This current-source/JAR audit is not a re-labelled client pass. Middle key all69+7oldtypes and distinct saved alias phases are mandatory future package gates.",
+  "limits": [
+    "No new type merge or world edit performed.",
+    "Every supported type contract is compared; a concrete differing art/selection/physics/function witness refutes full equivalence. Manual all-pose visual acceptance is NOT_RUN.",
+    "118 TEMP rows do not finish1121 source-model assembly catalogue, final numeric IDs or city conversion."
+  ]
+}

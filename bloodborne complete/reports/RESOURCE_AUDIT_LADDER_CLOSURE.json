@@ -1,0 +1,955 @@
+{
+  "conditions": [
+    "Copy exact source model elements/UV/rotations; namespace rewrite changes resource paths only.",
+    "Do not transform the 21-element cap into a narrow section.",
+    "Preserve original position-selected random variant before owner translation.",
+    "SOURCE geometry bounds are not a placement mask. Climbing collider and support must be reviewed with source adjacent ladders."
+  ],
+  "files": [
+    {
+      "origin": {
+        "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+        "role": "source_pack"
+      },
+      "path": "assets/minecraft/models/block/hold/wood_ladder_01.json",
+      "sha256": "8b5855f97e859ce724de49ea53961daa0ad310c69025de84610c5ea32860e9fb"
+    },
+    {
+      "origin": {
+        "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+        "role": "source_pack"
+      },
+      "path": "assets/minecraft/models/block/hold/wood_ladder_02.json",
+      "sha256": "26fc62ecfe28777238d512d4227541158b4c33a9e358615f294598716318ad82"
+    },
+    {
+      "origin": {
+        "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+        "role": "source_pack"
+      },
+      "path": "assets/minecraft/models/block/hold/wood_ladder_03.json",
+      "sha256": "6025da77793c849065229b0b51a7f2b7659d12f2832c1cc14fdfd50a1da8aeab"
+    },
+    {
+      "origin": {
+        "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+        "role": "source_pack"
+      },
+      "path": "assets/minecraft/models/block/hold/wood_ladder_04.json",
+      "sha256": "6298c5dea5f349870aa0fa200720871850a557f15d5ffd3a83628e7d98f8b044"
+    },
+    {
+      "origin": {
+        "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+        "role": "source_pack"
+      },
+      "path": "assets/minecraft/textures/block/addon/spirelamp_0095.png",
+      "sha256": "b9378e8833dd069a78245b5f10c8a2be2c9120fc2dc32784303af4a75ea3151d"
+    }
+  ],
+  "input_archives": [
+    {
+      "path": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+      "role": "source_pack",
+      "sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+    },
+    {
+      "minecraft_version": {
+        "build_time": "2022-02-28T10:40:37+00:00",
+        "id": "1.18.2",
+        "java_component": "java-runtime-beta",
+        "java_version": 17,
+        "name": "1.18.2",
+        "pack_version": {
+          "data": 9,
+          "resource": 8
+        },
+        "protocol_version": 758,
+        "release_target": "1.18.2",
+        "series_id": "main",
+        "stable": true,
+        "world_version": 2975
+      },
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\inputs\\extracted\\vanilla-1.18.2\\client.jar",
+      "role": "dependency",
+      "sha256": "1d09e3639644b6b2254499469d0765cc005a286d19f3fa595b0ed8fb07971ec7"
+    }
+  ],
+  "random_alternative_order": [
+    "minecraft:block/hold/wood_ladder_02",
+    "minecraft:block/hold/wood_ladder_03",
+    "minecraft:block/hold/wood_ladder_04"
+  ],
+  "random_weights": [
+    1,
+    1,
+    1
+  ],
+  "runtime_visual_status": "NOT_RUN",
+  "source_blockstate": {
+    "carrier": "minecraft:beehive",
+    "origin": {
+      "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+      "role": "source_pack"
+    },
+    "path": "assets/minecraft/blockstates/beehive.json",
+    "rules": [
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_01",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_01",
+              "y": 90
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          }
+        ],
+        "index": 0,
+        "properties": {
+          "facing": "east",
+          "honey_level": "0"
+        },
+        "selector": "facing=east,honey_level=0",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_01",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_01"
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "index": 1,
+        "properties": {
+          "facing": "north",
+          "honey_level": "0"
+        },
+        "selector": "facing=north,honey_level=0",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_01",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_01",
+              "y": 180
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          }
+        ],
+        "index": 2,
+        "properties": {
+          "facing": "south",
+          "honey_level": "0"
+        },
+        "selector": "facing=south,honey_level=0",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_01",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_01",
+              "y": 270
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          }
+        ],
+        "index": 3,
+        "properties": {
+          "facing": "west",
+          "honey_level": "0"
+        },
+        "selector": "facing=west,honey_level=0",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_02",
+              "y": 90
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          },
+          {
+            "index": 1,
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_03",
+              "y": 90
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          },
+          {
+            "index": 2,
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_04",
+              "y": 90
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          }
+        ],
+        "index": 4,
+        "properties": {
+          "facing": "east",
+          "honey_level": "1"
+        },
+        "selector": "facing=east,honey_level=1",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_02"
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "index": 1,
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_03"
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "index": 2,
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_04"
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "index": 5,
+        "properties": {
+          "facing": "north",
+          "honey_level": "1"
+        },
+        "selector": "facing=north,honey_level=1",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_02",
+              "y": 180
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          },
+          {
+            "index": 1,
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_03",
+              "y": 180
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          },
+          {
+            "index": 2,
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_04",
+              "y": 180
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          }
+        ],
+        "index": 6,
+        "properties": {
+          "facing": "south",
+          "honey_level": "1"
+        },
+        "selector": "facing=south,honey_level=1",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_02",
+              "y": 270
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          },
+          {
+            "index": 1,
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_03",
+              "y": 270
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          },
+          {
+            "index": 2,
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "source": {
+              "model": "minecraft:block/hold/wood_ladder_04",
+              "y": 270
+            },
+            "total_weight": 3,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          }
+        ],
+        "index": 7,
+        "properties": {
+          "facing": "west",
+          "honey_level": "1"
+        },
+        "selector": "facing=west,honey_level=1",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1",
+              "y": 90
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          }
+        ],
+        "index": 8,
+        "properties": {
+          "facing": "east",
+          "honey_level": "2"
+        },
+        "selector": "facing=east,honey_level=2",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1"
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "index": 9,
+        "properties": {
+          "facing": "north",
+          "honey_level": "2"
+        },
+        "selector": "facing=north,honey_level=2",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1",
+              "y": 180
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          }
+        ],
+        "index": 10,
+        "properties": {
+          "facing": "south",
+          "honey_level": "2"
+        },
+        "selector": "facing=south,honey_level=2",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1",
+              "y": 270
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          }
+        ],
+        "index": 11,
+        "properties": {
+          "facing": "west",
+          "honey_level": "2"
+        },
+        "selector": "facing=west,honey_level=2",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_2",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_2",
+              "y": 90
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          }
+        ],
+        "index": 12,
+        "properties": {
+          "facing": "east",
+          "honey_level": "3"
+        },
+        "selector": "facing=east,honey_level=3",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_2",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_2"
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "index": 13,
+        "properties": {
+          "facing": "north",
+          "honey_level": "3"
+        },
+        "selector": "facing=north,honey_level=3",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_2",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_2",
+              "y": 180
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          }
+        ],
+        "index": 14,
+        "properties": {
+          "facing": "south",
+          "honey_level": "3"
+        },
+        "selector": "facing=south,honey_level=3",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_2",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_2",
+              "y": 270
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          }
+        ],
+        "index": 15,
+        "properties": {
+          "facing": "west",
+          "honey_level": "3"
+        },
+        "selector": "facing=west,honey_level=3",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_3",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_3",
+              "y": 90
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          }
+        ],
+        "index": 16,
+        "properties": {
+          "facing": "east",
+          "honey_level": "4"
+        },
+        "selector": "facing=east,honey_level=4",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_3",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_3"
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "index": 17,
+        "properties": {
+          "facing": "north",
+          "honey_level": "4"
+        },
+        "selector": "facing=north,honey_level=4",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_3",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_3",
+              "y": 180
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          }
+        ],
+        "index": 18,
+        "properties": {
+          "facing": "south",
+          "honey_level": "4"
+        },
+        "selector": "facing=south,honey_level=4",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_3",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_3",
+              "y": 270
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          }
+        ],
+        "index": 19,
+        "properties": {
+          "facing": "west",
+          "honey_level": "4"
+        },
+        "selector": "facing=west,honey_level=4",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1",
+              "y": 90
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 90
+          }
+        ],
+        "index": 20,
+        "properties": {
+          "facing": "east",
+          "honey_level": "5"
+        },
+        "selector": "facing=east,honey_level=5",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1"
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "index": 21,
+        "properties": {
+          "facing": "north",
+          "honey_level": "5"
+        },
+        "selector": "facing=north,honey_level=5",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1",
+              "y": 180
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 180
+          }
+        ],
+        "index": 22,
+        "properties": {
+          "facing": "south",
+          "honey_level": "5"
+        },
+        "selector": "facing=south,honey_level=5",
+        "type": "variant"
+      },
+      {
+        "alternatives": [
+          {
+            "index": 0,
+            "model": "minecraft:block/hold/wimperge_1",
+            "source": {
+              "model": "minecraft:block/hold/wimperge_1",
+              "y": 270
+            },
+            "total_weight": 1,
+            "uvlock": false,
+            "weight": 1,
+            "x": 0,
+            "y": 270
+          }
+        ],
+        "index": 23,
+        "properties": {
+          "facing": "west",
+          "honey_level": "5"
+        },
+        "selector": "facing=west,honey_level=5",
+        "type": "variant"
+      }
+    ],
+    "source": {
+      "variants": {
+        "facing=east,honey_level=0": {
+          "model": "minecraft:block/hold/wood_ladder_01",
+          "y": 90
+        },
+        "facing=east,honey_level=1": [
+          {
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "y": 90
+          }
+        ],
+        "facing=east,honey_level=2": {
+          "model": "minecraft:block/hold/wimperge_1",
+          "y": 90
+        },
+        "facing=east,honey_level=3": {
+          "model": "minecraft:block/hold/wimperge_2",
+          "y": 90
+        },
+        "facing=east,honey_level=4": {
+          "model": "minecraft:block/hold/wimperge_3",
+          "y": 90
+        },
+        "facing=east,honey_level=5": {
+          "model": "minecraft:block/hold/wimperge_1",
+          "y": 90
+        },
+        "facing=north,honey_level=0": {
+          "model": "minecraft:block/hold/wood_ladder_01"
+        },
+        "facing=north,honey_level=1": [
+          {
+            "model": "minecraft:block/hold/wood_ladder_02"
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_03"
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_04"
+          }
+        ],
+        "facing=north,honey_level=2": {
+          "model": "minecraft:block/hold/wimperge_1"
+        },
+        "facing=north,honey_level=3": {
+          "model": "minecraft:block/hold/wimperge_2"
+        },
+        "facing=north,honey_level=4": {
+          "model": "minecraft:block/hold/wimperge_3"
+        },
+        "facing=north,honey_level=5": {
+          "model": "minecraft:block/hold/wimperge_1"
+        },
+        "facing=south,honey_level=0": {
+          "model": "minecraft:block/hold/wood_ladder_01",
+          "y": 180
+        },
+        "facing=south,honey_level=1": [
+          {
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "y": 180
+          }
+        ],
+        "facing=south,honey_level=2": {
+          "model": "minecraft:block/hold/wimperge_1",
+          "y": 180
+        },
+        "facing=south,honey_level=3": {
+          "model": "minecraft:block/hold/wimperge_2",
+          "y": 180
+        },
+        "facing=south,honey_level=4": {
+          "model": "minecraft:block/hold/wimperge_3",
+          "y": 180
+        },
+        "facing=south,honey_level=5": {
+          "model": "minecraft:block/hold/wimperge_1",
+          "y": 180
+        },
+        "facing=west,honey_level=0": {
+          "model": "minecraft:block/hold/wood_ladder_01",
+          "y": 270
+        },
+        "facing=west,honey_level=1": [
+          {
+            "model": "minecraft:block/hold/wood_ladder_02",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_03",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/hold/wood_ladder_04",
+            "y": 270
+          }
+        ],
+        "facing=west,honey_level=2": {
+          "model": "minecraft:block/hold/wimperge_1",
+          "y": 270
+        },
+        "facing=west,honey_level=3": {
+          "model": "minecraft:block/hold/wimperge_2",
+          "y": 270
+        },
+        "facing=west,honey_level=4": {
+          "model": "minecraft:block/hold/wimperge_3",
+          "y": 270
+        },
+        "facing=west,honey_level=5": {
+          "model": "minecraft:block/hold/wimperge_1",
+          "y": 270
+        }
+      }
+    },
+    "source_sha256": "50a4e51897c78e7ab13e12d38e571115b9968248f5a6508aef4e5caa47a09830"
+  },
+  "source_models": [
+    "minecraft:block/hold/wood_ladder_01",
+    "minecraft:block/hold/wood_ladder_02",
+    "minecraft:block/hold/wood_ladder_03",
+    "minecraft:block/hold/wood_ladder_04"
+  ],
+  "source_parent_chains": {
+    "minecraft:block/hold/wood_ladder_01": [
+      "minecraft:block/hold/wood_ladder_01"
+    ],
+    "minecraft:block/hold/wood_ladder_02": [
+      "minecraft:block/hold/wood_ladder_02"
+    ],
+    "minecraft:block/hold/wood_ladder_03": [
+      "minecraft:block/hold/wood_ladder_03"
+    ],
+    "minecraft:block/hold/wood_ladder_04": [
+      "minecraft:block/hold/wood_ladder_04"
+    ]
+  },
+  "source_to_target_model_drift": "None for these four standalone models; verified separately in RESOURCE_AUDIT_TARGET_DIFF.json.",
+  "status": "RESOURCE_CHAIN_CLOSED",
+  "textures": [
+    {
+      "alpha_histogram": {
+        "0": 7045,
+        "255": 9339
+      },
+      "alpha_max": 255,
+      "alpha_min": 0,
+      "alpha_pixels": {
+        "opaque": 9339,
+        "partial": 0,
+        "transparent": 7045
+      },
+      "bit_depth": 8,
+      "color_type": 6,
+      "height": 128,
+      "interlace": 0,
+      "origin": {
+        "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+        "role": "source_pack"
+      },
+      "path": "assets/minecraft/textures/block/addon/spirelamp_0095.png",
+      "present": true,
+      "sha256": "b9378e8833dd069a78245b5f10c8a2be2c9120fc2dc32784303af4a75ea3151d",
+      "status": "PASS",
+      "texture": "minecraft:block/addon/spirelamp_0095",
+      "width": 128
+    }
+  ]
+}

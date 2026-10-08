@@ -1,0 +1,6281 @@
+{
+  "schema": "dw-v10-static-source-rp-part-camera-feasibility-v1",
+  "status": "STATIC69_SOURCE_CANDIDATES_NOT_RUNTIME_RAY_OR_PLAYER_PROOF",
+  "productionJarSha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "defaultFixtureReport": "reports\\V10_RP_ORDINARY_FIXTURE_SUPPORT_AUDIT_MAIN6.json",
+  "defaultFixtureReportSha256": "dfb27ab746d9057eca180d842fa5870b0e7cce11088415c9f9abe66e4dc7d6a9",
+  "population": 69,
+  "sourceModelsAndAnimationBytesUnchanged": true,
+  "candidateDistanceOrder": [
+    2,
+    3,
+    4
+  ],
+  "fiveDirections": [
+    "−Z",
+    "+Z",
+    "−X",
+    "+X",
+    "+Y"
+  ],
+  "standingActorAssumption": {
+    "width": 0.6,
+    "height": 1.8,
+    "eyeHeight": 1.62
+  },
+  "nativeScope": "Exactly source-authored25 STONE pad cells X−66..−62,Z62..66,Y99 plus one ordinarily placedSTONE root/east; no whole-world/nativeVoxelShape query fabricated.",
+  "firstRayOnlyCameraBodyConflictAssets": [
+    "dog_cage2",
+    "dog_cage3",
+    "odeon_tomb",
+    "wood_gate",
+    "furniture_1",
+    "furniture_2",
+    "furniture_10",
+    "furniture_11",
+    "furniture_12",
+    "furniture_15",
+    "furniture_16",
+    "chandelier_large",
+    "statue_1",
+    "lever_1",
+    "lever_2",
+    "smallcross",
+    "hunterlamp",
+    "lamp_npc",
+    "furniture_cabinet_pantry",
+    "long_table",
+    "furniture_books",
+    "chest",
+    "boat",
+    "babycart",
+    "chair",
+    "coffin_1",
+    "coffin_2",
+    "coffin_3",
+    "coffins_1",
+    "coffins_2",
+    "coffins_3",
+    "coffins_4",
+    "coffins_5",
+    "horse_carcass",
+    "elevator"
+  ],
+  "noCollisionFreeCandidateAssets": [],
+  "candidateIterationsBeforeFirstFeasibleTotal": 245,
+  "largestSearches": [
+    {
+      "asset": "lever_2",
+      "candidates": 66,
+      "sourcePhysicalRejected": 5,
+      "nativeBodyRejected": 23,
+      "nativeRayRejected": 37
+    },
+    {
+      "asset": "furniture_10",
+      "candidates": 6,
+      "sourcePhysicalRejected": 1,
+      "nativeBodyRejected": 4,
+      "nativeRayRejected": 0
+    },
+    {
+      "asset": "furniture_12",
+      "candidates": 6,
+      "sourcePhysicalRejected": 1,
+      "nativeBodyRejected": 4,
+      "nativeRayRejected": 0
+    },
+    {
+      "asset": "furniture_16",
+      "candidates": 6,
+      "sourcePhysicalRejected": 1,
+      "nativeBodyRejected": 4,
+      "nativeRayRejected": 0
+    },
+    {
+      "asset": "chandelier_large",
+      "candidates": 6,
+      "sourcePhysicalRejected": 5,
+      "nativeBodyRejected": 0,
+      "nativeRayRejected": 0
+    },
+    {
+      "asset": "statue_1",
+      "candidates": 6,
+      "sourcePhysicalRejected": 1,
+      "nativeBodyRejected": 4,
+      "nativeRayRejected": 0
+    },
+    {
+      "asset": "lever_1",
+      "candidates": 6,
+      "sourcePhysicalRejected": 1,
+      "nativeBodyRejected": 4,
+      "nativeRayRejected": 0
+    },
+    {
+      "asset": "hunterlamp",
+      "candidates": 6,
+      "sourcePhysicalRejected": 1,
+      "nativeBodyRejected": 4,
+      "nativeRayRejected": 0
+    }
+  ],
+  "sourceFileInputs": {
+    "tools/audit_v10_rp_selection_cameras.py": "039e148fa40a4314e3ef58af70af75c276419ba21c049c2514493cf0ceead716",
+    "tools/audit_v10_rp_fixture_supports.py": "2ef20b12726262d9429d72d7bd6ac1016cddc307261fd3ec36cbbc9e6fa5693b",
+    "tools/audit_rp_motion_envelopes.py": "f6d96b7f142d88d4348637ea70a5d56ed264f10613160765860aa4b102ae896c",
+    "src/rp/resources/assets/bloodborne_rp/catalog.json": "594bd2a47153e52888b1fcd5db34ced0c429fc2419f498eb848603236389d8dd"
+  },
+  "assets": [
+    {
+      "asset": "cage_obj_1",
+      "sourceModel": "geo/cage_obj_1.geo.json",
+      "sourceModelSha256": "e84925d4d95b6fc69b5a09050d78fa83594da1f1be54dddc316f3681c3a8d11c",
+      "sourceAnimation": "animations/cage_obj_1.animation.json",
+      "sourceAnimationSha256": "2e095cea7f0a01995ff392f189f18f7df0a286e2bc4b2e4da255eade5351977a",
+      "defaultSelectionBoxCount": 275,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -62.380759375,
+          102.3125,
+          59.066594375
+        ],
+        "feet": [
+          -62.380759375,
+          100.6925,
+          59.066594375
+        ],
+        "standingActorBox": [
+          -62.680759374999994,
+          100.6925,
+          58.766594375000004,
+          -62.080759375,
+          102.49249999999999,
+          59.366594375
+        ],
+        "sourcePoint": [
+          -62.380759375,
+          102.3125,
+          61.066594375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -62.380759375,
+          102.3125,
+          59.066594375
+        ],
+        "feet": [
+          -62.380759375,
+          100.6925,
+          59.066594375
+        ],
+        "standingActorBox": [
+          -62.680759374999994,
+          100.6925,
+          58.766594375000004,
+          -62.080759375,
+          102.49249999999999,
+          59.366594375
+        ],
+        "sourcePoint": [
+          -62.380759375,
+          102.3125,
+          61.066594375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "cage_obj_2",
+      "sourceModel": "geo/cage_obj_2.geo.json",
+      "sourceModelSha256": "8cf1792d7c2b31f87613edd725ecc8007d833e2e50988e6bdc124f303a90ba4d",
+      "sourceAnimation": "animations/cage_obj_2.animation.json",
+      "sourceAnimationSha256": "b678d1300c30f7ceb6c786a63f2030db9dda41cec31c6f26dee4d58a4b081c1a",
+      "defaultSelectionBoxCount": 246,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -66.4414198123731,
+          105.46875,
+          62.711201019428145
+        ],
+        "feet": [
+          -66.4414198123731,
+          103.84875,
+          62.711201019428145
+        ],
+        "standingActorBox": [
+          -66.7414198123731,
+          103.84875,
+          62.41120101942815,
+          -66.1414198123731,
+          105.64874999999999,
+          63.01120101942814
+        ],
+        "sourcePoint": [
+          -66.4414198123731,
+          105.46875,
+          64.71120101942815
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.4414198123731,
+          105.46875,
+          62.711201019428145
+        ],
+        "feet": [
+          -66.4414198123731,
+          103.84875,
+          62.711201019428145
+        ],
+        "standingActorBox": [
+          -66.7414198123731,
+          103.84875,
+          62.41120101942815,
+          -66.1414198123731,
+          105.64874999999999,
+          63.01120101942814
+        ],
+        "sourcePoint": [
+          -66.4414198123731,
+          105.46875,
+          64.71120101942815
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "cage_obj_3",
+      "sourceModel": "geo/cage_obj_3.geo.json",
+      "sourceModelSha256": "b8f0361ae851b3592d4f28db79b2b2d6698825d5dd015cd3d0df0600c1902f69",
+      "sourceAnimation": "animations/cage_obj_3.animation.json",
+      "sourceAnimationSha256": "31aae9f2e2c5db1436c7e49ffd7870d6b46e565640bc20e47240f793e8d61675",
+      "defaultSelectionBoxCount": 245,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -65.193259375,
+          102.3125,
+          60.629094375
+        ],
+        "feet": [
+          -65.193259375,
+          100.6925,
+          60.629094375
+        ],
+        "standingActorBox": [
+          -65.493259375,
+          100.6925,
+          60.329094375000004,
+          -64.893259375,
+          102.49249999999999,
+          60.929094375
+        ],
+        "sourcePoint": [
+          -65.193259375,
+          102.3125,
+          62.629094375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -65.193259375,
+          102.3125,
+          60.629094375
+        ],
+        "feet": [
+          -65.193259375,
+          100.6925,
+          60.629094375
+        ],
+        "standingActorBox": [
+          -65.493259375,
+          100.6925,
+          60.329094375000004,
+          -64.893259375,
+          102.49249999999999,
+          60.929094375
+        ],
+        "sourcePoint": [
+          -65.193259375,
+          102.3125,
+          62.629094375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "hearse",
+      "sourceModel": "geo/hearse.geo.json",
+      "sourceModelSha256": "c1f0aee81ace9739c09bbe796f15abf6050516519278b7ac8a9d8bac5b804f66",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 216,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -62.8125,
+          103.65625,
+          62.0
+        ],
+        "feet": [
+          -62.8125,
+          102.03625,
+          62.0
+        ],
+        "standingActorBox": [
+          -63.1125,
+          102.03625,
+          61.7,
+          -62.5125,
+          103.83624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.8125,
+          103.65625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -62.8125,
+          103.65625,
+          62.0
+        ],
+        "feet": [
+          -62.8125,
+          102.03625,
+          62.0
+        ],
+        "standingActorBox": [
+          -63.1125,
+          102.03625,
+          61.7,
+          -62.5125,
+          103.83624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.8125,
+          103.65625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "carriage",
+      "sourceModel": "geo/carriage.geo.json",
+      "sourceModelSha256": "b5a694b2248889f233a1e42c545ccc2c866de412e9429734748752c9a409fc8a",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 105,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -60.912744375,
+          101.28125,
+          60.03125
+        ],
+        "feet": [
+          -60.912744375,
+          99.66125,
+          60.03125
+        ],
+        "standingActorBox": [
+          -61.212744375,
+          99.66125,
+          59.73125,
+          -60.612744375000005,
+          101.46124999999999,
+          60.33125
+        ],
+        "sourcePoint": [
+          -60.912744375,
+          101.28125,
+          62.03125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -60.912744375,
+          101.28125,
+          60.03125
+        ],
+        "feet": [
+          -60.912744375,
+          99.66125,
+          60.03125
+        ],
+        "standingActorBox": [
+          -61.212744375,
+          99.66125,
+          59.73125,
+          -60.612744375000005,
+          101.46124999999999,
+          60.33125
+        ],
+        "sourcePoint": [
+          -60.912744375,
+          101.28125,
+          62.03125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "dog_cage",
+      "sourceModel": "geo/dog_cage.geo.json",
+      "sourceModelSha256": "c5b164b8ebd292bc90b0e65331162f2b6fa86918553a0d695d28eb3ea75bbf85",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 39,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          101.1875,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          99.5675,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.5675,
+          60.7,
+          -63.7,
+          101.36749999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.1875,
+          63.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          101.1875,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          99.5675,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.5675,
+          60.7,
+          -63.7,
+          101.36749999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.1875,
+          63.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "dog_cage1",
+      "sourceModel": "geo/dog_cage1.geo.json",
+      "sourceModelSha256": "48e9216aa7dc9a440c4d2fdd788bc8432ba2acec60d8c855857a3d80c23e9152",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 39,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          103.625,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          102.005,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.005,
+          60.7,
+          -63.7,
+          103.80499999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.625,
+          63.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          103.625,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          102.005,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.005,
+          60.7,
+          -63.7,
+          103.80499999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.625,
+          63.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "dog_cage2",
+      "sourceModel": "geo/dog_cage_floor.geo.json",
+      "sourceModelSha256": "18601050b135a6697fc36dcf3dc412949aa334e4a9766c4b7cfeaef5a06ef25b",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 58,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -65.8125,
+          101.28125,
+          62.0
+        ],
+        "feet": [
+          -65.8125,
+          99.66125,
+          62.0
+        ],
+        "standingActorBox": [
+          -66.1125,
+          99.66125,
+          61.7,
+          -65.5125,
+          101.46124999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -65.8125,
+          101.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -67.8125,
+          101.28125,
+          64.0
+        ],
+        "feet": [
+          -67.8125,
+          99.66125,
+          64.0
+        ],
+        "standingActorBox": [
+          -68.1125,
+          99.66125,
+          63.7,
+          -67.5125,
+          101.46124999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -65.8125,
+          101.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "dog_cage3",
+      "sourceModel": "geo/dog_cage_floor_lone.geo.json",
+      "sourceModelSha256": "7ab4af01a91d2a2b04cd13088bf1a5e9a3cdf339abe4b1a2740e2077f437dce0",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 29,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -65.8125,
+          101.28125,
+          62.0
+        ],
+        "feet": [
+          -65.8125,
+          99.66125,
+          62.0
+        ],
+        "standingActorBox": [
+          -66.1125,
+          99.66125,
+          61.7,
+          -65.5125,
+          101.46124999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -65.8125,
+          101.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -67.8125,
+          101.28125,
+          64.0
+        ],
+        "feet": [
+          -67.8125,
+          99.66125,
+          64.0
+        ],
+        "standingActorBox": [
+          -68.1125,
+          99.66125,
+          63.7,
+          -67.5125,
+          101.46124999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -65.8125,
+          101.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "cabriolet_open",
+      "sourceModel": "geo/cabriolet_opened.geo.json",
+      "sourceModelSha256": "974478954b1dd32061be36338ba65c927198e000c38767eaf1b420d0e4d95ed3",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 79,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.0,
+          101.53125,
+          61.3125
+        ],
+        "feet": [
+          -63.0,
+          99.91125,
+          61.3125
+        ],
+        "standingActorBox": [
+          -63.3,
+          99.91125,
+          61.0125,
+          -62.7,
+          101.71124999999999,
+          61.6125
+        ],
+        "sourcePoint": [
+          -63.0,
+          101.53125,
+          63.3125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.0,
+          101.53125,
+          61.3125
+        ],
+        "feet": [
+          -63.0,
+          99.91125,
+          61.3125
+        ],
+        "standingActorBox": [
+          -63.3,
+          99.91125,
+          61.0125,
+          -62.7,
+          101.71124999999999,
+          61.6125
+        ],
+        "sourcePoint": [
+          -63.0,
+          101.53125,
+          63.3125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "cabriolet_closed",
+      "sourceModel": "geo/cabriolet_closed.geo.json",
+      "sourceModelSha256": "fa8ffbe0b476937b2d99b3ce0dac30fb91c35ffd8a5375be44ac35e559992414",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 79,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.0,
+          101.53125,
+          61.3125
+        ],
+        "feet": [
+          -63.0,
+          99.91125,
+          61.3125
+        ],
+        "standingActorBox": [
+          -63.3,
+          99.91125,
+          61.0125,
+          -62.7,
+          101.71124999999999,
+          61.6125
+        ],
+        "sourcePoint": [
+          -63.0,
+          101.53125,
+          63.3125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.0,
+          101.53125,
+          61.3125
+        ],
+        "feet": [
+          -63.0,
+          99.91125,
+          61.3125
+        ],
+        "standingActorBox": [
+          -63.3,
+          99.91125,
+          61.0125,
+          -62.7,
+          101.71124999999999,
+          61.6125
+        ],
+        "sourcePoint": [
+          -63.0,
+          101.53125,
+          63.3125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "door_1",
+      "sourceModel": "geo/door_1.geo.json",
+      "sourceModelSha256": "55c6815daa231310dd3e8fb4eba44359b34100d2a07ae9f0c1d872de8e315ae1",
+      "sourceAnimation": "animations/door.animation.json",
+      "sourceAnimationSha256": "27bbe99d36cb7dc40dfd50324ebc7bb5c2965fb02ea61bb061784c5dd5b8dea9",
+      "defaultSelectionBoxCount": 42,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          103.90625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          102.28625,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.28625,
+          61.7,
+          -63.7,
+          104.08624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.90625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          103.90625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          102.28625,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.28625,
+          61.7,
+          -63.7,
+          104.08624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.90625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "door_2",
+      "sourceModel": "geo/dubble_door.geo.json",
+      "sourceModelSha256": "09c9dca3da0096fe733f9b2ef5a32f12d54b34c2e5ed991c68cf915b9e5d7b2f",
+      "sourceAnimation": "animations/double_door.animation.json",
+      "sourceAnimationSha256": "e8c0c4d470c739ec04099b1004714894709418e4a12a576b31993f30972fa667",
+      "defaultSelectionBoxCount": 57,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          103.90625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          102.28625,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.28625,
+          61.7,
+          -63.7,
+          104.08624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.90625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          103.90625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          102.28625,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.28625,
+          61.7,
+          -63.7,
+          104.08624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.90625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "main_gate",
+      "sourceModel": "geo/main_gate.geo.json",
+      "sourceModelSha256": "bbf917b10c612d4d145368677b9dd5c998e39bba3dff2a04e9d0994239ae68a1",
+      "sourceAnimation": "animations/main_gate.animation.json",
+      "sourceAnimationSha256": "c65a198e29fda54884c6175941e89f220d99309e70b821dc0069cc1b5dbc3ea5",
+      "defaultSelectionBoxCount": 239,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          111.40625,
+          59.09375
+        ],
+        "feet": [
+          -64.0,
+          109.78625,
+          59.09375
+        ],
+        "standingActorBox": [
+          -64.3,
+          109.78625,
+          58.79375,
+          -63.7,
+          111.58624999999999,
+          59.39375
+        ],
+        "sourcePoint": [
+          -64.0,
+          111.40625,
+          61.09375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          111.40625,
+          59.09375
+        ],
+        "feet": [
+          -64.0,
+          109.78625,
+          59.09375
+        ],
+        "standingActorBox": [
+          -64.3,
+          109.78625,
+          58.79375,
+          -63.7,
+          111.58624999999999,
+          59.39375
+        ],
+        "sourcePoint": [
+          -64.0,
+          111.40625,
+          61.09375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "odeon_tomb",
+      "sourceModel": "geo/oden_tomb.geo.json",
+      "sourceModelSha256": "8538ee0a34eda1153ec4f0fb8b9787db442ee9575f77d052d97431d4b616ce95",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 375,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -66.3125,
+          114.3125,
+          62.0
+        ],
+        "feet": [
+          -66.3125,
+          112.6925,
+          62.0
+        ],
+        "standingActorBox": [
+          -66.6125,
+          112.6925,
+          61.7,
+          -66.0125,
+          114.49249999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -66.3125,
+          114.3125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -68.3125,
+          114.3125,
+          64.0
+        ],
+        "feet": [
+          -68.3125,
+          112.6925,
+          64.0
+        ],
+        "standingActorBox": [
+          -68.6125,
+          112.6925,
+          63.7,
+          -68.0125,
+          114.49249999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -66.3125,
+          114.3125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 2,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "wood_gate",
+      "sourceModel": "geo/wood_gate.geo.json",
+      "sourceModelSha256": "e88629bcd6600f40fece4630b13a6b35b053d87cc4c8c5a6d06adb7952bfff15",
+      "sourceAnimation": "animations/wooden_gate.animation.json",
+      "sourceAnimationSha256": "ba2b938a68c14b9e14068928e5d0d36b245a64cf2116aa0a96090fe5de2044e2",
+      "defaultSelectionBoxCount": 1,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.5,
+          108.15625,
+          62.5
+        ],
+        "feet": [
+          -63.5,
+          106.53625,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.8,
+          106.53625,
+          62.2,
+          -63.2,
+          108.33624999999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.5,
+          108.15625,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -65.5,
+          108.15625,
+          64.5
+        ],
+        "feet": [
+          -65.5,
+          106.53625,
+          64.5
+        ],
+        "standingActorBox": [
+          -65.8,
+          106.53625,
+          64.2,
+          -65.2,
+          108.33624999999999,
+          64.8
+        ],
+        "sourcePoint": [
+          -63.5,
+          108.15625,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 2,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_1",
+      "sourceModel": "geo/furnature_1.geo.json",
+      "sourceModelSha256": "37de27356255d4429a0154eaf01f0da00174b02389f78f2c33a2c2deca18514c",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 211,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0234375,
+          101.734375,
+          63.1875
+        ],
+        "feet": [
+          -64.0234375,
+          100.114375,
+          63.1875
+        ],
+        "standingActorBox": [
+          -64.3234375,
+          100.114375,
+          62.8875,
+          -63.7234375,
+          101.91437499999999,
+          63.4875
+        ],
+        "sourcePoint": [
+          -64.0234375,
+          101.734375,
+          65.1875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0234375,
+          101.734375,
+          67.1875
+        ],
+        "feet": [
+          -64.0234375,
+          100.114375,
+          67.1875
+        ],
+        "standingActorBox": [
+          -64.3234375,
+          100.114375,
+          66.8875,
+          -63.7234375,
+          101.91437499999999,
+          67.4875
+        ],
+        "sourcePoint": [
+          -64.0234375,
+          101.734375,
+          65.1875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 2,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_2",
+      "sourceModel": "geo/furnature_2.geo.json",
+      "sourceModelSha256": "8f4af70b391ce9ca63e15afd4889d97b5183664d003a8f07055d64fdcf2f99f8",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 141,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.4823675,
+          101.796875,
+          62.65625
+        ],
+        "feet": [
+          -64.4823675,
+          100.176875,
+          62.65625
+        ],
+        "standingActorBox": [
+          -64.78236749999999,
+          100.176875,
+          62.35625,
+          -64.1823675,
+          101.97687499999999,
+          62.95625
+        ],
+        "sourcePoint": [
+          -64.4823675,
+          101.796875,
+          64.65625
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.4823675,
+          101.796875,
+          66.65625
+        ],
+        "feet": [
+          -64.4823675,
+          100.176875,
+          66.65625
+        ],
+        "standingActorBox": [
+          -64.78236749999999,
+          100.176875,
+          66.35625,
+          -64.1823675,
+          101.97687499999999,
+          66.95625
+        ],
+        "sourcePoint": [
+          -64.4823675,
+          101.796875,
+          64.65625
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 2,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_10",
+      "sourceModel": "geo/furnature_10.geo.json",
+      "sourceModelSha256": "b7f22e2c214bef753719b377f0d4d65d3accc6175316571acd8b2f2ccc175f82",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 247,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0078125,
+          100.09375,
+          62.023383124999995
+        ],
+        "feet": [
+          -64.0078125,
+          98.47375,
+          62.023383124999995
+        ],
+        "standingActorBox": [
+          -64.3078125,
+          98.47375,
+          61.723383125,
+          -63.7078125,
+          100.27374999999999,
+          62.32338312499999
+        ],
+        "sourcePoint": [
+          -64.0078125,
+          100.09375,
+          64.023383125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0078125,
+          100.09375,
+          61.023383124999995
+        ],
+        "feet": [
+          -64.0078125,
+          98.47375,
+          61.023383124999995
+        ],
+        "standingActorBox": [
+          -64.3078125,
+          98.47375,
+          60.723383125,
+          -63.7078125,
+          100.27374999999999,
+          61.32338312499999
+        ],
+        "sourcePoint": [
+          -64.0078125,
+          100.09375,
+          64.023383125
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_11",
+      "sourceModel": "geo/furnature_11.geo.json",
+      "sourceModelSha256": "7b3976dd55f73bf138242aa4687aeffeea6b71ec1c32d76911204cc6e1ab5d83",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 55,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.34375,
+          100.75,
+          62.0
+        ],
+        "feet": [
+          -64.34375,
+          99.13,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.64375,
+          99.13,
+          61.7,
+          -64.04375,
+          100.92999999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.34375,
+          100.75,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.34375,
+          100.75,
+          64.0
+        ],
+        "feet": [
+          -66.34375,
+          99.13,
+          64.0
+        ],
+        "standingActorBox": [
+          -66.64375,
+          99.13,
+          63.7,
+          -66.04375,
+          100.92999999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -64.34375,
+          100.75,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_12",
+      "sourceModel": "geo/furnature_12.geo.json",
+      "sourceModelSha256": "ec790ff9fc324db0c2377d98cb661ac29a4a8d0147737c9f66b70d666838e7fa",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 51,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.015625,
+          100.78125,
+          62.070946250000006
+        ],
+        "feet": [
+          -64.015625,
+          99.16125,
+          62.070946250000006
+        ],
+        "standingActorBox": [
+          -64.315625,
+          99.16125,
+          61.77094625000001,
+          -63.715625,
+          100.96124999999999,
+          62.37094625
+        ],
+        "sourcePoint": [
+          -64.015625,
+          100.78125,
+          64.07094625
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.015625,
+          100.78125,
+          61.070946250000006
+        ],
+        "feet": [
+          -64.015625,
+          99.16125,
+          61.070946250000006
+        ],
+        "standingActorBox": [
+          -64.315625,
+          99.16125,
+          60.77094625000001,
+          -63.715625,
+          100.96124999999999,
+          61.37094625
+        ],
+        "sourcePoint": [
+          -64.015625,
+          100.78125,
+          64.07094625
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_13",
+      "sourceModel": "geo/furnature_13.geo.json",
+      "sourceModelSha256": "8149d1c8e25667b0e322816cc41da7ed950d2defa6b29a3dc65fe2eb91aa666e",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 192,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.533136875,
+          103.59375,
+          60.800325
+        ],
+        "feet": [
+          -63.533136875,
+          101.97375,
+          60.800325
+        ],
+        "standingActorBox": [
+          -63.833136874999994,
+          101.97375,
+          60.500325000000004,
+          -63.233136875,
+          103.77374999999999,
+          61.100325
+        ],
+        "sourcePoint": [
+          -63.533136875,
+          103.59375,
+          62.800325
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.533136875,
+          103.59375,
+          60.800325
+        ],
+        "feet": [
+          -63.533136875,
+          101.97375,
+          60.800325
+        ],
+        "standingActorBox": [
+          -63.833136874999994,
+          101.97375,
+          60.500325000000004,
+          -63.233136875,
+          103.77374999999999,
+          61.100325
+        ],
+        "sourcePoint": [
+          -63.533136875,
+          103.59375,
+          62.800325
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_14",
+      "sourceModel": "geo/furnature_14.geo.json",
+      "sourceModelSha256": "ebf058edd5f57eef23dfcfd042e39da79a9e7c4bf1c34b6adbf844bfb3847392",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 546,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -61.530594042138965,
+          103.59375,
+          59.52250854900274
+        ],
+        "feet": [
+          -61.530594042138965,
+          101.97375,
+          59.52250854900274
+        ],
+        "standingActorBox": [
+          -61.83059404213896,
+          101.97375,
+          59.22250854900274,
+          -61.23059404213897,
+          103.77374999999999,
+          59.822508549002734
+        ],
+        "sourcePoint": [
+          -61.530594042138965,
+          103.59375,
+          61.52250854900274
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -61.530594042138965,
+          103.59375,
+          59.52250854900274
+        ],
+        "feet": [
+          -61.530594042138965,
+          101.97375,
+          59.52250854900274
+        ],
+        "standingActorBox": [
+          -61.83059404213896,
+          101.97375,
+          59.22250854900274,
+          -61.23059404213897,
+          103.77374999999999,
+          59.822508549002734
+        ],
+        "sourcePoint": [
+          -61.530594042138965,
+          103.59375,
+          61.52250854900274
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_15",
+      "sourceModel": "geo/furnature_15.geo.json",
+      "sourceModelSha256": "a5667ab7990164f8539198632ed5b0fd3f79929a62fb782922916d0ffadc1291",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 115,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.5171875,
+          100.28125,
+          62.0
+        ],
+        "feet": [
+          -64.5171875,
+          98.66125,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.8171875,
+          98.66125,
+          61.7,
+          -64.21718750000001,
+          100.46124999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.5171875,
+          100.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.5171875,
+          100.28125,
+          64.0
+        ],
+        "feet": [
+          -66.5171875,
+          98.66125,
+          64.0
+        ],
+        "standingActorBox": [
+          -66.8171875,
+          98.66125,
+          63.7,
+          -66.21718750000001,
+          100.46124999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -64.5171875,
+          100.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_16",
+      "sourceModel": "geo/furnature_16.geo.json",
+      "sourceModelSha256": "e6c9eaa58c6fede900c03714aad8581a10eec0071927e4876d5452f3fd3c6d6c",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 116,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0078125,
+          100.09375,
+          62.023383124999995
+        ],
+        "feet": [
+          -64.0078125,
+          98.47375,
+          62.023383124999995
+        ],
+        "standingActorBox": [
+          -64.3078125,
+          98.47375,
+          61.723383125,
+          -63.7078125,
+          100.27374999999999,
+          62.32338312499999
+        ],
+        "sourcePoint": [
+          -64.0078125,
+          100.09375,
+          64.023383125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0078125,
+          100.09375,
+          61.023383124999995
+        ],
+        "feet": [
+          -64.0078125,
+          98.47375,
+          61.023383124999995
+        ],
+        "standingActorBox": [
+          -64.3078125,
+          98.47375,
+          60.723383125,
+          -63.7078125,
+          100.27374999999999,
+          61.32338312499999
+        ],
+        "sourcePoint": [
+          -64.0078125,
+          100.09375,
+          64.023383125
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "chandelier_small",
+      "sourceModel": "geo/chandeliere_small.geo.json",
+      "sourceModelSha256": "e2dc4848e1821d7166b143aa7b88c9350ebccf81eadb2c063b3b8c89859111b5",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 1,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.5,
+          103.125,
+          62.5
+        ],
+        "feet": [
+          -63.5,
+          101.505,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.8,
+          101.505,
+          62.2,
+          -63.2,
+          103.30499999999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.5,
+          103.125,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.5,
+          103.125,
+          62.5
+        ],
+        "feet": [
+          -63.5,
+          101.505,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.8,
+          101.505,
+          62.2,
+          -63.2,
+          103.30499999999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.5,
+          103.125,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "chandelier_large",
+      "sourceModel": "geo/chandeliere_large.geo.json",
+      "sourceModelSha256": "a09bd810140327f01b671211935594138e46030debb65e3853cf0f9b071a5c30",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 111,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          108.78125,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          107.16125,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          107.16125,
+          61.7,
+          -63.7,
+          108.96124999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          108.78125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          108.78125,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          107.16125,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          107.16125,
+          60.7,
+          -63.7,
+          108.96124999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          108.78125,
+          64.0
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 5,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "cross_beast",
+      "sourceModel": "geo/cross_beast.geo.json",
+      "sourceModelSha256": "516ce50786624cb18286862ff4cc2aadbd197a1aff8e7a73938c64d5098c464f",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 198,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.35831018185209,
+          103.46874999913095,
+          61.99191190402156
+        ],
+        "feet": [
+          -64.35831018185209,
+          101.84874999913094,
+          61.99191190402156
+        ],
+        "standingActorBox": [
+          -64.65831018185209,
+          101.84874999913094,
+          61.691911904021566,
+          -64.0583101818521,
+          103.64874999913094,
+          62.29191190402156
+        ],
+        "sourcePoint": [
+          -64.35831018185209,
+          103.46874999913095,
+          63.99191190402156
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.35831018185209,
+          103.46874999913095,
+          61.99191190402156
+        ],
+        "feet": [
+          -64.35831018185209,
+          101.84874999913094,
+          61.99191190402156
+        ],
+        "standingActorBox": [
+          -64.65831018185209,
+          101.84874999913094,
+          61.691911904021566,
+          -64.0583101818521,
+          103.64874999913094,
+          62.29191190402156
+        ],
+        "sourcePoint": [
+          -64.35831018185209,
+          103.46874999913095,
+          63.99191190402156
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "statue_1",
+      "sourceModel": "geo/statue_1.geo.json",
+      "sourceModelSha256": "60fb87d07a3ca78576b5beaad9935cfc7361d55425cc4448a8575637741bc2d7",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 34,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          101.0625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          99.4425,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.4425,
+          61.7,
+          -63.7,
+          101.24249999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.0625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          101.0625,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          99.4425,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.4425,
+          60.7,
+          -63.7,
+          101.24249999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.0625,
+          64.0
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "lever_1",
+      "sourceModel": "geo/lever_1.geo.json",
+      "sourceModelSha256": "51e06b9673988e2795f1d909f55431055fbad06ec6f44fd245fef1c988b3a59f",
+      "sourceAnimation": "animations/lever_1.animation.json",
+      "sourceAnimationSha256": "065ac6e9f51f173880e8f086524efd744f103dcd38263cb7600f788b2c83b2eb",
+      "defaultSelectionBoxCount": 31,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -62.849999999999994,
+          100.2,
+          62.0
+        ],
+        "feet": [
+          -62.849999999999994,
+          98.58,
+          62.0
+        ],
+        "standingActorBox": [
+          -63.14999999999999,
+          98.58,
+          61.7,
+          -62.55,
+          100.38,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.849999999999994,
+          100.2,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -62.849999999999994,
+          100.2,
+          61.0
+        ],
+        "feet": [
+          -62.849999999999994,
+          98.58,
+          61.0
+        ],
+        "standingActorBox": [
+          -63.14999999999999,
+          98.58,
+          60.7,
+          -62.55,
+          100.38,
+          61.3
+        ],
+        "sourcePoint": [
+          -62.849999999999994,
+          100.2,
+          64.0
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "lever_2",
+      "sourceModel": "geo/lever_2.geo.json",
+      "sourceModelSha256": "e9d899aeb5be6a739175b2c18965edbfcac46b1622034d69c9f191bc7ee01bdd",
+      "sourceAnimation": "animations/lever_2.animation.json",
+      "sourceAnimationSha256": "a9cc07e32ab56c564dcd52019894a3e0833e52e863a6504706c17bf170a91667",
+      "defaultSelectionBoxCount": 17,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.25,
+          100.04375,
+          62.40625
+        ],
+        "feet": [
+          -64.25,
+          98.42375,
+          62.40625
+        ],
+        "standingActorBox": [
+          -64.55,
+          98.42375,
+          62.10625,
+          -63.95,
+          100.22375,
+          62.70625
+        ],
+        "sourcePoint": [
+          -64.25,
+          100.04375,
+          64.40625
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 21,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 20
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.25,
+          100.04375,
+          61.40625
+        ],
+        "feet": [
+          -64.25,
+          98.42375,
+          61.40625
+        ],
+        "standingActorBox": [
+          -64.55,
+          98.42375,
+          61.10625,
+          -63.95,
+          100.22375,
+          61.70625
+        ],
+        "sourcePoint": [
+          -64.25,
+          100.04375,
+          64.40625
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 66,
+        "sourcePhysicalRejected": 5,
+        "nativeBodyRejected": 23,
+        "nativeRayRejected": 37
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "wheelchair",
+      "sourceModel": "geo/wheelchair.geo.json",
+      "sourceModelSha256": "05a6c518643f167f7a3ea521d423c6b266c42cd08f4d5f895705be7100422223",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 17,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.78125,
+          100.5625,
+          61.4375
+        ],
+        "feet": [
+          -63.78125,
+          98.9425,
+          61.4375
+        ],
+        "standingActorBox": [
+          -64.08125,
+          98.9425,
+          61.1375,
+          -63.48125,
+          100.74249999999999,
+          61.7375
+        ],
+        "sourcePoint": [
+          -63.78125,
+          100.5625,
+          63.4375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.78125,
+          100.5625,
+          61.4375
+        ],
+        "feet": [
+          -63.78125,
+          98.9425,
+          61.4375
+        ],
+        "standingActorBox": [
+          -64.08125,
+          98.9425,
+          61.1375,
+          -63.48125,
+          100.74249999999999,
+          61.7375
+        ],
+        "sourcePoint": [
+          -63.78125,
+          100.5625,
+          63.4375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "smallcross",
+      "sourceModel": "geo/smallcross.geo.json",
+      "sourceModelSha256": "3c2412b18c58d41d93dde4cd3ad525c0a6dff5a95a873a0cbd99d79eddf2d4c7",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 218,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.016413125,
+          104.69782625,
+          63.654594375
+        ],
+        "feet": [
+          -64.016413125,
+          103.07782625,
+          63.654594375
+        ],
+        "standingActorBox": [
+          -64.316413125,
+          103.07782625,
+          63.354594375000005,
+          -63.716413125,
+          104.87782625,
+          63.954594375
+        ],
+        "sourcePoint": [
+          -64.016413125,
+          104.69782625,
+          65.654594375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.016413125,
+          104.69782625,
+          67.654594375
+        ],
+        "feet": [
+          -64.016413125,
+          103.07782625,
+          67.654594375
+        ],
+        "standingActorBox": [
+          -64.316413125,
+          103.07782625,
+          67.354594375,
+          -63.716413125,
+          104.87782625,
+          67.954594375
+        ],
+        "sourcePoint": [
+          -64.016413125,
+          104.69782625,
+          65.654594375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 2,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "curtainsmall",
+      "sourceModel": "geo/curtain_small.geo.json",
+      "sourceModelSha256": "2400dffb021cc396e73e0e5ebe44777bf4f12de60fdf879020dc38ffd2bf900b",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 7,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.96875,
+          101.828125,
+          61.375
+        ],
+        "feet": [
+          -63.96875,
+          100.208125,
+          61.375
+        ],
+        "standingActorBox": [
+          -64.26875,
+          100.208125,
+          61.075,
+          -63.66875,
+          102.00812499999999,
+          61.675
+        ],
+        "sourcePoint": [
+          -63.96875,
+          101.828125,
+          63.375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.96875,
+          101.828125,
+          61.375
+        ],
+        "feet": [
+          -63.96875,
+          100.208125,
+          61.375
+        ],
+        "standingActorBox": [
+          -64.26875,
+          100.208125,
+          61.075,
+          -63.66875,
+          102.00812499999999,
+          61.675
+        ],
+        "sourcePoint": [
+          -63.96875,
+          101.828125,
+          63.375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "hunterlamp",
+      "sourceModel": "geo/hunter_lamp.geo.json",
+      "sourceModelSha256": "b9c4797cf268ba21117a8d03f11cc77e6e89663f16368382cb4f06732373fc1a",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 23,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.09375,
+          100.9375,
+          62.0
+        ],
+        "feet": [
+          -64.09375,
+          99.3175,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.39375,
+          99.3175,
+          61.7,
+          -63.79375,
+          101.11749999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.09375,
+          100.9375,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.09375,
+          100.9375,
+          61.0
+        ],
+        "feet": [
+          -64.09375,
+          99.3175,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.39375,
+          99.3175,
+          60.7,
+          -63.79375,
+          101.11749999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.09375,
+          100.9375,
+          64.0
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "lamp_npc",
+      "sourceModel": "geo/lamp_npc.geo.json",
+      "sourceModelSha256": "6a11abd77596c497bc7b7ac31c3e9632f0709a2337fa7c705fdff55291d35d8f",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 6,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.125,
+          100.375,
+          62.0
+        ],
+        "feet": [
+          -64.125,
+          98.755,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.425,
+          98.755,
+          61.7,
+          -63.825,
+          100.55499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.125,
+          100.375,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.125,
+          100.375,
+          61.0
+        ],
+        "feet": [
+          -64.125,
+          98.755,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.425,
+          98.755,
+          60.7,
+          -63.825,
+          100.55499999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.125,
+          100.375,
+          64.0
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_pantry",
+      "sourceModel": "geo/furniture_pantry.geo.json",
+      "sourceModelSha256": "6214ee37a5dc5575b03ac384100a92777e6ea9bca1293f5a5e6638cb02582a77",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 46,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          105.125,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          103.505,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          103.505,
+          61.7,
+          -63.7,
+          105.30499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          105.125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          105.125,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          103.505,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          103.505,
+          61.7,
+          -63.7,
+          105.30499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          105.125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_cabinet_pantry",
+      "sourceModel": "geo/furniture_cabinet_pantry.geo.json",
+      "sourceModelSha256": "6d823d9e0fb79fb83c54d179ab28ef08011139aec77759c0f1a3d75e4b41c56a",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 193,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -65.421875,
+          101.0,
+          63.875
+        ],
+        "feet": [
+          -65.421875,
+          99.38,
+          63.875
+        ],
+        "standingActorBox": [
+          -65.721875,
+          99.38,
+          63.575,
+          -65.121875,
+          101.17999999999999,
+          64.175
+        ],
+        "sourcePoint": [
+          -65.421875,
+          101.0,
+          65.875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -65.421875,
+          101.0,
+          67.875
+        ],
+        "feet": [
+          -65.421875,
+          99.38,
+          67.875
+        ],
+        "standingActorBox": [
+          -65.721875,
+          99.38,
+          67.575,
+          -65.121875,
+          101.17999999999999,
+          68.175
+        ],
+        "sourcePoint": [
+          -65.421875,
+          101.0,
+          65.875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 2,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "gate_empty",
+      "sourceModel": "geo/gate_empty.geo.json",
+      "sourceModelSha256": "758be5aeb1dc550ca1da50c465eb95460d9b9c92b1114e2072e01b0b36de17cd",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 237,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          111.40625,
+          59.09375
+        ],
+        "feet": [
+          -64.0,
+          109.78625,
+          59.09375
+        ],
+        "standingActorBox": [
+          -64.3,
+          109.78625,
+          58.79375,
+          -63.7,
+          111.58624999999999,
+          59.39375
+        ],
+        "sourcePoint": [
+          -64.0,
+          111.40625,
+          61.09375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          111.40625,
+          59.09375
+        ],
+        "feet": [
+          -64.0,
+          109.78625,
+          59.09375
+        ],
+        "standingActorBox": [
+          -64.3,
+          109.78625,
+          58.79375,
+          -63.7,
+          111.58624999999999,
+          59.39375
+        ],
+        "sourcePoint": [
+          -64.0,
+          111.40625,
+          61.09375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "small_gate",
+      "sourceModel": "geo/small_gate.geo.json",
+      "sourceModelSha256": "9f7ff87753c78a963d56fdd5d79afa2fd7438d8da2f51a704580e4356ad2ae45",
+      "sourceAnimation": "animations/small_gate.animation.json",
+      "sourceAnimationSha256": "ac043a25d68af356ca3ea78f5e609a5e242f422bd828bed50845d3df83196f85",
+      "defaultSelectionBoxCount": 75,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          101.15625,
+          59.375
+        ],
+        "feet": [
+          -64.0,
+          99.53625,
+          59.375
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.53625,
+          59.075,
+          -63.7,
+          101.33624999999999,
+          59.675
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.15625,
+          61.375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          101.15625,
+          59.375
+        ],
+        "feet": [
+          -64.0,
+          99.53625,
+          59.375
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.53625,
+          59.075,
+          -63.7,
+          101.33624999999999,
+          59.675
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.15625,
+          61.375
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "trapdoor",
+      "sourceModel": "geo/trapdoor.geo.json",
+      "sourceModelSha256": "aa0b6ee396299661d2a7d0c5e8be65554fff66c377fd9f5c36a9ea4a2ab3d852",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 18,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -62.08723877473067,
+          102.27934644316372,
+          62.0
+        ],
+        "feet": [
+          -62.08723877473067,
+          100.65934644316371,
+          62.0
+        ],
+        "standingActorBox": [
+          -62.38723877473067,
+          100.65934644316371,
+          61.7,
+          -61.787238774730675,
+          102.45934644316371,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.08723877473067,
+          102.27934644316372,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -62.08723877473067,
+          102.27934644316372,
+          62.0
+        ],
+        "feet": [
+          -62.08723877473067,
+          100.65934644316371,
+          62.0
+        ],
+        "standingActorBox": [
+          -62.38723877473067,
+          100.65934644316371,
+          61.7,
+          -61.787238774730675,
+          102.45934644316371,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.08723877473067,
+          102.27934644316372,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "stairs",
+      "sourceModel": "geo/stairs.geo.json",
+      "sourceModelSha256": "99a9364aa1e9fae37ca07b322acddb19dcbbac4a145a7ffa8188c26fb7291769",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 1,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 26,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -57.375,
+          107.159598125,
+          62.5
+        ],
+        "feet": [
+          -57.375,
+          105.539598125,
+          62.5
+        ],
+        "standingActorBox": [
+          -57.675,
+          105.539598125,
+          62.2,
+          -57.075,
+          107.339598125,
+          62.8
+        ],
+        "sourcePoint": [
+          -57.375,
+          107.159598125,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -57.375,
+          107.159598125,
+          62.5
+        ],
+        "feet": [
+          -57.375,
+          105.539598125,
+          62.5
+        ],
+        "standingActorBox": [
+          -57.675,
+          105.539598125,
+          62.2,
+          -57.075,
+          107.339598125,
+          62.8
+        ],
+        "sourcePoint": [
+          -57.375,
+          107.159598125,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "long_table",
+      "sourceModel": "geo/long_table.geo.json",
+      "sourceModelSha256": "d0409cddc80beeeef7a4ab295e42213447ac46da2d3fa87cf2849a895b596d53",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 25,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.28976854342773,
+          101.259375,
+          62.595954761275635
+        ],
+        "feet": [
+          -63.28976854342773,
+          99.639375,
+          62.595954761275635
+        ],
+        "standingActorBox": [
+          -63.58976854342773,
+          99.639375,
+          62.29595476127564,
+          -62.989768543427736,
+          101.439375,
+          62.89595476127563
+        ],
+        "sourcePoint": [
+          -63.28976854342773,
+          101.259375,
+          64.59595476127564
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.28976854342773,
+          103.259375,
+          64.59595476127564
+        ],
+        "feet": [
+          -63.28976854342773,
+          101.639375,
+          64.59595476127564
+        ],
+        "standingActorBox": [
+          -63.58976854342773,
+          101.639375,
+          64.29595476127564,
+          -62.989768543427736,
+          103.439375,
+          64.89595476127563
+        ],
+        "sourcePoint": [
+          -63.28976854342773,
+          101.259375,
+          64.59595476127564
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 5,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "hook",
+      "sourceModel": "geo/hook.geo.json",
+      "sourceModelSha256": "6560a64abb8b579171a1aa867cb94d3a68135d23aa44c23d809bf95a640f1376",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 56,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.34375,
+          100.84375,
+          61.4
+        ],
+        "feet": [
+          -63.34375,
+          99.22375,
+          61.4
+        ],
+        "standingActorBox": [
+          -63.64375,
+          99.22375,
+          61.1,
+          -63.04375,
+          101.02374999999999,
+          61.699999999999996
+        ],
+        "sourcePoint": [
+          -63.34375,
+          100.84375,
+          63.4
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.34375,
+          100.84375,
+          61.4
+        ],
+        "feet": [
+          -63.34375,
+          99.22375,
+          61.4
+        ],
+        "standingActorBox": [
+          -63.64375,
+          99.22375,
+          61.1,
+          -63.04375,
+          101.02374999999999,
+          61.699999999999996
+        ],
+        "sourcePoint": [
+          -63.34375,
+          100.84375,
+          63.4
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "furniture_books",
+      "sourceModel": "geo/furniture_books.geo.json",
+      "sourceModelSha256": "3642ab7ea016c64abf48962894d2bd3426df11a728e056ed1ca92739181504e6",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 115,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.5171875,
+          100.28125,
+          62.0
+        ],
+        "feet": [
+          -64.5171875,
+          98.66125,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.8171875,
+          98.66125,
+          61.7,
+          -64.21718750000001,
+          100.46124999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.5171875,
+          100.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.5171875,
+          100.28125,
+          64.0
+        ],
+        "feet": [
+          -66.5171875,
+          98.66125,
+          64.0
+        ],
+        "standingActorBox": [
+          -66.8171875,
+          98.66125,
+          63.7,
+          -66.21718750000001,
+          100.46124999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -64.5171875,
+          100.28125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "door_empty",
+      "sourceModel": "geo/door_empty.geo.json",
+      "sourceModelSha256": "ed83b70290299130d3266a0914f0b37b948983b5937ce20121daf39b8a1f2fa6",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 27,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          103.90625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          102.28625,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.28625,
+          61.7,
+          -63.7,
+          104.08624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.90625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          103.90625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          102.28625,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          102.28625,
+          61.7,
+          -63.7,
+          104.08624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          103.90625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "curtain_half",
+      "sourceModel": "geo/curtain_half.geo.json",
+      "sourceModelSha256": "c9747b1d2cd2f561120f5e6774ecd0ba449f63c4654aacdf9e0212e7e4b41c90",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 14,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.75,
+          106.125,
+          62.0
+        ],
+        "feet": [
+          -63.75,
+          104.505,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.05,
+          104.505,
+          61.7,
+          -63.45,
+          106.30499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -63.75,
+          106.125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.75,
+          106.125,
+          62.0
+        ],
+        "feet": [
+          -63.75,
+          104.505,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.05,
+          104.505,
+          61.7,
+          -63.45,
+          106.30499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -63.75,
+          106.125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffin_stand",
+      "sourceModel": "geo/coffin_stand.geo.json",
+      "sourceModelSha256": "dedc17bcd95140ae481833265336394312ef1ce2e28ea4e2410c512b1671d724",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 67,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -62.953125,
+          102.25,
+          62.0
+        ],
+        "feet": [
+          -62.953125,
+          100.63,
+          62.0
+        ],
+        "standingActorBox": [
+          -63.253125,
+          100.63,
+          61.7,
+          -62.653125,
+          102.42999999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.953125,
+          102.25,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -62.953125,
+          102.25,
+          62.0
+        ],
+        "feet": [
+          -62.953125,
+          100.63,
+          62.0
+        ],
+        "standingActorBox": [
+          -63.253125,
+          100.63,
+          61.7,
+          -62.653125,
+          102.42999999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -62.953125,
+          102.25,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "chest",
+      "sourceModel": "geo/chest.geo.json",
+      "sourceModelSha256": "3a3bd36ed590c13bbc9099eecedb8d2c679a384fa41a78b4d3364c21aeaa6c5e",
+      "sourceAnimation": "animations/chest.animation.json",
+      "sourceAnimationSha256": "075861f5f8cbe683e72250234db10abdbcadc303a28c6975a2bca3affe819223",
+      "defaultSelectionBoxCount": 40,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          101.0625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          99.4425,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.4425,
+          61.7,
+          -63.7,
+          101.24249999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.0625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          103.0625,
+          64.0
+        ],
+        "feet": [
+          -64.0,
+          101.4425,
+          64.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          101.4425,
+          63.7,
+          -63.7,
+          103.24249999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.0625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 5,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "boat",
+      "sourceModel": "geo/boat.geo.json",
+      "sourceModelSha256": "4cfcdbcc08ce9e3963a8090007d13d4765ebe6a26ae0bcfd71be2a6df5456d03",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 93,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -65.2,
+          100.15625,
+          62.0
+        ],
+        "feet": [
+          -65.2,
+          98.53625,
+          62.0
+        ],
+        "standingActorBox": [
+          -65.5,
+          98.53625,
+          61.7,
+          -64.9,
+          100.33624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -65.2,
+          100.15625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -67.2,
+          100.15625,
+          64.0
+        ],
+        "feet": [
+          -67.2,
+          98.53625,
+          64.0
+        ],
+        "standingActorBox": [
+          -67.5,
+          98.53625,
+          63.7,
+          -66.9,
+          100.33624999999999,
+          64.3
+        ],
+        "sourcePoint": [
+          -65.2,
+          100.15625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "babycart",
+      "sourceModel": "geo/babycart.geo.json",
+      "sourceModelSha256": "95d880fd6b9d978fc28afbf80e28f2816180999205da6df2e9743c9008e03041",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 29,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          101.00625,
+          62.0
+        ],
+        "feet": [
+          -64.0,
+          99.38624999999999,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.38624999999999,
+          61.7,
+          -63.7,
+          101.18624999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.00625,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          101.00625,
+          61.0
+        ],
+        "feet": [
+          -64.0,
+          99.38624999999999,
+          61.0
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.38624999999999,
+          60.7,
+          -63.7,
+          101.18624999999999,
+          61.3
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.00625,
+          64.0
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "chair",
+      "sourceModel": "geo/chair.geo.json",
+      "sourceModelSha256": "124cc6b35db84ee87c39610d2a094a2fe7a2da41a80c477c742ac684c587fedd",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 14,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.39538252921804,
+          100.875,
+          61.75733228547718
+        ],
+        "feet": [
+          -63.39538252921804,
+          99.255,
+          61.75733228547718
+        ],
+        "standingActorBox": [
+          -63.69538252921804,
+          99.255,
+          61.457332285477186,
+          -63.09538252921804,
+          101.05499999999999,
+          62.05733228547718
+        ],
+        "sourcePoint": [
+          -63.39538252921804,
+          100.875,
+          63.75733228547718
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.39538252921804,
+          100.875,
+          60.75733228547718
+        ],
+        "feet": [
+          -63.39538252921804,
+          99.255,
+          60.75733228547718
+        ],
+        "standingActorBox": [
+          -63.69538252921804,
+          99.255,
+          60.457332285477186,
+          -63.09538252921804,
+          101.05499999999999,
+          61.05733228547718
+        ],
+        "sourcePoint": [
+          -63.39538252921804,
+          100.875,
+          63.75733228547718
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffin_1",
+      "sourceModel": "geo/coffin_01.geo.json",
+      "sourceModelSha256": "571e22c5f2ee70fe149b66d86cf5b56b49b2bfbfab722d2d468c395d598e17be",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 14,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.77574470079344,
+          101.04997718902328,
+          61.86352375959405
+        ],
+        "feet": [
+          -63.77574470079344,
+          99.42997718902328,
+          61.86352375959405
+        ],
+        "standingActorBox": [
+          -64.07574470079344,
+          99.42997718902328,
+          61.563523759594055,
+          -63.47574470079344,
+          101.22997718902327,
+          62.16352375959405
+        ],
+        "sourcePoint": [
+          -63.77574470079344,
+          101.04997718902328,
+          63.86352375959405
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.77574470079344,
+          101.04997718902328,
+          60.86352375959405
+        ],
+        "feet": [
+          -63.77574470079344,
+          99.42997718902328,
+          60.86352375959405
+        ],
+        "standingActorBox": [
+          -64.07574470079344,
+          99.42997718902328,
+          60.563523759594055,
+          -63.47574470079344,
+          101.22997718902327,
+          61.16352375959405
+        ],
+        "sourcePoint": [
+          -63.77574470079344,
+          101.04997718902328,
+          63.86352375959405
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffin_2",
+      "sourceModel": "geo/gold_coffin.geo.json",
+      "sourceModelSha256": "e69e18e6667ba9d30dd52872b82beaeac3398f15a251bd584204bcb8fbe1b68e",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 13,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0,
+          101.47067708703338,
+          62.13010453173442
+        ],
+        "feet": [
+          -64.0,
+          99.85067708703338,
+          62.13010453173442
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.85067708703338,
+          61.83010453173442,
+          -63.7,
+          101.65067708703337,
+          62.430104531734415
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0,
+          101.47067708703338,
+          61.13010453173442
+        ],
+        "feet": [
+          -64.0,
+          99.85067708703338,
+          61.13010453173442
+        ],
+        "standingActorBox": [
+          -64.3,
+          99.85067708703338,
+          60.83010453173442,
+          -63.7,
+          101.65067708703337,
+          61.430104531734415
+        ],
+        "sourcePoint": [
+          -64.0,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffin_3",
+      "sourceModel": "geo/coffin_02.geo.json",
+      "sourceModelSha256": "dbae6bc01ccb7292b18b41252dd4b3ccaa272a608d57e02d37641b0c439224a0",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 12,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.003505625,
+          101.39412681782964,
+          61.81503598300057
+        ],
+        "feet": [
+          -64.003505625,
+          99.77412681782964,
+          61.81503598300057
+        ],
+        "standingActorBox": [
+          -64.303505625,
+          99.77412681782964,
+          61.51503598300057,
+          -63.703505625000005,
+          101.57412681782964,
+          62.11503598300057
+        ],
+        "sourcePoint": [
+          -64.003505625,
+          101.39412681782964,
+          63.81503598300057
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.003505625,
+          101.39412681782964,
+          60.81503598300057
+        ],
+        "feet": [
+          -64.003505625,
+          99.77412681782964,
+          60.81503598300057
+        ],
+        "standingActorBox": [
+          -64.303505625,
+          99.77412681782964,
+          60.51503598300057,
+          -63.703505625000005,
+          101.57412681782964,
+          61.11503598300057
+        ],
+        "sourcePoint": [
+          -64.003505625,
+          101.39412681782964,
+          63.81503598300057
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffins_1",
+      "sourceModel": "geo/coffins_1.geo.json",
+      "sourceModelSha256": "f1240b2033c60c813258308e18f03aaddf731cff60b225728f2049a133574b12",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 27,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.625,
+          101.47067708703338,
+          62.13010453173442
+        ],
+        "feet": [
+          -64.625,
+          99.85067708703338,
+          62.13010453173442
+        ],
+        "standingActorBox": [
+          -64.925,
+          99.85067708703338,
+          61.83010453173442,
+          -64.325,
+          101.65067708703337,
+          62.430104531734415
+        ],
+        "sourcePoint": [
+          -64.625,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.625,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "feet": [
+          -66.625,
+          99.85067708703338,
+          64.13010453173442
+        ],
+        "standingActorBox": [
+          -66.925,
+          99.85067708703338,
+          63.83010453173442,
+          -66.325,
+          101.65067708703337,
+          64.43010453173441
+        ],
+        "sourcePoint": [
+          -64.625,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffins_2",
+      "sourceModel": "geo/coffins_2.geo.json",
+      "sourceModelSha256": "4686de29b2b028cabacfcd814aa759ee18e0a743f770729032565313fda45ad8",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 27,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.375,
+          101.47067708703338,
+          62.13010453173442
+        ],
+        "feet": [
+          -63.375,
+          99.85067708703338,
+          62.13010453173442
+        ],
+        "standingActorBox": [
+          -63.675,
+          99.85067708703338,
+          61.83010453173442,
+          -63.075,
+          101.65067708703337,
+          62.430104531734415
+        ],
+        "sourcePoint": [
+          -63.375,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.375,
+          101.47067708703338,
+          61.13010453173442
+        ],
+        "feet": [
+          -63.375,
+          99.85067708703338,
+          61.13010453173442
+        ],
+        "standingActorBox": [
+          -63.675,
+          99.85067708703338,
+          60.83010453173442,
+          -63.075,
+          101.65067708703337,
+          61.430104531734415
+        ],
+        "sourcePoint": [
+          -63.375,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 3,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 6,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 4,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffins_3",
+      "sourceModel": "geo/coffins_3.geo.json",
+      "sourceModelSha256": "e8912ce45577e046c236f8b04ecc93c3f21be7b5872d21a8abccef7bfa404782",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 24,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.628505625,
+          101.39412681782964,
+          61.81503598300057
+        ],
+        "feet": [
+          -64.628505625,
+          99.77412681782964,
+          61.81503598300057
+        ],
+        "standingActorBox": [
+          -64.928505625,
+          99.77412681782964,
+          61.51503598300057,
+          -64.328505625,
+          101.57412681782964,
+          62.11503598300057
+        ],
+        "sourcePoint": [
+          -64.628505625,
+          101.39412681782964,
+          63.81503598300057
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.628505625,
+          101.39412681782964,
+          63.81503598300057
+        ],
+        "feet": [
+          -66.628505625,
+          99.77412681782964,
+          63.81503598300057
+        ],
+        "standingActorBox": [
+          -66.928505625,
+          99.77412681782964,
+          63.51503598300057,
+          -66.328505625,
+          101.57412681782964,
+          64.11503598300057
+        ],
+        "sourcePoint": [
+          -64.628505625,
+          101.39412681782964,
+          63.81503598300057
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffins_4",
+      "sourceModel": "geo/coffins_4.geo.json",
+      "sourceModelSha256": "16b5a0abb7251b75deec9dd0064a67216ed3050b951b9f8789c472edca5bb911",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 25,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.625,
+          101.47067708703338,
+          62.13010453173442
+        ],
+        "feet": [
+          -64.625,
+          99.85067708703338,
+          62.13010453173442
+        ],
+        "standingActorBox": [
+          -64.925,
+          99.85067708703338,
+          61.83010453173442,
+          -64.325,
+          101.65067708703337,
+          62.430104531734415
+        ],
+        "sourcePoint": [
+          -64.625,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.625,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "feet": [
+          -66.625,
+          99.85067708703338,
+          64.13010453173442
+        ],
+        "standingActorBox": [
+          -66.925,
+          99.85067708703338,
+          63.83010453173442,
+          -66.325,
+          101.65067708703337,
+          64.43010453173441
+        ],
+        "sourcePoint": [
+          -64.625,
+          101.47067708703338,
+          64.13010453173442
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "coffins_5",
+      "sourceModel": "geo/coffins_5.geo.json",
+      "sourceModelSha256": "52771852c34657861486e645ace48c7a1cf0c67489ee1d6c7b94e2de0ef93143",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 25,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.67688313521097,
+          101.45863149814389,
+          62.17215390727512
+        ],
+        "feet": [
+          -64.67688313521097,
+          99.83863149814388,
+          62.17215390727512
+        ],
+        "standingActorBox": [
+          -64.97688313521097,
+          99.83863149814388,
+          61.87215390727512,
+          -64.37688313521097,
+          101.63863149814388,
+          62.472153907275114
+        ],
+        "sourcePoint": [
+          -64.67688313521097,
+          101.45863149814389,
+          64.17215390727512
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.67688313521097,
+          101.45863149814389,
+          64.17215390727512
+        ],
+        "feet": [
+          -66.67688313521097,
+          99.83863149814388,
+          64.17215390727512
+        ],
+        "standingActorBox": [
+          -66.97688313521097,
+          99.83863149814388,
+          63.87215390727512,
+          -66.37688313521097,
+          101.63863149814388,
+          64.47215390727511
+        ],
+        "sourcePoint": [
+          -64.67688313521097,
+          101.45863149814389,
+          64.17215390727512
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 2,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "horse_carcass",
+      "sourceModel": "geo/hourse_carcase.geo.json",
+      "sourceModelSha256": "ad5bd263d6652254f5a5bb5dc159dbf15442c0be11e986e63c3fc4c6a706db48",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 53,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.6875,
+          100.21875,
+          63.1875
+        ],
+        "feet": [
+          -64.6875,
+          98.59875,
+          63.1875
+        ],
+        "standingActorBox": [
+          -64.9875,
+          98.59875,
+          62.8875,
+          -64.3875,
+          100.39874999999999,
+          63.4875
+        ],
+        "sourcePoint": [
+          -64.6875,
+          100.21875,
+          65.1875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.6875,
+          100.21875,
+          65.1875
+        ],
+        "feet": [
+          -66.6875,
+          98.59875,
+          65.1875
+        ],
+        "standingActorBox": [
+          -66.9875,
+          98.59875,
+          64.8875,
+          -66.3875,
+          100.39874999999999,
+          65.4875
+        ],
+        "sourcePoint": [
+          -64.6875,
+          100.21875,
+          65.1875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 3,
+        "sourcePhysicalRejected": 1,
+        "nativeBodyRejected": 1,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "elevator",
+      "sourceModel": "geo/elevator.geo.json",
+      "sourceModelSha256": "1f22d46fa7ce2421afbf4a2515b56c78f8040383bca6ffd26e210ae16cd04780",
+      "sourceAnimation": "animations/elevator.animation.json",
+      "sourceAnimationSha256": "9f86b598d3ca18944a31dca020de63820f6aeca5ebaee85bc176a6946c582603",
+      "defaultSelectionBoxCount": 478,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -61.74375,
+          100.13125,
+          62.03125
+        ],
+        "feet": [
+          -61.74375,
+          98.51124999999999,
+          62.03125
+        ],
+        "standingActorBox": [
+          -62.043749999999996,
+          98.51124999999999,
+          61.73125,
+          -61.44375,
+          100.31124999999999,
+          62.33125
+        ],
+        "sourcePoint": [
+          -61.74375,
+          100.13125,
+          64.03125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": true,
+        "nativeBodyOverlap": true,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -59.74375,
+          100.13125,
+          64.03125
+        ],
+        "feet": [
+          -59.74375,
+          98.51124999999999,
+          64.03125
+        ],
+        "standingActorBox": [
+          -60.043749999999996,
+          98.51124999999999,
+          63.73125,
+          -59.44375,
+          100.31124999999999,
+          64.33125
+        ],
+        "sourcePoint": [
+          -61.74375,
+          100.13125,
+          64.03125
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 4,
+        "sourcePhysicalRejected": 3,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "ladder",
+      "sourceModel": "geo/ladder.geo.json",
+      "sourceModelSha256": "197119e48597be502f26390bf23d73f378223b0b497443e9868f9dcf0ea87ec3",
+      "sourceAnimation": "animations/ladder.animation.json",
+      "sourceAnimationSha256": "0328f404180c90257e952182db59a304b64a97e16cb706a1af22aca49dc76385",
+      "defaultSelectionBoxCount": 3,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 3,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.484375,
+          124.0,
+          62.5
+        ],
+        "feet": [
+          -63.484375,
+          122.38,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.784375,
+          122.38,
+          62.2,
+          -63.184375,
+          124.17999999999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.484375,
+          124.0,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.484375,
+          124.0,
+          62.5
+        ],
+        "feet": [
+          -63.484375,
+          122.38,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.784375,
+          122.38,
+          62.2,
+          -63.184375,
+          124.17999999999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.484375,
+          124.0,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "npc_window",
+      "sourceModel": "geo/npc_window.geo.json",
+      "sourceModelSha256": "f7da53705aada3fd1b063f72625559e04f9b87a0cdecddbc7f9734ba41c4476e",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 1,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.5,
+          102.015625,
+          62.5
+        ],
+        "feet": [
+          -63.5,
+          100.395625,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.8,
+          100.395625,
+          62.2,
+          -63.2,
+          102.19562499999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.5,
+          102.015625,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.5,
+          102.015625,
+          62.5
+        ],
+        "feet": [
+          -63.5,
+          100.395625,
+          62.5
+        ],
+        "standingActorBox": [
+          -63.8,
+          100.395625,
+          62.2,
+          -63.2,
+          102.19562499999999,
+          62.8
+        ],
+        "sourcePoint": [
+          -63.5,
+          102.015625,
+          64.5
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "curtains",
+      "sourceModel": "geo/curtains.geo.json",
+      "sourceModelSha256": "fa8bea46328a55ac88094374e2afb4cd9a239db60255442e84bcf9866dae8373",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 14,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 0,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.75,
+          106.125,
+          62.0
+        ],
+        "feet": [
+          -63.75,
+          104.505,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.05,
+          104.505,
+          61.7,
+          -63.45,
+          106.30499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -63.75,
+          106.125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.75,
+          106.125,
+          62.0
+        ],
+        "feet": [
+          -63.75,
+          104.505,
+          62.0
+        ],
+        "standingActorBox": [
+          -64.05,
+          104.505,
+          61.7,
+          -63.45,
+          106.30499999999999,
+          62.3
+        ],
+        "sourcePoint": [
+          -63.75,
+          106.125,
+          64.0
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "ropes",
+      "sourceModel": "geo/ropes.geo.json",
+      "sourceModelSha256": "19bd55e7356b86df76cc934964d996b84fe7364fb3462ae792c170a851bbfd5a",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 78,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -66.92393753781045,
+          101.8125,
+          62.182140467949836
+        ],
+        "feet": [
+          -66.92393753781045,
+          100.1925,
+          62.182140467949836
+        ],
+        "standingActorBox": [
+          -67.22393753781044,
+          100.1925,
+          61.88214046794984,
+          -66.62393753781045,
+          101.99249999999999,
+          62.48214046794983
+        ],
+        "sourcePoint": [
+          -66.92393753781045,
+          101.8125,
+          64.18214046794984
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -66.92393753781045,
+          101.8125,
+          62.182140467949836
+        ],
+        "feet": [
+          -66.92393753781045,
+          100.1925,
+          62.182140467949836
+        ],
+        "standingActorBox": [
+          -67.22393753781044,
+          100.1925,
+          61.88214046794984,
+          -66.62393753781045,
+          101.99249999999999,
+          62.48214046794983
+        ],
+        "sourcePoint": [
+          -66.92393753781045,
+          101.8125,
+          64.18214046794984
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "tree1",
+      "sourceModel": "geo/tree_1.geo.json",
+      "sourceModelSha256": "5ad3eeb8eb48877d56b5f2512f7f78f1b27823c8828aa0c785f2b380c6eb8d5d",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 87,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.0625,
+          111.28125,
+          64.1875
+        ],
+        "feet": [
+          -64.0625,
+          109.66125,
+          64.1875
+        ],
+        "standingActorBox": [
+          -64.3625,
+          109.66125,
+          63.8875,
+          -63.7625,
+          111.46124999999999,
+          64.4875
+        ],
+        "sourcePoint": [
+          -64.0625,
+          111.28125,
+          66.1875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.0625,
+          111.28125,
+          64.1875
+        ],
+        "feet": [
+          -64.0625,
+          109.66125,
+          64.1875
+        ],
+        "standingActorBox": [
+          -64.3625,
+          109.66125,
+          63.8875,
+          -63.7625,
+          111.46124999999999,
+          64.4875
+        ],
+        "sourcePoint": [
+          -64.0625,
+          111.28125,
+          66.1875
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "tree2",
+      "sourceModel": "geo/tree_2.geo.json",
+      "sourceModelSha256": "db11205526048d944bf005a4793dcf555a246f69ff9f37d6bc956b17efb4e846",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 86,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -64.80611881711825,
+          109.90625,
+          62.82751011593541
+        ],
+        "feet": [
+          -64.80611881711825,
+          108.28625,
+          62.82751011593541
+        ],
+        "standingActorBox": [
+          -65.10611881711824,
+          108.28625,
+          62.527510115935414,
+          -64.50611881711825,
+          110.08624999999999,
+          63.12751011593541
+        ],
+        "sourcePoint": [
+          -64.80611881711825,
+          109.90625,
+          64.82751011593541
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -64.80611881711825,
+          109.90625,
+          62.82751011593541
+        ],
+        "feet": [
+          -64.80611881711825,
+          108.28625,
+          62.82751011593541
+        ],
+        "standingActorBox": [
+          -65.10611881711824,
+          108.28625,
+          62.527510115935414,
+          -64.50611881711825,
+          110.08624999999999,
+          63.12751011593541
+        ],
+        "sourcePoint": [
+          -64.80611881711825,
+          109.90625,
+          64.82751011593541
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    },
+    {
+      "asset": "tree3",
+      "sourceModel": "geo/tree_3.geo.json",
+      "sourceModelSha256": "7fcb33242f12f6d63de6a48913e69551909865ccb9e836f398c28ef61549f5df",
+      "sourceAnimation": "animations/fallback.animation.json",
+      "sourceAnimationSha256": "07013680aa38e5b06fe03186ab65dff55d85fe0a20ad45c2d02f4c55168a496e",
+      "defaultSelectionBoxCount": 87,
+      "nativeStone": [
+        -64,
+        100,
+        64,
+        -63,
+        101,
+        65
+      ],
+      "physicalBoxCount": 1,
+      "originalRayOnlyFirstCandidate": {
+        "eye": [
+          -63.95857123139554,
+          108.46875,
+          60.5872641150132
+        ],
+        "feet": [
+          -63.95857123139554,
+          106.84875,
+          60.5872641150132
+        ],
+        "standingActorBox": [
+          -64.25857123139554,
+          106.84875,
+          60.2872641150132,
+          -63.65857123139554,
+          108.64874999999999,
+          60.887264115013195
+        ],
+        "sourcePoint": [
+          -63.95857123139554,
+          108.46875,
+          62.5872641150132
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "originalSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "proposedCollisionFreeCandidate": {
+        "eye": [
+          -63.95857123139554,
+          108.46875,
+          60.5872641150132
+        ],
+        "feet": [
+          -63.95857123139554,
+          106.84875,
+          60.5872641150132
+        ],
+        "standingActorBox": [
+          -64.25857123139554,
+          106.84875,
+          60.2872641150132,
+          -63.65857123139554,
+          108.64874999999999,
+          60.887264115013195
+        ],
+        "sourcePoint": [
+          -63.95857123139554,
+          108.46875,
+          62.5872641150132
+        ],
+        "distance": 2,
+        "physicalBodyOverlap": false,
+        "nativeBodyOverlap": false,
+        "withinOrdinaryReach5": true
+      },
+      "proposedSearchCounts": {
+        "candidates": 1,
+        "sourcePhysicalRejected": 0,
+        "nativeBodyRejected": 0,
+        "nativeRayRejected": 0
+      },
+      "staticCandidateAvailable": true,
+      "nativeFirstRayDoesNotLoadChunks": "Static calculation only; actual native shape/ray/context must be read by QA."
+    }
+  ],
+  "limits": [
+    "Source part boxes are conservative rest-cube AABBs; cage animation envelopes remain conservative, not pixel-perfect meshes.",
+    "No ordinary input/packet/nativeVoxelShape/entity-index ray/actual player motion was performed. Only one target RP and declared native pad/stone are modeled.",
+    "Native ray endpoint ties and finite slabs are approximated numerically; actual Minecraft ray and exact UUID are required independently.",
+    "Actor has standing dimensions. Sneaking/swimming/other poses require actual dimensions.",
+    "Search counters describe this offline candidate enumeration, not CPU/GPU/FPS or a full-world workload.",
+    "Current MIN10 18architecture and7canonicalpartialPASS are retained; wholeclient failed and does not satisfy final package gates."
+  ]
+}

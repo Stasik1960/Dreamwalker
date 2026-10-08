@@ -1,0 +1,430 @@
+{
+  "schema": "dreamwalker-final-jar-server-v1",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-8\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+  "artifact_sha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+  "profile": "minimal",
+  "modset_profile_sha256": "fbde8d5d1f1a6f63ee66a73db2ed140787e1ce461b1ba4d444b4914f6cf78f9b",
+  "modset": [
+    {
+      "path": "mods/fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "mods/geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib",
+      "version": "4.4.9"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-qa-22\\dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+      "sha256": "908fecf507770df01147e78af60b1a07173d1133436bc1c6068e3934a49b0071",
+      "id": "bloodborne_dw_review",
+      "version": "1.0.0",
+      "extra_mod": true
+    }
+  ],
+  "minecraft": "1.20.1",
+  "loader": "0.19.5",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.19.5/server/json",
+  "loader_metadata_sha256": "886afde0bd834d87a94a0595241ead469c387f1ae13861101cfb76b090b16961",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.10.1",
+      "path": "libraries/org/ow2/asm/asm/9.10.1/asm-9.10.1.jar",
+      "sha256": "ed825d10ab1399c8c0cb669e688cf0c8c82629b4c8399b58352b68e92ca10fcb",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.10.1/asm-analysis-9.10.1.jar",
+      "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.10.1/asm-commons-9.10.1.jar",
+      "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1.jar",
+      "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.10.1/asm-util-9.10.1.jar",
+      "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar",
+      "sha256": "1f0ae44db7295f8626f33b1dc0ad7f043d8954a8d6847247875fcc5dfcecc934",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.5",
+      "path": "libraries/net/fabricmc/fabric-loader/0.19.5/fabric-loader-0.19.5.jar",
+      "sha256": "93044e4dd46de5d8136701292f05e868da096d2c9fddb4793e4fdbcc63efc695",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\0.19.5.jar"
+    }
+  ],
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-material-review\\DW\\bloodborne complete\\build\\production-smoke\\final-city\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2",
+  "server_bind": "127.0.0.1:60829",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "60829",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":62},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false",
+    "gamemode": "creative",
+    "op-permission-level": "4"
+  },
+  "review_scene_input": null,
+  "bounded_source_input": null,
+  "ordinary_gameplay_input": null,
+  "diagnostics_input": null,
+  "alias_input": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\review-v10-alias-pipeline-release2\\markers\\review-v10-alias-author.json",
+    "sha256": "836d5914fc4fe30ebbfd96dd028e5617ea21a81195b7213cadb6fc0121b674bb",
+    "mode": "AUTHOR"
+  },
+  "derived_world_copy": null,
+  "saved_world_gamemode": null,
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\libraries\\net\\fabricmc\\fabric-loader\\0.19.5\\fabric-loader-0.19.5.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "status": "PASS",
+  "client_visuals": "NOT_RUN",
+  "gameplay": "NOT_RUN",
+  "original_world_loaded": false,
+  "note": "A new flat smoke world cannot prove city performance or entity gameplay.",
+  "startup_seconds": 23.11,
+  "commands": [
+    "list",
+    "help bbrp",
+    "help bb",
+    "help bloodborne"
+  ],
+  "alias_output_ready_before_stop": true,
+  "exit_code": 0,
+  "console_sha256": "c7780df244b2d62c3c0766a25c9529eee20c9e0edd18c93b5fbf42e58ddcc568",
+  "elapsed_seconds": 26.688,
+  "world_startup": "PASS",
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\launch-console.log",
+  "rp_initialization_count": 1,
+  "errors": [],
+  "alias_review": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\review-v10-alias-output.json",
+    "sha256": "c55ccee34208663f7c9bbb9a74fa98e85d3e3a06fc56e6981206684f06c19e90",
+    "result": {
+      "schema": "dw-v10-alias-disk-output-v1",
+      "mode": "AUTHOR",
+      "status": "PASS_ALIAS_AUTHOR_14_INSTANCES_REQUIRES_DISTINCT_DISK_REENTER",
+      "markerSha256": "836d5914fc4fe30ebbfd96dd028e5617ea21a81195b7213cadb6fc0121b674bb",
+      "productionArtifactOrigins": [
+        {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-alias-author-release2\\mods\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+          "sha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75"
+        }
+      ],
+      "productionJarSha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+      "manualClientRenderOrPacketProof": "NOT_RUN_SERVER_TECHNICAL_DISK_AND_REAL_ITEM_DAMAGE_APIS_ONLY",
+      "linkHookScope": "Furniture aliases are static unsupported mechanism targets; preserved raw Links and typed opaque provenance, no fabricated active route/hook function",
+      "fixtures": [
+        {
+          "alias": "furniture_3",
+          "canonical": "furniture_10",
+          "uuid": "f443b9d7-468f-4872-a517-a0932ff3719b",
+          "temporaryId": "91040",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV8zIGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEWssOIzeAQ1i73kdkX5EDFgEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wAAAQAET3BlbgAJAANQb3MGAAAAA8BE0AAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAIAAAAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV8zIGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAARayw4jN4BDWLveR2RfkQMWAQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8AAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPARNAAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACAAAAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAAT0Q7nXRo9IcqUXoJMv83GbBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV8zAAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAT0Q7nXRo9IcqUXoJMv83GbBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV8zAA==",
+          "stableTypedSha256": "6e03a471535a5f9602213e2ef66d522061e67e95dd3dbe0715d2125c8a8e2cb4",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|f443b9d7-468f-4872-a517-a0932ff3719b",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_10.geo.json"
+        },
+        {
+          "alias": "furniture_3",
+          "canonical": "furniture_10",
+          "uuid": "6211dfb4-d01f-4a40-bbe5-8bf10070049a",
+          "temporaryId": "91040",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV8zIGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAE+2ddmMzETaa/Mik7d7pIrAEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wAAAQAET3BlbgEJAANQb3MGAAAAA8BE0AAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAJCtAAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV8zIGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAAT7Z12YzMRNpr8yKTt3ukisAQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8AAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPARNAAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQrQAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAARiEd+00B9KQLvli/EAcASaBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV8zAAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAARiEd+00B9KQLvli/EAcASaBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV8zAA==",
+          "stableTypedSha256": "080d3f16fa31b4dd4330de2f8e7a9a113e4d8f7ae54474c621e74a485c6ae450",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|6211dfb4-d01f-4a40-bbe5-8bf10070049a",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_10.geo.json"
+        },
+        {
+          "alias": "furniture_4",
+          "canonical": "furniture_11",
+          "uuid": "b6b01821-d193-4256-9fe5-7f61493b9dd4",
+          "temporaryId": "91041",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV80IGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEv2QpT05HSs2jfOE4Q0YzAgEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wEAAQAET3BlbgAJAANQb3MGAAAAA8BBUAAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAJCNAAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV80IGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAAS/ZClPTkdKzaN84ThDRjMCAQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8BAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAQVAAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACQjQAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAAS2sBgh0ZNCVp/lf2FJO53UBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV80AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAS2sBgh0ZNCVp/lf2FJO53UBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV80AA==",
+          "stableTypedSha256": "0196e138dc1dffd4df9b32a237cb62e9f6372a448fdefde935c4f5f6c7e9d40a",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|b6b01821-d193-4256-9fe5-7f61493b9dd4",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_11.geo.json"
+        },
+        {
+          "alias": "furniture_4",
+          "canonical": "furniture_11",
+          "uuid": "b97a3c96-9d7f-4ce7-9567-fab0c3206305",
+          "temporaryId": "91041",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV80IGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAEjo0nN4otSgOJJspzotFxegEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wEAAQAET3BlbgEJAANQb3MGAAAAA8BBUAAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDBwAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV80IGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAASOjSc3ii1KA4kmynOi0XF6AQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8BAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAQVAAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQwcAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAAS5ejyWnX9M55Vn+rDDIGMFBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV80AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAS5ejyWnX9M55Vn+rDDIGMFBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV80AA==",
+          "stableTypedSha256": "647877ae6b470d454751070654791ac78ffceaa2c63054ebe91b6f4fc7cbe963",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|b97a3c96-9d7f-4ce7-9567-fab0c3206305",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_11.geo.json"
+        },
+        {
+          "alias": "furniture_5",
+          "canonical": "furniture_12",
+          "uuid": "97e1e19d-1279-4824-8ee0-476d715acfb2",
+          "temporaryId": "91042",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV81IGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEFjdy61KfQAeptvzyaArSqgEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wIAAQAET3BlbgAJAANQb3MGAAAAA8A7oAAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAJCtAAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV81IGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAAQWN3LrUp9AB6m2/PJoCtKqAQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8CAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAO6AAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACQrQAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAASX4eGdEnlIJI7gR21xWs+yBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV81AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAASX4eGdEnlIJI7gR21xWs+yBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV81AA==",
+          "stableTypedSha256": "21e81a2fdc38522599f479ded26f4eac040344cbefa6202dcc29441bc990eb2f",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|97e1e19d-1279-4824-8ee0-476d715acfb2",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_12.geo.json"
+        },
+        {
+          "alias": "furniture_5",
+          "canonical": "furniture_12",
+          "uuid": "bec07e17-3680-40c6-8e13-c5f79f19428e",
+          "temporaryId": "91042",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV81IGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAEVr5sE2QOSbi0anb6+Oe2YAEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wIAAQAET3BlbgEJAANQb3MGAAAAA8A7oAAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDNAAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV81IGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAARWvmwTZA5JuLRqdvr457ZgAQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8CAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAO6AAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQzQAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAAS+wH4XNoBAxo4TxfefGUKOBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV81AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAS+wH4XNoBAxo4TxfefGUKOBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV81AA==",
+          "stableTypedSha256": "9c0917ff68bfd2aaf6177d8e62b596363838bfa8821ecd5c4a66405babc6bf92",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|bec07e17-3680-40c6-8e13-c5f79f19428e",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_12.geo.json"
+        },
+        {
+          "alias": "furniture_6",
+          "canonical": "furniture_13",
+          "uuid": "377691c9-4cc8-4945-a32b-c7c0114762c0",
+          "temporaryId": "91043",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV82IGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEbOAvTgZJT7WIIfdgAGieeQEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wMAAQAET3BlbgAJAANQb3MGAAAAA8A0oAAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDBwAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV82IGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAARs4C9OBklPtYgh92AAaJ55AQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8DAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPANKAAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACQwcAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAAQ3dpHJTMhJRaMrx8ARR2LABgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV82AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAQ3dpHJTMhJRaMrx8ARR2LABgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV82AA==",
+          "stableTypedSha256": "0087c8b174b76678b3789d4c36384ed0d3e3ce6daebebb07769ae0195c980999",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|377691c9-4cc8-4945-a32b-c7c0114762c0",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_13.geo.json"
+        },
+        {
+          "alias": "furniture_6",
+          "canonical": "furniture_13",
+          "uuid": "89242b4b-278c-4c2e-9bdc-bec674d582ac",
+          "temporaryId": "91043",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV82IGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAE2xJaaaZwTUKOHeviaGmgmgEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wMAAQAET3BlbgEJAANQb3MGAAAAA8A0oAAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDYQAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV82IGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAATbElpppnBNQo4d6+JoaaCaAQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8DAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPANKAAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQ2EAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAASJJCtLJ4xMLpvcvsZ01YKsBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV82AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAASJJCtLJ4xMLpvcvsZ01YKsBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV82AA==",
+          "stableTypedSha256": "23e5e1b787f602cdec426c406f3b854c0ef0a590b7e1b4234c83e8b71826682a",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|89242b4b-278c-4c2e-9bdc-bec674d582ac",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_13.geo.json"
+        },
+        {
+          "alias": "furniture_7",
+          "canonical": "furniture_14",
+          "uuid": "cab36327-2bc4-4a0e-9ec5-76019910a7a1",
+          "temporaryId": "91044",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV83IGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEaSAjP2X+SiOObzo/ZgCWpgEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wQAAQAET3BlbgAJAANQb3MGAAAAA8ArQAAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDNAAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV83IGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAARpICM/Zf5KI45vOj9mAJamAQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8EAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAK0AAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACQzQAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAATKs2MnK8RKDp7FdgGZEKehBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV83AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAATKs2MnK8RKDp7FdgGZEKehBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV83AA==",
+          "stableTypedSha256": "65c0408261dcb00b68a532a492bc62760b9d8b560338e2981603423a178537f4",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|cab36327-2bc4-4a0e-9ec5-76019910a7a1",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_14.geo.json"
+        },
+        {
+          "alias": "furniture_7",
+          "canonical": "furniture_14",
+          "uuid": "68a70d17-1239-4f80-b324-b0d8c5e9b83d",
+          "temporaryId": "91044",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV83IGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAEjHCHvmLNSgifJz4gHBnI9QEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wQAAQAET3BlbgEJAANQb3MGAAAAA8ArQAAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDhwAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV83IGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAASMcIe+Ys1KCJ8nPiAcGcj1AQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8EAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAK0AAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQ4cAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAARopw0XEjlPgLMksNjF6bg9BgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV83AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAARopw0XEjlPgLMksNjF6bg9BgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV83AA==",
+          "stableTypedSha256": "87230123ca0b24e82d33d8a19026ba596eb9e07efa25381689d55387a5759164",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|68a70d17-1239-4f80-b324-b0d8c5e9b83d",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_14.geo.json"
+        },
+        {
+          "alias": "furniture_8",
+          "canonical": "furniture_1",
+          "uuid": "bcd07fcf-5566-4202-9717-c7a23ff772a1",
+          "temporaryId": "91039",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV84IGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEEgceRsarRJqypEzLCXctrgEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wUAAQAET3BlbgAJAANQb3MGAAAAA8AagAAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDYQAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV84IGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAAQSBx5GxqtEmrKkTMsJdy2uAQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8FAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAGoAAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACQ2EAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAAS80H/PVWZCApcXx6I/93KhBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV84AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAS80H/PVWZCApcXx6I/93KhBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV84AA==",
+          "stableTypedSha256": "4e6314f645e0eddea60467b93874c8391b71000769d3ad4cc30264308bc94fc7",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|bcd07fcf-5566-4202-9717-c7a23ff772a1",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_1.geo.json"
+        },
+        {
+          "alias": "furniture_8",
+          "canonical": "furniture_1",
+          "uuid": "3727d076-7669-49a5-b312-af5ee59c35bb",
+          "temporaryId": "91039",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV84IGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAEdu8maTgIQFWlpaqsPjbW4AEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wUAAQAET3BlbgEJAANQb3MGAAAAA8AagAAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDnYAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV84IGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAAR27yZpOAhAVaWlqqw+NtbgAQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8FAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAPAGoAAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQ52AAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAAQ3J9B2dmlJpbMSr17lnDW7BgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV84AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAQ3J9B2dmlJpbMSr17lnDW7BgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV84AA==",
+          "stableTypedSha256": "a7104b5cb37e9915e7a24c02e09ff83d4427640db20898e4ea478c217b9d2edb",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|3727d076-7669-49a5-b312-af5ee59c35bb",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_1.geo.json"
+        },
+        {
+          "alias": "furniture_9",
+          "canonical": "furniture_2",
+          "uuid": "81dc6680-5520-42d1-a8ac-36714f123b4e",
+          "temporaryId": "91047",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV85IGluc3RhbmNlIDAifQkABUxpbmtzCwAAAAEAAAAEVoWHurfFQcyxW9WMLQAwvQEABkxvY2tlZAEKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAAIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wYAAQAET3BlbgAJAANQb3MGAAAAAz/YAAAAAAAAQFAIAAAAAABAMOAAAAAAAAkACFJvdGF0aW9uBQAAAAJDhwAAAAAAAAUABVNjYWxlP4AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV85IGluc3RhbmNlIDAifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAARWhYe6t8VBzLFb1YwtADC9AQAGTG9ja2VkAQkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAAACAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8GAAEABE9wZW4AAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAM/2AAAAAAAAEBQCAAAAAAAQDDgAAAAAAAJAAhSb3RhdGlvbgUAAAACQ4cAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/gAAACwAEVVVJRAAAAASB3GaAVSBC0aisNnFPEjtOBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV85AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAASB3GaAVSBC0aisNnFPEjtOBgAOVmVydGljYWxPZmZzZXQ/wAAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV85AA==",
+          "stableTypedSha256": "9472b4338b1c8539fcaef236aecd5a00a46e9739f2bc33b180b54581a5c1b186",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|81dc6680-5520-42d1-a8ac-36714f123b4e",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_2.geo.json"
+        },
+        {
+          "alias": "furniture_9",
+          "canonical": "furniture_2",
+          "uuid": "1f8a4923-080f-4f7e-8ced-b29f263630b1",
+          "temporaryId": "91047",
+          "expectedTypedNbtBase64": "CgAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV85IGluc3RhbmNlIDEifQkABUxpbmtzCwAAAAEAAAAEQtQR1tRXRLWeY7S+R+/UTQEABkxvY2tlZAAKABBPcGFxdWVBbGlhc1Byb2JlAwANSW5zdGFuY2VJbmRleAAAAAEIAARSb2xlACpwcmVzZXJ2ZWRfc291cmNlX29wYXF1ZV9ub3RfYW5fYWN0aXZlX2hvb2sHAApUeXBlZEJ5dGVzAAAABAAB/wYAAQAET3BlbgEJAANQb3MGAAAAAz/YAAAAAAAAQFAgAAAAAABAOOAAAAAAAAkACFJvdGF0aW9uBQAAAAIAAAAAAAAAAAUABVNjYWxlP6AAAAoAE1NvdXJjZUxlZ2FjeVBheWxvYWQKAAhPcmlnaW5hbAIAA0FpcgEsAwALQW5pbWF0aW9uSWQAAAAACAAKQ3VzdG9tTmFtZQA6eyJ0ZXh0Ijoic2FtZSB0eXBlIGRpc3RpbmN0IHNhdmVkIGZ1cm5pdHVyZV85IGluc3RhbmNlIDEifQUADEZhbGxEaXN0YW5jZQAAAAACAARGaXJl//8BAAxJbnZ1bG5lcmFibGUACQAFTGlua3MLAAAAAQAAAARC1BHW1FdEtZ5jtL5H79RNAQAGTG9ja2VkAAkABk1vdGlvbgYAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIT25Hcm91bmQACgAQT3BhcXVlQWxpYXNQcm9iZQMADUluc3RhbmNlSW5kZXgAAAABCAAEUm9sZQAqcHJlc2VydmVkX3NvdXJjZV9vcGFxdWVfbm90X2FuX2FjdGl2ZV9ob29rBwAKVHlwZWRCeXRlcwAAAAQAAf8GAAEABE9wZW4BAwAOUG9ydGFsQ29vbGRvd24AAAAACQADUG9zBgAAAAM/2AAAAAAAAEBQIAAAAAAAQDjgAAAAAAAJAAhSb3RhdGlvbgUAAAACQ7QAAAAAAAADABJScEJlaGF2aW91clZlcnNpb24AAAABBQAFU2NhbGU/oAAACwAEVVVJRAAAAAQfikkjCA9Pfoztsp8mNjCxBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV85AAMABlNjaGVtYQAAAAEACwAEVVVJRAAAAAQfikkjCA9Pfoztsp8mNjCxBgAOVmVydGljYWxPZmZzZXQ/4AAAAAAAAAgAAmlkABlibG9vZGJvcm5lX3JwOmZ1cm5pdHVyZV85AA==",
+          "stableTypedSha256": "0ef38e2f6ae9b22540f1a57a90932133f4af2def4545e9684130117db5e73137",
+          "currentAndExpectedTypedEqual": true,
+          "policyLookupKey": "RP|minecraft:overworld|1f8a4923-080f-4f7e-8ced-b29f263630b1",
+          "linksHooksFunction": "UNSUPPORTED_STATIC_TYPE; rawLinks/provenance preserved, no routes invented",
+          "actualDebugCommand": "bb debug",
+          "actualDebugResult": 1,
+          "exactCommandEntityRay": true,
+          "canonicalModelSelected": "geo/furnature_2.geo.json"
+        }
+      ],
+      "probes": [],
+      "temporaryChunkForcingScope": "30 declared chunks only; previous flags restored before final save; actual process stop/reenter verified by launcher and independent saved-world reader",
+      "persistedOldInstanceCount": 14,
+      "persistedOldAliasTypeCount": 7,
+      "savedOldInventoryStacks": [
+        {
+          "aliasItem": "bloodborne_rp:furniture_3_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzNfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/AAAJAAVMaW5rcwsAAAABAAAABFrLDiM3gENYu95HZF+RAxYLAARVVUlEAAAABPRDuddGj0hypRegky/zcZsKABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAEBAARPcGVuAAUABVNjYWxlP2AAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfMyJ9AAAA",
+          "savedTypedStackSha256": "751a9e77eef09c3be16750af0f2bd24e944b0ff05f386cfb23eee1615d0840f2",
+          "parsedAndSerializedTypedEqual": true
+        },
+        {
+          "aliasItem": "bloodborne_rp:furniture_4_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzRfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/AQAJAAVMaW5rcwsAAAABAAAABL9kKU9OR0rNo3zhOENGMwILAARVVUlEAAAABLawGCHRk0JWn+V/YUk7ndQKABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAABAARPcGVuAQUABVNjYWxlP3AAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfNCJ9AAAA",
+          "savedTypedStackSha256": "8ff35f08115c8390551a84acc7f0aedc38f24488da35ca265e427da3c44f2143",
+          "parsedAndSerializedTypedEqual": true
+        },
+        {
+          "aliasItem": "bloodborne_rp:furniture_5_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzVfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/AgAJAAVMaW5rcwsAAAABAAAABBY3cutSn0AHqbb88mgK0qoLAARVVUlEAAAABJfh4Z0SeUgkjuBHbXFaz7IKABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAEBAARPcGVuAAUABVNjYWxlP4AAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfNSJ9AAAA",
+          "savedTypedStackSha256": "9358c4d40781872a0610052735c22572e9b06c851193aebcc5e3ad6ebe56476b",
+          "parsedAndSerializedTypedEqual": true
+        },
+        {
+          "aliasItem": "bloodborne_rp:furniture_6_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzZfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/AwAJAAVMaW5rcwsAAAABAAAABGzgL04GSU+1iCH3YABonnkLAARVVUlEAAAABDd2kclMyElFoyvHwBFHYsAKABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAABAARPcGVuAQUABVNjYWxlP4gAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfNiJ9AAAA",
+          "savedTypedStackSha256": "11096cc4cf6347d7dd789481997e483c228ca31e33a7a79d6692932fa9486c06",
+          "parsedAndSerializedTypedEqual": true
+        },
+        {
+          "aliasItem": "bloodborne_rp:furniture_7_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzdfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/BAAJAAVMaW5rcwsAAAABAAAABGkgIz9l/kojjm86P2YAlqYLAARVVUlEAAAABMqzYycrxEoOnsV2AZkQp6EKABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAEBAARPcGVuAAUABVNjYWxlP5AAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfNyJ9AAAA",
+          "savedTypedStackSha256": "f1e1397df21f2fe1dc8cfed7a8581cafbe13818c5344457e974060dc3034faf5",
+          "parsedAndSerializedTypedEqual": true
+        },
+        {
+          "aliasItem": "bloodborne_rp:furniture_8_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzhfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/BQAJAAVMaW5rcwsAAAABAAAABBIHHkbGq0SasqRMywl3La4LAARVVUlEAAAABLzQf89VZkIClxfHoj/3cqEKABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAABAARPcGVuAQUABVNjYWxlP5gAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfOCJ9AAAA",
+          "savedTypedStackSha256": "65afcd52277a748cb26d4924140b576210b2246dd7d337b0a88ef73884ea0431",
+          "parsedAndSerializedTypedEqual": true
+        },
+        {
+          "aliasItem": "bloodborne_rp:furniture_9_placer",
+          "savedTypedStackNbtBase64": "CgAAAQAFQ291bnQBCAACaWQAIGJsb29kYm9ybmVfcnA6ZnVybml0dXJlXzlfcGxhY2VyCgADdGFnCgAUQWxpYXNJbnZlbnRvcnlPcGFxdWUIAAVTY29wZQBJb2xkIGludmVudG9yeSBtZXRhZGF0YSBwcmVzZXJ2ZWQgb24gaGVsZCBzdGFjaywgbm90IGEgbmV3IGVudGl0eSBpZGVudGl0eQcAClR5cGVkQnl0ZXMAAAAEAAH/BgAJAAVMaW5rcwsAAAABAAAABFaFh7q3xUHMsVvVjC0AML0LAARVVUlEAAAABIHcZoBVIELRqKw2cU8SO04KABRibG9vZGJvcm5lX3JwX29iamVjdAEABkxvY2tlZAEBAARPcGVuAAUABVNjYWxlP6AAAAAKAAdkaXNwbGF5CAAETmFtZQA2eyJ0ZXh0Ijoic2F2ZWQgb2xkIGludmVudG9yeSBjb25zdHJ1Y3RvciBmdXJuaXR1cmVfOSJ9AAAA",
+          "savedTypedStackSha256": "f9bcc6653e6b36e8616497ae7ed3212e1781da81c973110e2fe5634f11d966e6",
+          "parsedAndSerializedTypedEqual": true
+        }
+      ],
+      "savedOldInventoryStackCount": 7,
+      "actualSave": true,
+      "forcedChunksTouched": 30,
+      "forcedFlagsRestored": true,
+      "actualFinalSave": true
+    }
+  }
+}

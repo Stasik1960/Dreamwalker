@@ -1,0 +1,987 @@
+{
+  "schema": "dreamwalker-final-jar-server-v1",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v9-attempt-12\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.4.jar",
+  "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+  "profile": "minimal",
+  "modset_profile_sha256": "fbde8d5d1f1a6f63ee66a73db2ed140787e1ce461b1ba4d444b4914f6cf78f9b",
+  "modset": [
+    {
+      "path": "mods/fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "mods/geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib",
+      "version": "4.4.9"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v9-qa-fix13\\dreamwalker-first-set-review-qa-0.1.0-prototype.4.jar",
+      "sha256": "5f5d213d62b09feff4f716f707092fb23f235a53670d23326b07e8d77451ac73",
+      "id": "bloodborne_dw_review",
+      "version": "1.0.0",
+      "extra_mod": true
+    }
+  ],
+  "minecraft": "1.20.1",
+  "loader": "0.19.5",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.19.5/server/json",
+  "loader_metadata_sha256": "93ce901455fe33d13e00b51856812a3fde03e4d93d0821f529311fed1c135a19",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.10.1",
+      "path": "libraries/org/ow2/asm/asm/9.10.1/asm-9.10.1.jar",
+      "sha256": "ed825d10ab1399c8c0cb669e688cf0c8c82629b4c8399b58352b68e92ca10fcb",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.10.1/asm-analysis-9.10.1.jar",
+      "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.10.1/asm-commons-9.10.1.jar",
+      "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1.jar",
+      "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.10.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.10.1/asm-util-9.10.1.jar",
+      "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.17.4+mixin.0.8.7/sponge-mixin-0.17.4+mixin.0.8.7.jar",
+      "sha256": "1f0ae44db7295f8626f33b1dc0ad7f043d8954a8d6847247875fcc5dfcecc934",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.5",
+      "path": "libraries/net/fabricmc/fabric-loader/0.19.5/fabric-loader-0.19.5.jar",
+      "sha256": "93044e4dd46de5d8136701292f05e868da096d2c9fddb4793e4fdbcc63efc695",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\0.19.5.jar"
+    }
+  ],
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\bloodborne-material-review\\DW\\bloodborne complete\\build\\production-smoke\\final-city\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9",
+  "server_bind": "127.0.0.1:52890",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "52890",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":126},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false"
+  },
+  "review_scene_input": null,
+  "bounded_source_input": null,
+  "ordinary_gameplay_input": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\tools\\first_set_v9_gameplay_input_reopen.json",
+    "sha256": "304e3f2e3c00a344bfab8c7f5e68835cee3e2f36de91f9da66d5d8252de5426e",
+    "phase": "REOPEN"
+  },
+  "diagnostics_input": null,
+  "derived_world_copy": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-author-release9\\isolated-smoke-world",
+    "files": [
+      {
+        "path": "data/bloodborne_dw_composite_owners.dat",
+        "bytes": 5681,
+        "sha256": "53b5fcc31f1b105f14c09ceadffa57681f4a82f61652e9e4eaa652d88572a33c"
+      },
+      {
+        "path": "data/bloodborne_dw_mechanism_links.dat",
+        "bytes": 831,
+        "sha256": "9ace57eb3efaf77736a4aa06419cb9d18a882777bc9e638f3c9e01013e591b4a"
+      },
+      {
+        "path": "data/bloodborne_dw_v9_gameplay_review.dat",
+        "bytes": 771,
+        "sha256": "db04b9e2d5e05ed5e31325914b481d2409cafda99f2aa0eb158103557376bfdc"
+      },
+      {
+        "path": "data/bloodborne_rp_lamps.dat",
+        "bytes": 265,
+        "sha256": "e9fd7a3d492c318ef5257c36ffde21a9b414e3db47190bed0c139389ef16ef0f"
+      },
+      {
+        "path": "data/chunks.dat",
+        "bytes": 59,
+        "sha256": "4f9e967c9c3efa779b3e027e60db35020ef3a380e32be321623495da2f43d2dd"
+      },
+      {
+        "path": "data/raids.dat",
+        "bytes": 89,
+        "sha256": "488436a73f49d93eaaa7f5ea520fdf2b27f4d432d51e7e839bc6419082e9bddd"
+      },
+      {
+        "path": "DIM-1/data/raids.dat",
+        "bytes": 89,
+        "sha256": "488436a73f49d93eaaa7f5ea520fdf2b27f4d432d51e7e839bc6419082e9bddd"
+      },
+      {
+        "path": "DIM1/data/raids_end.dat",
+        "bytes": 89,
+        "sha256": "488436a73f49d93eaaa7f5ea520fdf2b27f4d432d51e7e839bc6419082e9bddd"
+      },
+      {
+        "path": "entities/r.-1.-1.mca",
+        "bytes": 16384,
+        "sha256": "8fd5210d7a92430ad98909b08682c1b1dc09cd5b4fafee033c035939ca74daee"
+      },
+      {
+        "path": "entities/r.-1.0.mca",
+        "bytes": 28672,
+        "sha256": "0d07626796d462b8aa0ad55dcad445f3d922c59389586248fadd34dbcf8a4185"
+      },
+      {
+        "path": "entities/r.0.-1.mca",
+        "bytes": 20480,
+        "sha256": "cfb0660898981bf2e6fb480ea21138f39dae4d42dc1a2e1812f71f013e5e0d26"
+      },
+      {
+        "path": "entities/r.0.0.mca",
+        "bytes": 28672,
+        "sha256": "d73aadf7b3c57fa72e8a954c49c7938ba4ef261052f8805b8e4e9ecd2a78845b"
+      },
+      {
+        "path": "level.dat",
+        "bytes": 1489,
+        "sha256": "64a957111d64cd83995918f02d47d6aed342a4b4add774e326b942b2532b8417"
+      },
+      {
+        "path": "level.dat_old",
+        "bytes": 1401,
+        "sha256": "f88930553acddd092c046e28da12f0fb3cdb615985e98cc4969fba3246473a43"
+      },
+      {
+        "path": "region/r.-1.-1.mca",
+        "bytes": 1990656,
+        "sha256": "229842a353a0e261dd243e7b745ef90645ba528f826b6501a8b3e5050a56df0f"
+      },
+      {
+        "path": "region/r.-1.0.mca",
+        "bytes": 2080768,
+        "sha256": "bc9b1ca5ca6c3ed691b088185fc5a0a843ceff19c1198a47bd3e9a306ff10fe2"
+      },
+      {
+        "path": "region/r.0.-1.mca",
+        "bytes": 2080768,
+        "sha256": "790284316cd78552df620373b1cbc94f807112a521bbd99ad9bb43b3b52aa9f5"
+      },
+      {
+        "path": "region/r.0.0.mca",
+        "bytes": 2174976,
+        "sha256": "962e432969c246cceed900dd5c08e04e5706cb34238fefb8a9a2b3665343c599"
+      }
+    ],
+    "omitted_files": [
+      "session.lock"
+    ],
+    "copy_byte_verification": "PASS",
+    "source_unchanged_after_run": true
+  },
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\libraries\\net\\fabricmc\\fabric-loader\\0.19.5\\fabric-loader-0.19.5.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "status": "PASS",
+  "client_visuals": "NOT_RUN",
+  "gameplay": "PASS_V9_ORDINARY_GAMEPLAY_AFTER_ACTUAL_RESTART",
+  "original_world_loaded": false,
+  "note": "A new flat smoke world cannot prove city performance or entity gameplay.",
+  "startup_seconds": 23.125,
+  "commands": [
+    "list",
+    "help bbrp",
+    "help bb",
+    "help bloodborne"
+  ],
+  "ordinary_gameplay_output_ready_before_stop": true,
+  "exit_code": 0,
+  "console_sha256": "183b108d45cdc79bee2d8732783f07f28783193e15682f2b5142cb3cddc40b8f",
+  "elapsed_seconds": 39.437,
+  "world_startup": "PASS",
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\launch-console.log",
+  "rp_initialization_count": 1,
+  "errors": [],
+  "ordinary_gameplay_output": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\review-v9-gameplay-output.json",
+    "sha256": "925843d4ddc0ac6422c14cb46d8e170a808c7bff2f753bc9c3d6b953f1611fec",
+    "result": {
+      "schema": "dreamwalker-v9-ordinary-rp-gameplay-v1",
+      "phase": "REOPEN",
+      "manual_visual_gameplay": "NOT_RUN",
+      "scope": "Real production item/callback/entity/70-tick lever and lamp travel endpoint on a server survival QA player; no client GUI acceptance.",
+      "checks": [
+        {
+          "check": "CageHiddenPersistedDogVisibility",
+          "pass": true
+        },
+        {
+          "check": "CageVisibleTwinPersistedDogVisibility",
+          "pass": true
+        },
+        {
+          "check": "CageTwoPersistedDogVisibility",
+          "pass": true
+        },
+        {
+          "check": "CageThreePersistedDogVisibility",
+          "pass": true
+        },
+        {
+          "check": "persistedExactLampNodeAndEntityIdentities",
+          "pass": true
+        },
+        {
+          "check": "persistedBothDirectedRoutes",
+          "pass": true
+        },
+        {
+          "check": "persistedLinksAndArchitectureOwner",
+          "pass": true
+        },
+        {
+          "check": "woodGateRestartsIdleWithoutSavedRequest",
+          "pass": true
+        },
+        {
+          "check": "outboundDirectedTravel",
+          "pass": true
+        },
+        {
+          "check": "outboundDirectedTravelReplayRejected",
+          "pass": true
+        },
+        {
+          "check": "woodGateRejectsOffhandAndInflightRepeat",
+          "pass": true
+        },
+        {
+          "check": "heldWoodGateDoesNotQueueAnotherPulse",
+          "pass": true
+        },
+        {
+          "check": "originalLeverDelay69",
+          "pass": true
+        },
+        {
+          "check": "nativeLeverDelayIsOneAfter69EntityTicks",
+          "pass": true
+        },
+        {
+          "check": "firstLeverActualTargets",
+          "pass": true
+        },
+        {
+          "check": "firstLeverActualTargetsRpCollision",
+          "pass": true
+        },
+        {
+          "check": "firstLeverActualTargetsOriginalRpLadderActivated",
+          "pass": true
+        },
+        {
+          "check": "secondLeverUsesSharedActualDoor",
+          "pass": true
+        },
+        {
+          "check": "secondLeverUsesSharedActualDoorRpCollision",
+          "pass": true
+        },
+        {
+          "check": "secondLeverUsesSharedActualDoorOriginalRpLadderActivated",
+          "pass": true
+        },
+        {
+          "check": "reverseDirectedTravelAfterCooldown",
+          "pass": true
+        },
+        {
+          "check": "reverseDirectedTravelAfterCooldownReplayRejected",
+          "pass": true
+        },
+        {
+          "check": "primaryLeverSecondOperation",
+          "pass": true
+        },
+        {
+          "check": "primaryLeverSecondOperationRpCollision",
+          "pass": true
+        },
+        {
+          "check": "allOrdinaryTargetStatesRestored",
+          "pass": true
+        },
+        {
+          "check": "allOrdinaryTargetStatesRestoredRpCollision",
+          "pass": true
+        },
+        {
+          "check": "originalRpLadderStateRestored",
+          "pass": true
+        },
+        {
+          "check": "bothNativeLeverDelaysFinishedBeforeSave",
+          "pass": true
+        },
+        {
+          "check": "NpcWindowActualPlayerBlocksSide-1",
+          "pass": true
+        },
+        {
+          "check": "NpcWindowActualPlayerBlocksSide1",
+          "pass": true
+        },
+        {
+          "check": "NpcWindowOutsideWorkingPlanePassable",
+          "pass": true
+        },
+        {
+          "check": "WoodGateActualPlayerBlocksSide-1",
+          "pass": true
+        },
+        {
+          "check": "WoodGateActualPlayerBlocksSide1",
+          "pass": true
+        },
+        {
+          "check": "WoodGateOutsideWorkingPlanePassable",
+          "pass": true
+        },
+        {
+          "check": "ChandelierFloorNoDecorativeAabbPhysics",
+          "pass": true
+        },
+        {
+          "check": "ChandelierFloorActualPlayerCrossesDecor",
+          "pass": true
+        },
+        {
+          "check": "ChandelierCeilingNoDecorativeAabbPhysics",
+          "pass": true
+        },
+        {
+          "check": "ChandelierCeilingActualPlayerCrossesDecor",
+          "pass": true
+        },
+        {
+          "check": "RpLadderActualWorkingFootClimbsFarBelowOrigin",
+          "pass": true
+        },
+        {
+          "check": "RpLadderWorldQueriesActualThinLowerPanel",
+          "pass": true
+        },
+        {
+          "check": "RpStairsActualPlayerStepsFirstAuthoredTread",
+          "pass": true
+        },
+        {
+          "check": "TwoSameCagesHaveIndependentFlagsAndUnchangedPhysicalCost",
+          "pass": true
+        },
+        {
+          "check": "noRespawnPointOrHealthChange",
+          "pass": true
+        },
+        {
+          "check": "newLampDoesNotInventTechnicalLighting",
+          "pass": true
+        },
+        {
+          "check": "pulseOnlyLinkedWoodgateReturnsIdleWithoutFakeOpen",
+          "pass": true
+        }
+      ],
+      "ordinaryItemPlacements": [],
+      "actualTargetStates": [
+        {
+          "phase": "firstLeverActualTargets",
+          "elapsedServerTicks": 71,
+          "rpDoor": true,
+          "chest": true,
+          "gate": true,
+          "architectureDoor": true,
+          "architecturePending": false,
+          "leverAAge": 90,
+          "leverBAge": 90,
+          "leverARemainingDelay": 0,
+          "leverBRemainingDelay": 0
+        },
+        {
+          "phase": "secondLeverUsesSharedActualDoor",
+          "elapsedServerTicks": 142,
+          "rpDoor": false,
+          "chest": true,
+          "gate": true,
+          "architectureDoor": true,
+          "architecturePending": false,
+          "leverAAge": 161,
+          "leverBAge": 161,
+          "leverARemainingDelay": 0,
+          "leverBRemainingDelay": 0
+        },
+        {
+          "phase": "primaryLeverSecondOperation",
+          "elapsedServerTicks": 213,
+          "rpDoor": true,
+          "chest": false,
+          "gate": false,
+          "architectureDoor": false,
+          "architecturePending": false,
+          "leverAAge": 232,
+          "leverBAge": 232,
+          "leverARemainingDelay": 0,
+          "leverBRemainingDelay": 0
+        },
+        {
+          "phase": "allOrdinaryTargetStatesRestored",
+          "elapsedServerTicks": 284,
+          "rpDoor": false,
+          "chest": false,
+          "gate": false,
+          "architectureDoor": false,
+          "architecturePending": false,
+          "leverAAge": 303,
+          "leverBAge": 303,
+          "leverARemainingDelay": 0,
+          "leverBRemainingDelay": 0
+        }
+      ],
+      "leverOperations": [
+        {
+          "uuid": "6d779c70-bc23-4ef1-848d-d96b3afe5646",
+          "serverTick": 20,
+          "entityAge": 19,
+          "nativeRemainingDelay": 70
+        },
+        {
+          "uuid": "06c5924e-f704-4f77-8f76-67eab350c356",
+          "serverTick": 91,
+          "entityAge": 90,
+          "nativeRemainingDelay": 70
+        },
+        {
+          "uuid": "6d779c70-bc23-4ef1-848d-d96b3afe5646",
+          "serverTick": 162,
+          "entityAge": 161,
+          "nativeRemainingDelay": 70
+        },
+        {
+          "uuid": "06c5924e-f704-4f77-8f76-67eab350c356",
+          "serverTick": 233,
+          "entityAge": 232,
+          "nativeRemainingDelay": 70
+        }
+      ],
+      "fixtureTicking": "BOUNDED_TEMPORARY_FORCED_CHUNKS_ORIGINAL_FORCED_FLAGS_RESTORED",
+      "actualMovementProbes": [
+        {
+          "probe": "NpcWindow-side--1",
+          "start": [
+            1.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.043749988079071,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-side-1",
+          "start": [
+            7.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.831250011920929,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-outside-working-edge",
+          "start": [
+            1.4375,
+            64.2,
+            83.53125
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            7.4375,
+            64.2,
+            83.53125
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "WoodGate-side--1",
+          "start": [
+            67.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            69.69999998807907,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-side-1",
+          "start": [
+            73.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            71.30000001192093,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-outside-working-edge",
+          "start": [
+            67.5,
+            65.2,
+            89.9375
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            73.5,
+            65.2,
+            89.9375
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "ChandelierFloor-through-visible-decor",
+          "start": [
+            -17.5,
+            66.225,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -17.5,
+            66.225,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "a15bb7c4-6d0b-47fe-a572-2d48b6b8d36f",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "ChandelierCeiling-through-visible-decor",
+          "start": [
+            -7.5,
+            69.975,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -7.5,
+            69.975,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "f2040d0d-9089-4c75-97eb-2a08defa9581",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "RpLadder-working-foot",
+          "player": [
+            42.503125,
+            65.5,
+            80.5
+          ],
+          "originHeightDelta": 28.0625,
+          "climbing": true,
+          "nativeEntityCollisionShapeCount": 1
+        },
+        {
+          "probe": "RpStairs-first-native-step",
+          "start": [
+            22.5,
+            64.0,
+            79.7
+          ],
+          "requested": [
+            0.0,
+            -0.08,
+            0.4
+          ],
+          "actual": [
+            0.0,
+            0.5,
+            0.4000000000000057
+          ],
+          "end": [
+            22.5,
+            64.5,
+            80.10000000000001
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": true
+          },
+          "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "aec2a525-b901-482c-b578-edc6af04a9cd",
+              "asset": "stairs",
+              "activePhysicalBoxes": 26
+            }
+          ],
+          "firstTreadTopY": 64.5,
+          "firstTreadDepth": 0.5,
+          "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+        }
+      ],
+      "actualRpPhysicsSelectionCost": [
+        {
+          "role": "RpLadder",
+          "uuid": "d1743dce-82aa-46cd-a599-ba1df7e942c4",
+          "physicalBoxes": 2,
+          "selectionBoxes": 2,
+          "visualBounds": "AABB[38.703125, 64.0, 79.75] -> [42.6875, 95.5625, 81.25]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierCeiling",
+          "uuid": "f2040d0d-9089-4c75-97eb-2a08defa9581",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-8.617968460862285, 67.75, 79.27695755652644] -> [-6.382031539137715, 74.0, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageTwo",
+          "uuid": "0289f73e-dd34-41c9-8e50-4f7d128bfd08",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-47.39999997615814, 64.0, 78.60000002384186] -> [-44.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpStairs",
+          "uuid": "aec2a525-b901-482c-b578-edc6af04a9cd",
+          "physicalBoxes": 26,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[20.75, 63.44419625, 78.25] -> [24.25, 78.875, 95.0]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageThree",
+          "uuid": "2f07656e-496d-4358-8f11-082ac8414030",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-35.39999997615814, 64.0, 78.60000002384186] -> [-32.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "NpcWindow",
+          "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[3.96875, 64.0, 79.1875] -> [5.03125, 68.03125, 81.8125]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageVisibleTwin",
+          "uuid": "d52a41f2-6e49-4595-ae95-e3e46fbbcbf9",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-59.39999997615814, 64.0, 78.60000002384186] -> [-56.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierFloor",
+          "uuid": "a15bb7c4-6d0b-47fe-a572-2d48b6b8d36f",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-18.617968460862286, 64.0, 79.27695755652644] -> [-16.382031539137714, 70.25, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageHidden",
+          "uuid": "a7f8c70d-66bf-4d4d-96b3-2128f320ff64",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-71.39999997615814, 64.0, 78.60000002384186] -> [-68.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": false
+        },
+        {
+          "role": "WoodGate",
+          "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[69.4375, 64.0, 72.8125] -> [71.5625, 80.3125, 88.1875]",
+          "dogsVisible": true
+        }
+      ],
+      "status": "PASS_V9_ORDINARY_GAMEPLAY_AFTER_ACTUAL_RESTART",
+      "identities": "{ArchitectureDoor:{Dimension:\"minecraft:overworld\",Instance:[I;-571498258,82789528,-1287900466,-613192026],Kind:\"ARCHITECTURE\",Registry:\"bloodborne_dw:prototype_double_door\",Root:-3298534850496L},AuthorPassed:1b,Chest:[I;-376948222,-1325314756,-1524994216,-931899277],Gate:[I;549911296,-1040102006,-1726929525,1023308629],LampA:[I;-703426829,658655341,-1080284653,-1422773623],LampB:[I;-139208036,484986649,-1448976743,3770460],LeverA:[I;1836555376,-1138536719,-2071078549,989746758],LeverB:[I;113611342,-150712457,-1888065558,-1286552746],NodeA:[I;-824049505,-16365800,-1334165371,-834175981],NodeB:[I;1552171869,73092029,-1362626445,-1809449073],RestartPassed:1b,RpDoor:[I;1315442956,-1435615055,-1336837527,-143710590],VisualObjects:{CageHidden:[I;-1476868339,1723813197,-1766645464,-215941276],CageThree:[I;789013870,1231897432,-1894709206,-935247824],CageTwo:[I;42596158,-583777847,-1907339395,311164168],CageVisibleTwin:[I;-718650894,1850295701,-1365908508,1874578425],ChandelierCeiling:[I;-234615539,-1870050187,-1746195960,-554003071],ChandelierFloor:[I;-1587824700,1829455870,-1519243960,-1229401233],NpcWindow:[I;1294565440,-1617477046,-1116028372,-1797977615],RpLadder:[I;-780911154,-2102769971,-1516652003,-135707964],RpStairs:[I;-1362975451,-1191098324,-1250366010,-1358648883],WoodGate:[I;-1940533311,430590621,-1578013167,-908104762]}}",
+      "leverDelayTicks": 70,
+      "elapsedServerTicks": 284,
+      "hunterlampTravel": "PASS_EXISTING_DIRECTED_NETWORK_BOTH_DIRECTIONS",
+      "newLampLighting": "UNCHANGED_NO_AUTOMATIC_SOURCE_TECHNICAL_LIGHT",
+      "respawn": "UNCHANGED_NO_NEW_FEATURE",
+      "temporaryFixtureTickingTicketsRestored": true
+    }
+  }
+}

@@ -1,0 +1,598 @@
+{
+  "schema": "dreamwalker-final-jar-client-v1",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.1.jar",
+  "artifact_sha256": "6d8c9b37d3322c5172fcb9499d03a4e183ae5a5fa5674a6912edbfd71bb59e75",
+  "minecraft": "1.20.1",
+  "loader": "0.19.5",
+  "profile": "full_client",
+  "modset_profile_sha256": "fbde8d5d1f1a6f63ee66a73db2ed140787e1ce461b1ba4d444b4914f6cf78f9b",
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay",
+  "libraries": [
+    {
+      "coordinate": "com.github.oshi:oshi-core:6.2.2",
+      "sha256": "efbca93df18f3eb16964a92d8342f0674dd5d90da575ef8e04ef2e4eabec6910",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\github\\oshi\\oshi-core\\6.2.2\\oshi-core-6.2.2.jar"
+    },
+    {
+      "coordinate": "com.google.code.gson:gson:2.10",
+      "sha256": "0cdd163ce3598a20fc04eee71b140b24f6f2a3b35f0a499dbbdd9852e83fbfaf",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\google\\code\\gson\\gson\\2.10\\gson-2.10.jar"
+    },
+    {
+      "coordinate": "com.google.guava:failureaccess:1.0.1",
+      "sha256": "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\google\\guava\\failureaccess\\1.0.1\\failureaccess-1.0.1.jar"
+    },
+    {
+      "coordinate": "com.google.guava:guava:31.1-jre",
+      "sha256": "a42edc9cab792e39fe39bb94f3fca655ed157ff87a8af78e1d6ba5b07c4a00ab",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\google\\guava\\guava\\31.1-jre\\guava-31.1-jre.jar"
+    },
+    {
+      "coordinate": "com.ibm.icu:icu4j:71.1",
+      "sha256": "91c4f8ebf0ceb489547098fe9d5c09a65eb419caea6ed714867f5280800bcf1a",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\ibm\\icu\\icu4j\\71.1\\icu4j-71.1.jar"
+    },
+    {
+      "coordinate": "com.mojang:authlib:4.0.43",
+      "sha256": "697043d19e0b84b04f011dbec1bec3d80c04d8c468e7e4c6b221c0183bc1c0ef",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\authlib\\4.0.43\\authlib-4.0.43.jar"
+    },
+    {
+      "coordinate": "com.mojang:blocklist:1.0.10",
+      "sha256": "830bfd639c8db49236bbd8e45d3a2b8c96c56ff654a10118654958a6235d4c44",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\blocklist\\1.0.10\\blocklist-1.0.10.jar"
+    },
+    {
+      "coordinate": "com.mojang:brigadier:1.1.8",
+      "sha256": "cf65afa612fffbe4dc976115dac0312f48b9c84b3ddaf58bec8018a9454440d7",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\brigadier\\1.1.8\\brigadier-1.1.8.jar"
+    },
+    {
+      "coordinate": "com.mojang:datafixerupper:6.0.8",
+      "sha256": "6e38e9fc5404be7e45189aa14ca6058bc85df20d6760a212b6d48e666abf0fef",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\datafixerupper\\6.0.8\\datafixerupper-6.0.8.jar"
+    },
+    {
+      "coordinate": "com.mojang:logging:1.1.1",
+      "sha256": "c1756eaf0685da94142bacc84309bb7ccddf65e004638c3299ab645710b5938c",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\logging\\1.1.1\\logging-1.1.1.jar"
+    },
+    {
+      "coordinate": "com.mojang:patchy:2.2.10",
+      "sha256": "16d70e7968b45caffc81576268eb000f473fb60bf257182d3447dea8ec919d5a",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\patchy\\2.2.10\\patchy-2.2.10.jar"
+    },
+    {
+      "coordinate": "com.mojang:text2speech:1.17.9",
+      "sha256": "c2a95b499e76fada7dd63e9b0ec797b678d411c2b0ee6f37f4dc674662bfb0af",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\text2speech\\1.17.9\\text2speech-1.17.9.jar"
+    },
+    {
+      "coordinate": "commons-codec:commons-codec:1.15",
+      "sha256": "b3e9f6d63a790109bf0d056611fbed1cf69055826defeb9894a71369d246ed63",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\commons-codec\\commons-codec\\1.15\\commons-codec-1.15.jar"
+    },
+    {
+      "coordinate": "commons-io:commons-io:2.11.0",
+      "sha256": "961b2f6d87dbacc5d54abf45ab7a6e2495f89b75598962d8c723cea9bc210908",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\commons-io\\commons-io\\2.11.0\\commons-io-2.11.0.jar"
+    },
+    {
+      "coordinate": "commons-logging:commons-logging:1.2",
+      "sha256": "daddea1ea0be0f56978ab3006b8ac92834afeefbd9b7e4e6316fca57df0fa636",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\commons-logging\\commons-logging\\1.2\\commons-logging-1.2.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-buffer:4.1.82.Final",
+      "sha256": "a7ce7f6d8c1e82b044cd56765dab4338251596416de03b1f9a05d7402429c29d",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-buffer\\4.1.82.Final\\netty-buffer-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-codec:4.1.82.Final",
+      "sha256": "170c0ce091c2e1cc1d952d87a6a30deb773922507bbc609b962b539f03f53407",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-codec\\4.1.82.Final\\netty-codec-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-common:4.1.82.Final",
+      "sha256": "d5923db1cc68b26baf5368f1f76ec2c6100d12db8406c6de00eb6dbc08052550",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-common\\4.1.82.Final\\netty-common-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-handler:4.1.82.Final",
+      "sha256": "31015505983dc57eec491ad4873411ba51f0f3beb24d22d509336c72511019cb",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-handler\\4.1.82.Final\\netty-handler-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-resolver:4.1.82.Final",
+      "sha256": "4cfeba7ec535964a35722178aeecc87ec186dba0203d04389a850e8e62575383",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-resolver\\4.1.82.Final\\netty-resolver-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-transport-classes-epoll:4.1.82.Final",
+      "sha256": "73f827fca18870959b9581c6875130576e5de684cfb4e6f346f8c1c266840ba3",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-transport-classes-epoll\\4.1.82.Final\\netty-transport-classes-epoll-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-transport-native-unix-common:4.1.82.Final",
+      "sha256": "1096f16527a51dd5f44ced90636110a429cc7359a9a8a91db25000b747793429",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-transport-native-unix-common\\4.1.82.Final\\netty-transport-native-unix-common-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "io.netty:netty-transport:4.1.82.Final",
+      "sha256": "c210069be4ab4120f5ac7cb5e4a126d3a007e78a64fd44c9971220e013dbaef1",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-transport\\4.1.82.Final\\netty-transport-4.1.82.Final.jar"
+    },
+    {
+      "coordinate": "it.unimi.dsi:fastutil:8.5.9",
+      "sha256": "9578bf2a1700cf20d21746a2ee89e57ba1abbd37fa9feda68ff5e9a28473a7f9",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\it\\unimi\\dsi\\fastutil\\8.5.9\\fastutil-8.5.9.jar"
+    },
+    {
+      "coordinate": "net.java.dev.jna:jna-platform:5.12.1",
+      "sha256": "8ce969116cac95bd61b07a8d5e07174b352e63301473caac72c395e3c08488d2",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\java\\dev\\jna\\jna-platform\\5.12.1\\jna-platform-5.12.1.jar"
+    },
+    {
+      "coordinate": "net.java.dev.jna:jna:5.12.1",
+      "sha256": "91a814ac4f40d60dee91d842e1a8ad874c62197984403d0e3c30d39e55cf53b3",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\java\\dev\\jna\\jna\\5.12.1\\jna-5.12.1.jar"
+    },
+    {
+      "coordinate": "net.sf.jopt-simple:jopt-simple:5.0.4",
+      "sha256": "df26cc58f235f477db07f753ba5a3ab243ebe5789d9f89ecf68dd62ea9a66c28",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\sf\\jopt-simple\\jopt-simple\\5.0.4\\jopt-simple-5.0.4.jar"
+    },
+    {
+      "coordinate": "org.apache.commons:commons-compress:1.21",
+      "sha256": "6aecfd5459728a595601cfa07258d131972ffc39b492eb48bdd596577a2f244a",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\commons\\commons-compress\\1.21\\commons-compress-1.21.jar"
+    },
+    {
+      "coordinate": "org.apache.commons:commons-lang3:3.12.0",
+      "sha256": "d919d904486c037f8d193412da0c92e22a9fa24230b9d67a57855c5c31c7e94e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\commons\\commons-lang3\\3.12.0\\commons-lang3-3.12.0.jar"
+    },
+    {
+      "coordinate": "org.apache.httpcomponents:httpclient:4.5.13",
+      "sha256": "6fe9026a566c6a5001608cf3fc32196641f6c1e5e1986d1037ccdbd5f31ef743",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\httpcomponents\\httpclient\\4.5.13\\httpclient-4.5.13.jar"
+    },
+    {
+      "coordinate": "org.apache.httpcomponents:httpcore:4.4.15",
+      "sha256": "3cbaed088c499a10f96dde58f39dc0e7985171abd88138ca1655a872011bb142",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\httpcomponents\\httpcore\\4.4.15\\httpcore-4.4.15.jar"
+    },
+    {
+      "coordinate": "org.apache.logging.log4j:log4j-api:2.19.0",
+      "sha256": "5ccb24ad9f92e768d0bc456d3061a737951262df803e004d2cad096b75a88d60",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\logging\\log4j\\log4j-api\\2.19.0\\log4j-api-2.19.0.jar"
+    },
+    {
+      "coordinate": "org.apache.logging.log4j:log4j-core:2.19.0",
+      "sha256": "b4a1796fab7bfc36df015c1b4052459147997e8d215a7199d71d05f9e747e4f4",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\logging\\log4j\\log4j-core\\2.19.0\\log4j-core-2.19.0.jar"
+    },
+    {
+      "coordinate": "org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0",
+      "sha256": "825605eacb2d5605b105c53d4108c18125e0f82f62960d0be583278b9c524f3c",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\logging\\log4j\\log4j-slf4j2-impl\\2.19.0\\log4j-slf4j2-impl-2.19.0.jar"
+    },
+    {
+      "coordinate": "org.joml:joml:1.10.5",
+      "sha256": "cac9f22f83a7aa33eebda73c16ff5261e3cb4911b6bafcf4c79ea486099d0c9a",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\joml\\joml\\1.10.5\\joml-1.10.5.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-glfw:3.3.1",
+      "sha256": "08bbc34eb752f863e37f83ab1c7b0c22f7cb26d0f8fb0a4a4a8c6028ac45b385",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.3.1\\lwjgl-glfw-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-glfw:3.3.1:natives-windows",
+      "sha256": "9e744ecb84029d7acedae876e2557659184a29afee55e453f4ab2567349bf849",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.3.1\\lwjgl-glfw-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-jemalloc:3.3.1",
+      "sha256": "ee49fc0a8d9456452e54cd6f777823eda666e2c63fc14d65b2fd2cc2cfed5dbe",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.3.1\\lwjgl-jemalloc-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-jemalloc:3.3.1:natives-windows",
+      "sha256": "225f37df5500614675be9acb6278cb6c9c80a349264798b2cfc7ec434f1ed472",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.3.1\\lwjgl-jemalloc-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-openal:3.3.1",
+      "sha256": "7325ee1b91a8a10c0626c69b557a88f2df6ac1bdca0e52e2a92d324249f2cad0",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-openal\\3.3.1\\lwjgl-openal-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-openal:3.3.1:natives-windows",
+      "sha256": "5f7e666aa24ca8b3fb758e72c03ffb9d809b30489c6a7b47ead67c6977ff654e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-openal\\3.3.1\\lwjgl-openal-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-opengl:3.3.1",
+      "sha256": "e436d2144f3a36fff772fd64233316809b795f390defd4d55660fc686e7c2834",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.3.1\\lwjgl-opengl-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-opengl:3.3.1:natives-windows",
+      "sha256": "851b9b593cac21e3af51dd4c303e8df3fe6a344a3f81d6b9bcc186e7e540bfda",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.3.1\\lwjgl-opengl-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-stb:3.3.1",
+      "sha256": "64e5ccce2fc7cbcf0c834a5be8642d9e2498ce3fe31c14ff1df741878a3f8121",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-stb\\3.3.1\\lwjgl-stb-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-stb:3.3.1:natives-windows",
+      "sha256": "fd6ff7a26e8645af79a0d21ca73e8dc9e473f3402d1333e544a81d21ca5077e7",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-stb\\3.3.1\\lwjgl-stb-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-tinyfd:3.3.1",
+      "sha256": "488f51ed95f0fac48d1d87cb0e3bac08c012dcbf6ef3c1688685d708cdbccd56",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.3.1\\lwjgl-tinyfd-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl-tinyfd:3.3.1:natives-windows",
+      "sha256": "ecc7152109680597569d9b322045f29c1a7ddeec7182cf69189dae154138b9c8",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.3.1\\lwjgl-tinyfd-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl:3.3.1",
+      "sha256": "cf83f90e32fb973ff5edfca4ef35f55ca51bb70a579b6a1f290744f552e8e484",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl\\3.3.1\\lwjgl-3.3.1.jar"
+    },
+    {
+      "coordinate": "org.lwjgl:lwjgl:3.3.1:natives-windows",
+      "sha256": "093d13d62a6434bc656bf10a3b37e2530fd9af3b0bc20f8e9545be58659d1443",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl\\3.3.1\\lwjgl-3.3.1-natives-windows.jar"
+    },
+    {
+      "coordinate": "org.slf4j:slf4j-api:2.0.1",
+      "sha256": "b36b99b8d99ea7857554d9b25dfdbd1fb25378c926f7b9e0249983c99335b2c4",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\slf4j\\slf4j-api\\2.0.1\\slf4j-api-2.0.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm:9.10.1",
+      "sha256": "ed825d10ab1399c8c0cb669e688cf0c8c82629b4c8399b58352b68e92ca10fcb",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.10.1",
+      "sha256": "dede75a21306b65974ecd8f87114ff6970f09fb794157a4ca09ab25c888c2bfc",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.10.1",
+      "sha256": "6d0abefb7cbf972ea16edb37ec14835372505063a45f976ab7ea889ed9497895",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.10.1",
+      "sha256": "3dfb0d5b6a106cd40b5b250e39935fbf2f927f4477546a5369a3ac609cf0506b",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.10.1",
+      "sha256": "1bb99d091fba2597dc6d51193e9bbcf0d8447e7ed96bd8f0198b18152f09655c",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7",
+      "sha256": "1f0ae44db7295f8626f33b1dc0ad7f043d8954a8d6847247875fcc5dfcecc934",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.19.5",
+      "sha256": "93044e4dd46de5d8136701292f05e868da096d2c9fddb4793e4fdbcc63efc695",
+      "source": "C:\\Users\\vakir\\Limacina\\project\\dw\\0.19.5.jar"
+    }
+  ],
+  "loader_metadata_url": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.19.5/profile/json",
+  "loader_metadata_sha256": "f8ae602b978a7612f8e31d8fa4b2d6e0ef406367225d7f3265c4fe5ab6bf8f82",
+  "assets_read_only": "C:\\Users\\vakir\\.gradle\\caches\\fabric-loom\\assets",
+  "asset_index_sha1": "3d1e8e9cad62f188270564f4bdfd3a79df9be65a",
+  "offline_username": "DreamwalkerQA",
+  "fixture": "bloodborne complete\\build\\runtime-server-ladder-scene\\isolated-smoke-world",
+  "status": "STARTUP_AND_SCENE_ENTRY_OBSERVED",
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx4G",
+    "-Djava.library.path=C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\natives",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\github\\oshi\\oshi-core\\6.2.2\\oshi-core-6.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\google\\code\\gson\\gson\\2.10\\gson-2.10.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\google\\guava\\failureaccess\\1.0.1\\failureaccess-1.0.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\google\\guava\\guava\\31.1-jre\\guava-31.1-jre.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\ibm\\icu\\icu4j\\71.1\\icu4j-71.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\authlib\\4.0.43\\authlib-4.0.43.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\blocklist\\1.0.10\\blocklist-1.0.10.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\brigadier\\1.1.8\\brigadier-1.1.8.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\datafixerupper\\6.0.8\\datafixerupper-6.0.8.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\logging\\1.1.1\\logging-1.1.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\patchy\\2.2.10\\patchy-2.2.10.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\com\\mojang\\text2speech\\1.17.9\\text2speech-1.17.9.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\commons-codec\\commons-codec\\1.15\\commons-codec-1.15.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\commons-io\\commons-io\\2.11.0\\commons-io-2.11.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\commons-logging\\commons-logging\\1.2\\commons-logging-1.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-buffer\\4.1.82.Final\\netty-buffer-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-codec\\4.1.82.Final\\netty-codec-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-common\\4.1.82.Final\\netty-common-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-handler\\4.1.82.Final\\netty-handler-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-resolver\\4.1.82.Final\\netty-resolver-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-transport-classes-epoll\\4.1.82.Final\\netty-transport-classes-epoll-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-transport-native-unix-common\\4.1.82.Final\\netty-transport-native-unix-common-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\io\\netty\\netty-transport\\4.1.82.Final\\netty-transport-4.1.82.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\it\\unimi\\dsi\\fastutil\\8.5.9\\fastutil-8.5.9.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\net\\java\\dev\\jna\\jna-platform\\5.12.1\\jna-platform-5.12.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\net\\java\\dev\\jna\\jna\\5.12.1\\jna-5.12.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\net\\sf\\jopt-simple\\jopt-simple\\5.0.4\\jopt-simple-5.0.4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\commons\\commons-compress\\1.21\\commons-compress-1.21.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\commons\\commons-lang3\\3.12.0\\commons-lang3-3.12.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\httpcomponents\\httpclient\\4.5.13\\httpclient-4.5.13.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\httpcomponents\\httpcore\\4.4.15\\httpcore-4.4.15.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\logging\\log4j\\log4j-api\\2.19.0\\log4j-api-2.19.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\logging\\log4j\\log4j-core\\2.19.0\\log4j-core-2.19.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\apache\\logging\\log4j\\log4j-slf4j2-impl\\2.19.0\\log4j-slf4j2-impl-2.19.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\joml\\joml\\1.10.5\\joml-1.10.5.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.3.1\\lwjgl-glfw-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.3.1\\lwjgl-glfw-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.3.1\\lwjgl-jemalloc-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.3.1\\lwjgl-jemalloc-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-openal\\3.3.1\\lwjgl-openal-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-openal\\3.3.1\\lwjgl-openal-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.3.1\\lwjgl-opengl-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.3.1\\lwjgl-opengl-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-stb\\3.3.1\\lwjgl-stb-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-stb\\3.3.1\\lwjgl-stb-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.3.1\\lwjgl-tinyfd-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.3.1\\lwjgl-tinyfd-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl\\3.3.1\\lwjgl-3.3.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\lwjgl\\lwjgl\\3.3.1\\lwjgl-3.3.1-natives-windows.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\slf4j\\slf4j-api\\2.0.1\\slf4j-api-2.0.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\ow2\\asm\\asm\\9.10.1\\asm-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\ow2\\asm\\asm-analysis\\9.10.1\\asm-analysis-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\ow2\\asm\\asm-commons\\9.10.1\\asm-commons-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\ow2\\asm\\asm-tree\\9.10.1\\asm-tree-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\org\\ow2\\asm\\asm-util\\9.10.1\\asm-util-9.10.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\net\\fabricmc\\sponge-mixin\\0.17.4+mixin.0.8.7\\sponge-mixin-0.17.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\libraries\\net\\fabricmc\\fabric-loader\\0.19.5\\fabric-loader-0.19.5.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay\\minecraft-client.jar",
+    "net.fabricmc.loader.impl.launch.knot.KnotClient",
+    "--username",
+    "DreamwalkerQA",
+    "--uuid",
+    "d7a56ee7-ead5-3229-91dd-a174ac33b9d7",
+    "--accessToken",
+    "0",
+    "--userType",
+    "legacy",
+    "--version",
+    "1.20.1",
+    "--gameDir",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-full-quickplay",
+    "--assetsDir",
+    "C:\\Users\\vakir\\.gradle\\caches\\fabric-loom\\assets",
+    "--assetIndex",
+    "1.20.1-5",
+    "--width",
+    "1280",
+    "--height",
+    "720",
+    "--quickPlaySingleplayer",
+    "prototype-fixture"
+  ],
+  "gameplay": "NOT_RUN",
+  "client_visuals": "NOT_RUN",
+  "pid": 95408,
+  "observations": {
+    "loader": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 1,
+          "text": "[12:22:24] [main/INFO]: Loading Minecraft 1.20.1 with Fabric Loader 0.19.5"
+        }
+      ]
+    },
+    "architecture_init": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 543,
+          "text": "[12:22:48] [Render thread/INFO]: Dreamwalker BB source-backed prototype checkpoint; final catalog IDs are not frozen"
+        }
+      ]
+    },
+    "rp_init": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 544,
+          "text": "[12:22:48] [Render thread/INFO]: Bloodborne RP initialized: standard Minecraft health; independent namespace"
+        }
+      ]
+    },
+    "resource_reload": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 1055,
+          "text": "[12:23:08] [Render thread/INFO]: Reloading ResourceManager: vanilla, create:dynamic_data, fabric (ambientsounds, amendments, animatica, ardagrass, armourers_workshop, azurelib, balm-fabric, betterclouds, bettercombat, biomesoplenty, bloodborne_dw, caffeineconfig, cameraoverhaul, cardiac, cardinal-components-base, cardinal-components-entity, cave_dweller, chiselsandbits, citresewn, citresewn-defaults, cloth-config, cmdkeybind, cnpc_cpm, configlibtxf, construction_deco, continuity, cpm, crafttweaker, crawl, create, creativecore, croptopia, customnpcs, distanthorizons, dripstone_fluid_lib, dsurround, dw_magic_connect, emotecraft, entity_model_features, entity_texture_features, entityculling, epherolib, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-view-api-v2, fabric-blockrenderlayer-v1, fabric-client-tags-api-v1, fabric-command-api-v1, fabric-command-api-v2, fabric-commands-v0, fabric-containers-v0, fabric-content-registries-v0, fabric-convention-tags-v1, fabric-crash-report-info-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-events-lifecycle-v0, fabric-game-rule-api-v1, fabric-item-api-v1, fabric-item-group-api-v1, fabric-key-binding-api-v1, fabric-keybindings-v0, fabric-language-kotlin, fabric-lifecycle-events-v1, fabric-loot-api-v2, fabric-loot-tables-v1, fabric-message-api-v1, fabric-mining-level-api-v1, fabric-model-loading-api-v1, fabric-models-v0, fabric-networking-api-v1, fabric-networking-v0, fabric-object-builder-api-v1, fabric-particles-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-renderer-registries-v1, fabric-rendering-data-attachment-v1, fabric-rendering-fluids-v1, fabric-rendering-v0, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-screen-api-v1, fabric-screen-handler-api-v1, fabric-sound"
+        }
+      ]
+    },
+    "audio_init": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 1681,
+          "text": "[12:23:32] [Render thread/INFO]: OpenAL initialized on device OpenAL Soft on �������� (Realtek(R) Audio)"
+        }
+      ]
+    },
+    "integrated_server": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 2499,
+          "text": "[12:23:49] [Server thread/INFO]: Starting integrated minecraft server version 1.20.1"
+        }
+      ]
+    },
+    "qa_player_entered": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 2701,
+          "text": "[12:24:06] [Server thread/INFO]: DreamwalkerQA[local:E:dcd5aa05] logged in with entity id 5 at (-8.5, 64.0, 1.5)"
+        }
+      ]
+    },
+    "advancements": {
+      "status": "OBSERVED",
+      "count": 1,
+      "samples": [
+        {
+          "line": 63816,
+          "text": "[12:24:15] [Render thread/INFO]: Loaded 2 advancements"
+        }
+      ]
+    }
+  },
+  "process_ended": true,
+  "termination": "forced-after-observation",
+  "normal_world_save_verified": false,
+  "two_clients": "NOT_RUN",
+  "shader_comparison": "NOT_RUN",
+  "city_performance": "NOT_RUN",
+  "full_modpack_compatibility": "NOT_ACCEPTED_ERRORS_RECORDED",
+  "log_sha256": "70729f14a08ae50cddb433dd09715e38e949546c3251cf1a8eb7a364d3dacf23",
+  "error_line_count": 1800,
+  "error_groups": {
+    "Failed to verify authentication": 1,
+    "No data fixer registered for life_orb": 1,
+    "No data fixer registered for thrown_life_bottle": 1,
+    "No data fixer registered for cave_dweller:cave_dweller": 1,
+    "No data fixer registered for tileblockanvil": 1,
+    "No data fixer registered for tilenpcborder": 1,
+    "No data fixer registered for tilenpcbuilder": 1,
+    "No data fixer registered for tilenpccopy": 1,
+    "No data fixer registered for tilemailbox": 1,
+    "No data fixer registered for tileredstoneblock": 1,
+    "No data fixer registered for tilenpcscripted": 1,
+    "No data fixer registered for tilenpcscripteddoor": 1,
+    "No data fixer registered for tilewaypoint": 1,
+    "No data fixer registered for customnpcs:npcpony": 1,
+    "No data fixer registered for customnpcs:npccrystal": 1,
+    "No data fixer registered for customnpcs:npcslime": 1,
+    "No data fixer registered for customnpcs:npcdragon": 1,
+    "No data fixer registered for customnpcs:npcgolem": 1,
+    "No data fixer registered for customnpcs:customnpc": 1,
+    "No data fixer registered for customnpcs:customnpc64x32": 1,
+    "No data fixer registered for customnpcs:customnpcalex": 1,
+    "No data fixer registered for customnpcs:customnpcclassic": 1,
+    "No data fixer registered for customnpcs:customnpcchairmount": 1,
+    "No data fixer registered for customnpcs:customnpcprojectile": 1,
+    "No data fixer registered for rotten_tomato": 1,
+    "No data fixer registered for biomesoplenty:boat": 1,
+    "No data fixer registered for biomesoplenty:chest_boat": 1,
+    "No data fixer registered for anomaly": 1,
+    "No data fixer registered for handcrafted": 1,
+    "No data fixer registered for creeper_minion": 1,
+    "No data fixer registered for mutant_creeper": 1,
+    "No data fixer registered for mutant_enderman": 1,
+    "No data fixer registered for mutant_skeleton": 1,
+    "No data fixer registered for mutant_snow_golem": 1,
+    "No data fixer registered for mutant_zombie": 1,
+    "No data fixer registered for spider_pig": 1,
+    "No data fixer registered for body_part": 1,
+    "No data fixer registered for creeper_minion_egg": 1,
+    "No data fixer registered for endersoul_clone": 1,
+    "No data fixer registered for endersoul_fragment": 1,
+    "No data fixer registered for throwable_block": 1,
+    "Could not resolve configuration key: settings.bit-bag.invert-durability-bar-indication in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.placement.render-mode.success in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.placement.render-mode.failed in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.placement.color.success in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.placement.color.not-fitting in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.placement.color.missing-bits-or-space in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.chiseling-previews.default.colors.chiseling in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.chiseling-previews.default.colors.placement in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.chiseling-previews.renderer in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.chiseling-previews.debug.enabled in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.chiseling-previews.debug.mutator.colors.chiseling in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.chiseling-previews.debug.mutator.colors.placement in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.selected-tool-mode-icons.renderer in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.invert-pick-block-behaviour in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.clipboard.size in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.clipboard.add-broken-blocks in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.clipboard.add-picked-blocks in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.patterns.export-path in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.caches.sizes.bit-storage-content-models in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.lighting.extract-lighting-values-from-faces in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.lighting.extract-lighting-values-from-blockstates in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: gui.radial-menu.display-mouse-indicator in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.caches.sizes.block-models in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.caches.sizes.block-faces in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.caches.sizes.cull-testing in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.model-building.thread-count in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: performance.caches.sizes.stack-models in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.warnings.show-cool-down-error in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: settings.interactions.scrolling-changes-mode in: chiselsandbits-client": 1,
+    "Could not resolve configuration key: help.enabled-in-tooltips in: chiselsandbits-common": 1,
+    "Could not resolve configuration key: performance.caches.sizes.collision-boxes in: chiselsandbits-common": 1,
+    "Could not resolve configuration key: performance.caches.sizes.class-metadata in: chiselsandbits-common": 1,
+    "Could not resolve configuration key: performance.saving.thread-count in: chiselsandbits-common": 1,
+    "Could not resolve configuration key: balancing.blacklist-random-ticking-blocks in: chiselsandbits-server": 1,
+    "Could not resolve configuration key: balancing.enable-compatibility-mode in: chiselsandbits-server": 1,
+    "Could not resolve configuration key: balancing.bit-bag-stack-size in: chiselsandbits-server": 1,
+    "Could not resolve configuration key: style.bit-size in: chiselsandbits-server": 1,
+    "Could not resolve configuration key: balancing.change-tracker-size in: chiselsandbits-server": 1,
+    "Could not resolve configuration key: balancing.delete-excess-bits in: chiselsandbits-server": 1,
+    "Could not resolve configuration key: balancing.light-factor-multiplier in: chiselsandbits-server": 1,
+    "No data fixer registered for battlestandard": 1,
+    "No data fixer registered for battlestandarddark": 1,
+    "No data fixer registered for simplyswords:simplybeeentity": 1,
+    "No data fixer registered for ride_entity": 1,
+    "No data fixer registered for medium_dragon_fireball": 1,
+    "No data fixer registered for medium_fireball": 1,
+    "No data fixer registered for ring_effect_cloud": 1,
+    "No data fixer registered for falling_lantern": 1,
+    "No data fixer registered for dispenser_minecart": 1,
+    "No data fixer registered for falling_urn": 1,
+    "No data fixer registered for falling_ash": 1,
+    "No data fixer registered for falling_sack": 1,
+    "No data fixer registered for brick_projectile": 1,
+    "No data fixer registered for slimeball_projectile": 1,
+    "No data fixer registered for bomb": 1,
+    "No data fixer registered for cannonball": 1,
+    "No data fixer registered for rope_arrow": 1,
+    "No data fixer registered for slingshot_projectile": 1,
+    "Invalid path in mod resource-pack hwg: hwg:textures/item/misc/brimstone mk 2.png, ignoring": 3,
+    "Parsing error loading recipe supplementaries:integration/lapis_bricks_fd": 1,
+    "Parsing error loading recipe supplementaries:integration/ash_bricks_fd": 1,
+    "JEI recipe integration error": 1696
+  },
+  "error_samples": [
+    {
+      "line": 407,
+      "text": "[12:22:46] [Render thread/ERROR]: Failed to verify authentication"
+    },
+    {
+      "line": 545,
+      "text": "[12:22:48] [Render thread/ERROR]: No data fixer registered for life_orb"
+    },
+    {
+      "line": 546,
+      "text": "[12:22:48] [Render thread/ERROR]: No data fixer registered for thrown_life_bottle"
+    },
+    {
+      "line": 547,
+      "text": "[12:22:48] [Render thread/ERROR]: No data fixer registered for cave_dweller:cave_dweller"
+    },
+    {
+      "line": 601,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tileblockanvil"
+    },
+    {
+      "line": 602,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tilenpcborder"
+    },
+    {
+      "line": 603,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tilenpcbuilder"
+    },
+    {
+      "line": 604,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tilenpccopy"
+    },
+    {
+      "line": 605,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tilemailbox"
+    },
+    {
+      "line": 606,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tileredstoneblock"
+    },
+    {
+      "line": 607,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tilenpcscripted"
+    },
+    {
+      "line": 608,
+      "text": "[12:22:54] [Render thread/ERROR]: No data fixer registered for tilenpcscripteddoor"
+    }
+  ],
+  "log_archive": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_FULL_CLIENT_LOGS.zip",
+    "sha256": "eb2ab348dc86f84ddf33e6c40f8608e7f12a3b838be595c3c4986048dfbbb48d"
+  },
+  "limitations": [
+    "Log markers prove initialization and optional local scene entry, not a inspected frame or user action.",
+    "The user modset is selected from supplied duplicate versions; original configs and shaders are not copied.",
+    "Forced process termination does not prove normal save/restart; a normally stopped dedicated server supplies the review scene.",
+    "Windows Graphics Capture twice timed out; manual visual and Creative gameplay remain NOT_RUN."
+  ]
+}

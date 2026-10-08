@@ -1,0 +1,281 @@
+{
+  "schema": "dw-review-v10-diagnostics-input-plan-v1",
+  "status": "TOOLS_ONLY_PREPARED_ACTUAL_SCENE_BASELINE_AND_RUNTIME_PENDING",
+  "artifactSha256": "afe24b08295fa64bf8f598a279622c7a9013b587f6ff3d67638dea9da111c32e",
+  "files": [
+    {
+      "path": "tools/review_v10_diagnostics_enabled_input.json",
+      "sha256": "9464d0fc281d6a3e3605df9a08188df2fde8b9befe89242fbbc5370f03b6883e",
+      "mode": "ENABLED"
+    },
+    {
+      "path": "tools/review_v10_diagnostics_disabled_input.json",
+      "sha256": "dbb96427685a9a92ee3f8bf693c8a1b1bc9c8a138a972ecfb1a93e2894620aa8",
+      "mode": "DISABLED"
+    },
+    {
+      "path": "tools/review_v10_diagnostics_reenter_input.json",
+      "sha256": "62d088c0e070aeeb21d58091001f15b562c93c50af173e4c8c5a4828bd6f2397",
+      "mode": "REENTER"
+    }
+  ],
+  "targetCount": 15,
+  "requiresAuthorFixtureRows": [
+    {
+      "key": "sample_90001",
+      "root": [
+        -60,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_double_door"
+    },
+    {
+      "key": "architecture_door",
+      "root": [
+        -8,
+        64,
+        -16
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_double_door"
+    },
+    {
+      "key": "sample_90005",
+      "root": [
+        36,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_tree"
+    },
+    {
+      "key": "sample_90004",
+      "root": [
+        12,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_thin_window"
+    },
+    {
+      "key": "sample_90010",
+      "root": [
+        -36,
+        64,
+        60
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_glass_window_02"
+    },
+    {
+      "key": "sample_90020",
+      "root": [
+        60,
+        64,
+        80
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_glass_window_03"
+    },
+    {
+      "key": "sample_90006",
+      "root": [
+        60,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_ladder"
+    },
+    {
+      "key": "sample_90002",
+      "root": [
+        -36,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "key": "sample_90003",
+      "root": [
+        -12,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_roof"
+    },
+    {
+      "key": "diag_rp_door",
+      "root": [
+        8,
+        64,
+        16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "door_2"
+    },
+    {
+      "key": "rp_door",
+      "root": [
+        8,
+        64,
+        -16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "door_1"
+    },
+    {
+      "key": "rp_ladder",
+      "root": [
+        40,
+        64,
+        16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "ladder"
+    },
+    {
+      "key": "diag_stairs",
+      "root": [
+        64,
+        64,
+        16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "stairs"
+    },
+    {
+      "key": "wood_gate",
+      "root": [
+        24,
+        64,
+        -16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "wood_gate"
+    },
+    {
+      "key": "lamp_A",
+      "root": [
+        60,
+        64,
+        -16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "hunterlamp"
+    }
+  ],
+  "sourceSceneTemplate": "tools/review_v10_scene_input.json / ReviewV10SceneBootstrap requested roots; needs fresh successful author and production-only reopened world",
+  "forbiddenBaseline": "build/runtime-server-v10-author-min-attempt1; actual author failure retained historical",
+  "baselineBinding": "Root replaces placeholders only after current exact-JAR author+production-reopen PASS. OFF/ON use same world path; neither source world is mutated by launcher. REENTER derives ON saved world. If production freeze changes, explicitly rebind productionArtifactSha256 and argv before running; do not silently use V9 or failed V10 proof.",
+  "execution": "Root only; commands not executed by this preparation. Choose fresh release suffix if names already exist. Wrapper PASS+normal child exit0+current artifact SHA+raw checksPassed+actualSave required; independent ZIP/off-on/typed preservation checks remain separate.",
+  "commands": [
+    {
+      "mode": "DISABLED",
+      "argv": [
+        "C:/Users/vakir/miniconda3/python.exe",
+        "tools/run_final_server.py",
+        "--jar",
+        "build/frozen-artifacts/v10-attempt-3/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+        "--extra-mod",
+        "<CURRENT_V10_QA_JAR_WITH_DIAGNOSTICS_BOOTSTRAP>",
+        "--accepted-eula-file",
+        "<EXISTING_ACCEPTED_EULA_FILE>",
+        "--profile",
+        "minimal",
+        "--startup-timeout",
+        "180",
+        "--shutdown-timeout",
+        "60",
+        "--diagnostics-timeout",
+        "100",
+        "--world-copy",
+        "<SUCCESSFUL_V10_PRODUCTION_REOPEN_WORLD>",
+        "--diagnostics-input",
+        "tools/review_v10_diagnostics_disabled_input.json",
+        "--run-name",
+        "v10-diagnostics-off-release1",
+        "--report",
+        "reports/DIAGNOSTICS_SERVER_OFF_V10_RELEASE1.json"
+      ],
+      "expectedRawStatus": "PASS_SERVER_DIAGNOSTICS_DISABLED",
+      "actualStatus": "NOT_RUN"
+    },
+    {
+      "mode": "ENABLED",
+      "argv": [
+        "C:/Users/vakir/miniconda3/python.exe",
+        "tools/run_final_server.py",
+        "--jar",
+        "build/frozen-artifacts/v10-attempt-3/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+        "--extra-mod",
+        "<CURRENT_V10_QA_JAR_WITH_DIAGNOSTICS_BOOTSTRAP>",
+        "--accepted-eula-file",
+        "<EXISTING_ACCEPTED_EULA_FILE>",
+        "--profile",
+        "minimal",
+        "--startup-timeout",
+        "180",
+        "--shutdown-timeout",
+        "60",
+        "--diagnostics-timeout",
+        "100",
+        "--world-copy",
+        "<SUCCESSFUL_V10_PRODUCTION_REOPEN_WORLD>",
+        "--diagnostics-input",
+        "tools/review_v10_diagnostics_enabled_input.json",
+        "--run-name",
+        "v10-diagnostics-on-release1",
+        "--report",
+        "reports/DIAGNOSTICS_SERVER_ON_V10_RELEASE1.json"
+      ],
+      "expectedRawStatus": "PASS_SERVER_DIAGNOSTICS_ENABLED",
+      "actualStatus": "NOT_RUN"
+    },
+    {
+      "mode": "REENTER",
+      "argv": [
+        "C:/Users/vakir/miniconda3/python.exe",
+        "tools/run_final_server.py",
+        "--jar",
+        "build/frozen-artifacts/v10-attempt-3/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+        "--extra-mod",
+        "<CURRENT_V10_QA_JAR_WITH_DIAGNOSTICS_BOOTSTRAP>",
+        "--accepted-eula-file",
+        "<EXISTING_ACCEPTED_EULA_FILE>",
+        "--profile",
+        "minimal",
+        "--startup-timeout",
+        "180",
+        "--shutdown-timeout",
+        "60",
+        "--diagnostics-timeout",
+        "100",
+        "--world-copy",
+        "build/runtime-server-v10-diagnostics-on-release1/isolated-smoke-world",
+        "--diagnostics-input",
+        "tools/review_v10_diagnostics_reenter_input.json",
+        "--run-name",
+        "v10-diagnostics-reenter-release1",
+        "--report",
+        "reports/DIAGNOSTICS_SERVER_REENTER_V10_RELEASE1.json"
+      ],
+      "expectedRawStatus": "PASS_SERVER_DIAGNOSTICS_REENTER",
+      "actualStatus": "NOT_RUN"
+    }
+  ],
+  "interpretationLimits": [
+    "Native RMB no-edit row is not actual GUI snapshot acceptance",
+    "Dedicated fake actor is not actual join or client GUI proof",
+    "Balanced door ops use independent manual unlinked fixtures",
+    "Server tick comparison includes matched QA observer; cold/sharedPID/JFR scopes remain explicit",
+    "GPU/full-network/exact object FPS burden unmeasured; no lighting/respawn changes"
+  ]
+}

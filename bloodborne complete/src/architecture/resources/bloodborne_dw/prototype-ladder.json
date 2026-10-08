@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "format": "dreamwalker-prototype-ladder-v1",
+  "units": 16,
+  "northCollision": [
+    [
+      0,
+      0,
+      13.19785,
+      16,
+      16,
+      16
+    ]
+  ],
+  "northOutline": [
+    [
+      0,
+      0,
+      13.19785,
+      16,
+      16,
+      16
+    ]
+  ],
+  "sourceModels": [
+    "minecraft:block/hold/wood_ladder_02",
+    "minecraft:block/hold/wood_ladder_03",
+    "minecraft:block/hold/wood_ladder_04"
+  ],
+  "placement_mask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "diagonal_physics": {
+    "rotation_degrees": 45,
+    "pivot": [
+      8,
+      8,
+      8
+    ],
+    "local_clip": [
+      0,
+      0,
+      0,
+      16,
+      16,
+      16
+    ],
+    "backing": "Two real touching vertical faces. Ordinary sections require one centered 2x4-pixel contact pad on either vertical half; top/bottom slabs and suitable stair faces work. Source installations retain original full-face backing checks.",
+    "representation": "one_cached_coarse_axis_aligned_box"
+  },
+  "note": "One ordinary ladder cell with no helpers; authored rail protrusions do not reserve neighbors. Cardinal collision remains thin; diagonals deliberately use one coarse rectangle. Visual, collision, selection and support are distinct contracts.",
+  "render_mount": {
+    "both_ordinary_and_source_clone": true,
+    "post_cardinal_clockwise_yaw": 180,
+    "north_translation_model_units": [
+      0,
+      0,
+      16
+    ],
+    "optional45_applied_after_mount": true,
+    "source_elements_uv_display_unchanged": true
+  }
+}

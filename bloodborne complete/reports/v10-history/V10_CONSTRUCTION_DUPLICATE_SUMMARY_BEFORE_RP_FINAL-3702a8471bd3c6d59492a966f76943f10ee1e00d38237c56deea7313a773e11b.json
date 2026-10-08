@@ -1,0 +1,290 @@
+{
+  "schema": "dreamwalker-v10-existing-construction-catalogue-duplicate-summary-v1",
+  "status": "READ_ONLY_STATIC_ALL_EXISTING_CONSTRUCTION_TYPES_AUDITED_NO_NEW_MERGES",
+  "productionJarSha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "scope": {
+    "architectureCanonical": 18,
+    "rpCanonical": 69,
+    "canonicalConstruction": 87,
+    "registeredConstructionIncludingRpAliases": 94,
+    "temporaryTableRows": 118,
+    "architecturePairs": 153,
+    "rpCanonicalPairs": 2346,
+    "crossCanonicalPairs": 1242,
+    "canonicalPairsTotal": 3741,
+    "rpRegisteredPairs": 2850,
+    "oldAliasCrossPairs": 126,
+    "oldAliasCrossBasis": "Seven full shared-runtime aliases reduce to canonical crosscontract; all76 RpObjectEntity.damage is Creative-only with0drops",
+    "registeredAllPairsTotal": 4371,
+    "nonConstructionTableRows": "18mobs+4items+2tools roster only, not construction pair proof"
+  },
+  "newConfirmedGroups": [],
+  "unresolvedPairs": [],
+  "confirmedAlreadyImplementedRpGroups": [
+    {
+      "left": "furniture_1",
+      "right": "furniture_8",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_10",
+      "right": "furniture_3",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_11",
+      "right": "furniture_4",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_12",
+      "right": "furniture_5",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_13",
+      "right": "furniture_6",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_14",
+      "right": "furniture_7",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    },
+    {
+      "left": "furniture_2",
+      "right": "furniture_9",
+      "bothOfferedCanonical": false,
+      "status": "CONFIRMED_FULL_SOURCE_AND_SHARED_RUNTIME_CONTRACT_DUPLICATE",
+      "expectedExistingAlias": true,
+      "evidence": null
+    }
+  ],
+  "removedIdToKeptIdAlreadyImplemented": [
+    {
+      "retiredTemporaryId": "91048",
+      "oldRegistry": "bloodborne_rp:furniture_3",
+      "canonicalRegistry": "bloodborne_rp:furniture_10",
+      "canonicalTemporaryId": "91040",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91049",
+      "oldRegistry": "bloodborne_rp:furniture_4",
+      "canonicalRegistry": "bloodborne_rp:furniture_11",
+      "canonicalTemporaryId": "91041",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91050",
+      "oldRegistry": "bloodborne_rp:furniture_5",
+      "canonicalRegistry": "bloodborne_rp:furniture_12",
+      "canonicalTemporaryId": "91042",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91051",
+      "oldRegistry": "bloodborne_rp:furniture_6",
+      "canonicalRegistry": "bloodborne_rp:furniture_13",
+      "canonicalTemporaryId": "91043",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91052",
+      "oldRegistry": "bloodborne_rp:furniture_7",
+      "canonicalRegistry": "bloodborne_rp:furniture_14",
+      "canonicalTemporaryId": "91044",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91053",
+      "oldRegistry": "bloodborne_rp:furniture_8",
+      "canonicalRegistry": "bloodborne_rp:furniture_1",
+      "canonicalTemporaryId": "91039",
+      "numberNeverReuse": true
+    },
+    {
+      "retiredTemporaryId": "91054",
+      "oldRegistry": "bloodborne_rp:furniture_9",
+      "canonicalRegistry": "bloodborne_rp:furniture_2",
+      "canonicalTemporaryId": "91047",
+      "numberNeverReuse": true
+    }
+  ],
+  "preservedExceptions": [
+    {
+      "ids": [
+        "90010",
+        "90020"
+      ],
+      "request": {
+        "path": "reports/user-review-v9/request.txt",
+        "line": 62,
+        "token": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02.",
+        "sha256": "425df01a1f8f1ee67bf6bd50b9b2b996024fe4478bff175c7172764f931d01f9"
+      },
+      "quote": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02.",
+      "details": "same ownfrontUV andtexture, differentrawZby4/16; initialside/floor/ceilingseat can compensate, sneakgroundvertical keepsdifferent mounting depth; legacysource03 intrinsic-45 remains distinct. Explicit independenttype request controls even ifnew mountedposes lookidentical."
+    }
+  ],
+  "preservedAllArchitecture": [
+    {
+      "temporaryId": "90001",
+      "registryId": "bloodborne_dw:prototype_double_door"
+    },
+    {
+      "temporaryId": "90002",
+      "registryId": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "temporaryId": "90003",
+      "registryId": "bloodborne_dw:prototype_roof"
+    },
+    {
+      "temporaryId": "90004",
+      "registryId": "bloodborne_dw:prototype_thin_window"
+    },
+    {
+      "temporaryId": "90005",
+      "registryId": "bloodborne_dw:prototype_tree"
+    },
+    {
+      "temporaryId": "90006",
+      "registryId": "bloodborne_dw:prototype_ladder"
+    },
+    {
+      "temporaryId": "90007",
+      "registryId": "bloodborne_dw:prototype_wood_window"
+    },
+    {
+      "temporaryId": "90010",
+      "registryId": "bloodborne_dw:prototype_glass_window_02"
+    },
+    {
+      "temporaryId": "90011",
+      "registryId": "bloodborne_dw:prototype_wall_skin_0"
+    },
+    {
+      "temporaryId": "90012",
+      "registryId": "bloodborne_dw:prototype_wall_skin_1"
+    },
+    {
+      "temporaryId": "90013",
+      "registryId": "bloodborne_dw:prototype_wall_skin_2"
+    },
+    {
+      "temporaryId": "90014",
+      "registryId": "bloodborne_dw:prototype_wall_skin_3"
+    },
+    {
+      "temporaryId": "90015",
+      "registryId": "bloodborne_dw:prototype_wall_skin_4"
+    },
+    {
+      "temporaryId": "90016",
+      "registryId": "bloodborne_dw:prototype_wall_skin_5"
+    },
+    {
+      "temporaryId": "90017",
+      "registryId": "bloodborne_dw:prototype_wall_skin_7"
+    },
+    {
+      "temporaryId": "90018",
+      "registryId": "bloodborne_dw:prototype_ladder_art_1"
+    },
+    {
+      "temporaryId": "90019",
+      "registryId": "bloodborne_dw:prototype_ladder_art_2"
+    },
+    {
+      "temporaryId": "90020",
+      "registryId": "bloodborne_dw:prototype_glass_window_03"
+    }
+  ],
+  "compatibility": {
+    "sourceSharedCanonicalLookup": "confirmed existing RP implementation",
+    "native131AliasIdentityTest": {
+      "xml": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V10_ATTEMPT_7.xml",
+      "sha256": "d3bf79b083f8383d54ac5fa5e068c4800dff399e2d7ed1629d9a6656306d895f",
+      "testcase": {
+        "classname": "fabric-gametest-api-v1:empty",
+        "name": "rpv9behaviourgametests.exactfurniturealiasespreserveoldregistryuuidnamepayloadandlinks",
+        "time": "0.137"
+      },
+      "status": "PASS",
+      "asserted": [
+        "old registry remains loadable",
+        "same UUID and CustomName",
+        "canonical asset/render/geometry lookup",
+        "typed UUID Links and unknown source field",
+        "exact full typed SourceLegacyPayload.Original",
+        "canonical Pick item without cloning world UUID/Links"
+      ]
+    },
+    "actualAdditionalAliasesDiskRoundTrip": "PENDING_QA19_DEDICATED_SERVER_PROOFS",
+    "noNewArchitectureOrRpMigrationPerformed": true,
+    "placedInstancesNotDeletedOrCombined": true,
+    "unchangedRequiredProperties": [
+      "UUID",
+      "root",
+      "typedopaque/source provenance",
+      "height/profile/pose",
+      "CustomName",
+      "Links/mechanism policies/orderedhooks",
+      "lampnames/routes/line membership"
+    ]
+  },
+  "actualRuntimeScope": {
+    "newSurvivalFullClientEnumeration": "NOT_RUN",
+    "allStateVisualManualInspection": "NOT_RUN",
+    "currentWholeClientGUIFullKappa": "PENDING_CURRENT_MAIN7",
+    "evidenceKind": "STATIC_CLOSED_UNION_SOURCEPOINTS_AND_SHARED_RUNTIME_CONTRACTS; existing currentnative methods separately cited"
+  },
+  "evidence": [
+    {
+      "path": "reports/V10_ARCHITECTURE_DUPLICATE_AUDIT_CANDIDATE7.json",
+      "sha256": "bf07cbb67a59689743a7abce726091f3943c5d8df75221fcdbf53865c0708e4c"
+    },
+    {
+      "path": "reports/V10_ARCHITECTURE_DUPLICATE_SUMMARY_CANDIDATE7.json",
+      "sha256": "eccc877037ee2d24cfbe977cd7db2531b7bd68c8c0c4ee5c7e6f2b1553c8eb6a"
+    },
+    {
+      "path": "reports/V10_CROSS_MODULE_DUPLICATE_AUDIT_CANDIDATE7.json",
+      "sha256": "c3b97b165ff19b22df65b5b9210c582c77e1037394380d114a1f3efa3af9a00a"
+    },
+    {
+      "path": "reports/RP_TYPE_DUPLICATE_AUDIT_V10_CANDIDATE7_SEMANTIC.json",
+      "sha256": "4af3b03e18d43a604cd274f756e373b6e17bb839b940ee6c710bc987d23f3deb"
+    }
+  ],
+  "reproducibleTools": [
+    "tools/audit_v10_architecture_duplicates.py",
+    "tools/audit_v10_cross_module_duplicates.py",
+    "tools/audit_rp_type_duplicates.py"
+  ],
+  "originalTaskStillUnfinished": [
+    "independent assemblies/catalogue from1121source modelrecords",
+    "finalnumericregistrynamespace/frequencyIDs",
+    "full originalcity conversion",
+    "manualuserart/GUIacceptance"
+  ]
+}

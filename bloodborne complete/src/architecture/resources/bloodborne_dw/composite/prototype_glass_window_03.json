@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:prototype_glass_window_03",
+  "openable": false,
+  "displayName": "Тонкое остекление · window03",
+  "support": {
+    "offset": [
+      0,
+      -1,
+      0
+    ],
+    "required": false
+  },
+  "variants": [
+    {
+      "sourceModel": "minecraft:block/hold/window_03",
+      "sourceIntrinsicYaw": 0,
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/v10_windows/window_03",
+              "altModel": "bloodborne_dw:alt/v10_windows/window_03",
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "extraYaw": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -14,
+                -13,
+                1.5
+              ],
+              "to": [
+                30,
+                31,
+                2.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -14,
+                -13,
+                1.5
+              ],
+              "to": [
+                30,
+                31,
+                2.5
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -14,
+          -13,
+          1.5
+        ],
+        "to": [
+          30,
+          31,
+          2.5
+        ]
+      },
+      "mountAlignmentYaw": 0,
+      "mountedPlaneBounds": {
+        "from": [
+          -14,
+          -13,
+          1.5
+        ],
+        "to": [
+          30,
+          31,
+          2.5
+        ]
+      }
+    }
+  ],
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "placementPolicy": "SOFT_OVERLAP",
+  "globalOrientations": 4,
+  "orientationStepDegrees": 90,
+  "source": {
+    "model": "minecraft:block/hold/window_03",
+    "originalIntrinsicYaw": -45,
+    "sourcePngBytesUnchanged": true,
+    "authorizedChanges": [
+      "south UV uses front atlas rectangle with reversed U",
+      "ordinary intrinsic yaw -45 normalized to0; installed legacy poses retained"
+    ]
+  },
+  "proposal": {
+    "status": "V10_EXPLICIT_USER_REQUEST_IMPLEMENTED_AWAITING_RUNTIME",
+    "motion": "FIXED_GLAZING"
+  },
+  "renderPolicy": "CUTOUT, exact PNG bytes and authored north+south faces without cullface; no translucency dependency added.",
+  "collisionPolicy": "One prism for straight pane; six coarse strips for intrinsic diagonal. Horizontal mode is one thin plane prism before global yaw. Root-only reservation remains independent.",
+  "variantMeaning": "One independently offered type; cardinal global yaw and three mounts; BASE/ALT are states.",
+  "mountingPolicy": "Initial actual clicked-face seating; persists freely after support removal; separate user vertical offset.",
+  "compatibility": "Legacy90004 installed variant1/2 keeps its saved geometry/UUID/root; pick/drop maps to the corresponding independent cardinal type."
+}

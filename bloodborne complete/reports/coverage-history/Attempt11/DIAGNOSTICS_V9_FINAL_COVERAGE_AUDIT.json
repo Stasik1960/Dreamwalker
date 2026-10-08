@@ -1,0 +1,407 @@
+{
+  "schema": "dreamwalker-v9-diagnostics-final-coverage-audit-v1",
+  "generatedUtc": "2026-10-07T23:39:57.307957+00:00",
+  "status": "PASS_CURRENT_DIAGNOSTICS_IMPLEMENTATION_AND_ACTUAL_SCOPED_RUNTIME_WITH_EXPLICIT_LIMITS",
+  "request": {
+    "path": "reports/user-diagnostics-request-2026-10-08/request.txt",
+    "sha256": "22c4ae75e6ec2d2d50e47461e41c9655c39e16c548a17d10cc742126b6895f93"
+  },
+  "currentCandidate": {
+    "name": "Attempt11",
+    "productionArtifactSha256": "8dd5d1976f7348a9c08899acd723ba62358cc9611d4694bec3fc2b4914e3c1c0",
+    "native": "PASS_ACTUAL_105_OF_105",
+    "ordinaryServer": "PASS_MINIMAL_AND_FULL83_SIX_PHASES_RELEASE8",
+    "diagnosticsServer": "PASS_CURRENT_OFF60_ON60_REENTER_RELEASE8",
+    "minimalClient": "PASS_ACTUAL_JOINED_CLIENT_AND_DIAGNOSTICS_REENTER_RELEASE9",
+    "full109Kappa": "PASS_CURRENT_FULL_CLIENT_WORLD_SAVE_NORMAL_EXIT_RELEASE9_WITH_OBSERVED_ACTIVE_IRIS_KAPPA",
+    "sourceMigration": "PASS_FINAL3_CURRENT_AUTHOR_REOPEN_REPLAY_RELEASE8",
+    "nativeCount": 105,
+    "core": "PASS_ACTUAL_20_OF_20",
+    "coreCount": 20,
+    "ordinaryFullGameplayReopen": "PASS_RELEASE8",
+    "ordinaryFullProductionReopen": "PASS_RELEASE8"
+  },
+  "historicalEvidence": {
+    "candidate": "Attempt10",
+    "productionArtifactSha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0",
+    "nativeCount": 104,
+    "coreCount": 20,
+    "diagnosticsIndependent": "reports/REVIEW_V9_DIAGNOSTICS_INDEPENDENT_RELEASE7.json",
+    "exclusions": "reports/REVIEW_V9_CANDIDATE10_EXCLUSIONS.json",
+    "scope": "Historical evidence only; not inherited by Attempt11. Its old summary ZIP is now rejected by the stronger readable-summary gate."
+  },
+  "clauses": [
+    {
+      "clause": 1,
+      "implementation": "Bounded errors for owned model/texture fallback, IDs, object data, persistence, synchronization and rollback; normal overlap is a refusal event.",
+      "limitsAndEvidence": "Actual corruption and UTF8/readable-summary regressions passed; current valid packets produced no COMPOSITE_SYNC_DECODE. Known particle-only texture_fallback remains journaled, while BASE/ALT visible quads are resolved. No blanket error-free claim.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    },
+    {
+      "clause": 2,
+      "implementation": "Operator-level2 controls; default60 real-time auto-stop; id/object/area filters; stop/status/mark/export.",
+      "limitsAndEvidence": "Actual Candidate10 default60/OP2 and native id/UUID checks exist; exhaustive ordinary UI area-filter test is not claimed.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    },
+    {
+      "clause": 3,
+      "implementation": "Events carry operation/time/type/UUID or root/dimension/before/after/result/reason. Client placement acknowledgements join actual selected model.",
+      "limitsAndEvidence": "Actual ordinary 90010 held item/server acceptance/client model chain exists. New ordinary RP placement-to-client-model chain remains NOT_PROBED.",
+      "newArtifactVerdict": "IMPLEMENTED_ARCHITECTURE_ACTUAL_MODEL_CHAIN_VERIFIED_RP_NEW_PLACEMENT_MODEL_CHAIN_NOT_PROBED"
+    },
+    {
+      "clause": 4,
+      "implementation": "Read-only debug/tool snapshots and notes; bounded actual collision/selection fragments, sparse helpers, orientations, MountY/SourceShift and applicable state.",
+      "limitsAndEvidence": "Read-only resolver avoids scheduling cleanup; snapshot truncation is explicit. Manual visual acceptance NOT_RUN.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    },
+    {
+      "clause": 5,
+      "implementation": "Client frame/FPS, server ticks/TPS/mean/p95/p99/>50ms; heap, actual JFR pause source, loaded server RP/owners/helpers, cache/queue and instrumented payload counters.",
+      "limitsAndEvidence": "Available server/client/process metrics actually captured in minimal and full-Kappa runs. GPU/all-mod native chunk/DataTracker/TCP traffic/client loaded-helper count remain NOT_MEASURED. Shared process values are non-additive, no-sample quantiles unmeasured.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    },
+    {
+      "clause": 6,
+      "implementation": "First then every32nd own-code sample; grouping by type/chunk and precise UUID where available; measured/retained/dropped counts.",
+      "limitsAndEvidence": "Shared queries have UNASSIGNED scope. Timings may overlap; no exact block CPU percentage or GPU inference from FPS.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    },
+    {
+      "clause": 7,
+      "implementation": "Local bounded rotated ZIP with session/versions/artifact SHA/events/metrics/marks/snapshots/client batches and separate same-UUID client ZIP.",
+      "limitsAndEvidence": "Actual current same-session client/server exports and strict readable-UTF8 summary verified; exact current artifact SHA and available graphics/Iris metadata present. Remote local ZIP remains separate.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    },
+    {
+      "clause": 8,
+      "implementation": "Default-off bounded buffers, batched/rotated local output, no complete NBT/per-frame network packets; nonfatal report failure; matching off/on/save/reenter scenarios.",
+      "limitsAndEvidence": "Actual current default-off/balanced off-on/save/reenter minimal comparisons and full109+Kappa normal exit passed. Native nonfatal report IO failure passed. No whole-city/two-remote-client/manual-visual or exact causal FPS-cost claim.",
+      "newArtifactVerdict": "IMPLEMENTED_WITH_ACTUAL_SCOPED_RUNTIME_EVIDENCE_AND_EXPLICIT_LIMITS"
+    }
+  ],
+  "fixedFindings": [
+    {
+      "id": "SUMMARY_MOJIBAKE",
+      "scope": "DwDiagnostics.summary() only",
+      "change": "Readable ASCII English with actual session result/count/tick summaries and explicit missing-client/GPU/network scopes. No giant telemetry map dump.",
+      "regression": "Actual native ZIP export passed UUID/readability/unavailable scopes in Attempt11. Actual current ordinary diagnostic ZIP pending."
+    },
+    {
+      "id": "SILENT_SAVED_MECHANISM_NORMALIZATION",
+      "scope": "MechanismState.fromNbt",
+      "change": "Wrong schema, malformed target metadata/UUID and malformed lever UUID/ID/position journal bounded contextual errors while preserving original skip/normalization. Permitted unresolved empty RP IDs stay valid.",
+      "regression": "Attempt11 actual mixed valid+corrupt graph reader passed unchanged input and surviving pending UUID binding."
+    },
+    {
+      "id": "SILENT_SOURCE_PAIR_NORMALIZATION",
+      "scope": "SourceLadderBlockEntity.readNbt",
+      "change": "Malformed Owner/Root/FixedBacking/Original reports field-type reason without original NBT; prior null/ORIGIN/empty normalization remains.",
+      "regression": "Attempt11 actual valid/corrupt pair reads passed old normalization, input retention and repeat dedup without payload leakage."
+    },
+    {
+      "id": "CLIENT_OWNER_SELECTION_CORRUPTION",
+      "scope": "CompositeClient; sibling-owned",
+      "change": "Both typed S2C decodes validated atomically with safe context/class/stack error reporting.",
+      "regression": "Sibling isolated compile proof; actual malformed packet gameplay not yet separately probed."
+    }
+  ],
+  "remainingActionable": [
+    "Manual visual/gameplay acceptance remains PENDING_USER_REVIEW; the kit does not declare user approval.",
+    "Ordinary newly placed RP item to actual client model mapping remains NOT_PROBED; only architecture90010 chain is actual proof.",
+    "GPU duration, full-mod network/chunk/DataTracker/TCP bytes and client loaded-helper count remain explicitly NOT_MEASURED.",
+    "Retain known particle-only fallback warning and historical4GB/superseded-candidate failures; never relabel those runs as current PASS."
+  ],
+  "nonClaims": [
+    "No new-hash runtime PASS until evidence exists",
+    "No manual visual acceptance",
+    "No full-city scaling or performance guarantee",
+    "No exact GPU cost or full network traffic measurement",
+    "No blanket interception of arbitrary vanilla/uninstrumented failures"
+  ],
+  "auditMethod": "Lightweight code/request/current-report inspection only; no Minecraft, Gradle, javac, performance process or production edits during this audit.",
+  "frozenOwnedFiles": [
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/diagnostics/DwDiagnostics.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/link/MechanismState.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/ladder_source/SourceLadderBlockEntity.java",
+    "src/gametest/java/dev/dreamwalker/bloodbornedw/diagnostics/DwDiagnosticsGameTests.java"
+  ],
+  "currentEvidence": {
+    "native": {
+      "path": "reports/FIRST_SET_GAMETEST_V9_ATTEMPT_11.xml",
+      "sha256": "90093e29c4dffb341dadeac36165d60a4707e0091c24ede3bf0082ff4c8e80f7",
+      "bytes": 16473
+    },
+    "buildAndCore": {
+      "path": "reports/REVIEW_V9_BUILD_AND_CORE_ATTEMPT_11.log",
+      "sha256": "bf8bd82f693b0ac498d2f428319ee428a59ef61a6daf14b5a70d967d9ea44244",
+      "bytes": 2493905
+    },
+    "ownedNativeBinding": {
+      "path": "reports/REVIEW_V9_MECHANISM_LADDER_NATIVE_CANDIDATE11.json",
+      "sha256": "4162913eaa044fab695399d0a88709c8386f94d19ad91a60765479c0f54fe4e8",
+      "bytes": 11031
+    },
+    "ordinaryWrappers": [
+      {
+        "path": "reports/FIRST_SET_MINIMAL_AUTHOR_V9_RELEASE8.json",
+        "sha256": "942bb18da1ca4c01e72f5e5c2a5dd2413a38422f565f1e605e6eb9dfd601b452",
+        "bytes": 128430,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/FIRST_SET_MINIMAL_GAMEPLAY_REOPEN_V9_RELEASE8.json",
+        "sha256": "09b480f6754bb2df2ece077517f2718e65ce00ec4adeaeadc641ffdb647861c0",
+        "bytes": 36386,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/FIRST_SET_MINIMAL_PRODUCTION_REOPEN_V9_RELEASE8.json",
+        "sha256": "43da9d2f1765d67d3dad4e0d670f1d610a90ed9f34772a9cf0daed36231dc277",
+        "bytes": 12404,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/FIRST_SET_FULL_AUTHOR_V9_RELEASE8.json",
+        "sha256": "4635a41b7c6bcb413d753e5656e1a1ddc4c25a2ea69ef7b03c00d92a9140bf96",
+        "bytes": 150998,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/FIRST_SET_FULL_GAMEPLAY_REOPEN_V9_RELEASE8.json",
+        "sha256": "c687d7b877a3bb2f9879ca35395038803f87e52c4ef2434216a4ff1e75ee999f",
+        "bytes": 66720,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/FIRST_SET_FULL_PRODUCTION_REOPEN_V9_RELEASE8.json",
+        "sha256": "2f68eb77ed87cca5b23b247cb8ae3cb577e9ea61148784c2f87e2a5cb8b747e5",
+        "bytes": 42894,
+        "status": "PASS"
+      }
+    ],
+    "ordinaryIndependentAndArchive": [
+      {
+        "path": "reports/REVIEW_V9_SCENE_INDEPENDENT_MINIMAL_RELEASE8.json",
+        "sha256": "dc3f4963f5d0d64b0d25787e4d6aee5e90dce52e13daa45af713cddf053a8230",
+        "bytes": 104628,
+        "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+      },
+      {
+        "path": "reports/REVIEW_V9_GAMEPLAY_INDEPENDENT_MINIMAL_RELEASE8.json",
+        "sha256": "85a8410fe422c0b790736c75b79e76161124469f139e6912bf564970264ab881",
+        "bytes": 20026,
+        "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+      },
+      {
+        "path": "reports/REVIEW_V9_SCENE_INDEPENDENT_FULL_RELEASE8.json",
+        "sha256": "b66fa83b1274bcb207c3ffce90d570ab7c07d410c528b5da013d981a2124eec7",
+        "bytes": 104633,
+        "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+      },
+      {
+        "path": "reports/REVIEW_V9_GAMEPLAY_INDEPENDENT_FULL_RELEASE8.json",
+        "sha256": "393c4dd9b3632029edf3ba8407ec479dd14fe5eed67e47688292586936f6152f",
+        "bytes": 20029,
+        "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+      },
+      {
+        "path": "reports/REVIEW_V9_SCENE_ARCHIVE_RELEASE8.json",
+        "sha256": "7cb02c369d4788bfc53159a0c50db209462bd32455c5da1df4ae2c9e99019995",
+        "bytes": 107697,
+        "status": "PACKAGED_VERIFIED_SCENE_PENDING_USER_REVIEW"
+      }
+    ],
+    "sourceWrappersAndIndependent": [
+      {
+        "path": "reports/SERVER_SOURCE_REVIEW_AUTHOR_V9_RELEASE8.json",
+        "sha256": "4c922f1eaec9379b5163826f6a7a88b86d957258414a678339ce4a8b11c11056",
+        "bytes": 123568,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/SERVER_SOURCE_REVIEW_REOPEN_V9_RELEASE8.json",
+        "sha256": "6fea8033dc4af8b20aba028f85cff1325c721e5f26586e63d7b04c87e9027c25",
+        "bytes": 14452,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/SERVER_SOURCE_REVIEW_REPLAY_V9_RELEASE8.json",
+        "sha256": "cc2b12ab88b81e90774f666cf54f648fae9af99ae741044ca7840c0e6d53f0bd",
+        "bytes": 101223,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/SOURCE_REVIEW_POSTSAVE_INDEPENDENT_V9_RELEASE8.json",
+        "sha256": "7a2b6692dfd2b41c0d0fbb90ee309e060fdb87afbc6e52ad353b531dbf001ed3",
+        "bytes": 607817,
+        "status": "PASS_ARCHITECTURE_AND_FOREIGN_DATA_WITH_EXPLICIT_RUNTIME_DIFFS"
+      },
+      {
+        "path": "reports/SOURCE_REVIEW_POSTSAVE_REOPEN_INDEPENDENT_V9_RELEASE8.json",
+        "sha256": "fd94a9440e7d1e4948e827982367960a9c6fbcbf99f3e39f33ab837ce0a7c945",
+        "bytes": 636928,
+        "status": "PASS_ARCHITECTURE_AND_FOREIGN_DATA_WITH_EXPLICIT_RUNTIME_DIFFS"
+      },
+      {
+        "path": "reports/SOURCE_REVIEW_SECOND_SAVE_INDEPENDENT_V9_RELEASE8.json",
+        "sha256": "360cd609d18eb7438d72b3ffb3410fc2b39dcc1fc43cd32d35cee52ba2be8cb1",
+        "bytes": 17894,
+        "status": "PASS_PERSISTED_OWNERSHIP_NATIVE_DATA_AND_NONRECURSIVE_RP_SOURCE_PAYLOAD"
+      },
+      {
+        "path": "reports/SOURCE_REVIEW_PERSISTED_REPLAY_INDEPENDENT_V9_RELEASE8.json",
+        "sha256": "ae9bb6de43783e660088ae3ca88062a3b0c6f2b5263ad671b296bf307824081b",
+        "bytes": 178995,
+        "status": "PASS_PERSISTED_OWNERSHIP_NATIVE_DATA_AND_NONRECURSIVE_RP_SOURCE_PAYLOAD"
+      },
+      {
+        "path": "reports/FIRST_SET_SOURCE_REVIEW_SCENE_V9_RELEASE8.json",
+        "sha256": "465ef0ef4af88d4aa5f938ec9b280326d623baa633fc09a93bf84c3bebe3cc60",
+        "bytes": 11660,
+        "status": "PASS_ARCHIVE_EXACT_PRODUCTION_REOPEN; PENDING_USER_REVIEW"
+      }
+    ],
+    "diagnosticsWrappersAndIndependent": [
+      {
+        "path": "reports/DIAGNOSTICS_SERVER_OFF_V9_RELEASE8.json",
+        "sha256": "b2fd183cd6283d7c4e993ff7489c276f3a63d5fdcfe238a3cb2d545bf8c1243a",
+        "bytes": 43605,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/DIAGNOSTICS_SERVER_ON_V9_RELEASE8.json",
+        "sha256": "62e964f084920287245fdb36c6bfa75af27f4eff5bc67724b110299871fcc2d2",
+        "bytes": 45333,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/DIAGNOSTICS_SERVER_REENTER_V9_RELEASE8.json",
+        "sha256": "9e01ad195ffa0bf50ccd08e460316675c53542bbb4e53cd8ddec0968914edfd3",
+        "bytes": 25798,
+        "status": "PASS"
+      },
+      {
+        "path": "reports/CLIENT_MINIMAL_V9_RELEASE9.json",
+        "sha256": "68be0fc33df425ee70c44db78893e3dcc759091beee1ce416ca80a4cd197342e",
+        "bytes": 2807630,
+        "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT"
+      },
+      {
+        "path": "reports/CLIENT_MINIMAL_REENTER_V9_RELEASE9.json",
+        "sha256": "7ba9af6a3714845fb88ad9a72a31fa3fb8007bf493d2f304019c3c087d5d8f21",
+        "bytes": 2811179,
+        "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT"
+      },
+      {
+        "path": "reports/REVIEW_V9_DIAGNOSTICS_INDEPENDENT_RELEASE8.json",
+        "sha256": "f0d36aebd347536da89cf51605d55fd674832752cc3a35becfb17b6b386874a3",
+        "bytes": 467034,
+        "status": "PASS_CURRENT_ARTIFACT_DIAGNOSTICS_ACTUAL_RUNTIME_OFF_ON_REENTER_EXPORTS"
+      }
+    ],
+    "fullKappaClient": {
+      "path": "reports/CLIENT_FULL_KAPPA_V9_RELEASE9.json",
+      "sha256": "38c85fe90dd7d78580519683b08c471e15ee4401eee0cdd66a95598927d8efd1",
+      "bytes": 2394128,
+      "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT"
+    },
+    "knownParticleFallback": {
+      "path": "reports/REVIEW_V9_TREE_PARTICLE_FALLBACK_OBSERVATION.json",
+      "sha256": "85b3b25d147f74e13958725dd370b97ce177d0a4189e603f1667004206fdbce3",
+      "bytes": 5239,
+      "status": "KNOWN_PARTICLE_FALLBACK_VISIBLE_RENDER_FACES_RESOLVED"
+    }
+  },
+  "safeHookReview": {
+    "status": "PASS_LIGHTWEIGHT_READ_ONLY_NO_FURTHER_PRODUCTION_CHANGES",
+    "scope": [
+      "MechanismState.fromNbt",
+      "SourceLadderBlockEntity.readNbt"
+    ],
+    "findings": [
+      "No extra world/chunk lookup or editing is introduced by logging.",
+      "Existing malformed-record skipping and source pair null/ORIGIN/empty normalization remain.",
+      "Valid unresolved empty RP target type metadata remains admitted as before.",
+      "The diagnostic reasons contain field types/context rather than input NBT or raw exception messages."
+    ],
+    "nativeRegression": "Actual105 XML includes corruptSavedBindingsAndSourcePairReportErrorsWithoutChangingPriorNormalization PASS; source-member and ordinary ladder tests all PASS."
+  },
+  "actualDiagnostics": {
+    "scope": "Actual default60 dedicated recording/automatic stop, matching OFF/ON raw ticks/balanced targets, server persisted reentry, actual minimal/full-Kappa joined client and minimal saved reenter at current production SHA.",
+    "independentStatus": "PASS_CURRENT_ARTIFACT_DIAGNOSTICS_ACTUAL_RUNTIME_OFF_ON_REENTER_EXPORTS",
+    "readableServerSummary": "PASS_ACTUAL_CURRENT_ZIP_BYTES_UTF8_AND_MEANINGFUL_SCOPE",
+    "validClientOwnerSelectionPackets": "PASS_OBSERVED_VALID_SYNC_NO_COMPOSITE_SYNC_DECODE_ERRORS",
+    "globalErrorFreeClaim": false,
+    "newRpPlacementModelChain": "NOT_PROBED_BY_THIS_QA_STAGE",
+    "gpuAndAllModTraffic": "NOT_MEASURED",
+    "manualVisualAcceptance": "PENDING_USER_REVIEW"
+  },
+  "observedClientIssues": [
+    {
+      "status": "KNOWN_PARTICLE_FALLBACK_VISIBLE_RENDER_FACES_RESOLVED",
+      "category": "texture_fallback",
+      "typeId": "90005",
+      "instanceId": "b993e55c-9dde-4890-b18c-2a820627cd69",
+      "root": [
+        36,
+        64,
+        38
+      ],
+      "model": "bloodborne_dw:tree_alt/block/birch_log_1",
+      "purpose": "world-root-render",
+      "repeatCountEachSession": 2,
+      "scope": "Known missing particle metadata in inherited BASE/ALT tree model. Both actual visible models have two resolved tree_2 quads and identical vertex hashes. Warning retained, not suppressed; does not permit missing visible sprites in other models.",
+      "actualBakedModel": {
+        "missingModel": false,
+        "quadCount": 2,
+        "quadSpriteIds": [
+          "bloodborne_dw:tree_source/block/addon/tree_2"
+        ],
+        "quadVertexSha256": "0cd251428455521a5da709af70429c0e97e0d5a1c11a812cadaa7fe150bcfb6e",
+        "evidencePath": "CLIENT_MINIMAL_V9_RELEASE9.json/client_review_output/result/actualBakedModels/25"
+      },
+      "productionChange": "NONE_BY_THIS_AUDIT",
+      "reference": "reports/REVIEW_V9_TREE_PARTICLE_FALLBACK_OBSERVATION.json"
+    },
+    {
+      "status": "KNOWN_OFFLINE_LAUNCH_CONTEXT",
+      "category": "console_authentication_401",
+      "scope": "Client wrappers retain offline authentication errors; not relabelled as synchronization/diagnostic/model failure."
+    }
+  ],
+  "actualFullKappa": {
+    "status": "PASS_CLIENT_WORLD_LOAD_SAVE_NORMAL_EXIT",
+    "exitCode": 0,
+    "profile": "full_client",
+    "selectedMods": 109,
+    "physicalModJars": 111,
+    "productionArtifactSha256": "8dd5d1976f7348a9c08899acd723ba62358cc9611d4694bec3fc2b4914e3c1c0",
+    "heap": "6G",
+    "scope": "Actual normal client world/resource load, same-camera diagnostics windows, saved world and normal exit. Optional Iris public API snapshot captured once per recording session, repeated in batches; not independent GPU or settings-performance measurement.",
+    "observedIris": {
+      "captureTimeUtc": "2026-10-07T23:36:16.645114900Z",
+      "source": "Optional public Iris APIs reflected once at first session batch; no Iris dependency or GPU timing",
+      "irisVersion": "1.7.6+mc1.20.1",
+      "enabled": true,
+      "packName": "Kappa_v5.2.zip",
+      "fallback": false,
+      "pipelineClass": "net.irisshaders.iris.pipeline.IrisRenderingPipeline",
+      "status": "OBSERVED_IRIS_PUBLIC_API"
+    },
+    "manualVisualAcceptance": "PENDING_USER_REVIEW"
+  },
+  "finalOwnedFreeze": {
+    "status": "FROZEN_DOCS_REPORT_ONLY_NO_MAIN_OR_QA_CHANGES",
+    "productionArtifactSha256": "8dd5d1976f7348a9c08899acd723ba62358cc9611d4694bec3fc2b4914e3c1c0",
+    "native": 105,
+    "core": 20,
+    "ordinaryServerPhases": 6,
+    "sourceServerPhases": 3,
+    "dedicatedDiagnosticPhases": 3,
+    "minimalClient": "RELEASE9",
+    "actualDiagnosticClientReenter": "RELEASE9",
+    "fullKappaClient": "RELEASE9",
+    "independentDiagnostics": "RELEASE8"
+  }
+}

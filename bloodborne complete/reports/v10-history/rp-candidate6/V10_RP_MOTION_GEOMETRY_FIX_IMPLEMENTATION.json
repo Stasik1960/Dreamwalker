@@ -1,0 +1,64 @@
+{
+  "schema": "dw-rp-v10-motion-envelope-fix-implementation-v1",
+  "status": "PASS_ISOLATED_JAVA17_COMPILE_REAL_PRE_FIX_REFUSAL_CONFIRMED_NEW_RUNTIME_PENDING",
+  "historicalProductionArtifactSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "actualFailure": {
+    "wrapper": "reports/V10_CLIENT_MIN_ATTEMPT_9.json",
+    "raw": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\client-review-output.json",
+    "rawSha256": "f4d79aa63676b6da5cb8cdc0a4d9a80214e07dc509f0aa2bc1591a4f3a00f14d",
+    "sessionId": "8ea47d47-9ede-4b27-a1e4-1e2cfaafd269",
+    "diagnosticZip": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt9\\dreamwalker-diagnostics\\diagnostics-8ea47d47-9ede-4b27-a1e4-1e2cfaafd269-1791462467553.zip",
+    "zipSha256": "64e9b00ee86be7980e67e65b495583d4f3dbf65d54e17b1d22942d87b9f1fffe",
+    "exactServerEvent": {
+      "sessionId": "8ea47d47-9ede-4b27-a1e4-1e2cfaafd269",
+      "time": "2026-10-08T12:27:37.873155400Z",
+      "elapsedNs": 774431900,
+      "operation": 2,
+      "side": "server",
+      "typeId": "91007",
+      "instanceId": "",
+      "dimension": "minecraft:overworld",
+      "root": [
+        -64,
+        100,
+        64
+      ],
+      "action": "place",
+      "before": {
+        "requestedAsset": "cage_obj_1",
+        "canonicalAsset": "cage_obj_1",
+        "heldItem": "bloodborne_rp:cage_obj_1_placer",
+        "heldTypeId": "91007",
+        "placementOrigin": "ordinary_item_context",
+        "clickedFace": "up",
+        "hand": "MAIN_HAND"
+      },
+      "after": {},
+      "result": "REFUSED",
+      "reason": "visual_bounds_outside_build_height",
+      "scope": "MATCHED_OBJECT_FILTER"
+    }
+  },
+  "sourceAudit": {
+    "path": "reports/V10_RP_MOTION_ENVELOPE_SOURCE_AUDIT_MAIN6.json",
+    "sha256": "c4f876d07c9d5c20364a1ffc0ab2c34aff39d5789bdadfc27a5698bcfb8c788d",
+    "scope": "Independent source resources, all69 canonical items, seeded20,976 transformation containment samples; not actual new-client acceptance"
+  },
+  "correction": "Retain sphere center/radius between animated ancestors: nextR=(distance(center,pivot)+R)*maxScale. After rotation, source translation contributes its maximum transformed norm. The first sphere alone uses static/previously translated cube corners. Never treat sphere AABB corners as physical sphere points.",
+  "preserved": [
+    "Exact source geometry/PNG/model/animation resources",
+    "Existing registered physical movement boxes",
+    "Source-facing/scale/mount rules",
+    "Living obstruction/permissions/world-height/chunk placement guards",
+    "UUID/registry/SourceLegacyPayload"
+  ],
+  "selectionScope": "Conservative source-clip animation envelope for selection/frustum/broadphase; not exact per-frame visible mesh, not movement collider",
+  "newNativeCase": "ordinaryVisibleDogCagePlacementRetainsFiniteSourcePartsAndLegacyMovement",
+  "expectedNativeSuiteCount": 131,
+  "actualNewNativeStatus": "PENDING_ROOT_BUILD_AND_GAME_RUNTIME",
+  "actualNewOrdinary69Status": "PENDING_ROOT_CURRENT_ARTIFACT_CLIENT",
+  "sourceSha256": {
+    "src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\RpObjectGeometry.java": "6a57ff39cf9c2c0fbb0fd394d9fe6185d780578670ee37652c23904b26977132",
+    "src\\gametest\\java\\dev\\dreamwalker\\bloodbornedw\\gametest\\RpV10EditingGameTests.java": "da55ff919cb06aabdee3eec2d7d5646aaf10094a94bc7d92ebdde9f4da2910c3"
+  }
+}

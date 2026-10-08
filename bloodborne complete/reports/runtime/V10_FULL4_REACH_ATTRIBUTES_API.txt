@@ -1,0 +1,703 @@
+Classfile jar:file:///C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne%20complete/build/diagnostics/v10-full4att3-server-reach/reach-entity-attributes-2.4.0.jar!/com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.class
+  Last modified 1 февр. 1980 г.; size 5722 bytes
+  SHA-256 checksum beed4d360bbf9bd5dbd24119420d595887c3b30f672a91a786021d0421510cc6
+  Compiled from "ReachEntityAttributes.java"
+public final class com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes implements net.fabricmc.api.ModInitializer
+  minor version: 0
+  major version: 61
+  flags: (0x0031) ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+  this_class: #2                          // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes
+  super_class: #4                         // java/lang/Object
+  interfaces: 1, fields: 3, methods: 12, attributes: 4
+Constant pool:
+    #1 = Utf8               com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes
+    #2 = Class              #1            // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes
+    #3 = Utf8               java/lang/Object
+    #4 = Class              #3            // java/lang/Object
+    #5 = Utf8               net/fabricmc/api/ModInitializer
+    #6 = Class              #5            // net/fabricmc/api/ModInitializer
+    #7 = Utf8               ReachEntityAttributes.java
+    #8 = Utf8               Ljavax/annotation/ParametersAreNonnullByDefault;
+    #9 = Utf8               java/lang/invoke/MethodHandles$Lookup
+   #10 = Class              #9            // java/lang/invoke/MethodHandles$Lookup
+   #11 = Utf8               java/lang/invoke/MethodHandles
+   #12 = Class              #11           // java/lang/invoke/MethodHandles
+   #13 = Utf8               Lookup
+   #14 = Utf8               MOD_ID
+   #15 = Utf8               Ljava/lang/String;
+   #16 = Utf8               reach-entity-attributes
+   #17 = String             #16           // reach-entity-attributes
+   #18 = Utf8               REACH
+   #19 = Utf8               Lnet/minecraft/class_1320;
+   #20 = Utf8               ATTACK_RANGE
+   #21 = Utf8               <init>
+   #22 = Utf8               ()V
+   #23 = NameAndType        #21:#22       // "<init>":()V
+   #24 = Methodref          #4.#23        // java/lang/Object."<init>":()V
+   #25 = Utf8               this
+   #26 = Utf8               Lcom/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes;
+   #27 = Utf8               getReachDistance
+   #28 = Utf8               (Lnet/minecraft/class_1309;D)D
+   #29 = Utf8               entity
+   #30 = Utf8               baseReachDistance
+   #31 = NameAndType        #18:#19       // REACH:Lnet/minecraft/class_1320;
+   #32 = Fieldref           #2.#31        // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.REACH:Lnet/minecraft/class_1320;
+   #33 = Utf8               net/minecraft/class_1309
+   #34 = Class              #33           // net/minecraft/class_1309
+   #35 = Utf8               method_5996
+   #36 = Utf8               (Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;
+   #37 = NameAndType        #35:#36       // method_5996:(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;
+   #38 = Methodref          #34.#37       // net/minecraft/class_1309.method_5996:(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;
+   #39 = Utf8               net/minecraft/class_1324
+   #40 = Class              #39           // net/minecraft/class_1324
+   #41 = Utf8               method_6194
+   #42 = Utf8               ()D
+   #43 = NameAndType        #41:#42       // method_6194:()D
+   #44 = Methodref          #40.#43       // net/minecraft/class_1324.method_6194:()D
+   #45 = Utf8               Lnet/minecraft/class_1309;
+   #46 = Utf8               D
+   #47 = Utf8               reachDistance
+   #48 = Utf8               Lnet/minecraft/class_1324;
+   #49 = Utf8               getSquaredReachDistance
+   #50 = Utf8               sqBaseReachDistance
+   #51 = Utf8               java/lang/Math
+   #52 = Class              #51           // java/lang/Math
+   #53 = Utf8               sqrt
+   #54 = Utf8               (D)D
+   #55 = NameAndType        #53:#54       // sqrt:(D)D
+   #56 = Methodref          #52.#55       // java/lang/Math.sqrt:(D)D
+   #57 = NameAndType        #27:#28       // getReachDistance:(Lnet/minecraft/class_1309;D)D
+   #58 = Methodref          #2.#57        // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.getReachDistance:(Lnet/minecraft/class_1309;D)D
+   #59 = Utf8               getAttackRange
+   #60 = Utf8               baseAttackRange
+   #61 = NameAndType        #20:#19       // ATTACK_RANGE:Lnet/minecraft/class_1320;
+   #62 = Fieldref           #2.#61        // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.ATTACK_RANGE:Lnet/minecraft/class_1320;
+   #63 = Utf8               attackRange
+   #64 = Utf8               getSquaredAttackRange
+   #65 = Utf8               sqBaseAttackRange
+   #66 = NameAndType        #59:#28       // getAttackRange:(Lnet/minecraft/class_1309;D)D
+   #67 = Methodref          #2.#66        // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.getAttackRange:(Lnet/minecraft/class_1309;D)D
+   #68 = Utf8               getPlayersWithinReach
+   #69 = Utf8               (Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+   #70 = Utf8               (Lnet/minecraft/class_1937;IIID)Ljava/util/List<Lnet/minecraft/class_1657;>;
+   #71 = Utf8               world
+   #72 = Utf8               x
+   #73 = Utf8               y
+   #74 = Utf8               z
+   #75 = Utf8               (Ljava/lang/Object;)Z
+   #76 = MethodType         #75           //  (Ljava/lang/Object;)Z
+   #77 = Utf8               lambda$getPlayersWithinReach$0
+   #78 = Utf8               (Lnet/minecraft/class_1657;)Z
+   #79 = NameAndType        #77:#78       // lambda$getPlayersWithinReach$0:(Lnet/minecraft/class_1657;)Z
+   #80 = Methodref          #2.#79        // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.lambda$getPlayersWithinReach$0:(Lnet/minecraft/class_1657;)Z
+   #81 = MethodHandle       6:#80         // REF_invokeStatic com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.lambda$getPlayersWithinReach$0:(Lnet/minecraft/class_1657;)Z
+   #82 = MethodType         #78           //  (Lnet/minecraft/class_1657;)Z
+   #83 = Utf8               java/lang/invoke/LambdaMetafactory
+   #84 = Class              #83           // java/lang/invoke/LambdaMetafactory
+   #85 = Utf8               metafactory
+   #86 = Utf8               (Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #87 = NameAndType        #85:#86       // metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #88 = Methodref          #84.#87       // java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #89 = MethodHandle       6:#88         // REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+   #90 = Utf8               test
+   #91 = Utf8               ()Ljava/util/function/Predicate;
+   #92 = NameAndType        #90:#91       // test:()Ljava/util/function/Predicate;
+   #93 = InvokeDynamic      #0:#92        // #0:test:()Ljava/util/function/Predicate;
+   #94 = Utf8               (Ljava/util/function/Predicate;Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+   #95 = NameAndType        #68:#94       // getPlayersWithinReach:(Ljava/util/function/Predicate;Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+   #96 = Methodref          #2.#95        // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.getPlayersWithinReach:(Ljava/util/function/Predicate;Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+   #97 = Utf8               Lnet/minecraft/class_1937;
+   #98 = Utf8               I
+   #99 = Utf8               (Ljava/util/function/Predicate<Lnet/minecraft/class_1657;>;Lnet/minecraft/class_1937;IIID)Ljava/util/List<Lnet/minecraft/class_1657;>;
+  #100 = Utf8               viewerPredicate
+  #101 = Utf8               java/util/ArrayList
+  #102 = Class              #101          // java/util/ArrayList
+  #103 = Utf8               (I)V
+  #104 = NameAndType        #21:#103      // "<init>":(I)V
+  #105 = Methodref          #102.#104     // java/util/ArrayList."<init>":(I)V
+  #106 = Utf8               net/minecraft/class_1937
+  #107 = Class              #106          // net/minecraft/class_1937
+  #108 = Utf8               method_18456
+  #109 = Utf8               ()Ljava/util/List;
+  #110 = NameAndType        #108:#109     // method_18456:()Ljava/util/List;
+  #111 = Methodref          #107.#110     // net/minecraft/class_1937.method_18456:()Ljava/util/List;
+  #112 = Utf8               java/util/List
+  #113 = Class              #112          // java/util/List
+  #114 = Utf8               iterator
+  #115 = Utf8               ()Ljava/util/Iterator;
+  #116 = NameAndType        #114:#115     // iterator:()Ljava/util/Iterator;
+  #117 = InterfaceMethodref #113.#116     // java/util/List.iterator:()Ljava/util/Iterator;
+  #118 = Utf8               java/util/Iterator
+  #119 = Class              #118          // java/util/Iterator
+  #120 = Utf8               hasNext
+  #121 = Utf8               ()Z
+  #122 = NameAndType        #120:#121     // hasNext:()Z
+  #123 = InterfaceMethodref #119.#122     // java/util/Iterator.hasNext:()Z
+  #124 = Utf8               next
+  #125 = Utf8               ()Ljava/lang/Object;
+  #126 = NameAndType        #124:#125     // next:()Ljava/lang/Object;
+  #127 = InterfaceMethodref #119.#126     // java/util/Iterator.next:()Ljava/lang/Object;
+  #128 = Utf8               net/minecraft/class_1657
+  #129 = Class              #128          // net/minecraft/class_1657
+  #130 = Utf8               java/util/function/Predicate
+  #131 = Class              #130          // java/util/function/Predicate
+  #132 = NameAndType        #90:#75       // test:(Ljava/lang/Object;)Z
+  #133 = InterfaceMethodref #131.#132     // java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+  #134 = Double             0.5d
+  #136 = Utf8               method_23317
+  #137 = NameAndType        #136:#42      // method_23317:()D
+  #138 = Methodref          #129.#137     // net/minecraft/class_1657.method_23317:()D
+  #139 = Utf8               method_23320
+  #140 = NameAndType        #139:#42      // method_23320:()D
+  #141 = Methodref          #129.#140     // net/minecraft/class_1657.method_23320:()D
+  #142 = Utf8               method_23321
+  #143 = NameAndType        #142:#42      // method_23321:()D
+  #144 = Methodref          #129.#143     // net/minecraft/class_1657.method_23321:()D
+  #145 = Utf8               add
+  #146 = NameAndType        #145:#75      // add:(Ljava/lang/Object;)Z
+  #147 = InterfaceMethodref #113.#146     // java/util/List.add:(Ljava/lang/Object;)Z
+  #148 = Utf8               reach
+  #149 = Utf8               dx
+  #150 = Utf8               dy
+  #151 = Utf8               dz
+  #152 = Utf8               player
+  #153 = Utf8               Lnet/minecraft/class_1657;
+  #154 = Utf8               Ljava/util/function/Predicate<Lnet/minecraft/class_1657;>;
+  #155 = Utf8               Ljava/util/function/Predicate;
+  #156 = Utf8               playersWithinReach
+  #157 = Utf8               Ljava/util/List<Lnet/minecraft/class_1657;>;
+  #158 = Utf8               Ljava/util/List;
+  #159 = Utf8               isWithinAttackRange
+  #160 = Utf8               (Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;)Z
+  #161 = Utf8               method_5858
+  #162 = Utf8               (Lnet/minecraft/class_1297;)D
+  #163 = NameAndType        #161:#162     // method_5858:(Lnet/minecraft/class_1297;)D
+  #164 = Methodref          #129.#163     // net/minecraft/class_1657.method_5858:(Lnet/minecraft/class_1297;)D
+  #165 = Double             64.0d
+  #167 = NameAndType        #64:#28       // getSquaredAttackRange:(Lnet/minecraft/class_1309;D)D
+  #168 = Methodref          #2.#167       // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.getSquaredAttackRange:(Lnet/minecraft/class_1309;D)D
+  #169 = Utf8               Lnet/minecraft/class_1297;
+  #170 = Utf8               make
+  #171 = Utf8               (Ljava/lang/String;DDD)Lnet/minecraft/class_1320;
+  #172 = Utf8               name
+  #173 = Utf8               base
+  #174 = Utf8               min
+  #175 = Utf8               max
+  #176 = Utf8               net/minecraft/class_1329
+  #177 = Class              #176          // net/minecraft/class_1329
+  #178 = Utf8               attribute.name.generic.reach-entity-attributes.\u0001
+  #179 = String             #178          // attribute.name.generic.reach-entity-attributes.\u0001
+  #180 = Utf8               java/lang/invoke/StringConcatFactory
+  #181 = Class              #180          // java/lang/invoke/StringConcatFactory
+  #182 = Utf8               makeConcatWithConstants
+  #183 = Utf8               (Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #184 = NameAndType        #182:#183     // makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #185 = Methodref          #181.#184     // java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #186 = MethodHandle       6:#185        // REF_invokeStatic java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #187 = Utf8               (Ljava/lang/String;)Ljava/lang/String;
+  #188 = NameAndType        #182:#187     // makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+  #189 = InvokeDynamic      #1:#188       // #1:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+  #190 = Utf8               (Ljava/lang/String;DDD)V
+  #191 = NameAndType        #21:#190      // "<init>":(Ljava/lang/String;DDD)V
+  #192 = Methodref          #177.#191     // net/minecraft/class_1329."<init>":(Ljava/lang/String;DDD)V
+  #193 = Utf8               method_26829
+  #194 = Utf8               (Z)Lnet/minecraft/class_1320;
+  #195 = NameAndType        #193:#194     // method_26829:(Z)Lnet/minecraft/class_1320;
+  #196 = Methodref          #177.#195     // net/minecraft/class_1329.method_26829:(Z)Lnet/minecraft/class_1320;
+  #197 = Utf8               onInitialize
+  #198 = Utf8               net/minecraft/class_7923
+  #199 = Class              #198          // net/minecraft/class_7923
+  #200 = Utf8               field_41190
+  #201 = Utf8               Lnet/minecraft/class_2378;
+  #202 = NameAndType        #200:#201     // field_41190:Lnet/minecraft/class_2378;
+  #203 = Fieldref           #199.#202     // net/minecraft/class_7923.field_41190:Lnet/minecraft/class_2378;
+  #204 = Utf8               net/minecraft/class_2960
+  #205 = Class              #204          // net/minecraft/class_2960
+  #206 = String             #148          // reach
+  #207 = Utf8               (Ljava/lang/String;Ljava/lang/String;)V
+  #208 = NameAndType        #21:#207      // "<init>":(Ljava/lang/String;Ljava/lang/String;)V
+  #209 = Methodref          #205.#208     // net/minecraft/class_2960."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+  #210 = Utf8               net/minecraft/class_2378
+  #211 = Class              #210          // net/minecraft/class_2378
+  #212 = Utf8               method_10230
+  #213 = Utf8               (Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;
+  #214 = NameAndType        #212:#213     // method_10230:(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;
+  #215 = InterfaceMethodref #211.#214     // net/minecraft/class_2378.method_10230:(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;
+  #216 = Utf8               attack_range
+  #217 = String             #216          // attack_range
+  #218 = Utf8               <clinit>
+  #219 = Double             -1024.0d
+  #221 = Double             1024.0d
+  #223 = NameAndType        #170:#171     // make:(Ljava/lang/String;DDD)Lnet/minecraft/class_1320;
+  #224 = Methodref          #2.#223       // com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.make:(Ljava/lang/String;DDD)Lnet/minecraft/class_1320;
+  #225 = Utf8               ConstantValue
+  #226 = Utf8               Code
+  #227 = Utf8               LineNumberTable
+  #228 = Utf8               LocalVariableTable
+  #229 = Utf8               StackMapTable
+  #230 = Utf8               MethodParameters
+  #231 = Utf8               Signature
+  #232 = Utf8               LocalVariableTypeTable
+  #233 = Utf8               InnerClasses
+  #234 = Utf8               SourceFile
+  #235 = Utf8               RuntimeVisibleAnnotations
+  #236 = Utf8               BootstrapMethods
+{
+  public static final java.lang.String MOD_ID;
+    descriptor: Ljava/lang/String;
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    ConstantValue: String reach-entity-attributes
+
+  public static final net.minecraft.class_1320 REACH;
+    descriptor: Lnet/minecraft/class_1320;
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+
+  public static final net.minecraft.class_1320 ATTACK_RANGE;
+    descriptor: Lnet/minecraft/class_1320;
+    flags: (0x0019) ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+
+  public com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #24                 // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 21: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       5     0  this   Lcom/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes;
+
+  public static double getReachDistance(net.minecraft.class_1309, double);
+    descriptor: (Lnet/minecraft/class_1309;D)D
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=4, args_size=2
+         0: aload_0
+         1: getstatic     #32                 // Field REACH:Lnet/minecraft/class_1320;
+         4: invokevirtual #38                 // Method net/minecraft/class_1309.method_5996:(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;
+         7: astore_3
+         8: aload_3
+         9: ifnull        21
+        12: dload_1
+        13: aload_3
+        14: invokevirtual #44                 // Method net/minecraft/class_1324.method_6194:()D
+        17: dadd
+        18: goto          22
+        21: dload_1
+        22: dreturn
+      StackMapTable: number_of_entries = 2
+        frame_type = 252 /* append */
+          offset_delta = 21
+          locals = [ class net/minecraft/class_1324 ]
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ double ]
+      LineNumberTable:
+        line 28: 0
+        line 29: 8
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      23     0 entity   Lnet/minecraft/class_1309;
+            0      23     1 baseReachDistance   D
+            8      15     3 reachDistance   Lnet/minecraft/class_1324;
+    MethodParameters:
+      Name                           Flags
+      entity                         final
+      baseReachDistance              final
+
+  public static double getSquaredReachDistance(net.minecraft.class_1309, double);
+    descriptor: (Lnet/minecraft/class_1309;D)D
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=5, args_size=2
+         0: aload_0
+         1: dload_1
+         2: invokestatic  #56                 // Method java/lang/Math.sqrt:(D)D
+         5: invokestatic  #58                 // Method getReachDistance:(Lnet/minecraft/class_1309;D)D
+         8: dstore_3
+         9: dload_3
+        10: dload_3
+        11: dmul
+        12: dreturn
+      LineNumberTable:
+        line 33: 0
+        line 34: 9
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      13     0 entity   Lnet/minecraft/class_1309;
+            0      13     1 sqBaseReachDistance   D
+            9       4     3 reachDistance   D
+    MethodParameters:
+      Name                           Flags
+      entity                         final
+      sqBaseReachDistance            final
+
+  public static double getAttackRange(net.minecraft.class_1309, double);
+    descriptor: (Lnet/minecraft/class_1309;D)D
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=4, args_size=2
+         0: aload_0
+         1: getstatic     #62                 // Field ATTACK_RANGE:Lnet/minecraft/class_1320;
+         4: invokevirtual #38                 // Method net/minecraft/class_1309.method_5996:(Lnet/minecraft/class_1320;)Lnet/minecraft/class_1324;
+         7: astore_3
+         8: aload_3
+         9: ifnull        21
+        12: dload_1
+        13: aload_3
+        14: invokevirtual #44                 // Method net/minecraft/class_1324.method_6194:()D
+        17: dadd
+        18: goto          22
+        21: dload_1
+        22: dreturn
+      StackMapTable: number_of_entries = 2
+        frame_type = 252 /* append */
+          offset_delta = 21
+          locals = [ class net/minecraft/class_1324 ]
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ double ]
+      LineNumberTable:
+        line 38: 0
+        line 39: 8
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      23     0 entity   Lnet/minecraft/class_1309;
+            0      23     1 baseAttackRange   D
+            8      15     3 attackRange   Lnet/minecraft/class_1324;
+    MethodParameters:
+      Name                           Flags
+      entity                         final
+      baseAttackRange                final
+
+  public static double getSquaredAttackRange(net.minecraft.class_1309, double);
+    descriptor: (Lnet/minecraft/class_1309;D)D
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=5, args_size=2
+         0: aload_0
+         1: dload_1
+         2: invokestatic  #56                 // Method java/lang/Math.sqrt:(D)D
+         5: invokestatic  #67                 // Method getAttackRange:(Lnet/minecraft/class_1309;D)D
+         8: dstore_3
+         9: dload_3
+        10: dload_3
+        11: dmul
+        12: dreturn
+      LineNumberTable:
+        line 43: 0
+        line 44: 9
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      13     0 entity   Lnet/minecraft/class_1309;
+            0      13     1 sqBaseAttackRange   D
+            9       4     3 attackRange   D
+    MethodParameters:
+      Name                           Flags
+      entity                         final
+      sqBaseAttackRange              final
+
+  public static java.util.List<net.minecraft.class_1657> getPlayersWithinReach(net.minecraft.class_1937, int, int, int, double);
+    descriptor: (Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=7, locals=6, args_size=5
+         0: invokedynamic #93,  0             // InvokeDynamic #0:test:()Ljava/util/function/Predicate;
+         5: aload_0
+         6: iload_1
+         7: iload_2
+         8: iload_3
+         9: dload         4
+        11: invokestatic  #96                 // Method getPlayersWithinReach:(Ljava/util/function/Predicate;Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+        14: areturn
+      LineNumberTable:
+        line 48: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      15     0 world   Lnet/minecraft/class_1937;
+            0      15     1     x   I
+            0      15     2     y   I
+            0      15     3     z   I
+            0      15     4 baseReachDistance   D
+    Signature: #70                          // (Lnet/minecraft/class_1937;IIID)Ljava/util/List<Lnet/minecraft/class_1657;>;
+    MethodParameters:
+      Name                           Flags
+      world                          final
+      x                              final
+      y                              final
+      z                              final
+      baseReachDistance              final
+
+  public static java.util.List<net.minecraft.class_1657> getPlayersWithinReach(java.util.function.Predicate<net.minecraft.class_1657>, net.minecraft.class_1937, int, int, int, double);
+    descriptor: (Ljava/util/function/Predicate;Lnet/minecraft/class_1937;IIID)Ljava/util/List;
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=6, locals=18, args_size=6
+         0: new           #102                // class java/util/ArrayList
+         3: dup
+         4: iconst_0
+         5: invokespecial #105                // Method java/util/ArrayList."<init>":(I)V
+         8: astore        7
+        10: aload_1
+        11: invokevirtual #111                // Method net/minecraft/class_1937.method_18456:()Ljava/util/List;
+        14: invokeinterface #117,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        19: astore        8
+        21: aload         8
+        23: invokeinterface #123,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        28: ifeq          145
+        31: aload         8
+        33: invokeinterface #127,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        38: checkcast     #129                // class net/minecraft/class_1657
+        41: astore        9
+        43: aload_0
+        44: aload         9
+        46: invokeinterface #133,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+        51: ifeq          142
+        54: aload         9
+        56: dload         5
+        58: invokestatic  #58                 // Method getReachDistance:(Lnet/minecraft/class_1309;D)D
+        61: dstore        10
+        63: iload_2
+        64: i2d
+        65: ldc2_w        #134                // double 0.5d
+        68: dadd
+        69: aload         9
+        71: invokevirtual #138                // Method net/minecraft/class_1657.method_23317:()D
+        74: dsub
+        75: dstore        12
+        77: iload_3
+        78: i2d
+        79: ldc2_w        #134                // double 0.5d
+        82: dadd
+        83: aload         9
+        85: invokevirtual #141                // Method net/minecraft/class_1657.method_23320:()D
+        88: dsub
+        89: dstore        14
+        91: iload         4
+        93: i2d
+        94: ldc2_w        #134                // double 0.5d
+        97: dadd
+        98: aload         9
+       100: invokevirtual #144                // Method net/minecraft/class_1657.method_23321:()D
+       103: dsub
+       104: dstore        16
+       106: dload         12
+       108: dload         12
+       110: dmul
+       111: dload         14
+       113: dload         14
+       115: dmul
+       116: dadd
+       117: dload         16
+       119: dload         16
+       121: dmul
+       122: dadd
+       123: dload         10
+       125: dload         10
+       127: dmul
+       128: dcmpg
+       129: ifgt          142
+       132: aload         7
+       134: aload         9
+       136: invokeinterface #147,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+       141: pop
+       142: goto          21
+       145: aload         7
+       147: areturn
+      StackMapTable: number_of_entries = 3
+        frame_type = 253 /* append */
+          offset_delta = 21
+          locals = [ class java/util/List, class java/util/Iterator ]
+        frame_type = 251 /* same_frame_extended */
+          offset_delta = 120
+        frame_type = 250 /* chop */
+          offset_delta = 2
+      LineNumberTable:
+        line 52: 0
+        line 53: 10
+        line 54: 43
+        line 55: 54
+        line 56: 63
+        line 57: 77
+        line 58: 91
+        line 59: 106
+        line 60: 132
+        line 63: 142
+        line 64: 145
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+           63      79    10 reach   D
+           77      65    12    dx   D
+           91      51    14    dy   D
+          106      36    16    dz   D
+           43      99     9 player   Lnet/minecraft/class_1657;
+            0     148     0 viewerPredicate   Ljava/util/function/Predicate;
+            0     148     1 world   Lnet/minecraft/class_1937;
+            0     148     2     x   I
+            0     148     3     y   I
+            0     148     4     z   I
+            0     148     5 baseReachDistance   D
+           10     138     7 playersWithinReach   Ljava/util/List;
+      LocalVariableTypeTable:
+        Start  Length  Slot  Name   Signature
+            0     148     0 viewerPredicate   Ljava/util/function/Predicate<Lnet/minecraft/class_1657;>;
+           10     138     7 playersWithinReach   Ljava/util/List<Lnet/minecraft/class_1657;>;
+    Signature: #99                          // (Ljava/util/function/Predicate<Lnet/minecraft/class_1657;>;Lnet/minecraft/class_1937;IIID)Ljava/util/List<Lnet/minecraft/class_1657;>;
+    MethodParameters:
+      Name                           Flags
+      viewerPredicate                final
+      world                          final
+      x                              final
+      y                              final
+      z                              final
+      baseReachDistance              final
+
+  public static boolean isWithinAttackRange(net.minecraft.class_1657, net.minecraft.class_1297);
+    descriptor: (Lnet/minecraft/class_1657;Lnet/minecraft/class_1297;)Z
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=5, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #164                // Method net/minecraft/class_1657.method_5858:(Lnet/minecraft/class_1297;)D
+         5: aload_0
+         6: ldc2_w        #165                // double 64.0d
+         9: invokestatic  #168                // Method getSquaredAttackRange:(Lnet/minecraft/class_1309;D)D
+        12: dcmpg
+        13: ifgt          20
+        16: iconst_1
+        17: goto          21
+        20: iconst_0
+        21: ireturn
+      StackMapTable: number_of_entries = 2
+        frame_type = 20 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+      LineNumberTable:
+        line 68: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      22     0 player   Lnet/minecraft/class_1657;
+            0      22     1 entity   Lnet/minecraft/class_1297;
+    MethodParameters:
+      Name                           Flags
+      player                         final
+      entity                         final
+
+  private static net.minecraft.class_1320 make(java.lang.String, double, double, double);
+    descriptor: (Ljava/lang/String;DDD)Lnet/minecraft/class_1320;
+    flags: (0x000a) ACC_PRIVATE, ACC_STATIC
+    Code:
+      stack=9, locals=7, args_size=4
+         0: new           #177                // class net/minecraft/class_1329
+         3: dup
+         4: aload_0
+         5: invokedynamic #189,  0            // InvokeDynamic #1:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+        10: dload_1
+        11: dload_3
+        12: dload         5
+        14: invokespecial #192                // Method net/minecraft/class_1329."<init>":(Ljava/lang/String;DDD)V
+        17: iconst_1
+        18: invokevirtual #196                // Method net/minecraft/class_1329.method_26829:(Z)Lnet/minecraft/class_1320;
+        21: areturn
+      LineNumberTable:
+        line 72: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      22     0  name   Ljava/lang/String;
+            0      22     1  base   D
+            0      22     3   min   D
+            0      22     5   max   D
+    MethodParameters:
+      Name                           Flags
+      name                           final
+      base                           final
+      min                            final
+      max                            final
+
+  public void onInitialize();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=5, locals=1, args_size=1
+         0: getstatic     #203                // Field net/minecraft/class_7923.field_41190:Lnet/minecraft/class_2378;
+         3: new           #205                // class net/minecraft/class_2960
+         6: dup
+         7: ldc           #17                 // String reach-entity-attributes
+         9: ldc           #206                // String reach
+        11: invokespecial #209                // Method net/minecraft/class_2960."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+        14: getstatic     #32                 // Field REACH:Lnet/minecraft/class_1320;
+        17: invokestatic  #215                // InterfaceMethod net/minecraft/class_2378.method_10230:(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;
+        20: pop
+        21: getstatic     #203                // Field net/minecraft/class_7923.field_41190:Lnet/minecraft/class_2378;
+        24: new           #205                // class net/minecraft/class_2960
+        27: dup
+        28: ldc           #17                 // String reach-entity-attributes
+        30: ldc           #217                // String attack_range
+        32: invokespecial #209                // Method net/minecraft/class_2960."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+        35: getstatic     #62                 // Field ATTACK_RANGE:Lnet/minecraft/class_1320;
+        38: invokestatic  #215                // InterfaceMethod net/minecraft/class_2378.method_10230:(Lnet/minecraft/class_2378;Lnet/minecraft/class_2960;Ljava/lang/Object;)Ljava/lang/Object;
+        41: pop
+        42: return
+      LineNumberTable:
+        line 77: 0
+        line 78: 21
+        line 79: 42
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      43     0  this   Lcom/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes;
+
+  private static boolean lambda$getPlayersWithinReach$0(net.minecraft.class_1657);
+    descriptor: (Lnet/minecraft/class_1657;)Z
+    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: iconst_1
+         1: ireturn
+      LineNumberTable:
+        line 48: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       2     0 player   Lnet/minecraft/class_1657;
+    MethodParameters:
+      Name                           Flags
+      player
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=7, locals=0, args_size=0
+         0: ldc           #206                // String reach
+         2: dconst_0
+         3: ldc2_w        #219                // double -1024.0d
+         6: ldc2_w        #221                // double 1024.0d
+         9: invokestatic  #224                // Method make:(Ljava/lang/String;DDD)Lnet/minecraft/class_1320;
+        12: putstatic     #32                 // Field REACH:Lnet/minecraft/class_1320;
+        15: ldc           #217                // String attack_range
+        17: dconst_0
+        18: ldc2_w        #219                // double -1024.0d
+        21: ldc2_w        #221                // double 1024.0d
+        24: invokestatic  #224                // Method make:(Ljava/lang/String;DDD)Lnet/minecraft/class_1320;
+        27: putstatic     #62                 // Field ATTACK_RANGE:Lnet/minecraft/class_1320;
+        30: return
+      LineNumberTable:
+        line 24: 0
+        line 25: 15
+}
+InnerClasses:
+  public static final #13= #10 of #12;    // Lookup=class java/lang/invoke/MethodHandles$Lookup of class java/lang/invoke/MethodHandles
+SourceFile: "ReachEntityAttributes.java"
+RuntimeVisibleAnnotations:
+  0: #8()
+    javax.annotation.ParametersAreNonnullByDefault
+BootstrapMethods:
+  0: #89 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #76 (Ljava/lang/Object;)Z
+      #81 REF_invokeStatic com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes.lambda$getPlayersWithinReach$0:(Lnet/minecraft/class_1657;)Z
+      #82 (Lnet/minecraft/class_1657;)Z
+  1: #186 REF_invokeStatic java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #179 attribute.name.generic.reach-entity-attributes.\u0001

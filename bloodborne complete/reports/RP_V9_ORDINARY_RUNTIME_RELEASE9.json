@@ -1,0 +1,1648 @@
+{
+  "schema": "dreamwalker-rp-v9-current-ordinary-runtime-v1",
+  "status": "PASS_CURRENT_MINIMAL_FULL_AUTHOR_QA_AND_PRODUCTION_REOPEN",
+  "production_artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+  "phases": [
+    {
+      "wrapper": "reports/FIRST_SET_MINIMAL_AUTHOR_V9_RELEASE9.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+      "profile": "minimal",
+      "phase": "AUTHOR",
+      "root_jars_excluding_combined_artifact": 3,
+      "root_jars_including_combined_artifact": 4,
+      "qa_gameplay": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-author-release9\\review-v9-gameplay-output.json",
+        "sha256": "7af9d1a6e4d7b3dbc6ed2b7879066481b81e80cd312d560504c47bab64f178eb",
+        "status": "PASS_V9_ORDINARY_GAMEPLAY_AUTHOR_REQUIRES_ACTUAL_RESTART",
+        "actualMovementProbes": [
+          {
+            "probe": "NpcWindow-side--1",
+            "start": [
+              1.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.043749988079071,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-side-1",
+            "start": [
+              7.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.831250011920929,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-outside-working-edge",
+            "start": [
+              1.4375,
+              64.2,
+              83.53125
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              7.4375,
+              64.2,
+              83.53125
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "ChandelierFloor-through-visible-decor",
+            "start": [
+              -17.5,
+              66.225,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -17.5,
+              66.225,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "a15bb7c4-6d0b-47fe-a572-2d48b6b8d36f",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "ChandelierCeiling-through-visible-decor",
+            "start": [
+              -7.5,
+              69.975,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -7.5,
+              69.975,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "f2040d0d-9089-4c75-97eb-2a08defa9581",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "RpLadder-working-foot",
+            "player": [
+              42.503125,
+              65.5,
+              80.5
+            ],
+            "originHeightDelta": 28.0625,
+            "climbing": true,
+            "nativeEntityCollisionShapeCount": 1
+          },
+          {
+            "probe": "RpStairs-first-native-step",
+            "start": [
+              22.5,
+              64.0,
+              79.7
+            ],
+            "requested": [
+              0.0,
+              -0.08,
+              0.4
+            ],
+            "actual": [
+              0.0,
+              0.5,
+              0.4000000000000057
+            ],
+            "end": [
+              22.5,
+              64.5,
+              80.10000000000001
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": true
+            },
+            "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "aec2a525-b901-482c-b578-edc6af04a9cd",
+                "asset": "stairs",
+                "activePhysicalBoxes": 26
+              }
+            ],
+            "firstTreadTopY": 64.5,
+            "firstTreadDepth": 0.5,
+            "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+          }
+        ]
+      }
+    },
+    {
+      "wrapper": "reports/FIRST_SET_MINIMAL_GAMEPLAY_REOPEN_V9_RELEASE9.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+      "profile": "minimal",
+      "phase": "GAMEPLAY_REOPEN",
+      "root_jars_excluding_combined_artifact": 3,
+      "root_jars_including_combined_artifact": 4,
+      "qa_gameplay": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release9\\review-v9-gameplay-output.json",
+        "sha256": "925843d4ddc0ac6422c14cb46d8e170a808c7bff2f753bc9c3d6b953f1611fec",
+        "status": "PASS_V9_ORDINARY_GAMEPLAY_AFTER_ACTUAL_RESTART",
+        "actualMovementProbes": [
+          {
+            "probe": "NpcWindow-side--1",
+            "start": [
+              1.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.043749988079071,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-side-1",
+            "start": [
+              7.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.831250011920929,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "4d298040-9f97-424a-bd7a-c22c94d509f1",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-outside-working-edge",
+            "start": [
+              1.4375,
+              64.2,
+              83.53125
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              7.4375,
+              64.2,
+              83.53125
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "8c55cfc1-19aa-4a9d-a1f1-6e11c9df6bc6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "ChandelierFloor-through-visible-decor",
+            "start": [
+              -17.5,
+              66.225,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -17.5,
+              66.225,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "a15bb7c4-6d0b-47fe-a572-2d48b6b8d36f",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "ChandelierCeiling-through-visible-decor",
+            "start": [
+              -7.5,
+              69.975,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -7.5,
+              69.975,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "f2040d0d-9089-4c75-97eb-2a08defa9581",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "RpLadder-working-foot",
+            "player": [
+              42.503125,
+              65.5,
+              80.5
+            ],
+            "originHeightDelta": 28.0625,
+            "climbing": true,
+            "nativeEntityCollisionShapeCount": 1
+          },
+          {
+            "probe": "RpStairs-first-native-step",
+            "start": [
+              22.5,
+              64.0,
+              79.7
+            ],
+            "requested": [
+              0.0,
+              -0.08,
+              0.4
+            ],
+            "actual": [
+              0.0,
+              0.5,
+              0.4000000000000057
+            ],
+            "end": [
+              22.5,
+              64.5,
+              80.10000000000001
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": true
+            },
+            "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "aec2a525-b901-482c-b578-edc6af04a9cd",
+                "asset": "stairs",
+                "activePhysicalBoxes": 26
+              }
+            ],
+            "firstTreadTopY": 64.5,
+            "firstTreadDepth": 0.5,
+            "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+          }
+        ]
+      }
+    },
+    {
+      "wrapper": "reports/FIRST_SET_MINIMAL_PRODUCTION_REOPEN_V9_RELEASE9.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+      "profile": "minimal",
+      "phase": "PRODUCTION_REOPEN",
+      "root_jars_excluding_combined_artifact": 2,
+      "root_jars_including_combined_artifact": 3,
+      "qa_gameplay": {
+        "path": null,
+        "sha256": null,
+        "status": null,
+        "actualMovementProbes": []
+      }
+    },
+    {
+      "wrapper": "reports/FIRST_SET_FULL_AUTHOR_V9_RELEASE9.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+      "profile": "full_server",
+      "phase": "AUTHOR",
+      "root_jars_excluding_combined_artifact": 84,
+      "root_jars_including_combined_artifact": 85,
+      "qa_gameplay": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-author-release9\\review-v9-gameplay-output.json",
+        "sha256": "5417138a037578d147c7086f191ccb5b499a2e7fe117c83f54b952b823952025",
+        "status": "PASS_V9_ORDINARY_GAMEPLAY_AUTHOR_REQUIRES_ACTUAL_RESTART",
+        "actualMovementProbes": [
+          {
+            "probe": "NpcWindow-side--1",
+            "start": [
+              1.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.043749988079071,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "2b58cae4-b9bc-44c7-bf8f-1622dd367e8d",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-side-1",
+            "start": [
+              7.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.831250011920929,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "2b58cae4-b9bc-44c7-bf8f-1622dd367e8d",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-outside-working-edge",
+            "start": [
+              1.4375,
+              64.2,
+              83.53125
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              7.4375,
+              64.2,
+              83.53125
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "59e750b2-daf7-4b6b-9019-e2b1cbc168f6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "59e750b2-daf7-4b6b-9019-e2b1cbc168f6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "ChandelierFloor-through-visible-decor",
+            "start": [
+              -17.5,
+              66.225,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -17.5,
+              66.225,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "915604bf-4758-4485-a913-f4412b6a28b1",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "ChandelierCeiling-through-visible-decor",
+            "start": [
+              -7.5,
+              69.975,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -7.5,
+              69.975,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "715ce6b9-a052-466e-b60d-349955b684fc",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "RpLadder-working-foot",
+            "player": [
+              42.503125,
+              65.5,
+              80.5
+            ],
+            "originHeightDelta": 28.0625,
+            "climbing": true,
+            "nativeEntityCollisionShapeCount": 1
+          },
+          {
+            "probe": "RpStairs-first-native-step",
+            "start": [
+              22.5,
+              64.0,
+              79.7
+            ],
+            "requested": [
+              0.0,
+              -0.08,
+              0.4
+            ],
+            "actual": [
+              0.0,
+              0.5,
+              0.4000000000000057
+            ],
+            "end": [
+              22.5,
+              64.5,
+              80.10000000000001
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": true
+            },
+            "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "2fe0b332-1c73-40fc-bfbf-99118412c376",
+                "asset": "stairs",
+                "activePhysicalBoxes": 26
+              }
+            ],
+            "firstTreadTopY": 64.5,
+            "firstTreadDepth": 0.5,
+            "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+          }
+        ]
+      }
+    },
+    {
+      "wrapper": "reports/FIRST_SET_FULL_GAMEPLAY_REOPEN_V9_RELEASE9.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+      "profile": "full_server",
+      "phase": "GAMEPLAY_REOPEN",
+      "root_jars_excluding_combined_artifact": 84,
+      "root_jars_including_combined_artifact": 85,
+      "qa_gameplay": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-gameplay_reopen-release9\\review-v9-gameplay-output.json",
+        "sha256": "e50fb5b3baabf959339907526fe38fa294307fdb52781ad1c61ba3244d9c082e",
+        "status": "PASS_V9_ORDINARY_GAMEPLAY_AFTER_ACTUAL_RESTART",
+        "actualMovementProbes": [
+          {
+            "probe": "NpcWindow-side--1",
+            "start": [
+              1.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.043749988079071,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "2b58cae4-b9bc-44c7-bf8f-1622dd367e8d",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-side-1",
+            "start": [
+              7.4375,
+              64.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.606249988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              4.831250011920929,
+              64.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "2b58cae4-b9bc-44c7-bf8f-1622dd367e8d",
+                "asset": "npc_window",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "NpcWindow-outside-working-edge",
+            "start": [
+              1.4375,
+              64.2,
+              83.53125
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              7.4375,
+              64.2,
+              83.53125
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "WoodGate-side--1",
+            "start": [
+              67.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              69.69999998807907,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "59e750b2-daf7-4b6b-9019-e2b1cbc168f6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-side-1",
+            "start": [
+              73.5,
+              65.2,
+              80.5
+            ],
+            "requested": [
+              -6.0,
+              -0.0,
+              -0.0
+            ],
+            "actual": [
+              -2.199999988079071,
+              0.0,
+              0.0
+            ],
+            "end": [
+              71.30000001192093,
+              65.2,
+              80.5
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "59e750b2-daf7-4b6b-9019-e2b1cbc168f6",
+                "asset": "wood_gate",
+                "activePhysicalBoxes": 1
+              }
+            ]
+          },
+          {
+            "probe": "WoodGate-outside-working-edge",
+            "start": [
+              67.5,
+              65.2,
+              89.9375
+            ],
+            "requested": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "actual": [
+              6.0,
+              0.0,
+              0.0
+            ],
+            "end": [
+              73.5,
+              65.2,
+              89.9375
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": []
+          },
+          {
+            "probe": "ChandelierFloor-through-visible-decor",
+            "start": [
+              -17.5,
+              66.225,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -17.5,
+              66.225,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "915604bf-4758-4485-a913-f4412b6a28b1",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "ChandelierCeiling-through-visible-decor",
+            "start": [
+              -7.5,
+              69.975,
+              78.27695755652644
+            ],
+            "requested": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "actual": [
+              0.0,
+              0.0,
+              4.446084886947119
+            ],
+            "end": [
+              -7.5,
+              69.975,
+              82.72304244347356
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": false
+            },
+            "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+            "directWorldEntityCollisionShapes": 0,
+            "directWorldEntityCollisionBoxes": 0,
+            "rpIndexCandidates": [
+              {
+                "uuid": "715ce6b9-a052-466e-b60d-349955b684fc",
+                "asset": "chandelier_small",
+                "activePhysicalBoxes": 0
+              }
+            ]
+          },
+          {
+            "probe": "RpLadder-working-foot",
+            "player": [
+              42.503125,
+              65.5,
+              80.5
+            ],
+            "originHeightDelta": 28.0625,
+            "climbing": true,
+            "nativeEntityCollisionShapeCount": 1
+          },
+          {
+            "probe": "RpStairs-first-native-step",
+            "start": [
+              22.5,
+              64.0,
+              79.7
+            ],
+            "requested": [
+              0.0,
+              -0.08,
+              0.4
+            ],
+            "actual": [
+              0.0,
+              0.5,
+              0.4000000000000057
+            ],
+            "end": [
+              22.5,
+              64.5,
+              80.10000000000001
+            ],
+            "playerFlags": {
+              "noClip": false,
+              "spectator": false,
+              "creative": false,
+              "flying": false,
+              "allowFlying": false,
+              "stepHeight": 1.0,
+              "onGround": true
+            },
+            "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+            "directWorldEntityCollisionShapes": 1,
+            "directWorldEntityCollisionBoxes": 1,
+            "rpIndexCandidates": [
+              {
+                "uuid": "2fe0b332-1c73-40fc-bfbf-99118412c376",
+                "asset": "stairs",
+                "activePhysicalBoxes": 26
+              }
+            ],
+            "firstTreadTopY": 64.5,
+            "firstTreadDepth": 0.5,
+            "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+          }
+        ]
+      }
+    },
+    {
+      "wrapper": "reports/FIRST_SET_FULL_PRODUCTION_REOPEN_V9_RELEASE9.json",
+      "status": "PASS",
+      "exit_code": 0,
+      "artifact_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+      "profile": "full_server",
+      "phase": "PRODUCTION_REOPEN",
+      "root_jars_excluding_combined_artifact": 83,
+      "root_jars_including_combined_artifact": 84,
+      "qa_gameplay": {
+        "path": null,
+        "sha256": null,
+        "status": null,
+        "actualMovementProbes": []
+      }
+    }
+  ],
+  "independent_reports": [
+    {
+      "path": "reports/REVIEW_V9_SCENE_INDEPENDENT_MINIMAL_RELEASE9.json",
+      "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+    },
+    {
+      "path": "reports/REVIEW_V9_GAMEPLAY_INDEPENDENT_MINIMAL_RELEASE9.json",
+      "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+    },
+    {
+      "path": "reports/REVIEW_V9_SCENE_INDEPENDENT_FULL_RELEASE9.json",
+      "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+    },
+    {
+      "path": "reports/REVIEW_V9_GAMEPLAY_INDEPENDENT_FULL_RELEASE9.json",
+      "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+    }
+  ],
+  "scope": "Actual remapped artifact in isolated worlds. Server movement probes use QA survival actors, not a human client. Physical JAR counts are separate from Fabric container counts.",
+  "manual_visual_gameplay": "PENDING_USER_REVIEW",
+  "full_catalogue_acceptance": false
+}

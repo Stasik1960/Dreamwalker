@@ -1,0 +1,349 @@
+{
+  "schema": "dw-review-v10-diagnostics-input-plan-v1",
+  "status": "THREE_ACTUAL_SERVER_PHASES_AND_TYPED_REENTER_INDEPENDENT_PASS_CURRENT_CLIENT_PROOFS_PENDING",
+  "artifactSha256": "2ad51b2314cbf1c3748288fa13fac2a6c804e77149e4b46bb94c86df0ab49da8",
+  "files": [
+    {
+      "path": "tools/review_v10_diagnostics_enabled_input.json",
+      "sha256": "7f836a559a6ea4159ccc5fa7d8875b061903826a904cae6414cd1be5fcdad7d6",
+      "mode": "ENABLED"
+    },
+    {
+      "path": "tools/review_v10_diagnostics_disabled_input.json",
+      "sha256": "a94d7d4fc7a12b59af5611591d2dd79265718c892ac9fc8661f91d088ca45329",
+      "mode": "DISABLED"
+    },
+    {
+      "path": "tools/review_v10_diagnostics_reenter_input.json",
+      "sha256": "4f83b1661c6af98aecf1a4b06d21281dc146268ddd9c949ceac2edce1e8871d8",
+      "mode": "REENTER"
+    }
+  ],
+  "targetCount": 15,
+  "requiresAuthorFixtureRows": [
+    {
+      "key": "sample_90001",
+      "root": [
+        -60,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_double_door"
+    },
+    {
+      "key": "architecture_door",
+      "root": [
+        -8,
+        64,
+        -16
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_double_door"
+    },
+    {
+      "key": "sample_90005",
+      "root": [
+        36,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_tree"
+    },
+    {
+      "key": "sample_90004",
+      "root": [
+        12,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_thin_window"
+    },
+    {
+      "key": "sample_90010",
+      "root": [
+        -36,
+        64,
+        60
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_glass_window_02"
+    },
+    {
+      "key": "sample_90020",
+      "root": [
+        60,
+        64,
+        80
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_glass_window_03"
+    },
+    {
+      "key": "sample_90006",
+      "root": [
+        60,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_ladder"
+    },
+    {
+      "key": "sample_90002",
+      "root": [
+        -36,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "key": "sample_90003",
+      "root": [
+        -12,
+        64,
+        40
+      ],
+      "kind": "ARCHITECTURE",
+      "assetOrRegistry": "bloodborne_dw:prototype_roof"
+    },
+    {
+      "key": "diag_rp_door",
+      "root": [
+        8,
+        64,
+        16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "door_2"
+    },
+    {
+      "key": "rp_door",
+      "root": [
+        8,
+        64,
+        -16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "door_1"
+    },
+    {
+      "key": "rp_ladder",
+      "root": [
+        40,
+        64,
+        16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "ladder"
+    },
+    {
+      "key": "rp_stairs",
+      "root": [
+        64,
+        64,
+        16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "stairs"
+    },
+    {
+      "key": "wood_gate",
+      "root": [
+        24,
+        64,
+        -16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "wood_gate"
+    },
+    {
+      "key": "lamp_A",
+      "root": [
+        60,
+        64,
+        -16
+      ],
+      "kind": "RP",
+      "assetOrRegistry": "hunterlamp"
+    }
+  ],
+  "sourceSceneTemplate": "tools/review_v10_scene_input.json / ReviewV10SceneBootstrap requested roots; needs fresh successful author and production-only reopened world",
+  "forbiddenBaseline": "build/runtime-server-v10-author-min-attempt1; actual author failure retained historical",
+  "baselineBinding": "Root replaces placeholders only after current exact-JAR author+production-reopen PASS. OFF/ON use same world path; neither source world is mutated by launcher. REENTER derives ON saved world. If production freeze changes, explicitly rebind productionArtifactSha256 and argv before running; do not silently use V9 or failed V10 proof.",
+  "execution": "Root GO received; assigned runtime_audit executes sequential copies only. Baseline immutable; raw costs may include background clients. Runtime verdicts live in explicit wrappers/pipeline, not inferred here.",
+  "commands": [
+    {
+      "mode": "DISABLED",
+      "argv": [
+        "C:/Users/vakir/miniconda3/python.exe",
+        "tools/run_final_server.py",
+        "--jar",
+        "build/frozen-artifacts/v10-attempt-5/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+        "--extra-mod",
+        "build/frozen-artifacts/v10-qa-server-4/dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+        "--accepted-eula-file",
+        "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+        "--profile",
+        "minimal",
+        "--startup-timeout",
+        "180",
+        "--shutdown-timeout",
+        "60",
+        "--diagnostics-timeout",
+        "100",
+        "--world-copy",
+        "build/runtime-server-v10-author-min-attempt4/isolated-smoke-world",
+        "--diagnostics-input",
+        "tools/review_v10_diagnostics_disabled_input.json",
+        "--run-name",
+        "v10-diag-disabled-release1",
+        "--report",
+        "reports/DIAGNOSTICS_SERVER_DISABLED_V10_RELEASE1.json"
+      ],
+      "expectedRawStatus": "PASS_SERVER_DIAGNOSTICS_DISABLED",
+      "actualStatus": "PASS_SERVER_DIAGNOSTICS_DISABLED",
+      "normalChildExitCode": 0
+    },
+    {
+      "mode": "ENABLED",
+      "argv": [
+        "C:/Users/vakir/miniconda3/python.exe",
+        "tools/run_final_server.py",
+        "--jar",
+        "build/frozen-artifacts/v10-attempt-5/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+        "--extra-mod",
+        "build/frozen-artifacts/v10-qa-server-4/dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+        "--accepted-eula-file",
+        "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+        "--profile",
+        "minimal",
+        "--startup-timeout",
+        "180",
+        "--shutdown-timeout",
+        "60",
+        "--diagnostics-timeout",
+        "100",
+        "--world-copy",
+        "build/runtime-server-v10-author-min-attempt4/isolated-smoke-world",
+        "--diagnostics-input",
+        "tools/review_v10_diagnostics_enabled_input.json",
+        "--run-name",
+        "v10-diag-enabled-release1",
+        "--report",
+        "reports/DIAGNOSTICS_SERVER_ENABLED_V10_RELEASE1.json"
+      ],
+      "expectedRawStatus": "PASS_SERVER_DIAGNOSTICS_ENABLED",
+      "actualStatus": "PASS_SERVER_DIAGNOSTICS_ENABLED",
+      "normalChildExitCode": 0
+    },
+    {
+      "mode": "REENTER",
+      "argv": [
+        "C:/Users/vakir/miniconda3/python.exe",
+        "tools/run_final_server.py",
+        "--jar",
+        "build/frozen-artifacts/v10-attempt-5/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+        "--extra-mod",
+        "build/frozen-artifacts/v10-qa-server-4/dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+        "--accepted-eula-file",
+        "C:/Users/vakir/.codex/worktrees/bloodborne-material-review/DW/bloodborne complete/build/production-smoke/final-city/eula.txt",
+        "--profile",
+        "minimal",
+        "--startup-timeout",
+        "180",
+        "--shutdown-timeout",
+        "60",
+        "--diagnostics-timeout",
+        "100",
+        "--world-copy",
+        "build/runtime-server-v10-diag-enabled-release1/isolated-smoke-world",
+        "--diagnostics-input",
+        "tools/review_v10_diagnostics_reenter_input.json",
+        "--run-name",
+        "v10-diag-reenter-release1",
+        "--report",
+        "reports/DIAGNOSTICS_SERVER_REENTER_V10_RELEASE1.json"
+      ],
+      "expectedRawStatus": "PASS_SERVER_DIAGNOSTICS_REENTER",
+      "actualStatus": "PASS_SERVER_DIAGNOSTICS_REENTER",
+      "normalChildExitCode": 0
+    }
+  ],
+  "interpretationLimits": [
+    "Native RMB no-edit row is not actual GUI snapshot acceptance",
+    "Dedicated fake actor is not actual join or client GUI proof",
+    "Balanced door ops use independent manual unlinked fixtures",
+    "Server tick comparison includes matched QA observer; cold/sharedPID/JFR scopes remain explicit",
+    "GPU/full-network/exact object FPS burden unmeasured; no lighting/respawn changes"
+  ],
+  "currentNative": {
+    "xml": "reports/FIRST_SET_GAMETEST_V10_ATTEMPT_5.xml",
+    "all": 129,
+    "passed": 129,
+    "corePassed": 20,
+    "scope": "Actual native5, no ordinarydiagnosticsruntime inferred"
+  },
+  "independentVerification": {
+    "status": "CURRENT_SERVER_ZIPS_AND_TYPED_REENTER_PASS_FULL_CLIENT_CHAIN_PENDING",
+    "argv": [
+      "C:/Users/vakir/miniconda3/python.exe",
+      "tools/verify_review_v10_diagnostics.py",
+      "--jar",
+      "build/frozen-artifacts/v10-attempt-5/dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+      "--artifact-sha",
+      "2ad51b2314cbf1c3748288fa13fac2a6c804e77149e4b46bb94c86df0ab49da8",
+      "--server-off-report",
+      "reports/DIAGNOSTICS_SERVER_DISABLED_V10_RELEASE1.json",
+      "--server-on-report",
+      "reports/DIAGNOSTICS_SERVER_ENABLED_V10_RELEASE1.json",
+      "--server-reenter-report",
+      "reports/DIAGNOSTICS_SERVER_REENTER_V10_RELEASE1.json",
+      "--client-report",
+      "<CURRENT_V10_AUTHOR_CLIENT_PASS_WRAPPER>",
+      "--client-reenter-report",
+      "<CURRENT_V10_REENTER_CLIENT_PASS_WRAPPER>",
+      "--output",
+      "reports/REVIEW_V10_DIAGNOSTICS_INDEPENDENT_RELEASE1.json"
+    ],
+    "scope": "Current V10 wrapper fields productionArtifactOrigins/actualIntegratedSave, actual20s client exports/retention/ACK/OFF-ON-OFF; actual60s dedicated default; AUTHOR-to-REENTER structured semantics. No old V9 client field assumptions or old proof substitutions."
+  },
+  "metadataCorrection": {
+    "reason": "Author sets +2 for sample_90006 and sample_90020. This changes expected-offset labels only; targets/root/interaction/runtime code unchanged.",
+    "preservedPreviousBytes": [
+      {
+        "path": "tools/review_v10_diagnostics_enabled_input.json",
+        "sha256": "60f4d2236af38dbbc38be7a9323810ea4ab952b789e11e16f749e3b9d66e606d",
+        "preservedAt": "reports/v10-history/diagnostics-marker-offset-before-correction/60f4d2236af3-review_v10_diagnostics_enabled_input.json"
+      },
+      {
+        "path": "tools/review_v10_diagnostics_disabled_input.json",
+        "sha256": "9ac61a05ff24c27f035b02705d91439bcb7679f47c500707a5af757ea21e49a4",
+        "preservedAt": "reports/v10-history/diagnostics-marker-offset-before-correction/9ac61a05ff24-review_v10_diagnostics_disabled_input.json"
+      },
+      {
+        "path": "tools/review_v10_diagnostics_reenter_input.json",
+        "sha256": "ee9e490c2155619fe88dc22858e90da191bc14abd4153b59693e36891a1c3dae",
+        "preservedAt": "reports/v10-history/diagnostics-marker-offset-before-correction/ee9e490c2155-review_v10_diagnostics_reenter_input.json"
+      },
+      {
+        "path": "tools/review_v10_diagnostics_commands.json",
+        "sha256": "01f56d1dbc241f8e49a9328ab7883f4743a44414901abd7b1a6e0dffceae7b57",
+        "preservedAt": "reports/v10-history/diagnostics-marker-offset-before-correction/01f56d1dbc24-review_v10_diagnostics_commands.json"
+      }
+    ]
+  },
+  "backgroundConcurrencyLimit": "Root client tests may run concurrently. Record observed/background root-reported concurrency in actual pipeline/report; raw OFF/ON costs are descriptive and cannot establish exact causal percentages.",
+  "baselineActualAuthor": "reports/V10_SERVER_AUTHOR_MIN_ATTEMPT_4.json",
+  "baselineSettings": "reports/V10_SCENE_BEFORE_FIRST_ENTRY_SETTINGS_4.json",
+  "qaArtifact": {
+    "path": "build/frozen-artifacts/v10-qa-server-4/dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+    "sha256": "9377ec80258f4d427f8cb32d7b19c81cccc1b825ab88fb243c41adac624f4434"
+  },
+  "serverOnlyIndependent": "reports/DIAGNOSTICS_SERVER_TYPED_INDEPENDENT_V10_RELEASE1.json",
+  "pipeline": "build/review-v10-diagnostics-pipeline-release1/pipeline.json"
+}

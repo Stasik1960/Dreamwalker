@@ -1,0 +1,236 @@
+Compiled from "EmissiveBakedModel.java"
+public class me.pepperbell.continuity.client.model.EmissiveBakedModel extends net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel {
+  protected static final net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial[] EMISSIVE_MATERIALS;
+
+  protected static final net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial DEFAULT_EMISSIVE_MATERIAL;
+
+  protected static final net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial CUTOUT_MIPPED_EMISSIVE_MATERIAL;
+
+  public me.pepperbell.continuity.client.model.EmissiveBakedModel(net.minecraft.class_1087);
+    Code:
+       0: aload_0
+       1: invokespecial #37                 // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #40                 // Field wrapped:Lnet/minecraft/class_1087;
+       9: return
+
+  public void emitBlockQuads(net.minecraft.class_1920, net.minecraft.class_2680, net.minecraft.class_2338, java.util.function.Supplier<net.minecraft.class_5819>, net.fabricmc.fabric.api.renderer.v1.render.RenderContext);
+    Code:
+       0: getstatic     #56                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.INSTANCE:Lme/pepperbell/continuity/client/config/ContinuityConfig;
+       3: getfield      #60                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.emissiveTextures:Lme/pepperbell/continuity/client/config/Option$BooleanOption;
+       6: invokevirtual #64                 // Method me/pepperbell/continuity/client/config/Option$BooleanOption.get:()Ljava/lang/Object;
+       9: checkcast     #66                 // class java/lang/Boolean
+      12: invokevirtual #70                 // Method java/lang/Boolean.booleanValue:()Z
+      15: ifne          30
+      18: aload_0
+      19: aload_1
+      20: aload_2
+      21: aload_3
+      22: aload         4
+      24: aload         5
+      26: invokespecial #72                 // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitBlockQuads:(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+      29: return
+      30: invokestatic  #77                 // Method me/pepperbell/continuity/client/model/ModelObjectsContainer.get:()Lme/pepperbell/continuity/client/model/ModelObjectsContainer;
+      33: astore        6
+      35: aload         6
+      37: getfield      #81                 // Field me/pepperbell/continuity/client/model/ModelObjectsContainer.featureStates:Lme/pepperbell/continuity/impl/client/ContinuityFeatureStatesImpl;
+      40: invokevirtual #87                 // Method me/pepperbell/continuity/impl/client/ContinuityFeatureStatesImpl.getEmissiveTexturesState:()Lme/pepperbell/continuity/api/client/ContinuityFeatureStates$FeatureState;
+      43: invokeinterface #90,  1           // InterfaceMethod me/pepperbell/continuity/api/client/ContinuityFeatureStates$FeatureState.isEnabled:()Z
+      48: ifne          63
+      51: aload_0
+      52: aload_1
+      53: aload_2
+      54: aload_3
+      55: aload         4
+      57: aload         5
+      59: invokespecial #72                 // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitBlockQuads:(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+      62: return
+      63: aload         6
+      65: getfield      #94                 // Field me/pepperbell/continuity/client/model/ModelObjectsContainer.emissiveBlockQuadTransform:Lme/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveBlockQuadTransform;
+      68: astore        7
+      70: aload         7
+      72: invokevirtual #97                 // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveBlockQuadTransform.isActive:()Z
+      75: ifeq          90
+      78: aload_0
+      79: aload_1
+      80: aload_2
+      81: aload_3
+      82: aload         4
+      84: aload         5
+      86: invokespecial #72                 // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitBlockQuads:(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+      89: return
+      90: aload         6
+      92: getfield      #101                // Field me/pepperbell/continuity/client/model/ModelObjectsContainer.meshBuilder:Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;
+      95: astore        8
+      97: aload         7
+      99: aload         8
+     101: invokeinterface #107,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder.getEmitter:()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;
+     106: aload_1
+     107: aload_2
+     108: aload_3
+     109: aload         5
+     111: getstatic     #56                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.INSTANCE:Lme/pepperbell/continuity/client/config/ContinuityConfig;
+     114: getfield      #110                // Field me/pepperbell/continuity/client/config/ContinuityConfig.useManualCulling:Lme/pepperbell/continuity/client/config/Option$BooleanOption;
+     117: invokevirtual #64                 // Method me/pepperbell/continuity/client/config/Option$BooleanOption.get:()Ljava/lang/Object;
+     120: checkcast     #66                 // class java/lang/Boolean
+     123: invokevirtual #70                 // Method java/lang/Boolean.booleanValue:()Z
+     126: invokevirtual #114                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveBlockQuadTransform.prepare:(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;Z)V
+     129: aload         5
+     131: aload         7
+     133: invokeinterface #118,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/render/RenderContext.pushTransform:(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$QuadTransform;)V
+     138: aload_0
+     139: aload_1
+     140: aload_2
+     141: aload_3
+     142: aload         4
+     144: aload         5
+     146: invokespecial #72                 // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitBlockQuads:(Lnet/minecraft/class_1920;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+     149: aload         5
+     151: invokeinterface #121,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/render/RenderContext.popTransform:()V
+     156: aload         7
+     158: invokevirtual #124                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveBlockQuadTransform.didEmit:()Z
+     161: ifeq          183
+     164: aload         8
+     166: invokeinterface #128,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder.build:()Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;
+     171: aload         5
+     173: invokeinterface #129,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/render/RenderContext.getEmitter:()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;
+     178: invokeinterface #135,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/mesh/Mesh.outputTo:(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;)V
+     183: aload         7
+     185: invokevirtual #138                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveBlockQuadTransform.reset:()V
+     188: return
+
+  public void emitItemQuads(net.minecraft.class_1799, java.util.function.Supplier<net.minecraft.class_5819>, net.fabricmc.fabric.api.renderer.v1.render.RenderContext);
+    Code:
+       0: getstatic     #56                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.INSTANCE:Lme/pepperbell/continuity/client/config/ContinuityConfig;
+       3: getfield      #60                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.emissiveTextures:Lme/pepperbell/continuity/client/config/Option$BooleanOption;
+       6: invokevirtual #64                 // Method me/pepperbell/continuity/client/config/Option$BooleanOption.get:()Ljava/lang/Object;
+       9: checkcast     #66                 // class java/lang/Boolean
+      12: invokevirtual #70                 // Method java/lang/Boolean.booleanValue:()Z
+      15: ifne          26
+      18: aload_0
+      19: aload_1
+      20: aload_2
+      21: aload_3
+      22: invokespecial #153                // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitItemQuads:(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+      25: return
+      26: invokestatic  #77                 // Method me/pepperbell/continuity/client/model/ModelObjectsContainer.get:()Lme/pepperbell/continuity/client/model/ModelObjectsContainer;
+      29: astore        4
+      31: aload         4
+      33: getfield      #81                 // Field me/pepperbell/continuity/client/model/ModelObjectsContainer.featureStates:Lme/pepperbell/continuity/impl/client/ContinuityFeatureStatesImpl;
+      36: invokevirtual #87                 // Method me/pepperbell/continuity/impl/client/ContinuityFeatureStatesImpl.getEmissiveTexturesState:()Lme/pepperbell/continuity/api/client/ContinuityFeatureStates$FeatureState;
+      39: invokeinterface #90,  1           // InterfaceMethod me/pepperbell/continuity/api/client/ContinuityFeatureStates$FeatureState.isEnabled:()Z
+      44: ifne          55
+      47: aload_0
+      48: aload_1
+      49: aload_2
+      50: aload_3
+      51: invokespecial #153                // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitItemQuads:(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+      54: return
+      55: aload         4
+      57: getfield      #157                // Field me/pepperbell/continuity/client/model/ModelObjectsContainer.emissiveItemQuadTransform:Lme/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveItemQuadTransform;
+      60: astore        5
+      62: aload         5
+      64: invokevirtual #158                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveItemQuadTransform.isActive:()Z
+      67: ifeq          78
+      70: aload_0
+      71: aload_1
+      72: aload_2
+      73: aload_3
+      74: invokespecial #153                // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitItemQuads:(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+      77: return
+      78: aload         4
+      80: getfield      #101                // Field me/pepperbell/continuity/client/model/ModelObjectsContainer.meshBuilder:Lnet/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder;
+      83: astore        6
+      85: aload         5
+      87: aload         6
+      89: invokeinterface #107,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder.getEmitter:()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;
+      94: invokevirtual #160                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveItemQuadTransform.prepare:(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;)V
+      97: aload_3
+      98: aload         5
+     100: invokeinterface #118,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/render/RenderContext.pushTransform:(Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext$QuadTransform;)V
+     105: aload_0
+     106: aload_1
+     107: aload_2
+     108: aload_3
+     109: invokespecial #153                // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.emitItemQuads:(Lnet/minecraft/class_1799;Ljava/util/function/Supplier;Lnet/fabricmc/fabric/api/renderer/v1/render/RenderContext;)V
+     112: aload_3
+     113: invokeinterface #121,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/render/RenderContext.popTransform:()V
+     118: aload         5
+     120: invokevirtual #161                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveItemQuadTransform.didEmit:()Z
+     123: ifeq          144
+     126: aload         6
+     128: invokeinterface #128,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/mesh/MeshBuilder.build:()Lnet/fabricmc/fabric/api/renderer/v1/mesh/Mesh;
+     133: aload_3
+     134: invokeinterface #129,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/render/RenderContext.getEmitter:()Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;
+     139: invokeinterface #135,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/mesh/Mesh.outputTo:(Lnet/fabricmc/fabric/api/renderer/v1/mesh/QuadEmitter;)V
+     144: aload         5
+     146: invokevirtual #162                // Method me/pepperbell/continuity/client/model/EmissiveBakedModel$EmissiveItemQuadTransform.reset:()V
+     149: return
+
+  public boolean isVanillaAdapter();
+    Code:
+       0: getstatic     #56                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.INSTANCE:Lme/pepperbell/continuity/client/config/ContinuityConfig;
+       3: getfield      #60                 // Field me/pepperbell/continuity/client/config/ContinuityConfig.emissiveTextures:Lme/pepperbell/continuity/client/config/Option$BooleanOption;
+       6: invokevirtual #64                 // Method me/pepperbell/continuity/client/config/Option$BooleanOption.get:()Ljava/lang/Object;
+       9: checkcast     #66                 // class java/lang/Boolean
+      12: invokevirtual #70                 // Method java/lang/Boolean.booleanValue:()Z
+      15: ifne          23
+      18: aload_0
+      19: invokespecial #166                // Method net/fabricmc/fabric/api/renderer/v1/model/ForwardingBakedModel.isVanillaAdapter:()Z
+      22: ireturn
+      23: iconst_0
+      24: ireturn
+
+  static {};
+    Code:
+       0: invokestatic  #173                // Method net/fabricmc/fabric/api/renderer/v1/material/BlendMode.values:()[Lnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;
+       3: astore_0
+       4: aload_0
+       5: arraylength
+       6: anewarray     #175                // class net/fabricmc/fabric/api/renderer/v1/material/RenderMaterial
+       9: putstatic     #177                // Field EMISSIVE_MATERIALS:[Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+      12: invokestatic  #183                // Method me/pepperbell/continuity/client/util/RenderUtil.getMaterialFinder:()Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;
+      15: astore_1
+      16: aload_0
+      17: astore_2
+      18: aload_2
+      19: arraylength
+      20: istore_3
+      21: iconst_0
+      22: istore        4
+      24: iload         4
+      26: iload_3
+      27: if_icmpge     84
+      30: aload_2
+      31: iload         4
+      33: aaload
+      34: astore        5
+      36: getstatic     #177                // Field EMISSIVE_MATERIALS:[Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+      39: aload         5
+      41: invokevirtual #191                // Method net/fabricmc/fabric/api/renderer/v1/material/BlendMode.ordinal:()I
+      44: aload_1
+      45: iconst_1
+      46: invokeinterface #195,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.emissive:(Z)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;
+      51: iconst_1
+      52: invokeinterface #198,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.disableDiffuse:(Z)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;
+      57: getstatic     #204                // Field net/fabricmc/fabric/api/util/TriState.FALSE:Lnet/fabricmc/fabric/api/util/TriState;
+      60: invokeinterface #208,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.ambientOcclusion:(Lnet/fabricmc/fabric/api/util/TriState;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;
+      65: aload         5
+      67: invokeinterface #212,  2          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.blendMode:(Lnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;)Lnet/fabricmc/fabric/api/renderer/v1/material/MaterialFinder;
+      72: invokeinterface #216,  1          // InterfaceMethod net/fabricmc/fabric/api/renderer/v1/material/MaterialFinder.find:()Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+      77: aastore
+      78: iinc          4, 1
+      81: goto          24
+      84: getstatic     #177                // Field EMISSIVE_MATERIALS:[Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+      87: getstatic     #220                // Field net/fabricmc/fabric/api/renderer/v1/material/BlendMode.DEFAULT:Lnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;
+      90: invokevirtual #191                // Method net/fabricmc/fabric/api/renderer/v1/material/BlendMode.ordinal:()I
+      93: aaload
+      94: putstatic     #222                // Field DEFAULT_EMISSIVE_MATERIAL:Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+      97: getstatic     #177                // Field EMISSIVE_MATERIALS:[Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+     100: getstatic     #225                // Field net/fabricmc/fabric/api/renderer/v1/material/BlendMode.CUTOUT_MIPPED:Lnet/fabricmc/fabric/api/renderer/v1/material/BlendMode;
+     103: invokevirtual #191                // Method net/fabricmc/fabric/api/renderer/v1/material/BlendMode.ordinal:()I
+     106: aaload
+     107: putstatic     #227                // Field CUTOUT_MIPPED_EMISSIVE_MATERIAL:Lnet/fabricmc/fabric/api/renderer/v1/material/RenderMaterial;
+     110: return
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "dreamwalker-wall-model-isolation-diagnostic-classification-v1",
+  "diagnosticOnly": true,
+  "status": "PASS_DIAGNOSTIC_WORLD_LOAD_NO_OOM_NORMAL_SAVE_EXIT0_WITH_RESOURCE_FAILURE",
+  "production_acceptance": "NOT_APPLICABLE_DIAGNOSTIC_ONLY",
+  "source_jar_sha256": "88d48b6a4b2706d6ab82e853a3b81c391ab1cbfead1371bae3630a0c493a4dd5",
+  "diagnostic_jar_sha256": "88bdbe0663ad92feaa008a0e688d2cd491982f535777492c4acde85873127e37",
+  "patched_or_added_entries": [
+    "assets/bloodborne_dw/blockstates/prototype_wall.json",
+    "assets/bloodborne_dw/models/item/composite_builder.json"
+  ],
+  "unchanged_class_entries": 137,
+  "unchanged_original_entries": 1163,
+  "diagnostic_provenance": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\diagnostics\\wall-model-diagnostic-provenance.json",
+  "diagnostic_provenance_sha256": "c49e8881f94ad048be3badf7d8dae7d530b4b71ed11e33341d1fad0481dbb60d",
+  "client_report": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_DIAGNOSTIC_WALL_MODEL_ISOLATION_V5.json",
+  "client_report_sha256": "9257681aac2505beed44f9109e710f60776386c0cbba8e2a9a1a81b0f1099ec4",
+  "client_cli_status": "FAIL_CLIENT_REVIEW",
+  "client_qa_status": "FAIL_CLIENT_WORLD_RESOURCES",
+  "actual_first_resource_failure": "java.lang.IllegalStateException: Unresolved or empty authored model:bloodborne_dw:alt/prototype_door/bottom_frame quads=2 textures=[minecraft:missingno]",
+  "wall_probe_reached": false,
+  "world_loaded": true,
+  "actual_world_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-diagnostic-wall-model-isolation-v5\\saves\\prototype-fixture",
+  "actual_level_name": "isolated-smoke-world",
+  "actual_player_pos": [
+    0.5,
+    64.0,
+    0.5
+  ],
+  "normal_stop_requested": true,
+  "normal_save_messages": true,
+  "exit_code": 0,
+  "elapsed_seconds": 32.0,
+  "heap_arguments": [
+    "-Xmx4G"
+  ],
+  "old_oom_log": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-first-set-scene-minimal-v5\\launch-console.log",
+  "old_oom_log_sha256": "34916ae10e01c58a352ee2ad9ee400028af31de927f7684ee74fee3c220290ff",
+  "old_oom_occurrences": 4,
+  "diagnostic_log": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-diagnostic-wall-model-isolation-v5\\launch-console.log",
+  "diagnostic_log_sha256": "afd63699f6c07349b8b344d9e6d3ce740ab625140c8528f6adfc8048c0f6325c",
+  "diagnostic_oom_occurrences": 0,
+  "original_wall_multipart_parts": 592,
+  "inference": "Removing original multipart wall model selectors allowed all resource baking and actual world startup at the same4G heap; this supports the wall model memory diagnosis. Builder alias is a second declared small resource change. Exact heap allocation or selector complexity was not profiled. Separate alt-door missing texture must be fixed before resource acceptance.",
+  "manual_gameplay": "NOT_RUN",
+  "visual_acceptance": "NOT_RUN",
+  "source_copy_unchanged_after_run": true,
+  "original_wall_state_count": 32768,
+  "original_wall_state_cardinality": "16side combinations *2post *2waterlogged *8material *8rotation *2course *2profile *2connections",
+  "maximum_selector_state_associations": 19398656,
+  "selector_count_limitation": "19,398,656 is the maximum selector/state association count, not a measurement of allocations or heap bytes."
+}

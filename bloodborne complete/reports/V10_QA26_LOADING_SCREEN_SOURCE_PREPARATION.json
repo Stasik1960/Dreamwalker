@@ -1,0 +1,58 @@
+{
+  "schema": "dw-v10-qa-loading-screen-readiness-source-v1",
+  "status": "READY_FROZEN_QA26_ISOLATED_JAVA17_PASS",
+  "productionSha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+  "changedSource": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\review\\java\\dev\\dreamwalker\\bloodbornedw\\review\\ReviewV10ClientBootstrap.java",
+    "sha256": "d0755b0f8a86d5520bad8ab2c6c4c6a2a0b2840122cbfe6641b186359d549d67",
+    "bytes": 104953
+  },
+  "preservedBeforeSource": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\runtime\\V10_QA25_FULL5_LOADING_SCREEN_FAILURE_SOURCE.java.txt",
+    "sha256": "ada53f35e5654f1efc8ff85b41537cab9dcfef5ba646035dcccffeab126d0cbd",
+    "bytes": 103537
+  },
+  "compileLog": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\runtime\\V10_QA26_LOADING_SCREEN_COMPILE.log",
+    "sha256": "87ce6da852513d87503ecc11969a95676e7e08d2fe50d9761bea7ab85f2dd0c3",
+    "bytes": 239
+  },
+  "authoritativeYarnMapping": {
+    "path": "C:\\Users\\vakir\\.gradle\\caches\\fabric-loom\\1.20.1\\net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2\\mappings.tiny",
+    "entries": [
+      "c\teul\tnet/minecraft/class_433\tnet/minecraft/client/gui/screen/GameMenuScreen",
+      "c\teup\tnet/minecraft/class_434\tnet/minecraft/client/gui/screen/DownloadingTerrainScreen"
+    ]
+  },
+  "actualFailureEvidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_CLIENT_FULL_RELEASE5_ATTEMPT_1.json",
+    "sha256": "780e282732a5745902592d587f4d0d2a4b64bd69a2e5d2b0deb68af706a898f3",
+    "bytes": 673302
+  },
+  "failureScope": "Actual phase0 screen net.minecraft.class_434 is DownloadingTerrainScreen, not GameMenuScreen; no architecture probe/type/menu tests had run",
+  "waitPolicy": "Only native DownloadingTerrainScreen before initialize or first AUTHOR preparation: wait for vanilla auto-close to NONE; maxClientTicks still counts every wait tick; unexpected other screens still fail without closing",
+  "firstEntryPolicy": "Existing Creative/OP4/server readback and original inventory/camera are captured after native screen NONE and before ANY prepare; no forced Creative or actor setup during loading wait",
+  "newActualFields": [
+    "loadingScreenWaitTicks",
+    "observedLoadingScreenClasses",
+    "loadingScreenWaitScope when observed",
+    "nativeScreenNoneBeforeFirstEntrySnapshot",
+    "loadingScreenWasClosedByQa=false"
+  ],
+  "unchangedAssertions": [
+    "same first-entry Creative/OP4",
+    "18 architecture real input and renderer/UV/shift",
+    "69 canonical real placement/native overlap/Creativeattack/middle",
+    "7 legacy alias input",
+    "237 menus",
+    "typed inventory restoration",
+    "OFF/ON/OFF diagnostics",
+    "strict shader getters",
+    "normal save"
+  ],
+  "screenCloseOrEscUsed": false,
+  "gameOrGradleStarted": false,
+  "mainOrArtChanged": false,
+  "actualQa26Runtime": "NOT_RUN",
+  "focusPauseAttribution": "No causal attribution; failure remains explained by authoritative native screen identity, despite isolated pauseOnLostFocus false"
+}

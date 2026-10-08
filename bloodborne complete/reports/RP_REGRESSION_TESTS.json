@@ -1,0 +1,19 @@
+{
+  "schema": "dreamwalker-rp-regression-v1",
+  "command": [
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "bloodborne complete/tools",
+    "-p",
+    "test_rp_migration.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_arbitrary_compounds_and_block_entity_id_are_preserved (test_rp_migration.RpMigrationTests.test_arbitrary_compounds_and_block_entity_id_are_preserved) ... ok\ntest_conflicting_weapon_form_rejected_without_changes (test_rp_migration.RpMigrationTests.test_conflicting_weapon_form_rejected_without_changes) ... ok\ntest_gate_nbt_and_directed_mechanism_links_survive (test_rp_migration.RpMigrationTests.test_gate_nbt_and_directed_mechanism_links_survive) ... ok\ntest_item_stack_context_changes_weapon_form_preserving_custom_data (test_rp_migration.RpMigrationTests.test_item_stack_context_changes_weapon_form_preserving_custom_data) ... ok\ntest_lamp_registration_id_and_entity_uuid_remain_distinct_no_routes_invented (test_rp_migration.RpMigrationTests.test_lamp_registration_id_and_entity_uuid_remain_distinct_no_routes_invented) ... ok\ntest_lamp_unresolved_entity_does_not_create_a_fake_node (test_rp_migration.RpMigrationTests.test_lamp_unresolved_entity_does_not_create_a_fake_node) ... ok\ntest_legacy_object_item_maps_to_registered_placer_and_unknown_tool_stays (test_rp_migration.RpMigrationTests.test_legacy_object_item_maps_to_registered_placer_and_unknown_tool_stays) ... ok\ntest_mob_uuid_health_attributes_brain_and_opaque_forge_data_preserved (test_rp_migration.RpMigrationTests.test_mob_uuid_health_attributes_brain_and_opaque_forge_data_preserved) ... ok\ntest_second_pass_changes_nothing (test_rp_migration.RpMigrationTests.test_second_pass_changes_nothing) ... ok\ntest_unknown_entity_is_not_partially_rewritten (test_rp_migration.RpMigrationTests.test_unknown_entity_is_not_partially_rewritten) ... ok\ntest_vanilla_carrier_passengers_and_item_entity_are_explicit_contexts (test_rp_migration.RpMigrationTests.test_vanilla_carrier_passengers_and_item_entity_are_explicit_contexts) ... ok\ntest_wrong_inventory_tag_type_and_unreviewed_alias_are_visible (test_rp_migration.RpMigrationTests.test_wrong_inventory_tag_type_and_unreviewed_alias_are_visible) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.004s\n\nOK\n",
+  "status": "PASS",
+  "test_count": 12
+}

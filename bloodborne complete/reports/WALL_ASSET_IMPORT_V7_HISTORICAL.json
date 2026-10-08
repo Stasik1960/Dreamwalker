@@ -1,0 +1,514 @@
+{
+  "schema": "dreamwalker-wall-asset-import-v1",
+  "status": "PASS",
+  "registry_id": "bloodborne_dw:prototype_wall",
+  "final_numeric_id": null,
+  "source_hashes_before": {
+    "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\inputs\\extracted\\vanilla-1.18.2\\client.jar": "1d09e3639644b6b2254499469d0765cc005a286d19f3fa595b0ed8fb07971ec7"
+  },
+  "source_hashes_after": {
+    "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\inputs\\extracted\\vanilla-1.18.2\\client.jar": "1d09e3639644b6b2254499469d0765cc005a286d19f3fa595b0ed8fb07971ec7"
+  },
+  "source_coordinate_proof": [
+    154,
+    58,
+    -976
+  ],
+  "source_blockstate": {
+    "multipart": [
+      {
+        "when": {
+          "up": "true"
+        },
+        "apply": {
+          "model": "minecraft:block/polished_deepslate_wall_post"
+        }
+      },
+      {
+        "when": {
+          "north": "low"
+        },
+        "apply": {
+          "model": "minecraft:block/polished_deepslate_wall_side",
+          "uvlock": true
+        }
+      },
+      {
+        "when": {
+          "east": "low"
+        },
+        "apply": {
+          "model": "minecraft:block/polished_deepslate_wall_side",
+          "y": 90,
+          "uvlock": true
+        }
+      },
+      {
+        "when": {
+          "south": "low"
+        },
+        "apply": {
+          "model": "minecraft:block/polished_deepslate_wall_side",
+          "y": 180,
+          "uvlock": true
+        }
+      },
+      {
+        "when": {
+          "west": "low"
+        },
+        "apply": {
+          "model": "minecraft:block/polished_deepslate_wall_side",
+          "y": 270,
+          "uvlock": true
+        }
+      },
+      {
+        "when": {
+          "north": "tall"
+        },
+        "apply": [
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_0",
+            "weight": 20
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_1"
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_2"
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_3"
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_4",
+            "weight": 5
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_5"
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_6"
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_7"
+          }
+        ]
+      },
+      {
+        "when": {
+          "east": "tall"
+        },
+        "apply": [
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_0",
+            "y": 90,
+            "weight": 20
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_1",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_2",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_3",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_4",
+            "y": 90,
+            "weight": 5
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_5",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_6",
+            "y": 90
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_7",
+            "y": 90
+          }
+        ]
+      },
+      {
+        "when": {
+          "south": "tall"
+        },
+        "apply": [
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_0",
+            "y": 180,
+            "weight": 20
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_1",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_2",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_3",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_4",
+            "y": 180,
+            "weight": 5
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_5",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_6",
+            "y": 180
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_7",
+            "y": 180
+          }
+        ]
+      },
+      {
+        "when": {
+          "west": "tall"
+        },
+        "apply": [
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_0",
+            "y": 270,
+            "weight": 20
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_1",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_2",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_3",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_4",
+            "y": 270,
+            "weight": 5
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_5",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_6",
+            "y": 270
+          },
+          {
+            "model": "minecraft:block/polished_deepslate_wall_side_tall_7",
+            "y": 270
+          }
+        ]
+      }
+    ]
+  },
+  "tall_ordered_weights": [
+    20,
+    1,
+    1,
+    1,
+    5,
+    1,
+    1,
+    1
+  ],
+  "resource_closure": [
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/template_wall_post.json",
+      "origin": "source_vanilla_1.18.2",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/template_wall_post.json",
+      "source_sha256": "2f84a4c82af1962df5020381ef6fbcd3ffe4de229a909815f77ce8fb542caab2",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_1.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_1.png",
+      "source_sha256": "aa24e5ce5d8e5d07af8e293c8fd88a3aee14f1e2b41be75a0b1878f117852477",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_post.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_post.json",
+      "source_sha256": "ee5768998e9f3f2ddeb8a69ff3f89ff572195b8c504504d5a6f2e423d64c2c10",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/template_wall_side.json",
+      "origin": "source_vanilla_1.18.2",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/template_wall_side.json",
+      "source_sha256": "748b2ee6eadcc6771e3702afaee8f296562c60a13931dd98c1baa1390cff484e",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side.json",
+      "source_sha256": "476a08d16a844568304244441d8cf4b600e14f9df419044b39b38bc3bab29958",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/template_wall_side_tall.json",
+      "origin": "source_vanilla_1.18.2",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/template_wall_side_tall.json",
+      "source_sha256": "627d23aaa8c46099e8f08fea36bb7a7def714e2d43aad576d58795b784165149",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_0.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_0.png",
+      "source_sha256": "d487e1dddb4dbefe889fad89dac09bf4a6f990b427995a8ee2f7dd118b09da23",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_0.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_0.json",
+      "source_sha256": "f4194e0e2ed99d5ce9abc080ce119725784e98ff3f4e880e61b7658f80260731",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_1.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_1.json",
+      "source_sha256": "bee04998ce03fcb67d4fb6be3f590a0d95a1cc59fa4d2566386d020b291b7680",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_2.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_2.png",
+      "source_sha256": "716c1d17c9507b25e5bb256335e9bf7cdc1ad77a450e7314b849fd16a32c7b19",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_2.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_2.json",
+      "source_sha256": "d72f373af2bd39bad4eb1a852c12965cf8039fc196c0b89fc963da5be624f19a",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_3.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_3.png",
+      "source_sha256": "7f9231ba2cfeabd681e5e140e47d37df2f15863fc2d66f1bc2ba5de1ac06ee50",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_3.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_3.json",
+      "source_sha256": "8ee3c4ff097bcb95b2e1bb57251d2df0b8a02c3319da02a80a0a8eb3f671014b",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_4.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_4.png",
+      "source_sha256": "49b1ccd8e24f057071689d2ef85d98e7beb4847caa7449b38d7d85100fb6305e",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_4.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_4.json",
+      "source_sha256": "41df70164f074eb80bb6ec00388a46fd56b7233a6239150dbd2b5027b127eb2c",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_5.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_5.png",
+      "source_sha256": "41b6c76fe52db257a5907e9f72dd8b4bb5455563d7b2dba59ace06096089ee4c",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_5.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_5.json",
+      "source_sha256": "eaae94f61c9d015c972b63d416e69fa92b1425b479edfa743b4deadbed98ffd2",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_6.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_6.png",
+      "source_sha256": "47b030ee41ca00129b92070b5d4600d5eef94f437e164931a055aef4dc5d7786",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_6.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_6.json",
+      "source_sha256": "598f191ddef7e10500749d390e5c6a1f4304320f994b0aff289fedc261e1328a",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/polished_deepslate_wall_7.png",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/textures/wall/source/minecraft/block/polished_deepslate_wall_7.png",
+      "source_sha256": "c591af3703b47c843d06d73280e1d7ca1c3dbe374c63f179f6ebff7c7180e3e9",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/polished_deepslate_wall_side_tall_7.json",
+      "origin": "source_pack",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/polished_deepslate_wall_side_tall_7.json",
+      "source_sha256": "d464b75459ae5ccc541233a24053a308a5575051efe2cf34fe10ff0fe4fb1a4f",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/block.json",
+      "origin": "source_vanilla_1.18.2",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/block.json",
+      "source_sha256": "3ef6c442f1ab55d2a57fa58e28bb831268159052659f12b453b637b31ded1da8",
+      "identifier_rebase_only": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/wall_inventory.json",
+      "origin": "source_vanilla_1.18.2",
+      "target": "assets/bloodborne_dw/models/block/wall/source/minecraft/block/wall_inventory.json",
+      "source_sha256": "c565fa5bb54f8c6788c567e94d6f8302fe226f0937995d752556e66ddcd85117",
+      "identifier_rebase_only": true
+    }
+  ],
+  "wrapper_models": [
+    "bloodborne_dw:block/wall/base/post",
+    "bloodborne_dw:block/wall/base/post_diagonal",
+    "bloodborne_dw:block/wall/base/low",
+    "bloodborne_dw:block/wall/base/low_diagonal",
+    "bloodborne_dw:block/wall/base/tall_0",
+    "bloodborne_dw:block/wall/base/tall_0_diagonal",
+    "bloodborne_dw:block/wall/base/tall_1",
+    "bloodborne_dw:block/wall/base/tall_1_diagonal",
+    "bloodborne_dw:block/wall/base/tall_2",
+    "bloodborne_dw:block/wall/base/tall_2_diagonal",
+    "bloodborne_dw:block/wall/base/tall_3",
+    "bloodborne_dw:block/wall/base/tall_3_diagonal",
+    "bloodborne_dw:block/wall/base/tall_4",
+    "bloodborne_dw:block/wall/base/tall_4_diagonal",
+    "bloodborne_dw:block/wall/base/tall_5",
+    "bloodborne_dw:block/wall/base/tall_5_diagonal",
+    "bloodborne_dw:block/wall/base/tall_6",
+    "bloodborne_dw:block/wall/base/tall_6_diagonal",
+    "bloodborne_dw:block/wall/base/tall_7",
+    "bloodborne_dw:block/wall/base/tall_7_diagonal",
+    "bloodborne_dw:block/wall/alt/post",
+    "bloodborne_dw:block/wall/alt/post_diagonal",
+    "bloodborne_dw:block/wall/alt/low",
+    "bloodborne_dw:block/wall/alt/low_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_0",
+    "bloodborne_dw:block/wall/alt/tall_0_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_1",
+    "bloodborne_dw:block/wall/alt/tall_1_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_2",
+    "bloodborne_dw:block/wall/alt/tall_2_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_3",
+    "bloodborne_dw:block/wall/alt/tall_3_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_4",
+    "bloodborne_dw:block/wall/alt/tall_4_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_5",
+    "bloodborne_dw:block/wall/alt/tall_5_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_6",
+    "bloodborne_dw:block/wall/alt/tall_6_diagonal",
+    "bloodborne_dw:block/wall/alt/tall_7",
+    "bloodborne_dw:block/wall/alt/tall_7_diagonal"
+  ],
+  "runtime_geometry": {
+    "schemaVersion": 1,
+    "units": 16,
+    "post": [
+      [
+        4,
+        0,
+        4,
+        12,
+        16,
+        12
+      ]
+    ],
+    "low": [
+      [
+        5,
+        0,
+        0,
+        11,
+        14,
+        8
+      ]
+    ],
+    "tall": [
+      [
+        5,
+        0,
+        0,
+        11,
+        16,
+        8
+      ]
+    ],
+    "tallWeights": [
+      20,
+      1,
+      1,
+      1,
+      5,
+      1,
+      1,
+      1
+    ],
+    "collisionPolicy": "Exact source solid cuboids, within one local cell; no automatic vanilla 1.5-block collision.",
+    "profiles": "BASE and ALT have identical geometry; ALT wrappers fall back to BASE unless explicitly replaced."
+  },
+  "connection_policy": "Own family only in AUTO; explicit frozen source form in MANUAL. No WallBlock inheritance or vanilla family connection mutation.",
+  "profile_policy": "ALT wrappers explicitly inherit BASE; no distinct ALT source artwork was supplied.",
+  "scope": "Only wall prototype resource closure. No global catalog generation, final numbering or world conversion.",
+  "game_validation": "NOT_RUN"
+}

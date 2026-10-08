@@ -1,0 +1,72 @@
+{
+  "schema": "dreamwalker-prototype-resources-v1",
+  "status": "PROTOTYPE_NOT_ACCEPTED",
+  "source_pack_sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+  "registry_id": "bloodborne_dw:prototype_ladder",
+  "numeric_ids_frozen": false,
+  "source_models": [
+    "minecraft:block/hold/wood_ladder_02",
+    "minecraft:block/hold/wood_ladder_03",
+    "minecraft:block/hold/wood_ladder_04"
+  ],
+  "transform": {
+    "translation": [
+      0,
+      0,
+      0
+    ],
+    "pivot_before": [
+      8,
+      8,
+      8
+    ],
+    "pivot_after": [
+      8,
+      8,
+      8
+    ],
+    "world_position_compensation": [
+      0,
+      0,
+      0
+    ]
+  },
+  "imports": [
+    {
+      "kind": "texture",
+      "source": "assets/minecraft/textures/block/addon/spirelamp_0095.png",
+      "target": "assets/bloodborne_dw/textures/base/source/minecraft/block/addon/spirelamp_0095.png",
+      "source_sha256": "b9378e8833dd069a78245b5f10c8a2be2c9120fc2dc32784303af4a75ea3151d",
+      "byte_identical": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/hold/wood_ladder_02.json",
+      "target": "assets/bloodborne_dw/models/base/source/minecraft/block/hold/wood_ladder_02.json",
+      "source_sha256": "26fc62ecfe28777238d512d4227541158b4c33a9e358615f294598716318ad82",
+      "source_elements_uv_rotations_preserved": true,
+      "particle_alias_added": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/hold/wood_ladder_03.json",
+      "target": "assets/bloodborne_dw/models/base/source/minecraft/block/hold/wood_ladder_03.json",
+      "source_sha256": "6025da77793c849065229b0b51a7f2b7659d12f2832c1cc14fdfd50a1da8aeab",
+      "source_elements_uv_rotations_preserved": true,
+      "particle_alias_added": true
+    },
+    {
+      "kind": "model",
+      "source": "assets/minecraft/models/block/hold/wood_ladder_04.json",
+      "target": "assets/bloodborne_dw/models/base/source/minecraft/block/hold/wood_ladder_04.json",
+      "source_sha256": "6298c5dea5f349870aa0fa200720871850a557f15d5ffd3a83628e7d98f8b044",
+      "source_elements_uv_rotations_preserved": true,
+      "particle_alias_added": true
+    }
+  ],
+  "alt_example_sha256": "a780182531f30bb72573859fd233f190daf46097915adfdb327d414fcef4fbc6",
+  "checks": {
+    "offline_geometry_preservation": "PASS",
+    "minecraft_runtime_render": "NOT_RUN"
+  }
+}

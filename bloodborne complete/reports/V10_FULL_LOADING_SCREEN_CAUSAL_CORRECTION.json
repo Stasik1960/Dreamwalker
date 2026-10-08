@@ -1,0 +1,143 @@
+{
+  "schema": "dw-v10-loading-screen-causal-correction-v1",
+  "status": "CORRECTED_PRIMARY_CLASS_MAPPING_PRIOR_FOCUS_CAUSAL_INFERENCE_UNSUPPORTED",
+  "mappingJar": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\yarn\\1.20.1+build.10\\f09f3e05ed95dbd0075b033f85f41a3416af9968\\yarn-1.20.1+build.10-v2.jar",
+  "mappingJarSha256": "5444b470f35b892862908bb27314c0b5b325369fd60896d8d809e635d5371bea",
+  "mappingEntry": "mappings/mappings.tiny",
+  "mappingEntrySha256": "3d0722089deb99c32c9942a3d9f9f7a74e17e744477814b0f0b06194d8e4a2f0",
+  "exactMappingRows": [
+    "c\tnet/minecraft/class_434\tnet/minecraft/client/gui/screen/DownloadingTerrainScreen",
+    "c\tnet/minecraft/class_433\tnet/minecraft/client/gui/screen/GameMenuScreen"
+  ],
+  "attempts": [
+    {
+      "wrapper": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_CLIENT_FULL_RELEASE4_ATTEMPT_2.json",
+      "wrapperSha256": "b6c1c7b05a040f949d25bdc4004fb347723c31791c6597d1f719d6bb0494032b",
+      "productionJarSha256": "884ba57ce8ba0a64e3fdc5dd8730c3945a44d1a35f462cea39245301b2e69e75",
+      "status": "FAIL_CLIENT_REVIEW",
+      "normalExitCode": 0,
+      "actualIntegratedSaveLogPresent": true,
+      "raw": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release4-attempt2\\client-review-output.json",
+      "rawSha256": "cd4e320d17f6e8bfe76b1cbff392c4707cf42db7a9b71de63b3f69b5a51e0bb5",
+      "failedPhase": 0,
+      "reason": "Actor setup requires prior actual Esc",
+      "observedScreenIntermediary": "net.minecraft.class_434",
+      "correctMappedScreen": "net/minecraft/client/gui/screen/DownloadingTerrainScreen",
+      "priorGameMenuScreenInterpretation": "INCORRECT",
+      "actualDerivedOptionsPath": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release4-attempt2\\options.txt",
+      "actualDerivedOptionsSha256": "4b83f027066fdbc4774d6436653cba2536635994d9c538c6d74846dbdd4503a4",
+      "actualPauseOnLostFocus": "true",
+      "unattendedFlagApplied": false,
+      "focusOptionProvenance": "No unattended flag applied; generated isolated options only.",
+      "firstEntryBeforeAnySetup": {
+        "serverGameMode": "creative",
+        "serverCreativeAbility": true,
+        "serverOperator4": true,
+        "savedWorldGameMode": "creative",
+        "serverPlayerUuid": "d7a56ee7-ead5-3229-91dd-a174ac33b9d7",
+        "capturedBeforeAnyPrepare": true,
+        "readThread": "ACTUAL_SERVER_THREAD",
+        "clientGameMode": "creative",
+        "clientCreativeAbility": true,
+        "scope": "Actual first-entry readback before ANY QA prepare, inventory or mode setup"
+      },
+      "completedOrdinaryRpCount": 0,
+      "completedOrdinaryArchitectureCount": 0,
+      "architectureProbe": "NOT_RUN_AFTER_PHASE0_FAILURE",
+      "menus": "NOT_RUN",
+      "diagnosticsOffOnOff": "NOT_RUN",
+      "mainMixinBootFailure": "NOT_OBSERVED: scene/player loaded and failure was QA screen readiness before object operations"
+    },
+    {
+      "wrapper": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_CLIENT_FULL_RELEASE5_ATTEMPT_1.json",
+      "wrapperSha256": "780e282732a5745902592d587f4d0d2a4b64bd69a2e5d2b0deb68af706a898f3",
+      "productionJarSha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+      "status": "FAIL_CLIENT_REVIEW",
+      "normalExitCode": 0,
+      "actualIntegratedSaveLogPresent": true,
+      "raw": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release5-attempt1\\client-review-output.json",
+      "rawSha256": "d4f3c138d00d5d5f2b0dd93bad7855e3f2792bf62dc2d0d900ec053ad2da16ff",
+      "failedPhase": 0,
+      "reason": "Actor setup requires prior actual Esc",
+      "observedScreenIntermediary": "net.minecraft.class_434",
+      "correctMappedScreen": "net/minecraft/client/gui/screen/DownloadingTerrainScreen",
+      "priorGameMenuScreenInterpretation": "INCORRECT",
+      "actualDerivedOptionsPath": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release5-attempt1\\options.txt",
+      "actualDerivedOptionsSha256": "ebba68655079fae0fda4d203bc4a7268a1de66ac8fdfe1a1fae2968acb434683",
+      "actualPauseOnLostFocus": "false",
+      "unattendedFlagApplied": true,
+      "focusOptionProvenance": {
+        "schema": "dw-isolated-unattended-focus-option-v1",
+        "enabled": true,
+        "reason": "Explicit unattended QA flag avoids automatic background focus pause; it does not bypass an actual GUI or change game/mod/graphics policy",
+        "scope": "Only generated derived-profile options.txt; no existing user installation or launcher options read/written",
+        "sourceOriginalOptions": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release5-attempt1\\qa-inputs\\options-before-unattended.txt",
+        "sourceOriginalOptionsSha256": "4e516e3903468bb4c343d5ab7dcd72223f2596e0402a46ea0ffb9931b045c8ed",
+        "derivedOptions": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release5-attempt1\\options.txt",
+        "derivedBeforeSha256": "4e516e3903468bb4c343d5ab7dcd72223f2596e0402a46ea0ffb9931b045c8ed",
+        "derivedAfterPreparationSha256": "4634d5c24ea99bfa56af98ab51498c89434a0d48f16e7ba48ccf5345d3d5ff64",
+        "preciseDelta": {
+          "key": "pauseOnLostFocus",
+          "originalExplicitValue": null,
+          "originalValue": "ABSENT_IN_GENERATED_ISOLATED_OPTIONS",
+          "newValue": "false",
+          "operation": "APPEND_SINGLE_KEY",
+          "lineNumber1Based": 6,
+          "appendedLineSeparator": "",
+          "unrelatedLineContentsUnchanged": true,
+          "unrelatedLineContentsSha256": "b68996ea3d5fc9e97176e92dc1cc401e5373945a9739eda447b4830584a08e13"
+        },
+        "graphicsValueChanges": [],
+        "writes": [
+          "qa-inputs/options-before-unattended.txt (new preserved generated baseline)",
+          "options.txt (one reserved focus key)"
+        ],
+        "originalUserOptions": "NOT_READ_OR_MODIFIED",
+        "shaderOptionValues": "NOT_MODIFIED_BY_THIS_FLAG",
+        "source_original_options_unchanged_after_run": true,
+        "derivedOptionsAfterRunSha256": "ebba68655079fae0fda4d203bc4a7268a1de66ac8fdfe1a1fae2968acb434683",
+        "pauseOnLostFocusAfterRun": "false",
+        "originalShaderInputsVerifiedAfterRun": [
+          {
+            "source": "C:\\Users\\vakir\\Downloads\\Kappa_v5.2.zip",
+            "expectedSha256": "382fadd7d389260522099b25f9dc693bbc81b89220ec5b55459cce74e6c264d0",
+            "actualSha256AfterRun": "382fadd7d389260522099b25f9dc693bbc81b89220ec5b55459cce74e6c264d0",
+            "unchangedAfterRun": true
+          },
+          {
+            "source": "C:\\Users\\vakir\\Downloads\\Kappa_BB.zip (1).txt",
+            "expectedSha256": "32e38781a3ddd9340ff499edeea2833eb90ac5a6ae4ba670c890f6ac23c5fe0f",
+            "actualSha256AfterRun": "32e38781a3ddd9340ff499edeea2833eb90ac5a6ae4ba670c890f6ac23c5fe0f",
+            "unchangedAfterRun": true
+          }
+        ]
+      },
+      "firstEntryBeforeAnySetup": {
+        "serverGameMode": "creative",
+        "serverCreativeAbility": true,
+        "serverOperator4": true,
+        "savedWorldGameMode": "creative",
+        "serverPlayerUuid": "d7a56ee7-ead5-3229-91dd-a174ac33b9d7",
+        "capturedBeforeAnyPrepare": true,
+        "readThread": "ACTUAL_SERVER_THREAD",
+        "clientGameMode": "creative",
+        "clientCreativeAbility": true,
+        "scope": "Actual first-entry readback before ANY QA prepare, inventory or mode setup"
+      },
+      "completedOrdinaryRpCount": 0,
+      "completedOrdinaryArchitectureCount": 0,
+      "architectureProbe": "NOT_RUN_AFTER_PHASE0_FAILURE",
+      "menus": "NOT_RUN",
+      "diagnosticsOffOnOff": "NOT_RUN",
+      "mainMixinBootFailure": "NOT_OBSERVED: scene/player loaded and failure was QA screen readiness before object operations"
+    }
+  ],
+  "correction": "class_434 is DownloadingTerrainScreen. class_433 is GameMenuScreen. The earlier interpretation of class_434 as focus-pause GameMenuScreen was wrong.",
+  "causalScope": "A later attempt with pauseOnLostFocus=false still failed on class_434. Therefore the focus flag cannot be credited as the cause of earlier phase0 progress. It remains an explicit isolated unattended option with source settings preserved.",
+  "nextQaOnlyFix": "Wait for DownloadingTerrainScreen to close through native readiness before actor setup; keep initial Creative/OP snapshot before ANY setup.",
+  "historicalBytesOverwritten": false,
+  "productionOrQaEdited": false,
+  "minecraftOrBuildStarted": false,
+  "manualVisualAcceptance": "NOT_RUN",
+  "wholeTaskAcceptance": "PENDING"
+}

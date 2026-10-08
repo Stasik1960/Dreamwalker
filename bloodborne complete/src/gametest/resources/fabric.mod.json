@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_dw_gametest",
+  "version": "1.0.0",
+  "name": "Dreamwalker Bloodborne Prototype GameTests",
+  "environment": "server",
+  "entrypoints": {
+    "fabric-gametest": [
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeLadderGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeWallGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeWindowGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.GlazingMountGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeDoorGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeTreeGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeRoofGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PrototypeSourceAnchorGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.SourceLadderGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.SourceTechnicalLightGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.RpLegacyPayloadGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.DebugCatalogueGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.CompositeNbtSnapshotGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.CompositeAsyncShapeGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.CompositeGeometryMetricsGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.PlacementPhysicsGameTests",
+      "dev.dreamwalker.bloodbornedw.link.MechanismLinksGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.RpV9BehaviourGameTests",
+      "dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnosticsGameTests",
+      "dev.dreamwalker.bloodbornedw.link.MechanismRulesGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.RpV10EditingGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.RpAttackReachCompatibilityGameTests",
+      "dev.dreamwalker.bloodbornerp.lamp.LampV10GameTests",
+      "dev.dreamwalker.bloodbornedw.link.ObjectPolicyGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.ArchitectureVerticalMountGameTests"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "fabric-gametest-api-v1": "*",
+    "bloodborne_dw": "*"
+  }
+}

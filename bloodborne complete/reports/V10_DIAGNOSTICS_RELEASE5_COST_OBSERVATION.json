@@ -1,0 +1,693 @@
+{
+  "schema": "dw-v10-diagnostics-cost-observation-v1",
+  "status": "OBSERVED_CURRENT_ACTUAL_DIAGNOSTIC_COSTS_NO_CAUSAL_OVERHEAD_PERCENTAGE",
+  "productionJarSha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+  "evidence": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V10_DIAGNOSTICS_RELEASE5.json",
+      "bytes": 523831,
+      "sha256": "79dfd41ae4400eba6c9eb056cc6e833cf8844c3f4bca2ac2f2a1014b7ada52ce"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_CLIENT_FULL_RELEASE5_ATTEMPT_3.json",
+      "bytes": 2492037,
+      "sha256": "8b7e8996e7e3fa3fede9ad268057e24819ffb0b148b2aa24e2e47c845a0c4240"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_CLIENT_FULL5_ATT3_ROSTER_PARTS_MIDDLE_DIAGNOSTICS_INDEPENDENT.json",
+      "bytes": 15654,
+      "sha256": "97d6efe4d573c46a75442912db2e28db306832f09f4639385e3ecf17cc869b0e"
+    }
+  ],
+  "dedicatedServer": {
+    "off": {
+      "wholeTick": {
+        "max_ms": 1.8751,
+        "mean_ms": 0.9228323896752707,
+        "median_ms": 0.8818,
+        "min_ms": 0.7325,
+        "p95_ms": 1.2068,
+        "p99_ms": 1.379,
+        "samples": 1201,
+        "unit": "ms"
+      },
+      "report": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\DIAGNOSTICS_SERVER_DISABLED_V10_RELEASE5.json"
+    },
+    "on": {
+      "wholeTick": {
+        "max_ms": 23.7272,
+        "mean_ms": 1.078123178807947,
+        "median_ms": 0.90095,
+        "min_ms": 0.7329,
+        "p95_ms": 1.3023,
+        "p99_ms": 7.1989,
+        "samples": 1208,
+        "unit": "ms"
+      },
+      "report": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\DIAGNOSTICS_SERVER_ENABLED_V10_RELEASE5.json",
+      "session": "fba4cf7c-ec75-4e1a-a764-cb1e7b1b9a38",
+      "processId": 115772,
+      "requestedSeconds": 60,
+      "actualElapsedSeconds": 60.0129841,
+      "stopReason": "AUTO_DURATION_EXPIRED",
+      "ownInclusiveApiHookDurationsNs": {
+        "allCount": 1685,
+        "allCountOver50ms": 1,
+        "allMaxNs": 254119000,
+        "allMeanNs": 496486.88427299703,
+        "allSumNs": 836580400,
+        "capacity": 1024,
+        "dropped": 661,
+        "p95Ns": 3300,
+        "p99Ns": 8807400,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "retained": 1024,
+        "status": "MEASURED",
+        "unit": "ns"
+      },
+      "ownScope": "PARTIAL_INCLUSIVE_API_HOOK_SAMPLES; includes session/JFR start-stop, record, measured, END metrics; nested timings may overlap, not unique process CPU; actual off/on QA tick comparison separate",
+      "ioThreadCpu": "NOT_MEASURED; asynchronous report writing excluded from synchronous hooks",
+      "actualGcPauseSource": "JFR_jdk.GCPhasePause_ACTUAL_PAUSE_DURATION",
+      "actualGcPauseDurationsNs": {
+        "allCount": 0,
+        "allCountOver50ms": 0,
+        "allMaxNs": "NOT_MEASURED",
+        "allMeanNs": "NOT_MEASURED",
+        "allSumNs": 0,
+        "capacity": 256,
+        "dropped": 0,
+        "p95Ns": "NOT_MEASURED",
+        "p99Ns": "NOT_MEASURED",
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "retained": 0,
+        "status": "NOT_MEASURED_NO_SAMPLES",
+        "unit": "ns"
+      },
+      "processSampleCount": 60,
+      "processMemorySamples": {
+        "heapUsedBytes": {
+          "first": 1352295936,
+          "last": 1442473472,
+          "minimumRetained": 1352295936,
+          "maximumRetained": 1442473472
+        },
+        "heapCommittedBytes": {
+          "first": 2103443456,
+          "last": 2103443456,
+          "minimumRetained": 2103443456,
+          "maximumRetained": 2103443456
+        },
+        "heapMaxBytes": {
+          "first": 3221225472,
+          "last": 3221225472,
+          "minimumRetained": 3221225472,
+          "maximumRetained": 3221225472
+        },
+        "gcCollectionCountProcessCumulative": {
+          "first": 41,
+          "last": 41,
+          "minimumRetained": 41,
+          "maximumRetained": 41
+        },
+        "gcMxCollectionTimeMsProcessCumulative": {
+          "first": 732,
+          "last": 732,
+          "minimumRetained": 732,
+          "maximumRetained": 732
+        }
+      },
+      "latestSampledCachesAndQueues": {
+        "composite": {
+          "compositeLoadedContributionCells": 373,
+          "compositeLoadedForeignContributionCarriers": 21,
+          "compositeLoadedOwnersInLedger": 19,
+          "compositeLoadedTechnicalHelperCells": 344,
+          "compositeSavedLedgerCells": 373,
+          "compositeShapeCache": 16,
+          "countScope": "loaded ledger membership and technical carriers; native ladders/walls and RP counts recorded separately",
+          "pendingOwnerTasks": 0,
+          "selectedOwnerCache": 0,
+          "shapeSnapshotBatchDepth": 0,
+          "shapeSnapshotCells": 375,
+          "shapeSnapshotChunks": 20,
+          "shapeSnapshotPendingCells": 0,
+          "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries"
+        },
+        "diagnosticIoActiveWorkers": 0,
+        "diagnosticIoQueueMaximum": 4,
+        "diagnosticIoQueueSize": 0,
+        "mechanism_rules": {
+          "incompleteRules": 0,
+          "persistentSourceFlags": 0,
+          "queueMaximum": 4096,
+          "queuedEffects": 0,
+          "rules": 0
+        },
+        "mechanisms": {
+          "levers": 0,
+          "pendingImports": 0,
+          "pendingPulseEffects": 0,
+          "pendingTargets": 0,
+          "scope": "server-wide loaded persistent mechanism graph; no load triggered",
+          "targets": 0
+        },
+        "native_architecture": {
+          "coverage": "knownLoadedWorldChunks; directChunkPalettes; noChunkForcing",
+          "loadedChunkIndexLimit": 4096,
+          "loadedChunkIndexSize": 529,
+          "nativeObjectCount": 12,
+          "nativeObjectsByType": {
+            "90002": 1,
+            "90006": 2,
+            "90011": 1,
+            "90012": 1,
+            "90013": 1,
+            "90014": 1,
+            "90015": 1,
+            "90016": 1,
+            "90017": 1,
+            "90018": 1,
+            "90019": 1
+          },
+          "nativeWallJunctionCacheEntries": 0,
+          "nativeWallJunctionCacheLimit": 4096,
+          "paletteChunksMeasured": 529
+        },
+        "rp": {
+          "lampProtocol": {
+            "pendingTravelRequests": 0,
+            "scope": "server-wide bounded lamp state; no tokens; no permanent line chunk retention",
+            "temporaryChunkTickets": 0,
+            "travelContexts": 0,
+            "travelCooldowns": 0
+          },
+          "loadedCustomIndex": {
+            "gateRequestEntries": 0,
+            "geometryCacheHits": 1193,
+            "geometryCacheMisses": 27,
+            "geometrySnapshots": 12,
+            "loadedCustomGeometryObjects": 12,
+            "reviewedWorkingGeometryObjects": 3,
+            "scope": "all loaded RP objects in this world; legacy physical dimensions retained separately from model selection",
+            "weakEntries": 12
+          },
+          "sourceGeometryCache": {
+            "entries": 9,
+            "hits": 51,
+            "loadAttempts": 9,
+            "loadFailures": 0,
+            "scope": "shared JVM source-geometry cache; client/server values must not be added"
+          }
+        }
+      },
+      "processSamplingScope": "Retained process samples, usually once per second; extrema are not exhaustive peaks. MX collection duration is not STW pause duration.",
+      "export": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-enabled-release5\\dreamwalker-diagnostics\\diagnostics-fba4cf7c-ec75-4e1a-a764-cb1e7b1b9a38-1791481718405.zip",
+        "sha256": "23e287aa5283ae6c91c25fcd0f4c8860d8052a7ec0552c428f2fd469629757ef"
+      }
+    },
+    "reenter": {
+      "wholeTick": {
+        "max_ms": 16.9547,
+        "mean_ms": 1.8467809523809524,
+        "median_ms": 1.12585,
+        "min_ms": 0.9326,
+        "p95_ms": 5.9972,
+        "p99_ms": 8.8039,
+        "samples": 168,
+        "unit": "ms"
+      },
+      "report": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\DIAGNOSTICS_SERVER_REENTER_V10_RELEASE5.json",
+      "session": "0352df65-3287-41dd-b4ef-58d05c62c3bc",
+      "processId": 118164,
+      "requestedSeconds": 60,
+      "actualElapsedSeconds": 8.3566925,
+      "stopReason": "OPERATOR_STOP",
+      "ownInclusiveApiHookDurationsNs": {
+        "allCount": 268,
+        "allCountOver50ms": 2,
+        "allMaxNs": 246375600,
+        "allMeanNs": 1391995.8955223882,
+        "allSumNs": 373054900,
+        "capacity": 1024,
+        "dropped": 0,
+        "p95Ns": 55100,
+        "p99Ns": 11477400,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "retained": 268,
+        "status": "MEASURED",
+        "unit": "ns"
+      },
+      "ownScope": "PARTIAL_INCLUSIVE_API_HOOK_SAMPLES; includes session/JFR start-stop, record, measured, END metrics; nested timings may overlap, not unique process CPU; actual off/on QA tick comparison separate",
+      "ioThreadCpu": "NOT_MEASURED; asynchronous report writing excluded from synchronous hooks",
+      "actualGcPauseSource": "JFR_jdk.GCPhasePause_ACTUAL_PAUSE_DURATION",
+      "actualGcPauseDurationsNs": {
+        "allCount": 0,
+        "allCountOver50ms": 0,
+        "allMaxNs": "NOT_MEASURED",
+        "allMeanNs": "NOT_MEASURED",
+        "allSumNs": 0,
+        "capacity": 256,
+        "dropped": 0,
+        "p95Ns": "NOT_MEASURED",
+        "p99Ns": "NOT_MEASURED",
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "retained": 0,
+        "status": "NOT_MEASURED_NO_SAMPLES",
+        "unit": "ns"
+      },
+      "processSampleCount": 8,
+      "processMemorySamples": {
+        "heapUsedBytes": {
+          "first": 1438984904,
+          "last": 1459956424,
+          "minimumRetained": 1438984904,
+          "maximumRetained": 1459956424
+        },
+        "heapCommittedBytes": {
+          "first": 2128609280,
+          "last": 2128609280,
+          "minimumRetained": 2128609280,
+          "maximumRetained": 2128609280
+        },
+        "heapMaxBytes": {
+          "first": 3221225472,
+          "last": 3221225472,
+          "minimumRetained": 3221225472,
+          "maximumRetained": 3221225472
+        },
+        "gcCollectionCountProcessCumulative": {
+          "first": 39,
+          "last": 39,
+          "minimumRetained": 39,
+          "maximumRetained": 39
+        },
+        "gcMxCollectionTimeMsProcessCumulative": {
+          "first": 755,
+          "last": 755,
+          "minimumRetained": 755,
+          "maximumRetained": 755
+        }
+      },
+      "latestSampledCachesAndQueues": {
+        "composite": {
+          "compositeLoadedContributionCells": 373,
+          "compositeLoadedForeignContributionCarriers": 21,
+          "compositeLoadedOwnersInLedger": 19,
+          "compositeLoadedTechnicalHelperCells": 344,
+          "compositeSavedLedgerCells": 373,
+          "compositeShapeCache": 16,
+          "countScope": "loaded ledger membership and technical carriers; native ladders/walls and RP counts recorded separately",
+          "pendingOwnerTasks": 0,
+          "selectedOwnerCache": 0,
+          "shapeSnapshotBatchDepth": 0,
+          "shapeSnapshotCells": 375,
+          "shapeSnapshotChunks": 20,
+          "shapeSnapshotPendingCells": 0,
+          "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries"
+        },
+        "diagnosticIoActiveWorkers": 0,
+        "diagnosticIoQueueMaximum": 4,
+        "diagnosticIoQueueSize": 0,
+        "mechanism_rules": {
+          "incompleteRules": 0,
+          "persistentSourceFlags": 0,
+          "queueMaximum": 4096,
+          "queuedEffects": 0,
+          "rules": 0
+        },
+        "mechanisms": {
+          "levers": 0,
+          "pendingImports": 0,
+          "pendingPulseEffects": 0,
+          "pendingTargets": 0,
+          "scope": "server-wide loaded persistent mechanism graph; no load triggered",
+          "targets": 0
+        },
+        "native_architecture": {
+          "coverage": "knownLoadedWorldChunks; directChunkPalettes; noChunkForcing",
+          "loadedChunkIndexLimit": 4096,
+          "loadedChunkIndexSize": 529,
+          "nativeObjectCount": 12,
+          "nativeObjectsByType": {
+            "90002": 1,
+            "90006": 2,
+            "90011": 1,
+            "90012": 1,
+            "90013": 1,
+            "90014": 1,
+            "90015": 1,
+            "90016": 1,
+            "90017": 1,
+            "90018": 1,
+            "90019": 1
+          },
+          "nativeWallJunctionCacheEntries": 0,
+          "nativeWallJunctionCacheLimit": 4096,
+          "paletteChunksMeasured": 529
+        },
+        "rp": {
+          "lampProtocol": {
+            "pendingTravelRequests": 0,
+            "scope": "server-wide bounded lamp state; no tokens; no permanent line chunk retention",
+            "temporaryChunkTickets": 0,
+            "travelContexts": 0,
+            "travelCooldowns": 0
+          },
+          "loadedCustomIndex": {
+            "gateRequestEntries": 0,
+            "geometryCacheHits": 1193,
+            "geometryCacheMisses": 27,
+            "geometrySnapshots": 12,
+            "loadedCustomGeometryObjects": 12,
+            "reviewedWorkingGeometryObjects": 3,
+            "scope": "all loaded RP objects in this world; legacy physical dimensions retained separately from model selection",
+            "weakEntries": 12
+          },
+          "sourceGeometryCache": {
+            "entries": 9,
+            "hits": 51,
+            "loadAttempts": 9,
+            "loadFailures": 0,
+            "scope": "shared JVM source-geometry cache; client/server values must not be added"
+          }
+        }
+      },
+      "processSamplingScope": "Retained process samples, usually once per second; extrema are not exhaustive peaks. MX collection duration is not STW pause duration.",
+      "export": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v10-diag-reenter-release5\\dreamwalker-diagnostics\\diagnostics-0352df65-3287-41dd-b4ef-58d05c62c3bc-1791481753555.zip",
+        "sha256": "8850fc853e9d9bfa65e491806699481eaae52996cb3eac4c5bb563fbf4912a80"
+      }
+    }
+  },
+  "integratedClients": {
+    "client": {
+      "session": "6e440e7f-f0ae-4ef7-96c6-8368a61f2cef",
+      "clientProcessId": 118036,
+      "integratedServerProcessId": 118036,
+      "sameJvmProcess": true,
+      "presentationWindows": [
+        {
+          "max_ms": 12.4913,
+          "mean_ms": 8.402444612794614,
+          "median_ms": 8.37335,
+          "min_ms": 2.6357,
+          "p95_ms": 9.9056,
+          "p99_ms": 10.4759,
+          "samples": 594,
+          "unit": "ms",
+          "label": "OFF_BEFORE"
+        },
+        {
+          "max_ms": 11.2359,
+          "mean_ms": 8.405748821548821,
+          "median_ms": 8.40315,
+          "min_ms": 5.729,
+          "p95_ms": 9.8115,
+          "p99_ms": 10.5486,
+          "samples": 594,
+          "unit": "ms",
+          "label": "ON_IDENTICAL_CLEANED_SCENE"
+        },
+        {
+          "max_ms": 15.3665,
+          "mean_ms": 8.388655462184873,
+          "median_ms": 8.3916,
+          "min_ms": 4.2789,
+          "p95_ms": 9.685,
+          "p99_ms": 10.0446,
+          "samples": 595,
+          "unit": "ms",
+          "label": "OFF_AFTER"
+        }
+      ],
+      "clientFlushElapsedTotalMs": 18.2382,
+      "clientFlushScope": "Cumulative elapsed sendBatch work in this session; not CPU/GPU time and not all diagnostic work.",
+      "clientIoThreadCpuMsProcessCumulative": 265.625,
+      "clientIoScope": "IO worker process-cumulative counter; may include earlier exports in this process. Not session-only.",
+      "deliveredBatchCount": 19,
+      "clientRetainedErrorKeys": 1,
+      "queuesAtExport": {
+        "ioQueueSize": 0,
+        "ioQueueCapacity": 4,
+        "ioActiveTasks": 1,
+        "ioRejectedTasks": 0
+      },
+      "lastDeliveredMemory": {
+        "jvmPid": 118036,
+        "scope": "shared integrated client/server JVM process; do not add to server value",
+        "heapUsedBytes": 1200980480,
+        "heapCommittedBytes": 3139436544,
+        "heapMaxBytes": 4294967296,
+        "gcCountDelta": 0,
+        "gcAggregateMillisDelta": 0,
+        "processResidentBytes": "NOT_MEASURED"
+      },
+      "integratedServerOwnInclusiveApiHookDurationsNs": {
+        "retained": 880,
+        "capacity": 1024,
+        "dropped": 0,
+        "allCount": 880,
+        "unit": "ns",
+        "allSumNs": 351612900,
+        "status": "MEASURED",
+        "allMeanNs": 399560.11363636365,
+        "allMaxNs": 21915600,
+        "allCountOver50ms": 0,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "p95Ns": 12900,
+        "p99Ns": 16799900
+      },
+      "integratedServerOwnScope": "PARTIAL_INCLUSIVE_API_HOOK_SAMPLES; includes session/JFR start-stop, record, measured, END metrics; nested timings may overlap, not unique process CPU; actual off/on QA tick comparison separate",
+      "processResourceScope": "Client/server share a PID in integrated play: do not add heap, GC, caches or process CPU twice.",
+      "localTimingRetention": {
+        "ack_cache_contains_exact_ordinary_model_chain": true,
+        "local_windows_dropped": 0,
+        "local_windows_retained": 19,
+        "production_artifact_sha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+        "scope": "Exact current ZIP runtime identity; full window/session sample counts reconciled with partial tail once. Views overlap and must not be added; elapsed nested sampled timers are not unique CPU/GPU cost.",
+        "session": "6e440e7f-f0ae-4ef7-96c6-8368a61f2cef",
+        "session_raw_samples_dropped": 0,
+        "session_raw_samples_retained": 3274,
+        "session_sampled_invocations": 3274,
+        "session_sections": 16,
+        "status": "PASS_CURRENT_ACCEPTED_WIRE_AND_FULL_BOUNDED_LOCAL_SAMPLED_TIMINGS",
+        "wire_batches": 19,
+        "wire_sampled_invocations_omitted": 0
+      },
+      "clientExport": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt18\\diagnostics\\dreamwalker-client-6e440e7f-f0ae-4ef7-96c6-8368a61f2cef.zip",
+        "bytes": 32690,
+        "sha256": "525e88d7f7d845e3604f0c9ef991ed7ca91de90c5514ef9ba20c9b1494cc01e0"
+      },
+      "serverExport": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt18\\dreamwalker-diagnostics\\diagnostics-6e440e7f-f0ae-4ef7-96c6-8368a61f2cef-1791480718879.zip",
+        "bytes": 29115,
+        "sha256": "2336828352937f30de416759f0751576cc6c039efc8d95577a1bd8b68d5f9ad5"
+      }
+    },
+    "client_reenter": {
+      "session": "9428c701-ccea-4dcf-936a-f3ba983ea74e",
+      "clientProcessId": 115888,
+      "integratedServerProcessId": 115888,
+      "sameJvmProcess": true,
+      "presentationWindows": [
+        {
+          "max_ms": 10.8892,
+          "mean_ms": 8.426468128161888,
+          "median_ms": 8.4095,
+          "min_ms": 6.1981,
+          "p95_ms": 9.8615,
+          "p99_ms": 10.5741,
+          "samples": 593,
+          "unit": "ms",
+          "label": "OFF_BEFORE"
+        },
+        {
+          "max_ms": 15.724,
+          "mean_ms": 8.394380471380472,
+          "median_ms": 8.39345,
+          "min_ms": 2.2997,
+          "p95_ms": 9.8556,
+          "p99_ms": 10.5941,
+          "samples": 594,
+          "unit": "ms",
+          "label": "ON_IDENTICAL_CLEANED_SCENE"
+        },
+        {
+          "max_ms": 10.9709,
+          "mean_ms": 8.412402698145025,
+          "median_ms": 8.382,
+          "min_ms": 6.0564,
+          "p95_ms": 9.9027,
+          "p99_ms": 10.6534,
+          "samples": 593,
+          "unit": "ms",
+          "label": "OFF_AFTER"
+        }
+      ],
+      "clientFlushElapsedTotalMs": 19.9465,
+      "clientFlushScope": "Cumulative elapsed sendBatch work in this session; not CPU/GPU time and not all diagnostic work.",
+      "clientIoThreadCpuMsProcessCumulative": 187.5,
+      "clientIoScope": "IO worker process-cumulative counter; may include earlier exports in this process. Not session-only.",
+      "deliveredBatchCount": 19,
+      "clientRetainedErrorKeys": 1,
+      "queuesAtExport": {
+        "ioQueueSize": 0,
+        "ioQueueCapacity": 4,
+        "ioActiveTasks": 1,
+        "ioRejectedTasks": 0
+      },
+      "lastDeliveredMemory": {
+        "jvmPid": 115888,
+        "scope": "shared integrated client/server JVM process; do not add to server value",
+        "heapUsedBytes": 943358160,
+        "heapCommittedBytes": 2902458368,
+        "heapMaxBytes": 4294967296,
+        "gcCountDelta": 1,
+        "gcAggregateMillisDelta": 2,
+        "processResidentBytes": "NOT_MEASURED"
+      },
+      "integratedServerOwnInclusiveApiHookDurationsNs": {
+        "capacity": 1024,
+        "retained": 955,
+        "allCount": 955,
+        "dropped": 0,
+        "unit": "ns",
+        "allSumNs": 254499100,
+        "status": "MEASURED",
+        "allMeanNs": 266491.2041884817,
+        "allMaxNs": 15020600,
+        "allCountOver50ms": 0,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "p95Ns": 12500,
+        "p99Ns": 11262200
+      },
+      "integratedServerOwnScope": "PARTIAL_INCLUSIVE_API_HOOK_SAMPLES; includes session/JFR start-stop, record, measured, END metrics; nested timings may overlap, not unique process CPU; actual off/on QA tick comparison separate",
+      "processResourceScope": "Client/server share a PID in integrated play: do not add heap, GC, caches or process CPU twice.",
+      "localTimingRetention": {
+        "ack_cache_contains_exact_ordinary_model_chain": true,
+        "local_windows_dropped": 0,
+        "local_windows_retained": 19,
+        "production_artifact_sha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+        "scope": "Exact current ZIP runtime identity; full window/session sample counts reconciled with partial tail once. Views overlap and must not be added; elapsed nested sampled timers are not unique CPU/GPU cost.",
+        "session": "9428c701-ccea-4dcf-936a-f3ba983ea74e",
+        "session_raw_samples_dropped": 0,
+        "session_raw_samples_retained": 3268,
+        "session_sampled_invocations": 3268,
+        "session_sections": 16,
+        "status": "PASS_CURRENT_ACCEPTED_WIRE_AND_FULL_BOUNDED_LOCAL_SAMPLED_TIMINGS",
+        "wire_batches": 19,
+        "wire_sampled_invocations_omitted": 0
+      },
+      "clientExport": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-reenter-release5-attempt2\\diagnostics\\dreamwalker-client-9428c701-ccea-4dcf-936a-f3ba983ea74e.zip",
+        "bytes": 32696,
+        "sha256": "ff652ccd6dc500abc4b2e62589bd9a17aae159545a03de344464b49cd9e5d6dc"
+      },
+      "serverExport": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-reenter-release5-attempt2\\dreamwalker-diagnostics\\diagnostics-9428c701-ccea-4dcf-936a-f3ba983ea74e-1791481163765.zip",
+        "bytes": 28980,
+        "sha256": "46b406cbcee2932d551ed497b9cab0570aa855a28880cb8362bf9882e7ddb6d7"
+      }
+    },
+    "fullKappa": {
+      "session": "a45b4aeb-95e4-4beb-b849-59d8b34110ae",
+      "clientProcessId": 91892,
+      "integratedServerProcessId": 91892,
+      "sameJvmProcess": true,
+      "presentationWindows": [
+        {
+          "label": "OFF_BEFORE",
+          "measurements": 431,
+          "averageNs": 11576769.141531322,
+          "p95Ns": 16425800,
+          "p99Ns": 25318700,
+          "retainedSamples": 431,
+          "droppedSamples": 0
+        },
+        {
+          "label": "ON_IDENTICAL_CLEANED_SCENE",
+          "measurements": 436,
+          "averageNs": 11413891.513761468,
+          "p95Ns": 16224600,
+          "p99Ns": 25309100,
+          "retainedSamples": 436,
+          "droppedSamples": 0
+        },
+        {
+          "label": "OFF_AFTER",
+          "measurements": 440,
+          "averageNs": 11325012.727272727,
+          "p95Ns": 16186800,
+          "p99Ns": 24597700,
+          "retainedSamples": 440,
+          "droppedSamples": 0
+        }
+      ],
+      "clientFlushElapsedTotalMs": 18.6816,
+      "clientFlushScope": "Cumulative elapsed sendBatch work in this session; not CPU/GPU time and not all diagnostic work.",
+      "clientIoThreadCpuMsProcessCumulative": 312.5,
+      "clientIoScope": "IO worker process-cumulative counter; may include earlier exports in this process. Not session-only.",
+      "deliveredBatchCount": 19,
+      "clientRetainedErrorKeys": 1,
+      "queuesAtExport": {
+        "ioQueueSize": 0,
+        "ioQueueCapacity": 4,
+        "ioActiveTasks": 1,
+        "ioRejectedTasks": 0
+      },
+      "lastDeliveredMemory": {
+        "jvmPid": 91892,
+        "scope": "shared integrated client/server JVM process; do not add to server value",
+        "heapUsedBytes": 5760595656,
+        "heapCommittedBytes": 6442450944,
+        "heapMaxBytes": 6442450944,
+        "gcCountDelta": 2,
+        "gcAggregateMillisDelta": 21,
+        "processResidentBytes": "NOT_MEASURED"
+      },
+      "integratedServerOwnInclusiveApiHookDurationsNs": {
+        "capacity": 1024,
+        "retained": 704,
+        "allCount": 704,
+        "dropped": 0,
+        "unit": "ns",
+        "allSumNs": 858183500,
+        "status": "MEASURED",
+        "allMeanNs": 1219010.6534090908,
+        "allMaxNs": 61021900,
+        "allCountOver50ms": 1,
+        "quantileScope": "RETAINED_WINDOW_ONLY",
+        "p95Ns": 33300,
+        "p99Ns": 40951900
+      },
+      "integratedServerOwnScope": "PARTIAL_INCLUSIVE_API_HOOK_SAMPLES; includes session/JFR start-stop, record, measured, END metrics; nested timings may overlap, not unique process CPU; actual off/on QA tick comparison separate",
+      "processResourceScope": "Client/server share a PID in integrated play: do not add heap, GC, caches or process CPU twice.",
+      "localTimingRetention": "Already checked by bound actual-client independent report",
+      "clientExport": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release5-attempt3\\diagnostics\\dreamwalker-client-a45b4aeb-95e4-4beb-b849-59d8b34110ae.zip",
+        "bytes": 39826,
+        "sha256": "a38aa76edbe5e3b4daecfb01260ea1c69d4ae0a27a458b96541432e6369b414d"
+      },
+      "serverExport": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-full-release5-attempt3\\dreamwalker-diagnostics\\diagnostics-a45b4aeb-95e4-4beb-b849-59d8b34110ae-1791479306092.zip",
+        "bytes": 37274,
+        "sha256": "b85d904b9c1408f0de17018a361ce095dfa6ca241e2c7d1cf9000ad77d626f5a"
+      },
+      "windowUnit": "ns"
+    }
+  },
+  "scopes": {
+    "dedicated": "Separate OFF60/ON60 processes use the exact same pristine Author8 baseline and balanced operations; REENTER uses ON saved copy and explicit short stop.",
+    "frames": "Matched camera/cleaned scene/settings OFF/ON/OFF presentation intervals with observers in all windows; variance is descriptive, not causal diagnostics cost.",
+    "sampledTimers": "FIRST_THEN_EVERY_32_CALLS; nested/inclusive sampled elapsed times cannot be summed to unique CPU or extrapolated to total rendering cost.",
+    "gc": "JFR actual pause durations only when observed; zero observed events means NOT_MEASURED_NO_SAMPLES. MXBean collection duration includes other phases.",
+    "background": "No intended Minecraft/Gradle overlap during dedicated windows. OS/background load uncontrolled.",
+    "gpu": "NOT_MEASURED",
+    "exactBlockFpsPercentage": "NOT_MEASURED",
+    "wholeNetworkTraffic": "NOT_MEASURED; only instrumented custom payload channels",
+    "manualVisualAcceptance": "PENDING_USER_REVIEW"
+  },
+  "wholeTaskStatus": "NOT_READY_FULL_TASK; measured runtime checks do not replace manual review"
+}

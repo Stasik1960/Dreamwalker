@@ -1,0 +1,12 @@
+{
+  "schema": "dw-v10-qa22-text-api-fix-v1",
+  "status": "SOURCE_READY_FROZEN_COMPILATION_AND_ACTUAL_RUNTIME_NOT_RUN",
+  "beforeSha256": "783545637bb16aa26e9e174956f72e88810055fd864436c0258382ef8a7c29cf",
+  "afterSha256": "c8222b444b6d826dda921f0093066c21f7bf2db0e1561caa49646d10f24de35c",
+  "source": "src\\review\\java\\dev\\dreamwalker\\bloodbornedw\\review\\ReviewV10ClientBootstrap.java",
+  "exactReplacementCount": 3,
+  "replacement": "Text.Serialization.toJsonString -> Text.Serializer.toJson",
+  "productionChanged": false,
+  "assertionsChanged": false,
+  "compiledByThisAgent": false
+}

@@ -1,0 +1,515 @@
+Classfile jar:file:///C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne%20complete/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-cdeb4ce359/1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2/minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar!/net/minecraft/server/network/ServerPlayNetworkHandler$1.class
+  Last modified 6 окт. 2026 г.; size 5819 bytes
+  SHA-256 checksum 947186e1c35067e6bf4915389739026729035561bf48d28bdd2988883cd52550
+  Compiled from "ServerPlayNetworkHandler.java"
+class net.minecraft.server.network.ServerPlayNetworkHandler$1 implements net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket$Handler
+  minor version: 0
+  major version: 61
+  flags: (0x0020) ACC_SUPER
+  this_class: #2                          // net/minecraft/server/network/ServerPlayNetworkHandler$1
+  super_class: #4                         // java/lang/Object
+  interfaces: 1, fields: 3, methods: 6, attributes: 5
+Constant pool:
+    #1 = Utf8               net/minecraft/server/network/ServerPlayNetworkHandler$1
+    #2 = Class              #1            // net/minecraft/server/network/ServerPlayNetworkHandler$1
+    #3 = Utf8               java/lang/Object
+    #4 = Class              #3            // java/lang/Object
+    #5 = Utf8               net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$Handler
+    #6 = Class              #5            // net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$Handler
+    #7 = Utf8               ServerPlayNetworkHandler.java
+    #8 = Utf8               net/minecraft/server/network/ServerPlayNetworkHandler
+    #9 = Class              #8            // net/minecraft/server/network/ServerPlayNetworkHandler
+   #10 = Utf8               onPlayerInteractEntity
+   #11 = Utf8               (Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket;)V
+   #12 = NameAndType        #10:#11       // onPlayerInteractEntity:(Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket;)V
+   #13 = Utf8               net/minecraft/server/network/ServerPlayNetworkHandler$Interaction
+   #14 = Class              #13           // net/minecraft/server/network/ServerPlayNetworkHandler$Interaction
+   #15 = Utf8               Interaction
+   #16 = Utf8               net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket
+   #17 = Class              #16           // net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket
+   #18 = Utf8               Handler
+   #19 = Utf8               java/lang/invoke/MethodHandles$Lookup
+   #20 = Class              #19           // java/lang/invoke/MethodHandles$Lookup
+   #21 = Utf8               java/lang/invoke/MethodHandles
+   #22 = Class              #21           // java/lang/invoke/MethodHandles
+   #23 = Utf8               Lookup
+   #24 = Utf8               field_39991
+   #25 = Utf8               Lnet/minecraft/server/world/ServerWorld;
+   #26 = Utf8               field_28962
+   #27 = Utf8               Lnet/minecraft/entity/Entity;
+   #28 = Utf8               field_28963
+   #29 = Utf8               Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+   #30 = Utf8               <init>
+   #31 = Utf8               (Lnet/minecraft/server/network/ServerPlayNetworkHandler;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)V
+   #32 = Utf8               ()V
+   #33 = Utf8               serverPlayNetworkHandler
+   #34 = Utf8               serverWorld
+   #35 = Utf8               entity
+   #36 = NameAndType        #28:#29       // field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+   #37 = Fieldref           #2.#36        // net/minecraft/server/network/ServerPlayNetworkHandler$1.field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+   #38 = NameAndType        #24:#25       // field_39991:Lnet/minecraft/server/world/ServerWorld;
+   #39 = Fieldref           #2.#38        // net/minecraft/server/network/ServerPlayNetworkHandler$1.field_39991:Lnet/minecraft/server/world/ServerWorld;
+   #40 = NameAndType        #26:#27       // field_28962:Lnet/minecraft/entity/Entity;
+   #41 = Fieldref           #2.#40        // net/minecraft/server/network/ServerPlayNetworkHandler$1.field_28962:Lnet/minecraft/entity/Entity;
+   #42 = NameAndType        #30:#32       // "<init>":()V
+   #43 = Methodref          #4.#42        // java/lang/Object."<init>":()V
+   #44 = Utf8               this
+   #45 = Utf8               Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;
+   #46 = Utf8               processInteract
+   #47 = Utf8               (Lnet/minecraft/util/Hand;Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;)V
+   #48 = Utf8               hand
+   #49 = Utf8               action
+   #50 = Utf8               player
+   #51 = Utf8               Lnet/minecraft/server/network/ServerPlayerEntity;
+   #52 = NameAndType        #50:#51       // player:Lnet/minecraft/server/network/ServerPlayerEntity;
+   #53 = Fieldref           #9.#52        // net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+   #54 = Utf8               net/minecraft/server/network/ServerPlayerEntity
+   #55 = Class              #54           // net/minecraft/server/network/ServerPlayerEntity
+   #56 = Utf8               getStackInHand
+   #57 = Utf8               (Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;
+   #58 = NameAndType        #56:#57       // getStackInHand:(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;
+   #59 = Methodref          #55.#58       // net/minecraft/server/network/ServerPlayerEntity.getStackInHand:(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;
+   #60 = Utf8               net/minecraft/server/world/ServerWorld
+   #61 = Class              #60           // net/minecraft/server/world/ServerWorld
+   #62 = Utf8               getEnabledFeatures
+   #63 = Utf8               ()Lnet/minecraft/resource/featuretoggle/FeatureSet;
+   #64 = NameAndType        #62:#63       // getEnabledFeatures:()Lnet/minecraft/resource/featuretoggle/FeatureSet;
+   #65 = Methodref          #61.#64       // net/minecraft/server/world/ServerWorld.getEnabledFeatures:()Lnet/minecraft/resource/featuretoggle/FeatureSet;
+   #66 = Utf8               net/minecraft/item/ItemStack
+   #67 = Class              #66           // net/minecraft/item/ItemStack
+   #68 = Utf8               isItemEnabled
+   #69 = Utf8               (Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z
+   #70 = NameAndType        #68:#69       // isItemEnabled:(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z
+   #71 = Methodref          #67.#70       // net/minecraft/item/ItemStack.isItemEnabled:(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z
+   #72 = Utf8               copy
+   #73 = Utf8               ()Lnet/minecraft/item/ItemStack;
+   #74 = NameAndType        #72:#73       // copy:()Lnet/minecraft/item/ItemStack;
+   #75 = Methodref          #67.#74       // net/minecraft/item/ItemStack.copy:()Lnet/minecraft/item/ItemStack;
+   #76 = Utf8               run
+   #77 = Utf8               (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+   #78 = NameAndType        #76:#77       // run:(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+   #79 = InterfaceMethodref #14.#78       // net/minecraft/server/network/ServerPlayNetworkHandler$Interaction.run:(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+   #80 = Utf8               net/minecraft/util/ActionResult
+   #81 = Class              #80           // net/minecraft/util/ActionResult
+   #82 = Utf8               isAccepted
+   #83 = Utf8               ()Z
+   #84 = NameAndType        #82:#83       // isAccepted:()Z
+   #85 = Methodref          #81.#84       // net/minecraft/util/ActionResult.isAccepted:()Z
+   #86 = Utf8               net/minecraft/advancement/criterion/Criteria
+   #87 = Class              #86           // net/minecraft/advancement/criterion/Criteria
+   #88 = Utf8               PLAYER_INTERACTED_WITH_ENTITY
+   #89 = Utf8               Lnet/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion;
+   #90 = NameAndType        #88:#89       // PLAYER_INTERACTED_WITH_ENTITY:Lnet/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion;
+   #91 = Fieldref           #87.#90       // net/minecraft/advancement/criterion/Criteria.PLAYER_INTERACTED_WITH_ENTITY:Lnet/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion;
+   #92 = Utf8               net/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion
+   #93 = Class              #92           // net/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion
+   #94 = Utf8               trigger
+   #95 = Utf8               (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;)V
+   #96 = NameAndType        #94:#95       // trigger:(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;)V
+   #97 = Methodref          #93.#96       // net/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion.trigger:(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;)V
+   #98 = Utf8               shouldSwingHand
+   #99 = NameAndType        #98:#83       // shouldSwingHand:()Z
+  #100 = Methodref          #81.#99       // net/minecraft/util/ActionResult.shouldSwingHand:()Z
+  #101 = Utf8               swingHand
+  #102 = Utf8               (Lnet/minecraft/util/Hand;Z)V
+  #103 = NameAndType        #101:#102     // swingHand:(Lnet/minecraft/util/Hand;Z)V
+  #104 = Methodref          #55.#103      // net/minecraft/server/network/ServerPlayerEntity.swingHand:(Lnet/minecraft/util/Hand;Z)V
+  #105 = Utf8               Lnet/minecraft/util/Hand;
+  #106 = Utf8               Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #107 = Utf8               itemStack
+  #108 = Utf8               Lnet/minecraft/item/ItemStack;
+  #109 = Utf8               itemStack2
+  #110 = Utf8               actionResult
+  #111 = Utf8               Lnet/minecraft/util/ActionResult;
+  #112 = Utf8               interact
+  #113 = Utf8               (Lnet/minecraft/util/Hand;)V
+  #114 = MethodType         #77           //  (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #115 = Utf8               net/minecraft/entity/player/PlayerEntity
+  #116 = Class              #115          // net/minecraft/entity/player/PlayerEntity
+  #117 = Utf8               (Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #118 = NameAndType        #112:#117     // interact:(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #119 = Methodref          #116.#118     // net/minecraft/entity/player/PlayerEntity.interact:(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #120 = MethodHandle       5:#119        // REF_invokeVirtual net/minecraft/entity/player/PlayerEntity.interact:(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #121 = Utf8               java/lang/invoke/LambdaMetafactory
+  #122 = Class              #121          // java/lang/invoke/LambdaMetafactory
+  #123 = Utf8               metafactory
+  #124 = Utf8               (Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+  #125 = NameAndType        #123:#124     // metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+  #126 = Methodref          #122.#125     // java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+  #127 = MethodHandle       6:#126        // REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+  #128 = Utf8               ()Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #129 = NameAndType        #76:#128      // run:()Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #130 = InvokeDynamic      #0:#129       // #0:run:()Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #131 = NameAndType        #46:#47       // processInteract:(Lnet/minecraft/util/Hand;Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;)V
+  #132 = Methodref          #2.#131       // net/minecraft/server/network/ServerPlayNetworkHandler$1.processInteract:(Lnet/minecraft/util/Hand;Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;)V
+  #133 = Utf8               interactAt
+  #134 = Utf8               (Lnet/minecraft/util/Hand;Lnet/minecraft/util/math/Vec3d;)V
+  #135 = Utf8               pos
+  #136 = Utf8               method_33898
+  #137 = Utf8               (Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #138 = NameAndType        #136:#137     // method_33898:(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #139 = Methodref          #2.#138       // net/minecraft/server/network/ServerPlayNetworkHandler$1.method_33898:(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #140 = MethodHandle       6:#139        // REF_invokeStatic net/minecraft/server/network/ServerPlayNetworkHandler$1.method_33898:(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #141 = Utf8               (Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #142 = NameAndType        #76:#141      // run:(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #143 = InvokeDynamic      #1:#142       // #1:run:(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+  #144 = Utf8               Lnet/minecraft/util/math/Vec3d;
+  #145 = Utf8               attack
+  #146 = Utf8               net/minecraft/entity/ItemEntity
+  #147 = Class              #146          // net/minecraft/entity/ItemEntity
+  #148 = Utf8               net/minecraft/entity/ExperienceOrbEntity
+  #149 = Class              #148          // net/minecraft/entity/ExperienceOrbEntity
+  #150 = Utf8               net/minecraft/entity/projectile/PersistentProjectileEntity
+  #151 = Class              #150          // net/minecraft/entity/projectile/PersistentProjectileEntity
+  #152 = Utf8               multiplayer.disconnect.invalid_entity_attacked
+  #153 = String             #152          // multiplayer.disconnect.invalid_entity_attacked
+  #154 = Utf8               net/minecraft/text/Text
+  #155 = Class              #154          // net/minecraft/text/Text
+  #156 = Utf8               translatable
+  #157 = Utf8               (Ljava/lang/String;)Lnet/minecraft/text/MutableText;
+  #158 = NameAndType        #156:#157     // translatable:(Ljava/lang/String;)Lnet/minecraft/text/MutableText;
+  #159 = InterfaceMethodref #155.#158     // net/minecraft/text/Text.translatable:(Ljava/lang/String;)Lnet/minecraft/text/MutableText;
+  #160 = Utf8               disconnect
+  #161 = Utf8               (Lnet/minecraft/text/Text;)V
+  #162 = NameAndType        #160:#161     // disconnect:(Lnet/minecraft/text/Text;)V
+  #163 = Methodref          #9.#162       // net/minecraft/server/network/ServerPlayNetworkHandler.disconnect:(Lnet/minecraft/text/Text;)V
+  #164 = Utf8               LOGGER
+  #165 = Utf8               Lorg/slf4j/Logger;
+  #166 = NameAndType        #164:#165     // LOGGER:Lorg/slf4j/Logger;
+  #167 = Fieldref           #9.#166       // net/minecraft/server/network/ServerPlayNetworkHandler.LOGGER:Lorg/slf4j/Logger;
+  #168 = Utf8               Player {} tried to attack an invalid entity
+  #169 = String             #168          // Player {} tried to attack an invalid entity
+  #170 = Utf8               getName
+  #171 = Utf8               ()Lnet/minecraft/text/Text;
+  #172 = NameAndType        #170:#171     // getName:()Lnet/minecraft/text/Text;
+  #173 = Methodref          #55.#172      // net/minecraft/server/network/ServerPlayerEntity.getName:()Lnet/minecraft/text/Text;
+  #174 = Utf8               getString
+  #175 = Utf8               ()Ljava/lang/String;
+  #176 = NameAndType        #174:#175     // getString:()Ljava/lang/String;
+  #177 = InterfaceMethodref #155.#176     // net/minecraft/text/Text.getString:()Ljava/lang/String;
+  #178 = Utf8               org/slf4j/Logger
+  #179 = Class              #178          // org/slf4j/Logger
+  #180 = Utf8               warn
+  #181 = Utf8               (Ljava/lang/String;Ljava/lang/Object;)V
+  #182 = NameAndType        #180:#181     // warn:(Ljava/lang/String;Ljava/lang/Object;)V
+  #183 = InterfaceMethodref #179.#182     // org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+  #184 = Utf8               net/minecraft/util/Hand
+  #185 = Class              #184          // net/minecraft/util/Hand
+  #186 = Utf8               MAIN_HAND
+  #187 = NameAndType        #186:#105     // MAIN_HAND:Lnet/minecraft/util/Hand;
+  #188 = Fieldref           #185.#187     // net/minecraft/util/Hand.MAIN_HAND:Lnet/minecraft/util/Hand;
+  #189 = Utf8               (Lnet/minecraft/entity/Entity;)V
+  #190 = NameAndType        #145:#189     // attack:(Lnet/minecraft/entity/Entity;)V
+  #191 = Methodref          #55.#190      // net/minecraft/server/network/ServerPlayerEntity.attack:(Lnet/minecraft/entity/Entity;)V
+  #192 = Utf8               vec3d
+  #193 = Utf8               handx
+  #194 = Utf8               net/minecraft/entity/Entity
+  #195 = Class              #194          // net/minecraft/entity/Entity
+  #196 = Utf8               (Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #197 = NameAndType        #133:#196     // interactAt:(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #198 = Methodref          #195.#197     // net/minecraft/entity/Entity.interactAt:(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  #199 = Utf8               Code
+  #200 = Utf8               LineNumberTable
+  #201 = Utf8               LocalVariableTable
+  #202 = Utf8               Signature
+  #203 = Utf8               MethodParameters
+  #204 = Utf8               StackMapTable
+  #205 = Utf8               InnerClasses
+  #206 = Utf8               EnclosingMethod
+  #207 = Utf8               SourceFile
+  #208 = Utf8               BootstrapMethods
+  #209 = Utf8               NestHost
+{
+  final net.minecraft.server.world.ServerWorld field_39991;
+    descriptor: Lnet/minecraft/server/world/ServerWorld;
+    flags: (0x1010) ACC_FINAL, ACC_SYNTHETIC
+
+  final net.minecraft.entity.Entity field_28962;
+    descriptor: Lnet/minecraft/entity/Entity;
+    flags: (0x1010) ACC_FINAL, ACC_SYNTHETIC
+
+  final net.minecraft.server.network.ServerPlayNetworkHandler field_28963;
+    descriptor: Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+    flags: (0x1010) ACC_FINAL, ACC_SYNTHETIC
+
+  net.minecraft.server.network.ServerPlayNetworkHandler$1();
+    descriptor: (Lnet/minecraft/server/network/ServerPlayNetworkHandler;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)V
+    flags: (0x0000)
+    Code:
+      stack=2, locals=4, args_size=4
+         0: aload_0
+         1: aload_1
+         2: putfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+         5: aload_0
+         6: aload_2
+         7: putfield      #39                 // Field field_39991:Lnet/minecraft/server/world/ServerWorld;
+        10: aload_0
+        11: aload_3
+        12: putfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+        15: aload_0
+        16: invokespecial #43                 // Method java/lang/Object."<init>":()V
+        19: return
+      LineNumberTable:
+        line 1571: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      20     0  this   Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;
+            0      20     1 serverPlayNetworkHandler   Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+            0      20     2 serverWorld   Lnet/minecraft/server/world/ServerWorld;
+            0      20     3 entity   Lnet/minecraft/entity/Entity;
+    Signature: #32                          // ()V
+    MethodParameters:
+      Name                           Flags
+      serverPlayNetworkHandler
+      serverWorld
+      entity
+
+  private void processInteract(net.minecraft.util.Hand, net.minecraft.server.network.ServerPlayNetworkHandler$Interaction);
+    descriptor: (Lnet/minecraft/util/Hand;Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;)V
+    flags: (0x0002) ACC_PRIVATE
+    Code:
+      stack=4, locals=6, args_size=3
+         0: aload_0
+         1: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+         4: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+         7: aload_1
+         8: invokevirtual #59                 // Method net/minecraft/server/network/ServerPlayerEntity.getStackInHand:(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;
+        11: astore_3
+        12: aload_3
+        13: aload_0
+        14: getfield      #39                 // Field field_39991:Lnet/minecraft/server/world/ServerWorld;
+        17: invokevirtual #65                 // Method net/minecraft/server/world/ServerWorld.getEnabledFeatures:()Lnet/minecraft/resource/featuretoggle/FeatureSet;
+        20: invokevirtual #71                 // Method net/minecraft/item/ItemStack.isItemEnabled:(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z
+        23: ifne          27
+        26: return
+        27: aload_3
+        28: invokevirtual #75                 // Method net/minecraft/item/ItemStack.copy:()Lnet/minecraft/item/ItemStack;
+        31: astore        4
+        33: aload_2
+        34: aload_0
+        35: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        38: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+        41: aload_0
+        42: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+        45: aload_1
+        46: invokeinterface #79,  4           // InterfaceMethod net/minecraft/server/network/ServerPlayNetworkHandler$Interaction.run:(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+        51: astore        5
+        53: aload         5
+        55: invokevirtual #85                 // Method net/minecraft/util/ActionResult.isAccepted:()Z
+        58: ifeq          100
+        61: getstatic     #91                 // Field net/minecraft/advancement/criterion/Criteria.PLAYER_INTERACTED_WITH_ENTITY:Lnet/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion;
+        64: aload_0
+        65: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        68: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+        71: aload         4
+        73: aload_0
+        74: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+        77: invokevirtual #97                 // Method net/minecraft/advancement/criterion/PlayerInteractedWithEntityCriterion.trigger:(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/Entity;)V
+        80: aload         5
+        82: invokevirtual #100                // Method net/minecraft/util/ActionResult.shouldSwingHand:()Z
+        85: ifeq          100
+        88: aload_0
+        89: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        92: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+        95: aload_1
+        96: iconst_1
+        97: invokevirtual #104                // Method net/minecraft/server/network/ServerPlayerEntity.swingHand:(Lnet/minecraft/util/Hand;Z)V
+       100: return
+      StackMapTable: number_of_entries = 2
+        frame_type = 252 /* append */
+          offset_delta = 27
+          locals = [ class net/minecraft/item/ItemStack ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 72
+          locals = []
+          stack = []
+      LineNumberTable:
+        line 1573: 0
+        line 1574: 12
+        line 1575: 26
+        line 1577: 27
+        line 1578: 33
+        line 1579: 53
+        line 1580: 61
+        line 1581: 80
+        line 1582: 88
+        line 1585: 100
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     101     0  this   Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;
+            0     101     1  hand   Lnet/minecraft/util/Hand;
+            0     101     2 action   Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+           12      89     3 itemStack   Lnet/minecraft/item/ItemStack;
+           33      68     4 itemStack2   Lnet/minecraft/item/ItemStack;
+           53      48     5 actionResult   Lnet/minecraft/util/ActionResult;
+    MethodParameters:
+      Name                           Flags
+      hand
+      action
+
+  public void interact(net.minecraft.util.Hand);
+    descriptor: (Lnet/minecraft/util/Hand;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: invokedynamic #130,  0            // InvokeDynamic #0:run:()Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+         7: invokevirtual #132                // Method processInteract:(Lnet/minecraft/util/Hand;Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;)V
+        10: return
+      LineNumberTable:
+        line 1589: 0
+        line 1590: 10
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      11     0  this   Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;
+            0      11     1  hand   Lnet/minecraft/util/Hand;
+    MethodParameters:
+      Name                           Flags
+      hand
+
+  public void interactAt(net.minecraft.util.Hand, net.minecraft.util.math.Vec3d);
+    descriptor: (Lnet/minecraft/util/Hand;Lnet/minecraft/util/math/Vec3d;)V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=3
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: invokedynamic #143,  0            // InvokeDynamic #1:run:(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;
+         8: invokevirtual #132                // Method processInteract:(Lnet/minecraft/util/Hand;Lnet/minecraft/server/network/ServerPlayNetworkHandler$Interaction;)V
+        11: return
+      LineNumberTable:
+        line 1594: 0
+        line 1595: 11
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0      12     0  this   Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;
+            0      12     1  hand   Lnet/minecraft/util/Hand;
+            0      12     2   pos   Lnet/minecraft/util/math/Vec3d;
+    MethodParameters:
+      Name                           Flags
+      hand
+      pos
+
+  public void attack();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=3, locals=2, args_size=1
+         0: aload_0
+         1: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+         4: instanceof    #147                // class net/minecraft/entity/ItemEntity
+         7: ifne          44
+        10: aload_0
+        11: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+        14: instanceof    #149                // class net/minecraft/entity/ExperienceOrbEntity
+        17: ifne          44
+        20: aload_0
+        21: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+        24: instanceof    #151                // class net/minecraft/entity/projectile/PersistentProjectileEntity
+        27: ifne          44
+        30: aload_0
+        31: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+        34: aload_0
+        35: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        38: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+        41: if_acmpne     82
+        44: aload_0
+        45: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        48: ldc           #153                // String multiplayer.disconnect.invalid_entity_attacked
+        50: invokestatic  #159                // InterfaceMethod net/minecraft/text/Text.translatable:(Ljava/lang/String;)Lnet/minecraft/text/MutableText;
+        53: invokevirtual #163                // Method net/minecraft/server/network/ServerPlayNetworkHandler.disconnect:(Lnet/minecraft/text/Text;)V
+        56: getstatic     #167                // Field net/minecraft/server/network/ServerPlayNetworkHandler.LOGGER:Lorg/slf4j/Logger;
+        59: ldc           #169                // String Player {} tried to attack an invalid entity
+        61: aload_0
+        62: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        65: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+        68: invokevirtual #173                // Method net/minecraft/server/network/ServerPlayerEntity.getName:()Lnet/minecraft/text/Text;
+        71: invokeinterface #177,  1          // InterfaceMethod net/minecraft/text/Text.getString:()Ljava/lang/String;
+        76: invokeinterface #183,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+        81: return
+        82: aload_0
+        83: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+        86: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+        89: getstatic     #188                // Field net/minecraft/util/Hand.MAIN_HAND:Lnet/minecraft/util/Hand;
+        92: invokevirtual #59                 // Method net/minecraft/server/network/ServerPlayerEntity.getStackInHand:(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;
+        95: astore_1
+        96: aload_1
+        97: aload_0
+        98: getfield      #39                 // Field field_39991:Lnet/minecraft/server/world/ServerWorld;
+       101: invokevirtual #65                 // Method net/minecraft/server/world/ServerWorld.getEnabledFeatures:()Lnet/minecraft/resource/featuretoggle/FeatureSet;
+       104: invokevirtual #71                 // Method net/minecraft/item/ItemStack.isItemEnabled:(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z
+       107: ifne          111
+       110: return
+       111: aload_0
+       112: getfield      #37                 // Field field_28963:Lnet/minecraft/server/network/ServerPlayNetworkHandler;
+       115: getfield      #53                 // Field net/minecraft/server/network/ServerPlayNetworkHandler.player:Lnet/minecraft/server/network/ServerPlayerEntity;
+       118: aload_0
+       119: getfield      #41                 // Field field_28962:Lnet/minecraft/entity/Entity;
+       122: invokevirtual #191                // Method net/minecraft/server/network/ServerPlayerEntity.attack:(Lnet/minecraft/entity/Entity;)V
+       125: return
+      StackMapTable: number_of_entries = 3
+        frame_type = 44 /* same */
+        frame_type = 37 /* same */
+        frame_type = 28 /* same */
+      LineNumberTable:
+        line 1599: 0
+        line 1600: 44
+        line 1601: 56
+        line 1602: 81
+        line 1605: 82
+        line 1606: 96
+        line 1607: 110
+        line 1610: 111
+        line 1611: 125
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0     126     0  this   Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;
+           96      30     1 itemStack   Lnet/minecraft/item/ItemStack;
+
+  private static net.minecraft.util.ActionResult method_33898(net.minecraft.util.math.Vec3d, net.minecraft.server.network.ServerPlayerEntity, net.minecraft.entity.Entity, net.minecraft.util.Hand);
+    descriptor: (Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+    flags: (0x100a) ACC_PRIVATE, ACC_STATIC, ACC_SYNTHETIC
+    Code:
+      stack=4, locals=4, args_size=4
+         0: aload_2
+         1: aload_1
+         2: aload_0
+         3: aload_3
+         4: invokevirtual #198                // Method net/minecraft/entity/Entity.interactAt:(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+         7: areturn
+      LineNumberTable:
+        line 1594: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+            0       8     0 vec3d   Lnet/minecraft/util/math/Vec3d;
+            0       8     1 player   Lnet/minecraft/server/network/ServerPlayerEntity;
+            0       8     2 entity   Lnet/minecraft/entity/Entity;
+            0       8     3 handx   Lnet/minecraft/util/Hand;
+    MethodParameters:
+      Name                           Flags
+      vec3d
+      player
+      entity
+      handx
+}
+InnerClasses:
+  #2;                                     // class net/minecraft/server/network/ServerPlayNetworkHandler$1
+  private static #15= #14 of #9;          // Interaction=class net/minecraft/server/network/ServerPlayNetworkHandler$Interaction of class net/minecraft/server/network/ServerPlayNetworkHandler
+  public static #18= #6 of #17;           // Handler=class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$Handler of class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket
+  public static final #23= #20 of #22;    // Lookup=class java/lang/invoke/MethodHandles$Lookup of class java/lang/invoke/MethodHandles
+EnclosingMethod: #9.#12                 // net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerInteractEntity
+SourceFile: "ServerPlayNetworkHandler.java"
+BootstrapMethods:
+  0: #127 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #114 (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+      #120 REF_invokeVirtual net/minecraft/entity/player/PlayerEntity.interact:(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+      #114 (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+  1: #127 REF_invokeStatic java/lang/invoke/LambdaMetafactory.metafactory:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #114 (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+      #140 REF_invokeStatic net/minecraft/server/network/ServerPlayNetworkHandler$1.method_33898:(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+      #114 (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;
+NestHost: class net/minecraft/server/network/ServerPlayNetworkHandler

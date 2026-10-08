@@ -1,0 +1,553 @@
+{
+  "schema": "dreamwalker-rp-diagnostics-v9-implementation-v1",
+  "status": "PASS_CURRENT_NATIVE_ORDINARY_AND_INDEPENDENT_SERVER_CLIENT_DIAGNOSTICS_WITH_EXPLICIT_RP_CHAIN_GAP",
+  "authoritativeRequest": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\user-diagnostics-request-2026-10-08\\request.txt",
+    "bytes": 6676,
+    "sha256": "22c4ae75e6ec2d2d50e47461e41c9655c39e16c548a17d10cc742126b6895f93"
+  },
+  "ownedSources": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\RpDiagnostics.java",
+      "bytes": 4417,
+      "sha256": "99b0d47b26cd14ac7671ff3793fb085912b9903e5ee1b30171622f1392e681b3"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\ObjectRegistry.java",
+      "bytes": 10609,
+      "sha256": "40525539593f0bea4e20e01ca31a5dbe7389b89908fe663b9a261b3a75918bc0"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\PlacementObjectItem.java",
+      "bytes": 2261,
+      "sha256": "35f4758091cfb01fd4967c8f950dab5139424a385836f34ddb20b70c3ac7f268"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\RpObjectEntity.java",
+      "bytes": 24686,
+      "sha256": "092ac1bac8d04986b51516038db33a926fde00f482743ae42869cf18872d9294"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\RpObjectGeometry.java",
+      "bytes": 11425,
+      "sha256": "e3810aaf27fa87005f6a4edf93ff7a0fa489d732627d2d37257528c02e3ac352"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\object\\RpObjectIndex.java",
+      "bytes": 3380,
+      "sha256": "7c2834985e375c2b47b8f3afefb948a7b1763c7632a2e802bf34312ef1b3b0be"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\content\\SourceLegacyPayload.java",
+      "bytes": 3761,
+      "sha256": "08c9c1d91bfaca1f170b9e2427350177d487319f7ba1aba6fb9034b2c80d95fa"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\content\\AssetCatalog.java",
+      "bytes": 1688,
+      "sha256": "fb88154bb802b6790bfe7bbba3388558abf592c38b0468da46a722da02e96cb4"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\mob\\RpMobEntity.java",
+      "bytes": 12947,
+      "sha256": "809c8f7d4769f127b8aefd769b545678f6431d5836467af1c63a648af9b5e2d1"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\lamp\\LampService.java",
+      "bytes": 11527,
+      "sha256": "e2cf82ff6dc1696f58f0efc14cfa89af14e09ccd6889e7d9a3166939358a09f1"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\client\\RpClientDiagnostics.java",
+      "bytes": 2394,
+      "sha256": "5243edbbe9858bbc9e3327a458eae9af46ba4c0e595650fe388542caf6d87866"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\client\\CatalogEntityModel.java",
+      "bytes": 7173,
+      "sha256": "919bb005aa4e2359418e5436c34b970a029ea581b756ffced99e3d3afd419b76"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\client\\CatalogObjectRenderer.java",
+      "bytes": 1683,
+      "sha256": "115a8eda120c80b76aed7a31057d1a4074e5d36ccac88225ce794e5d06b474a4"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\client\\CatalogMobRenderer.java",
+      "bytes": 1193,
+      "sha256": "38be838084522cb3119076dddd7dbefc64ae9e993ad3b4823eb5eb660f4c4345"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\client\\lamp\\LampClient.java",
+      "bytes": 3224,
+      "sha256": "972cf158249c3d85ef4dd857eef5cc4dd3bf056ce3acc0cb76dc56bfe931ce32"
+    }
+  ],
+  "nativeSource": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\gametest\\java\\dev\\dreamwalker\\bloodbornedw\\gametest\\RpV9BehaviourGameTests.java",
+    "bytes": 24342,
+    "sha256": "443903566b73d459a3409082ab3f17d7ea25917a28b811213167d965a02eb946"
+  },
+  "compileLog": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\rp-diagnostics-compile\\javac.log",
+    "bytes": 354,
+    "sha256": "f6cd0f3a3f31f4c88e5a823bbda87819f208b74bf32263f2e125099730d4b08d"
+  },
+  "compileScope": "Java17 proc:none against current actual diagnostic API sources; not Loom remap, native test execution or game launch",
+  "nativeCase": "diagnosticsPreserveTypedRpStateRefusalsAndDeduplicateCorruptEnvelope",
+  "newNativeExecution": {
+    "status": "PASS_NATIVE_ACTUAL_TYPED_STATE_OFF_ON_REFUSAL_DEDUP_FALLBACK",
+    "name": "rpv9behaviourgametests.diagnosticspreservetypedrpstaterefusalsanddeduplicatecorruptenvelope",
+    "timeSeconds": "0.244"
+  },
+  "ordinaryArtifactOnOff": {
+    "functionalStatus": "PASS_CURRENT_DEDICATED_OFF_DEFAULT60_ON_SAVE_AND_ACTUAL_REENTER",
+    "phases": [
+      {
+        "mode": "OFF",
+        "wrapper": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\DIAGNOSTICS_SERVER_OFF_V9_RELEASE7.json",
+          "bytes": 43559,
+          "sha256": "c529b26da971f14baaf9e1339fff5d7aedb8e72897150d232ea6a36c665dabb4"
+        },
+        "rawOutput": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v9-diagnostics-off-release7\\review-diagnostics-output.json",
+          "bytes": 23274,
+          "sha256": "6dbd707d4b18fb34678f11cd9e7e70e9479bc9ea71657d2dd7aceba99bf849a7"
+        },
+        "status": "PASS_SERVER_DIAGNOSTICS_DISABLED",
+        "defaultSeconds": 60,
+        "stopReason": "NEVER_STARTED",
+        "sessionId": "NONE",
+        "actualSave": true,
+        "balancedTargetDigest": "fdc99a7499db9f42debc017e6323aef00403f069e035d1d039cf4927857f2495",
+        "actualReenterIdentityEquality": null,
+        "checks": {
+          "operatorPermission2": true,
+          "initiallyDisabled": true,
+          "existingTargetsOpened": true,
+          "existingTargetsClosedToOriginal": true,
+          "actualSaveDuringWindow": true,
+          "balancedExistingTargetState": true,
+          "recordingRemainedOff": true
+        },
+        "observedTickCount": 1201
+      },
+      {
+        "mode": "ON",
+        "wrapper": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\DIAGNOSTICS_SERVER_ON_V9_RELEASE7.json",
+          "bytes": 45303,
+          "sha256": "5e5fb4306f74065c59b571eb358644c03614f561f3ba28fb9668a03fee8e758c"
+        },
+        "rawOutput": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v9-diagnostics-on-release7\\review-diagnostics-output.json",
+          "bytes": 24772,
+          "sha256": "1e1d1b5247159dc0d19b7c01864a3d5eb6712dc75a2538f264ea41ef1545e5e2"
+        },
+        "status": "PASS_SERVER_DIAGNOSTICS_ENABLED",
+        "defaultSeconds": 60,
+        "stopReason": "AUTO_DURATION_EXPIRED",
+        "sessionId": "b0be8391-be2f-4b1f-8e90-a25d8a97f688",
+        "actualSave": true,
+        "balancedTargetDigest": "fdc99a7499db9f42debc017e6323aef00403f069e035d1d039cf4927857f2495",
+        "actualReenterIdentityEquality": null,
+        "checks": {
+          "operatorPermission2": true,
+          "initiallyDisabled": true,
+          "defaultCommandStarted": true,
+          "readOnlyToolSnapshot": true,
+          "existingTargetsOpened": true,
+          "existingTargetsClosedToOriginal": true,
+          "actualSaveDuringWindow": true,
+          "balancedExistingTargetState": true,
+          "default60AutomaticallyStopped": true,
+          "exportExists": true
+        },
+        "observedTickCount": 1208
+      },
+      {
+        "mode": "REENTER",
+        "wrapper": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\DIAGNOSTICS_SERVER_REENTER_V9_RELEASE7.json",
+          "bytes": 25788,
+          "sha256": "c74bd852b280b7cf59cedf1e924be2328477d40ad24c035ef935f6eb54cc5861"
+        },
+        "rawOutput": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v9-diagnostics-reenter-release7\\review-diagnostics-output.json",
+          "bytes": 10227,
+          "sha256": "81db94b801501a406dc8143b1a18d5d687b33187a0c71947cf3fbf85d1fcece0"
+        },
+        "status": "PASS_SERVER_DIAGNOSTICS_REENTER",
+        "defaultSeconds": 60,
+        "stopReason": "OPERATOR_STOP",
+        "sessionId": "30f64af5-594b-4db8-85f9-17eb8fea361d",
+        "actualSave": true,
+        "balancedTargetDigest": "fdc99a7499db9f42debc017e6323aef00403f069e035d1d039cf4927857f2495",
+        "actualReenterIdentityEquality": true,
+        "checks": {
+          "persistedIdentityAndState": true,
+          "operatorPermission2": true,
+          "initiallyDisabled": true,
+          "defaultCommandStarted": true,
+          "readOnlyToolSnapshot": true,
+          "existingTargetsOpened": true,
+          "existingTargetsClosedToOriginal": true,
+          "actualSaveDuringWindow": true,
+          "balancedExistingTargetState": true,
+          "explicitStop": true,
+          "exportExists": true
+        },
+        "observedTickCount": 168
+      }
+    ],
+    "independentFullDiagnosticsVerifier": {
+      "status": "PASS_CURRENT_ARTIFACT_DIAGNOSTICS_ACTUAL_RUNTIME_OFF_ON_REENTER_EXPORTS",
+      "report": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_DIAGNOSTICS_INDEPENDENT_RELEASE7.json",
+        "bytes": 466389,
+        "sha256": "c5a4043fef17c3006d72d3ddff5e95a97a203f91e30e412432f1d8d944a303cf"
+      },
+      "default60AutomaticExpiry": "PASS_ACTUAL_DEDICATED_DEFAULT60_SESSION",
+      "savedReentry": "PASS_ACTUAL_SERVER_AND_CLIENT_PRIOR_SAVED_WORLD",
+      "coverage": {
+        "all_mod_network_bytes": "NOT_MEASURED",
+        "gpu_duration": "NOT_MEASURED",
+        "ordinary_item_model_chain": "ACTUAL90010_ARCHITECTURE_ITEM_SERVER_ACK_RENDER_ACK",
+        "performance_attribution": "NO_EXACT_CAUSAL_OVERHEAD_OR_OBJECT_FPS_PERCENTAGE",
+        "rp_new_placement_model_chain": "NOT_PROBED_BY_THIS_QA_STAGE; loaded RP resource events do not imply observed placement item"
+      }
+    }
+  },
+  "actualClientAcceptedRpModelChain": "NOT_PROBED_RP_NEW_PLACEMENT; actual item/server/render chain belongs to architecture90010 only",
+  "correctedFullLithiumMovement": {
+    "nativeStatus": "PASS_NATIVE_SHARED_LIST_DEDUP_STEP_SWEEP_AND_REAL_ENGINE_ENDPOINT",
+    "ordinaryFullProfile": "PASS_CURRENT_FULL83_AUTHOR_GAMEPLAY_RESTART_PRODUCTION_REOPEN",
+    "ordinaryEvidence": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\RP_V9_ORDINARY_RUNTIME_RELEASE5.json",
+      "bytes": 66061,
+      "sha256": "613447d7c904d20c89b0f537ed956e782e6271cc536cb182d0f44af52043e892"
+    }
+  },
+  "networkCoverage": [
+    "bloodborne_rp:lamp_list",
+    "bloodborne_rp:lamp_travel"
+  ],
+  "networkUnit": "channel payload bytes only; framing/IP/all-mod/vanilla metadata NOT_MEASURED",
+  "timingUnits": "sampled elapsed wall nanoseconds; client additionally measured current-thread CPU when supported; not GPU or FPS attribution",
+  "sampling": {
+    "server": "1/32 bounded, UUID-aware for entities",
+    "client": "1/16 bounded, UUID-aware for entities"
+  },
+  "telemetryContainsFullNbt": false,
+  "telemetryContainsTravelTokens": false,
+  "physicsRuleChangeByDiagnostics": false,
+  "modelTextureAnimationBytesChangedByDiagnostics": false,
+  "originalInputsModified": false,
+  "manualVisualAcceptance": "PENDING_USER_REVIEW",
+  "wholeCatalogueComplete": false,
+  "productionArtifact": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v9-attempt-10\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.4.jar",
+    "bytes": 32807233,
+    "sha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0"
+  },
+  "nativeAttempt": 10,
+  "nativeXml": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V9_ATTEMPT_10.xml",
+    "bytes": 16294,
+    "sha256": "23b650bb21cec134b63e7df6366b53a0a2684901f0d9cc84f8d85ba28df79c50"
+  },
+  "nativeLog": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_BUILD_AND_CORE_ATTEMPT_10.log",
+    "bytes": 2495201,
+    "sha256": "279357bd661e454f23856cc69cfff11a007276f51162102ff71ab299448385ab"
+  },
+  "wholeNativeTestCount": 104,
+  "wholeNativeFailures": 0,
+  "coreChecks": 20,
+  "actualClientOrdinaryDiagnosticChain": {
+    "status": "PASS_ACTUAL_JOINED_CLIENT_90010_ITEM_SERVER_RENDER_EXPORT_OFF_ON_OFF_AND_REENTER",
+    "clientReport": {
+      "bytes": 2808234,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_MINIMAL_V9_RELEASE7.json",
+      "sha256": "e4f999d546ff19e9525173295a76c5b53fc5a14d8350737ad2e691f6cd18428d"
+    },
+    "clientReenterReport": {
+      "bytes": 2811710,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_MINIMAL_REENTER_V9_RELEASE8.json",
+      "sha256": "993935d6b8a89dfebd12b2ec73e260553edf56441d946d55382d54392e5bcd13"
+    },
+    "sessions": [
+      "0d72747d-cbaa-46a6-9d9c-7d8021df41cc",
+      "23a8dda0-e734-473c-bff1-2a5472a604a5"
+    ],
+    "originalGameMode": "survival",
+    "allComparisonWindows": "ISOLATED_QA_CREATIVE",
+    "originalModeRestored": true,
+    "boundedSavedScene": {
+      "roots": 102,
+      "fullTypedBlockEntities": 446,
+      "rpInstances": 18
+    },
+    "gpuDuration": "NOT_MEASURED",
+    "allModNetwork": "NOT_MEASURED"
+  },
+  "actualOwnCostObservations": {
+    "serverOff": {
+      "max_ns": 1942200,
+      "mean_ns": 760085.5120732723,
+      "median_ns": 734100,
+      "min_ns": 386400,
+      "p95_ns": 1052600,
+      "p99_ns": 1308300,
+      "samples": 1201
+    },
+    "serverOn": {
+      "max_ns": 15341300,
+      "mean_ns": 891069.9503311259,
+      "median_ns": 794450.0,
+      "min_ns": 384200,
+      "p95_ns": 1247400,
+      "p99_ns": 3332600,
+      "samples": 1208
+    },
+    "serverOnApiInclusivePartial": {
+      "allCount": 1918,
+      "allCountOver50ms": 1,
+      "allMaxNs": 259635800,
+      "allMeanNs": 675498.1230448384,
+      "allSumNs": 1295605400,
+      "capacity": 1024,
+      "dropped": 894,
+      "p95Ns": 2500,
+      "p99Ns": 16716500,
+      "quantileScope": "RETAINED_WINDOW_ONLY",
+      "retained": 1024,
+      "status": "MEASURED",
+      "unit": "ns"
+    },
+    "apiScope": "PARTIAL_INCLUSIVE_API_HOOK_SAMPLES; includes session/JFR start-stop, record, measured, END metrics; nested timings may overlap, not unique process CPU; actual off/on QA tick comparison separate",
+    "clientWindows": [
+      {
+        "label": "OFF_BEFORE",
+        "max_ns": 11314500,
+        "mean_ns": 8410135.016835017,
+        "median_ns": 8363900.0,
+        "min_ns": 4290800,
+        "p95_ns": 10121200,
+        "p99_ns": 11042700,
+        "samples": 594
+      },
+      {
+        "label": "ON_IDENTICAL_CLEANED_SCENE",
+        "max_ns": 30111000,
+        "mean_ns": 9206783.91866913,
+        "median_ns": 8679800,
+        "min_ns": 3898600,
+        "p95_ns": 13040200,
+        "p99_ns": 16138000,
+        "samples": 541
+      },
+      {
+        "label": "OFF_AFTER",
+        "max_ns": 11339900,
+        "mean_ns": 8387876.638655462,
+        "median_ns": 8350600,
+        "min_ns": 5555300,
+        "p95_ns": 9833400,
+        "p99_ns": 10730500,
+        "samples": 595
+      }
+    ],
+    "clientReenterWindows": [
+      {
+        "label": "OFF_BEFORE",
+        "max_ns": 15899700,
+        "mean_ns": 8389111.111111112,
+        "median_ns": 8373850.0,
+        "min_ns": 4579000,
+        "p95_ns": 10084600,
+        "p99_ns": 10849400,
+        "samples": 594
+      },
+      {
+        "label": "ON_IDENTICAL_CLEANED_SCENE",
+        "max_ns": 29432800,
+        "mean_ns": 8795277.248677248,
+        "median_ns": 8446100,
+        "min_ns": 3384400,
+        "p95_ns": 11068300,
+        "p99_ns": 15306400,
+        "samples": 567
+      },
+      {
+        "label": "OFF_AFTER",
+        "max_ns": 11336400,
+        "mean_ns": 8402614.646464646,
+        "median_ns": 8362050.0,
+        "min_ns": 3285500,
+        "p95_ns": 9833100,
+        "p99_ns": 10553400,
+        "samples": 594
+      }
+    ],
+    "conclusion": "Actual raw matched observations; no exact causal overhead, GPU duration or per-object FPS percentage."
+  },
+  "actualClientLoadedRpModels": {
+    "status": "PASS_LOADED_RP_RESOURCE_TRACKER_AND_BONE_POSES",
+    "runs": [
+      {
+        "report": {
+          "bytes": 2808234,
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_MINIMAL_V9_RELEASE7.json",
+          "sha256": "e4f999d546ff19e9525173295a76c5b53fc5a14d8350737ad2e691f6cd18428d"
+        },
+        "status": "PASS_ACTUAL_LOADED_RP_MODEL_TRACKER_POSES",
+        "loadedObjectCount": 10,
+        "loadedAssets": [
+          "cage_obj_1",
+          "cage_obj_1",
+          "cage_obj_2",
+          "cage_obj_3",
+          "chandelier_small",
+          "chandelier_small",
+          "npc_window",
+          "stairs",
+          "ladder",
+          "wood_gate"
+        ],
+        "sameTypeHiddenVisibleHiddenEvaluation": [
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          },
+          {
+            "uuid": "84cc32b2-752f-46cc-98cc-25decc78d522",
+            "trackerDogsVisible": true,
+            "hidden": false,
+            "childrenHidden": false
+          },
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          }
+        ],
+        "exactBoundedCustomMeshCulling": [
+          {
+            "asset": "chandelier_small",
+            "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+            "enclosed": true
+          },
+          {
+            "asset": "chandelier_small",
+            "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+            "enclosed": true
+          },
+          {
+            "asset": "npc_window",
+            "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+            "enclosed": true
+          },
+          {
+            "asset": "stairs",
+            "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+            "enclosed": true
+          },
+          {
+            "asset": "ladder",
+            "uuid": "f2888029-a9e9-403a-b632-1148725cfd09",
+            "enclosed": true
+          },
+          {
+            "asset": "wood_gate",
+            "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+            "enclosed": true
+          }
+        ],
+        "scope": "Actual client renderer/Gecko baked vertices and server-loaded tracker state evaluated through the existing custom-animation hook. No viewport, human action or visual acceptance is inferred.",
+        "manualVisualAcceptance": "NOT_RUN",
+        "newPlacementAcknowledgement": "NOT_PROBED_FOR_RP; loaded tracker/model checks are distinct from architecture90010 diagnostic placement"
+      },
+      {
+        "report": {
+          "bytes": 2811710,
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_MINIMAL_REENTER_V9_RELEASE8.json",
+          "sha256": "993935d6b8a89dfebd12b2ec73e260553edf56441d946d55382d54392e5bcd13"
+        },
+        "status": "PASS_ACTUAL_LOADED_RP_MODEL_TRACKER_POSES",
+        "loadedObjectCount": 10,
+        "loadedAssets": [
+          "cage_obj_1",
+          "cage_obj_1",
+          "cage_obj_3",
+          "cage_obj_2",
+          "chandelier_small",
+          "chandelier_small",
+          "npc_window",
+          "stairs",
+          "ladder",
+          "wood_gate"
+        ],
+        "sameTypeHiddenVisibleHiddenEvaluation": [
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          },
+          {
+            "uuid": "84cc32b2-752f-46cc-98cc-25decc78d522",
+            "trackerDogsVisible": true,
+            "hidden": false,
+            "childrenHidden": false
+          },
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          }
+        ],
+        "exactBoundedCustomMeshCulling": [
+          {
+            "asset": "chandelier_small",
+            "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+            "enclosed": true
+          },
+          {
+            "asset": "chandelier_small",
+            "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+            "enclosed": true
+          },
+          {
+            "asset": "npc_window",
+            "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+            "enclosed": true
+          },
+          {
+            "asset": "stairs",
+            "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+            "enclosed": true
+          },
+          {
+            "asset": "ladder",
+            "uuid": "f2888029-a9e9-403a-b632-1148725cfd09",
+            "enclosed": true
+          },
+          {
+            "asset": "wood_gate",
+            "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+            "enclosed": true
+          }
+        ],
+        "scope": "Actual client renderer/Gecko baked vertices and server-loaded tracker state evaluated through the existing custom-animation hook. No viewport, human action or visual acceptance is inferred.",
+        "manualVisualAcceptance": "NOT_RUN",
+        "newPlacementAcknowledgement": "NOT_PROBED_FOR_RP; loaded tracker/model checks are distinct from architecture90010 diagnostic placement"
+      }
+    ]
+  }
+}

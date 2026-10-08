@@ -1,0 +1,44 @@
+{
+  "schema": "dw-v10-qa21-actual-middle-pick-source-preparation-v1",
+  "status": "SOURCE_READY_FROZEN_COMPILATION_AND_ACTUAL_RUNTIME_NOT_RUN",
+  "productionChanges": false,
+  "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\review\\java\\dev\\dreamwalker\\bloodbornedw\\review\\ReviewV10ClientBootstrap.java",
+  "sourceSha256": "783545637bb16aa26e9e174956f72e88810055fd864436c0258382ef8a7c29cf",
+  "rootAuthorizedScope": "69 real canonical middle key in all3 client modes;7 temporary old-registry alias client pick cases in AUTHOR/FULL;1 real re-placement from actual picked stack; native/known fixtures retained and actor inventory restored",
+  "actualRuntime": "NOT_RUN_NEW_QA21",
+  "compile": "NOT_RUN_ROOT_REQUEST_NO_COMPILE",
+  "countsRequiredBeforeFinalClientPass": {
+    "canonicalMiddleKeys": 69,
+    "oldAliasMiddleKeysAuthorFull": 7,
+    "oldAliasMiddleKeysReenter": 0,
+    "pickedStackReinstallAuthorFull": 1
+  },
+  "input": "KeyBinding.onKeyPressed actual options.pickItemKey, native doItemPick and Creative inventory update packet; no direct getPickBlockStack in helper",
+  "sentinel": "Client and authoritative server STICK before enqueue; expectedHeld changes to canonical item; wait age>=4 and retry server/client typed-NBT mismatch until bounded120tick deadline",
+  "canonicalRowField": "ordinaryRpCases[].actualMiddlePick",
+  "aliasRowsField": "ordinaryAliasPickCases",
+  "replacementField": "actualPickedItemReinstallation",
+  "inventoryField": "actualOriginalInventoryRestorationAtExit",
+  "stateChecks": [
+    "Open BYTE,Locked BYTE,Scale FLOAT,optional DogsVisible BYTE",
+    "CustomName retained",
+    "source exact UUID/raw registry/stable typed before==after",
+    "picked NBT excludes UUID/Links/VerticalOffset/SourceLegacyPayload/SourceShift/MountY",
+    "old alias source canonical model path, without replacing its raw registry/UUID",
+    "new canonical replacement UUID differs, names/settings retained, offset0/links empty",
+    "ordinary Creative cleanup0ItemEntity drops and pad/support native state+BE unchanged",
+    "full vanilla PlayerInventory typed stacks and selectedSlot restored, no external mod capability inventory claim"
+  ],
+  "technicalSetup": "Only seven temporary old EntityType fixtures; setup is not user-action proof. No new world/art/production mutation",
+  "existingStandaloneAliasQa20": "UNCHANGED; separate3process disk inventory/debug preservation proof still mandatory",
+  "sourceAssertions": {
+    "noDirectGetPickBlockStackCall": true,
+    "actualPickKeyPresent": true,
+    "bounded120WaitPresent": true
+  },
+  "limits": [
+    "No new actualPASS or artifact binding inferred from source readiness.",
+    "Actual Creative-tab list/manual visual/GPU causal timing/full-city conversion are not proved.",
+    "Creative RP attack intentionally discards without an item; zero drops do not prove a dropped RPplacer ItemEntity path."
+  ]
+}

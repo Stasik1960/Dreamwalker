@@ -1,0 +1,2050 @@
+{
+  "schema": "dreamwalker-rp-v9-ordinary-runtime-v1",
+  "status": "PASS_CURRENT_ORDINARY_MINIMAL_FULL_LITHIUM_AUTHOR_RESTART_PRODUCTION_REOPEN",
+  "productionJarSha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0",
+  "phases": [
+    {
+      "profile": "minimal",
+      "phase": "AUTHOR",
+      "wrapper": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_MINIMAL_AUTHOR_V9_RELEASE5.json",
+        "bytes": 128449,
+        "sha256": "9499b39b3a3eeecd4e36f08654fd926a79b24eba79b3d2ff002fb050df75ef76"
+      },
+      "console": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-author-release5\\launch-console.log",
+        "bytes": 13723,
+        "sha256": "925f5f85b586b510cb8e6282ca26e89dc8c279bca4c2bf1d5943e2de96b1bbd0"
+      },
+      "exitCode": 0,
+      "runtimeModJars": 3,
+      "gameplayOutput": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-author-release5\\review-v9-gameplay-output.json",
+        "bytes": 24645,
+        "sha256": "a199f0341d24b94dc8dd7880177bc72809d58508ea85153dc5b57e23b3af6366"
+      },
+      "gameplayStatus": "PASS_V9_ORDINARY_GAMEPLAY_AUTHOR_REQUIRES_ACTUAL_RESTART",
+      "checksPassed": 42,
+      "actualMovementProbes": [
+        {
+          "probe": "NpcWindow-side--1",
+          "start": [
+            1.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.043749988079071,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-side-1",
+          "start": [
+            7.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.831250011920929,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-outside-working-edge",
+          "start": [
+            1.4375,
+            64.2,
+            83.53125
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            7.4375,
+            64.2,
+            83.53125
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "WoodGate-side--1",
+          "start": [
+            67.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            69.69999998807907,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-side-1",
+          "start": [
+            73.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            71.30000001192093,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-outside-working-edge",
+          "start": [
+            67.5,
+            65.2,
+            89.9375
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            73.5,
+            65.2,
+            89.9375
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "ChandelierFloor-through-visible-decor",
+          "start": [
+            -17.5,
+            66.225,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -17.5,
+            66.225,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "ChandelierCeiling-through-visible-decor",
+          "start": [
+            -7.5,
+            69.975,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -7.5,
+            69.975,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "RpLadder-working-foot",
+          "player": [
+            42.503125,
+            65.5,
+            80.5
+          ],
+          "originHeightDelta": 28.0625,
+          "climbing": true,
+          "nativeEntityCollisionShapeCount": 1
+        },
+        {
+          "probe": "RpStairs-first-native-step",
+          "start": [
+            22.5,
+            64.0,
+            79.7
+          ],
+          "requested": [
+            0.0,
+            -0.08,
+            0.4
+          ],
+          "actual": [
+            0.0,
+            0.5,
+            0.4000000000000057
+          ],
+          "end": [
+            22.5,
+            64.5,
+            80.10000000000001
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": true
+          },
+          "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+              "asset": "stairs",
+              "activePhysicalBoxes": 26
+            }
+          ],
+          "firstTreadTopY": 64.5,
+          "firstTreadDepth": 0.5,
+          "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+        }
+      ],
+      "actualRpPhysicsSelectionCost": [
+        {
+          "role": "CageHidden",
+          "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-71.39999997615814, 64.0, 78.60000002384186] -> [-68.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": false
+        },
+        {
+          "role": "CageVisibleTwin",
+          "uuid": "84cc32b2-752f-46cc-98cc-25decc78d522",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-59.39999997615814, 64.0, 78.60000002384186] -> [-56.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageTwo",
+          "uuid": "6efc6259-4985-4a52-a381-c2d1a90bd5d8",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-47.39999997615814, 64.0, 78.60000002384186] -> [-44.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageThree",
+          "uuid": "33750460-b5ff-4272-a01d-266041fd46ac",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-35.39999997615814, 64.0, 78.60000002384186] -> [-32.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierFloor",
+          "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-18.617968460862286, 64.0, 79.27695755652644] -> [-16.382031539137714, 70.25, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierCeiling",
+          "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-8.617968460862285, 67.75, 79.27695755652644] -> [-6.382031539137715, 74.0, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "NpcWindow",
+          "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[3.96875, 64.0, 79.1875] -> [5.03125, 68.03125, 81.8125]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpStairs",
+          "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+          "physicalBoxes": 26,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[20.75, 63.44419625, 78.25] -> [24.25, 78.875, 95.0]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpLadder",
+          "uuid": "f2888029-a9e9-403a-b632-1148725cfd09",
+          "physicalBoxes": 2,
+          "selectionBoxes": 2,
+          "visualBounds": "AABB[38.703125, 64.0, 79.75] -> [42.6875, 95.5625, 81.25]",
+          "dogsVisible": true
+        },
+        {
+          "role": "WoodGate",
+          "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[69.4375, 64.0, 72.8125] -> [71.5625, 80.3125, 88.1875]",
+          "dogsVisible": true
+        }
+      ]
+    },
+    {
+      "profile": "minimal",
+      "phase": "GAMEPLAY_REOPEN",
+      "wrapper": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_MINIMAL_GAMEPLAY_REOPEN_V9_RELEASE5.json",
+        "bytes": 36407,
+        "sha256": "dad51ed51c36ab54fe5d5965c896bc9a1ba91dbfd35c8896067c0df14609ae4b"
+      },
+      "console": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release5\\launch-console.log",
+        "bytes": 12910,
+        "sha256": "5415ddedb93b544ab6e7e8bc35ba1cbe91744aa77db1c104c8380ae843e72963"
+      },
+      "exitCode": 0,
+      "runtimeModJars": 3,
+      "gameplayOutput": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-gameplay_reopen-release5\\review-v9-gameplay-output.json",
+        "bytes": 20039,
+        "sha256": "c7ae6f5085a515e930b0f600878329f410925971e4d4ed12c092be897dc8a998"
+      },
+      "gameplayStatus": "PASS_V9_ORDINARY_GAMEPLAY_AFTER_ACTUAL_RESTART",
+      "checksPassed": 45,
+      "actualMovementProbes": [
+        {
+          "probe": "NpcWindow-side--1",
+          "start": [
+            1.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.043749988079071,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-side-1",
+          "start": [
+            7.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.831250011920929,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-outside-working-edge",
+          "start": [
+            1.4375,
+            64.2,
+            83.53125
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            7.4375,
+            64.2,
+            83.53125
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "WoodGate-side--1",
+          "start": [
+            67.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            69.69999998807907,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-side-1",
+          "start": [
+            73.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            71.30000001192093,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-outside-working-edge",
+          "start": [
+            67.5,
+            65.2,
+            89.9375
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            73.5,
+            65.2,
+            89.9375
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "ChandelierFloor-through-visible-decor",
+          "start": [
+            -17.5,
+            66.225,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -17.5,
+            66.225,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "ChandelierCeiling-through-visible-decor",
+          "start": [
+            -7.5,
+            69.975,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -7.5,
+            69.975,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "RpLadder-working-foot",
+          "player": [
+            42.503125,
+            65.5,
+            80.5
+          ],
+          "originHeightDelta": 28.0625,
+          "climbing": true,
+          "nativeEntityCollisionShapeCount": 1
+        },
+        {
+          "probe": "RpStairs-first-native-step",
+          "start": [
+            22.5,
+            64.0,
+            79.7
+          ],
+          "requested": [
+            0.0,
+            -0.08,
+            0.4
+          ],
+          "actual": [
+            0.0,
+            0.5,
+            0.4000000000000057
+          ],
+          "end": [
+            22.5,
+            64.5,
+            80.10000000000001
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": true
+          },
+          "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+              "asset": "stairs",
+              "activePhysicalBoxes": 26
+            }
+          ],
+          "firstTreadTopY": 64.5,
+          "firstTreadDepth": 0.5,
+          "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+        }
+      ],
+      "actualRpPhysicsSelectionCost": [
+        {
+          "role": "RpLadder",
+          "uuid": "f2888029-a9e9-403a-b632-1148725cfd09",
+          "physicalBoxes": 2,
+          "selectionBoxes": 2,
+          "visualBounds": "AABB[38.703125, 64.0, 79.75] -> [42.6875, 95.5625, 81.25]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierCeiling",
+          "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-8.617968460862285, 67.75, 79.27695755652644] -> [-6.382031539137715, 74.0, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageTwo",
+          "uuid": "6efc6259-4985-4a52-a381-c2d1a90bd5d8",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-47.39999997615814, 64.0, 78.60000002384186] -> [-44.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpStairs",
+          "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+          "physicalBoxes": 26,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[20.75, 63.44419625, 78.25] -> [24.25, 78.875, 95.0]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageThree",
+          "uuid": "33750460-b5ff-4272-a01d-266041fd46ac",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-35.39999997615814, 64.0, 78.60000002384186] -> [-32.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "NpcWindow",
+          "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[3.96875, 64.0, 79.1875] -> [5.03125, 68.03125, 81.8125]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageVisibleTwin",
+          "uuid": "84cc32b2-752f-46cc-98cc-25decc78d522",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-59.39999997615814, 64.0, 78.60000002384186] -> [-56.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierFloor",
+          "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-18.617968460862286, 64.0, 79.27695755652644] -> [-16.382031539137714, 70.25, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageHidden",
+          "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-71.39999997615814, 64.0, 78.60000002384186] -> [-68.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": false
+        },
+        {
+          "role": "WoodGate",
+          "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[69.4375, 64.0, 72.8125] -> [71.5625, 80.3125, 88.1875]",
+          "dogsVisible": true
+        }
+      ]
+    },
+    {
+      "profile": "minimal",
+      "phase": "PRODUCTION_REOPEN",
+      "wrapper": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_MINIMAL_PRODUCTION_REOPEN_V9_RELEASE5.json",
+        "bytes": 12404,
+        "sha256": "0d4d0059e9f8a47bc6ca19872edc194c63530157f17b7a6e0cc1773cc209bb52"
+      },
+      "console": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-minimal-production_reopen-release5\\launch-console.log",
+        "bytes": 12758,
+        "sha256": "8db1f292e091e55c451b6b0695d8c34e643c203649f162e1751adcb60a474cf9"
+      },
+      "exitCode": 0,
+      "runtimeModJars": 2
+    },
+    {
+      "profile": "full_server",
+      "phase": "AUTHOR",
+      "wrapper": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_FULL_AUTHOR_V9_RELEASE5.json",
+        "bytes": 150993,
+        "sha256": "5900b7c7017e8eb1801ba73b9d84273f0ac63e604697b004fac456903479c050"
+      },
+      "console": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-author-release5\\launch-console.log",
+        "bytes": 134779,
+        "sha256": "36d167c674fed5433ea821d41ea18827df70532a018cc144ab915018715e3009"
+      },
+      "exitCode": 0,
+      "runtimeModJars": 84,
+      "gameplayOutput": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-author-release5\\review-v9-gameplay-output.json",
+        "bytes": 24632,
+        "sha256": "4486cfb1e10ab38c53b4be513d1f35a997e2b3a358b88b29b5218a6b1e6ebcdd"
+      },
+      "gameplayStatus": "PASS_V9_ORDINARY_GAMEPLAY_AUTHOR_REQUIRES_ACTUAL_RESTART",
+      "checksPassed": 42,
+      "actualMovementProbes": [
+        {
+          "probe": "NpcWindow-side--1",
+          "start": [
+            1.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.043749988079071,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "673225ae-4f2a-4a17-9c67-809622f148dc",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-side-1",
+          "start": [
+            7.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.831250011920929,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "673225ae-4f2a-4a17-9c67-809622f148dc",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-outside-working-edge",
+          "start": [
+            1.4375,
+            64.2,
+            83.53125
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            7.4375,
+            64.2,
+            83.53125
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "WoodGate-side--1",
+          "start": [
+            67.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            69.69999998807907,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-side-1",
+          "start": [
+            73.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            71.30000001192093,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-outside-working-edge",
+          "start": [
+            67.5,
+            65.2,
+            89.9375
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            73.5,
+            65.2,
+            89.9375
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "ChandelierFloor-through-visible-decor",
+          "start": [
+            -17.5,
+            66.225,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -17.5,
+            66.225,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "b3711f10-17b6-4eb2-9226-f23553840f35",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "ChandelierCeiling-through-visible-decor",
+          "start": [
+            -7.5,
+            69.975,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -7.5,
+            69.975,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "148ca821-65cd-498e-ba57-57e5234e9841",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "RpLadder-working-foot",
+          "player": [
+            42.503125,
+            65.5,
+            80.5
+          ],
+          "originHeightDelta": 28.0625,
+          "climbing": true,
+          "nativeEntityCollisionShapeCount": 1
+        },
+        {
+          "probe": "RpStairs-first-native-step",
+          "start": [
+            22.5,
+            64.0,
+            79.7
+          ],
+          "requested": [
+            0.0,
+            -0.08,
+            0.4
+          ],
+          "actual": [
+            0.0,
+            0.5,
+            0.4000000000000057
+          ],
+          "end": [
+            22.5,
+            64.5,
+            80.10000000000001
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": true
+          },
+          "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "b9ad8c27-8dd1-41aa-a707-ed1039b5558a",
+              "asset": "stairs",
+              "activePhysicalBoxes": 26
+            }
+          ],
+          "firstTreadTopY": 64.5,
+          "firstTreadDepth": 0.5,
+          "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+        }
+      ],
+      "actualRpPhysicsSelectionCost": [
+        {
+          "role": "CageHidden",
+          "uuid": "193e9547-e553-4731-a205-bd03e9c8937a",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-71.39999997615814, 64.0, 78.60000002384186] -> [-68.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": false
+        },
+        {
+          "role": "CageVisibleTwin",
+          "uuid": "4a460a4a-f3a9-4d80-84b8-a2146a858372",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-59.39999997615814, 64.0, 78.60000002384186] -> [-56.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageTwo",
+          "uuid": "15f17ec9-d9a7-4bd8-b04c-b86ec4135724",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-47.39999997615814, 64.0, 78.60000002384186] -> [-44.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageThree",
+          "uuid": "2cef0bf7-eb34-47c8-86d1-de4da5e9c12c",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-35.39999997615814, 64.0, 78.60000002384186] -> [-32.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierFloor",
+          "uuid": "b3711f10-17b6-4eb2-9226-f23553840f35",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-18.617968460862286, 64.0, 79.27695755652644] -> [-16.382031539137714, 70.25, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierCeiling",
+          "uuid": "148ca821-65cd-498e-ba57-57e5234e9841",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-8.617968460862285, 67.75, 79.27695755652644] -> [-6.382031539137715, 74.0, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "NpcWindow",
+          "uuid": "673225ae-4f2a-4a17-9c67-809622f148dc",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[3.96875, 64.0, 79.1875] -> [5.03125, 68.03125, 81.8125]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpStairs",
+          "uuid": "b9ad8c27-8dd1-41aa-a707-ed1039b5558a",
+          "physicalBoxes": 26,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[20.75, 63.44419625, 78.25] -> [24.25, 78.875, 95.0]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpLadder",
+          "uuid": "9584357a-5c8e-4591-818f-26b8c6606540",
+          "physicalBoxes": 2,
+          "selectionBoxes": 2,
+          "visualBounds": "AABB[38.703125, 64.0, 79.75] -> [42.6875, 95.5625, 81.25]",
+          "dogsVisible": true
+        },
+        {
+          "role": "WoodGate",
+          "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[69.4375, 64.0, 72.8125] -> [71.5625, 80.3125, 88.1875]",
+          "dogsVisible": true
+        }
+      ],
+      "actualLithium": {
+        "id": "lithium",
+        "version": "0.11.2",
+        "sha256": "a0c595355d680e0c87bf8eaebafedff6900d4e771a8d6894ee6d2d4374de8df9"
+      }
+    },
+    {
+      "profile": "full_server",
+      "phase": "GAMEPLAY_REOPEN",
+      "wrapper": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_FULL_GAMEPLAY_REOPEN_V9_RELEASE5.json",
+        "bytes": 66713,
+        "sha256": "b7e02bad0bf11a49efba9f76d75608acbd6c18652be949885ba459c48c710e36"
+      },
+      "console": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-gameplay_reopen-release5\\launch-console.log",
+        "bytes": 115409,
+        "sha256": "f3c97910bfb83c1fe43b8862add3e345e4a3d27e6008b2307162d8b8d6d3efae"
+      },
+      "exitCode": 0,
+      "runtimeModJars": 84,
+      "gameplayOutput": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-gameplay_reopen-release5\\review-v9-gameplay-output.json",
+        "bytes": 20026,
+        "sha256": "3fa52390f37639bef9ee3fd64e65eba6c02cecac1b840cb770e9c9001b85128c"
+      },
+      "gameplayStatus": "PASS_V9_ORDINARY_GAMEPLAY_AFTER_ACTUAL_RESTART",
+      "checksPassed": 45,
+      "actualMovementProbes": [
+        {
+          "probe": "NpcWindow-side--1",
+          "start": [
+            1.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.043749988079071,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "673225ae-4f2a-4a17-9c67-809622f148dc",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-side-1",
+          "start": [
+            7.4375,
+            64.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.606249988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            4.831250011920929,
+            64.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 80.19999988807908] -> [7.737500111920929, 66.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "673225ae-4f2a-4a17-9c67-809622f148dc",
+              "asset": "npc_window",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "NpcWindow-outside-working-edge",
+          "start": [
+            1.4375,
+            64.2,
+            83.53125
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            7.4375,
+            64.2,
+            83.53125
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[1.137499888079071, 64.19999990000001, 83.23124988807908] -> [7.737500111920929, 66.00000005231628, 83.83125011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "WoodGate-side--1",
+          "start": [
+            67.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            69.69999998807907,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-side-1",
+          "start": [
+            73.5,
+            65.2,
+            80.5
+          ],
+          "requested": [
+            -6.0,
+            -0.0,
+            -0.0
+          ],
+          "actual": [
+            -2.199999988079071,
+            0.0,
+            0.0
+          ],
+          "end": [
+            71.30000001192093,
+            65.2,
+            80.5
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 80.19999988807908] -> [73.80000011192092, 67.00000005231628, 80.80000011192092]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+              "asset": "wood_gate",
+              "activePhysicalBoxes": 1
+            }
+          ]
+        },
+        {
+          "probe": "WoodGate-outside-working-edge",
+          "start": [
+            67.5,
+            65.2,
+            89.9375
+          ],
+          "requested": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "actual": [
+            6.0,
+            0.0,
+            0.0
+          ],
+          "end": [
+            73.5,
+            65.2,
+            89.9375
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[67.19999988807908, 65.19999990000001, 89.63749988807908] -> [73.80000011192092, 67.00000005231628, 90.23750011192092]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": []
+        },
+        {
+          "probe": "ChandelierFloor-through-visible-decor",
+          "start": [
+            -17.5,
+            66.225,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -17.5,
+            66.225,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-17.80000011192093, 66.2249999, 77.97695744460552] -> [-17.19999988807907, 68.02500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "b3711f10-17b6-4eb2-9226-f23553840f35",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "ChandelierCeiling-through-visible-decor",
+          "start": [
+            -7.5,
+            69.975,
+            78.27695755652644
+          ],
+          "requested": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "actual": [
+            0.0,
+            0.0,
+            4.446084886947119
+          ],
+          "end": [
+            -7.5,
+            69.975,
+            82.72304244347356
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": false
+          },
+          "sweptQuery": "AABB[-7.800000111920929, 69.9749999, 77.97695744460552] -> [-7.199999888079071, 71.77500005231627, 83.02304255539448]",
+          "directWorldEntityCollisionShapes": 0,
+          "directWorldEntityCollisionBoxes": 0,
+          "rpIndexCandidates": [
+            {
+              "uuid": "148ca821-65cd-498e-ba57-57e5234e9841",
+              "asset": "chandelier_small",
+              "activePhysicalBoxes": 0
+            }
+          ]
+        },
+        {
+          "probe": "RpLadder-working-foot",
+          "player": [
+            42.503125,
+            65.5,
+            80.5
+          ],
+          "originHeightDelta": 28.0625,
+          "climbing": true,
+          "nativeEntityCollisionShapeCount": 1
+        },
+        {
+          "probe": "RpStairs-first-native-step",
+          "start": [
+            22.5,
+            64.0,
+            79.7
+          ],
+          "requested": [
+            0.0,
+            -0.08,
+            0.4
+          ],
+          "actual": [
+            0.0,
+            0.5,
+            0.4000000000000057
+          ],
+          "end": [
+            22.5,
+            64.5,
+            80.10000000000001
+          ],
+          "playerFlags": {
+            "noClip": false,
+            "spectator": false,
+            "creative": false,
+            "flying": false,
+            "allowFlying": false,
+            "stepHeight": 1.0,
+            "onGround": true
+          },
+          "sweptQuery": "AABB[22.19999988807907, 63.9199999, 79.39999988807908] -> [22.80000011192093, 65.80000005231628, 80.40000011192093]",
+          "directWorldEntityCollisionShapes": 1,
+          "directWorldEntityCollisionBoxes": 1,
+          "rpIndexCandidates": [
+            {
+              "uuid": "b9ad8c27-8dd1-41aa-a707-ed1039b5558a",
+              "asset": "stairs",
+              "activePhysicalBoxes": 26
+            }
+          ],
+          "firstTreadTopY": 64.5,
+          "firstTreadDepth": 0.5,
+          "playerBodyForwardExtentFromFirstFront": 0.15000001192092893
+        }
+      ],
+      "actualRpPhysicsSelectionCost": [
+        {
+          "role": "CageTwo",
+          "uuid": "15f17ec9-d9a7-4bd8-b04c-b86ec4135724",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-47.39999997615814, 64.0, 78.60000002384186] -> [-44.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpStairs",
+          "uuid": "b9ad8c27-8dd1-41aa-a707-ed1039b5558a",
+          "physicalBoxes": 26,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[20.75, 63.44419625, 78.25] -> [24.25, 78.875, 95.0]",
+          "dogsVisible": true
+        },
+        {
+          "role": "WoodGate",
+          "uuid": "bf02bff1-b8f3-4855-b3cf-2475516aa4b8",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[69.4375, 64.0, 72.8125] -> [71.5625, 80.3125, 88.1875]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierFloor",
+          "uuid": "b3711f10-17b6-4eb2-9226-f23553840f35",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-18.617968460862286, 64.0, 79.27695755652644] -> [-16.382031539137714, 70.25, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "NpcWindow",
+          "uuid": "673225ae-4f2a-4a17-9c67-809622f148dc",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[3.96875, 64.0, 79.1875] -> [5.03125, 68.03125, 81.8125]",
+          "dogsVisible": true
+        },
+        {
+          "role": "RpLadder",
+          "uuid": "9584357a-5c8e-4591-818f-26b8c6606540",
+          "physicalBoxes": 2,
+          "selectionBoxes": 2,
+          "visualBounds": "AABB[38.703125, 64.0, 79.75] -> [42.6875, 95.5625, 81.25]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageVisibleTwin",
+          "uuid": "4a460a4a-f3a9-4d80-84b8-a2146a858372",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-59.39999997615814, 64.0, 78.60000002384186] -> [-56.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        },
+        {
+          "role": "ChandelierCeiling",
+          "uuid": "148ca821-65cd-498e-ba57-57e5234e9841",
+          "physicalBoxes": 0,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-8.617968460862285, 67.75, 79.27695755652644] -> [-6.382031539137715, 74.0, 81.72304244347356]",
+          "dogsVisible": true
+        },
+        {
+          "role": "CageHidden",
+          "uuid": "193e9547-e553-4731-a205-bd03e9c8937a",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-71.39999997615814, 64.0, 78.60000002384186] -> [-68.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": false
+        },
+        {
+          "role": "CageThree",
+          "uuid": "2cef0bf7-eb34-47c8-86d1-de4da5e9c12c",
+          "physicalBoxes": 1,
+          "selectionBoxes": 1,
+          "visualBounds": "AABB[-35.39999997615814, 64.0, 78.60000002384186] -> [-32.60000002384186, 70.5, 81.39999997615814]",
+          "dogsVisible": true
+        }
+      ],
+      "actualLithium": {
+        "id": "lithium",
+        "version": "0.11.2",
+        "sha256": "a0c595355d680e0c87bf8eaebafedff6900d4e771a8d6894ee6d2d4374de8df9"
+      }
+    },
+    {
+      "profile": "full_server",
+      "phase": "PRODUCTION_REOPEN",
+      "wrapper": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_FULL_PRODUCTION_REOPEN_V9_RELEASE5.json",
+        "bytes": 42894,
+        "sha256": "58ad31e894fdcf6df074a05d7c6daab9ecea3166952de03bf636346e5b8bab6f"
+      },
+      "console": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-first-set-v9-full_server-production_reopen-release5\\launch-console.log",
+        "bytes": 114904,
+        "sha256": "b8a8e061b13687a267a745283e8d21c3cd5cfa55d3db919c670bbb67d7f3de9f"
+      },
+      "exitCode": 0,
+      "runtimeModJars": 83,
+      "actualLithium": {
+        "id": "lithium",
+        "version": "0.11.2",
+        "sha256": "a0c595355d680e0c87bf8eaebafedff6900d4e771a8d6894ee6d2d4374de8df9"
+      }
+    }
+  ],
+  "independentSavedSceneAndGameplay": [
+    {
+      "domain": "GAMEPLAY",
+      "profile": "MINIMAL",
+      "report": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_GAMEPLAY_INDEPENDENT_MINIMAL_RELEASE5.json",
+        "bytes": 20026,
+        "sha256": "a245d1c09778bf89f52688d394eab709e85e349fdc12282276411b151e7c2fc4"
+      },
+      "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+    },
+    {
+      "domain": "GAMEPLAY",
+      "profile": "FULL",
+      "report": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_GAMEPLAY_INDEPENDENT_FULL_RELEASE5.json",
+        "bytes": 20029,
+        "sha256": "a1f128001b5c1180ac7be2b9a9e6974355107a7da2d233de7a518af86946d109"
+      },
+      "status": "PASS_REAL_GAMEPLAY_RESTART_IDENTITIES_LINKS_AND_LAMP_NETWORK"
+    },
+    {
+      "domain": "SCENE",
+      "profile": "MINIMAL",
+      "report": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_SCENE_INDEPENDENT_MINIMAL_RELEASE5.json",
+        "bytes": 104628,
+        "sha256": "3618f71260451f083d1bd893f8b9ced578e235e31022890d1254b6143c8a0017"
+      },
+      "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+    },
+    {
+      "domain": "SCENE",
+      "profile": "FULL",
+      "report": {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_SCENE_INDEPENDENT_FULL_RELEASE5.json",
+        "bytes": 104633,
+        "sha256": "82c452c55a3f90bfdd19327dbe40b8df48f714779d24c51a66ad353e619d1b12"
+      },
+      "status": "PASS_SAVED_OWNERS_NATIVE_FIXTURES_AND_PRODUCTION_REOPEN"
+    }
+  ],
+  "scope": "Actual ordinary remapped production JAR dedicated server with marker-gated QA during author/gameplay restart, then production-only reopen. Genuine native player movement; fake QA actor is not network player join or human gameplay.",
+  "fullProfile": "83 selected production mod JARs; author/gameplay adds separate QA JAR,84 recorded runtime JARs",
+  "diagnosticsOffOnReentry": "PENDING_ACTUAL_CURRENT_RUNS",
+  "actualClientRpModelChain": "PENDING_CURRENT_CLIENT_RUN",
+  "manualVisualGameplay": "PENDING_USER_REVIEW",
+  "fullCatalogueAccepted": false
+}

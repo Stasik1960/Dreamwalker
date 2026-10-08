@@ -1,0 +1,95 @@
+{
+  "credit": "Source-authored white_wool two stem quads; proposed lower2x split into legal48-unit panels, no new pixels.",
+  "texture_size": [
+    256,
+    256
+  ],
+  "textures": {
+    "0": "bloodborne_dw:tree_source/block/addon/tree_1",
+    "particle": "#0"
+  },
+  "elements": [
+    {
+      "from": [
+        8,
+        -16,
+        -16
+      ],
+      "to": [
+        8,
+        32,
+        32
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          0,
+          8
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            10.9375,
+            13,
+            7.9375,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            7.9375,
+            13,
+            10.9375,
+            14.5
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "from": [
+        -16,
+        -16,
+        8
+      ],
+      "to": [
+        32,
+        32,
+        8
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -8,
+          0,
+          6
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            7.9375,
+            13,
+            10.9375,
+            14.5
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            10.9375,
+            13,
+            7.9375,
+            14.5
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

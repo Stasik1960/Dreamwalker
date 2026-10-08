@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\write_review_v9_checkpoint.py", line 377, in <module>
+    main()
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\write_review_v9_checkpoint.py", line 365, in main
+    require(all(digest(path) == value for path, value in protected_hashes.items()), 'TASK/user text was changed')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\write_review_v9_checkpoint.py", line 365, in <genexpr>
+    require(all(digest(path) == value for path, value in protected_hashes.items()), 'TASK/user text was changed')
+                ^^^^^^^^^^^^
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\package_first_set.py", line 30, in digest
+    with path.open('rb') as stream:
+         ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'open'

@@ -1,0 +1,97 @@
+{
+  "parent": "builtin/entity",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        -6.25,
+        -3,
+        -12.5
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        5.75,
+        -3,
+        -12.5
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        30,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        -9.5,
+        -6.25
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        30,
+        0,
+        0
+      ],
+      "translation": [
+        12,
+        -9.5,
+        -6.25
+      ]
+    },
+    "ground": {
+      "translation": [
+        -6.75,
+        -5.5,
+        0
+      ]
+    },
+    "gui": {
+      "rotation": [
+        89.3,
+        -45.24,
+        89.51
+      ],
+      "translation": [
+        5.25,
+        -6,
+        0
+      ],
+      "scale": [
+        1,
+        0.8,
+        0.8
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        90,
+        38,
+        -90
+      ],
+      "translation": [
+        -8,
+        -6.5,
+        0
+      ]
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "bloodborne_rp:extended": 1
+      },
+      "model": "bloodborne_rp:item/saw_cleaver_extended"
+    }
+  ]
+}

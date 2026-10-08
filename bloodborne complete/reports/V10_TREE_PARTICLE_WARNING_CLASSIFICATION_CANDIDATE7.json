@@ -1,0 +1,87 @@
+{
+  "schema": "dreamwalker-v10-actual-warning-static-particle-classification-v1",
+  "status": "ACTUAL_WARNING_OBSERVED_STATIC_MISSING_PARTICLE_VISIBLE_FACE_RESOURCE_CLOSURE_COMPLETE",
+  "productionJarSha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "type": "90005",
+  "selectedModel": "bloodborne_dw:tree_source/block/birch_log_1",
+  "actualObservation": {
+    "logPath": "build/runtime-client-v10-client-min-attempt13/logs/latest.log",
+    "lines": [
+      {
+        "line": 141,
+        "text": "[16:30:41] [Render thread/WARN]: Dreamwalker [90005] texture_fallback: Missing sprite in actual baked model bloodborne_dw:tree_source/block/birch_log_1 at world-root-render (repeats retained)"
+      }
+    ],
+    "scope": "Current MIN13 actual warning; whole client failed later at QA guard, no wholeclientPASS inferred"
+  },
+  "detector": {
+    "source": {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/diagnostics/DwClientDiagnostics.java",
+      "sha256": "abbc5ee2192f5f7099732d46872ceb9bf3ea4d1b56e21769edc3a483f2cf31af"
+    },
+    "particlePredicate": "missing = actual.getParticleSprite() == missingSprite",
+    "visibleQuadPredicate": "same missing boolean OR each general/culled quad sprite",
+    "messageCannotDistinguish": "particle missing vs visiblequad missing; generic texture_fallback does not establish absent visiblefaces"
+  },
+  "sourceClosure": {
+    "model": {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/tree_source/block/birch_log_1.json",
+      "sha256": "eb967ec75f4f6e8976e8092026aa539f201bd29f77534a39a85e4c9093e855c0"
+    },
+    "elements": 1,
+    "faces": [
+      {
+        "element": 0,
+        "face": "east",
+        "texture": "#1",
+        "uv": [
+          0,
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "element": 0,
+        "face": "west",
+        "texture": "#1",
+        "uv": [
+          3,
+          0,
+          0,
+          3
+        ]
+      }
+    ],
+    "textures": {
+      "1": "bloodborne_dw:tree_source/block/addon/tree_2"
+    },
+    "explicitParticle": false,
+    "inheritedParticle": false,
+    "expectedParticle": "minecraft:missingno",
+    "visibleTexture": {
+      "path": "src/architecture/resources/assets/bloodborne_dw/textures/tree_source/block/addon/tree_2.png",
+      "sha256": "b43bba96dff54746a6e109bf10a81fd8ba72c49bbdc4138c0b60ec4b411d8121"
+    },
+    "blockAtlas": {
+      "path": "src/architecture/resources/assets/minecraft/atlases/blocks.json",
+      "sha256": "4db525c28222e5115d6e83df78cf700c50228801ee62172f0cebe310f304de3b"
+    },
+    "blockAtlasContainsExactSprite": true,
+    "altWrapper": {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/tree_alt/block/birch_log_1.json",
+      "sha256": "aacc29c69b962e319e06c8ffaefade315778bdd33672c369a5505164ae2179a4"
+    },
+    "altSharesSameParentParticle": true
+  },
+  "actualCurrentBakedQuadSpriteIsolation": "NOT_RECORDED_SEPARATELY_BY_CURRENT_PROBE; static cause is missingparticle, visiblefacePNG+atlas closure present; do not claim exactcurrentquadSpriteIds from the generic warning",
+  "historicalEvidence": "V9 minimal/reenter actual same accepted lower art had2quads using tree_source/block/addon/tree_2 and missingparticle-only warning; historical not V10proof substitute",
+  "action": "No production/artwork changes requested or made. Preserve accepted tree visuals. Separate QA-only perquad/particle sprite read is needed if exactcurrentbaked isolation required.",
+  "notClaims": [
+    "not object invisible",
+    "not alltextures nofallback",
+    "not a new missingPNG regression",
+    "not manualvisualPASS",
+    "not new wholeclientPASS"
+  ]
+}

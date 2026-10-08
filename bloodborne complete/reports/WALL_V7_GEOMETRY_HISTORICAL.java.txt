@@ -1,0 +1,77 @@
+package dev.dreamwalker.bloodbornedw.architecture.wall;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+
+/** Source cuboids. Odd yaw keeps empty corners through bounded strip approximation. */
+final class WallGeometry {
+    private static final int STRIPS = 32;
+    private final List<double[]> post, low, tall;
+    private final Map<Integer, VoxelShape> cache = new HashMap<>();
+    WallGeometry() {
+        try (InputStream stream = WallGeometry.class.getResourceAsStream("/bloodborne_dw/prototype-wall.json")) {
+            if (stream == null) throw new IllegalStateException("Missing original wall geometry");
+            JsonObject value = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+            if (value.get("schemaVersion").getAsInt() != 1 || value.get("units").getAsInt() != 16) throw new IllegalStateException("Invalid wall geometry schema");
+            post = boxes(value.getAsJsonArray("post")); low = boxes(value.getAsJsonArray("low")); tall = boxes(value.getAsJsonArray("tall"));
+        } catch (java.io.IOException failure) { throw new IllegalStateException("Cannot load wall geometry", failure); }
+    }
+    synchronized VoxelShape shape(int connections, boolean includePost, boolean high, int yaw) {
+        int key = connections | (includePost ? 16 : 0) | (high ? 32 : 0) | (yaw << 6);
+        return cache.computeIfAbsent(key, ignored -> {
+            VoxelShape result = VoxelShapes.empty();
+            if (includePost) for (double[] box : post) result = VoxelShapes.union(result, rotated(box, yaw));
+            for (int direction = 0; direction < 4; direction++) if ((connections & (1 << direction)) != 0)
+                for (double[] box : high ? tall : low) result = VoxelShapes.union(result, rotated(box, (yaw + direction * 2) & 7));
+            return result.simplify();
+        });
+    }
+    private static List<double[]> boxes(JsonArray input) {
+        if (input == null || input.isEmpty() || input.size() > 4) throw new IllegalArgumentException("Unexpected wall cuboid budget");
+        List<double[]> result = new ArrayList<>();
+        for (var entry : input) {
+            JsonArray values = entry.getAsJsonArray(); if (values.size() != 6) throw new IllegalArgumentException("Wall cuboid needs six values");
+            double[] box = new double[6];
+            for (int i = 0; i < 6; i++) { box[i] = values.get(i).getAsDouble() / 16; if (box[i] < 0 || box[i] > 1) throw new IllegalArgumentException("Wall geometry exceeds one cell"); }
+            if (box[0] >= box[3] || box[1] >= box[4] || box[2] >= box[5]) throw new IllegalArgumentException("Empty wall cuboid");
+            result.add(box);
+        }
+        return List.copyOf(result);
+    }
+    private static VoxelShape rotated(double[] box, int turns) {
+        double angle = turns * Math.PI / 4, c = Math.cos(angle), s = Math.sin(angle);
+        double[][] polygon = new double[4][2];
+        double[][] corners = {{box[0],box[2]},{box[3],box[2]},{box[3],box[5]},{box[0],box[5]}};
+        for (int i = 0; i < 4; i++) { double x = corners[i][0] - .5, z = corners[i][1] - .5; polygon[i][0] = .5 + c*x - s*z; polygon[i][1] = .5 + s*x + c*z; }
+        double minX = 1, maxX = 0, minZ = 1, maxZ = 0;
+        for (double[] point : polygon) { minX = Math.min(minX,point[0]); maxX = Math.max(maxX,point[0]); minZ = Math.min(minZ,point[1]); maxZ = Math.max(maxZ,point[1]); }
+        if ((turns & 1) == 0) return VoxelShapes.cuboid(clamp(minX),box[1],clamp(minZ),clamp(maxX),box[4],clamp(maxZ));
+        VoxelShape result = VoxelShapes.empty();
+        for (int strip = 0; strip < STRIPS; strip++) {
+            double first = Math.max(minX,strip/(double)STRIPS), last = Math.min(maxX,(strip+1)/(double)STRIPS);
+            if (last - first < 1e-9) continue;
+            List<Double> intersections = new ArrayList<>();
+            for (double x : new double[]{first,last}) for (int i = 0; i < 4; i++) {
+                double[] a = polygon[i], b = polygon[(i+1)%4];
+                if (Math.abs(a[0]-b[0]) < 1e-10) { if (Math.abs(x-a[0]) < 1e-9) { intersections.add(a[1]); intersections.add(b[1]); } }
+                else { double t = (x-a[0])/(b[0]-a[0]); if (t >= -1e-9 && t <= 1+1e-9) intersections.add(a[1]+t*(b[1]-a[1])); }
+            }
+            for (double[] point : polygon) if (point[0] >= first && point[0] <= last) intersections.add(point[1]);
+            if (intersections.isEmpty()) continue;
+            double bottom = intersections.stream().mapToDouble(Double::doubleValue).min().orElseThrow(), top = intersections.stream().mapToDouble(Double::doubleValue).max().orElseThrow();
+            if (top-bottom > 1e-9) result = VoxelShapes.union(result,VoxelShapes.cuboid(clamp(first),box[1],clamp(bottom),clamp(last),box[4],clamp(top)));
+        }
+        return result;
+    }
+    private static double clamp(double value) { return Math.max(0,Math.min(1,value)); }
+}

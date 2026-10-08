@@ -1,0 +1,372 @@
+{
+  "format": "dreamwalker-runtime-basis-v1",
+  "auditDate": "2026-10-07",
+  "status": "REVIEWED_BASIS_NOT_RELEASE_READY",
+  "localHead": "6bca311b87856ee251cc1d88f94ba6071ae231cf",
+  "mainRemote": "12e35e0d282837510d79f3b8b33c3ebc088cf380",
+  "bloodborneRemote": "ca01e3d94630691acf43d8132606bc5f55c628e0",
+  "githubComparison": {
+    "url": "https://github.com/Stasik1960/Dreamwalker/compare/6bca311b87856ee251cc1d88f94ba6071ae231cf...12e35e0d282837510d79f3b8b33c3ebc088cf380",
+    "status": "ahead",
+    "aheadBy": 1,
+    "behindBy": 0,
+    "commits": [
+      {
+        "sha": "12e35e0d282837510d79f3b8b33c3ebc088cf380",
+        "message": "feat(model-props): add Fabric model prop mod"
+      }
+    ],
+    "changedBloodborneBlocksFiles": [],
+    "mainRuntimeEquivalentToLocalHead": true
+  },
+  "branchRuntimeDiff": [
+    "D\tBloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/DocumentOwnerGameTests.java",
+    "M\tBloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/LogicalDebugGameTests.java",
+    "M\tBloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/PracticalTestKitGameTests.java",
+    "M\tBloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/ReviewedWallGameTests.java",
+    "M\tBloodborne-Blocks/src/gametest/java/dev/dreamwalker/bloodborneblocks/SharedPhysicalGameTests.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureBlock.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureBlockItem.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureCreativeCatalog.java",
+    "D\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/AutumnAppearance.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneBlocks.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneClient.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneCommands.java",
+    "D\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/DocumentOwnerDefinitions.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GeometryRuntime.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalContractV2.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalTargetDebug.java",
+    "M\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ModularBakedModel.java",
+    "D\tBloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/NumericDebugIds.java"
+  ],
+  "oldRuntimeSources": [
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureBlock.java",
+      "sha256": "49dad4fcd2b515e9b4cca1e2eac26ded90ac8cc1e5ac52ede845521fd67066a9",
+      "lfSha256": "65f57d2a0d867c0472d27b4997f1de28b7e93cbafadcc27232e1266eab3ac076"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureBlockItem.java",
+      "sha256": "a604751ce860aa36a0471d6c60f54b34ac19983011299f20099e92698d638aa9",
+      "lfSha256": "6f3ba7ebf5bd3e583e0ad20388f5f15bfda3c3cf2cb06322361e0ea2ec8f18d4"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureCreativeCatalog.java",
+      "sha256": "4d0e6659d5574a06e9fb05220059ecd9fa78a916cf1a3c8141f78b53a48c1cc3",
+      "lfSha256": "60cf15c7d5b729b6144a3732eb237351fe650213c5da174c096aa75838766207"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitecturePartBlock.java",
+      "sha256": "b07728479d8f600fc6a214e983161f4c492a52bf2ce02d6f698321fb17db2b44",
+      "lfSha256": "2ee8db3d29169126d2f0965e300ef93315efc37038ac224add602084a4fd2491"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitecturePartBlockEntity.java",
+      "sha256": "03c0ffc0518dbedda75e908f92bcc87d6ce5276a432636baf86b70d6d3c55514",
+      "lfSha256": "51bc8e67107c65f3fdbc9728a76c002c74be7b7b746e509b155879d2a195abea"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ArchitectureSeatEntity.java",
+      "sha256": "f8fdacc7cef3d5f54f04066aec5105ced58c7800f3f2b09c1dcbcb36b02bbbc7",
+      "lfSha256": "c703b48d9d72bdf310506dc9edbfd6941d5398da110b320eff1dcb6efb5eec4b"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/AuthoredSurfacePlacement.java",
+      "sha256": "d8dc0e1352651b518657f8887717486f8a089fdc354c389aa842a4c004e6d07b",
+      "lfSha256": "ffee4248d5aff858f8c2b00cc73bb3159873f3b8ed9585d96d1fe8a9a32fbc57"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneBlocks.java",
+      "sha256": "20832607f01c8627d3c5a7ee819287e4562b33d698a7707001a9adf25e50b48f",
+      "lfSha256": "3b272554d7b0f42602aecdd60e2413b1a612d8197abac23a3da319c69f99a23d"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneClient.java",
+      "sha256": "1cd3c6430cafc0ef332f015e5f8f04bd381a82bbd69267adab62b63d65b16dc5",
+      "lfSha256": "bac1fc57460131eb3aeac7a6f2d7bbbf2647b32f0efeac00e40396a5ee583008"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/BloodborneCommands.java",
+      "sha256": "60a9176256620a98d013c6b82198d4c9dd3f69f011dfd5adeb9fdfafdb10b324",
+      "lfSha256": "9df869f392ea4b3d9901e82d0b65ab61e35eab2d29c1feba50172ee36f143fe3"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/CityVariantItemModel.java",
+      "sha256": "2931188c6394ffc1e9cc813fcfa510253ad11c99d24da11b4bc3af0c41a2174f",
+      "lfSha256": "6c08bcb2256bdeca8389bd0b8984e934ac9b9b97b4b5cfba01fa1df575a8b7ac"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/EmissiveModel.java",
+      "sha256": "64832ebced8a74631868a383ab436321a1a62d3a8502085fa3b73c31aa043ec6",
+      "lfSha256": "296943049d943e6cf1c3bc5cb6cb4bef1f26a4bd4d72485e8656a71023593292"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/FunctionalFurniture.java",
+      "sha256": "80ffff2b7705349401ca2bdc41d42c5c277dfaff7b00d637e58ab18b29d747be",
+      "lfSha256": "eb613eee4c80fc618fa82cb1adb52c2866870af09fc7f2887e0b0abfe0c8c885"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GeneratedShape.java",
+      "sha256": "6ddb52d3194d18dc342db4d08e440ccc21a677f4d5b6b1955787d7460b7d5968",
+      "lfSha256": "1b8b85c712eee2b422225bfe4a5da0a416db049be7d2ef399e37a97712ba8fc7"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GeometryRuntime.java",
+      "sha256": "2c22d5fd38601c5d0acb6405722c28719347aa3f179380ab4d8b7ca6d708b0b4",
+      "lfSha256": "bf6c38fd7c96dc21e5b9a1bced67e915d2ac3b1115770a63a1fb4af4b8decaff"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GuiItemBounds.java",
+      "sha256": "669343e60a524794a95cec7bdae8488dbb395f7d814475b7808af25aff169127",
+      "lfSha256": "d50abfe8d4e798ac40601267c0eb10439c96a5a396d3dc4f7a746edbfa5e976a"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/GuiItemModel.java",
+      "sha256": "3baa9f9d229375baf56e794028984a9c6e55b1985a2d466925de140491a77e8b",
+      "lfSha256": "7c1eb1e1de3a8047b13b33b9479ae5a135df76d062e22d4d760e5b32b0da2f8f"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalAttachments.java",
+      "sha256": "6dd2a0766a4afaa5e281a391a976061052c7c722ce04393bc049aeb8d086f9a1",
+      "lfSha256": "832512eac79ddb63e5940a3e883f4c78838647d6b3de5c689b2eab2b8af0d41a"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalContractV2.java",
+      "sha256": "17f80f9a73acf9e2fd1a1077cacfdfc15f7d33f40510b682fd240073b86c2500",
+      "lfSha256": "9b1f89bd49ccf36c114e9d1880df4360db32ec73d2dab588f277b2028ce83531"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalTargetDebug.java",
+      "sha256": "1a6ca5e15765a33145ee38c882e5e8eaac9cabaaaabbb6bc60726497194e2fec",
+      "lfSha256": "8eaf2b06a1c39cbd13ae08db6fbc4317ae9285e5ec340f6acbadf4d6e36e5eb1"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalTransform.java",
+      "sha256": "77d232bc8f83c17c19d287ef11c74f53e5a365116ddd8cd505fb80e529612d51",
+      "lfSha256": "809e5fc54d8f51ff7da63109c19f124d15c8914d6ac43005d34f7307a958fc8a"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVariantProperty.java",
+      "sha256": "4e51999947229e1c9a1a56767267001a833de4536522a735d82be9f393f926d9",
+      "lfSha256": "6e41457ca708b96efc482eb964a943a4066b9dcae915a57f93b346dbb461c583"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVisualCommands.java",
+      "sha256": "5eb0c388d6efaf29065dea9839c256cda5bc59d71eceee9f2f5901ec3c969e80",
+      "lfSha256": "c2e2c230fcba0f10ee8c949a805715523172e39578a466d69b5e7d394961547a"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/LogicalVisualModels.java",
+      "sha256": "f0f0d2a5d08c34aca6e6e613533ba4df1f86ad18338b6a15897dda1a409f1d90",
+      "lfSha256": "5dde8062af32a239cd1a6dd3b0d0264750e92a0cb503931a756b455e4546f838"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/mixin/DecorativeClimbMixin.java",
+      "sha256": "17d647d965860ac39867448e5246a2c5e5a6507dfbcb0f33606714441e02bb76",
+      "lfSha256": "bd1092b143db792b36a6a39373df9c2d9852df84d388477f863f9f3e4119c696"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ModularBakedModel.java",
+      "sha256": "af983124b932a723b6546e7d3d17502e46f2cb542b19fc6b45ed69200ea849f5",
+      "lfSha256": "08c5a0a10d2f051a8ee61fbc34b667fefa866fe3b17d60d30e3071876e4f49bd"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ModularMeshData.java",
+      "sha256": "f35685341adc76c4e7b7acb575f594107ebd281d42307d4d21410b5dec2797ae",
+      "lfSha256": "c4a0b29c95f270aa02d0a27fc2f3bdd5e4c3cb8910529cec31740e76b222f715"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/ReviewedWallConnections.java",
+      "sha256": "037f01b1b16de528abe0a11a833ed4a2e3c9d916961e8d288a3b32a61e4e064a",
+      "lfSha256": "e1bae9566ff1b65b7f9d55e59bda358c5e2c829b02cf590bb72666d5bbdeaefa"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/SharedArchitectureBlock.java",
+      "sha256": "07ce35a2e2bd123c8354844a367bd174d1c113746a58e7b899b856fb190558b8",
+      "lfSha256": "a937aedfb2837f06d7165c5c074f8399a126154399ef448ef631e19d03012d22"
+    },
+    {
+      "path": "Bloodborne-Blocks/src/main/java/dev/dreamwalker/bloodborneblocks/TranslatedBakedModel.java",
+      "sha256": "0b2acfaf33619ceb6af6887fcc9601fae488057d890850210acea3576c1627cf",
+      "lfSha256": "65994fe143b6d5d842684d8e1c3daa74f31c01eddeffb8ec7058feaf88081219"
+    }
+  ],
+  "oldPackagedJar": {
+    "path": "Bloodborne-Blocks/releases/Bloodborne-Blocks/2.1.0-rc.2/bloodborne-blocks-2.1.0-rc.2.jar",
+    "sha256": "3a13fbf9e9d421ddd7b1172a3f6ca1aff21e234fb39970e8b4436d40fcb72b08"
+  },
+  "historicalRecordedTests": {
+    "method": "read supplied recorded XML; not rerun",
+    "path": "Bloodborne-Blocks/docs/accepted-restore/TEST-logical-gametest.xml",
+    "testCount": 57,
+    "failures": 0,
+    "errors": 0,
+    "names": [
+      "reviewedwallgametests.connectiontransitionkeepswindowguestbinding",
+      "reviewedwallgametests.paircornertandexistingpostlesscrossupdateonremoval",
+      "reviewedwallgametests.fourfacingsandlegacypicksuseonebuildingitem",
+      "agonyfurnituregametests.authoredbenchanchorsrotatethrougheightorientations",
+      "agonyfurnituregametests.threeplayersoccupydistinctseatsatplankheightandcleanup",
+      "creativecataloggametests.selectedstacksfromeverycatalogtypeplacetheirchosenart",
+      "productionfunctionalgametests.gatetransitionsandrejectsblockedopen",
+      "productionfunctionalgametests.wallpanelsplaceadjacenttoconcreteforeveryfacing",
+      "productionfunctionalgametests.railingconnectsinallfourdirectionsandlanterntoggles",
+      "productionrestorationgametests.lanternsbenchesladdersandconnectionsbehave",
+      "productionrestorationgametests.restoreddoorsandshuttertoggleatstationaryroot",
+      "productionrestorationgametests.restoredregistrycontainsfunctionalandc003successors",
+      "practicaltestkitgametests.connectedrailingplacesfrompickandjoinseveryhorizontalneighbor",
+      "practicaltestkitgametests.c001c474andc618placefrompickinfourdirectionsandbreakwhole",
+      "agonysurfacegametests.shuttertogglekeepsanchorhelpersandbackground",
+      "agonysurfacegametests.ladderstacksfromrootandhelperthencleansownedcells",
+      "agonysurfacegametests.shutterplacesbesidewallwithoutmutatingitforeachfacing",
+      "agonysurfacegametests.shutterownsonlyrootanduppercellandleavessidesplaceable",
+      "productionpalettegametests.productionfacingstatesrotatewithoutchangingtheirobjectid",
+      "productionpalettegametests.registryexactlymatchesproductionpaletteandpart",
+      "supportplanegametests.obsoletebelowroothelperisremovedafterpersistentownershipvalidation",
+      "creativecataloggametests.registeredtabscoverallplaceableitemsandconstructionmanifest",
+      "productionpalettegametests.c282openisatomicwhenanouterleafcellisblocked",
+      "productionpalettegametests.c282isonedoubleleafdooracrossfacings",
+      "productionpalettegametests.c282authenticsourcepanecontextisneverclaimed",
+      "logicalvisualgametests.actualregioncommanddeduplicateshelpersandpreservesownership",
+      "logicalvisualgametests.helpersresolveonlytovalidloadedmasters",
+      "logicalvisualgametests.selectiondropsotherdimensionendpoint",
+      "logicalvisualgametests.commandtreepermissionandvisualstatepreservation",
+      "windowtest3gametests.everyfacingvisualandopenstatehasonefixedmounttransform",
+      "windowtest3gametests.wallfirstmountsatrearboundaryforallfacesandvisualstates",
+      "windowtest3gametests.windowfirstallowsnormalbackingeditsandwholecleanup",
+      "windowtest3gametests.blockeduppercellandupperbreakdonotleaveanorphan",
+      "agonysurfacegametests.laddercontactclimbsandtopcanreachstandablelanding",
+      "sharedphysicalgametests.sameblockrotationrebuildswholeownerhelpers",
+      "sharedphysicalgametests.occupiedrootremainsarejectedrootrootplacement",
+      "sharedphysicalgametests.unloadedguestrejectscarrierreplacementandsurvivesreload",
+      "sharedphysicalgametests.storagerootownersuseemptyrootandcleaneveryownedhelper",
+      "sharedphysicalgametests.helperhelpercarriertracksandremovesownersindependently",
+      "sharedphysicalgametests.ownershipnbtreloadisboundedsortedandlegacycompatible",
+      "sharedphysicalgametests.guestfirstandcarrierfirstremovalpreservecompleteobjects",
+      "sharedphysicalgametests.foreignreplacementnevergetsoverwrittenandguestisremovedwhole",
+      "supportplanegametests.everyfloorcontractstatekeepssupportplaneandownership",
+      "supportplanegametests.flooritemsplaceonconcretefordefaultsandeveryfacing",
+      "productionpalettegametests.c001placesandbreaksasonewholetreeitem",
+      "sharedphysicalgametests.exactrepairtestonewindowwallreplacementusesordinaryairplacement",
+      "sharedphysicalgametests.rejectedhelperrootinsertionsleaveitemworldandnbtuntouched",
+      "sharedphysicalgametests.validhelperacceptsatomicitemrootinsertioninbothordersandcycles",
+      "logicaldebuggametests.ordinaryandlogicalmasterhelperandstalehelperaresafe",
+      "logicaldebuggametests.commandtreealiasespermissionandnonplayer",
+      "logicaldebuggametests.serverplayerraycastcommandsarereadonly",
+      "explicitrootgametests.benchexceptionminus37473minus291usesmanualanchor",
+      "explicitrootgametests.balustradeexceptionminus56098minus9usesmanualanchor",
+      "agonyattachmentgametests.creativeremovaldoesnotduplicatelantern",
+      "agonyattachmentgametests.survivalattachtoggleremoveandbreakpreservelantern",
+      "agonyattachmentgametests.adventureandunsupporteditemdatacannotmutateattachments",
+      "agonyattachmentgametests.attachmentsurvivesnearbyplayertickandhelperreconciliation"
+    ]
+  },
+  "freshPythonAudit": {
+    "command": "python -B -X utf8 -m unittest test_split_transactions test_atomic_owner_groups test_shared_helper_bindings test_support_collision test_contract_v2 test_source_variant_rng test_visual_slots test_accepted_runtime",
+    "tests": 49,
+    "pass": 46,
+    "fail": 2,
+    "error": 1,
+    "status": "FAIL_STALE_HISTORICAL_FIXTURE",
+    "durationSeconds": 16.967,
+    "currentBuildCheckContainsContractV2Module": false,
+    "defects": [
+      {
+        "test": "test_contract_v2.ContractTests.test_shared_vectors_and_all_family_origins",
+        "observed": "49 != 47",
+        "classification": "stale historical palette assertion"
+      },
+      {
+        "test": "test_contract_v2.ContractTests.test_frozen_poc_projection_preserved",
+        "observed": "KeyError: o_dead_tree_planter",
+        "classification": "retired historical family not present"
+      },
+      {
+        "test": "test_contract_v2.ContractTests.test_direct_migration_fixture",
+        "observed": "expected target_would_overwrite_foreign_block rejection not found",
+        "classification": "stale historical migration fixture"
+      }
+    ]
+  },
+  "freshCoreChecks": {
+    "status": "PASS",
+    "tests": 18,
+    "runtimeJava": "17.0.20.1",
+    "compilerRelease": 17,
+    "compilerJdk": "21.0.10",
+    "mainClass": "dev.dreamwalker.bloodbornedw.runtime.TransactionChecks",
+    "method": "standalone javac --release 17 + Java 17 execution",
+    "minecraftAdapter": "NOT_IMPLEMENTED",
+    "minecraftGameplay": "NOT_RUN",
+    "sourceManifest": [
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/runtime/CellSnapshot.java",
+        "sha256": "810ad96a830337cfbaa5023267ad46c9b6fcef0542b86df5d563bba1e972809c"
+      },
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/runtime/ObjectGeometry.java",
+        "sha256": "7737d2e228f30a4d8c5fbd784aa77cd5ebc14ea8d881852e8f59594ae03abec6"
+      },
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/runtime/ObjectInstance.java",
+        "sha256": "ae0273816c04b7bfe5aeac161c2440ff4c4d6c90fa32214795d95c863c3c10e1"
+      },
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/runtime/TargetResolver.java",
+        "sha256": "b307cd9134e9a07c224449482155b542b18da66e04a09f79fcf1aff645fe126a"
+      },
+      {
+        "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/runtime/TransactionCore.java",
+        "sha256": "422fed8e2ee05b8f76244a0f2bc6c7c367d1908a5b75623c7967cbf705ece527"
+      },
+      {
+        "path": "src/test/java/dev/dreamwalker/bloodbornedw/runtime/TransactionChecks.java",
+        "sha256": "e7ed137906023fe9d9c10c3622626b6b3c042b8b2d3ef4c19dad49e7c2852061"
+      },
+      {
+        "path": "src/test/java/dev/dreamwalker/bloodbornedw/runtime/TransactionCoreTest.java",
+        "sha256": "d17a62f1b7a2bc6068a83d8a2be65d2067b7828a9d871580ea252a2fb66f9153"
+      }
+    ]
+  },
+  "reviewedSafetyGaps": [
+    {
+      "oldPath": "ArchitecturePartBlock.java",
+      "codeEvidence": "multi-owner helper onUse returns PASS, getPickStack EMPTY, onBreak does not target an owner",
+      "effect": "accessible independent part cannot be acted upon",
+      "status": "CONFIRMED_CODE_PATH"
+    },
+    {
+      "oldPath": "GeometryRuntime.java:327",
+      "codeEvidence": "rebuild writes multiple cells before return false; no snapshot rollback",
+      "effect": "possible partial helper mutation under adapter/callback failure",
+      "status": "CODE_REVIEW_RISK_NOT_REPRODUCED_IN_GAME"
+    },
+    {
+      "oldPath": "ArchitectureBlock.java:193",
+      "codeEvidence": "onPlaced rebuild result ignored; interactive door rebuild result ignored",
+      "effect": "placement/door commit lacks complete failure propagation",
+      "status": "CODE_REVIEW_RISK_NOT_REPRODUCED_IN_GAME"
+    },
+    {
+      "oldPath": "GeometryRuntime.java:201",
+      "codeEvidence": "ownedRoots skips unloaded roots; guestShape then computes union of remaining live roots",
+      "effect": "helper shape may become temporarily empty across unload ordering",
+      "status": "CONFIRMED_CODE_PATH_GAME_CONSEQUENCE_NOT_RUN"
+    },
+    {
+      "oldPath": "LogicalVisualCommands.java",
+      "codeEvidence": "loaded-only region MAX_VOLUME=32768; no WorldEdit/all-dimensions command",
+      "effect": "required full-map/unloaded semantics missing",
+      "status": "CONFIRMED_SCOPE_GAP"
+    }
+  ],
+  "doNotCopy": [
+    "historical logical/city palettes",
+    "coordinate-bound owner mappings",
+    "historical exact-source signatures",
+    "RC1 physics as new object correctness oracle",
+    "Complete DwBlocks carrier cloning/mixins",
+    "unreviewed restored door/open geometry"
+  ]
+}

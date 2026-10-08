@@ -1,0 +1,269 @@
+{
+  "schema": "dreamwalker-v9-diagnostics-final-coverage-audit-v1",
+  "generatedUtc": "2026-10-08T00:00:48.948259+00:00",
+  "status": "PASS_CURRENT_NATIVE_CORE_BUILD_ACTUAL_RUNTIME_PENDING",
+  "request": {
+    "path": "reports/user-diagnostics-request-2026-10-08/request.txt",
+    "sha256": "22c4ae75e6ec2d2d50e47461e41c9655c39e16c548a17d10cc742126b6895f93"
+  },
+  "currentCandidate": {
+    "name": "Attempt12",
+    "productionArtifactSha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+    "native": "PASS_ACTUAL_105_OF_105",
+    "nativeCount": 105,
+    "core": "PASS_ACTUAL_20_OF_20",
+    "coreCount": 20,
+    "build": "PASS_ACTUAL_BUILD_SUCCESSFUL",
+    "ordinaryServer": "PENDING_RELEASE9_SIX_CURRENT_SHA_PHASES",
+    "sourceMigration": "PENDING_FINAL4_RELEASE9_AUTHOR_REOPEN_REPLAY",
+    "diagnosticsServer": "PENDING_RELEASE9_OFF60_ON60_REENTER",
+    "minimalClient": "PENDING_RELEASE10",
+    "actualDiagnosticClientReenter": "PENDING_RELEASE10",
+    "full109Kappa": "PENDING_STRICT_RELEASE11_CURRENT_SHA_AND_RETAINED_TIMINGS"
+  },
+  "historicalEvidence": {
+    "candidate11": {
+      "candidate": {
+        "name": "Attempt11",
+        "productionArtifactSha256": "8dd5d1976f7348a9c08899acd723ba62358cc9611d4694bec3fc2b4914e3c1c0",
+        "native": "PASS_ACTUAL_105_OF_105",
+        "ordinaryServer": "PASS_MINIMAL_AND_FULL83_SIX_PHASES_RELEASE8",
+        "diagnosticsServer": "PASS_CURRENT_OFF60_ON60_REENTER_RELEASE8",
+        "minimalClient": "PASS_ACTUAL_JOINED_CLIENT_AND_DIAGNOSTICS_REENTER_RELEASE9",
+        "full109Kappa": "PASS_CURRENT_FULL_CLIENT_WORLD_SAVE_NORMAL_EXIT_RELEASE9_WITH_OBSERVED_ACTIVE_IRIS_KAPPA",
+        "sourceMigration": "PASS_FINAL3_CURRENT_AUTHOR_REOPEN_REPLAY_RELEASE8",
+        "nativeCount": 105,
+        "core": "PASS_ACTUAL_20_OF_20",
+        "coreCount": 20,
+        "ordinaryFullGameplayReopen": "PASS_RELEASE8",
+        "ordinaryFullProductionReopen": "PASS_RELEASE8"
+      },
+      "exactPriorAudit": "reports/coverage-history/Attempt11/DIAGNOSTICS_V9_FINAL_COVERAGE_AUDIT.json",
+      "exclusions": "reports/REVIEW_V9_CANDIDATE11_TELEMETRY_EXCLUSIONS.json",
+      "scope": "Historical functional successes remain intact. Confirmed FULL9/FULL10 telemetry budget discards all sampled timing sections and incurs repeated whole-packet serialization. Not current Attempt12 runtime proof."
+    },
+    "candidate10": {
+      "candidate": "Attempt10",
+      "productionArtifactSha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0",
+      "nativeCount": 104,
+      "coreCount": 20,
+      "diagnosticsIndependent": "reports/REVIEW_V9_DIAGNOSTICS_INDEPENDENT_RELEASE7.json",
+      "exclusions": "reports/REVIEW_V9_CANDIDATE10_EXCLUSIONS.json",
+      "scope": "Historical evidence only; not inherited by Attempt11. Its old summary ZIP is now rejected by the stronger readable-summary gate."
+    }
+  },
+  "clauses": [
+    {
+      "clause": 1,
+      "implementation": "Bounded errors for owned model/texture fallback, IDs, object data, persistence, synchronization and rollback; normal overlap is a refusal event.",
+      "limitsAndEvidence": "Actual Attempt12 corruption/readable-summary native cases passed. Current valid-packet and visual error journals pending; historical particle-only fallback remains preserved.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 2,
+      "implementation": "Operator-level2 controls; default60 real-time auto-stop; id/object/area filters; stop/status/mark/export.",
+      "limitsAndEvidence": "Actual Attempt12 native commands/OP2/id/UUID checks and real 3-second automatic stop passed. Ordinary current default60/area-filter coverage pending.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 3,
+      "implementation": "Events carry operation/time/type/UUID or root/dimension/before/after/result/reason. Client placement acknowledgements join actual selected model.",
+      "limitsAndEvidence": "Current architecture placement/server-accept/render-ACK chain requires actual new-SHA client. Historical90010 chain does not prove current batch retention. New ordinary RP placement-to-model chain NOT_PROBED.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 4,
+      "implementation": "Read-only debug/tool snapshots and notes; bounded actual collision/selection fragments, sparse helpers, orientations, MountY/SourceShift and applicable state.",
+      "limitsAndEvidence": "Read-only resolver and bounded snapshots covered in current native case; ordinary client/manual visual acceptance pending.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 5,
+      "implementation": "Client frame/FPS, server ticks/TPS/mean/p95/p99/>50ms; heap, actual JFR pause source, loaded server RP/owners/helpers, cache/queue and instrumented payload counters.",
+      "limitsAndEvidence": "Current process metrics and client/server captures pending. GPU, all-mod chunk/DataTracker/TCP network and client loaded-helper count NOT_MEASURED. Shared process values non-additive; no-sample quantiles unmeasured.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 6,
+      "implementation": "First then every32nd own-code sample; grouping by type/chunk and precise UUID where available; measured/retained/dropped counts.",
+      "limitsAndEvidence": "Pure actual production budget regression preserves nonempty timing rows and local sources. Fresh full-client sample retention and cold/late ON cost remain PENDING; nested sample totals cannot be added.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 7,
+      "implementation": "Local bounded rotated ZIP with session/versions/artifact SHA/events/metrics/marks/snapshots/client batches and separate same-UUID client ZIP.",
+      "limitsAndEvidence": "Actual Attempt12 native exported readable ZIP passed. Actual current joined client/server same-session exports pending.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    },
+    {
+      "clause": 8,
+      "implementation": "Default-off bounded buffers, batched/rotated local output, no complete NBT/per-frame network packets; nonfatal report failure; matching off/on/save/reenter scenarios.",
+      "limitsAndEvidence": "Pure budget regression and current native nonfatal report IO failure passed. Fresh current default-off/matched off-on/save/reentry and actual full109 cost pending; no performance guarantee.",
+      "newArtifactVerdict": "IMPLEMENTED_CURRENT_NATIVE_OR_STATIC_EVIDENCE_ACTUAL_CURRENT_RUNTIME_PENDING",
+      "historicalRuntimeScope": "Prior Attempt11 statements retained only in the exact historical audit; current Attempt12 client/server runtime is pending."
+    }
+  ],
+  "fixedFindings": [
+    {
+      "id": "SUMMARY_MOJIBAKE",
+      "scope": "DwDiagnostics.summary() only",
+      "change": "Readable ASCII English with actual session result/count/tick summaries and explicit missing-client/GPU/network scopes. No giant telemetry map dump.",
+      "regression": "Actual native ZIP export passed UUID/readability/unavailable scopes in Attempt12. Actual current ordinary diagnostic ZIP pending."
+    },
+    {
+      "id": "SILENT_SAVED_MECHANISM_NORMALIZATION",
+      "scope": "MechanismState.fromNbt",
+      "change": "Wrong schema, malformed target metadata/UUID and malformed lever UUID/ID/position journal bounded contextual errors while preserving original skip/normalization. Permitted unresolved empty RP IDs stay valid.",
+      "regression": "Attempt12 actual mixed valid+corrupt graph reader passed unchanged input and surviving pending UUID binding."
+    },
+    {
+      "id": "SILENT_SOURCE_PAIR_NORMALIZATION",
+      "scope": "SourceLadderBlockEntity.readNbt",
+      "change": "Malformed Owner/Root/FixedBacking/Original reports field-type reason without original NBT; prior null/ORIGIN/empty normalization remains.",
+      "regression": "Attempt12 actual valid/corrupt pair reads passed old normalization, input retention and repeat dedup without payload leakage."
+    },
+    {
+      "id": "CLIENT_OWNER_SELECTION_CORRUPTION",
+      "scope": "CompositeClient; sibling-owned",
+      "change": "Both typed S2C decodes validated atomically with safe context/class/stack error reporting.",
+      "regression": "Sibling isolated compile proof; actual malformed packet gameplay not yet separately probed."
+    },
+    {
+      "id": "CLIENT_BATCH_METADATA_BUDGET_DATA_LOSS",
+      "scope": "DwClientDiagnostics client only; RP sibling owned fix",
+      "change": "Compact wire runtime identity, two whole JSON serializations, ACK/timing priority, explicit omissions, full bounded local timing windows/aggregates and separate ACK file; counters reset per active UUID. Local and wire records have different stated scopes.",
+      "regression": "PASS extracted actual production Gson budget harness. Actual new-SHA client retention and measured cost PENDING.",
+      "evidence": "reports/CLIENT_DIAGNOSTICS_BATCH_BUDGET_FIX_V9.json"
+    }
+  ],
+  "remainingActionable": [
+    "Obtain new-SHA ordinary/source/diagnostics/minimal/reenter/strict full109 Kappa proofs, including actual retained full-profile timing sections and measured cold/late ON costs.",
+    "Manual visual/gameplay acceptance remains PENDING_USER_REVIEW; the kit does not declare user approval.",
+    "Ordinary newly placed RP item to actual client model mapping remains NOT_PROBED; only architecture90010 chain is actual proof.",
+    "GPU duration, full-mod network/chunk/DataTracker/TCP bytes and client loaded-helper count remain explicitly NOT_MEASURED.",
+    "Retain known particle-only fallback warning and historical4GB/superseded-candidate failures; never relabel those runs as current PASS."
+  ],
+  "nonClaims": [
+    "No new-hash runtime PASS until evidence exists",
+    "No manual visual acceptance",
+    "No full-city scaling or performance guarantee",
+    "No exact GPU cost or full network traffic measurement",
+    "No blanket interception of arbitrary vanilla/uninstrumented failures"
+  ],
+  "auditMethod": "Lightweight code/request/current-report inspection only; no Minecraft, Gradle, javac, performance process or production edits during this audit.",
+  "frozenOwnedFiles": [
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/diagnostics/DwDiagnostics.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/link/MechanismState.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/ladder_source/SourceLadderBlockEntity.java",
+    "src/gametest/java/dev/dreamwalker/bloodbornedw/diagnostics/DwDiagnosticsGameTests.java"
+  ],
+  "currentEvidence": {
+    "native": {
+      "path": "reports/FIRST_SET_GAMETEST_V9_ATTEMPT_12.xml",
+      "sha256": "bb57325687744321ab7b54d7904d1eca8b9f032e8f8d8edd0f02fdc106169ef7",
+      "bytes": 16465
+    },
+    "buildAndCore": {
+      "path": "reports/REVIEW_V9_BUILD_AND_CORE_ATTEMPT_12.log",
+      "sha256": "7620981c1ddc89cd75414cc3cbb8afe2474143340c555c46f6abb04ea5008311",
+      "bytes": 2499183
+    },
+    "ownedNativeBinding": {
+      "path": "reports/REVIEW_V9_MECHANISM_LADDER_NATIVE_CANDIDATE12.json",
+      "sha256": "223de5e503b87819fe3a0368dacd7cf6277b6563cdeaad75d5883839c82adc75",
+      "bytes": 11026
+    },
+    "pureClientBudgetRegression": {
+      "path": "reports/CLIENT_DIAGNOSTICS_BATCH_BUDGET_FIX_V9.json",
+      "sha256": "7099cca0e817aa30339714a804f322079db0312f32febb7b65fc271c582c02e8",
+      "bytes": 3938
+    }
+  },
+  "safeHookReview": {
+    "status": "PASS_LIGHTWEIGHT_READ_ONLY_NO_FURTHER_PRODUCTION_CHANGES",
+    "scope": [
+      "MechanismState.fromNbt",
+      "SourceLadderBlockEntity.readNbt"
+    ],
+    "findings": [
+      "No extra world/chunk lookup or editing is introduced by logging.",
+      "Existing malformed-record skipping and source pair null/ORIGIN/empty normalization remain.",
+      "Valid unresolved empty RP target type metadata remains admitted as before.",
+      "The diagnostic reasons contain field types/context rather than input NBT or raw exception messages."
+    ],
+    "nativeRegression": "Actual Attempt12 105-case XML includes corruptSavedBindingsAndSourcePairReportErrorsWithoutChangingPriorNormalization PASS; source-member and ordinary ladder tests all PASS."
+  },
+  "actualDiagnostics": {
+    "status": "PENDING_CURRENT_ATTEMPT12_ACTUAL_RUNTIME",
+    "scope": "Dedicated release9 OFF60/ON60/REENTER, minimal/reenter clients10, strict full Kappa11 all require new-SHA reports.",
+    "newRpPlacementModelChain": "NOT_PROBED_BY_THIS_QA_STAGE",
+    "gpuAndAllModTraffic": "NOT_MEASURED",
+    "manualVisualAcceptance": "PENDING_USER_REVIEW",
+    "globalErrorFreeClaim": false
+  },
+  "observedClientIssues": [
+    {
+      "status": "KNOWN_PARTICLE_FALLBACK_VISIBLE_RENDER_FACES_RESOLVED",
+      "category": "texture_fallback",
+      "typeId": "90005",
+      "instanceId": "b993e55c-9dde-4890-b18c-2a820627cd69",
+      "root": [
+        36,
+        64,
+        38
+      ],
+      "model": "bloodborne_dw:tree_alt/block/birch_log_1",
+      "purpose": "world-root-render",
+      "repeatCountEachSession": 2,
+      "scope": "Known missing particle metadata in inherited BASE/ALT tree model. Both actual visible models have two resolved tree_2 quads and identical vertex hashes. Warning retained, not suppressed; does not permit missing visible sprites in other models.",
+      "actualBakedModel": {
+        "missingModel": false,
+        "quadCount": 2,
+        "quadSpriteIds": [
+          "bloodborne_dw:tree_source/block/addon/tree_2"
+        ],
+        "quadVertexSha256": "0cd251428455521a5da709af70429c0e97e0d5a1c11a812cadaa7fe150bcfb6e",
+        "evidencePath": "CLIENT_MINIMAL_V9_RELEASE9.json/client_review_output/result/actualBakedModels/25"
+      },
+      "productionChange": "NONE_BY_THIS_AUDIT",
+      "reference": "reports/REVIEW_V9_TREE_PARTICLE_FALLBACK_OBSERVATION.json",
+      "scopeCandidate": "Historical Attempt11 only; current12 actual client observation pending."
+    },
+    {
+      "status": "KNOWN_OFFLINE_LAUNCH_CONTEXT",
+      "category": "console_authentication_401",
+      "scope": "Client wrappers retain offline authentication errors; not relabelled as synchronization/diagnostic/model failure.",
+      "scopeCandidate": "Historical Attempt11 only; current12 actual client observation pending."
+    }
+  ],
+  "actualFullKappa": {
+    "status": "PENDING_CURRENT_ATTEMPT12_STRICT_FULL11",
+    "productionArtifactSha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+    "requiredSelectedMods": 109,
+    "requiredHeap": "6G",
+    "requiredOptions": 42,
+    "retainedColdAndLateOnTimings": "PENDING_ACTUAL_CURRENT_CLIENT",
+    "scope": "Preserve startup/cold ON measurements separately from later enabled batches. Packet flush cost alone did not explain the prior median frame slowdown. JFR/JIT startup attribution unproved.",
+    "manualVisualAcceptance": "PENDING_USER_REVIEW"
+  },
+  "finalOwnedFreeze": {
+    "status": "FROZEN_DOCS_REPORT_ONLY_NO_MAIN_OR_QA_CHANGES",
+    "productionArtifactSha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
+    "native": 105,
+    "core": 20,
+    "ordinaryServerPhases": "PENDING_RELEASE9",
+    "sourceServerPhases": "PENDING_FINAL4_RELEASE9",
+    "dedicatedDiagnosticPhases": "PENDING_RELEASE9",
+    "minimalClient": "PENDING_RELEASE10",
+    "actualDiagnosticClientReenter": "PENDING_RELEASE10",
+    "fullKappaClient": "PENDING_STRICT_RELEASE11",
+    "independentDiagnostics": "PENDING_NEW_SHA"
+  }
+}

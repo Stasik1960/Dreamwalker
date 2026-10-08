@@ -1,0 +1,50 @@
+Compiled from "BlockInit.java"
+public class com.potomy.bloodborne.core.init.BlockInit {
+  public static final net.minecraftforge.registries.DeferredRegister<net.minecraft.world.level.block.Block> BLOCKS;
+
+  public static final int hunterLampLightIntensity;
+
+  public static final net.minecraftforge.registries.RegistryObject<net.minecraft.world.level.block.Block> HUNTER_LAMP_LIGHT_SOURCE;
+
+  public com.potomy.bloodborne.core.init.BlockInit();
+    Code:
+       0: aload_0
+       1: invokespecial #28                 // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static net.minecraftforge.registries.RegistryObject<net.minecraft.world.level.block.Block> registerBlock(java.lang.String, java.util.function.Supplier<net.minecraft.world.level.block.Block>);
+    Code:
+       0: getstatic     #35                 // Field BLOCKS:Lnet/minecraftforge/registries/DeferredRegister;
+       3: aload_0
+       4: aload_1
+       5: invokevirtual #40                 // Method net/minecraftforge/registries/DeferredRegister.register:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/minecraftforge/registries/RegistryObject;
+       8: areturn
+
+  private static net.minecraft.world.level.block.Block lambda$static$1();
+    Code:
+       0: new           #49                 // class net/minecraft/world/level/block/AirBlock
+       3: dup
+       4: getstatic     #55                 // Field net/minecraft/world/level/material/Material.f_76296_:Lnet/minecraft/world/level/material/Material;
+       7: invokestatic  #59                 // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.m_60939_:(Lnet/minecraft/world/level/material/Material;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+      10: invokedynamic #78,  0             // InvokeDynamic #0:applyAsInt:()Ljava/util/function/ToIntFunction;
+      15: invokevirtual #82                 // Method net/minecraft/world/level/block/state/BlockBehaviour$Properties.m_60953_:(Ljava/util/function/ToIntFunction;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;
+      18: invokespecial #85                 // Method net/minecraft/world/level/block/AirBlock."<init>":(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+      21: areturn
+
+  private static int lambda$static$0(net.minecraft.world.level.block.state.BlockState);
+    Code:
+       0: bipush        9
+       2: ireturn
+
+  static {};
+    Code:
+       0: getstatic     #93                 // Field net/minecraftforge/registries/ForgeRegistries.BLOCKS:Lnet/minecraftforge/registries/IForgeRegistry;
+       3: ldc           #95                 // String bloodborne
+       5: invokestatic  #99                 // Method net/minecraftforge/registries/DeferredRegister.create:(Lnet/minecraftforge/registries/IForgeRegistry;Ljava/lang/String;)Lnet/minecraftforge/registries/DeferredRegister;
+       8: putstatic     #35                 // Field BLOCKS:Lnet/minecraftforge/registries/DeferredRegister;
+      11: ldc           #101                // String hunter_lamp_light_source
+      13: invokedynamic #111,  0            // InvokeDynamic #1:get:()Ljava/util/function/Supplier;
+      18: invokestatic  #113                // Method registerBlock:(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/minecraftforge/registries/RegistryObject;
+      21: putstatic     #115                // Field HUNTER_LAMP_LIGHT_SOURCE:Lnet/minecraftforge/registries/RegistryObject;
+      24: return
+}

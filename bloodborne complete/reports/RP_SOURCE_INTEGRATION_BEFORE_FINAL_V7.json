@@ -1,0 +1,237 @@
+{
+  "schema": "dreamwalker-rp-source-integration-v1",
+  "status": "PASS_TWO_DECLARED_NBT_HOOKS_ONLY",
+  "source_zip": "C:\\Users\\vakir\\Downloads\\Bloodborne-RP-Fixes-1.20.1-20261006\\sources\\bloodborne-rp-1.0.0-rp.2-full-source.zip",
+  "source_sha256": "25a778ceda1b042b811a180d7285564653b5c52c755ad0151cb813311ad5b801",
+  "original_java_files": 30,
+  "original_java_byte_identical": 28,
+  "declared_changed_files": [
+    "src/rp/java/dev/dreamwalker/bloodbornerp/mob/RpMobEntity.java",
+    "src/rp/java/dev/dreamwalker/bloodbornerp/object/RpObjectEntity.java"
+  ],
+  "java_files": [
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/BloodborneRp.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/BloodborneRp.java",
+      "source_sha256": "949e841cb156592ac79891502125c310b0be286ca67583c19212ac9a3ac287c7",
+      "integrated_sha256": "949e841cb156592ac79891502125c310b0be286ca67583c19212ac9a3ac287c7",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/RpConfig.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/RpConfig.java",
+      "source_sha256": "04b7cd309b403f54d8416e51f463362469b832bef3f6aed96457fdf79cb8bf61",
+      "integrated_sha256": "04b7cd309b403f54d8416e51f463362469b832bef3f6aed96457fdf79cb8bf61",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/BloodborneRpClient.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/BloodborneRpClient.java",
+      "source_sha256": "870742d2ebaef52847ece4ca9caf57745d51944bccbf8217c619291ed99bab5b",
+      "integrated_sha256": "870742d2ebaef52847ece4ca9caf57745d51944bccbf8217c619291ed99bab5b",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/CatalogEntityModel.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/CatalogEntityModel.java",
+      "source_sha256": "916a98f31c18d674e91b1b01fd11b6de37f64f9b5a9295f430257dabffd6bf3a",
+      "integrated_sha256": "916a98f31c18d674e91b1b01fd11b6de37f64f9b5a9295f430257dabffd6bf3a",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/CatalogMobRenderer.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/CatalogMobRenderer.java",
+      "source_sha256": "bb6880002e7a366fe4f91a5d9392db1d8cc91f3cf61637029819497639eadb2e",
+      "integrated_sha256": "bb6880002e7a366fe4f91a5d9392db1d8cc91f3cf61637029819497639eadb2e",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/CatalogObjectRenderer.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/CatalogObjectRenderer.java",
+      "source_sha256": "570d98f2d456955063dcd400a5357dbed4c7cdbe4e5a7efa4b5a749ec3b7a10f",
+      "integrated_sha256": "570d98f2d456955063dcd400a5357dbed4c7cdbe4e5a7efa4b5a749ec3b7a10f",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/lamp/LampClient.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/lamp/LampClient.java",
+      "source_sha256": "b0af0541af34d9cf531b5eafebbce52df82948ee0138e56bebf4a407b44b9b1e",
+      "integrated_sha256": "b0af0541af34d9cf531b5eafebbce52df82948ee0138e56bebf4a407b44b9b1e",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/weapon/TrickWeaponModel.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/weapon/TrickWeaponModel.java",
+      "source_sha256": "901d79296513320772e72752ee9550e272b1d6f53dfffad5be1be1e14a356c22",
+      "integrated_sha256": "901d79296513320772e72752ee9550e272b1d6f53dfffad5be1be1e14a356c22",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/weapon/TrickWeaponRenderer.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/weapon/TrickWeaponRenderer.java",
+      "source_sha256": "ade4dce172cdac4876d77f3385a4decaee7eaff110dbd9f932a05a84ac286cac",
+      "integrated_sha256": "ade4dce172cdac4876d77f3385a4decaee7eaff110dbd9f932a05a84ac286cac",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/client/weapon/WeaponClient.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/client/weapon/WeaponClient.java",
+      "source_sha256": "31f3ade6b8281b9e9a897de13c8b187c5227be6ae7b00703d8a29f5bf5b7f5fc",
+      "integrated_sha256": "31f3ade6b8281b9e9a897de13c8b187c5227be6ae7b00703d8a29f5bf5b7f5fc",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/command/RpCommands.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/command/RpCommands.java",
+      "source_sha256": "25e8698163e63de15d606eb52a798519bc6e6c0cb11e4dc9fdcf0fd95d372c60",
+      "integrated_sha256": "25e8698163e63de15d606eb52a798519bc6e6c0cb11e4dc9fdcf0fd95d372c60",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/content/AssetBacked.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/content/AssetBacked.java",
+      "source_sha256": "69e76ce30dd3e80056180d3b2430610272651a45daf86c2dfc8f4c4e049b083b",
+      "integrated_sha256": "69e76ce30dd3e80056180d3b2430610272651a45daf86c2dfc8f4c4e049b083b",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/content/AssetCatalog.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/content/AssetCatalog.java",
+      "source_sha256": "f4c8c8e5a35252035cc604676bfef509d6586c2ae543f4e92ed7c5219e485f83",
+      "integrated_sha256": "f4c8c8e5a35252035cc604676bfef509d6586c2ae543f4e92ed7c5219e485f83",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/content/AssetSpec.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/content/AssetSpec.java",
+      "source_sha256": "a1fe3ac8b14d798177251527a8453483bb99ce7ce2bac013dbc6d06c503d195b",
+      "integrated_sha256": "a1fe3ac8b14d798177251527a8453483bb99ce7ce2bac013dbc6d06c503d195b",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/content/BloodVialItem.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/content/BloodVialItem.java",
+      "source_sha256": "f22ba94a5fd9747842065bf92e02c721927f6325ae0679614e12c9539d4f189f",
+      "integrated_sha256": "f22ba94a5fd9747842065bf92e02c721927f6325ae0679614e12c9539d4f189f",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/content/RpSounds.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/content/RpSounds.java",
+      "source_sha256": "fbc625a3f107633d0fa940991872da19a821f35bc70b4a40fb5316f3a9cdd7b2",
+      "integrated_sha256": "fbc625a3f107633d0fa940991872da19a821f35bc70b4a40fb5316f3a9cdd7b2",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/lamp/LampPolicy.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/lamp/LampPolicy.java",
+      "source_sha256": "62690a7296261375e7a36e32926c97a95ce69ac40c4b0096e7e0ea097cc553f6",
+      "integrated_sha256": "62690a7296261375e7a36e32926c97a95ce69ac40c4b0096e7e0ea097cc553f6",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/lamp/LampService.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/lamp/LampService.java",
+      "source_sha256": "2b31cca0dd751af1db0d93e41d5a8a0f73bf08741845336ad9c2be74289203b0",
+      "integrated_sha256": "2b31cca0dd751af1db0d93e41d5a8a0f73bf08741845336ad9c2be74289203b0",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/lamp/LampState.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/lamp/LampState.java",
+      "source_sha256": "7ae1f2fa14ced77c11c73e2b9f802b0398a2530999ce040100282976f2aec74e",
+      "integrated_sha256": "7ae1f2fa14ced77c11c73e2b9f802b0398a2530999ce040100282976f2aec74e",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/mob/AttackRules.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/mob/AttackRules.java",
+      "source_sha256": "5f8ff5454c7db3868d4b109c099d564aa4416398ab14e021db181acce2284083",
+      "integrated_sha256": "5f8ff5454c7db3868d4b109c099d564aa4416398ab14e021db181acce2284083",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/mob/MobAnimationSelector.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/mob/MobAnimationSelector.java",
+      "source_sha256": "fcb6bfcd9ecd1e9a2847417e19d10f513271c0e45f282524728ef8d56aac581f",
+      "integrated_sha256": "fcb6bfcd9ecd1e9a2847417e19d10f513271c0e45f282524728ef8d56aac581f",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/mob/MobRegistry.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/mob/MobRegistry.java",
+      "source_sha256": "717125623f8c372db807f205fa4486a09a995d528e9df7949fa655641b94b06b",
+      "integrated_sha256": "717125623f8c372db807f205fa4486a09a995d528e9df7949fa655641b94b06b",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/mob/RpMobEntity.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/mob/RpMobEntity.java",
+      "source_sha256": "4b19434fcd1e58648a4835a3fe56c307899ff55f0b80721eea0b3b1914805b82",
+      "integrated_sha256": "15c03cc07a4644e35317016b8b11a18c37fcc4831fc8672b60ec970fa1df2608",
+      "byte_identical": false
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/object/ObjectRegistry.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/object/ObjectRegistry.java",
+      "source_sha256": "cd7297902491b1ecf67f8855e16c647b1dc203690870e0a5deb903e4012a9bb1",
+      "integrated_sha256": "cd7297902491b1ecf67f8855e16c647b1dc203690870e0a5deb903e4012a9bb1",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/object/PlacementObjectItem.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/object/PlacementObjectItem.java",
+      "source_sha256": "f5b33147da3da24952d417f83c6cd912eaca5243fae0fbe6a1c739570ed75937",
+      "integrated_sha256": "f5b33147da3da24952d417f83c6cd912eaca5243fae0fbe6a1c739570ed75937",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/object/RpObjectEntity.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/object/RpObjectEntity.java",
+      "source_sha256": "6162f64aed22b7b4a78e635600491471672ed715cec99c4c31b1b3ed17e75413",
+      "integrated_sha256": "5e329a946ba40e23c8747e8e43c5f707d647c0b32ff3e464af8264047768e84f",
+      "byte_identical": false
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/weapon/TrickWeaponItem.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/weapon/TrickWeaponItem.java",
+      "source_sha256": "ec4796b5dc375ae80e772d4f107543682d0fa5afbe6d2bc32eaaf9485f82ffc2",
+      "integrated_sha256": "ec4796b5dc375ae80e772d4f107543682d0fa5afbe6d2bc32eaaf9485f82ffc2",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/weapon/WeaponForm.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/weapon/WeaponForm.java",
+      "source_sha256": "869478b711a3244d2c1ff7cd0e4d90a57a3465eb6a2ea358767b5d179cfc0cf6",
+      "integrated_sha256": "869478b711a3244d2c1ff7cd0e4d90a57a3465eb6a2ea358767b5d179cfc0cf6",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/weapon/WeaponProfile.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/weapon/WeaponProfile.java",
+      "source_sha256": "4d108c7ca133e7292e80290742f2944e1a6d435b0dedaa2eaddeabb6eb9335f5",
+      "integrated_sha256": "4d108c7ca133e7292e80290742f2944e1a6d435b0dedaa2eaddeabb6eb9335f5",
+      "byte_identical": true
+    },
+    {
+      "path": "src/rp/java/dev/dreamwalker/bloodbornerp/weapon/WeaponRegistry.java",
+      "source_entry": "Bloodborne-RP/src/main/java/dev/dreamwalker/bloodbornerp/weapon/WeaponRegistry.java",
+      "source_sha256": "74fa1a42dff54cd28d49f9331850da68965f4ce5fc2c3805566e50eab88696c5",
+      "integrated_sha256": "74fa1a42dff54cd28d49f9331850da68965f4ce5fc2c3805566e50eab88696c5",
+      "byte_identical": true
+    }
+  ],
+  "added_helper": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\rp\\java\\dev\\dreamwalker\\bloodbornerp\\content\\SourceLegacyPayload.java",
+    "sha256": "67e3a61cc96c25a8497a93b74c6f23197d9f2f41607fa718b307980d3fc6537f"
+  },
+  "resource_files_byte_identical": 707,
+  "diff": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\RP_SOURCE_INTEGRATION.patch",
+  "diff_sha256": "7037164729be16b3895c655934e199aa89bf5c359b35f6f0a114d6e0ab9450a2",
+  "reason": "V3 independent game-save audit found unhandled original Forge fields dropped by the RP serializers.",
+  "behavior": "Preserve full typed original NBT under SourceLegacyPayload; passthrough unhandled fields only; current role/vanilla writers win.",
+  "game_save_retention": "PASS_AUTHOR_V4_INDEPENDENT_POSTSAVE",
+  "game_save_evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\SOURCE_REVIEW_POSTSAVE_INDEPENDENT_V4.json",
+  "game_save_evidence_sha256": "f2602c4714ff90aec1e2dcf0f46bab1554eeb004e58738065275fd8c0a721cf8",
+  "production_sha256": "14e88d539224121cbdcb7037b38c50cb64dc3edc52fe6028dfbc21aba3b2eeb6"
+}

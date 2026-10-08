@@ -1,0 +1,40 @@
+{
+  "parent": "bloodborne_dw:base/source/minecraft/block/hold/wood_ladder_02",
+  "overrides": [
+    {
+      "predicate": {
+        "bloodborne_dw:variant": 0.5,
+        "bloodborne_dw:profile": 0
+      },
+      "model": "bloodborne_dw:item/prototype_ladder_base_1"
+    },
+    {
+      "predicate": {
+        "bloodborne_dw:variant": 1.0,
+        "bloodborne_dw:profile": 0
+      },
+      "model": "bloodborne_dw:item/prototype_ladder_base_2"
+    },
+    {
+      "predicate": {
+        "bloodborne_dw:variant": 0.0,
+        "bloodborne_dw:profile": 1
+      },
+      "model": "bloodborne_dw:item/prototype_ladder_alt_0"
+    },
+    {
+      "predicate": {
+        "bloodborne_dw:variant": 0.5,
+        "bloodborne_dw:profile": 1
+      },
+      "model": "bloodborne_dw:item/prototype_ladder_alt_1"
+    },
+    {
+      "predicate": {
+        "bloodborne_dw:variant": 1.0,
+        "bloodborne_dw:profile": 1
+      },
+      "model": "bloodborne_dw:item/prototype_ladder_alt_2"
+    }
+  ]
+}

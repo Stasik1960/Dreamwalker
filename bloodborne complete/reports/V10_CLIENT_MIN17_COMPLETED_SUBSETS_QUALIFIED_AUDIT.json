@@ -1,0 +1,164 @@
+{
+  "schema": "dw-v10-min17-qualified-completed-subsets-v1",
+  "status": "VERIFIED_ORDINARY_MIDDLE_GUI_AND_DIAGNOSTIC_SUBSETS_WHOLE_MIN17_FAILED_LATE_CHATSCREEN_TEARDOWN",
+  "productionJarSha256": "ad7fb47b9f22594f05d8c9523030c2d35f13154be61ba44b1bacf964838fabe5",
+  "qaArtifacts": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-qa-27\\dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar",
+      "sha256": "b102c1e96a8eea8644ccd5c219549872f0c9bd040463120c06b50a90b6af02db",
+      "copied_name": "dreamwalker-first-set-review-qa-0.1.0-prototype.5.jar"
+    }
+  ],
+  "wrapper": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_CLIENT_MIN_ATTEMPT_17.json",
+  "wrapperSha256": "d2300240b7176865eb4a96c87a6933e9853964843bca591462b6952ab66911ba",
+  "raw": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt17\\client-review-output.json",
+  "rawSha256": "662ad303ac9884498833b581fd8cd69d262966581c08c1deaa71d05cd104c157",
+  "wholeWrapperStatus": "FAIL_CLIENT_REVIEW",
+  "exitCode": 0,
+  "elapsedSeconds": 374.61,
+  "actualIntegratedSaveLogPresent": true,
+  "completed": {
+    "canonicalRp": 69,
+    "additionalWorkingParts": 4,
+    "ordinaryArchitecture": 18,
+    "canonicalActualMiddleKeys": 69,
+    "oldRegistryActualMiddleKeys": 7,
+    "pickedItemOrdinaryReinstallationNewUuid": "f148c787-da13-4fbe-a171-5802b0f2016f",
+    "pickedItemCleanupDrops": 0,
+    "typedInventorySlotsRestoredBeforeMenus": 41,
+    "preMenuActorRestoration": {
+      "serverPositionRestored": true,
+      "serverYawPitchRestored": true,
+      "serverFlyingRestored": true,
+      "serverOriginalHandsRestored": true,
+      "serverInventoryRestored": true,
+      "clientYawPitchRestored": true,
+      "clientFlyingRestored": true,
+      "clientOriginalHandsRestored": true,
+      "clientInventoryRestored": true
+    },
+    "permanentFixtureStateAndGraphsUnchangedThroughTemporaryCases": true,
+    "actualMenusSteps": 237
+  },
+  "diagnosticsActualCompletedSubset": {
+    "status": "PASS_CURRENT_ACTUAL_ACK_LOCAL_RETENTION_OFF_ON_OFF_EXPORTS",
+    "sessionId": "369a38ff-f95f-4adb-8cce-a5e23a2ddd16",
+    "instanceId": "f3fcffc0-6b67-4423-8555-0071b44b614b",
+    "acceptedOperation": 2,
+    "actualItemServerRendererType": "90010",
+    "requestedRecordingSeconds": 20,
+    "actualRecordingSeconds": 20.0291136,
+    "comparisonWindowTicksRequested": 100,
+    "comparisonWindows": [
+      {
+        "label": "OFF_BEFORE",
+        "actualWindowSeconds": 5.0066203,
+        "framesObserved": 595,
+        "retained": 595,
+        "dropped": 0,
+        "meanFrameMs": 8.397998823529411,
+        "p95FrameMs": 9.7517,
+        "p99FrameMs": 10.4265,
+        "timeWeightedPresentationFps": 119.07598715044018,
+        "renderThreadCpuMeanMs": 2.547268907563025
+      },
+      {
+        "label": "ON_IDENTICAL_CLEANED_SCENE",
+        "actualWindowSeconds": 5.0017984,
+        "framesObserved": 592,
+        "retained": 592,
+        "dropped": 0,
+        "meanFrameMs": 8.432667905405406,
+        "p95FrameMs": 9.8441,
+        "p99FrameMs": 11.1733,
+        "timeWeightedPresentationFps": 118.58643210163562,
+        "renderThreadCpuMeanMs": 2.956081081081081
+      },
+      {
+        "label": "OFF_AFTER",
+        "actualWindowSeconds": 4.9970911,
+        "framesObserved": 590,
+        "retained": 590,
+        "dropped": 0,
+        "meanFrameMs": 8.453883050847457,
+        "p95FrameMs": 10.2758,
+        "p99FrameMs": 11.1596,
+        "timeWeightedPresentationFps": 118.28883768385644,
+        "renderThreadCpuMeanMs": 3.204449152542373
+      }
+    ],
+    "deliveredBatches": 19,
+    "allBatchesHaveSampledTimingGroups": true,
+    "localWindows": 19,
+    "sessionSampledSections": 14,
+    "sampledInvocations": 3270,
+    "completedWindowSampledInvocations": 3168,
+    "untransmittedPartialTailSampledInvocations": 102,
+    "rawRetainedSamples": 3270,
+    "rawDroppedSamples": 0,
+    "wireOmittedRowsCumulative": 83,
+    "ownFlushInclusiveWallMilliseconds": 19.1801,
+    "nativeCellsRestored": 10,
+    "temporaryLedgerRemoved": true,
+    "clientErrors": [
+      {
+        "timeUtc": "2026-10-08T17:16:26.868937500Z",
+        "operationNumber": 17,
+        "origin": "client",
+        "session": "369a38ff-f95f-4adb-8cce-a5e23a2ddd16",
+        "typeId": "90005",
+        "instanceId": "d730258b-2ebf-4396-a007-2a3ca6a2e574",
+        "dimension": "minecraft:overworld",
+        "root": [
+          36,
+          64,
+          40
+        ],
+        "category": "texture_fallback",
+        "reason": "Missing sprite in actual baked model bloodborne_dw:tree_source/block/birch_log_1 at world-root-render",
+        "repeatCount": 2
+      }
+    ],
+    "serverErrors": [],
+    "exports": [
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt17\\diagnostics\\dreamwalker-client-369a38ff-f95f-4adb-8cce-a5e23a2ddd16.zip",
+        "bytes": 32814,
+        "sha256": "86bf208eba15b20a410e005766539687d2810a900222e804afec61ac709dd47b"
+      },
+      {
+        "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt17\\dreamwalker-diagnostics\\diagnostics-369a38ff-f95f-4adb-8cce-a5e23a2ddd16-1791479806892.zip",
+        "bytes": 29331,
+        "sha256": "125da81959f130be13460d66e3e7b6a8b685fc5fe0c32936e5c1677b7cd8b9ff"
+      }
+    ],
+    "limits": [
+      "Actual20second recording, three approximately5second windows. No20seconds-per-window claim.",
+      "Sampled hook elapsed intervals may nest; cannot sum them as unique CPU costs.",
+      "Render-thread CPU has host clock resolution; presentation includes wait. GPU duration NOT_MEASURED; no causal overhead percentage.",
+      "Formal ordinary ACK chain is90010; no full all69RP diagnostics-render-chain coverage claim."
+    ]
+  },
+  "failure": {
+    "phase": 4,
+    "reason": "Actor setup requires prior actual Esc",
+    "actualScreen": "net.minecraft.class_408",
+    "mappedScreen": "net.minecraft.client.gui.screen.ChatScreen",
+    "primaryMappingRow": "c\tnet/minecraft/class_408\tnet/minecraft/client/gui/screen/ChatScreen",
+    "mappingJar": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\yarn\\1.20.1+build.10\\f09f3e05ed95dbd0075b033f85f41a3416af9968\\yarn-1.20.1+build.10-v2.jar",
+    "mappingJarSha256": "5444b470f35b892862908bb27314c0b5b325369fd60896d8d809e635d5371bea",
+    "nextActorSetupOrFinalCleanup": "FAIL_NOT_COMPLETED",
+    "causalClassification": "READONLY_SOURCE_DIAGNOSIS_OWNED_RP_AGENT; no GUI-pause or production-bug inference"
+  },
+  "finalInventoryAtExit": "NOT_OBSERVED: before-menu typed restoration passed, but final teardown did not finish.",
+  "distinctReenter": "NOT_RUN",
+  "strictShader": "NOT_APPLICABLE_MINIMAL_PROFILE",
+  "manualReview": "PENDING",
+  "wholeTaskAcceptance": "PENDING",
+  "limits": [
+    "Completed diagnostics include actual matched OFF/ON/OFF, ACK bindings, sent/delivered batch equality and bounded retained/drop reconciliation.",
+    "Successful subsets do not change the whole MIN17 FAIL or satisfy a normal terminal client acceptance gate.",
+    "No historical candidate8 runtime proof is substituted for this exact candidate9 run.",
+    "No Minecraft/build/production/QA mutation occurred in this audit."
+  ]
+}

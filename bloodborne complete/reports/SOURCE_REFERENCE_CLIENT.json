@@ -1,0 +1,6340 @@
+{
+  "schema": "dreamwalker-original-forge-source-client-v1",
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2",
+  "manual_gameplay": "NOT_RUN",
+  "client_visuals": "NOT_RUN",
+  "previous_dedicated_evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\SOURCE_REFERENCE.json",
+  "previous_dedicated_evidence_sha256": "2fb78e4e9c290b67b39a2690dd6421ca0695933155321f7117cbd6942612b7fb",
+  "original_inputs_modified": false,
+  "metadata": {
+    "forge_path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\versions\\1.18.2-forge-40.2.0\\1.18.2-forge-40.2.0.json",
+    "forge_sha256": "b9d56943b8870477a3120e73dbb1f704127af762916e6130f47fd6f6ca38b2a7",
+    "vanilla_path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\inputs\\extracted\\vanilla-1.18.2\\version.json",
+    "vanilla_sha256": "3df8f7b5e0ae5ccfd73adc9e00daf407a7274b138daab5793e58d14f2ab74144"
+  },
+  "libraries": [
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\logging\\1.0.0\\logging-1.0.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\logging\\1.0.0\\logging-1.0.0.jar",
+      "sha1": "f6ca3b2eee0b80b384e8ed93d368faecb82dfb9b",
+      "sha256": "b2f5d129244f7a90973623cb683becfccd0e23b2ac3adec028f259f27b0a5400",
+      "coordinate": "com.mojang:logging:1.0.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\blocklist\\1.0.10\\blocklist-1.0.10.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\blocklist\\1.0.10\\blocklist-1.0.10.jar",
+      "sha1": "5c685c5ffa94c4cd39496c7184c1d122e515ecef",
+      "sha256": "830bfd639c8db49236bbd8e45d3a2b8c96c56ff654a10118654958a6235d4c44",
+      "coordinate": "com.mojang:blocklist:1.0.10",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\patchy\\2.2.10\\patchy-2.2.10.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\patchy\\2.2.10\\patchy-2.2.10.jar",
+      "sha1": "da05971b07cbb379d002cf7eaec6a2048211fefc",
+      "sha256": "16d70e7968b45caffc81576268eb000f473fb60bf257182d3447dea8ec919d5a",
+      "coordinate": "com.mojang:patchy:2.2.10",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\github\\oshi\\oshi-core\\5.8.5\\oshi-core-5.8.5.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\github\\oshi\\oshi-core\\5.8.5\\oshi-core-5.8.5.jar",
+      "sha1": "1d0ec654d820741327f5a9229d513732a4b7ce50",
+      "sha256": "fe16bd8836eecf3d152585c2151322273b68237d13f223e662e0db959dd13680",
+      "coordinate": "com.github.oshi:oshi-core:5.8.5",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\java\\dev\\jna\\jna\\5.10.0\\jna-5.10.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\java\\dev\\jna\\jna\\5.10.0\\jna-5.10.0.jar",
+      "sha1": "7cf4c87dd802db50721db66947aa237d7ad09418",
+      "sha256": "e335c10679f743207d822c5f7948e930319835492575a9dba6b94f8a3b96fcc8",
+      "coordinate": "net.java.dev.jna:jna:5.10.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\java\\dev\\jna\\jna-platform\\5.10.0\\jna-platform-5.10.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\java\\dev\\jna\\jna-platform\\5.10.0\\jna-platform-5.10.0.jar",
+      "sha1": "fbed7d9669dba47714ad0d4f4454290a997aee69",
+      "sha256": "1f71afd977051bf0109ef5e3767d4e2afd777be894d89788cc0f38ad68f6a16f",
+      "coordinate": "net.java.dev.jna:jna-platform:5.10.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\slf4j\\slf4j-api\\1.8.0-beta4\\slf4j-api-1.8.0-beta4.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\slf4j\\slf4j-api\\1.8.0-beta4\\slf4j-api-1.8.0-beta4.jar",
+      "sha1": "83b0359d847ee053d745be7ec0d8e9e8a44304b4",
+      "sha256": "602b712329c84b4a83c40464f4fdfd0fe4238c53ef397139a867064739dbf4e0",
+      "coordinate": "org.slf4j:slf4j-api:1.8.0-beta4",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\logging\\log4j\\log4j-slf4j18-impl\\2.17.0\\log4j-slf4j18-impl-2.17.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\logging\\log4j\\log4j-slf4j18-impl\\2.17.0\\log4j-slf4j18-impl-2.17.0.jar",
+      "sha1": "bd7f6c0b9224dd214afb4e684957e2349b529a8d",
+      "sha256": "40bb460ce600aabf832be01141d07ed439fe288140aafae4fdc391d682e9cf43",
+      "coordinate": "org.apache.logging.log4j:log4j-slf4j18-impl:2.17.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\ibm\\icu\\icu4j\\70.1\\icu4j-70.1.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\ibm\\icu\\icu4j\\70.1\\icu4j-70.1.jar",
+      "sha1": "dfa3a1fbc55bf5db8c6e79fc0935ac7ab1202950",
+      "sha256": "2b4d8d4e098e86aa5f905ec81c46751d218b16afd3f7fc02b64f80dd20fffa20",
+      "coordinate": "com.ibm.icu:icu4j:70.1",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\javabridge\\1.2.24\\javabridge-1.2.24.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\javabridge\\1.2.24\\javabridge-1.2.24.jar",
+      "sha1": "0c876796229b2ef5120f186eab5acc870699d3b9",
+      "sha256": "b5f8871a1799b36e27a5f2ad8a4b47db39210031c967b794707b92e9e3f8598e",
+      "coordinate": "com.mojang:javabridge:1.2.24",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\sf\\jopt-simple\\jopt-simple\\5.0.4\\jopt-simple-5.0.4.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\sf\\jopt-simple\\jopt-simple\\5.0.4\\jopt-simple-5.0.4.jar",
+      "sha1": "4fdac2fbe92dfad86aa6e9301736f6b4342a3f5c",
+      "sha256": "df26cc58f235f477db07f753ba5a3ab243ebe5789d9f89ecf68dd62ea9a66c28",
+      "coordinate": "net.sf.jopt-simple:jopt-simple:5.0.4",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\io\\netty\\netty-all\\4.1.68.Final\\netty-all-4.1.68.Final.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\io\\netty\\netty-all\\4.1.68.Final\\netty-all-4.1.68.Final.jar",
+      "sha1": "b8266a3c93c1c051109f71d3449e5dcd5d60b333",
+      "sha256": "21e9d45194ee99b1415cc85463555417e494baf87c5d285877a7584328122f02",
+      "coordinate": "io.netty:netty-all:4.1.68.Final",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\google\\guava\\failureaccess\\1.0.1\\failureaccess-1.0.1.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\google\\guava\\failureaccess\\1.0.1\\failureaccess-1.0.1.jar",
+      "sha1": "1dcf1de382a0bf95a3d8b0849546c88bac1292c9",
+      "sha256": "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26",
+      "coordinate": "com.google.guava:failureaccess:1.0.1",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\google\\guava\\guava\\31.0.1-jre\\guava-31.0.1-jre.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\google\\guava\\guava\\31.0.1-jre\\guava-31.0.1-jre.jar",
+      "sha1": "119ea2b2bc205b138974d351777b20f02b92704b",
+      "sha256": "d5be94d65e87bd219fb3193ad1517baa55a3b88fc91d21cf735826ab5af087b9",
+      "coordinate": "com.google.guava:guava:31.0.1-jre",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\commons\\commons-lang3\\3.12.0\\commons-lang3-3.12.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\commons\\commons-lang3\\3.12.0\\commons-lang3-3.12.0.jar",
+      "sha1": "c6842c86792ff03b9f1d1fe2aab8dc23aa6c6f0e",
+      "sha256": "d919d904486c037f8d193412da0c92e22a9fa24230b9d67a57855c5c31c7e94e",
+      "coordinate": "org.apache.commons:commons-lang3:3.12.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\commons-io\\commons-io\\2.11.0\\commons-io-2.11.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\commons-io\\commons-io\\2.11.0\\commons-io-2.11.0.jar",
+      "sha1": "a2503f302b11ebde7ebc3df41daebe0e4eea3689",
+      "sha256": "961b2f6d87dbacc5d54abf45ab7a6e2495f89b75598962d8c723cea9bc210908",
+      "coordinate": "commons-io:commons-io:2.11.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\commons-codec\\commons-codec\\1.15\\commons-codec-1.15.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\commons-codec\\commons-codec\\1.15\\commons-codec-1.15.jar",
+      "sha1": "49d94806b6e3dc933dacbd8acb0fdbab8ebd1e5d",
+      "sha256": "b3e9f6d63a790109bf0d056611fbed1cf69055826defeb9894a71369d246ed63",
+      "coordinate": "commons-codec:commons-codec:1.15",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\brigadier\\1.0.18\\brigadier-1.0.18.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\brigadier\\1.0.18\\brigadier-1.0.18.jar",
+      "sha1": "c1ef1234282716483c92183f49bef47b1a89bfa9",
+      "sha256": "edc4926aa4b49010f6e7ac46efd623fb38f9517344d26f6251d79a26a9738c0b",
+      "coordinate": "com.mojang:brigadier:1.0.18",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\datafixerupper\\4.1.27\\datafixerupper-4.1.27.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\datafixerupper\\4.1.27\\datafixerupper-4.1.27.jar",
+      "sha1": "0a02c43824ce57c3f7a7d7e744f0d99a040398b5",
+      "sha256": "fef342ed9e0bc30de8bd900559e719eac3585ee10c2961a4ebf19fc49a83054f",
+      "coordinate": "com.mojang:datafixerupper:4.1.27",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\google\\code\\gson\\gson\\2.8.9\\gson-2.8.9.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\google\\code\\gson\\gson\\2.8.9\\gson-2.8.9.jar",
+      "sha1": "8a432c1d6825781e21a02db2e2c33c5fde2833b9",
+      "sha256": "d3999291855de495c94c743761b8ab5176cfeabe281a5ab0d8e8d45326fd703e",
+      "coordinate": "com.google.code.gson:gson:2.8.9",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\authlib\\3.3.39\\authlib-3.3.39.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\authlib\\3.3.39\\authlib-3.3.39.jar",
+      "sha1": "289405e70c0917eaeac017f7fba9adb4427baa36",
+      "sha256": "21132e3bde5eeac556437da9580221931bb00dbf350b453f100526c9aa232fee",
+      "coordinate": "com.mojang:authlib:3.3.39",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\commons\\commons-compress\\1.21\\commons-compress-1.21.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\commons\\commons-compress\\1.21\\commons-compress-1.21.jar",
+      "sha1": "4ec95b60d4e86b5c95a0e919cb172a0af98011ef",
+      "sha256": "6aecfd5459728a595601cfa07258d131972ffc39b492eb48bdd596577a2f244a",
+      "coordinate": "org.apache.commons:commons-compress:1.21",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\httpcomponents\\httpclient\\4.5.13\\httpclient-4.5.13.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\httpcomponents\\httpclient\\4.5.13\\httpclient-4.5.13.jar",
+      "sha1": "e5f6cae5ca7ecaac1ec2827a9e2d65ae2869cada",
+      "sha256": "6fe9026a566c6a5001608cf3fc32196641f6c1e5e1986d1037ccdbd5f31ef743",
+      "coordinate": "org.apache.httpcomponents:httpclient:4.5.13",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\commons-logging\\commons-logging\\1.2\\commons-logging-1.2.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\commons-logging\\commons-logging\\1.2\\commons-logging-1.2.jar",
+      "sha1": "4bfc12adfe4842bf07b657f0369c4cb522955686",
+      "sha256": "daddea1ea0be0f56978ab3006b8ac92834afeefbd9b7e4e6316fca57df0fa636",
+      "coordinate": "commons-logging:commons-logging:1.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\httpcomponents\\httpcore\\4.4.14\\httpcore-4.4.14.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\httpcomponents\\httpcore\\4.4.14\\httpcore-4.4.14.jar",
+      "sha1": "9dd1a631c082d92ecd4bd8fd4cf55026c720a8c1",
+      "sha256": "f956209e450cb1d0c51776dfbd23e53e9dd8db9a1298ed62b70bf0944ba63b28",
+      "coordinate": "org.apache.httpcomponents:httpcore:4.4.14",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\it\\unimi\\dsi\\fastutil\\8.5.6\\fastutil-8.5.6.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\it\\unimi\\dsi\\fastutil\\8.5.6\\fastutil-8.5.6.jar",
+      "sha1": "76f95700418a68fbc4ac050525261f05dc681ca1",
+      "sha256": "5021369bdc72e2ca24222d036c9b35c9733dc9c082a0891c4dba5a583663f30b",
+      "coordinate": "it.unimi.dsi:fastutil:8.5.6",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\logging\\log4j\\log4j-api\\2.17.0\\log4j-api-2.17.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\logging\\log4j\\log4j-api\\2.17.0\\log4j-api-2.17.0.jar",
+      "sha1": "bbd791e9c8c9421e45337c4fe0a10851c086e36c",
+      "sha256": "ab9cadc80e234580e3f3c8c18644314fccd4b3cd3f7085d4e934866cb561b95d",
+      "coordinate": "org.apache.logging.log4j:log4j-api:2.17.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\logging\\log4j\\log4j-core\\2.17.0\\log4j-core-2.17.0.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\apache\\logging\\log4j\\log4j-core\\2.17.0\\log4j-core-2.17.0.jar",
+      "sha1": "fe6e7a32c1228884b9691a744f953a55d0dd8ead",
+      "sha256": "65c33dc9b24a5e5f6cacae62680641582894749c7bf16c951032ef92f3e12a60",
+      "coordinate": "org.apache.logging.log4j:log4j-core:2.17.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl\\3.2.2\\lwjgl-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl\\3.2.2\\lwjgl-3.2.2.jar",
+      "sha1": "8ad6294407e15780b43e84929c40e4c5e997972e",
+      "sha256": "600591641bf3e168102cc0bc8ff31e57cd6717fcf882dbf453aa98cb92fb0a9b",
+      "coordinate": "org.lwjgl:lwjgl:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.2.2\\lwjgl-jemalloc-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.2.2\\lwjgl-jemalloc-3.2.2.jar",
+      "sha1": "ee8e57a79300f78294576d87c4a587f8c99402e2",
+      "sha256": "d8a0eacb25b5336b5a673e1431adf123a78cce10f263bb043230e5c59d673e82",
+      "coordinate": "org.lwjgl:lwjgl-jemalloc:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-openal\\3.2.2\\lwjgl-openal-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-openal\\3.2.2\\lwjgl-openal-3.2.2.jar",
+      "sha1": "2b772a102b0a11ee5f2109a5b136f4dc7c630827",
+      "sha256": "164f73a2be18bb1d158a47205cc33f8156fc4325454c234d0e062b84afd67223",
+      "coordinate": "org.lwjgl:lwjgl-openal:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.2.2\\lwjgl-opengl-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.2.2\\lwjgl-opengl-3.2.2.jar",
+      "sha1": "6ac5bb88b44c43ea195a570aab059f63da004cd8",
+      "sha256": "8ef989f6b6956dcafffc76a57389d46cbcec749c3b87a2a53a51dd28229f185b",
+      "coordinate": "org.lwjgl:lwjgl-opengl:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.2.2\\lwjgl-glfw-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.2.2\\lwjgl-glfw-3.2.2.jar",
+      "sha1": "d3ad4df38e400b8afba1de63f84338809399df5b",
+      "sha256": "45b6ec9491f09260f0c8218762c021bffe0e1b96f650891d9c773d50fdc945c9",
+      "coordinate": "org.lwjgl:lwjgl-glfw:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-stb\\3.2.2\\lwjgl-stb-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-stb\\3.2.2\\lwjgl-stb-3.2.2.jar",
+      "sha1": "3b8e6ebc5851dd3d17e37e5cadce2eff2a429f0f",
+      "sha256": "79800c9c80dcadbbbd2b3b40ae17258f7d3e81bad5bf0832217a87fc0d2587c2",
+      "coordinate": "org.lwjgl:lwjgl-stb:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.2.2\\lwjgl-tinyfd-3.2.2.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.2.2\\lwjgl-tinyfd-3.2.2.jar",
+      "sha1": "fcbe606c8f8da6f8f9a05e2c540eb1ee8632b0e9",
+      "sha256": "2e084e0faf7390979e7a19fc9605378b24dabc319bdd62a49de9def331c67693",
+      "coordinate": "org.lwjgl:lwjgl-tinyfd:3.2.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl\\3.2.2\\lwjgl-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl\\3.2.2\\lwjgl-3.2.2-natives-windows.jar",
+      "sha1": "05359f3aa50d36352815fc662ea73e1c00d22170",
+      "sha256": "59e8c44b4a119da9321bb117a9edc68c8dbefb60c72c0739233ada0b6114d715",
+      "coordinate": "org.lwjgl:lwjgl:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.2.2\\lwjgl-jemalloc-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.2.2\\lwjgl-jemalloc-3.2.2-natives-windows.jar",
+      "sha1": "338b25b99da3ba5f441f6492f2ce2a9c608860ed",
+      "sha256": "71a5cd5789fe3212a4a26f0704b38bbc189f29a8ec8b24b17d3c75cca5bd424e",
+      "coordinate": "org.lwjgl:lwjgl-jemalloc:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-openal\\3.2.2\\lwjgl-openal-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-openal\\3.2.2\\lwjgl-openal-3.2.2-natives-windows.jar",
+      "sha1": "ec20a7d42a2438528fca87e60b1705f1e2339ddb",
+      "sha256": "1c53175903e33165c308408d51630473f8d1f8ac50e3f1767296ecd3121dc7a6",
+      "coordinate": "org.lwjgl:lwjgl-openal:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.2.2\\lwjgl-opengl-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.2.2\\lwjgl-opengl-3.2.2-natives-windows.jar",
+      "sha1": "d8dcdc91066cae2d2d8279cb4a9f9f05d9525826",
+      "sha256": "f43182267b06c367fedf1ea2c1be6be0483bc43531bf3a736cdf388b87e86139",
+      "coordinate": "org.lwjgl:lwjgl-opengl:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.2.2\\lwjgl-glfw-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.2.2\\lwjgl-glfw-3.2.2-natives-windows.jar",
+      "sha1": "dc6826d636bf796b33a49038c354210e661bfc17",
+      "sha256": "1e3d07b431f9329294eb2c79036831c3ed8ab4ebc2ff6c8c37996c4ca7fc7dcb",
+      "coordinate": "org.lwjgl:lwjgl-glfw:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.2.2\\lwjgl-tinyfd-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.2.2\\lwjgl-tinyfd-3.2.2-natives-windows.jar",
+      "sha1": "e9115958773644e863332a6a06488d26f9e1fc9f",
+      "sha256": "2b30080dc2816d7d96fc293be82f38b9fdea4e7c5e7fffd355a3d9042e03b14b",
+      "coordinate": "org.lwjgl:lwjgl-tinyfd:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-stb\\3.2.2\\lwjgl-stb-3.2.2-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\org\\lwjgl\\lwjgl-stb\\3.2.2\\lwjgl-stb-3.2.2-natives-windows.jar",
+      "sha1": "811f705cbb29e8ae8d60bdf8fdd38c0c123ad3ef",
+      "sha256": "79e773c48c6a7d4c24a3ebb3d36541c9668d790752623c5bb1eba361988c44b2",
+      "coordinate": "org.lwjgl:lwjgl-stb:3.2.2",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\text2speech\\1.12.4\\text2speech-1.12.4.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\text2speech\\1.12.4\\text2speech-1.12.4.jar",
+      "sha1": "1f618f522dbdd93218c270bcfd8f8dd84be31717",
+      "sha256": "e41be3ccd9c9142409f8950b4f1762bab02c90f3e35b24187c9cdfca9e361394",
+      "coordinate": "com.mojang:text2speech:1.12.4",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\text2speech\\1.12.4\\text2speech-1.12.4-natives-windows.jar",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\com\\mojang\\text2speech\\1.12.4\\text2speech-1.12.4-natives-windows.jar",
+      "sha1": "7e37c535186a058d730ec03491182fae2efb57be",
+      "sha256": "3b93c2cd5dd53255a23f84eea3f128f50c7e19fd06547dba35c1f2b14d25d25c",
+      "coordinate": "com.mojang:text2speech:1.12.4",
+      "kind": "native"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\cpw\\mods\\securejarhandler\\1.0.3\\securejarhandler-1.0.3.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\cpw\\mods\\securejarhandler\\1.0.3\\securejarhandler-1.0.3.jar",
+      "sha1": "acbf5e3c8a38fb8bf824a54fe45eee121c510392",
+      "sha256": "fac5c48708626a8660b3599d3567852dad72d53ddc49ac922a809e00f967d6d5",
+      "coordinate": "cpw.mods:securejarhandler:1.0.3",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm\\9.2\\asm-9.2.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\ow2\\asm\\asm\\9.2\\asm-9.2.jar",
+      "sha1": "81a03f76019c67362299c40e0ba13405f5467bff",
+      "sha256": "b9d4fe4d71938df38839f0eca42aaaa64cf8b313d678da036f0cb3ca199b47f5",
+      "coordinate": "org.ow2.asm:asm:9.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-commons\\9.2\\asm-commons-9.2.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\ow2\\asm\\asm-commons\\9.2\\asm-commons-9.2.jar",
+      "sha1": "f4d7f0fc9054386f2893b602454d48e07d4fbead",
+      "sha256": "be4ce53138a238bb522cd781cf91f3ba5ce2f6ca93ec62d46a162a127225e0a6",
+      "coordinate": "org.ow2.asm:asm-commons:9.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-tree\\9.2\\asm-tree-9.2.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\ow2\\asm\\asm-tree\\9.2\\asm-tree-9.2.jar",
+      "sha1": "d96c99a30f5e1a19b0e609dbb19a44d8518ac01e",
+      "sha256": "aabf9bd23091a4ebfc109c1f3ee7cf3e4b89f6ba2d3f51c5243f16b3cffae011",
+      "coordinate": "org.ow2.asm:asm-tree:9.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-util\\9.2\\asm-util-9.2.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\ow2\\asm\\asm-util\\9.2\\asm-util-9.2.jar",
+      "sha1": "fbc178fc5ba3dab50fd7e8a5317b8b647c8e8946",
+      "sha256": "ff5b3cd331ae8a9a804768280da98f50f424fef23dd3c788bb320e08c94ee598",
+      "coordinate": "org.ow2.asm:asm-util:9.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.2\\asm-analysis-9.2.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.2\\asm-analysis-9.2.jar",
+      "sha1": "7487dd756daf96cab9986e44b9d7bcb796a61c10",
+      "sha256": "878fbe521731c072d14d2d65b983b1beae6ad06fda0007b6a8bae81f73f433c4",
+      "coordinate": "org.ow2.asm:asm-analysis:9.2",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\accesstransformers\\8.0.4\\accesstransformers-8.0.4.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\accesstransformers\\8.0.4\\accesstransformers-8.0.4.jar",
+      "sha1": "272d240aa73f42195b2a68e2ebd8b701ecf41f63",
+      "sha256": "3225e2a513f658df686fe8b2ae5b4808525851a2c238ce65e38847cc4ffc6441",
+      "coordinate": "net.minecraftforge:accesstransformers:8.0.4",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\antlr\\antlr4-runtime\\4.9.1\\antlr4-runtime-4.9.1.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\antlr\\antlr4-runtime\\4.9.1\\antlr4-runtime-4.9.1.jar",
+      "sha1": "428664f05d2b7f7b7610204b5aa7c1763f62011a",
+      "sha256": "a80502c3140ae7acfbb1f57847c8eb1c101461a969215ec38c3f1ebdff61ac29",
+      "coordinate": "org.antlr:antlr4-runtime:4.9.1",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\eventbus\\5.0.3\\eventbus-5.0.3.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\eventbus\\5.0.3\\eventbus-5.0.3.jar",
+      "sha1": "f2317ed9d19271be8727a71ae3e5dfeb62715594",
+      "sha256": "81f34dea30f014aa45ec172370ae712476a6aa7b887428d9a85f9e2bd8eda2f9",
+      "coordinate": "net.minecraftforge:eventbus:5.0.3",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\forgespi\\4.0.15-4.x\\forgespi-4.0.15-4.x.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\forgespi\\4.0.15-4.x\\forgespi-4.0.15-4.x.jar",
+      "sha1": "1d10ffe779684cb20f2b63bdcc030152e47116bb",
+      "sha256": "afbea13adeb1def87a358ad529acb157506b34c3ec62d02033d584ea6a28bf14",
+      "coordinate": "net.minecraftforge:forgespi:4.0.15-4.x",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\coremods\\5.0.1\\coremods-5.0.1.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\coremods\\5.0.1\\coremods-5.0.1.jar",
+      "sha1": "386b00279628b105b2d507539c46e134e96f6237",
+      "sha256": "a0678f4d444c9d9ac816f91638308604576aa1297168e33a154538d1acc0c1ac",
+      "coordinate": "net.minecraftforge:coremods:5.0.1",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\cpw\\mods\\modlauncher\\9.1.3\\modlauncher-9.1.3.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\cpw\\mods\\modlauncher\\9.1.3\\modlauncher-9.1.3.jar",
+      "sha1": "7339d0e87813c366d706c3fdba479455e2283ecd",
+      "sha256": "433c038b505eb37a963e810b105b96b4d073fced389c68cbe332614a6b502c76",
+      "coordinate": "cpw.mods:modlauncher:9.1.3",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\unsafe\\0.2.0\\unsafe-0.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\unsafe\\0.2.0\\unsafe-0.2.0.jar",
+      "sha1": "54d7a0a5e8fdb71b973025caa46f341ae5904f39",
+      "sha256": "946937e182ab3b518b5b88264f367e1f35ac12bc83abed220490c60c717be239",
+      "coordinate": "net.minecraftforge:unsafe:0.2.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\electronwill\\night-config\\core\\3.6.4\\core-3.6.4.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\com\\electronwill\\night-config\\core\\3.6.4\\core-3.6.4.jar",
+      "sha1": "510f174abbf1c947494db50ef2445683bd52c230",
+      "sha256": "1bc71c67b54ba9c8e5030b3ddaef7dee16ae43fee6850368f76b0cffef819700",
+      "coordinate": "com.electronwill.night-config:core:3.6.4",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\electronwill\\night-config\\toml\\3.6.4\\toml-3.6.4.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\com\\electronwill\\night-config\\toml\\3.6.4\\toml-3.6.4.jar",
+      "sha1": "51d6cefb2b55ee55ee26b16391212fb2c7dfb4f4",
+      "sha256": "3cb3d0ef3352e204cda68215fbe41afdc7f56425ef4fd8e84006964a656117d4",
+      "coordinate": "com.electronwill.night-config:toml:3.6.4",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\maven\\maven-artifact\\3.6.3\\maven-artifact-3.6.3.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\apache\\maven\\maven-artifact\\3.6.3\\maven-artifact-3.6.3.jar",
+      "sha1": "f8ff8032903882376e8d000c51e3e16d20fc7df7",
+      "sha256": "61b20da4e1e3db837630d0810a6a7a5ac9fb7ea31b0a55638062aad6e479c09c",
+      "coordinate": "org.apache.maven:maven-artifact:3.6.3",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\jodah\\typetools\\0.8.3\\typetools-0.8.3.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\jodah\\typetools\\0.8.3\\typetools-0.8.3.jar",
+      "sha1": "98f84f353457629e81cc6827224871b1a8faa7af",
+      "sha256": "f853e21f7de6bd192f0ce09e64a6c8b0e154c9cf9f34e62f08d5e26f73ce3b19",
+      "coordinate": "net.jodah:typetools:0.8.3",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecrell\\terminalconsoleappender\\1.2.0\\terminalconsoleappender-1.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecrell\\terminalconsoleappender\\1.2.0\\terminalconsoleappender-1.2.0.jar",
+      "sha1": "96d02cd3b384ff015a8fef4223bcb4ccf1717c95",
+      "sha256": "912e432c9355c4b2025d788ed87fd72bb95542e2fc967ad6875fbbeb6e1c7a1c",
+      "coordinate": "net.minecrell:terminalconsoleappender:1.2.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\jline\\jline-reader\\3.12.1\\jline-reader-3.12.1.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\jline\\jline-reader\\3.12.1\\jline-reader-3.12.1.jar",
+      "sha1": "4382ab1382c7b6f379377ed5f665dc2f6e1218bc",
+      "sha256": "4d1037c7110027ed64816c510fad2afa0a5aa9bbc38fb9f0e772870823fcad2a",
+      "coordinate": "org.jline:jline-reader:3.12.1",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\jline\\jline-terminal\\3.12.1\\jline-terminal-3.12.1.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\jline\\jline-terminal\\3.12.1\\jline-terminal-3.12.1.jar",
+      "sha1": "c777448314e050d980a6b697c140f3bfe9eb7416",
+      "sha256": "eb6115680f732562f0e8e6777f127dece81e23b25015925f3c4a2a900d48cc9e",
+      "coordinate": "org.jline:jline-terminal:3.12.1",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\spongepowered\\mixin\\0.8.5\\mixin-0.8.5.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\spongepowered\\mixin\\0.8.5\\mixin-0.8.5.jar",
+      "sha1": "9d1c0c3a304ae6697ecd477218fa61b850bf57fc",
+      "sha256": "ca15a907e4d1f6b38cefed51d7df96a83347dcfb0bc8ced53111519e991d887d",
+      "coordinate": "org.spongepowered:mixin:0.8.5",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\openjdk\\nashorn\\nashorn-core\\15.3\\nashorn-core-15.3.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\org\\openjdk\\nashorn\\nashorn-core\\15.3\\nashorn-core-15.3.jar",
+      "sha1": "43977e804697048fc8d81d333a36c17d07a5b3dd",
+      "sha256": "efc4f1e6164377a6a347dae255cf764fb3e5461cafd859abbdfb39e2dc831b62",
+      "coordinate": "org.openjdk.nashorn:nashorn-core:15.3",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\JarJar\\0.3.0\\JarJar-0.3.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\JarJar\\0.3.0\\JarJar-0.3.0.jar",
+      "sha1": "224dc7851fd1613b681365adcd8af636aa52e505",
+      "sha256": "f60e1761055ffae591e8087b8c303a544da34140f27c2e891df715228d5a30d0",
+      "coordinate": "net.minecraftforge:JarJar:0.3.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\cpw\\mods\\bootstraplauncher\\1.0.0\\bootstraplauncher-1.0.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\cpw\\mods\\bootstraplauncher\\1.0.0\\bootstraplauncher-1.0.0.jar",
+      "sha1": "f55ddbb35612c6745cefc47d1a0d6dbfb25d3982",
+      "sha256": "bf09102181b8d9b03b536d3388463cc08c4044e4234d233515dae84bd39920e4",
+      "coordinate": "cpw.mods:bootstraplauncher:1.0.0",
+      "kind": "artifact"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\fmlloader\\1.18.2-40.2.0\\fmlloader-1.18.2-40.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\fmlloader\\1.18.2-40.2.0\\fmlloader-1.18.2-40.2.0.jar",
+      "sha1": "1166c0df109ded579c9b9c84c81c814aa51f2949",
+      "sha256": "c7433ca8a23a05bcc326ed83795820f5b0828e294d8e771a83687b9c3ba8ce3f",
+      "coordinate": "net.minecraftforge:fmlloader:1.18.2-40.2.0",
+      "kind": "artifact"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraft\\client\\1.18.2-20220404.173914\\client-1.18.2-20220404.173914-srg.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraft\\client\\1.18.2-20220404.173914\\client-1.18.2-20220404.173914-srg.jar",
+      "sha256": "1203e857332e8d8655beb956dfc62e7fb527ca5419904e48185cc4c5bb0ccd62",
+      "source_sha256": "1203e857332e8d8655beb956dfc62e7fb527ca5419904e48185cc4c5bb0ccd62"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraft\\client\\1.18.2-20220404.173914\\client-1.18.2-20220404.173914-extra.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraft\\client\\1.18.2-20220404.173914\\client-1.18.2-20220404.173914-extra.jar",
+      "sha256": "e81c6178dc7401468bff77e38c5ff256b14c1b014f986c182f6ee829585d8bc3",
+      "source_sha256": "e81c6178dc7401468bff77e38c5ff256b14c1b014f986c182f6ee829585d8bc3"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\fmlcore\\1.18.2-40.2.0\\fmlcore-1.18.2-40.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\fmlcore\\1.18.2-40.2.0\\fmlcore-1.18.2-40.2.0.jar",
+      "sha256": "45d4462447ea50c19351436fad966618335adabb54a844cfe9bb6602bfc4365c",
+      "source_sha256": "45d4462447ea50c19351436fad966618335adabb54a844cfe9bb6602bfc4365c"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\javafmllanguage\\1.18.2-40.2.0\\javafmllanguage-1.18.2-40.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\javafmllanguage\\1.18.2-40.2.0\\javafmllanguage-1.18.2-40.2.0.jar",
+      "sha256": "7f03c6bf7c0dec61ee9fed43530b9de899f9634a17620be67f25558c8f965905",
+      "source_sha256": "7f03c6bf7c0dec61ee9fed43530b9de899f9634a17620be67f25558c8f965905"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\lowcodelanguage\\1.18.2-40.2.0\\lowcodelanguage-1.18.2-40.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\lowcodelanguage\\1.18.2-40.2.0\\lowcodelanguage-1.18.2-40.2.0.jar",
+      "sha256": "f53295a84d833f02c97bb79d933933ab0a53e7e9104444f4b77bbb1eec8fae0b",
+      "source_sha256": "f53295a84d833f02c97bb79d933933ab0a53e7e9104444f4b77bbb1eec8fae0b"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\mclanguage\\1.18.2-40.2.0\\mclanguage-1.18.2-40.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\mclanguage\\1.18.2-40.2.0\\mclanguage-1.18.2-40.2.0.jar",
+      "sha256": "89bf383d89e9551ee701328e6d6a2905673679f79d8a426cb8a8f74544954315",
+      "source_sha256": "89bf383d89e9551ee701328e6d6a2905673679f79d8a426cb8a8f74544954315"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\forge\\1.18.2-40.2.0\\forge-1.18.2-40.2.0-client.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\forge\\1.18.2-40.2.0\\forge-1.18.2-40.2.0-client.jar",
+      "sha256": "53f0fa93f6b3c172369184a254c68f039e7ec844ee1b5e2bb3939b2a725a77f9",
+      "source_sha256": "53f0fa93f6b3c172369184a254c68f039e7ec844ee1b5e2bb3939b2a725a77f9"
+    },
+    {
+      "kind": "verified_installer_product",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\forge\\1.18.2-40.2.0\\forge-1.18.2-40.2.0-universal.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-client-forge-1.18.2\\libraries\\net\\minecraftforge\\forge\\1.18.2-40.2.0\\forge-1.18.2-40.2.0-universal.jar",
+      "sha256": "df22490651a6fe07a0996c3cf59a89df0b1e74579418be98aba0ccdc7b16ab7d",
+      "source_sha256": "df22490651a6fe07a0996c3cf59a89df0b1e74579418be98aba0ccdc7b16ab7d"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\versions\\1.18.2-forge-40.2.0\\1.18.2-forge-40.2.0.jar",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\inputs\\extracted\\vanilla-1.18.2\\client.jar",
+      "sha1": "2e9a3e3107cca00d6bc9c97bf7d149cae163ef21",
+      "sha256": "1d09e3639644b6b2254499469d0765cc005a286d19f3fa595b0ed8fb07971ec7",
+      "kind": "inherited_vanilla_client"
+    }
+  ],
+  "asset_index": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\assets\\indexes\\1.18.json",
+    "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\assets\\indexes\\1.18.json",
+    "sha1": "d31a2e85ae149dd1b1a7070b22cb8887892fda6c",
+    "sha256": "f804fa59f2ca70a163a190b6cfeec3c1470e198cafa8fd343593bc9a754038af"
+  },
+  "assets": {
+    "directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\assets",
+    "objects_sha1_verified": 3052,
+    "downloaded": 0,
+    "copied_read_only_caches": 3052,
+    "total_bytes": 468380003,
+    "source_index_sha1": "d31a2e85ae149dd1b1a7070b22cb8887892fda6c"
+  },
+  "source_world": {
+    "archive": "C:\\Users\\vakir\\Downloads\\bbmc_v16_map (1).zip",
+    "sha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "copy": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\saves\\source-reference-world",
+    "files": [
+      {
+        "path": "DIM1/data/capabilities.dat",
+        "bytes": 48,
+        "sha256": "564935a523b18b55504fb19c66391615c548fd69a03a84e7828059884742ac1e"
+      },
+      {
+        "path": "DIM1/data/raids_end.dat",
+        "bytes": 90,
+        "sha256": "252639932a59ed7f575ec1313f4728dd98d846a78d5af628676717400038afd5"
+      },
+      {
+        "path": "DIM-1/data/capabilities.dat",
+        "bytes": 48,
+        "sha256": "564935a523b18b55504fb19c66391615c548fd69a03a84e7828059884742ac1e"
+      },
+      {
+        "path": "DIM-1/data/raids.dat",
+        "bytes": 90,
+        "sha256": "252639932a59ed7f575ec1313f4728dd98d846a78d5af628676717400038afd5"
+      },
+      {
+        "path": "entities/r.-1.-1.mca",
+        "bytes": 65536,
+        "sha256": "4a04c5d04e0f640f9a7f9c5680b5f2e5f3f72365ac0d3da59d6bb98615f738e4"
+      },
+      {
+        "path": "entities/r.-1.-2.mca",
+        "bytes": 32768,
+        "sha256": "9907c34d5c734413a9732e33e0870ddb3557b9701b789e35c80fb997cea91dc9"
+      },
+      {
+        "path": "entities/r.-1.-3.mca",
+        "bytes": 65536,
+        "sha256": "ac1f3e0bb4650556a2bba9195379b0803beb83583ee3c465e1f440d136fb6118"
+      },
+      {
+        "path": "entities/r.-1.0.mca",
+        "bytes": 90112,
+        "sha256": "1832835f1fcee5470b0bf9f0d23bd0120649dcfd8677fa07bbeeb21c7372dc6b"
+      },
+      {
+        "path": "entities/r.0.-1.mca",
+        "bytes": 24576,
+        "sha256": "d7aebb1693a3c1ec2337765cd4a8359a4e4ed38c5436134af0b8fa300dbf0c01"
+      },
+      {
+        "path": "entities/r.0.-2.mca",
+        "bytes": 503808,
+        "sha256": "c12004f4bd8dd48cf021013545fff17f96f74d1932b441a5d3f35166c9060de1"
+      },
+      {
+        "path": "entities/r.0.-3.mca",
+        "bytes": 233472,
+        "sha256": "ce84ada59454b377a4381ab2f486a6001194ea348f1fb46c1aa53c86804bdefe"
+      },
+      {
+        "path": "entities/r.0.0.mca",
+        "bytes": 16384,
+        "sha256": "4418cfe58b5c5fd6b1d795218fd27c1c63dd3fbad8e44787a93f8c4d7564d806"
+      },
+      {
+        "path": "entities/r.1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.1.-2.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.1.-3.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "playerdata/250157ab-cc75-4b5c-b0c8-fa3fb2ab33b0.cosarmor",
+        "bytes": 39,
+        "sha256": "c804a6eb6d99fd25b8d08320cfaffd9dc6c11d81cb5704ee0b91c1cd7ca947d1"
+      },
+      {
+        "path": "playerdata/250157ab-cc75-4b5c-b0c8-fa3fb2ab33b0.dat",
+        "bytes": 3001,
+        "sha256": "7bb4a473518e4fa34975f02cc970b3dc97ee872098d65b476e21ded480ad3aae"
+      },
+      {
+        "path": "playerdata/250157ab-cc75-4b5c-b0c8-fa3fb2ab33b0.dat_old",
+        "bytes": 3001,
+        "sha256": "7bb4a473518e4fa34975f02cc970b3dc97ee872098d65b476e21ded480ad3aae"
+      },
+      {
+        "path": "playerdata/380df991-f603-344c-a090-369bad2a924a.dat",
+        "bytes": 2909,
+        "sha256": "024fd87e719c896af54d8efd6a7d0a9517933e344521c73bc9c8c5454f532aa6"
+      },
+      {
+        "path": "playerdata/380df991-f603-344c-a090-369bad2a924a.dat_old",
+        "bytes": 2909,
+        "sha256": "024fd87e719c896af54d8efd6a7d0a9517933e344521c73bc9c8c5454f532aa6"
+      },
+      {
+        "path": "poi/r.-1.-1.mca",
+        "bytes": 53248,
+        "sha256": "9e73a86d619b1da0f7a04b726688c4bc13142e208ab0fdaed2f52d165cdc5e64"
+      },
+      {
+        "path": "poi/r.-1.-2.mca",
+        "bytes": 20480,
+        "sha256": "0f863c0dcead00c5b8e4a57264259e599d91c60a37402dbe82a49c1ada3b05cb"
+      },
+      {
+        "path": "poi/r.-1.-3.mca",
+        "bytes": 24576,
+        "sha256": "bf7391a213d8bf4229f6f3d495d835dc8cc91ea8f4a8faa0fe7c499530342e7a"
+      },
+      {
+        "path": "poi/r.-1.-4.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.-1.0.mca",
+        "bytes": 28672,
+        "sha256": "97dff4b7f6d9575154bcb59f566fac501946bfc360b6a9b591c2b302a21fbb43"
+      },
+      {
+        "path": "poi/r.-2.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.-2.-2.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.-2.-3.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.0.-1.mca",
+        "bytes": 49152,
+        "sha256": "14a0bce8b3c66d753887d4fed5460ef62b0b517f5bda0def7b0ff16c8acb622c"
+      },
+      {
+        "path": "poi/r.0.-2.mca",
+        "bytes": 118784,
+        "sha256": "74259266948ca91f59a7477631267c312072e241adcc8ca6338d2d02a3c7813c"
+      },
+      {
+        "path": "poi/r.0.-3.mca",
+        "bytes": 53248,
+        "sha256": "9add92159d5bc7779b959d6aada88cb769f167f22fe85c97053832d13e05bb0b"
+      },
+      {
+        "path": "poi/r.0.-4.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.0.0.mca",
+        "bytes": 12288,
+        "sha256": "e10a24929f165e1b73edf6ae41609502877caef823444e71ab789fb87496ec14"
+      },
+      {
+        "path": "poi/r.1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.1.-2.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.1.-3.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.1.-4.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.1.0.mca",
+        "bytes": 12288,
+        "sha256": "48d6b9dab3ee3630d42856e5b0096c0add0686f96cb998622dc0e3b32b9eab06"
+      },
+      {
+        "path": "region/r.-1.-1.mca",
+        "bytes": 5484544,
+        "sha256": "5136ae005b2c6fcea9fb7a630fa9f0f1e9f078b640d3e9714ad0af6f6e723e73"
+      },
+      {
+        "path": "region/r.-1.-2.mca",
+        "bytes": 5083136,
+        "sha256": "02cda0e5ae2b610c1809c5c9a61ebeea38ffb19f27e8ecb6c1a54ec95f91c0a4"
+      },
+      {
+        "path": "region/r.-1.-3.mca",
+        "bytes": 4583424,
+        "sha256": "2b982dc30c2532e538b156eef159de5998e9fa26e664d23fa50ad061acc920b5"
+      },
+      {
+        "path": "region/r.-1.-4.mca",
+        "bytes": 3682304,
+        "sha256": "e933b851a141b653040cd6c25312391c635f1b34614d99192ac3fd08842185e4"
+      },
+      {
+        "path": "region/r.-1.0.mca",
+        "bytes": 4759552,
+        "sha256": "17d6ff3126290e198c57ff3d9f054ad6870f53929585e705b1cdb2d18a3cde8d"
+      },
+      {
+        "path": "region/r.-1.1.mca",
+        "bytes": 4169728,
+        "sha256": "a60643f1608dd68f6b7836d3b3190717b7f294ecae69fd0c695a88f90e2a1c75"
+      },
+      {
+        "path": "region/r.-1.2.mca",
+        "bytes": 385024,
+        "sha256": "048b743b58586577b47e872d465ac4c5d631e8ddae3cdeae4938d72d0318e866"
+      },
+      {
+        "path": "region/r.-2.-1.mca",
+        "bytes": 4206592,
+        "sha256": "58cabdc7be0db05d63aaedcb017c4f12159baba13c881ecbe2df65a3dbe2e1f2"
+      },
+      {
+        "path": "region/r.-2.-2.mca",
+        "bytes": 4206592,
+        "sha256": "0c1f80b0095bd0a6180cddcd27b53810c65b1b9eef6bba3d3526b0e2fe3e8a12"
+      },
+      {
+        "path": "region/r.-2.-3.mca",
+        "bytes": 4206592,
+        "sha256": "be946b10c432431531806bfc62a0fdd27a29d35b897c9334888b4fab0fbc1dc5"
+      },
+      {
+        "path": "region/r.-2.-4.mca",
+        "bytes": 3588096,
+        "sha256": "74ebda2978090d8e77b1b48e648f4e8f3ed5779110bb3882de3778eb199a8da1"
+      },
+      {
+        "path": "region/r.-2.0.mca",
+        "bytes": 4206592,
+        "sha256": "eccf603290f6a4c0ea47f083a9e1aa68bcab25ac4714708c5a070be1cbc3e351"
+      },
+      {
+        "path": "region/r.-2.1.mca",
+        "bytes": 3932160,
+        "sha256": "3e25fd750e05db5f869ce6b88b980151dcc98b7f3b5b85ee9871ea93dbb4b4bd"
+      },
+      {
+        "path": "region/r.-3.-1.mca",
+        "bytes": 3682304,
+        "sha256": "29f5a0d250e36dfa2c2ee9bce4c6d4b02ab0d635bd5957d30ed310e5479ac1b7"
+      },
+      {
+        "path": "region/r.-3.-2.mca",
+        "bytes": 3682304,
+        "sha256": "c619fa04ce16ae12d5a81ebd6779f158149f9412d0d99f76c3464af3f9f4af9d"
+      },
+      {
+        "path": "region/r.-3.-3.mca",
+        "bytes": 1228800,
+        "sha256": "6179994367cfb413bbbce31dc03ee0936be794d40ae268aa589d11113ec9dd83"
+      },
+      {
+        "path": "region/r.-3.-4.mca",
+        "bytes": 499712,
+        "sha256": "8dc7dc55ec55421536e6344bf79904a774dc23d64d6703a535cf19ec61de40ae"
+      },
+      {
+        "path": "region/r.-3.0.mca",
+        "bytes": 3080192,
+        "sha256": "a04fd085f8d552a1aa7e30e696e3518a50b91cae0a1c52365e86f8bd5acbe708"
+      },
+      {
+        "path": "region/r.-3.1.mca",
+        "bytes": 856064,
+        "sha256": "f4099e9d6a530f410b0bdfc299246ed15473d4526e21c1ee8b091e9d8aafc1bb"
+      },
+      {
+        "path": "region/r.0.-1.mca",
+        "bytes": 5894144,
+        "sha256": "0cd4bfcbbcdfe60992f487298592f77fe9564fbf2dfa05ea0475f50e49413e64"
+      },
+      {
+        "path": "region/r.0.-2.mca",
+        "bytes": 8220672,
+        "sha256": "29c9ed4fafbad8295fe9859cece4f9144e810ed702db040afd3933aa7a349cda"
+      },
+      {
+        "path": "region/r.0.-3.mca",
+        "bytes": 5271552,
+        "sha256": "1b552742912c77936b81f980fadf86c7ad918cb52f286b595206a6b4750fda64"
+      },
+      {
+        "path": "region/r.0.-4.mca",
+        "bytes": 3682304,
+        "sha256": "67852ae6283cf44b94c8a01c58df9f99f06acf9c3286476657ac748fe27e4609"
+      },
+      {
+        "path": "region/r.0.0.mca",
+        "bytes": 4702208,
+        "sha256": "b7ee04faf7ccf7b173ffe82054db92a8799639f863bdf4e84b268cb590239166"
+      },
+      {
+        "path": "region/r.0.1.mca",
+        "bytes": 4206592,
+        "sha256": "f6f2f59fecbb6dd5d2cc9b1073306f026bf743b4e49fb9ef0ba95939c95b1ffb"
+      },
+      {
+        "path": "region/r.0.2.mca",
+        "bytes": 532480,
+        "sha256": "c535e61d28ebb643f76363b46ecfc9ced80fd900305c086936f329735180b699"
+      },
+      {
+        "path": "region/r.1.-1.mca",
+        "bytes": 4345856,
+        "sha256": "a9df371cf3b55b4c0ca39085b84604f8b311dd236c38f9fa86812ce5b7a4b6a8"
+      },
+      {
+        "path": "region/r.1.-2.mca",
+        "bytes": 4206592,
+        "sha256": "b0db145d0b67285e011a603e39aad1ea2cd49377ca5646be2dac32048662be21"
+      },
+      {
+        "path": "region/r.1.-3.mca",
+        "bytes": 4206592,
+        "sha256": "33188a2e18569f2d39e6b52b4be20c5684e52a391777527058b00b60311c3033"
+      },
+      {
+        "path": "region/r.1.-4.mca",
+        "bytes": 3682304,
+        "sha256": "3cab9d2c2b3a21d103abb6e5054e43f7b13197b92c5b5c2281780f148287d1b5"
+      },
+      {
+        "path": "region/r.1.0.mca",
+        "bytes": 4710400,
+        "sha256": "d0dec3dccc5046009284c84b8d043b4afa035df600de8faa5c88c2af1740a7fd"
+      },
+      {
+        "path": "region/r.1.1.mca",
+        "bytes": 4206592,
+        "sha256": "a5c2b8347ec81d7c35f50db58e9213e61497d86d3d63b9a1631d77bdbbda4b3b"
+      },
+      {
+        "path": "region/r.1.2.mca",
+        "bytes": 532480,
+        "sha256": "ab5605104f594306cb3d68f07f21b8b98ce78008980e8091c3c8e2f1d10654d3"
+      },
+      {
+        "path": "region/r.2.-1.mca",
+        "bytes": 4206592,
+        "sha256": "16ec9bd78cc0703bee614ad2cc30eeeb23cf036df37533b7d92495f0b2a5b153"
+      },
+      {
+        "path": "region/r.2.-10.mca",
+        "bytes": 2174976,
+        "sha256": "4c76c923501e09705f7d8e4b22adcc95fc1913e508f481e068a9acd68c1ec0e9"
+      },
+      {
+        "path": "region/r.2.-2.mca",
+        "bytes": 3059712,
+        "sha256": "5e937486119bd7ac2d9b979c5cddee39ccb7333ac9c9a1d9a7ea895a0f7afa98"
+      },
+      {
+        "path": "region/r.2.-3.mca",
+        "bytes": 2371584,
+        "sha256": "fc8a504682286f7c357ad851f44faa6c36385e560b3e2352e8e2e6200940d709"
+      },
+      {
+        "path": "region/r.2.-4.mca",
+        "bytes": 1925120,
+        "sha256": "4e9fa1cf9861373d7d206b4c9726aac3d8ed5721f67683747511d57428312095"
+      },
+      {
+        "path": "region/r.2.0.mca",
+        "bytes": 4280320,
+        "sha256": "6c6fb03ed03e936e0bee70b99d4de83b98c7df37257070742505ceebc035c794"
+      },
+      {
+        "path": "region/r.2.1.mca",
+        "bytes": 3944448,
+        "sha256": "afbac73192636a24f4790055dab6feedb0a0aba80966f20898f40c0c225dee30"
+      },
+      {
+        "path": "region/r.2.2.mca",
+        "bytes": 90112,
+        "sha256": "28f0f68e4b2706d3b847d924fbfdd11fd69d453216c80ae4f1e4b321520e4a1c"
+      },
+      {
+        "path": "region/r.3.-1.mca",
+        "bytes": 3551232,
+        "sha256": "d19f67c02b705d542c7fcb71410013267f42d46a35d32247316b233166fded3a"
+      },
+      {
+        "path": "region/r.3.-2.mca",
+        "bytes": 929792,
+        "sha256": "2aed4f9b07f610d5666db32b553579e496a307e2baa14a951e6cd632a9f880df"
+      },
+      {
+        "path": "region/r.3.-32.mca",
+        "bytes": 2080768,
+        "sha256": "b5888ea5303b0975c98460e35bba8081c49716d083312218c587904395a3ed46"
+      },
+      {
+        "path": "region/r.3.-33.mca",
+        "bytes": 102400,
+        "sha256": "de4aebbb23db626d2d40e827e961ffee67276c96f7b8102566caf1e5ca1ff6ca"
+      },
+      {
+        "path": "region/r.3.0.mca",
+        "bytes": 3551232,
+        "sha256": "9a1a8a0ca62625e6b098a9a4a2f392f77169570fb3f708a1e327c44904cecb6f"
+      },
+      {
+        "path": "region/r.3.1.mca",
+        "bytes": 2408448,
+        "sha256": "959cda7ff02eef51907160d68ba66dd75afad76a173a03f72b561184e7635311"
+      },
+      {
+        "path": "region_custom_blocks/r.-1.-1.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "region_custom_blocks/r.-1.0.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "region_custom_blocks/r.0.-1.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "region_custom_blocks/r.0.0.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "region_custom_blocks/r.1.-1.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "region_custom_blocks/r.1.0.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "region_custom_blocks/r.2.0.nbt",
+        "bytes": 24,
+        "sha256": "0c5f40fb642781709ce4bd9b2443628b345a2abc34cff20dea6564ca014875f9"
+      },
+      {
+        "path": "serverconfig/forge-server.toml",
+        "bytes": 1925,
+        "sha256": "f41633ff6943f713ad78779e4bc33c91b9e89869b3c0f5fe9c139bd31717f619"
+      },
+      {
+        "path": "stats/250157ab-cc75-4b5c-b0c8-fa3fb2ab33b0.json",
+        "bytes": 5052,
+        "sha256": "2fa5f8939e68b0a98ce2851a0991a82f2a2d75713b193de2e3d515f5c067d5c8"
+      },
+      {
+        "path": "stats/380df991-f603-344c-a090-369bad2a924a.json",
+        "bytes": 3678,
+        "sha256": "6633a0151dbae61026b7d0cdb9ae6a9193b2c55ede6863355f0a0584b0dc5535"
+      },
+      {
+        "path": "icon.png",
+        "bytes": 2137,
+        "sha256": "755f8a4e4566dba12fcdb98ff411e66afa8aef2e1621fe1e73d1f1d4fd360755"
+      },
+      {
+        "path": "level.dat",
+        "bytes": 37582,
+        "sha256": "43d28581c65512e077f68b4e2e3bb0439f262e5190ac715be2b464a59b61c700"
+      },
+      {
+        "path": "level.dat_old",
+        "bytes": 37583,
+        "sha256": "a1ad7cbcabac88075e5567fc894a1bf8376157c19dec8d9d1f2cdd175262cb30"
+      },
+      {
+        "path": "level6695143506696965044.dat",
+        "bytes": 522,
+        "sha256": "e33ba8b1bf19f529edaf9ab3e2cdc090741b1d26b96d3920c95dfb08c6d749a1"
+      },
+      {
+        "path": "session.lock",
+        "bytes": 3,
+        "sha256": "51643361c79ecaef25a8de802de24f570ba25d9c2df1d22d94fade11b4f466cc"
+      },
+      {
+        "path": "uid.dat",
+        "bytes": 16,
+        "sha256": "b11f33a126e34d1b9788b7f05a3c52edac63487fe8facba5d1a6aa8e054e866a"
+      },
+      {
+        "path": "advancements/250157ab-cc75-4b5c-b0c8-fa3fb2ab33b0.json",
+        "bytes": 15788,
+        "sha256": "427a0c12be39531085a0e1db91c49eb7c4d7697db5c21aaf0756330337b7de8d"
+      },
+      {
+        "path": "advancements/380df991-f603-344c-a090-369bad2a924a.json",
+        "bytes": 11796,
+        "sha256": "ff90a35be3996c7e65c9becaf03b4effea2b2d519aa682ffe9d5eee4d49ab9a5"
+      },
+      {
+        "path": "data/capabilities.dat",
+        "bytes": 48,
+        "sha256": "564935a523b18b55504fb19c66391615c548fd69a03a84e7828059884742ac1e"
+      },
+      {
+        "path": "data/geckolib_ids.dat",
+        "bytes": 60,
+        "sha256": "0560ecfe138914ae5f99ea21b75a3ecb0a655056308aa977a10c2f1658a67a8e"
+      },
+      {
+        "path": "data/hunter_lamp_manager.dat",
+        "bytes": 148,
+        "sha256": "ba11b3fa511e246fd55f15ce7b7b77ef0f63ec95aab58efa8e64d550e1e1f34e"
+      },
+      {
+        "path": "data/raids.dat",
+        "bytes": 90,
+        "sha256": "252639932a59ed7f575ec1313f4728dd98d846a78d5af628676717400038afd5"
+      },
+      {
+        "path": "datapacks/Bloodborne/data/commands/functions/enemy_spawn.mcfunction",
+        "bytes": 6766,
+        "sha256": "cd3b087d251e2d9867bbbd7901062c38b59c8b85ce9930f0e3f31fbef554f404"
+      },
+      {
+        "path": "datapacks/Bloodborne/data/commands/functions/kill.mcfunction",
+        "bytes": 968,
+        "sha256": "0054c47b75f2cf46c6c2ea34e6d99bb0f3aed585e0455d55ec6e74ec07598e14"
+      },
+      {
+        "path": "datapacks/Bloodborne/data/commands/functions/load.mcfunction",
+        "bytes": 8,
+        "sha256": "8d840da85918ed5ebbc04e8d9f2166ff08e23b7379cc501cb789d0fb36448ff3"
+      },
+      {
+        "path": "datapacks/Bloodborne/data/commands/functions/tick.mcfunction",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "datapacks/Bloodborne/data/minecraft/tags/functions/load.json",
+        "bytes": 55,
+        "sha256": "e0a3cd9a6e9c4a6859d94e62732a8cf1f342aad1466bbdde3fe0d12b0994e95a"
+      },
+      {
+        "path": "datapacks/Bloodborne/data/minecraft/tags/functions/tick.json",
+        "bytes": 118,
+        "sha256": "5dd9e324cc644b571e29e981165e150acf8866a32813f3fe17a5e31dd3f3fcd8"
+      },
+      {
+        "path": "datapacks/Bloodborne/pack.mcmeta",
+        "bytes": 90,
+        "sha256": "11fb481e8dc833c98541bede8da20cb4092c8d32b8cef5e45184679e6ad88a0f"
+      }
+    ],
+    "before_launch_all_bytes_equal": true
+  },
+  "original_mods": [
+    {
+      "source": "C:\\Users\\vakir\\Downloads\\Bloodborne_X_Minecraft_mod_6.0.jar",
+      "copy": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\mods\\Bloodborne_X_Minecraft_mod_6.0.jar",
+      "sha256": "399541635dfc559580193ca38da074f7158e064647d612fdb6d92236565266d2",
+      "source_sha256": "399541635dfc559580193ca38da074f7158e064647d612fdb6d92236565266d2",
+      "byte_identical": true
+    },
+    {
+      "source": "C:\\Users\\vakir\\Downloads\\geckolib-forge-1.18-3.0.57.jar",
+      "copy": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\mods\\geckolib-forge-1.18-3.0.57.jar",
+      "sha256": "b6d0954f7b777b43e72f202116c8ccbb1e37757a1142759303ab636a9077b8ba",
+      "source_sha256": "b6d0954f7b777b43e72f202116c8ccbb1e37757a1142759303ab636a9077b8ba",
+      "byte_identical": true
+    }
+  ],
+  "source_pack": {
+    "source": "C:\\Users\\vakir\\Downloads\\bbmc_v15_resource (1).zip",
+    "copy": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\resourcepacks\\source-bbmc-v15.zip",
+    "sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "source_sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "byte_identical": true,
+    "original_pack_format": 9,
+    "target_vanilla_pack_format": 8,
+    "explicit_incompatible_pack_selection": true,
+    "resource_manager_loaded_original_pack": true,
+    "resource_manager_reload_messages": [
+      "<log4j:Message><![CDATA[Reloading ResourceManager: Default, Mod Resources, source-bbmc-v15.zip]]></log4j:Message>"
+    ]
+  },
+  "qa_probe": {
+    "java_source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\tools\\java\\SourcePhysicsProbe.java",
+    "java_source_sha256": "a689aef5a2e9dda56dc0e3d041627f0591cb12952c1b3588ee9deae8a253e4ee",
+    "jar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\mods\\dreamwalker-source-client-physics-qa.jar",
+    "sha256": "d0c9c0b23cf8b72928b660fb3b9041c3859c866f4de44be70aaf31201e069a0c",
+    "compile_exit_code": 0,
+    "client_methods": {
+      "screen": "f_91080_",
+      "getInstance": "m_91087_",
+      "loadLevel": "m_91200_",
+      "stop": "m_91395_"
+    },
+    "input_sha256": "4945dbab2cf8de45b0b20be603478a838c146ed4aa7faba0ce35074880dc0925"
+  },
+  "logging_config": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\logging\\client-1.12.xml",
+    "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\assets\\log_configs\\client-1.12.xml",
+    "sha1": "bd65e7d2e3c237be76cfbef4c2405033d7f91521",
+    "sha256": "03e30ee5bd5c1fc723d1049e2e4e8b3ad4c4992514f3206fc4b54637488b83e4"
+  },
+  "status": "MEASURED_ACTUAL_SOURCE_INTEGRATED_CLIENT",
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-Ddreamwalker.source.autoOpen=true",
+    "-Ddreamwalker.source.autoStop=true",
+    "-Ddreamwalker.source.mode=integrated-client",
+    "-Dlog4j.configurationFile=C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\logging\\client-1.12.xml",
+    "-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump",
+    "-Dos.name=Windows 10",
+    "-Dos.version=10.0",
+    "-Djava.library.path=C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\natives",
+    "-Dminecraft.launcher.brand=Dreamwalker-isolated-source-QA",
+    "-Dminecraft.launcher.version=1",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\logging\\1.0.0\\logging-1.0.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\blocklist\\1.0.10\\blocklist-1.0.10.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\patchy\\2.2.10\\patchy-2.2.10.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\github\\oshi\\oshi-core\\5.8.5\\oshi-core-5.8.5.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\java\\dev\\jna\\jna\\5.10.0\\jna-5.10.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\java\\dev\\jna\\jna-platform\\5.10.0\\jna-platform-5.10.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\slf4j\\slf4j-api\\1.8.0-beta4\\slf4j-api-1.8.0-beta4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\logging\\log4j\\log4j-slf4j18-impl\\2.17.0\\log4j-slf4j18-impl-2.17.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\ibm\\icu\\icu4j\\70.1\\icu4j-70.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\javabridge\\1.2.24\\javabridge-1.2.24.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\sf\\jopt-simple\\jopt-simple\\5.0.4\\jopt-simple-5.0.4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\io\\netty\\netty-all\\4.1.68.Final\\netty-all-4.1.68.Final.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\google\\guava\\failureaccess\\1.0.1\\failureaccess-1.0.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\google\\guava\\guava\\31.0.1-jre\\guava-31.0.1-jre.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\commons\\commons-lang3\\3.12.0\\commons-lang3-3.12.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\commons-io\\commons-io\\2.11.0\\commons-io-2.11.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\commons-codec\\commons-codec\\1.15\\commons-codec-1.15.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\brigadier\\1.0.18\\brigadier-1.0.18.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\datafixerupper\\4.1.27\\datafixerupper-4.1.27.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\google\\code\\gson\\gson\\2.8.9\\gson-2.8.9.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\authlib\\3.3.39\\authlib-3.3.39.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\commons\\commons-compress\\1.21\\commons-compress-1.21.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\httpcomponents\\httpclient\\4.5.13\\httpclient-4.5.13.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\commons-logging\\commons-logging\\1.2\\commons-logging-1.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\httpcomponents\\httpcore\\4.4.14\\httpcore-4.4.14.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\it\\unimi\\dsi\\fastutil\\8.5.6\\fastutil-8.5.6.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\logging\\log4j\\log4j-api\\2.17.0\\log4j-api-2.17.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\logging\\log4j\\log4j-core\\2.17.0\\log4j-core-2.17.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl\\3.2.2\\lwjgl-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-jemalloc\\3.2.2\\lwjgl-jemalloc-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-openal\\3.2.2\\lwjgl-openal-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-opengl\\3.2.2\\lwjgl-opengl-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-glfw\\3.2.2\\lwjgl-glfw-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-stb\\3.2.2\\lwjgl-stb-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\lwjgl\\lwjgl-tinyfd\\3.2.2\\lwjgl-tinyfd-3.2.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\mojang\\text2speech\\1.12.4\\text2speech-1.12.4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\cpw\\mods\\securejarhandler\\1.0.3\\securejarhandler-1.0.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm\\9.2\\asm-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-commons\\9.2\\asm-commons-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-tree\\9.2\\asm-tree-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-util\\9.2\\asm-util-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.2\\asm-analysis-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\accesstransformers\\8.0.4\\accesstransformers-8.0.4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\antlr\\antlr4-runtime\\4.9.1\\antlr4-runtime-4.9.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\eventbus\\5.0.3\\eventbus-5.0.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\forgespi\\4.0.15-4.x\\forgespi-4.0.15-4.x.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\coremods\\5.0.1\\coremods-5.0.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\cpw\\mods\\modlauncher\\9.1.3\\modlauncher-9.1.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\unsafe\\0.2.0\\unsafe-0.2.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\electronwill\\night-config\\core\\3.6.4\\core-3.6.4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\com\\electronwill\\night-config\\toml\\3.6.4\\toml-3.6.4.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\apache\\maven\\maven-artifact\\3.6.3\\maven-artifact-3.6.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\jodah\\typetools\\0.8.3\\typetools-0.8.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecrell\\terminalconsoleappender\\1.2.0\\terminalconsoleappender-1.2.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\jline\\jline-reader\\3.12.1\\jline-reader-3.12.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\jline\\jline-terminal\\3.12.1\\jline-terminal-3.12.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\spongepowered\\mixin\\0.8.5\\mixin-0.8.5.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\org\\openjdk\\nashorn\\nashorn-core\\15.3\\nashorn-core-15.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\JarJar\\0.3.0\\JarJar-0.3.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\cpw\\mods\\bootstraplauncher\\1.0.0\\bootstraplauncher-1.0.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries\\net\\minecraftforge\\fmlloader\\1.18.2-40.2.0\\fmlloader-1.18.2-40.2.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\versions\\1.18.2-forge-40.2.0\\1.18.2-forge-40.2.0.jar",
+    "-Djava.net.preferIPv6Addresses=system",
+    "-DignoreList=bootstraplauncher,securejarhandler,asm-commons,asm-util,asm-analysis,asm-tree,asm,client-extra,fmlcore,javafmllanguage,lowcodelanguage,mclanguage,forge-,1.18.2-forge-40.2.0.jar",
+    "-DmergeModules=jna-5.10.0.jar,jna-platform-5.10.0.jar,java-objc-bridge-1.0.0.jar",
+    "-DlibraryDirectory=C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries",
+    "-p",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/cpw/mods/bootstraplauncher/1.0.0/bootstraplauncher-1.0.0.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/cpw/mods/securejarhandler/1.0.3/securejarhandler-1.0.3.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/org/ow2/asm/asm-commons/9.2/asm-commons-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/org/ow2/asm/asm-util/9.2/asm-util-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/org/ow2/asm/asm-analysis/9.2/asm-analysis-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/org/ow2/asm/asm-tree/9.2/asm-tree-9.2.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\libraries/org/ow2/asm/asm/9.2/asm-9.2.jar",
+    "--add-modules",
+    "ALL-MODULE-PATH",
+    "--add-opens",
+    "java.base/java.util.jar=cpw.mods.securejarhandler",
+    "--add-exports",
+    "java.base/sun.security.util=cpw.mods.securejarhandler",
+    "--add-exports",
+    "jdk.naming.dns/com.sun.jndi.dns=java.naming",
+    "cpw.mods.bootstraplauncher.BootstrapLauncher",
+    "--username",
+    "SourcePhysicsQA",
+    "--version",
+    "1.18.2-forge-40.2.0",
+    "--gameDir",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2",
+    "--assetsDir",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\assets",
+    "--assetIndex",
+    "1.18",
+    "--uuid",
+    "f5dffe88-4806-372a-9dbf-956133e18cc2",
+    "--accessToken",
+    "0",
+    "--clientId",
+    "",
+    "--xuid",
+    "",
+    "--userType",
+    "legacy",
+    "--versionType",
+    "release",
+    "--width",
+    "1280",
+    "--height",
+    "720",
+    "--launchTarget",
+    "forgeclient",
+    "--fml.forgeVersion",
+    "40.2.0",
+    "--fml.mcVersion",
+    "1.18.2",
+    "--fml.forgeGroup",
+    "net.minecraftforge",
+    "--fml.mcpVersion",
+    "20220404.173914"
+  ],
+  "offline_username": "SourcePhysicsQA",
+  "auth": "offline QA literal token0",
+  "minecraft": "1.18.2",
+  "forge": "40.2.0",
+  "original_mod": "Bloodborne X Minecraft 6.0",
+  "pid": 83948,
+  "physics": {
+    "schema": "dreamwalker-original-forge-physics-v1",
+    "manual_gameplay": "NOT_RUN",
+    "runtime_mode": "integrated-client",
+    "source": "Actual Forge1.18.2 with original Bloodborne6.0 and GeckoLib3.0.57; immutable-source world copy",
+    "actual_shapes": [
+      {
+        "purpose": "source_double_door_lower",
+        "pos": [
+          -93,
+          59,
+          -212
+        ],
+        "actual_state": "Block{minecraft:acacia_stairs}[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ]
+        ]
+      },
+      {
+        "purpose": "source_double_door_header",
+        "pos": [
+          -93,
+          61,
+          -212
+        ],
+        "actual_state": "Block{minecraft:acacia_stairs}[facing=north,half=top,shape=straight,waterlogged=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.5,
+            0.5,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.5,
+            0.5,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_window",
+        "pos": [
+          -32,
+          37,
+          -1120
+        ],
+        "actual_state": "Block{minecraft:jungle_stairs}[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ]
+        ]
+      },
+      {
+        "purpose": "source_thin_window",
+        "pos": [
+          -121,
+          53,
+          -241
+        ],
+        "actual_state": "Block{minecraft:red_sandstone_stairs}[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.5,
+            1.0
+          ],
+          [
+            0.0,
+            0.5,
+            0.0,
+            1.0,
+            1.0,
+            0.5
+          ]
+        ]
+      },
+      {
+        "purpose": "source_ladder_art",
+        "pos": [
+          177,
+          33,
+          -1108
+        ],
+        "actual_state": "Block{minecraft:beehive}[facing=north,honey_level=1]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_ladder_physics",
+        "pos": [
+          177,
+          33,
+          -1107
+        ],
+        "actual_state": "Block{minecraft:ladder}[facing=south,waterlogged=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            0.1875
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            0.1875
+          ]
+        ]
+      },
+      {
+        "purpose": "source_wall",
+        "pos": [
+          154,
+          58,
+          -976
+        ],
+        "actual_state": "Block{minecraft:polished_deepslate_wall}[east=low,north=low,south=low,up=true,waterlogged=false,west=none]",
+        "collisionShape": [
+          [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            1.5,
+            0.75
+          ],
+          [
+            0.3125,
+            0.0,
+            0.0,
+            0.6875,
+            1.5,
+            0.25
+          ],
+          [
+            0.3125,
+            0.0,
+            0.75,
+            0.6875,
+            1.5,
+            1.0
+          ],
+          [
+            0.75,
+            0.0,
+            0.3125,
+            1.0,
+            1.5,
+            0.6875
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.25,
+            0.0,
+            0.25,
+            0.75,
+            1.0,
+            0.75
+          ],
+          [
+            0.3125,
+            0.0,
+            0.0,
+            0.6875,
+            0.875,
+            0.25
+          ],
+          [
+            0.3125,
+            0.0,
+            0.75,
+            0.6875,
+            0.875,
+            1.0
+          ],
+          [
+            0.75,
+            0.0,
+            0.3125,
+            1.0,
+            0.875,
+            0.6875
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          125,
+          -504
+        ],
+        "actual_state": "Block{minecraft:orange_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          125,
+          -507
+        ],
+        "actual_state": "Block{minecraft:jungle_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          125,
+          -504
+        ],
+        "actual_state": "Block{minecraft:jungle_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          125,
+          -501
+        ],
+        "actual_state": "Block{minecraft:oak_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -19,
+          125,
+          -504
+        ],
+        "actual_state": "Block{minecraft:oak_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          128,
+          -504
+        ],
+        "actual_state": "Block{minecraft:magenta_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          128,
+          -507
+        ],
+        "actual_state": "Block{minecraft:acacia_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          128,
+          -504
+        ],
+        "actual_state": "Block{minecraft:acacia_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          128,
+          -501
+        ],
+        "actual_state": "Block{minecraft:spruce_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -19,
+          128,
+          -504
+        ],
+        "actual_state": "Block{minecraft:spruce_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          131,
+          -504
+        ],
+        "actual_state": "Block{minecraft:light_blue_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          131,
+          -507
+        ],
+        "actual_state": "Block{minecraft:dark_oak_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          131,
+          -504
+        ],
+        "actual_state": "Block{minecraft:dark_oak_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          131,
+          -501
+        ],
+        "actual_state": "Block{minecraft:birch_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -19,
+          131,
+          -504
+        ],
+        "actual_state": "Block{minecraft:birch_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -508
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -508
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -508
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -507
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -507
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -507
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -507
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -506
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -506
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -506
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -506
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -506
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -505
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -505
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -505
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -505
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -505
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -18,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -18,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          119,
+          -500
+        ],
+        "actual_state": "Block{minecraft:melon}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          119,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          122,
+          -500
+        ],
+        "actual_state": "Block{minecraft:melon}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          125,
+          -503
+        ],
+        "actual_state": "Block{minecraft:jungle_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          125,
+          -500
+        ],
+        "actual_state": "Block{minecraft:oak_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          125,
+          -500
+        ],
+        "actual_state": "Block{minecraft:orange_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          128,
+          -503
+        ],
+        "actual_state": "Block{minecraft:acacia_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          128,
+          -500
+        ],
+        "actual_state": "Block{minecraft:spruce_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          128,
+          -500
+        ],
+        "actual_state": "Block{minecraft:magenta_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          131,
+          -503
+        ],
+        "actual_state": "Block{minecraft:dark_oak_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -17,
+          131,
+          -500
+        ],
+        "actual_state": "Block{minecraft:birch_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          131,
+          -500
+        ],
+        "actual_state": "Block{minecraft:light_blue_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          134,
+          -500
+        ],
+        "actual_state": "Block{minecraft:cyan_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          119,
+          -504
+        ],
+        "actual_state": "Block{minecraft:melon}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          122,
+          -504
+        ],
+        "actual_state": "Block{minecraft:melon}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -16,
+          134,
+          -504
+        ],
+        "actual_state": "Block{minecraft:cyan_wool}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          125,
+          -500
+        ],
+        "actual_state": "Block{minecraft:jungle_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          125,
+          -497
+        ],
+        "actual_state": "Block{minecraft:oak_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          128,
+          -500
+        ],
+        "actual_state": "Block{minecraft:acacia_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          128,
+          -497
+        ],
+        "actual_state": "Block{minecraft:spruce_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          131,
+          -500
+        ],
+        "actual_state": "Block{minecraft:dark_oak_log}[axis=z]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          131,
+          -497
+        ],
+        "actual_state": "Block{minecraft:birch_log}[axis=x]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -504
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -503
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -502
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -501
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -500
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -499
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -499
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -499
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -499
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -499
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -499
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -15,
+          118,
+          -498
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -498
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -498
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -498
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -498
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -498
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -14,
+          118,
+          -497
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -497
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -497
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -497
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -497
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -13,
+          118,
+          -496
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          118,
+          -496
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          118,
+          -496
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          118,
+          -496
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -504
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -503
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -502
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -501
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -500
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -500
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          119,
+          -499
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -499
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -499
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          119,
+          -498
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -498
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -498
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          119,
+          -497
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -497
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -497
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -12,
+          119,
+          -496
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          119,
+          -496
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          119,
+          -496
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -504
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -503
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -502
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -501
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          120,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -500
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          120,
+          -499
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -499
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          120,
+          -498
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -498
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          120,
+          -497
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -497
+        ],
+        "actual_state": "Block{minecraft:stone}",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -11,
+          120,
+          -496
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          120,
+          -496
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          121,
+          -499
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          121,
+          -498
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      },
+      {
+        "purpose": "source_architecture_tree_context",
+        "pos": [
+          -10,
+          121,
+          -497
+        ],
+        "actual_state": "Block{minecraft:grass_block}[snowy=false]",
+        "collisionShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ],
+        "outlineShape": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        ]
+      }
+    ],
+    "actual_fake_player_movements": [
+      {
+        "purpose": "tree_foliage_gap_west",
+        "start": [
+          -17.5,
+          128.05,
+          -505.5
+        ],
+        "delta": [
+          0,
+          0,
+          3
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "unobstructed": true
+      },
+      {
+        "purpose": "tree_central_source_wool",
+        "start": [
+          -15.5,
+          128.05,
+          -505.5
+        ],
+        "delta": [
+          0,
+          0,
+          3
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          1.199999988079071
+        ],
+        "unobstructed": false
+      },
+      {
+        "purpose": "source_melon_trunk",
+        "start": [
+          -15.5,
+          119.05,
+          -505.5
+        ],
+        "delta": [
+          0,
+          0,
+          3
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          1.199999988079071
+        ],
+        "unobstructed": false
+      },
+      {
+        "purpose": "source_door_center",
+        "start": [
+          -92.5,
+          58.05,
+          -213.5
+        ],
+        "delta": [
+          0,
+          0,
+          4
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          1.199999988079071
+        ],
+        "unobstructed": false
+      },
+      {
+        "purpose": "source_door_side",
+        "start": [
+          -93.6,
+          58.05,
+          -213.5
+        ],
+        "delta": [
+          0,
+          0,
+          4
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "unobstructed": true
+      },
+      {
+        "purpose": "source_window_center",
+        "start": [
+          -31.5,
+          37.05,
+          -1121.5
+        ],
+        "delta": [
+          0,
+          0,
+          3
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          1.199999988079071
+        ],
+        "unobstructed": false
+      },
+      {
+        "purpose": "source_ladder_entry",
+        "start": [
+          177.5,
+          33.05,
+          -1105.5
+        ],
+        "delta": [
+          0,
+          0,
+          -2
+        ],
+        "actual_displacement": [
+          0.0,
+          0.0,
+          -1.012499988079071
+        ],
+        "unobstructed": false
+      }
+    ],
+    "status": "MEASURED_ACTUAL_SOURCE_SERVER",
+    "limitation": "Fake-player physical movement and source shape queries; not manual keyboard, visual comparison or all source modpack interactions."
+  },
+  "physics_output_sha256": "cd8d51be3c25a9f465a962c8cd28aaa14bc5c38e5d1812c7950d62d7660b78e1",
+  "shutdown": "STANDARD_MINECRAFT_STOP_EXIT0",
+  "exit_code": 0,
+  "elapsed_seconds": 51.641,
+  "launch_console": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-reference-client-original-physics-v2\\launch-console.log",
+  "launch_console_sha256": "7f1f7290e6f12c39b90d9ea30db74dfb55ee6f3d1e4a6b8f8323cc30b995afa2",
+  "error_lines": 178,
+  "standard_loadLevel_marker": true,
+  "originals_after_run": {
+    "world_archive_sha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "pack_sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "mods": [
+      {
+        "path": "C:\\Users\\vakir\\Downloads\\Bloodborne_X_Minecraft_mod_6.0.jar",
+        "sha256": "399541635dfc559580193ca38da074f7158e064647d612fdb6d92236565266d2"
+      },
+      {
+        "path": "C:\\Users\\vakir\\Downloads\\geckolib-forge-1.18-3.0.57.jar",
+        "sha256": "b6d0954f7b777b43e72f202116c8ccbb1e37757a1142759303ab636a9077b8ba"
+      }
+    ],
+    "dedicated_report_sha256": "2fb78e4e9c290b67b39a2690dd6421ca0695933155321f7117cbd6942612b7fb"
+  },
+  "physical_reference_summary": {
+    "actual_shape_samples": 162,
+    "actual_fake_player_movements": 7,
+    "manual_gameplay": "NOT_RUN",
+    "visual_comparison": "NOT_RUN"
+  },
+  "additional_reference_manifest": "INPUTS.json:additional_reference_inputs",
+  "launcher_account_or_config_read": false,
+  "provenance_recheck": {
+    "status": "PASS",
+    "all_main8_user_inputs_unchanged": true,
+    "all6_reference_inputs_unchanged": true,
+    "record_inputs_run_exit_code": 0
+  }
+}

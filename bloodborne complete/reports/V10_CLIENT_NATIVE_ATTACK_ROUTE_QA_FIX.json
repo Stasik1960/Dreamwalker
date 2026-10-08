@@ -1,0 +1,69 @@
+{
+  "schema": "dw-v10-client-native-attack-route-qa-fix-v1",
+  "status": "PASS_ISOLATED_JAVA17_COMPILE_ACTUAL_RETRY_PENDING",
+  "productionJarSha256": "521337222c6f75b31a094c4944963c4103c514985d5696d55187f31dc4b17ca5",
+  "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\review\\java\\dev\\dreamwalker\\bloodbornedw\\review\\ReviewV10ClientBootstrap.java",
+  "sourceSha256": "22e18948903ca28fc4008033adc04171b3f9ff31264c36df0e5a554573477737",
+  "compileArguments": "build/review-v10-client-compile/javac.args",
+  "compileExitCode": 0,
+  "productionModified": false,
+  "actualFailure": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v10-client-min-attempt7\\client-review-output.json",
+    "sha256": "fca0aa92fdfb34f143b3589c90b46d1018e16e8b499976d725f5d9219d82f9ba",
+    "status": "FAIL_ACTUAL_CLIENT_V10",
+    "failedStep": "actual helper/root crosshair for architecture bloodborne_dw:prototype_wall",
+    "actualCrosshair": {
+      "type": "BLOCK",
+      "hitPos": [
+        -63.5,
+        100.57022643305008,
+        64.25
+      ],
+      "blockPos": [
+        -64,
+        100,
+        64
+      ],
+      "side": "north",
+      "insideBlock": false
+    },
+    "clientPadObservation": {
+      "registry": "bloodborne_dw:prototype_wall",
+      "state": "Block{bloodborne_dw:prototype_wall}[connections=auto,east=none,material=6,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+      "nativeChunkAvailable": true,
+      "safeChunkAvailable": true,
+      "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+      "nativeResident": "7bb4e0c3-74d4-4e09-8c8d-d698f8538bb8",
+      "safeOwner": "7bb4e0c3-74d4-4e09-8c8d-d698f8538bb8"
+    },
+    "serverThreadObservation": {
+      "registry": "bloodborne_dw:prototype_wall",
+      "state": "Block{bloodborne_dw:prototype_wall}[connections=auto,east=none,material=6,north=none,profile=base,rotation=4,south=none,up=true,waterlogged=false,west=none]",
+      "air": false,
+      "nativeChunkAvailable": true,
+      "safeChunkAvailable": true,
+      "nativeBlockEntityClass": "dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity",
+      "nativeResident": "7bb4e0c3-74d4-4e09-8c8d-d698f8538bb8",
+      "safeOwner": "7bb4e0c3-74d4-4e09-8c8d-d698f8538bb8",
+      "readThread": "ACTUAL_SERVER_THREAD"
+    }
+  },
+  "confirmedPartialRuntime": {
+    "rpOnRp": "PASS_ACTUAL_ORDINARY_RP_ON_RP_PLACE_PRESERVE_AND_CREATIVE_CLEANUP",
+    "originalStablePreserved": true,
+    "twoUuidCleanup": true,
+    "ordinaryArchitectureCompleted": 1,
+    "menus": "PASS_ACTUAL_CLIENT_MENUS_PACKETS_RULES_COMMANDS",
+    "architectureRendererSamples": 18
+  },
+  "cause": "QA required composite contribution targeting for an unshifted native backend whose resident identity precedes mounted contributions. Actual native outline BlockHit is the production selection path.",
+  "guard": [
+    "actual BlockHitResult type BLOCK",
+    "hit cell is exact placed root pad",
+    "state is native wall or ladder",
+    "VerticalMount.offset equals zero",
+    "resident UUID equals exact current object UUID"
+  ],
+  "actualRepeat": "PENDING",
+  "manualVisualAcceptance": "NOT_RUN"
+}

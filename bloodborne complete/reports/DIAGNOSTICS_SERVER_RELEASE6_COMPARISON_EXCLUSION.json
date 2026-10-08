@@ -1,0 +1,13 @@
+{
+  "schema": "dreamwalker-diagnostics-comparison-exclusion-v1",
+  "runtimeFunctionalStatus": "PASS_THREE_SERVER_PHASES_CURRENT_PRODUCTION",
+  "performanceReleaseAcceptance": "EXCLUDED_FROM_PRIMARY_MATCHED_COMPARISON",
+  "reports": [
+    "reports/DIAGNOSTICS_SERVER_OFF_V9_RELEASE6.json",
+    "reports/DIAGNOSTICS_SERVER_ON_V9_RELEASE6.json",
+    "reports/DIAGNOSTICS_SERVER_REENTER_V9_RELEASE6.json"
+  ],
+  "reason": "During DISABLED measured window another agent completed source FINAL2 preparation (8.26s) and independent preload (2.25s). Their concurrent CPU/IO confounds OFF/ON performance comparison. Preserve all raw actual outputs; rerun identical windows serialized with no agent heavy work.",
+  "productionSha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0",
+  "repeatStatus": "PENDING_SERIALIZED_RELEASE7"
+}

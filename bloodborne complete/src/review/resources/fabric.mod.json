@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "bloodborne_dw_review",
+  "version": "1.0.0",
+  "name": "Dreamwalker isolated review scene QA",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.dreamwalker.bloodbornedw.review.ReviewSceneBootstrap",
+      "dev.dreamwalker.bloodbornerp.lamp.V9GameplayReviewBootstrap",
+      "dev.dreamwalker.bloodbornedw.review.DiagnosticsReviewBootstrap",
+      "dev.dreamwalker.bloodbornedw.review.ReviewV10SceneBootstrap",
+      "dev.dreamwalker.bloodbornedw.review.ReviewV10AliasCompatibilityBootstrap"
+    ],
+    "client": [
+      "dev.dreamwalker.bloodbornedw.review.ReviewClientBootstrap",
+      "dev.dreamwalker.bloodbornedw.review.ReviewV10ClientBootstrap"
+    ]
+  },
+  "depends": {
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabricloader": ">=0.16.10",
+    "fabric-api": "*",
+    "bloodborne_dw": "*"
+  },
+  "description": "Optional isolated authoring/resource-load QA, active only with explicit profile markers. Excluded from the production Dreamwalker JAR."
+}

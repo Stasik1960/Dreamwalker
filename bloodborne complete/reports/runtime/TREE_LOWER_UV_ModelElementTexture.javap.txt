@@ -1,0 +1,108 @@
+Compiled from "ModelElementTexture.java"
+public class net.minecraft.client.render.model.json.ModelElementTexture {
+  public float[] uvs;
+
+  public final int rotation;
+
+  public net.minecraft.client.render.model.json.ModelElementTexture(float[], int);
+    Code:
+       0: aload_0
+       1: invokespecial #22                 // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #24                 // Field uvs:[F
+       9: aload_0
+      10: iload_2
+      11: putfield      #26                 // Field rotation:I
+      14: return
+
+  public float getU(int);
+    Code:
+       0: aload_0
+       1: getfield      #24                 // Field uvs:[F
+       4: ifnonnull     17
+       7: new           #32                 // class java/lang/NullPointerException
+      10: dup
+      11: ldc           #33                 // String uvs
+      13: invokespecial #36                 // Method java/lang/NullPointerException."<init>":(Ljava/lang/String;)V
+      16: athrow
+      17: aload_0
+      18: iload_1
+      19: invokevirtual #40                 // Method getRotatedUVIndex:(I)I
+      22: istore_2
+      23: aload_0
+      24: getfield      #24                 // Field uvs:[F
+      27: iload_2
+      28: ifeq          36
+      31: iload_2
+      32: iconst_1
+      33: if_icmpne     40
+      36: iconst_0
+      37: goto          41
+      40: iconst_2
+      41: faload
+      42: freturn
+
+  public float getV(int);
+    Code:
+       0: aload_0
+       1: getfield      #24                 // Field uvs:[F
+       4: ifnonnull     17
+       7: new           #32                 // class java/lang/NullPointerException
+      10: dup
+      11: ldc           #33                 // String uvs
+      13: invokespecial #36                 // Method java/lang/NullPointerException."<init>":(Ljava/lang/String;)V
+      16: athrow
+      17: aload_0
+      18: iload_1
+      19: invokevirtual #40                 // Method getRotatedUVIndex:(I)I
+      22: istore_2
+      23: aload_0
+      24: getfield      #24                 // Field uvs:[F
+      27: iload_2
+      28: ifeq          36
+      31: iload_2
+      32: iconst_3
+      33: if_icmpne     40
+      36: iconst_1
+      37: goto          41
+      40: iconst_3
+      41: faload
+      42: freturn
+
+  private int getRotatedUVIndex(int);
+    Code:
+       0: iload_1
+       1: aload_0
+       2: getfield      #26                 // Field rotation:I
+       5: bipush        90
+       7: idiv
+       8: iadd
+       9: iconst_4
+      10: irem
+      11: ireturn
+
+  public int getDirectionIndex(int);
+    Code:
+       0: iload_1
+       1: iconst_4
+       2: iadd
+       3: aload_0
+       4: getfield      #26                 // Field rotation:I
+       7: bipush        90
+       9: idiv
+      10: isub
+      11: iconst_4
+      12: irem
+      13: ireturn
+
+  public void setUvs(float[]);
+    Code:
+       0: aload_0
+       1: getfield      #24                 // Field uvs:[F
+       4: ifnonnull     12
+       7: aload_0
+       8: aload_1
+       9: putfield      #24                 // Field uvs:[F
+      12: return
+}

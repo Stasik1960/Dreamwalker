@@ -1,0 +1,123 @@
+{
+  "schema": "dw-v10-async-shape-patch-prebuild-v1",
+  "status": "SOURCE_FROZEN_PEER_READ_ONLY_REVIEW_COMPLETE_BUILD_AND_RUNTIME_NOT_RUN",
+  "previousArtifactSha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+  "failureEvidence": "reports/V10_FULL_CLIENT3_LOADING_SHAPE_DEADLOCK_AUDIT.json",
+  "historicalFailureWrapper": "reports/V10_CLIENT_FULL_RELEASE3_ATTEMPT_1.json",
+  "files": [
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeShapeSnapshots.java",
+      "bytes": 7962,
+      "sha256": "56ebfa9e75548a48bd41ba66018b65bb27bd119a2f305c9ed07e5499ba6b20ac",
+      "main7SourceSha256": null,
+      "baselineScope": "new file"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java",
+      "bytes": 40586,
+      "sha256": "d63160474ad454e95cf68e1d29c786291f780ffed0387b6474f9cf5bc774696a",
+      "main7SourceSha256": "6ed4588fc2e942cf5c027fa6014059fa2b9ac65288eb6a1a66112f2153c9786d",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeLedger.java",
+      "bytes": 3114,
+      "sha256": "a2d98689cd122c9f802695da6ed6044f4600a11358712637281844ffc1fc700f",
+      "main7SourceSha256": "3250d8e79a4c07b69537946278825b5ac907f92894bcc648ccc8a3641162c8d8",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeBlockEntity.java",
+      "bytes": 4117,
+      "sha256": "b25a6a8128b7d6e68beb846af1af5706da1af8df3d8c28929cefe25f1d3bb4df",
+      "main7SourceSha256": "09564db7ce553a46b45a0699e0821f612fdcc41b583e16c49579a6b39ec0f561",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeArchitecture.java",
+      "bytes": 4827,
+      "sha256": "078066d133235bab6fa4e397bc7fba62c05693c87580e22d53355c33d372a949",
+      "main7SourceSha256": "9b247538717a5751a1e01892816cb60d516871c896da51cfa8305f8a3f092a1b",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/mixin/CompositeShapeMixin.java",
+      "bytes": 2549,
+      "sha256": "d52955e441256e15b0eab0be752ff9fa5ca94776467079366601fa6e0de65625",
+      "main7SourceSha256": "01b382efe53f5cab46ac52a9a60642b58a22618ada028e69ccbbfe129bb99c9a",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/mount/VerticalMount.java",
+      "bytes": 12929,
+      "sha256": "7c209c6d7870a02a42fd5d11f0bab4f3adca9984565d812021b6ee8d3e012644",
+      "main7SourceSha256": "69882a64c67cc0add1904c89572177357856c59dd3b4c837887b652ea8f7994f",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/ladder_source/SourceLadderBlockEntity.java",
+      "bytes": 3910,
+      "sha256": "74b9d024b1ed7f5083d67e75a8aa5aa3e774f4979ed5057fd87132377f4424d3",
+      "main7SourceSha256": "fde9dc173acf261adbbf08cc67a5c7bca3d097ad5a8695a254e3d71c05a276b4",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/ladder_source/SourceBackingBlock.java",
+      "bytes": 3276,
+      "sha256": "b6999431e5649bf72fa8aba889c5c59adaea4fc2bb04a93676c36834a535f41c",
+      "main7SourceSha256": "9aff3d07bb0cce15d88609b0e968bda43bb4f1a513a97f464c6eeaf5fdcc9b66",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/wall/PrototypeWallBlock.java",
+      "bytes": 16575,
+      "sha256": "74aaba894ade4a1e93e2487b35b48b0680f6ad79b021f823982724a0e2232452",
+      "main7SourceSha256": "20016346bf976a8a13224e398125094fa035da3027611108151e4c45f723cbf7",
+      "baselineScope": "actual main7 frozen source manifest"
+    },
+    {
+      "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/CompositeAsyncShapeGameTests.java",
+      "bytes": 12003,
+      "sha256": "31fb978b29e11df419b8396903ac690ce3ecb6e209b5662b743e565f0a99ee71",
+      "main7SourceSha256": null,
+      "baselineScope": "native test/metadata not in production-source manifest"
+    },
+    {
+      "path": "src/gametest/resources/fabric.mod.json",
+      "bytes": 2091,
+      "sha256": "a79ea01535ae43ad2f4f20d389dd85aa2bfbbd239040dc7ad174007fe1841d31",
+      "main7SourceSha256": null,
+      "baselineScope": "native test/metadata not in production-source manifest"
+    }
+  ],
+  "nativeTests": [
+    "workerLightingQueriesMatchRootHelperForeignAndMountedNativeWithoutChunkLoads",
+    "savedDeferredOwnersKnownUuidReplacementsAndRollbackPublishExactShapeRevisions"
+  ],
+  "expectedAdditionalNativeTests": 2,
+  "currentBuild": "NOT_RUN; parent exclusively builds candidate8",
+  "currentRuntime": "NOT_RUN; main7 successes are historical and not evidence of candidate8",
+  "publication": {
+    "world": "weak keys; no World/BE reference in published or staged values; explicit UNLOAD retirement",
+    "read": "immutable volatile revision; known carrier passed by mixin; no forced state/BE/chunk/persistent access",
+    "write": "per-world synchronized nested batch depth; worker attachments cannot flush a main partial write",
+    "commitRollback": "one revision in execute finally after final committed or restored cells; only touched chunk maps copied",
+    "load": "saved ledger before spawn lighting via ServerWorld LOAD; BE read/set/setWorld/setCachedState publication",
+    "retire": "token-aware markRemoved retires actual BE metadata; saved owner contributions retained for deferred unload",
+    "metrics": [
+      "shapeSnapshotChunks",
+      "shapeSnapshotCells",
+      "shapeSnapshotPendingCells",
+      "shapeSnapshotBatchDepth"
+    ]
+  },
+  "limits": [
+    "Observed and guarded async scope is ServerWorld off its server thread; non-World prefetched BlockViews retain local BE access.",
+    "Known published different resident UUID rejects old contributions; absent/unloaded root metadata is deferred until authoritative main validation/cleanup.",
+    "External vanilla replacement without published replacement metadata can remain deferred in worker snapshot until main cleanup; no worker mutation is scheduled.",
+    "Unshifted native wall worker collision returns native raw guard without neighbor chunk reads; global collider union preserved, per-cell seam attribution belongs to main thread.",
+    "Runtime full-client saved-scene proof is still required; removing mods was not used as a fix."
+  ],
+  "officialApiReference": "https://maven.fabricmc.net/docs/yarn-1.20.1%2Bbuild.10/net/minecraft/server/world/ServerChunkManager.html",
+  "apiEvidenceScope": "Nullable getWorldChunk API; off-thread/future behavior established by actual local bytecode and the preserved runtime thread dump, not inferred from Javadoc."
+}

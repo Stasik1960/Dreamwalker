@@ -1,0 +1,303 @@
+{
+  "schema": "dreamwalker-v10-cross-module-full-type-duplicate-audit-v1",
+  "status": "READ_ONLY_ALL_1242_CROSS_PAIRS_REFUTED_BY_REAL_REMOVAL_DROP_CONTRACT",
+  "production": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v10-attempt-7\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+    "sha256": "2cf96fbe771bb44bba4e4e8f320ed65a8bc0a8ffe7a8149b07fbd9ec691592c1",
+    "bytes": 32980636,
+    "version": "0.1.0-prototype.5"
+  },
+  "architectureAudit": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\V10_ARCHITECTURE_DUPLICATE_AUDIT_CANDIDATE7.json",
+    "sha256": "bf07cbb67a59689743a7abce726091f3943c5d8df75221fcdbf53865c0708e4c"
+  },
+  "summary": {
+    "architecture": 18,
+    "canonicalRp": 69,
+    "crossPairs": 1242,
+    "newConfirmedCrossGroups": 0,
+    "canonicalTotal": 87,
+    "canonicalAllPairs": 3741,
+    "inFamilyPartition": {
+      "architecturePairs": 153,
+      "rpPairs": 2346,
+      "crossPairs": 1242
+    },
+    "rpInFamilyStatus": "Separate rp_integration report; do not infer completion from cross audit"
+  },
+  "witnesses": [
+    {
+      "id": "SURVIVAL_ARCHITECTURE_ONE_ART_DROP_VS_CREATIVE_ONLY_RP_ZERO_DROPS",
+      "architecture": "All18 use positive-hardness .4 or2 native roots. Ordinary permitted Survival break is allowed, cleans exact owned object and returns one canonical artistic item. SourceClone permitted Survival pairbreak has the same oneitem contract; no OP/Creative-only condition in wholeowned remove permissions.",
+      "rp": "All69 use RpObjectEntity.damage: PLAYER_ATTACK from player.isCreative only; Survival player attack returns false. Authorized Creative deletion calls removeByBuilder -> links/lamp cleanup and discard, zero item drops. Builder/admin deletion also has zero drops.",
+      "observableDifference": "For the same permitted emptyhand Survival attacker, architecture supports native break and one own-type item; RP rejects deletion. Creative RP deletion yields no item, unlike architecture Survival drop. This is interaction/function/drop, not Block-versus-entity class identity.",
+      "sources": [
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRootBlock.java",
+          "sha256": "e296f17aaf628fe032715678184022cd9667f5590bd23853edf02c8f3bb9746f",
+          "lines": [
+            {
+              "line": 24,
+              "token": "strength(.4F)"
+            },
+            {
+              "line": 34,
+              "token": "getDroppedStacks"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java",
+          "sha256": "6ed4588fc2e942cf5c027fa6014059fa2b9ac65288eb6a1a66112f2153c9786d",
+          "lines": [
+            {
+              "line": 148,
+              "token": "private static boolean canModify"
+            },
+            {
+              "line": 107,
+              "token": "if(drop&&!item.isEmpty())"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PrototypeArchitecture.java",
+          "sha256": "d91041a9d09a056b474aaf3a55271db0586f5e41862c18d85912baa99f8ffba4",
+          "lines": [
+            {
+              "line": 50,
+              "token": ".strength(.4F)"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/wall/PrototypeWallArchitecture.java",
+          "sha256": "2bd0996f1b4a2abe39c261ce329a565da1009d2b3573aa746ad8822c2b73c477",
+          "lines": [
+            {
+              "line": 56,
+              "token": "strength(2F)"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/wall/PrototypeWallBlock.java",
+          "sha256": "20016346bf976a8a13224e398125094fa035da3027611108151e4c45f723cbf7",
+          "lines": [
+            {
+              "line": 144,
+              "token": "getDroppedStacks"
+            },
+            {
+              "line": 143,
+              "token": "artisticStack"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderBlock.java",
+          "sha256": "2a2766f5410ce33932aba237be10e081ac15ad5020d5b4655f8102ad0749fa34",
+          "lines": [
+            {
+              "line": 189,
+              "token": "getDroppedStacks"
+            }
+          ]
+        },
+        {
+          "path": "src/rp/java/dev/dreamwalker/bloodbornerp/object/RpObjectEntity.java",
+          "sha256": "9e9d4a75f4af20d2e878573623e625b110f358baffc4b41cb41bfc9fdbfa3692",
+          "lines": [
+            {
+              "line": 155,
+              "token": "public boolean damage"
+            },
+            {
+              "line": 156,
+              "token": "!player.isCreative()"
+            },
+            {
+              "line": 161,
+              "token": "public void removeByBuilder"
+            }
+          ]
+        },
+        {
+          "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/SourceLadderGameTests.java",
+          "sha256": "3094d6a03455b20a53ce8585e9300750eaf284f9395ca9a8c18b8937e9a2d330",
+          "lines": [
+            {
+              "line": 102,
+              "token": "NativeSurvivalBreakPermissionGuardChecksWholePair"
+            },
+            {
+              "line": 67,
+              "token": "exactly one item"
+            }
+          ]
+        },
+        {
+          "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/PrototypeDoorGameTests.java",
+          "sha256": "1f074c3e69e7d668981d4491dba6532c448c3e23c432750cdb654a924d076297",
+          "lines": [
+            {
+              "line": 97,
+              "token": "one logical object drops one item"
+            }
+          ]
+        },
+        {
+          "path": "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/PrototypeWallGameTests.java",
+          "sha256": "a0922533183956329488ee1f95442776be561f8a031b6c1cfd273c9158b82cbe",
+          "lines": [
+            {
+              "line": 123,
+              "token": "one wall yields one registry item"
+            }
+          ]
+        }
+      ],
+      "runtimeEvidenceScope": "Native current131 XML has SourceLadder Survival pairpermission/oneitem, dooroneitem and wallcanonicaloneitem regressions. All18/69 ordinary Creative item/attack cases are separate partial MIN11/MIN12 evidence; no new exhaustive Survival-client test claimed."
+    },
+    {
+      "id": "NATIVE_ROOT_SLOT_VS_RP_ENTITY_WITHOUT_NATIVE_SLOT",
+      "architecture": "Ordinary item is native BlockItem/transaction root. It requires an available replaceable BlockState root; committing writes own root/residentBE. Cannot stack a second ordinary root in one occupied native cell or overwrite a foreign native BE.",
+      "rp": "All69 canonical ordinary RP use ObjectRegistry.placeAt: spawn independent EntityType/UUID at calculated surface origin; no root native BlockState/BE reservation/write. Native solids/otherRP do not reject entity construction under authorized V10 permanent overlap policy; living/right/build/chunk guards still apply.",
+      "observableDifference": "Two RP instances may share their calculated root position while preserving the native cell; two ordinary architectural roots cannot occupy one native slot. Subsequent offset overlap in both modules does not make their ordinary installation contract identical.",
+      "notUsedAsProof": [
+        "Java class identity",
+        "Block versus entity name by itself",
+        "different registry/TEMP identifier",
+        "different JSON formats"
+      ],
+      "sources": [
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeItem.java",
+          "sha256": "9e551ccaa8579dafa035fcb9586f3f71b5326c7e73602f6b0e47ee1cbd6a8009",
+          "lines": [
+            {
+              "line": 11,
+              "token": "extends BlockItem"
+            },
+            {
+              "line": 39,
+              "token": "CompositeRuntime.place"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderItem.java",
+          "sha256": "e20239e12e154b13728085e0d7573c8bbe6ce96fbff788ef751949b0ee712e3c",
+          "lines": [
+            {
+              "line": 18,
+              "token": "extends BlockItem"
+            },
+            {
+              "line": 27,
+              "token": "if(!context.canPlace())"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/wall/PrototypeWallItem.java",
+          "sha256": "082c14f6476bd4aff22b498f207027449f88ccbed3d6ad99dee73e7efc9cc251",
+          "lines": [
+            {
+              "line": 19,
+              "token": "extends BlockItem"
+            },
+            {
+              "line": 27,
+              "token": "getBlock"
+            }
+          ]
+        },
+        {
+          "path": "src/architecture/java/dev/dreamwalker/bloodbornedw/runtime/TransactionCore.java",
+          "sha256": "1f6a12ca1b6b1537c5dce3f6b40b52f9caf5d23ef125492c71636879e5d2bfe3",
+          "lines": [
+            {
+              "line": 41,
+              "token": "root"
+            }
+          ]
+        },
+        {
+          "path": "src/rp/java/dev/dreamwalker/bloodbornerp/object/ObjectRegistry.java",
+          "sha256": "dae52dca2cd76a9aa3408c7e7abe582399b31fd969e231f39929363ec235c4ca",
+          "lines": [
+            {
+              "line": 52,
+              "token": "private static boolean placeAt"
+            },
+            {
+              "line": 79,
+              "token": "world.spawnEntity(entity)"
+            },
+            {
+              "line": 72,
+              "token": "origin=surface.subtract"
+            }
+          ]
+        },
+        {
+          "path": "reports/user-review-v9/request.txt",
+          "sha256": "425df01a1f8f1ee67bf6bd50b9b2b996024fe4478bff175c7172764f931d01f9",
+          "lines": [
+            {
+              "line": 32,
+              "token": "Разреши ставить блоки рядом и внутри"
+            },
+            {
+              "line": 38,
+              "token": "Это разрешение не означает возможность записать два обычных BlockState"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "potentialSimilarPairs": [
+    {
+      "architecture": "90001",
+      "rpAsset": "door_1",
+      "reason": "Architecture central leaf/jamb/header narrow volumes and static side passage; RP legacy square closed body/open-empty with full source bone animation. Shared OPEN/CLOSE policies do not remove different source geometry, physics and native-slot installation."
+    },
+    {
+      "architecture": "90005",
+      "rpAssets": [
+        "tree1",
+        "tree2",
+        "tree3"
+      ],
+      "reason": "Architecture18authoredparts/acceptedlowerUV/physicalstem+4selectionprisms; RP entity-source geo/native collider dimensions/selection and no native root. Repeated placed trees are instances, never catalogue duplicates by location."
+    },
+    {
+      "architecture": [
+        "90006",
+        "90018",
+        "90019"
+      ],
+      "rpAsset": "ladder",
+      "reason": "Architecture one-cell section, native side/foundation support and8yaw; RP long extended/collapsed animation/anchors/climb zones/top platform. SourceClone fixed backing is legacyinstallation role, not a new independent type."
+    }
+  ],
+  "removedIdToKeptId": [],
+  "confirmedGroups": [],
+  "exceptions": {
+    "ids": [
+      "90010",
+      "90020"
+    ],
+    "request": {
+      "path": "reports/user-review-v9/request.txt",
+      "line": 62,
+      "token": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02.",
+      "sha256": "425df01a1f8f1ee67bf6bd50b9b2b996024fe4478bff175c7172764f931d01f9"
+    },
+    "quote": "Возвращение этого прямо запрошенного типа является исключением из удаления художественных дублей; не удаляй его снова из-за сходства с window02.",
+    "details": "same ownfrontUV andtexture, differentrawZby4/16; initialside/floor/ceilingseat can compensate, sneakgroundvertical keepsdifferent mounting depth; legacysource03 intrinsic-45 remains distinct. Explicit independenttype request controls even ifnew mountedposes lookidentical."
+  },
+  "scope": "Static necessary-condition refutation. No new runtime/GUI/compatibility merge run, no world mutation, no original archive edits, no full-city claim."
+}

@@ -1,0 +1,321 @@
+{
+  "schema": "dreamwalker-rp-v9-native-outcomes-v1",
+  "status": "PASS_12_REQUESTED_RP_NATIVE_CHECKS",
+  "nativeXml": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_GAMETEST_V9_ATTEMPT_10.xml",
+    "bytes": 16294,
+    "sha256": "23b650bb21cec134b63e7df6366b53a0a2684901f0d9cc84f8d85ba28df79c50"
+  },
+  "nativeLog": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\REVIEW_V9_BUILD_AND_CORE_ATTEMPT_10.log",
+    "bytes": 2495201,
+    "sha256": "279357bd661e454f23856cc69cfff11a007276f51162102ff71ab299448385ab"
+  },
+  "rpTestCount": 12,
+  "productionArtifact": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\frozen-artifacts\\v9-attempt-10\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.4.jar",
+    "bytes": 32807233,
+    "sha256": "a84d202c4f404ba48b6219e864f915f9160b0e0153b1b5a708d731f9ffd6d1a0"
+  },
+  "rpFailures": 0,
+  "wholeNativeTestCount": 104,
+  "wholeNativeFailures": 0,
+  "cases": [
+    {
+      "name": "rpv9behaviourgametests.actualwindowandgateblockbothsideswithoutdecorativeboundingboxwall",
+      "timeSeconds": "0.163",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.exactfurniturealiasespreserveoldregistryuuidnamepayloadandlinks",
+      "timeSeconds": "0.162",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.realsmallchandelieritemmountsvisiblebaseandceilinghook",
+      "timeSeconds": "0.182",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.realstairsladderandwindowitemsusebaseswhilesavedsourceposisexact",
+      "timeSeconds": "0.216",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.authoredgateandladderkeyframesremainnumericexactandidleneutral",
+      "timeSeconds": "0.22",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.actualladderworkingzoneclimbsdescendsandmoveswithbottombone",
+      "timeSeconds": "0.224",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.normalrpitemrejectspositivephysicaloverlapandbuilderrotationrollsback",
+      "timeSeconds": "0.238",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.deferredmovementshapeskeepnativevolumesdeduplicateandincludestepsweep",
+      "timeSeconds": "0.236",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.diagnosticspreservetypedrpstaterefusalsanddeduplicatecorruptenvelope",
+      "timeSeconds": "0.244",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.dogsareindependentandtypedstatesurvivespickandsave",
+      "timeSeconds": "0.242",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.actualplayerwalkstwentysixsourcetreadsanddescends",
+      "timeSeconds": "0.261",
+      "status": "PASS",
+      "failure": []
+    },
+    {
+      "name": "rpv9behaviourgametests.gateoneshotrejectsheldcadenceoffhandandreloadbackground",
+      "timeSeconds": "0.305",
+      "status": "PASS",
+      "failure": []
+    }
+  ],
+  "originalForgeGate": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\SOURCE_WOODGATE_V9_COMPARISON.json",
+    "bytes": 24057,
+    "sha256": "dffdadbd4eb7f1b6d24776cf9325262f834e1d78ba614801c22448e5b4b9e00e"
+  },
+  "catalogueResourceAudit": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\RP_V9_OBJECT_AUDIT.json",
+    "bytes": 536868,
+    "sha256": "876395ad07c1531f13dde61cebdb959c4f6a1c2b6951432802935bacaf404204"
+  },
+  "geometry": {
+    "stairsSourceTreads": 26,
+    "ladderWorkingPlanes": 2,
+    "ladderClimbingZones": 2,
+    "npcWindowWorkingPlanes": 1,
+    "woodGateWorkingPlanes": 1,
+    "smallChandelierPhysicalBoxes": 0,
+    "newDefaultLadderBaseAnchorPixels": [
+      0,
+      -473,
+      -24.75
+    ],
+    "newStairsBaseAnchorPixels": [
+      0,
+      -192,
+      -213
+    ],
+    "loadedSourceEntityPose": "not compensated; exact Pos roundtrip tested",
+    "customEntityLookup": "server/client loaded index, real bounds; no expanded chunk scan"
+  },
+  "placementScope": "actual ItemUsageContext floor/ceiling/base placement, one spawned object, active overlap refusal, checked rotation rollback and creative attack at real stair/ladder base beyond8m from origin",
+  "nativeScope": "Fabric development GameTest runtime; real items/entities/player move/travel. This is separate from an ordinary remapped JAR client/server launch.",
+  "manualGameplay": "NOT_RUN",
+  "manualVisualAcceptance": "PENDING_USER_REVIEW",
+  "fullRpCatalogueAccepted": false,
+  "originalInputsModified": false,
+  "rpModelTextureAnimationBytesChanged": false,
+  "ordinaryRuntime": {
+    "status": "PASS_CURRENT_ORDINARY_MINIMAL_FULL_LITHIUM_AUTHOR_RESTART_PRODUCTION_REOPEN",
+    "proof": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\RP_V9_ORDINARY_RUNTIME_RELEASE5.json",
+      "bytes": 66061,
+      "sha256": "613447d7c904d20c89b0f537ed956e782e6271cc536cb182d0f44af52043e892"
+    },
+    "fullLithiumMovement": "PASS_ACTUAL_MINIMAL_AND_FULL_AUTHOR_AND_AFTER_RESTART",
+    "manualVisualGameplay": "PENDING_USER_REVIEW"
+  },
+  "currentBoundedSourceArchive": {
+    "status": "PASS_ARCHIVE_EXACT_PRODUCTION_REOPEN; PENDING_USER_REVIEW",
+    "proof": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_SOURCE_REVIEW_SCENE_V9_RELEASE7.json",
+      "bytes": 11660,
+      "sha256": "ed77c44b8b8f58a406f4c91c8353c3db375b1129aec6f23cf96509262472d75b"
+    },
+    "archiveSha256": "8a1827314a03d94e0946f9dc55a97c50bb2bfe0e9726936aaff5e5115f3e7e19",
+    "counts": {
+      "objects": 41,
+      "source_member_cells": 110,
+      "source_world_files": 38,
+      "archived_files": 37,
+      "archive_entries_including_root_directory": 38,
+      "uncompressed_bytes": 18773690,
+      "original_terrain_chunks": 71,
+      "extra_generated_chunks_preserved": 4363
+    },
+    "fullCityConverted": false
+  },
+  "actualClientLoadedRp": {
+    "status": "PASS_ACTUAL_CLIENT7_AND_DIAGNOSTIC_REENTER8_LOADED_RP_TRACKER_MODEL_POSES",
+    "runs": [
+      {
+        "report": {
+          "bytes": 2808234,
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_MINIMAL_V9_RELEASE7.json",
+          "sha256": "e4f999d546ff19e9525173295a76c5b53fc5a14d8350737ad2e691f6cd18428d"
+        },
+        "status": "PASS_ACTUAL_LOADED_RP_MODEL_TRACKER_POSES",
+        "loadedObjectCount": 10,
+        "loadedAssets": [
+          "cage_obj_1",
+          "cage_obj_1",
+          "cage_obj_2",
+          "cage_obj_3",
+          "chandelier_small",
+          "chandelier_small",
+          "npc_window",
+          "stairs",
+          "ladder",
+          "wood_gate"
+        ],
+        "sameTypeHiddenVisibleHiddenEvaluation": [
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          },
+          {
+            "uuid": "84cc32b2-752f-46cc-98cc-25decc78d522",
+            "trackerDogsVisible": true,
+            "hidden": false,
+            "childrenHidden": false
+          },
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          }
+        ],
+        "exactBoundedCustomMeshCulling": [
+          {
+            "asset": "chandelier_small",
+            "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+            "enclosed": true
+          },
+          {
+            "asset": "chandelier_small",
+            "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+            "enclosed": true
+          },
+          {
+            "asset": "npc_window",
+            "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+            "enclosed": true
+          },
+          {
+            "asset": "stairs",
+            "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+            "enclosed": true
+          },
+          {
+            "asset": "ladder",
+            "uuid": "f2888029-a9e9-403a-b632-1148725cfd09",
+            "enclosed": true
+          },
+          {
+            "asset": "wood_gate",
+            "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+            "enclosed": true
+          }
+        ],
+        "scope": "Actual client renderer/Gecko baked vertices and server-loaded tracker state evaluated through the existing custom-animation hook. No viewport, human action or visual acceptance is inferred.",
+        "manualVisualAcceptance": "NOT_RUN",
+        "newPlacementAcknowledgement": "NOT_PROBED_FOR_RP; loaded tracker/model checks are distinct from architecture90010 diagnostic placement"
+      },
+      {
+        "report": {
+          "bytes": 2811710,
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\CLIENT_MINIMAL_REENTER_V9_RELEASE8.json",
+          "sha256": "993935d6b8a89dfebd12b2ec73e260553edf56441d946d55382d54392e5bcd13"
+        },
+        "status": "PASS_ACTUAL_LOADED_RP_MODEL_TRACKER_POSES",
+        "loadedObjectCount": 10,
+        "loadedAssets": [
+          "cage_obj_1",
+          "cage_obj_1",
+          "cage_obj_3",
+          "cage_obj_2",
+          "chandelier_small",
+          "chandelier_small",
+          "npc_window",
+          "stairs",
+          "ladder",
+          "wood_gate"
+        ],
+        "sameTypeHiddenVisibleHiddenEvaluation": [
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          },
+          {
+            "uuid": "84cc32b2-752f-46cc-98cc-25decc78d522",
+            "trackerDogsVisible": true,
+            "hidden": false,
+            "childrenHidden": false
+          },
+          {
+            "uuid": "e2b09836-febf-4df5-aaa5-633da22d4bce",
+            "trackerDogsVisible": false,
+            "hidden": true,
+            "childrenHidden": true
+          }
+        ],
+        "exactBoundedCustomMeshCulling": [
+          {
+            "asset": "chandelier_small",
+            "uuid": "d11180c0-b6ae-4357-9bc1-4af2eb68eb75",
+            "enclosed": true
+          },
+          {
+            "asset": "chandelier_small",
+            "uuid": "3e7fb0a2-6b3c-4607-8b11-e24e6c1c208f",
+            "enclosed": true
+          },
+          {
+            "asset": "npc_window",
+            "uuid": "58a723a8-7a11-4d75-9c9c-186b7d4b366d",
+            "enclosed": true
+          },
+          {
+            "asset": "stairs",
+            "uuid": "b7df9014-05e1-4993-874a-d23bf5dbfa2c",
+            "enclosed": true
+          },
+          {
+            "asset": "ladder",
+            "uuid": "f2888029-a9e9-403a-b632-1148725cfd09",
+            "enclosed": true
+          },
+          {
+            "asset": "wood_gate",
+            "uuid": "691ead13-f071-42da-95e7-6679dc112272",
+            "enclosed": true
+          }
+        ],
+        "scope": "Actual client renderer/Gecko baked vertices and server-loaded tracker state evaluated through the existing custom-animation hook. No viewport, human action or visual acceptance is inferred.",
+        "manualVisualAcceptance": "NOT_RUN",
+        "newPlacementAcknowledgement": "NOT_PROBED_FOR_RP; loaded tracker/model checks are distinct from architecture90010 diagnostic placement"
+      }
+    ]
+  }
+}

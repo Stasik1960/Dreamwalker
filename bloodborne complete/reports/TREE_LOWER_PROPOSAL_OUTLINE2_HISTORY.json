@@ -1,0 +1,64 @@
+{
+  "schema": "dreamwalker-tree-lower-proposal-v1",
+  "status": "PROPOSED_LOWER_UV_ONLY_NOT_ACCEPTED",
+  "registry": "bloodborne_dw:prototype_tree",
+  "temporary_type_id": "90005",
+  "variant0_art_fingerprint": "6fcdb7a6cd037aab8f4e2df1b4b3d61d4d1a5520dd0245979fc29c30cb777f7c",
+  "variant1_upper_art_fingerprint": "b2a224c64935c6abd276a59e661e47efd2d966d8f93cf70b76ecd69237386529",
+  "variant0_original_art_unchanged": true,
+  "upper16_parts_models_positions_uv_unchanged": true,
+  "source_model": "minecraft:block/white_wool",
+  "source_model_sha256": "d156942360fdb7b8face32c3d06e1d1b91093031a1745111e908e1f0daf33df2",
+  "source_atlas_sha256": "b2b9a60a2b23b44be888af24ddea1b0b615380a48dd3b7bce4362e3d4e04dc02",
+  "atlas_byte_exact": true,
+  "new_pixels": false,
+  "source_elements_used": [
+    0,
+    1
+  ],
+  "other13_source_elements_omitted": true,
+  "geometry_diff": [
+    {
+      "element": 0,
+      "from_y_before": -16,
+      "from_y_after": 0,
+      "to_y_before": 32,
+      "to_y_after": 96,
+      "face_uv_equal": true,
+      "xz_equal": true,
+      "intrinsic_rotation_equal": true
+    },
+    {
+      "element": 1,
+      "from_y_before": -16,
+      "from_y_after": 0,
+      "to_y_before": 32,
+      "to_y_after": 96,
+      "face_uv_equal": true,
+      "xz_equal": true,
+      "intrinsic_rotation_equal": true
+    }
+  ],
+  "source_authored_height_blocks": 3,
+  "existing_lower_height_blocks": 6,
+  "proposed_vertical_stretch": 2,
+  "reason": "Source map used two repeated melon small-trunk patches; source white_wool supplies authored main-tree base UV208..256. Extend its two planes only within original lower0..6 bounds, keeping accepted upper junctionY6 fixed.",
+  "physical_volumes_before": 1,
+  "physical_volumes_after": 1,
+  "collision_unchanged": true,
+  "selection_volumes_before": 24,
+  "selection_volumes_after": 2,
+  "selection_is_separate_from_collision": true,
+  "registered_id_unchanged": true,
+  "variant1_acceptance": "PENDING_USER_REVIEW",
+  "source_map_not_modified": true,
+  "regeneration_order": [
+    "python tools/prepare_tree_prototype.py",
+    "python tools/prepare_tree_lower_proposal.py"
+  ],
+  "changed_assets": [
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_proposal/lower_source_base.json",
+    "src/architecture/resources/assets/bloodborne_dw/models/tree_proposal/lower_source_base_alt.json",
+    "src/architecture/resources/bloodborne_dw/composite/prototype_tree.json"
+  ]
+}

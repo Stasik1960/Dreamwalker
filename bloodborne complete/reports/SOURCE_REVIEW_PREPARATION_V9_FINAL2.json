@@ -1,0 +1,1381 @@
+{
+  "schema": "dreamwalker-source-review-preparation-v1",
+  "status": "PASS_PRELOAD_TYPED_MIGRATION_RUNTIME_NOT_RUN",
+  "world": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-review-prepared-v9-final2\\world",
+  "input": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-review-prepared-v9-final2\\source-review-input.json",
+  "inputSha256": "6505a75d00cf8f8db7259adf1831ba544f1eead19220a147e4dea67d6802459a",
+  "sourceFixture": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\prototype\\Source-coordinate-fixture.zip",
+  "sourceFixtureSha256": "f048b6affd076d53ef3bf58d4f70b437b22d962c712127141be81b75f76cae5e",
+  "sourceFixtureBytesUnchanged": true,
+  "originalArchiveWritten": false,
+  "sourceMemberCount": 110,
+  "objectCount": 41,
+  "architectureCount": 7,
+  "ladderPairCount": 34,
+  "nonmemberPreconditions": 158,
+  "excludedInstances": [
+    {
+      "key": "door_east",
+      "reason": "SOURCE_MEMBER_CHUNKS_ABSENT_FROM_FROZEN_SUBSET",
+      "sourceMembers": [
+        {
+          "pos": [
+            -58,
+            76,
+            -113
+          ],
+          "state": "minecraft:acacia_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+          "terrain_chunk": [
+            -4,
+            -8
+          ],
+          "source_chunk_exists": true,
+          "included_in_frozen_source_fixture": false
+        },
+        {
+          "pos": [
+            -58,
+            78,
+            -113
+          ],
+          "state": "minecraft:acacia_stairs[facing=east,half=top,shape=straight,waterlogged=false]",
+          "terrain_chunk": [
+            -4,
+            -8
+          ],
+          "source_chunk_exists": true,
+          "included_in_frozen_source_fixture": false
+        }
+      ]
+    }
+  ],
+  "preloadAudit": {
+    "entityCountsBefore": {
+      "bloodborne:coffins_2": 1,
+      "bloodborne:furniture_16": 1,
+      "bloodborne:horse_carcass": 1,
+      "bloodborne:coffin_3": 1,
+      "bloodborne:carriage": 1,
+      "bloodborne:door_1": 1,
+      "bloodborne:coffins_3": 2,
+      "bloodborne:lever_1": 1,
+      "bloodborne:small_gate": 1,
+      "bloodborne:npc_window": 1,
+      "bloodborne:hunterlamp": 1,
+      "bloodborne:coffin_2": 1,
+      "bloodborne:coffin_1": 2
+    },
+    "blockEntityCountsBefore": {
+      "minecraft:daylight_detector": 13,
+      "minecraft:beehive": 36
+    },
+    "contextsAudited": {
+      "entity": 15,
+      "player": 1,
+      "block_entity": 49
+    },
+    "allOccupiedBlockCountsBefore": {
+      "minecraft:air": 6156521,
+      "minecraft:stone": 409357,
+      "minecraft:grass_block": 7870,
+      "minecraft:oak_log": 27,
+      "minecraft:spruce_log": 27,
+      "minecraft:birch_log": 27,
+      "minecraft:melon": 20,
+      "minecraft:jungle_log": 29,
+      "minecraft:orange_wool": 14,
+      "minecraft:acacia_log": 29,
+      "minecraft:magenta_wool": 14,
+      "minecraft:polished_diorite_slab": 486,
+      "minecraft:polished_andesite": 1534,
+      "minecraft:white_wool": 4,
+      "minecraft:dark_oak_log": 28,
+      "minecraft:light_blue_wool": 14,
+      "minecraft:cyan_wool": 10,
+      "minecraft:bricks": 103909,
+      "minecraft:calcite": 372,
+      "minecraft:quartz_stairs": 3478,
+      "minecraft:polished_deepslate": 208,
+      "minecraft:stone_slab": 773,
+      "minecraft:stone_bricks": 178608,
+      "minecraft:polished_blackstone_bricks": 134,
+      "minecraft:brick_wall": 9425,
+      "minecraft:glass_pane": 7123,
+      "minecraft:cut_copper_stairs": 107,
+      "minecraft:cobbled_deepslate": 302,
+      "minecraft:diorite_stairs": 2770,
+      "minecraft:warped_stairs": 16,
+      "minecraft:mossy_cobblestone": 158,
+      "minecraft:stone_brick_wall": 4928,
+      "minecraft:warped_trapdoor": 906,
+      "minecraft:cobblestone_stairs": 162,
+      "minecraft:prismarine_stairs": 1088,
+      "minecraft:deepslate_bricks": 266,
+      "minecraft:oak_trapdoor": 217,
+      "minecraft:polished_blackstone_stairs": 1922,
+      "minecraft:cyan_terracotta": 9319,
+      "minecraft:spruce_trapdoor": 298,
+      "minecraft:warped_planks": 1249,
+      "minecraft:acacia_trapdoor": 328,
+      "minecraft:white_stained_glass_pane": 562,
+      "minecraft:gold_block": 134,
+      "minecraft:bedrock": 8096,
+      "minecraft:dirt": 13312,
+      "minecraft:cobbled_deepslate_stairs": 1880,
+      "minecraft:mossy_cobblestone_wall": 2097,
+      "minecraft:red_stained_glass_pane": 473,
+      "minecraft:granite_stairs": 1722,
+      "minecraft:warped_fence": 663,
+      "minecraft:granite_wall": 678,
+      "minecraft:end_stone_brick_wall": 627,
+      "minecraft:cobbled_deepslate_wall": 1175,
+      "minecraft:orange_stained_glass": 108,
+      "minecraft:dripstone_block": 551,
+      "minecraft:cracked_deepslate_tiles": 221,
+      "minecraft:tinted_glass": 481,
+      "minecraft:crimson_fence": 327,
+      "minecraft:cobbled_deepslate_slab": 212,
+      "minecraft:magenta_stained_glass": 300,
+      "minecraft:polished_blackstone": 1084,
+      "minecraft:crimson_trapdoor": 41,
+      "minecraft:chiseled_polished_blackstone": 205,
+      "minecraft:brown_stained_glass_pane": 56,
+      "minecraft:polished_blackstone_brick_stairs": 235,
+      "minecraft:prismarine": 2596,
+      "minecraft:granite": 430,
+      "minecraft:prismarine_wall": 366,
+      "minecraft:chiseled_deepslate": 62,
+      "minecraft:stone_brick_stairs": 190,
+      "minecraft:granite_slab": 5,
+      "minecraft:iron_trapdoor": 410,
+      "minecraft:crimson_planks": 10,
+      "minecraft:gray_concrete": 4355,
+      "minecraft:cobblestone_wall": 543,
+      "minecraft:end_stone_brick_slab": 43,
+      "minecraft:white_stained_glass": 311,
+      "minecraft:black_stained_glass_pane": 150,
+      "minecraft:nether_brick_fence": 945,
+      "minecraft:gray_stained_glass_pane": 285,
+      "minecraft:mossy_stone_brick_wall": 160,
+      "minecraft:red_nether_bricks": 49,
+      "minecraft:oak_planks": 74,
+      "minecraft:cobweb": 10,
+      "minecraft:prismarine_bricks": 63,
+      "minecraft:diorite": 207,
+      "minecraft:dark_prismarine": 62,
+      "minecraft:polished_andesite_slab": 315,
+      "minecraft:smooth_red_sandstone_stairs": 107,
+      "minecraft:acacia_fence": 397,
+      "minecraft:acacia_planks": 55,
+      "minecraft:smooth_quartz": 306,
+      "minecraft:dark_oak_planks": 51,
+      "minecraft:blackstone_wall": 266,
+      "minecraft:brick_stairs": 971,
+      "minecraft:andesite": 3054,
+      "minecraft:copper_ore": 96,
+      "minecraft:coal_ore": 54,
+      "minecraft:deepslate_iron_ore": 36,
+      "minecraft:deepslate_copper_ore": 10,
+      "minecraft:deepslate_coal_ore": 20,
+      "minecraft:stone_stairs": 391,
+      "minecraft:copper_block": 17,
+      "minecraft:raw_gold_block": 26,
+      "minecraft:raw_iron_block": 67,
+      "minecraft:dark_oak_trapdoor": 41,
+      "minecraft:orange_stained_glass_pane": 77,
+      "minecraft:jungle_fence": 1032,
+      "minecraft:sandstone_stairs": 418,
+      "minecraft:barrier": 900,
+      "minecraft:pink_stained_glass_pane": 130,
+      "minecraft:light_gray_stained_glass_pane": 317,
+      "minecraft:sandstone_wall": 177,
+      "minecraft:red_nether_brick_wall": 177,
+      "minecraft:lime_glazed_terracotta": 16,
+      "minecraft:prismarine_slab": 40,
+      "minecraft:ancient_debris": 41,
+      "minecraft:coal_block": 52,
+      "minecraft:dark_oak_stairs": 89,
+      "minecraft:red_sandstone_stairs": 5,
+      "minecraft:nether_bricks": 276,
+      "minecraft:mossy_cobblestone_stairs": 119,
+      "minecraft:iron_bars": 221,
+      "minecraft:smooth_sandstone_stairs": 97,
+      "minecraft:chiseled_sandstone": 42,
+      "minecraft:sandstone": 66,
+      "minecraft:nether_gold_ore": 37,
+      "minecraft:iron_block": 36,
+      "minecraft:netherite_block": 18,
+      "minecraft:cracked_nether_bricks": 42,
+      "minecraft:exposed_cut_copper_stairs": 1172,
+      "minecraft:dark_prismarine_stairs": 219,
+      "minecraft:waxed_weathered_cut_copper_stairs": 2,
+      "minecraft:nether_brick_wall": 932,
+      "minecraft:waxed_exposed_cut_copper_stairs": 31,
+      "minecraft:polished_diorite_stairs": 152,
+      "minecraft:prismarine_brick_stairs": 46,
+      "minecraft:brick_slab": 941,
+      "minecraft:nether_brick_stairs": 49,
+      "minecraft:deepslate_gold_ore": 1946,
+      "minecraft:purpur_slab": 306,
+      "minecraft:deepslate_tile_wall": 7,
+      "minecraft:diorite_wall": 7,
+      "minecraft:flower_pot": 16,
+      "minecraft:magenta_stained_glass_pane": 68,
+      "minecraft:gilded_blackstone": 30,
+      "minecraft:raw_copper_block": 66,
+      "minecraft:snow": 17,
+      "minecraft:tuff": 257,
+      "minecraft:jungle_stairs": 94,
+      "minecraft:polished_andesite_stairs": 211,
+      "minecraft:potted_spruce_sapling": 12,
+      "minecraft:obsidian": 122,
+      "minecraft:dried_kelp_block": 158,
+      "minecraft:mossy_cobblestone_slab": 16,
+      "minecraft:birch_planks": 20,
+      "minecraft:cracked_polished_blackstone_bricks": 4,
+      "minecraft:spruce_planks": 10,
+      "minecraft:iron_ore": 16,
+      "minecraft:oak_wood": 10,
+      "minecraft:spruce_wood": 10,
+      "minecraft:birch_wood": 10,
+      "minecraft:black_stained_glass": 2,
+      "minecraft:polished_diorite": 19,
+      "minecraft:deepslate_brick_wall": 156,
+      "minecraft:jungle_fence_gate": 5,
+      "minecraft:cobblestone": 17,
+      "minecraft:polished_granite_slab": 322,
+      "minecraft:white_glazed_terracotta": 53,
+      "minecraft:light_blue_glazed_terracotta": 7,
+      "minecraft:magenta_glazed_terracotta": 7,
+      "minecraft:orange_glazed_terracotta": 7,
+      "minecraft:dead_fire_coral_fan": 218,
+      "minecraft:blackstone_stairs": 18,
+      "minecraft:andesite_slab": 109,
+      "minecraft:purpur_stairs": 78,
+      "minecraft:oak_stairs": 639,
+      "minecraft:ladder": 60,
+      "minecraft:jungle_trapdoor": 2,
+      "minecraft:weathered_cut_copper_stairs": 25,
+      "minecraft:deepslate_tiles": 54,
+      "minecraft:acacia_stairs": 6,
+      "minecraft:chiseled_nether_bricks": 34,
+      "minecraft:smooth_stone": 11,
+      "minecraft:exposed_copper": 1,
+      "minecraft:spruce_fence": 9,
+      "minecraft:crimson_stairs": 85,
+      "minecraft:smooth_quartz_stairs": 25,
+      "minecraft:lime_stained_glass_pane": 67,
+      "minecraft:oak_fence": 146,
+      "minecraft:white_concrete": 24,
+      "minecraft:spruce_stairs": 26,
+      "minecraft:lime_stained_glass": 57,
+      "minecraft:jungle_planks": 9,
+      "minecraft:light_blue_stained_glass_pane": 8,
+      "minecraft:dead_bubble_coral_fan": 40,
+      "minecraft:cracked_deepslate_bricks": 20,
+      "minecraft:oak_button": 336,
+      "minecraft:cracked_stone_bricks": 859,
+      "minecraft:glass": 3336,
+      "minecraft:light": 426,
+      "minecraft:prismarine_brick_slab": 307,
+      "minecraft:dark_oak_fence_gate": 26,
+      "minecraft:dead_bubble_coral": 20,
+      "minecraft:spruce_button": 238,
+      "minecraft:warped_door": 16,
+      "minecraft:dark_oak_door": 29,
+      "minecraft:crimson_fence_gate": 17,
+      "minecraft:activator_rail": 75,
+      "minecraft:red_stained_glass": 24,
+      "minecraft:green_concrete": 21,
+      "minecraft:green_stained_glass_pane": 38,
+      "minecraft:purpur_block": 5,
+      "minecraft:cobblestone_slab": 1,
+      "minecraft:cyan_stained_glass_pane": 6,
+      "minecraft:light_gray_concrete": 7,
+      "minecraft:chiseled_red_sandstone": 3,
+      "minecraft:red_terracotta": 4,
+      "minecraft:smooth_sandstone": 2,
+      "minecraft:purple_terracotta": 2,
+      "minecraft:quartz_bricks": 21,
+      "minecraft:birch_stairs": 6,
+      "minecraft:dark_oak_fence": 56,
+      "minecraft:chiseled_quartz_block": 3,
+      "minecraft:quartz_pillar": 2,
+      "minecraft:emerald_block": 12,
+      "minecraft:lapis_block": 6,
+      "minecraft:gold_ore": 4,
+      "minecraft:red_sandstone_slab": 89,
+      "minecraft:cut_red_sandstone_slab": 102,
+      "minecraft:oxidized_cut_copper_stairs": 22,
+      "minecraft:dead_horn_coral_fan": 26,
+      "minecraft:waxed_cut_copper_stairs": 18,
+      "minecraft:warped_button": 18,
+      "minecraft:acacia_button": 49,
+      "minecraft:water": 42,
+      "minecraft:polished_deepslate_wall": 504,
+      "minecraft:mossy_stone_brick_stairs": 30,
+      "minecraft:birch_trapdoor": 31,
+      "minecraft:polished_granite_stairs": 23,
+      "minecraft:polished_blackstone_wall": 65,
+      "minecraft:andesite_wall": 73,
+      "minecraft:gray_wool": 61,
+      "minecraft:cyan_glazed_terracotta": 102,
+      "minecraft:dead_brain_coral_fan": 3,
+      "minecraft:blue_stained_glass_pane": 36,
+      "minecraft:daylight_detector": 13,
+      "minecraft:green_wool": 34,
+      "minecraft:deepslate_tile_stairs": 55,
+      "minecraft:purple_wool": 7,
+      "minecraft:birch_fence_gate": 30,
+      "minecraft:oak_fence_gate": 24,
+      "minecraft:blue_wool": 21,
+      "minecraft:warped_fence_gate": 8,
+      "minecraft:rooted_dirt": 6,
+      "minecraft:light_gray_wool": 59,
+      "minecraft:black_wool": 15,
+      "minecraft:spruce_fence_gate": 26,
+      "minecraft:magenta_concrete_powder": 2,
+      "minecraft:cyan_concrete_powder": 15,
+      "minecraft:yellow_concrete_powder": 8,
+      "minecraft:light_blue_concrete_powder": 2,
+      "minecraft:pink_concrete_powder": 27,
+      "minecraft:cut_sandstone_slab": 33,
+      "minecraft:orange_concrete_powder": 2,
+      "minecraft:lime_concrete_powder": 8,
+      "minecraft:white_concrete_powder": 2,
+      "minecraft:waxed_oxidized_cut_copper_stairs": 47,
+      "minecraft:oak_slab": 10,
+      "minecraft:polished_deepslate_stairs": 29,
+      "minecraft:brown_concrete_powder": 135,
+      "minecraft:wet_sponge": 56,
+      "minecraft:orange_carpet": 4,
+      "minecraft:magenta_carpet": 3,
+      "minecraft:stone_brick_slab": 1,
+      "minecraft:blue_concrete_powder": 8,
+      "minecraft:light_weighted_pressure_plate": 38,
+      "minecraft:sandstone_slab": 7,
+      "minecraft:birch_pressure_plate": 4,
+      "minecraft:hay_block": 4,
+      "minecraft:sand": 32,
+      "minecraft:deepslate_lapis_ore": 30,
+      "minecraft:redstone_ore": 4,
+      "minecraft:jungle_button": 1,
+      "bloodborne:hunter_lamp_light_source": 2,
+      "minecraft:andesite_stairs": 2,
+      "minecraft:cut_sandstone": 17,
+      "minecraft:end_stone_bricks": 104,
+      "minecraft:yellow_terracotta": 6,
+      "minecraft:polished_blackstone_button": 30,
+      "minecraft:warped_wart_block": 2,
+      "minecraft:deepslate_emerald_ore": 317,
+      "minecraft:purple_concrete_powder": 37,
+      "minecraft:dead_brain_coral_wall_fan": 1,
+      "minecraft:exposed_cut_copper": 6,
+      "minecraft:white_carpet": 1,
+      "minecraft:soul_soil": 81,
+      "minecraft:dark_oak_pressure_plate": 1,
+      "minecraft:honeycomb_block": 17,
+      "minecraft:blue_glazed_terracotta": 1,
+      "minecraft:soul_sand": 11,
+      "minecraft:crimson_nylium": 12,
+      "minecraft:dirt_path": 6,
+      "minecraft:basalt": 61,
+      "minecraft:amethyst_block": 11,
+      "minecraft:gray_stained_glass": 24,
+      "minecraft:weathered_cut_copper": 66,
+      "minecraft:brown_mushroom_block": 1,
+      "minecraft:red_mushroom_block": 1,
+      "minecraft:red_sandstone": 1,
+      "minecraft:diamond_block": 1,
+      "minecraft:yellow_glazed_terracotta": 8,
+      "minecraft:beehive": 36,
+      "minecraft:deepslate_brick_stairs": 2,
+      "minecraft:crimson_button": 6,
+      "minecraft:black_terracotta": 15,
+      "minecraft:pumpkin": 2,
+      "minecraft:red_nether_brick_stairs": 4,
+      "minecraft:lightning_rod": 2,
+      "minecraft:light_blue_carpet": 1,
+      "minecraft:red_wool": 5
+    },
+    "allCustomOccupiedBlocksBefore": [
+      {
+        "pos": [
+          228,
+          69,
+          -932
+        ],
+        "state": "bloodborne:hunter_lamp_light_source",
+        "typedState": "CgAACAAETmFtZQAjYmxvb2Rib3JuZTpodW50ZXJfbGFtcF9saWdodF9zb3VyY2UA"
+      },
+      {
+        "pos": [
+          229,
+          69,
+          -931
+        ],
+        "state": "bloodborne:hunter_lamp_light_source",
+        "typedState": "CgAACAAETmFtZQAjYmxvb2Rib3JuZTpodW50ZXJfbGFtcF9saWdodF9zb3VyY2UA"
+      }
+    ],
+    "technicalLightTarget": "bloodborne_dw:source_hunter_lamp_light",
+    "allPaletteRegistryIdsBefore": [
+      "bloodborne:hunter_lamp_light_source",
+      "minecraft:acacia_button",
+      "minecraft:acacia_fence",
+      "minecraft:acacia_log",
+      "minecraft:acacia_planks",
+      "minecraft:acacia_stairs",
+      "minecraft:acacia_trapdoor",
+      "minecraft:activator_rail",
+      "minecraft:air",
+      "minecraft:amethyst_block",
+      "minecraft:ancient_debris",
+      "minecraft:andesite",
+      "minecraft:andesite_slab",
+      "minecraft:andesite_stairs",
+      "minecraft:andesite_wall",
+      "minecraft:barrier",
+      "minecraft:basalt",
+      "minecraft:bedrock",
+      "minecraft:beehive",
+      "minecraft:birch_fence_gate",
+      "minecraft:birch_log",
+      "minecraft:birch_planks",
+      "minecraft:birch_pressure_plate",
+      "minecraft:birch_stairs",
+      "minecraft:birch_trapdoor",
+      "minecraft:birch_wood",
+      "minecraft:black_stained_glass",
+      "minecraft:black_stained_glass_pane",
+      "minecraft:black_terracotta",
+      "minecraft:black_wool",
+      "minecraft:blackstone_stairs",
+      "minecraft:blackstone_wall",
+      "minecraft:blue_concrete_powder",
+      "minecraft:blue_glazed_terracotta",
+      "minecraft:blue_stained_glass_pane",
+      "minecraft:blue_wool",
+      "minecraft:brick_slab",
+      "minecraft:brick_stairs",
+      "minecraft:brick_wall",
+      "minecraft:bricks",
+      "minecraft:brown_concrete_powder",
+      "minecraft:brown_mushroom_block",
+      "minecraft:brown_stained_glass_pane",
+      "minecraft:calcite",
+      "minecraft:chiseled_deepslate",
+      "minecraft:chiseled_nether_bricks",
+      "minecraft:chiseled_polished_blackstone",
+      "minecraft:chiseled_quartz_block",
+      "minecraft:chiseled_red_sandstone",
+      "minecraft:chiseled_sandstone",
+      "minecraft:coal_block",
+      "minecraft:coal_ore",
+      "minecraft:cobbled_deepslate",
+      "minecraft:cobbled_deepslate_slab",
+      "minecraft:cobbled_deepslate_stairs",
+      "minecraft:cobbled_deepslate_wall",
+      "minecraft:cobblestone",
+      "minecraft:cobblestone_slab",
+      "minecraft:cobblestone_stairs",
+      "minecraft:cobblestone_wall",
+      "minecraft:cobweb",
+      "minecraft:copper_block",
+      "minecraft:copper_ore",
+      "minecraft:cracked_deepslate_bricks",
+      "minecraft:cracked_deepslate_tiles",
+      "minecraft:cracked_nether_bricks",
+      "minecraft:cracked_polished_blackstone_bricks",
+      "minecraft:cracked_stone_bricks",
+      "minecraft:crimson_button",
+      "minecraft:crimson_fence",
+      "minecraft:crimson_fence_gate",
+      "minecraft:crimson_nylium",
+      "minecraft:crimson_planks",
+      "minecraft:crimson_stairs",
+      "minecraft:crimson_trapdoor",
+      "minecraft:cut_copper_stairs",
+      "minecraft:cut_red_sandstone_slab",
+      "minecraft:cut_sandstone",
+      "minecraft:cut_sandstone_slab",
+      "minecraft:cyan_concrete_powder",
+      "minecraft:cyan_glazed_terracotta",
+      "minecraft:cyan_stained_glass_pane",
+      "minecraft:cyan_terracotta",
+      "minecraft:cyan_wool",
+      "minecraft:dark_oak_door",
+      "minecraft:dark_oak_fence",
+      "minecraft:dark_oak_fence_gate",
+      "minecraft:dark_oak_log",
+      "minecraft:dark_oak_planks",
+      "minecraft:dark_oak_pressure_plate",
+      "minecraft:dark_oak_stairs",
+      "minecraft:dark_oak_trapdoor",
+      "minecraft:dark_prismarine",
+      "minecraft:dark_prismarine_stairs",
+      "minecraft:daylight_detector",
+      "minecraft:dead_brain_coral_fan",
+      "minecraft:dead_brain_coral_wall_fan",
+      "minecraft:dead_bubble_coral",
+      "minecraft:dead_bubble_coral_fan",
+      "minecraft:dead_fire_coral_fan",
+      "minecraft:dead_horn_coral_fan",
+      "minecraft:deepslate_brick_stairs",
+      "minecraft:deepslate_brick_wall",
+      "minecraft:deepslate_bricks",
+      "minecraft:deepslate_coal_ore",
+      "minecraft:deepslate_copper_ore",
+      "minecraft:deepslate_emerald_ore",
+      "minecraft:deepslate_gold_ore",
+      "minecraft:deepslate_iron_ore",
+      "minecraft:deepslate_lapis_ore",
+      "minecraft:deepslate_tile_stairs",
+      "minecraft:deepslate_tile_wall",
+      "minecraft:deepslate_tiles",
+      "minecraft:diamond_block",
+      "minecraft:diorite",
+      "minecraft:diorite_stairs",
+      "minecraft:diorite_wall",
+      "minecraft:dirt",
+      "minecraft:dirt_path",
+      "minecraft:dried_kelp_block",
+      "minecraft:dripstone_block",
+      "minecraft:emerald_block",
+      "minecraft:end_stone_brick_slab",
+      "minecraft:end_stone_brick_wall",
+      "minecraft:end_stone_bricks",
+      "minecraft:exposed_copper",
+      "minecraft:exposed_cut_copper",
+      "minecraft:exposed_cut_copper_stairs",
+      "minecraft:flower_pot",
+      "minecraft:gilded_blackstone",
+      "minecraft:glass",
+      "minecraft:glass_pane",
+      "minecraft:gold_block",
+      "minecraft:gold_ore",
+      "minecraft:granite",
+      "minecraft:granite_slab",
+      "minecraft:granite_stairs",
+      "minecraft:granite_wall",
+      "minecraft:grass_block",
+      "minecraft:gray_concrete",
+      "minecraft:gray_stained_glass",
+      "minecraft:gray_stained_glass_pane",
+      "minecraft:gray_wool",
+      "minecraft:green_concrete",
+      "minecraft:green_stained_glass_pane",
+      "minecraft:green_wool",
+      "minecraft:hay_block",
+      "minecraft:honeycomb_block",
+      "minecraft:iron_bars",
+      "minecraft:iron_block",
+      "minecraft:iron_ore",
+      "minecraft:iron_trapdoor",
+      "minecraft:jungle_button",
+      "minecraft:jungle_fence",
+      "minecraft:jungle_fence_gate",
+      "minecraft:jungle_log",
+      "minecraft:jungle_planks",
+      "minecraft:jungle_stairs",
+      "minecraft:jungle_trapdoor",
+      "minecraft:ladder",
+      "minecraft:lapis_block",
+      "minecraft:light",
+      "minecraft:light_blue_carpet",
+      "minecraft:light_blue_concrete_powder",
+      "minecraft:light_blue_glazed_terracotta",
+      "minecraft:light_blue_stained_glass_pane",
+      "minecraft:light_blue_wool",
+      "minecraft:light_gray_concrete",
+      "minecraft:light_gray_stained_glass_pane",
+      "minecraft:light_gray_wool",
+      "minecraft:light_weighted_pressure_plate",
+      "minecraft:lightning_rod",
+      "minecraft:lime_concrete_powder",
+      "minecraft:lime_glazed_terracotta",
+      "minecraft:lime_stained_glass",
+      "minecraft:lime_stained_glass_pane",
+      "minecraft:magenta_carpet",
+      "minecraft:magenta_concrete_powder",
+      "minecraft:magenta_glazed_terracotta",
+      "minecraft:magenta_stained_glass",
+      "minecraft:magenta_stained_glass_pane",
+      "minecraft:magenta_wool",
+      "minecraft:melon",
+      "minecraft:mossy_cobblestone",
+      "minecraft:mossy_cobblestone_slab",
+      "minecraft:mossy_cobblestone_stairs",
+      "minecraft:mossy_cobblestone_wall",
+      "minecraft:mossy_stone_brick_stairs",
+      "minecraft:mossy_stone_brick_wall",
+      "minecraft:nether_brick_fence",
+      "minecraft:nether_brick_stairs",
+      "minecraft:nether_brick_wall",
+      "minecraft:nether_bricks",
+      "minecraft:nether_gold_ore",
+      "minecraft:netherite_block",
+      "minecraft:oak_button",
+      "minecraft:oak_fence",
+      "minecraft:oak_fence_gate",
+      "minecraft:oak_log",
+      "minecraft:oak_planks",
+      "minecraft:oak_slab",
+      "minecraft:oak_stairs",
+      "minecraft:oak_trapdoor",
+      "minecraft:oak_wood",
+      "minecraft:obsidian",
+      "minecraft:orange_carpet",
+      "minecraft:orange_concrete_powder",
+      "minecraft:orange_glazed_terracotta",
+      "minecraft:orange_stained_glass",
+      "minecraft:orange_stained_glass_pane",
+      "minecraft:orange_wool",
+      "minecraft:oxidized_cut_copper_stairs",
+      "minecraft:pink_concrete_powder",
+      "minecraft:pink_stained_glass_pane",
+      "minecraft:polished_andesite",
+      "minecraft:polished_andesite_slab",
+      "minecraft:polished_andesite_stairs",
+      "minecraft:polished_blackstone",
+      "minecraft:polished_blackstone_brick_stairs",
+      "minecraft:polished_blackstone_bricks",
+      "minecraft:polished_blackstone_button",
+      "minecraft:polished_blackstone_stairs",
+      "minecraft:polished_blackstone_wall",
+      "minecraft:polished_deepslate",
+      "minecraft:polished_deepslate_stairs",
+      "minecraft:polished_deepslate_wall",
+      "minecraft:polished_diorite",
+      "minecraft:polished_diorite_slab",
+      "minecraft:polished_diorite_stairs",
+      "minecraft:polished_granite_slab",
+      "minecraft:polished_granite_stairs",
+      "minecraft:potted_spruce_sapling",
+      "minecraft:prismarine",
+      "minecraft:prismarine_brick_slab",
+      "minecraft:prismarine_brick_stairs",
+      "minecraft:prismarine_bricks",
+      "minecraft:prismarine_slab",
+      "minecraft:prismarine_stairs",
+      "minecraft:prismarine_wall",
+      "minecraft:pumpkin",
+      "minecraft:purple_concrete_powder",
+      "minecraft:purple_terracotta",
+      "minecraft:purple_wool",
+      "minecraft:purpur_block",
+      "minecraft:purpur_slab",
+      "minecraft:purpur_stairs",
+      "minecraft:quartz_bricks",
+      "minecraft:quartz_pillar",
+      "minecraft:quartz_stairs",
+      "minecraft:raw_copper_block",
+      "minecraft:raw_gold_block",
+      "minecraft:raw_iron_block",
+      "minecraft:red_mushroom_block",
+      "minecraft:red_nether_brick_stairs",
+      "minecraft:red_nether_brick_wall",
+      "minecraft:red_nether_bricks",
+      "minecraft:red_sandstone",
+      "minecraft:red_sandstone_slab",
+      "minecraft:red_sandstone_stairs",
+      "minecraft:red_stained_glass",
+      "minecraft:red_stained_glass_pane",
+      "minecraft:red_terracotta",
+      "minecraft:red_wool",
+      "minecraft:redstone_ore",
+      "minecraft:rooted_dirt",
+      "minecraft:sand",
+      "minecraft:sandstone",
+      "minecraft:sandstone_slab",
+      "minecraft:sandstone_stairs",
+      "minecraft:sandstone_wall",
+      "minecraft:smooth_quartz",
+      "minecraft:smooth_quartz_stairs",
+      "minecraft:smooth_red_sandstone_stairs",
+      "minecraft:smooth_sandstone",
+      "minecraft:smooth_sandstone_stairs",
+      "minecraft:smooth_stone",
+      "minecraft:snow",
+      "minecraft:soul_sand",
+      "minecraft:soul_soil",
+      "minecraft:spruce_button",
+      "minecraft:spruce_fence",
+      "minecraft:spruce_fence_gate",
+      "minecraft:spruce_log",
+      "minecraft:spruce_planks",
+      "minecraft:spruce_stairs",
+      "minecraft:spruce_trapdoor",
+      "minecraft:spruce_wood",
+      "minecraft:stone",
+      "minecraft:stone_brick_slab",
+      "minecraft:stone_brick_stairs",
+      "minecraft:stone_brick_wall",
+      "minecraft:stone_bricks",
+      "minecraft:stone_slab",
+      "minecraft:stone_stairs",
+      "minecraft:tinted_glass",
+      "minecraft:tuff",
+      "minecraft:warped_button",
+      "minecraft:warped_door",
+      "minecraft:warped_fence",
+      "minecraft:warped_fence_gate",
+      "minecraft:warped_planks",
+      "minecraft:warped_stairs",
+      "minecraft:warped_trapdoor",
+      "minecraft:warped_wart_block",
+      "minecraft:water",
+      "minecraft:waxed_cut_copper_stairs",
+      "minecraft:waxed_exposed_cut_copper_stairs",
+      "minecraft:waxed_oxidized_cut_copper_stairs",
+      "minecraft:waxed_weathered_cut_copper_stairs",
+      "minecraft:weathered_cut_copper",
+      "minecraft:weathered_cut_copper_stairs",
+      "minecraft:wet_sponge",
+      "minecraft:white_carpet",
+      "minecraft:white_concrete",
+      "minecraft:white_concrete_powder",
+      "minecraft:white_glazed_terracotta",
+      "minecraft:white_stained_glass",
+      "minecraft:white_stained_glass_pane",
+      "minecraft:white_wool",
+      "minecraft:yellow_concrete_powder",
+      "minecraft:yellow_glazed_terracotta",
+      "minecraft:yellow_terracotta"
+    ],
+    "customPaletteRegistryIdsBefore": [
+      "bloodborne:hunter_lamp_light_source"
+    ],
+    "entityContexts": 15,
+    "records": [
+      {
+        "path": "entities/r.0.-2.mca/chunk/8,2/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/8,2/Entities/0/id",
+            "before": "bloodborne:coffins_2",
+            "after": "bloodborne_rp:coffins_2",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "fdccf7b18f824eb211c69b696ae852c78ec99a84317b66b8b3b40d59f47e505b",
+        "afterSha256": "efb3be3f3f24c0843affc1db71d067e382a8f3aea555ba5b20e7ae15be40f1cd",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/10,2/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/10,2/Entities/0/id",
+            "before": "bloodborne:furniture_16",
+            "after": "bloodborne_rp:furniture_16",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "eacaee904f4c92d3d65a7218d134b9733cc864e780de8b55f721362645569a56",
+        "afterSha256": "60da7a460b4dc9a14f0026e1ae1f723de96b5d98b0d3dd217c56bf97308f3a83",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/8,3/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/8,3/Entities/0/id",
+            "before": "bloodborne:horse_carcass",
+            "after": "bloodborne_rp:horse_carcass",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "8b9a7a97c813d3e7403e2822b6bbde32380740027b958e9beb023efe22471525",
+        "afterSha256": "e56769d8d1aa3dcfc230c3721c2346478c2da02839451d4e8cc8252b25f673c2",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/9,3/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/9,3/Entities/0/id",
+            "before": "bloodborne:coffin_3",
+            "after": "bloodborne_rp:coffin_3",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "8365c799df9a2d6837c00e18ad77fa4dcf84a0e5cf97ac0ee0243db816831bc3",
+        "afterSha256": "1f6040153503373000c51578198769be019a970d89874714e00a3722918df02d",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/9,3/Entities/1",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/9,3/Entities/1/id",
+            "before": "bloodborne:carriage",
+            "after": "bloodborne_rp:carriage",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "bd0dad6cc00f6486f48920b9b6003da59c65ae339fac59687f87260c20fe7002",
+        "afterSha256": "55628f2f9e33c88a8e4ff294cfb0bb555cca35d5196a35e6293d8c95e6287bef",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/10,3/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/10,3/Entities/0/id",
+            "before": "bloodborne:door_1",
+            "after": "bloodborne_rp:door_1",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "5186b5869d710a2d7b4db1dac5444beb302adb6020bf309c190802334d9ebab6",
+        "afterSha256": "96d166cfeecefebdc97b671b435150888979673ffb8983bee3f455135540b730",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/15,4/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/15,4/Entities/0/id",
+            "before": "bloodborne:coffins_3",
+            "after": "bloodborne_rp:coffins_3",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "0b9e8c3355a040bee8940b065cfa84f8f971ce69ade7a1213554fb48f900ebe5",
+        "afterSha256": "3e7f1af503822b9f3173775471f2c0cfa82b2a609494d5314c3540515f224d1c",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/13,5/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/13,5/Entities/0/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "253a5ada2691f5e416b1f9a71ae6694ad01b60c2cdd2559dccf229c487eddad3",
+        "afterSha256": "2d14cdd82637c48cb4150c46947f28bce51defa4a7034d8bc3dfb6757a066d06",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/13,5/Entities/1",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/13,5/Entities/1/id",
+            "before": "bloodborne:small_gate",
+            "after": "bloodborne_rp:small_gate",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "fefd6c0c5e2f9e3a50361bb0fa7f5b375a2d8baaf8891fb6ddc7788570ded122",
+        "afterSha256": "72de4fad74648310328f16cdf7c2c74aa5291c0ac96db863915a60a675e5cfa2",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/14,5/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/14,5/Entities/0/id",
+            "before": "bloodborne:npc_window",
+            "after": "bloodborne_rp:npc_window",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "04c639ef98677bacaad1214b8887b676b426bc214f1588345ecd3725fbad9e38",
+        "afterSha256": "109351566f61d16ef0e3a4e7da65056986f483993e62bce13fdf55f5e038e1c7",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/14,5/Entities/1",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/14,5/Entities/1/id",
+            "before": "bloodborne:hunterlamp",
+            "after": "bloodborne_rp:hunterlamp",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "cec312b5f3fca0d3ac4f6d7192d76f3cd90d978c047c9fd0d8ba527997cb0ffc",
+        "afterSha256": "fb5fe09d5849f7d511f0557b5d2eb7b2c07f8345bef839d89ae8356d3b6159fc",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/13,6/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/13,6/Entities/0/id",
+            "before": "bloodborne:coffin_2",
+            "after": "bloodborne_rp:coffin_2",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "e6ce7408eb1741bdef8a9d0890ceffb8fdc27b26a1a39001aef5e3d05e3c9f93",
+        "afterSha256": "3e90a227b4783c3721a1345d59518c07cc16ebaef37aa00ff95575bb7e901937",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/13,6/Entities/1",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/13,6/Entities/1/id",
+            "before": "bloodborne:coffin_1",
+            "after": "bloodborne_rp:coffin_1",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "ec798122730f466599f389e1fc2e86ddead3db2ed682c6875744efa819bc61bc",
+        "afterSha256": "b5e4e2b17c7247b5853f4a519f3a71b5404f54906ba7b511ed3ddf6654be0d82",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-2.mca/chunk/14,6/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-2.mca/chunk/14,6/Entities/0/id",
+            "before": "bloodborne:coffin_1",
+            "after": "bloodborne_rp:coffin_1",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "3380fcbc7d1e97d439dd89ceecb758be5956562275284d825466e92e15c481ef",
+        "afterSha256": "6eef006998fa4fcdb2252ffd6e93fd20b78cdaf1ea08a4612ccf909ecf8e856b",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "entities/r.0.-3.mca/chunk/11,27/Entities/0",
+        "kind": "entity",
+        "changes": [
+          {
+            "path": "entities/r.0.-3.mca/chunk/11,27/Entities/0/id",
+            "before": "bloodborne:coffins_3",
+            "after": "bloodborne_rp:coffins_3",
+            "rule": "validated_entity_registry_map"
+          }
+        ],
+        "beforeSha256": "323e5b7b442c2d00e392529d77e7c309cf1d35c756b11c4c5816f1f934bee89b",
+        "afterSha256": "8f814fd71d5f6998f5af38eee3c7d80eca2e9fd59f4cf8c5bcbe70f1aa491bb1",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "level.dat/Data/Player",
+        "kind": "player",
+        "changes": [
+          {
+            "path": "level.dat/Data/Player/Inventory/0/tag/BloodborneRpForm",
+            "before": null,
+            "after": 1,
+            "rule": "explicit_legacy_weapon_form"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/0/id",
+            "before": "bloodborne:sawcleaver_true",
+            "after": "bloodborne_rp:saw_cleaver",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/1/id",
+            "before": "bloodborne:executioner_spawn_egg",
+            "after": "bloodborne_rp:executioner_spawn_egg",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/0/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/1/id",
+            "before": "bloodborne:small_gate",
+            "after": "bloodborne_rp:small_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/2/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/3/id",
+            "before": "bloodborne:small_gate",
+            "after": "bloodborne_rp:small_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/4/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/5/id",
+            "before": "bloodborne:main_gate",
+            "after": "bloodborne_rp:main_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/6/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/7/id",
+            "before": "bloodborne:main_gate",
+            "after": "bloodborne_rp:main_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/8/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/9/id",
+            "before": "bloodborne:main_gate",
+            "after": "bloodborne_rp:main_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/10/id",
+            "before": "bloodborne:door_2",
+            "after": "bloodborne_rp:door_2_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/11/id",
+            "before": "bloodborne:door_2",
+            "after": "bloodborne_rp:door_2_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/12/id",
+            "before": "bloodborne:door_2",
+            "after": "bloodborne_rp:door_2_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/13/id",
+            "before": "bloodborne:door_1",
+            "after": "bloodborne_rp:door_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/2/tag/BlockEntityTag/Items/14/id",
+            "before": "bloodborne:door_1",
+            "after": "bloodborne_rp:door_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/0/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/1/id",
+            "before": "bloodborne:small_gate",
+            "after": "bloodborne_rp:small_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/2/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/3/id",
+            "before": "bloodborne:small_gate",
+            "after": "bloodborne_rp:small_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/4/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/5/id",
+            "before": "bloodborne:main_gate",
+            "after": "bloodborne_rp:main_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/6/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/7/id",
+            "before": "bloodborne:main_gate",
+            "after": "bloodborne_rp:main_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/8/id",
+            "before": "bloodborne:lever_1",
+            "after": "bloodborne_rp:lever_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/9/id",
+            "before": "bloodborne:main_gate",
+            "after": "bloodborne_rp:main_gate_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/10/id",
+            "before": "bloodborne:door_2",
+            "after": "bloodborne_rp:door_2_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/11/id",
+            "before": "bloodborne:door_2",
+            "after": "bloodborne_rp:door_2_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/12/id",
+            "before": "bloodborne:door_2",
+            "after": "bloodborne_rp:door_2_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/13/id",
+            "before": "bloodborne:door_1",
+            "after": "bloodborne_rp:door_1_placer",
+            "rule": "validated_item_registry_map"
+          },
+          {
+            "path": "level.dat/Data/Player/Inventory/3/tag/BlockEntityTag/Items/14/id",
+            "before": "bloodborne:door_1",
+            "after": "bloodborne_rp:door_1_placer",
+            "rule": "validated_item_registry_map"
+          }
+        ],
+        "beforeSha256": "aba007412a4dcf096547f85910a60df39ffd66dde7911f86b3d3fdc5140a5eb6",
+        "afterSha256": "afc7d2b5ee3817b408655455720d27627fd0e491b0045fa257c9efde3edf144b",
+        "preservation": "PASS_ALL_UNLOGGED_TYPED_FIELDS_EQUAL",
+        "secondPass": "PASS"
+      },
+      {
+        "path": "level.dat/Data/LevelName",
+        "kind": "fixture_configuration",
+        "before": "Bloodborne_X_Minecraft [ALPHA]",
+        "after": "isolated-smoke-world"
+      },
+      {
+        "path": "region/r.0.-2.mca/chunk/14,5/block/228,69,-932",
+        "kind": "technical_light_block",
+        "pos": [
+          228,
+          69,
+          -932
+        ],
+        "beforeState": "bloodborne:hunter_lamp_light_source",
+        "afterState": "bloodborne_dw:source_hunter_lamp_light",
+        "originalTypedState": "CgAACAAETmFtZQAjYmxvb2Rib3JuZTpodW50ZXJfbGFtcF9saWdodF9zb3VyY2UA",
+        "targetTypedState": "CgAACAAETmFtZQAmYmxvb2Rib3JuZV9kdzpzb3VyY2VfaHVudGVyX2xhbXBfbGlnaHQA",
+        "rule": "EXACT_TWO_SOURCE_AIRBLOCK_LIGHT9_CELLS",
+        "proof": "reports/SOURCE_LEGACY_LAMP_BLOCK_BYTECODE.txt",
+        "luminance": 9,
+        "collision": "EMPTY",
+        "selection": "EMPTY",
+        "isAir": false,
+        "replaceable": true
+      },
+      {
+        "path": "region/r.0.-2.mca/chunk/14,5/block/229,69,-931",
+        "kind": "technical_light_block",
+        "pos": [
+          229,
+          69,
+          -931
+        ],
+        "beforeState": "bloodborne:hunter_lamp_light_source",
+        "afterState": "bloodborne_dw:source_hunter_lamp_light",
+        "originalTypedState": "CgAACAAETmFtZQAjYmxvb2Rib3JuZTpodW50ZXJfbGFtcF9saWdodF9zb3VyY2UA",
+        "targetTypedState": "CgAACAAETmFtZQAmYmxvb2Rib3JuZV9kdzpzb3VyY2VfaHVudGVyX2xhbXBfbGlnaHQA",
+        "rule": "EXACT_TWO_SOURCE_AIRBLOCK_LIGHT9_CELLS",
+        "proof": "reports/SOURCE_LEGACY_LAMP_BLOCK_BYTECODE.txt",
+        "luminance": 9,
+        "collision": "EMPTY",
+        "selection": "EMPTY",
+        "isAir": false,
+        "replaceable": true
+      }
+    ],
+    "issues": [],
+    "lampManager": {
+      "sourceBytesPreserved": true,
+      "changes": [
+        {
+          "path": "lamp_state/data/HunterLamps/0",
+          "before": {
+            "Id": [
+              2119845798,
+              -1233039827,
+              -1132772455,
+              -1113870321
+            ],
+            "Pos": [
+              229,
+              69,
+              -931
+            ]
+          },
+          "after": {
+            "Id": [
+              2119845798,
+              -1233039827,
+              -1132772455,
+              -1113870321
+            ],
+            "Lamp": [
+              614039691,
+              1402487662,
+              -1386688151,
+              1241422566
+            ],
+            "Name": "area.bloodborne.name.0",
+            "Dimension": "minecraft:overworld",
+            "Routes": []
+          },
+          "rule": "verified_legacy_lamp_registry_to_rp_node"
+        }
+      ],
+      "issues": [
+        {
+          "path": "lamp_state/data/HunterLamps/1",
+          "code": "SOURCE_DUPLICATE_LAMP_REGISTRATION",
+          "value": [
+            2119845798,
+            -1233039827,
+            -1132772455,
+            -1113870321
+          ]
+        }
+      ],
+      "status": "PASS_SEPARATE_RP_LAMP_STATE"
+    },
+    "unknownEntityExclusions": [],
+    "unknownBlockEntityExclusions": [],
+    "originalDataFilesBytesRetained": true
+  },
+  "worldFiles": [
+    {
+      "path": "data/bloodborne_rp_lamps.dat",
+      "sha256": "f639439615aa7ad5d74789889357b7ebea8218ec401805c3645e61bcf67ce1c5"
+    },
+    {
+      "path": "data/capabilities.dat",
+      "sha256": "564935a523b18b55504fb19c66391615c548fd69a03a84e7828059884742ac1e"
+    },
+    {
+      "path": "data/geckolib_ids.dat",
+      "sha256": "0560ecfe138914ae5f99ea21b75a3ecb0a655056308aa977a10c2f1658a67a8e"
+    },
+    {
+      "path": "data/hunter_lamp_manager.dat",
+      "sha256": "ba11b3fa511e246fd55f15ce7b7b77ef0f63ec95aab58efa8e64d550e1e1f34e"
+    },
+    {
+      "path": "data/raids.dat",
+      "sha256": "252639932a59ed7f575ec1313f4728dd98d846a78d5af628676717400038afd5"
+    },
+    {
+      "path": "entities/r.0.-2.mca",
+      "sha256": "497a5c226b1b1cabf610a6ad5aacea0aab14be08772e4d6a6883b0cf848b3587"
+    },
+    {
+      "path": "entities/r.0.-3.mca",
+      "sha256": "8e7787281e3549b0905bf73ad64ef3efc128c614da7b4dec67ebebcf049e0f4b"
+    },
+    {
+      "path": "level.dat",
+      "sha256": "633c7ae9b6525153062fc1a77790b653f49f55d878e56447bff30049445f3a6e"
+    },
+    {
+      "path": "poi/r.0.-2.mca",
+      "sha256": "d4b3f740d658531e795901b66d13de0cebc0f419e236b37279c2f5801820564b"
+    },
+    {
+      "path": "poi/r.0.-3.mca",
+      "sha256": "0396ce552af317a5abfce785446429572f8cc98e2af6adfe4fc2d18427bf7a61"
+    },
+    {
+      "path": "region/r.-1.-1.mca",
+      "sha256": "b36ca5336e8c80d66278caf17ee14e7faadedeb1eb270c787b03830bf98b31ff"
+    },
+    {
+      "path": "region/r.-1.-2.mca",
+      "sha256": "270a856f9c5baea94c9a18d40de0465cb1c974baf4bc32c7ff79c2a4651a0989"
+    },
+    {
+      "path": "region/r.-1.-3.mca",
+      "sha256": "2c017e7252b161f2ef2834dedf0e9f1ecfd30d16f0b632a9e0b84df2824f1693"
+    },
+    {
+      "path": "region/r.0.-1.mca",
+      "sha256": "6c4e200803e126ef78d9745a8eaad828cbdfdc70cd0d0aa784bda0130deacf25"
+    },
+    {
+      "path": "region/r.0.-2.mca",
+      "sha256": "1aae5c6a7db2fbac91ae1c9f3584fef876083786d689a188604458a8b3a42539"
+    },
+    {
+      "path": "region/r.0.-3.mca",
+      "sha256": "8293dabe6010b9864ef45061dbf09365b7b8aa07bab75a7feae4cf6d7834b15e"
+    }
+  ],
+  "provenanceArchive": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\source-review-prepared-v9-final2\\source-provenance\\Source-coordinate-fixture-original.zip",
+  "runtimeMigration": "NOT_RUN",
+  "gameSavePreservation": "NOT_RUN",
+  "reviewAcceptance": "PENDING_USER_REVIEW",
+  "limits": [
+    "Selected source areas only; no full-city conversion",
+    "Full Forge typed NBT is archived; live RP SourceLegacyPayload retention requires an independent game-save check",
+    "Minecraft DFU changes and runtime migration changes must be audited separately"
+  ],
+  "reviewRevision": "V9",
+  "sourcePlan": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\reports\\FIRST_SET_MIGRATION_PLAN_V9_FINAL2.json",
+  "sourcePlanSha256": "a6f97777f135a1b25936643655c12be88325d852226bca7b9e471c45214ad63c"
+}

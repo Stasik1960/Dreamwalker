@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:prototype_roof",
+  "displayName": "Наклонный кровельный модуль — прототип",
+  "openable": false,
+  "support": {
+    "required": true,
+    "offset": [
+      0,
+      -1,
+      0
+    ]
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:base/source/minecraft/block/stairs/jungle_stairs_roof",
+              "altModel": "bloodborne_dw:alt/prototype_roof/0",
+              "yaw": 180,
+              "pivot": [
+                8,
+                8,
+                8
+              ],
+              "offset": [
+                0,
+                3,
+                -5
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0,
+                0,
+                0
+              ],
+              "to": [
+                16,
+                16,
+                16
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1,
+                0.0,
+                -8.0
+              ],
+              "to": [
+                17,
+                31.1525432638,
+                23.1525432638
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "sourceGeometryExact": true,
+  "numericId": null,
+  "sourceMountProposal": "New-build foot normalization; source-equivalent fractional world compensation is explicitly audited. City migration pending.",
+  "selectionOnlyFinThicknessUnits": 0.125,
+  "physicalPlacementRules": "One1x1x1 axis-aligned base cube; MountY/SourceShift translate it, visual yaw does not rotate or rasterize it. Selection/render/reservation separate.",
+  "collisionRotation": "GRID_ALIGNED"
+}

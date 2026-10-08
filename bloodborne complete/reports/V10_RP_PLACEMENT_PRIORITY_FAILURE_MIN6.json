@@ -1,0 +1,48 @@
+{
+  "schema": "dw-v10-independent-actual-rp-placer-priority-failure-v1",
+  "status": "CONFIRMED_ORDINARY_CLIENT_RP_PLACER_OVER_RP_FAILURE_CANDIDATE5",
+  "productionArtifactSha256": "2ad51b2314cbf1c3748288fa13fac2a6c804e77149e4b46bb94c86df0ab49da8",
+  "normalProcessExit": true,
+  "actualClientStatus": "FAIL_ACTUAL_CLIENT_V10",
+  "failedStep": "second ordinary RP use-key creates new overlapping UUID",
+  "primaryPreservedExact": [
+    {
+      "path": "reports\\runtime\\V10_RP_PLACEMENT_PRIORITY_FAILURE_MIN6\\client-review-output.json",
+      "sha256": "e1188b0510774f2ccb9d5e8c10f0c372f958abc6e24fa1dc722ded60eca689a6",
+      "bytes": 91814
+    },
+    {
+      "path": "reports\\runtime\\V10_RP_PLACEMENT_PRIORITY_FAILURE_MIN6\\V10_CLIENT_MIN_ATTEMPT_6.json",
+      "sha256": "0210051b9dea4df58ebede0f1f066662380ad53f86bb12d127b01e185fade9eb",
+      "bytes": 714509
+    }
+  ],
+  "observedOriginalUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+  "actualSelectedOriginalUuid": "300871ab-240e-4e05-9595-9edba58d3e7d",
+  "actualNativeSupport": {
+    "type": "BLOCK",
+    "hitPos": [
+      -63.5,
+      100.0,
+      64.75163219614838
+    ],
+    "blockPos": [
+      -64,
+      99,
+      64
+    ],
+    "side": "up",
+    "insideBlock": false
+  },
+  "actualMainHand": "bloodborne_rp:chair_placer",
+  "actualOffHand": "minecraft:air",
+  "newServerCount": 0,
+  "newClientCount": 0,
+  "originalStableTypedRoleValuesExactlyUnchanged": true,
+  "actualServerReadThread": "ACTUAL_SERVER_THREAD",
+  "causeConfirmedFromProductionSource": "RP PlacementObjectItem is a plain Item; native-surface bypass accepted only BlockItem. Client RP.interact returned SUCCESS and consumed ordinary item use before useOnBlock.",
+  "narrowCorrection": "Recognize only actual RP placement items; preserve builder guard and normal native reach; route construction click through actual BLOCK ray and ordinary ItemUsageContext; return PASS before RP client interaction consume.",
+  "newCandidateNativeAndActualClientStatus": "NOT_RUN_PENDING_PARENT_BUILD",
+  "supersession": "Candidate5 actual/native/diagnostics reports remain historical exact-SHA facts. Once changed production candidate6 is built, no prior candidate5 ordinary/source/diagnostics/client PASS can gate candidate6; all required current-SHA proofs must be fresh.",
+  "manualAcceptance": "NOT_RUN"
+}
