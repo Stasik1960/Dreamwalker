@@ -36,6 +36,8 @@ public final class BuilderScreen extends Screen {
     private String diagnosticsSession="";
     private boolean expiryStatusRequested;
     private ButtonWidget saveButton,cancelButton,folderButton;
+    private TextFieldWidget eventInput;
+    private EventDraft eventInputOwner;
     private interface Row {void build(int x,int y,int width);}
 
     private static final class EventDraft {
@@ -78,6 +80,10 @@ public final class BuilderScreen extends Screen {
     private EventDraft event(){return commandOpen?draft().open:draft().close;}
 
     public void accept(JsonObject next){
+        EventDraft editing=eventInputOwner;
+        String editingText=eventInput==null?"":eventInput.getText();
+        int editingCursor=eventInput==null?0:eventInput.getCursor();
+        boolean editingFocused=eventInput!=null&&eventInput.isFocused();
         String previousTargetVersion=string(target(),"version","");
         String previousLampFingerprint=string(lampView(),"fingerprint","");
         view=next;
@@ -106,12 +112,13 @@ public final class BuilderScreen extends Screen {
         }
         syncDrafts();
         clearAndInit();
+        if(eventInput!=null&&eventInputOwner==editing&&editingText.equals(eventInput.getText())){eventInput.setCursor(editingCursor);eventInput.setFocused(editingFocused);if(editingFocused)setFocused(eventInput);}
         if(answered&&bool(view,"success")&&closeAfterSave)continueCloseSave();
     }
     private void syncDrafts(){
         JsonObject t=target();if(t.size()>0){TargetDraft d=drafts.get(targetId());String name=string(object(lampView(),"node"),"name","");
             if(d==null){if(makeTargetRoom()){d=new TargetDraft();d.loadObject(t);d.loadEvents(t);d.lampName=d.lampBaseline=name;d.lampFingerprint=string(lampView(),"fingerprint","");d.updateVersions(t,view);drafts.put(targetId(),d);}else localMessage="Предел 64 черновиков. Сохраните или отмените прежние формы перед редактированием нового объекта.";}
-            else{boolean dirty=d.dirty();if(!d.objectDirty())d.loadObject(t);if(!d.eventsDirty())d.loadEvents(t);if(!d.lampDirty()){d.lampName=d.lampBaseline=name;d.lampFingerprint=string(lampView(),"fingerprint","");d.formVersion=formVersion();}if(!dirty)d.updateVersions(t,view);}
+            else{boolean dirty=d.dirty();if(!d.objectDirty())d.loadObject(t);if(!d.eventsDirty()&&(!d.open.baseline.equals(strings(array(t,"afterOpen")))||!d.close.baseline.equals(strings(array(t,"afterClose")))))d.loadEvents(t);if(!d.lampDirty()){d.lampName=d.lampBaseline=name;d.lampFingerprint=string(lampView(),"fingerprint","");d.formVersion=formVersion();}if(!dirty)d.updateVersions(t,view);}
         }
         JsonObject r=rule();if(r.size()>0){String id=string(r,"id","NONE");RuleDraft d=ruleDrafts.get(id);if(d==null){if(makeRuleRoom()){d=new RuleDraft();d.load(r,view);ruleDrafts.put(id,d);}else localMessage="Предел 64 черновиков правил. Сохраните или отмените прежние формы.";}else if(!d.dirty())d.load(r,view);else if(bool(r,"draft")){d.unsaved=true;d.formVersion=formVersion();}}
     }
@@ -124,7 +131,7 @@ public final class BuilderScreen extends Screen {
     private long diagnosticsRemaining(){return Math.max(0,(long)Math.ceil(decimal(object(view,"diagnostics"),"remainingSeconds",0)-(System.currentTimeMillis()-diagnosticsReceivedAt)/1000.0));}
 
     @Override protected void init(){
-        rows.clear();rightLines.clear();saveButton=null;cancelButton=null;folderButton=null;
+        rows.clear();rightLines.clear();saveButton=null;cancelButton=null;folderButton=null;eventInput=null;eventInputOwner=null;
         int tabRows=width>=540?1:2,tabCountPerRow=tabRows==1?6:3;
         bodyTop=58+tabRows*24;bodyBottom=height-81;
         central=12;right=width>=720?(int)(width*.70):width-12;columnWidth=Math.max(100,right-central-(width>=720?14:0));
@@ -149,7 +156,7 @@ public final class BuilderScreen extends Screen {
     private void row(String text,Runnable action){rows.add((x,y,w)->button(text,x,y,w,action));}
     private void disabled(String label,String reason){rows.add((x,y,w)->{ButtonWidget b=button(label,x,y,w,()->{});b.active=false;b.setTooltip(Tooltip.of(Text.literal(reason)));});}
     private void pair(String a,Runnable aa,String b,Runnable bb){rows.add((x,y,w)->{button(a,x,y,w/2-2,aa);button(b,x+w/2+2,y,w/2-2,bb);});}
-    private void field(String label,String value,int maximum,Consumer<String> changed){line(label);rows.add((x,y,w)->{TextFieldWidget f=new TextFieldWidget(textRenderer,x,y,w,20,Text.literal(label));f.setMaxLength(maximum);f.setText(value);f.setChangedListener(changed);f.setEditable(pendingId<0);addDrawableChild(f);});}
+    private void field(String label,String value,int maximum,Consumer<String> changed){line(label);rows.add((x,y,w)->{TextFieldWidget f=new TextFieldWidget(textRenderer,x,y,w,20,Text.literal(label));f.setMaxLength(maximum);f.setText(value);f.setChangedListener(changed);f.setEditable(pendingId<0);addDrawableChild(f);if(tab==3){eventInput=f;eventInputOwner=event();}});}
     private void mode(BuildingTool.Action action,boolean supported){if(!supported)return;String active=string(view,"action","");boolean continueInWorld=action==BuildingTool.Action.RULE_SOURCE||action==BuildingTool.Action.RULE_TARGET;if(active.equals(action.name())&&!continueInWorld)disabled("● "+action.label,"Текущее действие: один ЛКМ в мире.");else row((continueInWorld?"В мир: ":"")+action.label,()->{if(continueInWorld&&!lineRename.equals(lineRenameBase)){localMessage="Сохраните или отмените имя линии перед выбором участников в мире.";return;}send("mode",q->{q.addProperty("action",action.name());if(action==BuildingTool.Action.LAMP_TARGET||(action==BuildingTool.Action.LINK||action==BuildingTool.Action.UNLINK)&&(lampReference(target())||lampReference(object(view,"source")))){q.addProperty("line",selectedLine);q.addProperty("both",both);}});if(continueInWorld&&pendingId<0)super.close();});}
     private void send(String op,Consumer<JsonObject> values){if(pendingId>=0){localMessage="Ожидается ответ на сохранение.";return;}JsonObject q=BuilderClient.request(op);values.accept(q);BuilderClient.send(q);}
     private void immediateObject(String field,JsonElement value){send("object",q->{q.addProperty("field",field);q.add("value",value);});}
