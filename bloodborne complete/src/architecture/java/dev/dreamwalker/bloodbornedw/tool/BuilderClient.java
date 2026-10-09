@@ -56,6 +56,7 @@ public final class BuilderClient {
     private record Visual(String key, String instance, String dimension, String name, String id,
                           Vec3d anchor, List<Box> selection, List<Box> collision, int entityId, boolean loaded) {}
     private record Connection(Visual target, String direction, String label, boolean loaded) {}
+    private record WorldLabel(Vec3d point, String text, int color) {}
 
     private BuilderClient() {}
 
@@ -348,31 +349,32 @@ public final class BuilderClient {
         Vec3d camera = context.camera().getPos(); var matrices = context.matrixStack();
         matrices.push(); matrices.translate(-camera.x, -camera.y, -camera.z);
         VertexConsumer lines = context.consumers().getBuffer(RenderLayer.getLines());
+        List<WorldLabel> labels = new ArrayList<>(MAX_CONNECTIONS + 8);
         if (visible(selected, dimension, camera)) {
             outline(matrices, lines, selected.selection, .95f, .73f, .22f);
-            label(context, selected.anchor.add(0, 1.25, 0), "Выбрано [" + selected.id + "]" + (geometry ? " · область выбора" : ""), 0xFFE3A0);
+            queueLabel(labels, selected.anchor.add(0, 1.25, 0), "Выбрано [" + selected.id + "]" + (geometry ? " · область выбора" : ""), 0xFFE3A0);
             if (geometry) {
                 outline(matrices, lines, selected.collision, .3f, .92f, .45f);
-                label(context, selected.anchor.add(0, .95, 0), "Коллизия игрока (зелёная) · опора +", 0x94EBA4);
+                queueLabel(labels, selected.anchor.add(0, .95, 0), "Коллизия игрока (зелёная) · опора +", 0x94EBA4);
                 if (bool(object(latest, "target"), "geometryTruncated"))
-                    label(context, selected.anchor.add(0, .65, 0), "Графика ограничена · физика объекта сохранена", 0xD5BA93);
+                    queueLabel(labels, selected.anchor.add(0, .65, 0), "Графика ограничена · физика объекта сохранена", 0xD5BA93);
                 cross(matrices, lines, selected.anchor, .22, .3f, .92f, .45f);
                 JsonObject target = object(latest, "target");
                 if (target.has("yaw")) {
                     double angle = Math.toRadians(decimal(target, "yaw", 0));
                     Vec3d start = selected.anchor.add(0, .2, 0), end = start.add(-Math.sin(angle), 0, Math.cos(angle));
                     line(matrices, lines, start, end, .3f, .92f, .45f); arrow(matrices, lines, start, end, .3f, .92f, .45f);
-                    label(context, end.add(0, .4, 0), "Направление · Y " + string(target, "offset", "0"), 0x94EBA4);
+                    queueLabel(labels, end.add(0, .4, 0), "Направление · Y " + string(target, "offset", "0"), 0x94EBA4);
                 }
             }
         }
         if (visible(source, dimension, camera)) {
             outline(matrices, lines, source.selection, .66f, .4f, .95f);
-            label(context, source.anchor.add(0, 1.6, 0), "Источник [" + source.id + "]", 0xD7ACFF);
+            queueLabel(labels, source.anchor.add(0, 1.6, 0), "Источник [" + source.id + "]", 0xD7ACFF);
         }
         if (visible(hover, dimension, camera) && (selected == null || !same(hover, selected))) {
             outline(matrices, lines, hover.selection, .3f, .75f, 1f);
-            label(context, hover.anchor.add(0, 1, 0), "Прицел [" + hover.id + "]", 0xA3DDFF);
+            queueLabel(labels, hover.anchor.add(0, 1, 0), "Прицел [" + hover.id + "]", 0xA3DDFF);
         }
         Visual origin = source == null ? selected : source;
         if (visible(origin, dimension, camera)) for (Connection connection : connections) {
@@ -386,7 +388,7 @@ public final class BuilderClient {
             if (visible(destination, dimension, camera)) {
                 outline(matrices, lines, destination.selection, 1f, .46f, .23f);
                 cross(matrices, lines, destination.anchor, .16, 1f, .46f, .23f);
-                label(context, destination.anchor.add(0, 1.3, 0), "Цель [" + destination.id + "] · " + connection.label
+                queueLabel(labels, destination.anchor.add(0, 1.3, 0), "Цель [" + destination.id + "] · " + connection.label
                         + (connection.loaded ? "" : " · последнее положение"), 0xFFBC99);
             }
         }
@@ -394,8 +396,11 @@ public final class BuilderClient {
                 && Set.of("LINK", "UNLINK", "LAMP_TARGET", "RULE_TARGET").contains(string(latest, "action", ""))) {
             line(matrices, lines, source.anchor.add(0, .65, 0), hover.anchor.add(0, .65, 0), .3f, .75f, 1f);
             arrow(matrices, lines, source.anchor.add(0, .65, 0), hover.anchor.add(0, .65, 0), .3f, .75f, 1f);
-            label(context, hover.anchor.add(0, 1.6, 0), "Предварительная цель · " + keyName(client.options.attackKey), 0xA3DDFF);
+            queueLabel(labels, hover.anchor.add(0, 1.6, 0), "Предварительная цель · " + keyName(client.options.attackKey), 0xA3DDFF);
         }
+        // Immediate consumers may share a fallback BufferBuilder. Text changes its vertex format,
+        // so finish every outline/arrow before requesting any text layer; never reuse lines afterward.
+        for (WorldLabel queued : labels) label(context, queued.point, queued.text, queued.color);
         matrices.pop();
     }
 
@@ -423,6 +428,9 @@ public final class BuilderClient {
         line(matrices, lines, point.add(-size, 0, 0), point.add(size, 0, 0), r, g, b);
         line(matrices, lines, point.add(0, -size, 0), point.add(0, size, 0), r, g, b);
         line(matrices, lines, point.add(0, 0, -size), point.add(0, 0, size), r, g, b);
+    }
+    private static void queueLabel(List<WorldLabel> labels, Vec3d point, String text, int color) {
+        if (labels.size() < MAX_CONNECTIONS + 8) labels.add(new WorldLabel(point, text, color));
     }
     private static void label(WorldRenderContext context, Vec3d point, String text, int color) {
         var matrices = context.matrixStack(); MinecraftClient client = MinecraftClient.getInstance();
