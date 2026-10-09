@@ -16,8 +16,9 @@ public final class CatalogEntityModel<T extends Entity & GeoAnimatable & AssetBa
   super.setCustomAnimations(entity,instanceId,state);
   if(RpClientDiagnostics.enabled()){var actual=getBakedModel(getModelResource(entity));observe(entity,"baked_geometry",actual.getClass().getName()+"|topLevelBones="+actual.topLevelBones().size());}
   if(entity instanceof dev.dreamwalker.bloodbornerp.object.RpObjectEntity object){
-   // Reapply on every entity render, including visible=true; baked bones are shared by type.
-   if(object.supportsDogVisibility()){var bone=getBone(object.dogRootBone());if(bone.isEmpty())RpClientDiagnostics.error(entity,"missing_authored_bone","Dog visibility bone is unavailable: "+object.dogRootBone(),null);bone.ifPresent(value->value.setHidden(!object.dogsVisible()));observe(entity,"dogs_pose",object.dogsVisible()+"|"+bone.map(value->value.isHidden()).orElse(false));}
+   // Explicitly retain GeckoLib child visibility for the authored main/main_2 roots.
+   // The renderer also reapplies this per draw, independently of cached animation evaluation.
+   if(object.supportsDogVisibility()){var bone=getBone(object.dogRootBone());if(bone.isEmpty())RpClientDiagnostics.error(entity,"missing_authored_bone","Dog visibility bone is unavailable: "+object.dogRootBone(),null);bone.ifPresent(value->{value.setHidden(!object.dogsVisible());value.setChildrenHidden(!object.dogsVisible());});observe(entity,"dogs_pose",object.dogsVisible()+"|"+bone.map(value->value.isHidden()).orElse(false));}
    if(object.assetId().equals("ladder")){var bone=getBone("bottom");if(bone.isEmpty())RpClientDiagnostics.error(entity,"missing_authored_bone","Ladder bottom bone is unavailable",null);bone.ifPresent(value->{value.setPosY((float)object.ladderOffsetY());value.setPosZ((float)object.ladderOffsetZ());});observe(entity,"ladder_motion_state",object.isOpen()+"|"+(object.ladderOffsetY()==0&&object.ladderOffsetZ()==0?"deployed":"moving_or_retracted"));}
    if(object.assetId().equals("wood_gate")){
     double seconds=object.woodGatePulseActive()?Math.min(1.6,(32-object.woodGatePulseTicks()+state.getPartialTick())/20d):1.6;

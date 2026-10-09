@@ -10,7 +10,9 @@ public abstract class BuilderInputMixin {
     @Inject(method="doAttack",at=@At("HEAD"),cancellable=true)
     private void dwBuilderAttack(CallbackInfoReturnable<Boolean> ci){if(BuilderClient.attack())ci.setReturnValue(false);}
     @Inject(method="handleBlockBreaking",at=@At("HEAD"),cancellable=true)
-    private void dwBuilderHold(boolean breaking,CallbackInfo ci){if(BuildingTool.isHeld(MinecraftClient.getInstance().player))ci.cancel();}
+    private void dwBuilderHold(boolean breaking,CallbackInfo ci){var client=MinecraftClient.getInstance();if(client.currentScreen==null&&BuildingTool.isHeld(client.player))ci.cancel();}
     @Inject(method="doItemUse",at=@At("HEAD"),cancellable=true)
     private void dwBuilderMenu(CallbackInfo ci){if(BuilderClient.use())ci.cancel();}
+    @Inject(method="doItemPick",at=@At("HEAD"),cancellable=true)
+    private void dwBuilderPick(CallbackInfo ci){if(BuilderClient.pick())ci.cancel();}
 }

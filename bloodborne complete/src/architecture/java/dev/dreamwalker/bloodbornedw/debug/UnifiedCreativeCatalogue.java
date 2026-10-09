@@ -16,7 +16,7 @@ public final class UnifiedCreativeCatalogue {
     public static void initialize(){
         if(initialized)return;initialized=true;
         Registry.register(Registries.ITEM_GROUP,ID,FabricItemGroup.builder().displayName(Text.literal("Bloodborne · строительство и предметы"))
-            .icon(()->new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw","builder_tool"))))
+            .icon(()->new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw","composite_builder"))))
             .entries((context,entries)->canonicalItems().forEach(entries::add)).build());
     }
     private static int category(String kind){return switch(kind){case "architecture"->0;case "technical_tool"->1;case "rp_object"->2;case "rp_item"->3;case "rp_mob"->4;default->5;};}
@@ -25,7 +25,7 @@ public final class UnifiedCreativeCatalogue {
         DebugCatalogue.entries().stream().sorted(Comparator.comparingInt((DebugCatalogue.Entry e)->category(e.kind())).thenComparing(DebugCatalogue.Entry::temporaryId)).forEach(entry->{
             // A retired number still appears in the append-only table, but its
             // logical alias resolves to another canonical offered type.
-            if(DebugCatalogue.entry(entry.registryId())!=entry)return;
+            if(DebugCatalogue.entry(entry.registryId())!=entry||entry.registryId().equals(dev.dreamwalker.bloodbornedw.architecture.BuilderToolMigration.LEGACY_ID))return;
             Identifier item=switch(entry.kind()){
                 case "rp_object"->new Identifier(entry.registryId().getNamespace(),entry.registryId().getPath()+"_placer");
                 case "rp_mob"->new Identifier(entry.registryId().getNamespace(),entry.registryId().getPath()+"_spawn_egg");

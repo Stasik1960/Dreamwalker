@@ -41,8 +41,13 @@ public final class MechanismLinks {
     public static void loaded(RpObjectEntity entity){
         if(!(entity.getWorld() instanceof ServerWorld world))return;MechanismState state=MechanismState.get(world.getServer());
         if(entity.isMechanism()){
-            if(!entity.links().isEmpty()||state.levers.containsKey(entity.getUuid()))lever(state,entity);for(UUID id:entity.links()){
+            // Once a persisted lever exists, its bindings are authoritative. Old entity
+            // Links must not resurrect a pair removed while that source was unloaded.
+            boolean firstImport=!state.levers.containsKey(entity.getUuid());
+            var persisted=(!entity.links().isEmpty()||!firstImport)?lever(state,entity):null;
+            for(UUID id:entity.links()){
                 Entity target=world.getEntity(id);TargetRef ref=target instanceof RpObjectEntity rp?TargetRef.rp(rp):new TargetRef(Kind.RP,world.getRegistryKey().getValue().toString(),id,entity.getBlockPos().asLong(),"");
+                if(!firstImport&&persisted!=null&&!persisted.targets.contains(ref.key())){entity.removeLink(id);continue;}
                 if(!(target instanceof RpObjectEntity rp)||rp.canBeLinked())link(entity,ref);
             }
         }
@@ -66,6 +71,14 @@ public final class MechanismLinks {
         lever.targets.add(ref.key());state.markDirty();MechanismRules.legacyLinked(source,ref);event(world,ref,"link_create",Map.of("sourceLever",source.getUuid().toString()),Map.of("desired",target.desired,"pending",target.pending),"COMMITTED","");return true;
     }
     public static boolean unlink(RpObjectEntity source,String key){if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism())return false;MechanismState state=MechanismState.get(world.getServer());MechanismState.Lever lever=state.levers.get(source.getUuid());if(lever==null||!lever.targets.remove(key))return false;MechanismState.Target target=state.targets.get(key);if(target!=null)event(world,target.ref,"link_remove",Map.of("sourceLever",source.getUuid().toString()),Map.of(),"COMMITTED","");pruneUnused(state,key);state.markDirty();MechanismRules.legacyUnlinked(source,key);return true;}
+    /** Keep imported V9 entity bindings consistent with explicit rule/member deletion. */
+    static void forgetLegacyPair(MinecraftServer server,TargetRef source,String key){
+        if(MechanismRules.list(server).stream().anyMatch(r->r.sources.containsKey(source.instance())&&r.targets.containsKey(key)))return;
+        MechanismState old=MechanismState.get(server);var lever=old.levers.get(source.instance());
+        if(lever!=null&&lever.targets.remove(key)){pruneUnused(old,key);old.markDirty();}
+        ServerWorld w=world(server,source.dimension());Entity e=w==null?null:w.getEntity(source.instance());
+        if(e instanceof RpObjectEntity rp&&rp.isMechanism())for(UUID target:rp.links())if(new TargetRef(Kind.RP,source.dimension(),target,0,"").key().equals(key))rp.removeLink(target);
+    }
     /** Called once when the existing 70 tick RP lever delay expires. */
     public static void pulse(RpObjectEntity source){
         if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism())return;loaded(source);MechanismRules.pulse(source);

@@ -95,21 +95,31 @@ public final class VerticalMount {
     }
     /** Exact numeric offset; GUI steps are caller policy, not an arbitrary storage clamp. */
     public static boolean setOffset(ServerWorld world,BlockPos root,double amount,ServerPlayerEntity player){
+        if(!world.isChunkLoaded(root))return false;
+        return setGeometry(world,root,world.getBlockState(root),amount,player);
+    }
+    /** Prepare the final mounting state and height together, then commit one owner transaction. */
+    public static boolean setGeometry(ServerWorld world,BlockPos root,BlockState requested,double amount,ServerPlayerEntity player){
         if(!world.getServer().isOnThread()||!Double.isFinite(amount)||!world.isChunkLoaded(root)||!BuildPermissions.canEdit(world,player,root))return false;
-        BlockState state=world.getBlockState(root);if(!isArchitecture(state)||!(loadedEntity(world,root) instanceof CompositeBlockEntity own)||own.resident()==null)return false;
-        NbtCompound payload=own.payload();double before=payload.getDouble(KEY);if(amount==before)return true;
-        // Guard huge input before converting a double to integer cell indices.
-        // The only range comes from this world's actual build height and the
-        // object's unshifted physical/selection extrema, including initial seat.
-        NbtCompound base=payload.copy();base.remove(KEY);base.remove("NativeGeometry");var initial=CompositeRuntime.instance(world,root,state,own.resident().instanceId(),base);
+        BlockState live=world.getBlockState(root);
+        if(!isArchitecture(live)||!requested.isOf(live.getBlock())||!(loadedEntity(world,root) instanceof CompositeBlockEntity own)||own.resident()==null)return false;
+        NbtCompound payload=own.payload();double before=payload.getDouble(KEY);boolean stateChanged=!requested.equals(live),heightChanged=amount!=before;
+        if(!stateChanged&&!heightChanged)return true;
+        if(stateChanged&&requested.getBlock() instanceof ThinWindowRootBlock){GlazingMount.rememberAnchor(live,payload);if(!GlazingMount.seat(world,root,requested,payload))return false;}
+        // Validate large offsets before using them as integral cell coordinates. Bounds include
+        // the desired plane and the existing authored seat/source shift, but not the user offset.
+        NbtCompound base=payload.copy();base.remove(KEY);base.remove("NativeGeometry");var initial=CompositeRuntime.instance(world,root,requested,own.resident().instanceId(),base);
         double min=Double.POSITIVE_INFINITY,max=Double.NEGATIVE_INFINITY;
         for(var entry:initial.cells().entrySet())for(var boxes:List.of(entry.getValue().collision(),entry.getValue().selection()))for(var box:boxes){min=Math.min(min,entry.getKey().y()+box.minY());max=Math.max(max,entry.getKey().y()+box.maxY());}
         if(!Double.isFinite(min)||root.getY()+min+amount<world.getBottomY()-1e-8||root.getY()+max+amount>world.getTopY()+1e-8)return false;
-        payload.putDouble(KEY,amount);payload.putBoolean("MountEdited",true);boolean previous=HEIGHT_EDIT.get();HEIGHT_EDIT.set(true);
+        payload.putDouble(KEY,amount);if(heightChanged)payload.putBoolean("MountEdited",true);
+        var finalObject=CompositeRuntime.instance(world,root,requested,own.resident().instanceId(),payload);
+        if(heightChanged&&PlacementPhysics.entityConflict(world,PlacementPhysics.physicalBoxes(finalObject),null,false)!=null)return false;
+        boolean previous=HEIGHT_EDIT.get();HEIGHT_EDIT.set(heightChanged);
         try{
-            var result=CompositeRuntime.transitionPayload(world,own.resident(),state,payload,player);
+            var result=CompositeRuntime.transitionPayload(world,own.resident(),requested,payload,player);
             if(dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.enabled(world))dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.record(world,
-                dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.type(state),own.resident().instanceId().toString(),root,"height",
+                dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.type(requested),own.resident().instanceId().toString(),root,stateChanged?"mount_and_height":"height",
                 Map.of("verticalOffset",before),Map.of("verticalOffset",amount,"fixedRoot",root.toShortString()),result.outcome().name(),result.reason());
             return result.outcome()==TransactionCore.Outcome.COMMITTED;
         }

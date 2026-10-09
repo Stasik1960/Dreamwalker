@@ -26,6 +26,31 @@ public final class LampEditor {
   SELECTIONS.put(player.getUuid(),new Selection(entityId,node.dimension,player.getServer().getTicks()+SELECTION_TICKS));
   return new Result(true,"Источник выбран. Можно добавлять несколько назначений.",view(player,entityId));
  }
+ public static final String DEFAULT_LINE="Охотничья линия";
+ /** Fast tool linking uses explicit pairs. A shared source does not connect the other ends. */
+ public static Result simplePair(ServerPlayerEntity player,UUID source,UUID destination,String line,boolean unlink){
+  if(!allowed(player))return refused("Изменение фонарной сети доступно оператору уровня 2.");
+  if(source==null||destination==null||source.equals(destination))return refused("Нужны два разных экземпляра фонаря.");
+  String chosen=line==null||line.isBlank()?DEFAULT_LINE:line.strip();
+  Selection selected=SELECTIONS.get(player.getUuid());
+  if(selected==null||!selected.entity.equals(source)||selected.until<player.getServer().getTicks()){
+   Result result=selectSource(player,source);if(!result.success())return result;
+  }
+  LampState graph=LampService.state(player.getServer());LampState.Node a=graph.byEntity(source),b=graph.byEntity(destination);LampState.Line l=graph.byName(chosen);
+  if(!unlink&&a!=null&&b!=null&&l!=null){LampState.Connection c=graph.connection(l,a.id,b.id);if(c!=null&&c.aToB&&c.bToA)return new Result(true,"Связь уже существует: "+a.name+" ↔ "+b.name+". Повторная пара не создана.",view(player,source));}
+  Result result=edit(player,new Request(unlink?Action.UNLINK:Action.CONNECT,source,destination,chosen,"",true));
+  if(!result.success())return result;
+  return new Result(true,unlink?"Удалена только двусторонняя пара в линии «"+chosen+"»; остальные маршруты сохранены.":"Сохранена двусторонняя пара в линии «"+chosen+"». Можно выбрать ещё одно назначение.",result.view());
+ }
+ /** Digest only for this lamp's editable network; travel/cooldown does not invalidate a form. */
+ public static String fingerprint(MinecraftServer server,UUID lamp){
+  LampState graph=LampService.state(server);LampState.Node n=lamp==null?null:graph.byEntity(lamp);if(n==null)return "unregistered";
+  var text=new StringBuilder().append(n.id).append('|').append(n.name);
+  for(LampState.Line line:graph.lines.values())for(LampState.Connection c:line.connections.values())if(c.a.equals(n.id)||c.b.equals(n.id)){
+   var a=graph.nodes.get(c.a);var b=graph.nodes.get(c.b);text.append('|').append(line.id).append(':').append(line.name).append(':').append(c.id).append(':').append(c.a).append(':').append(c.b).append(':').append(c.aToB).append(':').append(c.bToA).append(':').append(a==null?"missing":a.name).append(':').append(b==null?"missing":b.name);
+  }
+  try{return HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(text.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8)));}catch(java.security.NoSuchAlgorithmException impossible){throw new IllegalStateException(impossible);}
+ }
  public static Result edit(ServerPlayerEntity player,Request request){
   if(!allowed(player))return refused("Изменение фонарной сети доступно оператору уровня 2.");
   if(request==null||request.action()==null)return refused("Не выбрано действие фонарной сети.");
@@ -83,11 +108,11 @@ public final class LampEditor {
     connections.add(Map.of("connectionUuid",c.id.toString(),"lineName",line.name,"source",nodeView(player.getServer(),a),"destination",nodeView(player.getServer(),b),"aToB",c.aToB,"bToA",c.bToA,"reverseOtherLines",otherReverse));
    }
   }
-  Map<String,Object> out=new LinkedHashMap<>();out.put("success",true);out.put("selected",n!=null);if(n!=null)out.put("node",nodeView(player.getServer(),n));out.put("lines",List.copyOf(lines));out.put("connections",List.copyOf(connections));out.put("connectionTotal",total);out.put("page",page);out.put("pageCount",Math.max(1,(total+PAGE_SIZE-1)/PAGE_SIZE));out.put("outgoingNames",n==null?List.of():LampService.destinations(player.getServer(),n).stream().map(x->x.name).toList());out.put("definition","Линия — имя группы явных связей; участие само по себе не создаёт переходов.");return Collections.unmodifiableMap(out);
+  Map<String,Object> out=new LinkedHashMap<>();out.put("success",true);out.put("fingerprint",fingerprint(player.getServer(),entityId));out.put("selected",n!=null);if(n!=null)out.put("node",nodeView(player.getServer(),n));out.put("lines",List.copyOf(lines));out.put("connections",List.copyOf(connections));out.put("connectionTotal",total);out.put("page",page);out.put("pageCount",Math.max(1,(total+PAGE_SIZE-1)/PAGE_SIZE));out.put("outgoingNames",n==null?List.of():LampService.destinations(player.getServer(),n).stream().map(x->x.name).toList());out.put("definition","Линия — имя группы явных связей; участие само по себе не создаёт переходов.");return Collections.unmodifiableMap(out);
  }
  private static Map<String,Object> nodeView(MinecraftServer server,LampState.Node n){ServerWorld world=LampService.world(server,n.dimension);return Map.of("nodeUuid",n.id.toString(),"entityUuid",n.lamp.toString(),"name",n.name,"dimension",n.dimension,"position",List.of(n.origin.x,n.origin.y,n.origin.z),"loaded",world!=null&&LampService.loadedLamp(world,n.lamp)!=null);}
  private static RpObjectEntity sourceEntity(ServerPlayerEntity p,LampState.Node n){ServerWorld world=LampService.world(p.getServer(),n.dimension);return world==null?null:LampService.loadedLamp(world,n.lamp);}
- private static String defaultName(RpObjectEntity lamp){return "Фонарь ("+lamp.getBlockX()+", "+lamp.getBlockY()+", "+lamp.getBlockZ()+")";}
+ private static String defaultName(RpObjectEntity lamp){String base="Фонарь ("+lamp.getBlockX()+", "+lamp.getBlockY()+", "+lamp.getBlockZ()+")";var graph=LampService.state(((ServerWorld)lamp.getWorld()).getServer());String name=base;for(int suffix=2;suffix<=LampState.MAX_NODES+1;suffix++){String candidate=name;if(graph.nodes.values().stream().noneMatch(n->n.name.equals(candidate)))return name;name=base+" №"+suffix;}return name;}
  private static boolean allowed(ServerPlayerEntity p){return p!=null&&p.getServer()!=null&&p.hasPermissionLevel(2);}
  private static Result refused(String reason){return new Result(false,reason,Map.of("success",false,"reason",reason));}
  static void expire(MinecraftServer server){SELECTIONS.entrySet().removeIf(e->e.getValue().until<server.getTicks()||server.getPlayerManager().getPlayer(e.getKey())==null);}

@@ -71,6 +71,17 @@ public final class RpObjectEntity extends Entity implements GeoEntity, AssetBack
   dev.dreamwalker.bloodbornerp.lamp.LampService.entityMoved(this);
   diagnosticEvent("rp_vertical_offset",java.util.Map.of("verticalOffset",before,"positionY",previous.y),java.util.Map.of("verticalOffset",requested,"positionY",getY()),"COMMITTED","same_uuid_pose_world_bounds_only");return true;
  }
+ /** Compound builder contents/height update: all checks happen before any tracker or pose changes. */
+ public boolean setBuilderGeometry(double requestedOffset,Boolean requestedDogs,net.minecraft.server.network.ServerPlayerEntity player){
+  double before=verticalOffset(),delta=requestedOffset-before;boolean dogsBefore=dogsVisible();
+  if(getWorld().isClient||!getWorld().getServer().isOnThread()||!Double.isFinite(requestedOffset)||!RpPlacementRules.canEdit(player,this)||requestedDogs!=null&&!supportsDogVisibility())return false;
+  if(delta!=0&&RpPlacementRules.bounds(getWorld(),visualBounds().offset(0,delta,0))!=null)return false;
+  if(delta!=0&&dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.entityConflict(getWorld(),activePhysicalBoxes().stream().map(box->box.offset(0,delta,0)).toList(),this,false)!=null)return false;
+  if(delta!=0){var previous=getPos();setPosition(previous.x,previous.y+delta,previous.z);NbtCompound tracked=new NbtCompound();tracked.putDouble("Value",requestedOffset);dataTracker.set(VERTICAL_OFFSET,tracked);velocityDirty=true;dev.dreamwalker.bloodbornerp.lamp.LampService.entityMoved(this);}
+  if(requestedDogs!=null)dataTracker.set(DOGS_VISIBLE,requestedDogs);
+  if(delta!=0||requestedDogs!=null&&requestedDogs!=dogsBefore)diagnosticEvent("rp_builder_geometry",java.util.Map.of("verticalOffset",before,"dogsVisible",dogsBefore),java.util.Map.of("verticalOffset",requestedOffset,"dogsVisible",dogsVisible()),"COMMITTED","compound_validated_height_and_contents");
+  return true;
+ }
  public void setObjectScale(float scale){float before=objectScale();boolean valid=Float.isFinite(scale)&&scale>=0&&scale<=8;dataTracker.set(SCALE,valid?scale:1f);refreshCollider();if(!valid)RpDiagnostics.error(this,"invalid_object_scale","Scale is non-finite or outside reviewed range 0..8; retained existing fallback 1",null);if(before!=objectScale())diagnosticEvent("rp_scale",java.util.Map.of("scale",before),java.util.Map.of("scale",objectScale()),"COMMITTED","validated_object_scale");}
  /** Builder rotation uses the active geometry at the proposed yaw and commits only after server validation. */
  public boolean rotateByBuilder(PlayerEntity player,float nextYaw){
@@ -93,6 +104,15 @@ public final class RpObjectEntity extends Entity implements GeoEntity, AssetBack
  public void setLocked(boolean locked){boolean before=isLocked();dataTracker.set(LOCKED,locked);if(before!=locked)diagnosticEvent("rp_lock",java.util.Map.of("locked",before),java.util.Map.of("locked",locked),"COMMITTED","server_state_transition");}
  public boolean isMechanism(){return assetId.startsWith("lever_");}
  public boolean canBeLinked(){return PASSAGES.contains(assetId)||assetId.equals("chest")||assetId.equals("ladder")||assetId.equals("wood_gate");}
+ /** Actual builder capabilities; functional opening is deliberately separate from decorative panel pose. */
+ public boolean supportsBuilderAction(dev.dreamwalker.bloodbornedw.architecture.BuildingTool.Action action){return switch(action){
+  case SELECT,ROTATE,UP,DOWN,DIAGNOSTICS,CONNECTIONS->true;
+  case DOGS->supportsDogVisibility();
+  case LINK,UNLINK,RULE_TARGET->canBeLinked()||isMechanism();
+  case RULE_SOURCE->isMechanism();
+  case LAMP_SOURCE,LAMP_TARGET->assetId().equals("hunterlamp");
+  default->false;
+ };}
  public boolean supportsDogVisibility(){return assetId.equals("cage_obj_1")||assetId.equals("cage_obj_2")||assetId.equals("cage_obj_3");}
  public boolean dogsVisible(){return dataTracker.get(DOGS_VISIBLE);}
  public boolean setDogsVisible(boolean visible){if(!supportsDogVisibility()||getWorld().isClient)return false;boolean before=dogsVisible();dataTracker.set(DOGS_VISIBLE,visible);if(before!=visible)diagnosticEvent("rp_dogs_visibility",java.util.Map.of("dogsVisible",before),java.util.Map.of("dogsVisible",visible),"COMMITTED","instance_tracker_state");return true;}
