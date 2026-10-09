@@ -10,6 +10,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /** Editor wheel gestures are consumed before the vanilla hotbar changes. Screen scrolling is untouched. */
 @Mixin(Mouse.class)
 public abstract class BuilderMouseMixin {
+    @Inject(method="onMouseButton",at=@At("HEAD"))
+    private void dwBuilderButton(long window,int button,int action,int modifiers,CallbackInfo ci){
+        BuilderClient.mouseEvent(window,button,action,modifiers);
+    }
     @Inject(method="onMouseScroll",at=@At("HEAD"),cancellable=true)
     private void dwBuilderScroll(long window,double horizontal,double vertical,CallbackInfo ci){
         if(BuilderClient.scroll(window,horizontal,vertical))ci.cancel();

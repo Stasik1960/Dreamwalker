@@ -83,7 +83,7 @@ public final class PrototypeArchitecture {
     public static PrototypeLadderBlock ladderBlock(int art){return LADDERS.get(Math.max(0,Math.min(2,art)));}
 
     private static int targetCommand(ServerCommandSource source, String operation) {
-        if(operation.equals("debug")){int result=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.debug(source);dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.snapshotSelected(source,"/bb debug");return result;}
+        if(operation.equals("debug")){int pinned=dev.dreamwalker.bloodbornedw.tool.BuilderServer.debugSelected(source);if(pinned>=0)return pinned;int result=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.debug(source);dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.snapshotSelected(source,"/bb debug");return result;}
         if (!(source.getEntity() instanceof ServerPlayerEntity player)) { source.sendError(Text.literal("Нужен игрок и объект под прицелом.")); return 0; }
         HitResult ray = player.raycast(6, 0, false);
         if (!(ray instanceof BlockHitResult hit) || ray.getType() != HitResult.Type.BLOCK || !player.getWorld().isChunkLoaded(hit.getBlockPos())) return 0;

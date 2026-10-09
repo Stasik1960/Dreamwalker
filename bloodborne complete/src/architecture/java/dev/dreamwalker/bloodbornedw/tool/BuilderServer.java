@@ -244,6 +244,20 @@ public final class BuilderServer {
     private static boolean snapshot(ServerPlayerEntity p,MechanismLinks.TargetRef t,String note){Map<String,Object> result;
         if(t.kind()==MechanismLinks.Kind.RP&&p.getServerWorld().getEntity(t.instance()) instanceof RpObjectEntity rp)result=DwDiagnostics.snapshot(p.getServerWorld(),p,rp,Map.of("note",note));else result=DwDiagnostics.snapshot(p.getServerWorld(),p,BlockPos.fromLong(t.root()),Map.of("note",note));return !"NOT_MEASURED_CORRUPT_OBJECT".equals(result.get("result"));
     }
+    /** -1 keeps ordinary ray inspection when no tool pin exists. An unavailable pin never falls through. */
+    public static int debugSelected(net.minecraft.server.command.ServerCommandSource command){
+        if(!(command.getEntity() instanceof ServerPlayerEntity p)||!BuildingTool.mainHeld(p))return -1;
+        Session s=SESSIONS.get(p.getUuid());if(s==null||!s.pinned||s.target==null)return -1;
+        if(!validTarget(p,s)){command.sendError(Text.literal("Закреплённый экземпляр недоступен или вне досягаемости. /bb debug не выбирает другой объект вместо него."));return 0;}
+        var t=currentRef(p,s.target);var view=targetView(p,t);var state=MechanismLinks.inspect(p.getServer(),t);
+        String orientation=t.kind()==MechanismLinks.Kind.RP?String.valueOf(view.get("yaw")):p.getWorld().getBlockState(BlockPos.fromLong(t.root())).toString();
+        var rules=MechanismRules.list(p.getServer()).stream().filter(r->related(r,t)).toList();
+        String lampLinks="";
+        if(isLamp(t)){Object raw=LampEditor.view(p,t.instance()).get("connections");if(raw instanceof List<?> rows)lampLinks="; маршруты фонаря="+rows.stream().limit(16).map(row->{if(!(row instanceof Map<?,?> c))return "неизвестная запись";return c.get("lineName")+" направления="+c.get("aToB")+"/"+c.get("bToA")+" "+c.get("source")+" → "+c.get("destination");}).toList();}
+        String message="Закреплённый объект ["+view.get("id")+"] "+view.get("name")+"; UUID="+t.instance()+"; registry="+view.get("registry")+"; измерение="+t.dimension()+"; корень="+view.get("position")+"; смещение Y="+view.get("offset")+"; ориентация="+orientation+"; состояние="+state.availability()+", open="+view.getOrDefault("open","не поддерживается")+", импульс="+state.pulseOnly()+", только рычагами="+view.get("leversOnly")+", ожидает="+view.get("pending")+"; действия="+view.get("supportedActions")+"; правил="+rules.size()+", связи="+rules.stream().limit(16).map(r->r.name+" "+r.condition+"/"+r.effect+" источников="+r.sources.size()+" целей="+r.targets.size()).toList()+lampLinks+"; выбор="+boxes(p,t,false).size()+" фрагментов; коллизия игрока="+boxes(p,t,true).size()+" фрагментов";
+        command.sendFeedback(()->Text.literal(message),false);
+        boolean captured=snapshot(p,t,"/bb debug — закреплённый экземпляр");if(!captured)command.sendError(Text.literal("Снимок содержит ошибку объекта; подробности записаны в диагностику."));return captured?1:0;
+    }
     private record Ray(MechanismLinks.TargetRef ref,double distance){}
     public static List<MechanismLinks.TargetRef> candidates(ServerPlayerEntity player){
         ServerWorld world=player.getServerWorld();Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(6));Map<String,Ray> nearest=new HashMap<>();

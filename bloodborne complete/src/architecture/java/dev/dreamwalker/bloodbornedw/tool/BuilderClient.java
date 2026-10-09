@@ -47,6 +47,8 @@ public final class BuilderClient {
     private static JsonObject latest = new JsonObject();
     private static final Map<Long, Long> pending = new LinkedHashMap<>();
     private static KeyBinding modeModifier, stepModifier, reverseModifier, undoKey, cancelKey;
+    private static boolean eventModifierPressed;
+    private static InputUtil.Key eventModifierBinding;
     private static List<String> conflictCache = List.of();
     private static String localMessage = "";
     private static long localMessageUntil;
@@ -207,6 +209,53 @@ public final class BuilderClient {
         if (BuildingTool.mainHeld(client.player)) send(request("select_cycle"));
         else notice("Для выбора перенесите 90009 в основную руку.");
         return true;
+    }
+
+    /** Capture short taps from native callbacks; tick polling alone can miss a press between frames. */
+    public static void keyboardEvent(long window, int key, int scanCode, int action, int modifiers) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (window != client.getWindow().getHandle() || modeModifier == null || action != GLFW.GLFW_PRESS && action != GLFW.GLFW_RELEASE) return;
+        if (modeModifier.matchesKey(key, scanCode)) rememberModifier(action);
+        shortcutEvent(cancelKey.matchesKey(key, scanCode), undoKey.matchesKey(key, scanCode), action, modifiers);
+    }
+
+    /** The same event capture supports mouse-remapped shortcuts without changing vanilla mouse input. */
+    public static void mouseEvent(long window, int button, int action, int modifiers) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (window != client.getWindow().getHandle() || modeModifier == null || action != GLFW.GLFW_PRESS && action != GLFW.GLFW_RELEASE) return;
+        if (modeModifier.matchesMouse(button)) rememberModifier(action);
+        shortcutEvent(cancelKey.matchesMouse(button), undoKey.matchesMouse(button), action, modifiers);
+    }
+
+    private static void rememberModifier(int action) {
+        eventModifierPressed = action == GLFW.GLFW_PRESS;
+        eventModifierBinding = KeyBindingHelper.getBoundKeyOf(modeModifier);
+    }
+
+    private static boolean eventModifierDown(int modifiers) {
+        InputUtil.Key key = KeyBindingHelper.getBoundKeyOf(modeModifier);
+        if (key.getCategory() == InputUtil.Type.KEYSYM) {
+            int mask = switch (key.getCode()) {
+                case GLFW.GLFW_KEY_LEFT_CONTROL, GLFW.GLFW_KEY_RIGHT_CONTROL -> GLFW.GLFW_MOD_CONTROL;
+                case GLFW.GLFW_KEY_LEFT_ALT, GLFW.GLFW_KEY_RIGHT_ALT -> GLFW.GLFW_MOD_ALT;
+                case GLFW.GLFW_KEY_LEFT_SHIFT, GLFW.GLFW_KEY_RIGHT_SHIFT -> GLFW.GLFW_MOD_SHIFT;
+                case GLFW.GLFW_KEY_LEFT_SUPER, GLFW.GLFW_KEY_RIGHT_SUPER -> GLFW.GLFW_MOD_SUPER;
+                default -> 0;
+            };
+            if (mask != 0) return (modifiers & mask) != 0;
+        }
+        // Ordered callback state also preserves a remapped ordinary-key modifier during a short tap.
+        return eventModifierPressed && key.equals(eventModifierBinding) || down(modeModifier);
+    }
+
+    private static void shortcutEvent(boolean cancelMatches, boolean undoMatches, int action, int modifiers) {
+        boolean previousCancel = cancelPressed, previousUndo = undoPressed;
+        if (cancelMatches) cancelPressed = action == GLFW.GLFW_PRESS;
+        if (undoMatches) undoPressed = action == GLFW.GLFW_PRESS;
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (action != GLFW.GLFW_PRESS || client.currentScreen != null || !BuildingTool.mainHeld(client.player)) return;
+        if (cancelMatches && !previousCancel) send(request("cancel_selection"));
+        else if (undoMatches && !previousUndo && eventModifierDown(modifiers)) send(request("undo"));
     }
 
     public static boolean scroll(long window, double horizontal, double vertical) {
