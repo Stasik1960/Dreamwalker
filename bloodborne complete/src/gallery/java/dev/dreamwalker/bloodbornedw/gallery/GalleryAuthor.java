@@ -5,6 +5,7 @@ import com.mojang.authlib.GameProfile;
 import dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics;
 import dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock;
 import dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount;
+import dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallBlock;
 import dev.dreamwalker.bloodbornedw.composite.*;
 import dev.dreamwalker.bloodbornedw.debug.DebugCatalogue;
 import dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue;
@@ -44,6 +45,12 @@ public final class GalleryAuthor implements ModInitializer {
     private static final ChunkTicketType<ChunkPos> TICKET = ChunkTicketType.create("dreamwalker_gallery_author",Comparator.comparingLong(ChunkPos::toLong));
     private record Exhibit(ItemStack item,String kind,Identifier registry,String number,String name) {}
     private record Platform(int x,int z,int width,int depth,BlockPos root,Box expected) {}
+    private record Footprint(Exhibit exhibit,Box bounds,int width,int depth) {}
+    private static final class Shelf {
+        final int z,depth;
+        int nextX;
+        Shelf(int z,int depth){this.z=z;this.depth=depth;}
+    }
 
     private static final class Author {
         final MinecraftServer server;
@@ -53,13 +60,24 @@ public final class GalleryAuthor implements ModInitializer {
         final Set<ChunkPos> tickets = new HashSet<>();
         final JsonObject report = new JsonObject();
         final JsonArray rows = new JsonArray();
+        final boolean dense,visualDense,altArchitecture;
+        final String layout;
+        final Map<Exhibit,Platform> densePlatforms = new IdentityHashMap<>();
+        final Map<Exhibit,Box> visualPackingBounds = new IdentityHashMap<>();
         int index,age,nextX;
+        int denseWidth,denseDepth;
         boolean finalizing;
         Author(MinecraftServer s,JsonObject marker) {
             server=s;world=s.getOverworld();
+            layout=marker.has("layout")?marker.get("layout").getAsString():"single_east_west_sequence";
+            String architectureProfile=marker.has("architectureProfile")?marker.get("architectureProfile").getAsString():"base";
+            require(Set.of("single_east_west_sequence","dense","dense_visual").contains(layout),"Unknown gallery layout: "+layout);
+            require(Set.of("base","alt").contains(architectureProfile),"Unknown architecture profile: "+architectureProfile);
+            dense=!layout.equals("single_east_west_sequence");visualDense=layout.equals("dense_visual");altArchitecture=architectureProfile.equals("alt");
             report.addProperty("schema","dreamwalker-v11-gallery-v1");
             report.addProperty("status","RUNNING");
             report.addProperty("productionJarSha256",marker.get("productionJarSha256").getAsString());
+            report.addProperty("architectureProfile",architectureProfile);
             report.add("exhibits",rows);
             actor=new ServerPlayerEntity(s,world,new GameProfile(UUID.nameUUIDFromBytes("OfflinePlayer:GalleryAuthor".getBytes(java.nio.charset.StandardCharsets.UTF_8)),"GalleryAuthor")) {
                 @Override public boolean hasPermissionLevel(int level){return level<=4;}
@@ -76,6 +94,7 @@ public final class GalleryAuthor implements ModInitializer {
                 require(seen.add(itemId),"Duplicate offered item: "+itemId);itemIds.add(itemId.toString());
                 var entry=DebugCatalogue.entry(item);
                 String kind=item.getItem() instanceof BlockItem?"architecture":itemId.getPath().endsWith("_placer")?"rp_object":"rp_item";
+                if(altArchitecture&&kind.equals("architecture"))item.getOrCreateSubNbt("BlockStateTag").putString("profile","alt");
                 Identifier registry=kind.equals("rp_object")?entry.registryId():itemId;
                 exhibits.add(new Exhibit(item,kind,registry,entry==null?"":entry.temporaryId(),entry==null?item.getName().getString():entry.name()));
             }
@@ -85,6 +104,19 @@ public final class GalleryAuthor implements ModInitializer {
                 exhibits.add(new Exhibit(ItemStack.EMPTY,"rp_mob",registry,entry==null?"":entry.temporaryId(),entry==null?type.getKey():entry.name()));
             }
             report.add("expectedItems",itemIds);report.add("expectedNpcs",npcIds);
+            if(visualDense) {
+                JsonObject envelopes=marker.getAsJsonObject("visualPackingBounds");
+                require(envelopes!=null&&envelopes.size()==exhibits.size(),"Visual layout requires an envelope for every exhibit");
+                for(Exhibit e:exhibits) {
+                    String key=e.kind+"|"+e.registry;JsonArray values=envelopes.getAsJsonArray(key);
+                    require(values!=null&&values.size()==6,"Missing visual packing envelope: "+key);
+                    double[] v=new double[6];for(int i=0;i<6;i++){v[i]=values.get(i).getAsDouble();require(Double.isFinite(v[i]),"Nonfinite visual envelope: "+key);}
+                    require(v[3]>v[0]&&v[4]>v[1]&&v[5]>v[2],"Empty visual envelope: "+key);
+                    visualPackingBounds.put(e,new Box(v[0],v[1],v[2],v[3],v[4],v[5]).union(prototypeBounds(e)));
+                }
+                report.addProperty("visualPackingPolicy","QA-only external model envelopes plus actual collider; floor platforms still collider footprint +2");
+                if(marker.has("visualPackingSource"))report.add("visualPackingSource",marker.get("visualPackingSource").deepCopy());
+            }
             report.addProperty("catalogueTypes",exhibits.size());
             report.addProperty("inventoryPolicy","Every offered current item, including spawn eggs in frames; each NPC also has a real persistent exhibit; retired aliases excluded.");
             world.setSpawnPos(new BlockPos(0,64,-6),0);s.setDefaultGameMode(GameMode.CREATIVE);
@@ -92,6 +124,7 @@ public final class GalleryAuthor implements ModInitializer {
             world.getGameRules().get(GameRules.DO_MOB_SPAWNING).set(false,s);
             world.getGameRules().get(GameRules.DO_WEATHER_CYCLE).set(false,s);
             world.getGameRules().get(GameRules.DO_FIRE_TICK).set(false,s);
+            if(dense)planDense();
         }
         void load(Box box) {
             for(int cx=MathHelper.floor(box.minX)>>4;cx<=MathHelper.floor(box.maxX)>>4;cx++)
@@ -110,6 +143,7 @@ public final class GalleryAuthor implements ModInitializer {
             }
             if(e.item.getItem() instanceof BlockItem item) {
                 var state=item.getBlock().getDefaultState();
+                if(altArchitecture)state=altProfile(state);
                 if(state.getBlock() instanceof PrototypeLadderBlock)state=PrototypeLadderBlock.withYaw(state.with(PrototypeLadderBlock.FREESTANDING,true),0);
                 var physical=PlacementPhysics.physicalBoxes(CompositeRuntime.instance(world,VIRTUAL,state,UUID.randomUUID(),new NbtCompound()));
                 if(!physical.isEmpty())return union(physical);
@@ -118,8 +152,7 @@ public final class GalleryAuthor implements ModInitializer {
             }
             return new Box(VIRTUAL).union(new ItemFrameEntity(world,VIRTUAL.north(),Direction.NORTH).getBoundingBox());
         }
-        Platform allocate(Box original) {
-            int x=nextX,z=0;
+        Platform platform(Box original,int x,int z) {
             BlockPos root=new BlockPos(x+2-(int)Math.floor(original.minX),64,z+2-(int)Math.floor(original.minZ));
             Box actual=original.offset(root.getX(),0,root.getZ());
             // Round after translation so trigonometric residue cannot add a whole block.
@@ -128,45 +161,92 @@ public final class GalleryAuthor implements ModInitializer {
             int width=(int)Math.ceil(actual.maxX)-(int)Math.floor(actual.minX)+4;
             int depth=(int)Math.ceil(actual.maxZ)-(int)Math.floor(actual.minZ)+4;
             require(Math.floor(actual.minX)-2==x&&Math.floor(actual.minZ)-2==z,"Platform origin differs");
-            nextX=x+width+2;
             return new Platform(x,z,width,depth,root,actual);
         }
+        Platform allocate(Box original) {
+            Platform platform=platform(original,nextX,0);nextX=platform.x+platform.width+2;return platform;
+        }
+        Platform physicalPlatform(Exhibit e,BlockPos root) {
+            Box actual=prototypeBounds(e).offset(root.getX(),0,root.getZ());
+            int x=(int)Math.floor(actual.minX)-2,z=(int)Math.floor(actual.minZ)-2;
+            return new Platform(x,z,(int)Math.ceil(actual.maxX)-x+2,(int)Math.ceil(actual.maxZ)-z+2,root,actual);
+        }
+        void planDense() {
+            final int shelfWidth=104;
+            List<Footprint> footprints=new ArrayList<>();
+            for(Exhibit e:exhibits){Box bounds=visualDense?visualPackingBounds.get(e):prototypeBounds(e);Platform p=platform(bounds,0,0);footprints.add(new Footprint(e,bounds,p.width,p.depth));}
+            footprints.sort(Comparator.comparingInt(Footprint::depth).reversed()
+                .thenComparing(Comparator.comparingInt(Footprint::width).reversed()).thenComparing(f->f.exhibit.registry.toString()));
+            List<Shelf> shelves=new ArrayList<>();
+            for(Footprint footprint:footprints) {
+                Shelf chosen=null;Platform placed=null;
+                for(Shelf shelf:shelves) {
+                    Platform candidate=platform(footprint.bounds,shelf.nextX,shelf.z);
+                    if(candidate.depth<=shelf.depth&&candidate.x+candidate.width<=shelfWidth){chosen=shelf;placed=candidate;break;}
+                }
+                if(chosen==null) {
+                    placed=platform(footprint.bounds,0,shelves.isEmpty()?0:denseDepth+2);
+                    require(placed.width<=shelfWidth,"Exhibit exceeds dense shelf width: "+footprint.exhibit.registry);
+                    chosen=new Shelf(placed.z,placed.depth);shelves.add(chosen);
+                }
+                densePlatforms.put(footprint.exhibit,visualDense?physicalPlatform(footprint.exhibit,placed.root):placed);chosen.nextX=placed.x+placed.width+2;
+                denseWidth=Math.max(denseWidth,placed.x+placed.width);denseDepth=Math.max(denseDepth,placed.z+placed.depth);
+            }
+            List<Platform> platforms=new ArrayList<>(densePlatforms.values());
+            for(int i=0;i<platforms.size();i++)for(int j=i+1;j<platforms.size();j++) {
+                Platform a=platforms.get(i),b=platforms.get(j);
+                require(a.x+a.width+2<=b.x||b.x+b.width+2<=a.x||a.z+a.depth+2<=b.z||b.z+b.depth+2<=a.z,"Dense platforms overlap or lack the two-block gap");
+            }
+            report.addProperty("shelfWidth",shelfWidth);report.addProperty("shelfCount",shelves.size());
+        }
+        BlockState altProfile(BlockState state) {
+            if(state.getBlock() instanceof CompositeRootBlock)return state.with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.ALT);
+            if(state.getBlock() instanceof PrototypeLadderBlock)return state.with(PrototypeLadderBlock.PROFILE,PrototypeLadderBlock.Profile.ALT);
+            if(state.getBlock() instanceof PrototypeWallBlock)return state.with(PrototypeWallBlock.PROFILE,PrototypeWallBlock.Profile.ALT);
+            throw new IllegalStateException("Architecture has no ALT profile: "+Registries.BLOCK.getId(state.getBlock()));
+        }
         void place(Exhibit e) {
-            Platform platform=allocate(prototypeBounds(e));BlockPos root=platform.root;
+            Platform platform=dense?densePlatforms.get(e):allocate(prototypeBounds(e));BlockPos root=platform.root;
             load(platform.expected.expand(2));
             Block flooring=e.kind.equals("rp_mob")?Blocks.DEEPSLATE_TILES:e.kind.equals("architecture")?Blocks.SMOOTH_STONE:Blocks.POLISHED_ANDESITE;
             for(int px=platform.x;px<platform.x+platform.width;px++)for(int pz=platform.z;pz<platform.z+platform.depth;pz++)
                 world.setBlockState(new BlockPos(px,63,pz),flooring.getDefaultState(),Block.NOTIFY_ALL);
             actor.setPosition(root.getX()+.5,64,root.getZ()-4);actor.setYaw(0);actor.setPitch(0);actor.setSneaking(true);
             actor.setStackInHand(Hand.MAIN_HAND,e.item.copy());actor.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);
-            Box actual;UUID uuid;String representation,boundsSource;
+            Box actual,visual;UUID uuid;String representation,boundsSource,visualBoundsSource;
             if(e.kind.equals("rp_object")) {
                 RpObjectEntity object=ObjectRegistry.TYPES.get(e.registry.getPath()).create(world);pose(object,root);load(object.queryBounds());
                 require(world.spawnEntity(object),"Cannot spawn RP exhibit: "+e.registry);
                 actual=objectBounds(object);uuid=object.getUuid();representation="registered_rp_entity";
                 boundsSource=object.activePhysicalBoxes().isEmpty()?"visual_fallback_no_player_collision":"player_collision";
+                visual=object.visualBounds();visualBoundsSource="source_rp_model_geometry";
             } else if(e.kind.equals("rp_mob")) {
                 var mob=MobRegistry.TYPES.get(e.registry.getPath()).create(world);
                 mob.refreshPositionAndAngles(root.getX()+.5,64,root.getZ()+.5,180,0);
                 mob.setAiDisabled(true);mob.setPersistent();mob.setInvulnerable(true);mob.setNoGravity(true);
                 require(world.spawnEntity(mob),"Cannot spawn real NPC: "+e.registry);
                 actual=mob.getBoundingBox();uuid=mob.getUuid();representation="registered_npc";boundsSource="npc_dimensions";
+                visual=actual;visualBoundsSource="npc_collider_fallback_requires_external_model_envelope";
             } else if(e.item.getItem() instanceof BlockItem) {
                 ActionResult result=e.item.getItem().useOnBlock(new ItemUsageContext(actor,Hand.MAIN_HAND,
                     new BlockHitResult(new Vec3d(root.getX()+.5,64,root.getZ()+.5),Direction.UP,root.down(),false)));
                 require(result.isAccepted(),"Ordinary block item placement refused: "+e.registry+" "+result);
+                require(!altArchitecture||world.getBlockState(root).equals(altProfile(world.getBlockState(root))),"ALT item profile was not placed: "+e.registry);
                 var owner=VerticalMount.owner(world,root);require(owner!=null,"Placed architecture root has no UUID: "+e.registry);
                 uuid=owner.instanceId();var be=(CompositeBlockEntity)world.getBlockEntity(root);
-                var physical=PlacementPhysics.physicalBoxes(CompositeRuntime.instance(world,root,world.getBlockState(root),uuid,be.payload()));
+                var instance=CompositeRuntime.instance(world,root,world.getBlockState(root),uuid,be.payload());
+                var physical=PlacementPhysics.physicalBoxes(instance);
                 var outline=world.getBlockState(root).getOutlineShape(world,root);
                 actual=physical.isEmpty()?(outline.isEmpty()?new Box(root):outline.getBoundingBox().offset(root)):union(physical);
                 representation="ordinary_block_item";boundsSource=physical.isEmpty()?"outline_fallback_no_player_collision":"player_collision";
+                visual=architectureVisualBounds(instance,root,actual);visualBoundsSource="architecture_selection_envelope";
             } else {
                 world.setBlockState(root,Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
                 ItemFrameEntity frame=new ItemFrameEntity(world,root.north(),Direction.NORTH);frame.setHeldItemStack(e.item.copy());frame.setInvulnerable(true);
                 NbtCompound fixed=frame.writeNbt(new NbtCompound());fixed.putBoolean("Fixed",true);frame.readNbt(fixed);
                 require(world.spawnEntity(frame),"Cannot spawn item frame: "+e.registry);
                 actual=new Box(root).union(frame.getBoundingBox());uuid=frame.getUuid();representation="item_frame";boundsSource="frame_and_support";
+                visual=actual;visualBoundsSource="frame_and_support";
             }
             require(Math.floor(actual.minX)-2==platform.x&&Math.ceil(actual.maxX)+2==platform.x+platform.width
                 &&Math.floor(actual.minZ)-2==platform.z&&Math.ceil(actual.maxZ)+2==platform.z+platform.depth,
@@ -176,7 +256,10 @@ public final class GalleryAuthor implements ModInitializer {
             JsonObject row=new JsonObject();row.addProperty("id",e.number);row.addProperty("registry",e.registry.toString());row.addProperty("name",e.name);row.addProperty("kind",e.kind);
             row.addProperty("item",e.item.isEmpty()?"":Registries.ITEM.getId(e.item.getItem()).toString());row.addProperty("uuid",uuid.toString());
             row.addProperty("representation",representation);row.addProperty("boundsSource",boundsSource);row.addProperty("floor",Registries.BLOCK.getId(flooring).toString());
+            if(e.kind.equals("architecture"))row.addProperty("architectureProfile",altArchitecture?"alt":"base");
             row.add("root",JSON.toJsonTree(List.of(root.getX(),root.getY(),root.getZ())));row.add("bounds",box(actual));
+            row.add("visualBounds",box(visual));row.addProperty("visualBoundsSource",visualBoundsSource);
+            if(visualDense)row.add("visualPackingBounds",box(visualPackingBounds.get(e).offset(root.getX(),0,root.getZ())));
             row.add("platform",JSON.toJsonTree(List.of(platform.x,platform.z,platform.width,platform.depth)));rows.add(row);
         }
         void label(BlockPos pos,String name,String number,String kind) {
@@ -199,8 +282,10 @@ public final class GalleryAuthor implements ModInitializer {
             label(new BlockPos(0,64,-8),"Dreamwalker BB v11","","Каталог → восток");
             report.addProperty("cataloguePlaced",rows.size());report.addProperty("standPlaced",0);
             for(String kind:List.of("architecture","rp_object","rp_mob","rp_item"))report.addProperty(kind,rows.asList().stream().filter(r->r.getAsJsonObject().get("kind").getAsString().equals(kind)).count());
-            report.addProperty("platformMargin",2);report.addProperty("nearestPlatformEdgeGap",2);report.addProperty("layout","single_east_west_sequence");
-            report.addProperty("lengthBlocks",nextX-2);report.addProperty("qaRequiredForSavedWorld",false);report.addProperty("actualKeyboardVisualTests","NOT_RUN");
+            report.addProperty("platformMargin",2);report.addProperty("nearestPlatformEdgeGap",2);report.addProperty("layout",layout);
+            report.addProperty("lengthBlocks",dense?denseWidth:nextX-2);
+            if(dense){report.addProperty("widthBlocks",denseWidth);report.addProperty("depthBlocks",denseDepth);}
+            report.addProperty("qaRequiredForSavedWorld",false);report.addProperty("actualKeyboardVisualTests","NOT_RUN");
             report.addProperty("rpPlacementScope","Registered authoring instances, not a claim of ordinary player placement testing.");
             server.save(false,true,true);report.addProperty("status","PASS_AUTHORED_REQUIRES_PRODUCTION_REOPEN");
             Files.writeString(OUTPUT,JSON.toJson(report));
@@ -235,6 +320,14 @@ public final class GalleryAuthor implements ModInitializer {
         object.refreshPositionAndAngles(origin.x,origin.y,origin.z,0,0);
     }
     private static Box objectBounds(RpObjectEntity object){return object.activePhysicalBoxes().isEmpty()?object.visualBounds():union(object.activePhysicalBoxes());}
+    private static Box architectureVisualBounds(dev.dreamwalker.bloodbornedw.runtime.ObjectInstance instance,BlockPos root,Box physical) {
+        Box bounds=physical;
+        for(var entry:instance.cells().entrySet())for(var b:entry.getValue().selection()) {
+            var cell=entry.getKey();bounds=bounds.union(new Box(root.getX()+cell.x()+b.minX(),root.getY()+cell.y()+b.minY(),root.getZ()+cell.z()+b.minZ(),
+                root.getX()+cell.x()+b.maxX(),root.getY()+cell.y()+b.maxY(),root.getZ()+cell.z()+b.maxZ()));
+        }
+        return bounds;
+    }
     private static Box union(List<Box> boxes){require(!boxes.isEmpty(),"No exhibit geometry");Box out=boxes.get(0);for(int i=1;i<boxes.size();i++)out=out.union(boxes.get(i));return out;}
     private static JsonElement box(Box b){return JSON.toJsonTree(List.of(b.minX,b.minY,b.minZ,b.maxX,b.maxY,b.maxZ));}
     private static void require(boolean condition,String message){if(!condition)throw new IllegalStateException(message);}

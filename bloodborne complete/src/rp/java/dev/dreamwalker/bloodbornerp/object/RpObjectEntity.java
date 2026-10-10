@@ -49,11 +49,18 @@ public final class RpObjectEntity extends Entity implements GeoEntity, AssetBack
 private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visual,List<net.minecraft.util.math.Box> physical,List<net.minecraft.util.math.Box> selection,List<net.minecraft.util.math.Box> climbing,List<net.minecraft.util.math.Box> ordinaryVisual) {}
  private GeometrySnapshot geometrySnapshot;
  private boolean restoringData;
+ private boolean clientOpen;
  private static final java.util.Set<String> NON_COLLIDING=java.util.Set.of("curtainsmall","curtain_half","curtains","door_empty","gate_empty","trapdoor","wood_gate");
  private static final java.util.Set<String> PASSAGES=java.util.Set.of("door_1","door_2","main_gate","small_gate");
  public RpObjectEntity(EntityType<? extends RpObjectEntity> type,World world,String assetId){super(type,world);this.assetId=assetId;if(assetId.equals("ladder"))dataTracker.set(OPEN,true);refreshCollider();}
  @Override protected void initDataTracker(){dataTracker.startTracking(OPEN,false);dataTracker.startTracking(LOCKED,false);dataTracker.startTracking(SCALE,1f);dataTracker.startTracking(DOGS_VISIBLE,true);dataTracker.startTracking(WOOD_GATE_PULSE_TICKS,0);dataTracker.startTracking(LADDER_DEPLOY_TICKS,0);dataTracker.startTracking(VERTICAL_OFFSET,new NbtCompound());}
- @Override public Packet<ClientPlayPacketListener> createSpawnPacket(){return new EntitySpawnS2CPacket(this);}
+ @Override public Packet<ClientPlayPacketListener> createSpawnPacket(){return new EntitySpawnS2CPacket(this,isOpen()?1:0);}
+ @Override public void onSpawnPacket(EntitySpawnS2CPacket packet){
+  super.onSpawnPacket(packet);
+  // Spawn always carries the baseline, even when default-valued metadata is omitted.
+  clientOpen=(packet.getEntityData()&1)!=0;
+  dataTracker.set(OPEN,clientOpen);transition="";transitionTicks=0;refreshCollider();
+ }
  @Override public String assetId(){return RpObjectCompatibility.canonicalId(assetId);} public AssetSpec asset(){return AssetCatalog.get(assetId());}
  public String originalRegistryAssetId(){return assetId;}
  @Override protected net.minecraft.text.Text getDefaultName(){return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(net.minecraft.registry.Registries.ENTITY_TYPE.getId(getType()),super.getDefaultName());}
@@ -184,7 +191,19 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
   if(nbt.contains("Links")&&(!nbt.contains("Links",NbtElement.LIST_TYPE)||(nbt.get("Links") instanceof NbtList list&&!list.isEmpty()&&list.getHeldType()!=NbtElement.INT_ARRAY_TYPE)))dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Links must contain typed UUID INT_ARRAY entries; existing read rules retained");
   if(nbt.contains("ConnectionId")&&!nbt.contains("ConnectionId",NbtElement.STRING_TYPE))dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("ConnectionId must be STRING; existing read rules retained");
  }
- @Override public void onTrackedDataSet(TrackedData<?> data){super.onTrackedDataSet(data);if(data==OPEN){if(assetId!=null&&getWorld().isClient){transition=assetId.equals("ladder")?"":isOpen()?"open":isMechanism()?"":"close";transitionTicks=transition.isEmpty()?0:transitionTicks(transition);}refreshCollider();}else if(data==SCALE||data==LADDER_DEPLOY_TICKS||data==VERTICAL_OFFSET||data==WOOD_GATE_PULSE_TICKS||data==DOGS_VISIBLE)refreshCollider();}
+ @Override public void onTrackedDataSet(TrackedData<?> data){super.onTrackedDataSet(data);if(data==OPEN||data==SCALE||data==LADDER_DEPLOY_TICKS||data==VERTICAL_OFFSET||data==WOOD_GATE_PULSE_TICKS||data==DOGS_VISIBLE)refreshCollider();}
+ @Override public void onDataTrackerUpdate(List<DataTracker.SerializedEntry<?>> entries){
+  super.onDataTrackerUpdate(entries);
+  if(assetId!=null&&getWorld().isClient){
+   boolean open=isOpen();
+   if(open!=clientOpen){
+    clientOpen=open;
+    transition=assetId.equals("ladder")?"":open?"open":isMechanism()?"":"close";
+    transitionTicks=transition.isEmpty()?0:transitionTicks(transition);
+   }
+  }
+  refreshCollider();
+ }
  @Override public void setPosition(double x,double y,double z){super.setPosition(x,y,z);if(assetId!=null)refreshCollider();}
  @Override public void setYaw(float yaw){super.setYaw(yaw);if(assetId!=null)refreshCollider();}
  @Override public void setPitch(float pitch){super.setPitch(pitch);if(assetId!=null)refreshCollider();}

@@ -175,7 +175,16 @@ public final class CompositeRuntime {
             BlockPos root=CompositeData.pos(entry.owner().root());
             BlockState state=CompositeData.state(entry.rootData());
             NbtCompound mount=CompositeData.nbt(entry.rootData().blockEntityNbt());
-            return dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock.hasBackingMount(state,world,root,mount.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY))?List.of():entry.shape().collision();
+            double offset=mount.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
+            if(dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock.hasBackingMount(state,world,root,offset))return List.of();
+            if(!(state.getBlock() instanceof dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock ladder))return entry.shape().collision();
+            List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> thin=new ArrayList<>();
+            for(var box:ladder.ordinaryPlayerCollision(state).getBoundingBoxes()){
+                var moved=box.offset(root.getX()-cell.getX(),root.getY()+offset-cell.getY(),root.getZ()-cell.getZ());
+                double a=Math.max(0,moved.minX),b=Math.max(0,moved.minY),c=Math.max(0,moved.minZ),d=Math.min(1,moved.maxX),e=Math.min(1,moved.maxY),f=Math.min(1,moved.maxZ);
+                if(d>a&&e>b&&f>c)thin.add(new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(a,b,c,d,e,f));
+            }
+            return thin;
         }
         NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());double x=entry.owner().root().x()+payload.getInt("NativeBackingX")-cell.getX(),y=entry.owner().root().y()+payload.getInt("NativeBackingY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY)-cell.getY(),z=entry.owner().root().z()+payload.getInt("NativeBackingZ")-cell.getZ();
         double a=Math.max(0,x),b=Math.max(0,y),c=Math.max(0,z),d=Math.min(1,x+1),e=Math.min(1,y+1),f=Math.min(1,z+1);

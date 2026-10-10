@@ -200,6 +200,49 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         p.discard();t.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="catalogue_repair")
+    public void diagonalLadderThinPlayerPhysicsClimbsWithoutFillingEmptyCorners(TestContext t) {
+        var w=t.getWorld();BlockPos root=t.getAbsolutePos(new BlockPos(3,3,3));
+        var p=t.createMockSurvivalPlayer();var ladder=(PrototypeLadderBlock)PrototypeArchitecture.ladderItem(0).getBlock();
+        var state=PrototypeLadderBlock.withYaw(ladder.getDefaultState(),1).with(PrototypeLadderBlock.FREESTANDING,true);
+        try {
+            for(int x=-1;x<=1;x++)for(int z=-1;z<=2;z++)w.setBlockState(root.add(x,-1,z),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
+            for(int y=0;y<4;y++)w.setBlockState(root.up(y),state,Block.NOTIFY_ALL);
+            t.assertTrue(w.getBlockState(root).isIn(net.minecraft.registry.tag.BlockTags.CLIMBABLE),"actual registered90006 remains in native climbable tag");
+            Box emptyCorner=new Box(.35,.1,.45,.45,.9,.55).offset(root);
+            t.assertTrue(w.isSpaceEmpty(p,emptyCorner),"empty space beside diagonal strip is not the old filled coarse rectangle");
+            p.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.05,0,0);p.setVelocity(Vec3d.ZERO);
+            t.assertTrue(w.isSpaceEmpty(p,p.getBoundingBox())&&p.isClimbing(),"unshifted free native player starts outside solid strip with feet in climbable cell");
+            double peak=p.getY();boolean stopped=false;
+            for(int tick=0;tick<55;tick++){p.travel(new Vec3d(0,0,1));peak=Math.max(peak,p.getY());stopped|=p.horizontalCollision;}
+            t.assertTrue(stopped&&peak-root.getY()>2.5,"actual native travel climbs free thin strip beyond a single jump; peak="+peak+" pos="+p.getPos());
+            for(int y=0;y<4;y++)for(Direction side:PrototypeLadderBlock.backingDirections(state))w.setBlockState(root.up(y).offset(side),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
+            p.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.05,0,0);p.setVelocity(Vec3d.ZERO);
+            t.assertTrue(state.getCollisionShape(w,root,ShapeContext.of(p)).isEmpty(),"two actual side supports retain empty player collider");
+            peak=p.getY();double furthest=p.getZ();
+            for(int tick=0;tick<55;tick++){p.travel(new Vec3d(0,0,1));peak=Math.max(peak,p.getY());furthest=Math.max(furthest,p.getZ());}
+            t.assertTrue(furthest-root.getZ()>.6&&peak-root.getY()>2.5,"native player enters supported cell and climbs against actual SOUTH support; peak="+peak+" pos="+p.getPos());
+            // Legacy mounted saves contain context-free coarse NativeGeometry.
+            // The contextual overlay must not reintroduce that filled corner.
+            var legacy=VerticalMount.nativePayload(w,root,state,new NbtCompound());legacy.putDouble(VerticalMount.KEY,.25);
+            p.setPosition(root.getX()+5,root.getY(),root.getZ()+5);p.setVelocity(Vec3d.ZERO);
+            for(int y=0;y<4;y++){w.removeBlock(root.up(y),false);for(Direction side:PrototypeLadderBlock.backingDirections(state))w.removeBlock(root.up(y).offset(side),false);}
+            w.setBlockState(root,state,Block.NOTIFY_ALL);VerticalMount.placed(w,root,state);
+            var nativeOwner=((CompositeBlockEntity)w.getBlockEntity(root)).resident();
+            t.assertTrue(nativeOwner!=null,"ordinary native ladder fixture has its persistent root owner");
+            var placed=CompositeRuntime.transitionPayload(w,nativeOwner,state,legacy,p);
+            t.assertTrue(placed.outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED,"legacy fractional diagonal fixture installs: "+placed.reason());
+            t.assertTrue(w.isSpaceEmpty(p,emptyCorner.offset(0,.25,0)),"saved coarse footprint cannot fill thin diagonal player's empty corner");
+            t.assertTrue(!net.minecraft.util.shape.VoxelShapes.matchesAnywhere(w.getBlockState(root).getOutlineShape(w,root,ShapeContext.of(p)),net.minecraft.util.shape.VoxelShapes.cuboid(emptyCorner.offset(-root.getX(),.25-root.getY(),-root.getZ())),net.minecraft.util.function.BooleanBiFunction.AND),"mounted player outline also excludes the saved coarse empty corner");
+            CompositeRuntime.remove(w,((CompositeBlockEntity)w.getBlockEntity(root)).resident(),p,false);
+            t.complete();
+        } finally {
+            if(w.getBlockEntity(root) instanceof CompositeBlockEntity own&&own.resident()!=null)CompositeRuntime.remove(w,own.resident(),null,false);
+            p.discard();
+            for(int y=0;y<4;y++){w.removeBlock(root.up(y),false);for(Direction side:PrototypeLadderBlock.backingDirections(state))w.removeBlock(root.up(y).offset(side),false);}
+            for(int x=-1;x<=1;x++)for(int z=-1;z<=2;z++)w.removeBlock(root.add(x,-1,z),false);
+        }
+    }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="catalogue_repair")
     public void animationBusyIsPerInstanceAndDoesNotChangeStateOnRejectedRepeat(TestContext t) {
         var w=t.getWorld();var a=ObjectRegistry.TYPES.get("door_1").create(w);var b=ObjectRegistry.TYPES.get("door_1").create(w);
         t.assertTrue(a.setOpen(true)&&a.animationBusy(),"first actual door clip starts");

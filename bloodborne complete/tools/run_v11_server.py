@@ -105,6 +105,8 @@ def main():
     parser.add_argument('--world-copy', type=Path)
     parser.add_argument('--commands-file', type=Path)
     parser.add_argument('--hold-seconds', type=int, default=0)
+    parser.add_argument('--view-distance', type=int, choices=range(2, 11), default=2)
+    parser.add_argument('--simulation-distance', type=int, choices=range(2, 11), default=2)
     parser.add_argument('--gallery-timeout', type=int, default=180)
     parser.add_argument('--startup-timeout', type=int, default=180)
     parser.add_argument('--shutdown-timeout', type=int, default=90)
@@ -184,7 +186,8 @@ def main():
         sock.bind(('127.0.0.1', 0));port = sock.getsockname()[1]
     properties = {'server-ip': '127.0.0.1', 'server-port': str(port), 'online-mode': 'false', 'spawn-protection': '0',
                   'level-name': 'isolated-smoke-world', 'level-type': 'minecraft:flat', 'generate-structures': 'false',
-                  'view-distance': '2', 'simulation-distance': '2', 'max-players': '2', 'enable-query': 'false', 'enable-rcon': 'false',
+                  'view-distance': str(args.view_distance), 'simulation-distance': str(args.simulation_distance),
+                  'max-players': '2', 'enable-query': 'false', 'enable-rcon': 'false',
                   'gamemode': 'creative', 'op-permission-level': '4', 'difficulty': 'normal',
                   'generator-settings': json.dumps({'biome': 'minecraft:plains', 'layers': [{'block': 'minecraft:bedrock', 'height': 1},
                     {'block': 'minecraft:dirt', 'height': 126}, {'block': 'minecraft:grass_block', 'height': 1}],
@@ -211,6 +214,7 @@ def main():
                     for text in commands:
                         process.stdin.write(text + '\n')
                     process.stdin.flush()
+                    write_json(args.report, result)
                     if args.gallery_input:
                         deadline = time.monotonic() + args.gallery_timeout
                         while process.poll() is None and not (run / 'catalogue-gallery-output.json').is_file() and time.monotonic() < deadline:
@@ -218,6 +222,19 @@ def main():
                     else:
                         deadline = time.monotonic() + (args.hold_seconds or 2)
                         while process.poll() is None and time.monotonic() < deadline and not (run / 'qa-normal-stop.request').is_file():
+                            mailbox = run / 'qa-live-commands.json'
+                            if mailbox.is_file():
+                                ordinary(mailbox)
+                                batch = commands_from(mailbox)
+                                number = len(result.setdefault('live_command_batches', [])) + 1
+                                evidence = run / f'qa-live-commands-{number:03d}.json'
+                                require(not evidence.exists(), 'Console batch evidence already exists')
+                                mailbox.rename(evidence)
+                                for text in batch:
+                                    process.stdin.write(text + '\n')
+                                process.stdin.flush()
+                                result['live_command_batches'].append({'file': str(evidence), 'commands': batch})
+                                write_json(args.report, result)
                             time.sleep(1)
                     if process.poll() is None:
                         process.stdin.write('stop\n');process.stdin.flush()

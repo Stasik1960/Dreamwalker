@@ -3,9 +3,12 @@
 Моды и инструменты для ролевого сервера **Minecraft 1.20.1 / Fabric**.
 Здесь находятся исходники самостоятельных проектов, готовые сборки и документация.
 
-Актуальная отдельная ревизия **Dreamwalker BB Fabric V11.1**:
+Актуальный кандидат **Dreamwalker BB Fabric V11.2**:
 [исходники и установка](bloodborne%20complete/README.md),
-[JAR и полная галерея](releases/Dreamwalker-BB/v11.1/README.md).
+[JAR и полная галерея](releases/Dreamwalker-BB/v11.2/README.md).
+Исправлены начальная синхронизация RP анимаций и тонкая коллизия диагональной
+90006; 42 GameTest и 21 core test прошли. Ручной подъём при удержании клавиши
+ещё ожидает подтверждения: [фактическая приёмка](bloodborne%20complete/docs/V11_2_ACCEPTANCE_RESULTS.md).
 
 [Скачать сборки](releases/README.md) · [Сборка из исходников](CONTRIBUTING.md) · [Статус Bloodborne](Bloodborne-Blocks/docs/RELEASE-STATUS.md)
 
