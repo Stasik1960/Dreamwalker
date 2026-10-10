@@ -47,6 +47,9 @@ public final class PlacementPhysics {
                                 if (overlaps(box,nativeBox.offset(pos))&&!retainedIntersection(box,nativeBox.offset(pos),previous)) return "solid_native_overlap:"+pos.toShortString();
                         for (var contribution : CompositeRuntime.contributions(world,pos)) {
                             if (contribution.owner().equals(excludeOwner)) continue;
+                            // Only block placement passes through the roof's protruding volume.
+                            // Its real root remains occupied and movement/entity checks remain solid.
+                            if(contribution.owner().registryId().equals("bloodborne_dw:prototype_roof")&&!pos.equals(CompositeData.pos(contribution.owner().root())))continue;
                             for (var b : contribution.shape().collision())
                                 if (overlaps(box,new Box(x+b.minX(),y+b.minY(),z+b.minZ(),x+b.maxX(),y+b.maxY(),z+b.maxZ()))
                                         &&!retainedIntersection(box,new Box(x+b.minX(),y+b.minY(),z+b.minZ(),x+b.maxX(),y+b.maxY(),z+b.maxZ()),previous))

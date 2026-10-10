@@ -37,7 +37,7 @@ public final class RpV10EditingGameTests implements FabricGameTest {
         var physical=cage.activePhysicalBoxes();c.assertTrue(physical.size()==1&&Math.abs(physical.get(0).getXLength()-2.8)<1e-6&&Math.abs(physical.get(0).getYLength()-6.5)<1e-6,"selection correction retains registered legacy cage movement dimensions");
         UUID uuid=cage.getUuid();cage.setDogsVisible(false);c.assertTrue(cage.activePhysicalBoxes().equals(physical),"hiding per-instance dog art cannot alter movement collider");cage.setDogsVisible(true);
         c.assertTrue(cage.getUuid().equals(uuid)&&c.getWorld().getBlockState(support).equals(beforeSupport)&&c.getWorld().getBlockState(root).isAir(),"source identity and exact native support/AIR survive ordinary RP placement");
-        near(player,cage);aim(player,cage.selectionBoxes().get(0).getCenter());var selected=RpObjectSelection.playerTarget(player,6);c.assertTrue(selected!=null&&selected.getEntity()==cage,"actual source-part selection survives finite animation envelope");player.attack(cage);c.assertTrue(cage.isRemoved()&&c.getWorld().getBlockState(support).equals(beforeSupport),"intentional ordinary part attack removes only cage, retaining native support");
+        near(player,cage);aim(player,cage.activePhysicalBoxes().get(0).getCenter());var selected=RpObjectSelection.playerTarget(player,6);c.assertTrue(selected!=null&&selected.getEntity()==cage,"ordinary selection targets physical cage, not decorative dog envelope");player.attack(cage);c.assertTrue(cage.isRemoved()&&c.getWorld().getBlockState(support).equals(beforeSupport),"intentional ordinary part attack removes only cage, retaining native support");
         c.getWorld().setBlockState(support,Blocks.AIR.getDefaultState());player.discard();c.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="rp_v10_item_passthrough")
@@ -71,7 +71,7 @@ public final class RpV10EditingGameTests implements FabricGameTest {
         for(String id:ObjectRegistry.TYPES.keySet()){
             if(!ObjectRegistry.isCanonicalPlacementItem(id))continue;
             RpObjectEntity object=create(c,id);object.refreshPositionAndAngles(origin.x,origin.y,origin.z,90,0);c.getWorld().spawnEntity(object);
-            Box part=object.selectionBoxes().get(0);Vec3d target=new Vec3d((part.minX+part.maxX)/2,(part.minY+part.maxY)/2,(part.minZ+part.maxZ)/2);
+            Box part=object.interactionBoxes().get(0);Vec3d target=new Vec3d((part.minX+part.maxX)/2,(part.minY+part.maxY)/2,(part.minZ+part.maxZ)/2);
             player.setPosition(target.x,target.y-player.getStandingEyeHeight(),part.minZ-2);aim(player,target);
             var hit=RpObjectSelection.playerTarget(player,6);
             c.assertTrue(hit!=null&&hit.getEntity()==object,"actual source-part ray selects canonical RP "+id);

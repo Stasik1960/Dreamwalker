@@ -55,6 +55,7 @@ public final class PrototypeWallModels {
     }
     public static int junctionCacheSize(){return WallStackGeometry.cacheSize();}
     public static int key(BlockState state){
+        state=PrototypeWallBlock.canonicalForm(state);
         int sides=PrototypeWallBlock.sideCode(state),art=PrototypeWallBlock.hasTallSide(state)?PrototypeWallBlock.material(state):0;
         return sides+81*((state.get(PrototypeWallBlock.POST)?1:0)+2*(state.get(PrototypeWallBlock.ROTATION)
             +8*((state.get(PrototypeWallBlock.PROFILE)==PrototypeWallBlock.Profile.ALT?1:0)+2*art)));

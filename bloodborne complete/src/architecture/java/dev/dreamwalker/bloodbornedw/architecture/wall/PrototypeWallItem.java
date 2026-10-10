@@ -23,6 +23,8 @@ public final class PrototypeWallItem extends BlockItem {
     }
     private ActionResult placeInternal(ItemPlacementContext context) {
         int art=material(context.getStack());
+        NbtCompound oldForm=context.getStack().getSubNbt("BlockStateTag");
+        if(art!=0)art=(oldForm!=null&&oldForm.contains("rotation",8)?(integer(oldForm,"rotation",7)&1)!=0:art==1)?1:6;
         PrototypeWallBlock canonical=PrototypeWallArchitecture.materialBlock(art);
         if(canonical!=getBlock()){
             ItemStack converted=new ItemStack(canonical.asItem(),context.getStack().getCount());
@@ -47,6 +49,11 @@ public final class PrototypeWallItem extends BlockItem {
         }
         tag.remove("post");tag.remove("course");
         tag.remove("waterlogged");
+        if(art==1) {
+            int yaw=oldForm!=null&&oldForm.contains("rotation",8)?integer(oldForm,"rotation",7)|1:(((int)Math.floor(context.getPlayerYaw()/90)+4)*2+1)&7;
+            tag.putString("rotation",Integer.toString(yaw));tag.putString("connections","manual");tag.putString("up","true");
+            for(Direction direction:Direction.Type.HORIZONTAL)tag.putString(direction.asString(),"none");
+        } else if(art==6&&tag.contains("rotation",8))tag.putString("rotation",Integer.toString(integer(tag,"rotation",7)&6));
         ItemPlacementContext prepared=new ItemPlacementContext(context){@Override public ItemStack getStack(){return working;}};
         ActionResult result=super.place(prepared);
         if(result.isAccepted())context.getStack().decrement(Math.max(0,context.getStack().getCount()-working.getCount()));
@@ -62,10 +69,11 @@ public final class PrototypeWallItem extends BlockItem {
             state=state.with(PrototypeWallBlock.CONNECTIONS,PrototypeWallBlock.Connections.MANUAL).with(PrototypeWallBlock.ROTATION,integer(tag,"rotation",7)).with(PrototypeWallBlock.POST,"true".equals(tag.getString("up")));
             for(Direction direction:Direction.Type.HORIZONTAL)state=state.with(PrototypeWallBlock.property(direction),WallShape.valueOf(tag.getString(direction.asString()).toUpperCase(java.util.Locale.ROOT)));
         } else {
-            int yaw=((int)Math.floor(context.getPlayerYaw()/45+0.5)+4)&7;
+            int yaw=PrototypeWallBlock.diagonalPost(state)?(((int)Math.floor(context.getPlayerYaw()/90)+4)*2+1)&7:(((int)Math.floor(context.getPlayerYaw()/90+0.5)+2)*2)&7;
             if((yaw&1)==0)state=((PrototypeWallBlock)getBlock()).reconnect(state.with(PrototypeWallBlock.ROTATION,yaw),context.getWorld(),pos);
             else state=state.with(PrototypeWallBlock.CONNECTIONS,PrototypeWallBlock.Connections.MANUAL).with(PrototypeWallBlock.ROTATION,yaw);
         }
+        state=PrototypeWallBlock.canonicalForm(state);
         if(!canPlace(context,state)){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal("native_canPlace_rejected; support_or_host_rules");return null;}
         if(!context.getWorld().doesNotIntersectEntities(null,state.getCollisionShape(context.getWorld(),pos).offset(pos.getX(),pos.getY(),pos.getZ()))){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal("active_entity_intersection");return null;}
         String physicalConflict=dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.ordinaryPlacementConflict(context.getWorld(),

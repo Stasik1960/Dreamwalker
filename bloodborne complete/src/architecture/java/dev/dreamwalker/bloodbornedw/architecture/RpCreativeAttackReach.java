@@ -21,7 +21,7 @@ public final class RpCreativeAttackReach {
                 || player.isRemoved() || object.isRemoved()
                 || object.getWorld() != world || !player.isCreative()
                 || !player.getAbilities().allowModifyWorld || BuildingTool.isHeld(player)) return null;
-        var selected = RpObjectSelection.playerTarget(player, 6);
+        var selected = RpObjectSelection.playerTarget(player, RpObjectSelection.entityReach(player));
         return selected != null && selected.getEntity() == object
                 && world.canPlayerModifyAt(player, BlockPos.ofFloored(selected.getPos())) ? selected.getPos() : null;
     }

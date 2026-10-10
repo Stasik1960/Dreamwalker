@@ -17,6 +17,7 @@ import socket
 import subprocess
 import time
 import urllib.request
+import uuid
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,12 +43,26 @@ def manifest_lines(text: str) -> bytes:
     return ("\r\n".join(result) + "\r\n\r\n").encode("utf8")
 
 
+def console_commands(path: Path) -> list[str]:
+    if path.stat().st_size > 65536:
+        raise ValueError("Console command fixture exceeds64KiB")
+    commands = json.loads(path.read_text(encoding="utf8"))
+    if not isinstance(commands, list) or len(commands) > 128 or any(
+            not isinstance(command, str) or not command or len(command) > 2048
+            or any(char in command for char in "\r\n\0") for command in commands):
+        raise ValueError("Use at most128 explicit single-line console commands")
+    return commands
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--jar", required=True, type=Path)
     parser.add_argument("--java-home", type=Path, default=USER / "AppData/Roaming/.minecraft/runtime/java-runtime-gamma/windows/java-runtime-gamma")
     parser.add_argument("--modset", type=Path, default=Path("C:/Users/vakir/Limacina/project/dw/mods.zip"))
     parser.add_argument("--profile", choices=("minimal", "full_server"), default="minimal")
+    parser.add_argument("--cached-minimal", action="store_true", help="Use exact project dependency versions already cached locally; no user's modset")
+    parser.add_argument("--gallery-input", type=Path, help="Explicit isolated full-catalogue gallery authoring marker")
+    parser.add_argument("--baseline-input", type=Path, help="Explicit original-v10 internal complaint probe marker")
     parser.add_argument("--profile-manifest", type=Path, default=ROOT / "reports/MODSET_PROFILE.json")
     parser.add_argument("--loader", default="0.19.5")
     parser.add_argument("--accepted-eula-file", type=Path)
@@ -56,6 +71,9 @@ def main():
     parser.add_argument("--startup-timeout", type=int, default=180)
     parser.add_argument("--shutdown-timeout", type=int, default=40, help="Bounded time for queued QA authoring/save/shutdown after startup")
     parser.add_argument("--commands-file", type=Path)
+    parser.add_argument("--after-hold-commands-file", type=Path, help="Explicit ordinary console commands after bounded hold, e.g. export after real60-second recording")
+    parser.add_argument("--hold-seconds", type=int, default=0, help="Bounded ordinary client-test window; qa-normal-stop.request ends it early")
+    parser.add_argument("--test-operator", action="store_true", help="OP4 only for the exact offline DreamwalkerQA UUID in this new localhost test server")
     parser.add_argument("--extra-mod", type=Path, action="append", default=[])
     parser.add_argument("--scene-input", type=Path, help="Optional QA-only fresh review scene add-on input copied into this isolated run")
     parser.add_argument("--scene-timeout", type=int, default=120, help="Bounded real ticking wait for delayed fresh scene authoring before normal save/stop")
@@ -70,6 +88,9 @@ def main():
     parser.add_argument("--report", type=Path)
     parser.add_argument("--expect-rejection", help="Literal diagnostic expected in an intentionally incompatible profile")
     args = parser.parse_args()
+    if args.after_hold_commands_file and (not 1 <= args.hold_seconds <= 3600 or any((args.gallery_input,args.baseline_input,args.scene_input,args.source_input,args.gameplay_input,args.diagnostics_input,args.alias_input))):
+        raise ValueError("After-hold commands require one separate bounded ordinary server run")
+    after_hold_commands = console_commands(args.after_hold_commands_file) if args.after_hold_commands_file else []
     if (args.scene_input or args.source_input or args.gameplay_input or args.diagnostics_input or args.alias_input) and args.report is None:
         raise ValueError("QA scene authoring requires an explicit separate --report path")
     if args.gameplay_input and args.source_input:
@@ -194,19 +215,40 @@ def main():
         shutil.copyfile(gameplay_input, run_dir / "review-v9-gameplay-input.json")
         gameplay_input_record = {"source": str(gameplay_input), "sha256": digest(gameplay_input), "phase": gameplay_document["phase"]}
     shutil.copyfile(jar, mods_dir / jar.name)
-    profile = json.loads(args.profile_manifest.read_text(encoding="utf8"))
-    selected_paths = profile["profiles"][args.profile]
-    selected_records = {item["path"]: item for item in profile["selected"]}
+    if args.gallery_input:
+        gallery_input=args.gallery_input.resolve()
+        gallery_document=json.loads(gallery_input.read_text(encoding="utf8"))
+        if gallery_document.get("guard")!="FRESH_ISOLATED_CATALOGUE_GALLERY_ONLY" or gallery_document.get("productionJarSha256")!=artifact_sha or args.world_copy:
+            raise ValueError("Gallery authoring requires a fresh isolated marker matching this exact production JAR")
+        shutil.copyfile(gallery_input,run_dir/"catalogue-gallery-input.json")
+    if args.baseline_input:
+        baseline_input=args.baseline_input.resolve()
+        baseline_document=json.loads(baseline_input.read_text(encoding="utf8"))
+        if baseline_document.get("productionJarSha256")!=artifact_sha or args.world_copy or not args.extra_mod:
+            raise ValueError("Original-v10 probe requires exact JAR, QA-only add-on and a fresh isolated world")
+        shutil.copyfile(baseline_input,run_dir/"base-v10-probe-input.json")
+    profile = json.loads(args.profile_manifest.read_text(encoding="utf8")) if not args.cached_minimal else None
+    selected_paths = profile["profiles"][args.profile] if profile else []
+    selected_records = {item["path"]: item for item in profile["selected"]} if profile else {}
     installed_mods = []
-    with zipfile.ZipFile(args.modset) as modset:
-        for path in selected_paths:
-            data = modset.read(path)
-            actual = hashlib.sha256(data).hexdigest()
-            if selected_records[path]["sha256"] != actual:
-                raise ValueError("Modset profile SHA mismatch: " + path)
-            destination = mods_dir / Path(path).name
-            destination.write_bytes(data)
-            installed_mods.append({"path": path, "sha256": actual, "id": selected_records[path]["id"], "version": selected_records[path]["version"]})
+    if args.cached_minimal:
+        if args.profile!="minimal":raise ValueError("Cached dependencies are only a minimal profile")
+        for group,name,version in [("net.fabricmc.fabric-api","fabric-api","0.92.9+1.20.1"),("software.bernie.geckolib","geckolib-fabric-1.20.1","4.4.9"),("com.eliotlash.mclib","mclib","20")]:
+            candidates=sorted((USER/".gradle/caches/modules-2/files-2.1"/group/name/version).glob("*/*.jar"))
+            source=next((p for p in candidates if not p.name.endswith(("-sources.jar","-javadoc.jar"))),None)
+            if source is None:raise ValueError("Missing exact cached runtime dependency: "+name+":"+version)
+            shutil.copyfile(source,mods_dir/source.name)
+            installed_mods.append({"path":str(source),"sha256":digest(source),"id":name,"version":version})
+    else:
+        with zipfile.ZipFile(args.modset) as modset:
+            for path in selected_paths:
+                data = modset.read(path)
+                actual = hashlib.sha256(data).hexdigest()
+                if selected_records[path]["sha256"] != actual:
+                    raise ValueError("Modset profile SHA mismatch: " + path)
+                destination = mods_dir / Path(path).name
+                destination.write_bytes(data)
+                installed_mods.append({"path": path, "sha256": actual, "id": selected_records[path]["id"], "version": selected_records[path]["version"]})
     for extra in args.extra_mod:
         extra = extra.resolve()
         destination = mods_dir / extra.name
@@ -235,7 +277,7 @@ def main():
             candidates.insert(0, USER / "Limacina/project/dw/0.19.5.jar")
         candidates += list((USER / ".gradle/caches/modules-2/files-2.1" / group / name / version).glob("*/*.jar"))
         expected = library.get("sha256")
-        candidate = next((path for path in candidates if path.is_file() and (expected is None or digest(path) == expected)), None)
+        candidate = next((path for path in candidates if path.is_file() and not path.name.endswith(("-sources.jar", "-javadoc.jar")) and (expected is None or digest(path) == expected)), None)
         if candidate:
             shutil.copyfile(candidate, target)
             provenance = str(candidate)
@@ -279,6 +321,9 @@ def main():
                 {"block": "minecraft:bedrock", "height": 1}, {"block": "minecraft:dirt", "height": 62},
                 {"block": "minecraft:grass_block", "height": 1}], "lakes": False, "features": False,
                 "structure_overrides": []}, separators=(",", ":"))
+    if args.gallery_input:
+        properties.update({"gamemode":"creative","op-permission-level":"4","difficulty":"normal"})
+        properties["generator-settings"]=json.dumps({"biome":"minecraft:plains","layers":[{"block":"minecraft:bedrock","height":1},{"block":"minecraft:dirt","height":126},{"block":"minecraft:grass_block","height":1}],"lakes":False,"features":False,"structure_overrides":[]},separators=(",",":"))
     saved_world_gamemode = None
     if args.world_copy:
         from world_io import read_nbt, compound
@@ -291,6 +336,12 @@ def main():
         saved_world_gamemode = {"source": "typed copied level.dat Data.GameType", "id": saved_mode_id,
                                 "server_property": properties["gamemode"], "player_modes_forced": False}
     (run_dir / "server.properties").write_text("\n".join(key + "=" + value for key, value in properties.items()) + "\n", encoding="utf8")
+    if args.test_operator:
+        # A pre-login /op name lookup lowercases the offline name and can cache a different UUID.
+        # Match the client harness's exact identity; never read/change a user's ops or account files.
+        name='DreamwalkerQA'
+        identity=str(uuid.UUID(bytes=hashlib.md5(('OfflinePlayer:'+name).encode()).digest(),version=3))
+        (run_dir / 'ops.json').write_text(json.dumps([{'uuid':identity,'name':name,'level':4,'bypassesPlayerLimit':False}])+'\n',encoding='utf8')
     # Explicit library classpath lets Loader enumerate its own parent sources;
     # java -jar plus a hand-written manifest-only launcher did not expose that
     # correctly under Loader 0.17.2 in this environment.
@@ -298,7 +349,8 @@ def main():
     command = [str(java), "-Xmx3G", "-cp", explicit_classpath,
                "net.fabricmc.loader.impl.launch.server.FabricServerLauncher", "nogui"]
     result = {"schema": "dreamwalker-final-jar-server-v1", "artifact": str(jar), "artifact_sha256": artifact_sha,
-              "profile": args.profile, "modset_profile_sha256": digest(args.profile_manifest), "modset": installed_mods,
+              "isolated_test_operator": {"name":"DreamwalkerQA","uuid":identity,"level":4,"scope":"New localhost offline test only"} if args.test_operator else None,
+              "profile": args.profile, "modset_profile_sha256": digest(args.profile_manifest) if profile else None, "modset": installed_mods,
               "minecraft": "1.20.1", "loader": args.loader, "java_version": java_version,
               "vanilla_server_sha256": digest(bundled), "loader_metadata_source": metadata_url,
               "loader_metadata_sha256": hashlib.sha256(metadata_bytes).hexdigest(), "libraries": library_records,
@@ -333,13 +385,23 @@ def main():
                         result["startup_seconds"] = round(time.monotonic() - started, 3)
                         commands = ["list", "help bbrp", "help bb", "help bloodborne"]
                         if args.commands_file:
-                            commands += json.loads(args.commands_file.read_text(encoding="utf8"))
+                            commands += console_commands(args.commands_file)
                             result["commands_file"] = {"path": str(args.commands_file.resolve()), "sha256": digest(args.commands_file)}
                         result["commands"] = commands
                         for text_command in commands:
                             process.stdin.write(text_command + "\n")
                         process.stdin.flush()
-                        if args.scene_input:
+                        if args.gallery_input:
+                            gallery_deadline=time.monotonic()+args.scene_timeout
+                            gallery_output=run_dir/"catalogue-gallery-output.json"
+                            while process.poll() is None and not gallery_output.is_file() and time.monotonic()<gallery_deadline:time.sleep(1)
+                            result["gallery_output_ready_before_stop"]=gallery_output.is_file()
+                        elif args.baseline_input:
+                            baseline_deadline=time.monotonic()+args.scene_timeout
+                            baseline_output=run_dir/"base-v10-probe-output.json"
+                            while process.poll() is None and not baseline_output.is_file() and time.monotonic()<baseline_deadline:time.sleep(1)
+                            result["baseline_output_ready_before_stop"]=baseline_output.is_file()
+                        elif args.scene_input:
                             scene_deadline = time.monotonic() + args.scene_timeout
                             awaited_scene = run_dir / ("review-v10-scene-output.json" if document.get("revision") == "V10" else "review-scene-output.json")
                             while process.poll() is None and not awaited_scene.is_file() and time.monotonic() < scene_deadline:
@@ -371,6 +433,20 @@ def main():
                             result["alias_output_ready_before_stop"] = alias_output.is_file()
                             if not alias_output.is_file():
                                 result["alias_timeout"] = "No separate completed alias-disk proof within bounded real ticking interval"
+                        elif args.hold_seconds:
+                            if not 1<=args.hold_seconds<=3600:
+                                raise ValueError("Client-test hold must be bounded to 1..3600 seconds")
+                            hold_started=time.monotonic()
+                            stop_request=run_dir/"qa-normal-stop.request"
+                            while process.poll() is None and time.monotonic()-hold_started<args.hold_seconds and not stop_request.is_file():
+                                time.sleep(1)
+                            result["client_test_hold"]={"maximumSeconds":args.hold_seconds,"elapsedSeconds":round(time.monotonic()-hold_started,3),"earlyNormalStopRequested":stop_request.is_file()}
+                            if after_hold_commands and process.poll() is None:
+                                result["after_hold_commands"] = after_hold_commands
+                                result["after_hold_commands_file"] = {"path":str(args.after_hold_commands_file.resolve()),"sha256":digest(args.after_hold_commands_file)}
+                                for text_command in after_hold_commands:
+                                    process.stdin.write(text_command+"\n")
+                                process.stdin.flush()
                         else:
                             time.sleep(2)
                         process.stdin.write("stop\n")
@@ -401,6 +477,18 @@ def main():
             result["derived_world_copy"]["source_unchanged_after_run"] = unchanged
             if not unchanged:
                 result["status"] = "FAIL_SOURCE_REVIEW_COPY_CHANGED"
+        if args.baseline_input:
+            baseline_output=run_dir/"base-v10-probe-output.json"
+            if baseline_output.is_file():
+                baseline_result=json.loads(baseline_output.read_text(encoding="utf8"))
+                result["baseline_probe"]={"path":str(baseline_output),"result":baseline_result,"sha256":digest(baseline_output)}
+                if (baseline_result.get("status")!="EXPECTED_BASELINE_OBSERVATIONS_PRESENT"
+                        or baseline_result.get("observedCount")!=6
+                        or baseline_result.get("expectedObservationCount")!=6
+                        or baseline_result.get("productionJarSha256")!=artifact_sha
+                        or not all(row.get("expectedObservationPresent") is True for row in baseline_result.get("observations",[]))):
+                    result["status"]="FAIL_BASELINE_PROBE"
+            else:result["status"]="FAIL_BASELINE_NO_OUTPUT"
         if args.scene_input:
             scene_output = run_dir / ("review-v10-scene-output.json" if document.get("revision")=="V10" else "review-scene-output.json")
             if scene_output.is_file():
@@ -411,6 +499,13 @@ def main():
                     result["status"] = "FAIL_SCENE_AUTHORING"
             else:
                 result["status"] = "FAIL_SCENE_AUTHORING_NO_QA_OUTPUT"
+        if args.gallery_input:
+            gallery_output=run_dir/"catalogue-gallery-output.json"
+            if gallery_output.is_file():
+                gallery_result=json.loads(gallery_output.read_text(encoding="utf8"))
+                result["gallery"]={"path":str(gallery_output),"sha256":digest(gallery_output),"result":gallery_result}
+                if gallery_result.get("status")!="PASS_AUTHORED_REQUIRES_PRODUCTION_REOPEN":result["status"]="FAIL_GALLERY_AUTHORING"
+            else:result["status"]="FAIL_GALLERY_NO_OUTPUT"
         if args.source_input:
             source_output = run_dir / "source-review-output.json"
             if source_output.is_file():

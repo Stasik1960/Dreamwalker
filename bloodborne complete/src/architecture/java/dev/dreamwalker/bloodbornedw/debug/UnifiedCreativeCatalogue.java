@@ -16,7 +16,7 @@ public final class UnifiedCreativeCatalogue {
     public static void initialize(){
         if(initialized)return;initialized=true;
         Registry.register(Registries.ITEM_GROUP,ID,FabricItemGroup.builder().displayName(Text.literal("Bloodborne · строительство и предметы"))
-            .icon(()->new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw","builder_tool"))))
+            .icon(()->new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw","composite_builder"))))
             .entries((context,entries)->canonicalItems().forEach(entries::add)).build());
     }
     private static int category(String kind){return switch(kind){case "architecture"->0;case "technical_tool"->1;case "rp_object"->2;case "rp_item"->3;case "rp_mob"->4;default->5;};}
@@ -26,6 +26,10 @@ public final class UnifiedCreativeCatalogue {
             // A retired number still appears in the append-only table, but its
             // logical alias resolves to another canonical offered type.
             if(DebugCatalogue.entry(entry.registryId())!=entry)return;
+            // 90008 is a deserialize-only alias.  It deliberately has no
+            // Creative entry, while its registered id remains available to old
+            // worlds until their stack is naturally read or used.
+            if(entry.registryId().getNamespace().equals("bloodborne_dw")&&dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.retired(entry.registryId().getPath()))return;
             Identifier item=switch(entry.kind()){
                 case "rp_object"->new Identifier(entry.registryId().getNamespace(),entry.registryId().getPath()+"_placer");
                 case "rp_mob"->new Identifier(entry.registryId().getNamespace(),entry.registryId().getPath()+"_spawn_egg");

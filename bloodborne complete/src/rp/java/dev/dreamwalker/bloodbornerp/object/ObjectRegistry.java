@@ -40,13 +40,13 @@ public final class ObjectRegistry {
  public static double placementY(String id,int y){return id.equals("chandelier_small")||id.equals("chandelier_large")?y-5.5:y;}
  public static float placementYaw(float yaw){return net.minecraft.util.math.MathHelper.floor((net.minecraft.util.math.MathHelper.wrapDegrees(yaw-180f)+22.5f)/45f)*45f;}
  public static boolean place(PlayerEntity player,String id,BlockPos pos,float yaw,net.minecraft.item.ItemStack stack){
-  if(RpObjectGeometry.custom(canonicalId(id)))return placeOnSurface(player,id,new Vec3d(pos.getX()+.5,pos.getY(),pos.getZ()+.5),Direction.UP,yaw,stack);
+  if(RpObjectGeometry.surfaceMounted(canonicalId(id)))return placeOnSurface(player,id,new Vec3d(pos.getX()+.5,pos.getY(),pos.getZ()+.5),Direction.UP,yaw,stack);
   return placeAt(player,id,pos,new Vec3d(pos.getX(),placementY(id,pos.getY()),pos.getZ()),yaw,stack,false,Direction.UP);
  }
  /** New items mount by a reviewed model-local base/hook; reading an old entity never runs this path. */
  public static boolean placeOnSurface(PlayerEntity player,String id,Vec3d surface,Direction face,float yaw,ItemStack stack){
   BlockPos cell=BlockPos.ofFloored(surface);
-  if(!RpObjectGeometry.custom(canonicalId(id)))return place(player,id,cell,yaw,stack);
+  if(!RpObjectGeometry.surfaceMounted(canonicalId(id)))return place(player,id,cell,yaw,stack);
   return placeAt(player,id,cell,surface,yaw,stack,true,face);
  }
  private static boolean placeAt(PlayerEntity player,String id,BlockPos cell,Vec3d surface,float yaw,ItemStack stack,boolean mount,Direction face){

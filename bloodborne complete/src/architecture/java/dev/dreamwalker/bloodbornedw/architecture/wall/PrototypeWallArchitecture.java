@@ -43,10 +43,11 @@ public final class PrototypeWallArchitecture {
     public static PrototypeWallBlock materialBlock(int material){var block=MATERIAL_BLOCKS.get(material);if(block==null)throw new IllegalArgumentException("Unknown wall material "+material);return block;}
     public static boolean isWall(BlockState state){return state.getBlock() instanceof PrototypeWallBlock;}
     public static BlockState changeMaterial(BlockState state,int material){
+        if(material!=0&&material!=1&&material!=6)material=(state.get(PrototypeWallBlock.ROTATION)&1)==0?6:1;
         BlockState next=materialBlock(material).getDefaultState().with(PrototypeWallBlock.ROTATION,state.get(PrototypeWallBlock.ROTATION)).with(PrototypeWallBlock.PROFILE,state.get(PrototypeWallBlock.PROFILE))
             .with(PrototypeWallBlock.CONNECTIONS,state.get(PrototypeWallBlock.CONNECTIONS)).with(PrototypeWallBlock.POST,state.get(PrototypeWallBlock.POST)).with(net.minecraft.block.WallBlock.WATERLOGGED,state.get(net.minecraft.block.WallBlock.WATERLOGGED));
         for(var direction:net.minecraft.util.math.Direction.Type.HORIZONTAL)next=next.with(PrototypeWallBlock.property(direction),state.get(PrototypeWallBlock.property(direction)));
-        return next;
+        return PrototypeWallBlock.canonicalForm(next);
     }
     private static boolean initialized;
     private PrototypeWallArchitecture(){}
@@ -100,6 +101,7 @@ public final class PrototypeWallArchitecture {
         finally{dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.finish(world,next,pos,"architecture.wall_edit",started);}
     }
     private static boolean editInternal(World world,BlockPos pos,BlockState before,BlockState next,net.minecraft.entity.player.PlayerEntity player){
+        next=PrototypeWallBlock.canonicalForm(next);
         if(BuildPermissions.canEdit(world,player,pos)&&world.isChunkLoaded(pos)&&before.isOf(next.getBlock())&&world.getBlockState(pos).equals(before)&&world.getBlockEntity(pos) instanceof dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity mounted&&!mounted.contributions().isEmpty())return world.isClient||dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.transition((net.minecraft.server.world.ServerWorld)world,mounted.resident(),next,player).outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED;
         if(!BuildPermissions.canEdit(world,player,pos)||!world.isChunkLoaded(pos)||!world.isInBuildLimit(pos)||!world.getWorldBorder().contains(pos)
             ||!isWall(before)||!isWall(next)||!world.getBlockState(pos).equals(before)||!next.canPlaceAt(world,pos))return false;

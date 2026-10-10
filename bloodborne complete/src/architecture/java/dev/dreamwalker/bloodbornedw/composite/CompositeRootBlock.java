@@ -26,7 +26,7 @@ public class CompositeRootBlock extends BlockWithEntity {
     @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new CompositeBlockEntity(pos,state);}
     @Override public BlockRenderType getRenderType(BlockState state){return BlockRenderType.INVISIBLE;}
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,true,state,context);}
-    @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,false,state);}
+    @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,false,state,context);}
     @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
     @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return 0;}
     @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}

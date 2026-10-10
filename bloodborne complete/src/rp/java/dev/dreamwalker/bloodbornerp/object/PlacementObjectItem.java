@@ -19,7 +19,7 @@ final class PlacementObjectItem extends Item {
   PlayerEntity player=context.getPlayer(); if(player==null || (!player.isCreative() && !player.hasPermissionLevel(2))) return ObjectRegistry.refuseItem(context,objectId,"creative_or_operator_required");
   if(dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player))return ActionResult.PASS;
   if(context.getWorld().isClient) return ActionResult.SUCCESS;
-  if(RpObjectGeometry.custom(ObjectRegistry.canonicalId(objectId))){
+  if(RpObjectGeometry.surfaceMounted(ObjectRegistry.canonicalId(objectId))){
    if(!ObjectRegistry.withItemContext(context,()->ObjectRegistry.placeOnSurface(player,objectId,context.getHitPos(),context.getSide(),context.getPlayerYaw(),context.getStack())))return ActionResult.FAIL;
    if(!player.isCreative())context.getStack().decrement(1);return ActionResult.CONSUME;
   }

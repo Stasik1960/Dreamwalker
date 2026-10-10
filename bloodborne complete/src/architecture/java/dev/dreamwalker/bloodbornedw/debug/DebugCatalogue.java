@@ -54,6 +54,8 @@ public final class DebugCatalogue {
     }
     public static Entry entry(Identifier registry){initialize();return ALIASES.get(registry);}
     public static Entry entry(BlockState state){initialize();Identifier registry=Registries.BLOCK.getId(state.getBlock());
+        BlockState current=dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.target(state);
+        if(!current.equals(state))return entry(current);
         for(StateAlias alias:STATE_ALIASES)if(alias.registry.equals(registry))for(var property:state.getEntries().entrySet())
             if(property.getKey().getName().equals(alias.property)&&property.getValue().toString().equals(alias.value))return entry(alias.canonical);
         return entry(registry);

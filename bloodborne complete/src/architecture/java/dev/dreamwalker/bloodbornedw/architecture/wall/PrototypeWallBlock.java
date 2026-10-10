@@ -53,12 +53,21 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder) { super.appendProperties(builder);builder.add(MATERIAL,ROTATION,PROFILE,CONNECTIONS); }
     protected final void appendFixedProperties(StateManager.Builder<Block,BlockState> builder) { super.appendProperties(builder);builder.add(ROTATION,PROFILE,CONNECTIONS); }
     public static int material(BlockState state) { return state.contains(MATERIAL)?state.get(MATERIAL):((FixedMaterialWallBlock)state.getBlock()).material(); }
+    public static boolean diagonalPost(BlockState state) { return material(state)==1; }
+    public static boolean retainedFence(BlockState state) { return material(state)==6||diagonalPost(state); }
+    public static BlockState canonicalForm(BlockState state) {
+        if(diagonalPost(state)) {
+            state=state.with(ROTATION,state.get(ROTATION)|1).with(CONNECTIONS,Connections.MANUAL).with(POST,true);
+            for(Direction direction:Direction.Type.HORIZONTAL)state=state.with(property(direction),WallShape.NONE);
+        } else if(material(state)==6)state=state.with(ROTATION,state.get(ROTATION)&6);
+        return state;
+    }
     public static EnumProperty<WallShape> property(Direction direction) { return switch(direction){case NORTH->NORTH;case EAST->EAST;case SOUTH->SOUTH;case WEST->WEST;default->throw new IllegalArgumentException("Horizontal wall direction required");}; }
     public static int sideCode(BlockState state){int code=0,factor=1;for(Direction direction:new Direction[]{Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST}){code+=(switch(state.get(property(direction))){case NONE->0;case LOW->1;case TALL->2;})*factor;factor*=3;}return code;}
     public static boolean hasTallSide(BlockState state){for(Direction direction:Direction.Type.HORIZONTAL)if(state.get(property(direction))==WallShape.TALL)return true;return false;}
     /** Compatibility authoring helper; height is stored independently on each present arm. */
     public BlockState withCourse(BlockState state,Course course){for(Direction direction:Direction.Type.HORIZONTAL)if(state.get(property(direction))!=WallShape.NONE)state=state.with(property(direction),course==Course.TALL?WallShape.TALL:WallShape.LOW);return state;}
-    public static VoxelShape rawCollision(BlockState state) { return geometry.collision(sideCode(state),state.get(POST),state.get(ROTATION)); }
+    public static VoxelShape rawCollision(BlockState state) { state=canonicalForm(state);return geometry.collision(sideCode(state),state.get(POST),state.get(ROTATION)); }
     @Override public net.minecraft.block.entity.BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity(pos,state);}
     @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){if(!state.isOf(next.getBlock())&&world instanceof net.minecraft.server.world.ServerWorld server&&!dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.writing())dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.scheduleCleanup(server,pos);super.onStateReplaced(state,world,pos,next,moved);}
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context) {
@@ -91,7 +100,12 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
         }
         return WallStackGeometry.of(raw,lowerRaw,cap);
     }
-    @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context) { return dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos)?(dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state)):geometry.outline(sideCode(state),state.get(POST),state.get(ROTATION)); }
+    @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context) {
+        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state,context);
+        state=canonicalForm(state);
+        if(context instanceof net.minecraft.block.EntityShapeContext actor&&actor.getEntity() instanceof net.minecraft.entity.player.PlayerEntity player&&dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player))return geometry.outline(sideCode(state),state.get(POST),state.get(ROTATION));
+        return getCollisionShape(state,world,pos,context);
+    }
     @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos) { return VoxelShapes.empty(); }
     @Override public FluidState getFluidState(BlockState state) { return state.get(WATERLOGGED)?Fluids.WATER.getStill(false):super.getFluidState(state); }
     @Override public BlockState getPlacementState(ItemPlacementContext context) {
@@ -102,6 +116,8 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     public BlockState nativeState(BlockState state){BlockState result=state;for(Direction local:Direction.Type.HORIZONTAL)result=result.with(property(worldDirection(local,state.get(ROTATION))),state.get(property(local)));return result;}
     public BlockState fromNativeState(BlockState original,BlockState nativeState){BlockState result=original.with(POST,nativeState.get(POST));for(Direction local:Direction.Type.HORIZONTAL)result=result.with(property(local),nativeState.get(property(worldDirection(local,original.get(ROTATION)))));return result;}
     public BlockState reconnect(BlockState state,WorldAccess world,BlockPos pos) {
+        state=canonicalForm(state);
+        if(diagonalPost(state))return state;
         if(state.get(CONNECTIONS)==Connections.MANUAL)return state;
         if((state.get(ROTATION)&1)!=0)return state.with(CONNECTIONS,Connections.MANUAL);
         BlockState nativeState=nativeState(state);
@@ -122,6 +138,7 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
         return direction==Direction.UP||direction.getAxis().isHorizontal()?reconnect(state,world,pos):state;
     }
     @Override public boolean canPlaceAt(BlockState state,WorldView world,BlockPos pos) {
+        if(retainedFence(state))return true;
         if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.rawQuery()&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.loadedEntity(world,pos) instanceof dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity own&&own.payload().getBoolean("MountEdited"))return true;
         if(world instanceof World loaded&&!loaded.isChunkLoaded(pos.down()))return false;
         VoxelShape body=getCollisionShape(state,world,pos,ShapeContext.absent());if(body.isEmpty())return false;
@@ -135,7 +152,7 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
         return !VoxelShapes.matchesAnywhere(required,actual,BooleanBiFunction.ONLY_FIRST);
     }
     /** A 45-degree builder turn freezes the current form rather than redirecting live grid links. */
-    public BlockState rotate45(BlockState state) { return state.with(CONNECTIONS,Connections.MANUAL).with(ROTATION,(state.get(ROTATION)+1)&7); }
+    public BlockState rotate45(BlockState state) { return canonicalForm(state.with(CONNECTIONS,retainedFence(state)&&!diagonalPost(state)?state.get(CONNECTIONS):Connections.MANUAL).with(ROTATION,(state.get(ROTATION)+(retainedFence(state)?2:1))&7)); }
     @Override public BlockState rotate(BlockState state,BlockRotation rotation) { return state.with(ROTATION,(state.get(ROTATION)+switch(rotation){case NONE->0;case CLOCKWISE_90->2;case CLOCKWISE_180->4;case COUNTERCLOCKWISE_90->6;})&7); }
     @Override public BlockState mirror(BlockState state,BlockMirror mirror) {
         if(mirror==BlockMirror.NONE)return state;

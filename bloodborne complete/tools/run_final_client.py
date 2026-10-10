@@ -109,6 +109,7 @@ def main():
     parser.add_argument("--java-home", type=Path, default=USER / "AppData/Roaming/.minecraft/runtime/java-runtime-gamma/windows/java-runtime-gamma")
     parser.add_argument("--loader", default="0.19.5")
     parser.add_argument("--profile", choices=("minimal", "full_client"), default="minimal")
+    parser.add_argument("--cached-minimal", action="store_true", help="Exact cached project runtime dependencies, no user modset")
     parser.add_argument("--profile-manifest", type=Path, default=ROOT / "reports/MODSET_PROFILE.json")
     parser.add_argument("--modset", type=Path, default=Path("C:/Users/vakir/Limacina/project/dw/mods.zip"))
     parser.add_argument("--run-name")
@@ -122,6 +123,9 @@ def main():
     parser.add_argument("--wait", action="store_true", help="Wait for marked QA client normal save/exit")
     parser.add_argument("--timeout", type=int, default=360)
     parser.add_argument("--heap-gb", type=int, choices=range(2, 13), default=4, help="Maximum Java heap only for this isolated test profile")
+    parser.add_argument("--width", type=int, choices=(1280,1920), default=1280)
+    parser.add_argument("--height", type=int, choices=(720,1080), default=720)
+    parser.add_argument("--gui-scale", type=int, choices=(0,2,3,4), default=0, help="Isolated GUI QA scale; 0 retains Minecraft Auto, never forces scale1")
     parser.add_argument("--shader-pack", type=Path, help="Copy and enable a supplied shader ZIP only in this isolated Iris profile")
     parser.add_argument("--shader-settings", type=Path, help="Exact optional supplied settings sidecar; requires --shader-pack")
     parser.add_argument("--resource-pack", type=Path, action="append", default=[], help="Byte-copy and enable an explicit ZIP only in this isolated client")
@@ -152,15 +156,23 @@ def main():
             raise ValueError("Invalid or conflicting QA add-on: "+str(extra))
         shutil.copyfile(extra,mods/extra.name)
         extra_records.append({"path":str(extra),"sha256":digest(extra),"copied_name":extra.name})
-    profile = json.loads(args.profile_manifest.read_text(encoding="utf8"))
-    mod_paths = profile["profiles"][args.profile]
-    selected = {item["path"]: item for item in profile["selected"]}
-    with zipfile.ZipFile(args.modset) as archive:
-        for path in mod_paths:
-            data = archive.read(path)
-            if hashlib.sha256(data).hexdigest() != selected[path]["sha256"]:
-                raise ValueError("Modset SHA mismatch: " + path)
-            (mods / Path(path).name).write_bytes(data)
+    profile = json.loads(args.profile_manifest.read_text(encoding="utf8")) if not args.cached_minimal else None
+    cached_mods=[]
+    if args.cached_minimal:
+        if args.profile!='minimal':raise ValueError('Cached project dependencies only support minimal profile')
+        for group,name,version in [('net.fabricmc.fabric-api','fabric-api','0.92.9+1.20.1'),('software.bernie.geckolib','geckolib-fabric-1.20.1','4.4.9'),('com.eliotlash.mclib','mclib','20')]:
+            source=next((p for p in sorted((USER/'.gradle/caches/modules-2/files-2.1'/group/name/version).glob('*/*.jar')) if not p.name.endswith(('-sources.jar','-javadoc.jar'))),None)
+            if source is None:raise ValueError('Missing exact project dependency '+name+':'+version)
+            shutil.copyfile(source,mods/source.name);cached_mods.append({'coordinate':group+':'+name+':'+version,'source':str(source),'sha256':digest(source)})
+    else:
+        mod_paths = profile["profiles"][args.profile]
+        selected = {item["path"]: item for item in profile["selected"]}
+        with zipfile.ZipFile(args.modset) as archive:
+            for path in mod_paths:
+                data = archive.read(path)
+                if hashlib.sha256(data).hexdigest() != selected[path]["sha256"]:
+                    raise ValueError("Modset SHA mismatch: " + path)
+                (mods / Path(path).name).write_bytes(data)
     loom = USER / ".gradle/caches/fabric-loom/1.20.1"
     minecraft = json.loads((loom / "minecraft-info.json").read_text(encoding="utf8"))
     client = run_dir / "minecraft-client.jar"
@@ -193,7 +205,7 @@ def main():
             candidates.insert(0, USER / "Limacina/project/dw/0.19.5.jar")
         group, name, version = coordinate.split(":")[:3]
         candidates += list((USER / ".gradle/caches/modules-2/files-2.1" / group / name / version).glob("*/*.jar"))
-        source = next((path for path in candidates if path.exists() and (not artifact or hashlib.sha1(path.read_bytes()).hexdigest() == artifact["sha1"])
+        source = next((path for path in candidates if path.is_file() and not path.name.endswith(("-sources.jar","-javadoc.jar")) and (not artifact or hashlib.sha1(path.read_bytes()).hexdigest() == artifact["sha1"])
                        and (not library.get("sha256") or digest(path) == library["sha256"])), None)
         if source:
             shutil.copyfile(source, destination)
@@ -264,7 +276,8 @@ def main():
         expected=digest(pack)
         if digest(destination)!=expected:raise ValueError("Resource pack byte-copy mismatch")
         resource_packs.append({'source':str(pack),'sha256':expected,'copied_name':pack.name,'selected_name':'file/'+pack.name,'byte_copy':'PASS'})
-    options="autoJump:false\nfullscreen:false\nrenderDistance:8\nsimulationDistance:5\ngamma:1.0\n"
+    options="autoJump:false\nfullscreen:false\nrenderDistance:8\nsimulationDistance:5\ngamma:1.0\ntutorialStep:none\n"
+    options+='guiScale:'+str(args.gui_scale)+'\n'
     # Fabric's always-enabled aggregate would otherwise be appended after an
     # external pack omitted from a fresh options list, hiding its ALT overrides.
     if resource_packs:options+='resourcePacks:'+json.dumps(['vanilla','fabric']+[row['selected_name'] for row in resource_packs],ensure_ascii=False)+'\n'
@@ -282,7 +295,7 @@ def main():
                "net.fabricmc.loader.impl.launch.knot.KnotClient", "--username", username,
                "--uuid", offline_uuid, "--accessToken", "0", "--userType", "legacy", "--version", "1.20.1",
                "--gameDir", str(run_dir), "--assetsDir", str(assets), "--assetIndex", asset_index.stem,
-               "--width", "1280", "--height", "720"]
+               "--width", str(args.width), "--height", str(args.height)]
     if args.server:
         host, port = args.server.rsplit(":", 1)
         if host not in ("127.0.0.1", "localhost"):
@@ -294,7 +307,7 @@ def main():
         command += ["--quickPlaySingleplayer", "prototype-fixture"]
     result = {"schema": "dreamwalker-final-jar-client-v1", "artifact": str(jar), "artifact_sha256": digest(jar),
               "minecraft": "1.20.1", "loader": args.loader, "profile": args.profile,
-              "modset_profile_sha256": digest(args.profile_manifest), "run_directory": str(run_dir),
+              "modset_profile_sha256": digest(args.profile_manifest) if profile else None, "run_directory": str(run_dir), "cachedProjectDependencies":cached_mods,
               "libraries": lib_records, "loader_metadata_url": loader_url,
               "loader_metadata_sha256": hashlib.sha256(loader_bytes).hexdigest(),
               "assets_read_only": str(assets), "asset_index_sha1": hashlib.sha1(asset_index.read_bytes()).hexdigest(),

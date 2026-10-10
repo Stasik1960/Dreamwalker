@@ -1,0 +1,211 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileRepairtestJava
+> Task :generateDLIConfig
+> Task :generateLog4jConfig
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :configureLaunch
+> Task :processRepairtestResources UP-TO-DATE
+> Task :repairtestClasses
+
+> Task :runRepairtest
+[01:08:02] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.16.10
+[01:08:02] [main/INFO] (FabricLoader) Loading 48 mods:
+	- bloodborne_dw 0.1.0-90009-fix.1
+	- bloodborne_dw_repairtest 1.0.0
+	- fabric-api 0.92.9+1.20.1
+	- fabric-api-base 0.4.32+1802ada577
+	- fabric-api-lookup-api-v1 1.6.37+1802ada577
+	- fabric-biome-api-v1 13.0.15+93aa238b77
+	- fabric-block-api-v1 1.0.12+1802ada577
+	- fabric-block-view-api-v2 1.0.3+924f046a77
+	- fabric-command-api-v1 1.2.35+f71b366f77
+	- fabric-command-api-v2 2.2.14+1802ada577
+	- fabric-commands-v0 0.2.52+df3654b377
+	- fabric-containers-v0 0.1.68+df3654b377
+	- fabric-content-registries-v0 4.0.13+1802ada577
+	- fabric-convention-tags-v1 1.5.6+1802ada577
+	- fabric-crash-report-info-v1 0.2.20+1802ada577
+	- fabric-data-attachment-api-v1 1.0.2+de0fd6d177
+	- fabric-data-generation-api-v1 12.3.9+1802ada577
+	- fabric-dimensions-v1 2.1.55+1802ada577
+	- fabric-entity-events-v1 1.6.1+1c78457f77
+	- fabric-events-interaction-v0 0.6.6+13a40c6677
+	- fabric-events-lifecycle-v0 0.2.64+df3654b377
+	- fabric-game-rule-api-v1 1.0.41+1802ada577
+	- fabric-gametest-api-v1 1.2.15+1802ada577
+	- fabric-item-api-v1 2.1.29+1802ada577
+	- fabric-item-group-api-v1 4.0.14+1802ada577
+	- fabric-lifecycle-events-v1 2.2.23+1802ada577
+	- fabric-loot-api-v2 1.2.3+1802ada577
+	- fabric-loot-tables-v1 1.1.47+9e7660c677
+	- fabric-message-api-v1 5.1.10+1802ada577
+	- fabric-mining-level-api-v1 2.1.52+1802ada577
+	- fabric-networking-api-v1 1.3.15+0caff8d077
+	- fabric-networking-v0 0.3.55+df3654b377
+	- fabric-object-builder-api-v1 11.1.5+e35120df77
+	- fabric-particles-v1 1.1.3+1802ada577
+	- fabric-recipe-api-v1 1.0.25+1802ada577
+	- fabric-registry-sync-v0 2.4.1+4c0a70e677
+	- fabric-rendering-data-attachment-v1 0.3.39+92a0d36777
+	- fabric-rendering-fluids-v1 3.0.29+1802ada577
+	- fabric-resource-conditions-api-v1 2.3.9+1802ada577
+	- fabric-resource-loader-v0 0.11.12+fb82e9d777
+	- fabric-screen-handler-api-v1 1.3.34+1802ada577
+	- fabric-transfer-api-v1 3.3.6+8dd72ea377
+	- fabric-transitive-access-wideners-v1 4.3.2+1802ada577
+	- fabricloader 0.16.10
+	- geckolib 4.4.9
+	- java 17
+	- minecraft 1.20.1
+	- mixinextras 0.4.1
+[01:08:02] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Admin/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[01:08:02] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[01:08:03] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
+[01:08:03] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[01:08:03] [main/WARN] (FabricLoader/Mixin) Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)
+[01:08:03] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+
+Problem in daemon expiration check
+org.gradle.internal.jvm.JavaHomeException: The supplied javaHome seems to be invalid. I cannot find the java executable. Tried location: C:\Program Files\Java\jdk-17\bin\java.exe
+	at org.gradle.internal.jvm.Jvm.findExecutable(Jvm.java:186)
+	at org.gradle.internal.jvm.Jvm.getJavaExecutable(Jvm.java:211)
+	at org.gradle.internal.jvm.Jvm.forHome(Jvm.java:114)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.jvmCompatible(DaemonCompatibilitySpec.java:71)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.whyUnsatisfied(DaemonCompatibilitySpec.java:40)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.isSatisfiedBy(DaemonCompatibilitySpec.java:35)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.isSatisfiedBy(DaemonCompatibilitySpec.java:25)
+	at org.gradle.launcher.daemon.server.CompatibleDaemonExpirationStrategy$1.isSatisfiedBy(CompatibleDaemonExpirationStrategy.java:51)
+	at org.gradle.launcher.daemon.server.CompatibleDaemonExpirationStrategy$1.isSatisfiedBy(CompatibleDaemonExpirationStrategy.java:48)
+	at org.gradle.util.internal.CollectionUtils.filter(CollectionUtils.java:160)
+	at org.gradle.util.internal.CollectionUtils.filter(CollectionUtils.java:132)
+	at org.gradle.launcher.daemon.server.CompatibleDaemonExpirationStrategy.checkExpiration(CompatibleDaemonExpirationStrategy.java:54)
+	at org.gradle.launcher.daemon.server.expiry.AllDaemonExpirationStrategy.checkExpiration(AllDaemonExpirationStrategy.java:47)
+	at org.gradle.launcher.daemon.server.expiry.AnyDaemonExpirationStrategy.checkExpiration(AnyDaemonExpirationStrategy.java:44)
+	at org.gradle.launcher.daemon.server.MasterExpirationStrategy.checkExpiration(MasterExpirationStrategy.java:73)
+	at org.gradle.launcher.daemon.server.Daemon$DaemonExpirationPeriodicCheck.run(Daemon.java:266)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+> Task :runRepairtest
+[01:08:07] [main/INFO] (bloodborne_dw) Dreamwalker BB source-backed prototype checkpoint; final catalog IDs are not frozen
+[01:08:10] [main/INFO] (bloodborne_rp) Bloodborne RP initialized: standard Minecraft health; independent namespace
+[01:08:10] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[01:08:10] [main/INFO] (FabricGameTestHelper) Starting test server
+[01:08:11] [main/INFO] (Minecraft) Loaded 7 recipes
+[01:08:11] [main/INFO] (Minecraft) Loaded 1272 advancements
+[01:08:11] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.113 ms
+[01:08:12] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[01:08:12] [Server thread/INFO] (Minecraft) Preparing spawn area: 0%
+[01:08:12] [Worker-Main-16/INFO] (Minecraft) Preparing spawn area: 83%
+[01:08:13] [Server thread/INFO] (Minecraft) Time elapsed: 576 ms
+[01:08:13] [Server thread/INFO] (Minecraft) Started game test server
+[01:08:13] [Server thread/INFO] (Minecraft) Running test batch 'catalogue_repair:1' (10 tests)...
+[01:08:13] [Server thread/INFO] (Minecraft) 14 tests are now running!
+[01:08:13] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 9 at (-5.5, -60.0, 9.5)
+[01:08:13] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[01:08:13] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 10 at (-7.5, -60.0, -9.5)
+[01:08:13] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[01:08:13] [Server thread/INFO] (Minecraft) Running test batch 'builder_repair:1' (4 tests)...
+[01:08:13] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 44 at (1.5, -59.0, -0.5)
+[01:08:13] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[01:08:14] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 47 at (5.5, -60.0, 6.5)
+[01:08:14] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[01:08:14] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 51 at (-0.5, -60.0, -4.5)
+[01:08:14] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[01:08:14] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 53 at (1.5, -60.0, -9.5)
+[01:08:14] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[01:08:14] [Server thread/INFO] (Minecraft) [++++++++++++++]
+[01:08:14] [Server thread/INFO] (Minecraft) ========= 14 GAME TESTS COMPLETE ======================
+[01:08:14] [Server thread/INFO] (Minecraft) All 14 required tests passed :)
+[01:08:14] [Server thread/INFO] (Minecraft) ====================================================
+[01:08:14] [Server thread/INFO] (Minecraft) Stopping server
+[01:08:14] [Server thread/INFO] (Minecraft) Saving players
+[01:08:14] [Server thread/INFO] (Minecraft) Saving worlds
+[01:08:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[01:08:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[01:08:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[01:08:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
+[01:08:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[01:08:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[01:08:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[01:08:14] [Server thread/INFO] (Minecraft) Game test server shutting down
+
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+Problem in daemon expiration check
+org.gradle.internal.jvm.JavaHomeException: The supplied javaHome seems to be invalid. I cannot find the java executable. Tried location: C:\Program Files\Java\jdk-17\bin\java.exe
+	at org.gradle.internal.jvm.Jvm.findExecutable(Jvm.java:186)
+	at org.gradle.internal.jvm.Jvm.getJavaExecutable(Jvm.java:211)
+	at org.gradle.internal.jvm.Jvm.forHome(Jvm.java:114)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.jvmCompatible(DaemonCompatibilitySpec.java:71)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.whyUnsatisfied(DaemonCompatibilitySpec.java:40)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.isSatisfiedBy(DaemonCompatibilitySpec.java:35)
+	at org.gradle.launcher.daemon.context.DaemonCompatibilitySpec.isSatisfiedBy(DaemonCompatibilitySpec.java:25)
+	at org.gradle.launcher.daemon.server.CompatibleDaemonExpirationStrategy$1.isSatisfiedBy(CompatibleDaemonExpirationStrategy.java:51)
+	at org.gradle.launcher.daemon.server.CompatibleDaemonExpirationStrategy$1.isSatisfiedBy(CompatibleDaemonExpirationStrategy.java:48)
+	at org.gradle.util.internal.CollectionUtils.filter(CollectionUtils.java:160)
+	at org.gradle.util.internal.CollectionUtils.filter(CollectionUtils.java:132)
+	at org.gradle.launcher.daemon.server.CompatibleDaemonExpirationStrategy.checkExpiration(CompatibleDaemonExpirationStrategy.java:54)
+	at org.gradle.launcher.daemon.server.expiry.AllDaemonExpirationStrategy.checkExpiration(AllDaemonExpirationStrategy.java:47)
+	at org.gradle.launcher.daemon.server.expiry.AnyDaemonExpirationStrategy.checkExpiration(AnyDaemonExpirationStrategy.java:44)
+	at org.gradle.launcher.daemon.server.MasterExpirationStrategy.checkExpiration(MasterExpirationStrategy.java:73)
+	at org.gradle.launcher.daemon.server.Daemon$DaemonExpirationPeriodicCheck.run(Daemon.java:266)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:305)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+
+> Task :transactionCheck
+PASS whole object placement/removal
+PASS foreign state and BE preservation
+PASS shared helper targeting and independent removal
+PASS shared root insertion retains other object NBT
+PASS partial write failure restores every snapshot
+PASS stale plan rejects without a write
+PASS unloaded owner is deferred; same ID reuse is stale
+PASS support reads become commit preconditions
+PASS visual-only transition ignores unchanged collision
+PASS entity movement between preflight and commit
+PASS chunk boundary rejects unloaded cells without loading
+PASS rotation hook keeps BE payload and four-turn geometry
+PASS notifications see complete commit and can roll back
+PASS rollback failure is an explicit failure
+PASS bounded multi-owner capacity
+PASS dimension-scoped plan
+PASS obsolete membership prunes links without destroying roots
+PASS snapshots copy opaque bytes and state maps
+PASS unchanged helpers refresh cached data and roll back separately
+PASS trusted functional payload transition preserves explicit adapter update
+PASS alias migration retains UUID/payload and atomically rewrites helpers
+PASS 21 transaction core checks; Java 17.0.20.1
+
+> Task :jar UP-TO-DATE
+> Task :remapJar UP-TO-DATE
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 21s
+12 actionable tasks: 5 executed, 7 up-to-date

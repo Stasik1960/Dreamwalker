@@ -50,6 +50,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     }
     @Override public boolean supportsGuestBindings(CellSnapshot carrier){return carrier.kind()!=Kind.AIR;}
     @Override public boolean allowsReviewedOverlap(ObjectInstance incoming,ObjectInstance existing,Cell cell){
+        if(existing.owner().registryId().equals("bloodborne_dw:prototype_roof")&&!cell.equals(existing.owner().root()))return true;
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.heightEdit())return true;
         if(dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(incoming.owner().instanceId()))return true;
         CellSnapshot previous=read(incoming.owner().root());

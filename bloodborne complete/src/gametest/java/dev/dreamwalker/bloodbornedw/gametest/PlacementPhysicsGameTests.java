@@ -33,9 +33,9 @@ public final class PlacementPhysicsGameTests implements FabricGameTest {
             NbtCompound shifted=new NbtCompound();shifted.putInt("OpaqueTypedNote",123);
             NbtCompound before=CompositeLedger.get(world).writeNbt(new NbtCompound());
             var ordinary=CompositeRuntime.place(world,second,state,UUID.randomUUID(),player,shifted);
-            test.assertTrue(ordinary.outcome()==Outcome.REJECTED&&(ordinary.reason().contains("overlap")||ordinary.reason().contains("collision")),"new positive physical overlap rejected, independent of decorations: "+ordinary.reason());
-            test.assertTrue(before.equals(CompositeLedger.get(world).writeNbt(new NbtCompound())),"rejected overlap leaves ownership journal unchanged");
-            UUID migrated=UUID.randomUUID();var converted=SourceConversionScope.initialInstances(Set.of(migrated),()->CompositeRuntime.place(world,second,state,migrated,null,shifted));
+            test.assertTrue(ordinary.outcome()==Outcome.COMMITTED,"90003 protruding physical overlap permits any incoming block while its actual root remains occupied: "+ordinary.reason());
+            test.assertTrue(!before.equals(CompositeLedger.get(world).writeNbt(new NbtCompound())),"permitted roof overlap publishes the new UUID exactly once");
+            CompositeRuntime.remove(world,((CompositeBlockEntity)world.getBlockEntity(second)).resident(),player,false);UUID migrated=UUID.randomUUID();var converted=SourceConversionScope.initialInstances(Set.of(migrated),()->CompositeRuntime.place(world,second,state,migrated,null,shifted));
             test.assertTrue(converted.outcome()==Outcome.COMMITTED&&!SourceConversionScope.initialInstance(migrated),"only this explicit initial source instance receives a scoped exception");
             owner=((CompositeBlockEntity)world.getBlockEntity(second)).resident();ItemStack picked=CompositeRuntime.pick(world,owner);
             test.assertTrue(picked.getSubNbt("CompositePayload")==null&&((CompositeBlockEntity)world.getBlockEntity(second)).payload().getInt("OpaqueTypedNote")==123,"installed typed compatibility data remains exact; new item contains no instance data or conversion privilege");
@@ -43,7 +43,7 @@ public final class PlacementPhysicsGameTests implements FabricGameTest {
             test.assertTrue(CompositeRuntime.transition(world,owner,world.getBlockState(second).with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.ALT),player).outcome()==Outcome.COMMITTED,"decorative profile change does not invalidate existing unchanged source physics");
             CompositeRuntime.remove(world,owner,player,false);player.setStackInHand(Hand.MAIN_HAND,picked);
             var used=picked.getItem().useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,new BlockHitResult(Vec3d.ofCenter(second.down()).add(0,.5,0),Direction.UP,second.down(),false)));
-            test.assertTrue(!used.isAccepted()&&picked.getCount()==1,"ordinary copied-item reinstall cannot inherit initial conversion privilege");
+            test.assertTrue(used.isAccepted()&&picked.isEmpty(),"ordinary block reinstall needs no conversion privilege for90003 protruding overlap");
             test.complete();
         }finally{
             for(BlockPos p:java.util.List.of(first,second))if(world.getBlockEntity(p) instanceof CompositeBlockEntity root&&root.resident()!=null)CompositeRuntime.remove(world,root.resident(),null,false);

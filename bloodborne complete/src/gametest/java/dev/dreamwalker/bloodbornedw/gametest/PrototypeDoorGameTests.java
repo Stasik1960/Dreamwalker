@@ -125,13 +125,13 @@ public final class PrototypeDoorGameTests implements FabricGameTest {
             test.assertTrue(place(world,root,player,art("base",1)).isAccepted(),"top half slab provides suitable contact without a full cube");Owner owner=resident(world,root);
             player.getAbilities().creativeMode=true;
             for(int turn=1;turn<=8;turn++){
-                aimAtAnyRootSelection(world,root,player);ItemStack tool=new ItemStack(PrototypeArchitecture.BUILDER_TOOL);player.setStackInHand(Hand.MAIN_HAND,tool);
+                aimAtAnyRootSelection(world,root,player);ItemStack tool=new ItemStack(CompositeArchitecture.BUILDER);player.setStackInHand(Hand.MAIN_HAND,tool);
                 BlockHitResult hit=new BlockHitResult(Vec3d.ofCenter(root),Direction.NORTH,root,false);
                 ActionResult used=BuildingTool.applyBlock(player,root,BuildingTool.Action.ROTATE);
                 test.assertTrue(used.isAccepted(),"common tool rotates actual installed door45; turn="+turn+"; result="+used+"; target="+CompositeRuntime.target(world,root,player)+"; transaction="+CompositeRuntime.lastResult()+"; "+CompositeRuntime.debugTarget(world,root,player));
                 test.assertTrue(world.getBlockState(root).get(CompositeRootBlock.ROTATION)==turn%8&&resident(world,root).equals(owner),"rotation keeps same registry and instance identity");
             }
-            BlockState before=world.getBlockState(root);player.setSneaking(true);aimAtAnyRootSelection(world,root,player);ItemStack tool=new ItemStack(PrototypeArchitecture.BUILDER_TOOL);player.setStackInHand(Hand.MAIN_HAND,tool);
+            BlockState before=world.getBlockState(root);player.setSneaking(true);aimAtAnyRootSelection(world,root,player);ItemStack tool=new ItemStack(CompositeArchitecture.BUILDER);player.setStackInHand(Hand.MAIN_HAND,tool);
             test.assertTrue(BuildingTool.applyBlock(player,root,BuildingTool.Action.PROFILE).isAccepted(),"explicit profile mode in server left-click adapter changes decoration");
             test.assertTrue(world.getBlockState(root).get(CompositeRootBlock.PROFILE)!=before.get(CompositeRootBlock.PROFILE)&&world.getBlockState(root).get(CompositeRootBlock.OPEN).equals(before.get(CompositeRootBlock.OPEN)),"art-only switch does not open door");test.complete();
         }finally{player.setSneaking(false);clear(world,root);player.discard();}
@@ -154,7 +154,7 @@ public final class PrototypeDoorGameTests implements FabricGameTest {
             test.assertTrue(place(world,root,player,art("base",1)).isAccepted(),"ordinary door placed");Owner owner=resident(world,root);
             for(Hand toolHand:Hand.values()){
                 player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);player.setStackInHand(Hand.OFF_HAND,ItemStack.EMPTY);
-                player.setStackInHand(toolHand,new ItemStack(PrototypeArchitecture.BUILDER_TOOL));
+                player.setStackInHand(toolHand,new ItemStack(CompositeArchitecture.BUILDER));
                 Vec3d fixedSide=Vec3d.of(root).add(-.9375,.8,.125);aim(player,fixedSide.add(0,0,-3),fixedSide);
                 Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(6));
                 BlockHitResult hit=world.raycast(new RaycastContext(eye,end,RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,player));

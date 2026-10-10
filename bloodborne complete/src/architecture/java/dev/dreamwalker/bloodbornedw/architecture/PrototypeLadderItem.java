@@ -28,11 +28,9 @@ public final class PrototypeLadderItem extends BlockItem {
         ItemStack working = context.getStack().copy();
         NbtCompound stateTag = working.getOrCreateSubNbt("BlockStateTag");
         if (!validVariant(stateTag)) stateTag.putString("variant", Integer.toString(Math.max(0,((PrototypeLadderBlock)getBlock()).fixedVariant())));
-        int art=((PrototypeLadderBlock)getBlock()).fixedVariant();
-        if(art>=0)stateTag.putString("variant",Integer.toString(art));
-        else if(variant(working)>0) {
-            // Old variant-bearing V8 items retain their artistic identity through an explicit alias.
-            ItemStack canonical=new ItemStack(PrototypeArchitecture.ladderItem(variant(working)),working.getCount());
+        stateTag.putString("variant","0");
+        if(getBlock()!=PrototypeArchitecture.ladderItem(0).getBlock()) {
+            ItemStack canonical=new ItemStack(PrototypeArchitecture.ladderItem(0),working.getCount());
             canonical.setNbt(working.getNbt().copy());
             ItemPlacementContext redirected=new PreparedContext(context,canonical);
             ActionResult result=((PrototypeLadderItem)canonical.getItem()).place(redirected);

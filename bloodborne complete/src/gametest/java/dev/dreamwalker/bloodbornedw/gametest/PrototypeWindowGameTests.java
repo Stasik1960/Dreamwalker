@@ -183,7 +183,7 @@ public final class PrototypeWindowGameTests implements FabricGameTest {
             Item tool = Registries.ITEM.get(new Identifier("bloodborne_dw", "composite_builder"));
             context.assertTrue(tool != Items.AIR, "ordinary composite builder tool is registered");
             Owner owner = resident(world, root); ItemStack toolStack = new ItemStack(tool);
-            int initial = world.getBlockState(root).get(CompositeRootBlock.ROTATION);
+            player.setStackInHand(Hand.MAIN_HAND,toolStack);int initial = world.getBlockState(root).get(CompositeRootBlock.ROTATION);
             for (int turn = 0; turn < 8; turn++) {
                 BlockState before = world.getBlockState(root); lookOutsideAtCenter(player, root);
                 context.assertTrue(CompositeRuntime.target(world,root,player)!=null,"builder ray resolves owner at turn"+turn+": "+CompositeRuntime.debugTarget(world,root,player));

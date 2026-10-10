@@ -137,17 +137,17 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
             world.setBlockState(root.south(), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL); world.setBlockState(root, before, Block.NOTIFY_ALL);
             ItemStack tool = new ItemStack(PrototypeArchitecture.BUILDER_TOOL); tool.getOrCreateNbt().putString("test_marker", "unchanged"); NbtCompound nbt = tool.getNbt().copy();
             ActionResult rejected = BuildingTool.applyBlock(player,root,BuildingTool.Action.ROTATE);
-            context.assertTrue(!rejected.isAccepted() && world.getBlockState(root).equals(before), "45-degree rotation without both new touching backing faces leaves the exact old state");
+            context.assertTrue(rejected.isAccepted() && world.getBlockState(root).equals(ladder().step45(before))&&!world.getBlockState(root).getCollisionShape(world,root,ShapeContext.of(player)).isEmpty(), "unsupported diagonal rotation is permitted and retains player collision");
             context.assertTrue(tool.getCount() == 1 && tool.getNbt().equals(nbt), "rejected builder action preserves its tool");
             for (Direction direction : Direction.Type.HORIZONTAL) world.setBlockState(root.offset(direction), Blocks.STONE.getDefaultState(), Block.NOTIFY_ALL);
-            BlockState current = before;
+            BlockState firstRotation=world.getBlockState(root);BlockState current = firstRotation;
             for (int turn = 0; turn < 8; turn++) {
                 BlockState expected = ladder().step45(current);
                 context.assertTrue(BuildingTool.applyBlock(player,root,player.isSneaking()?BuildingTool.Action.PROFILE:BuildingTool.Action.ROTATE).isAccepted(), "supported builder rotation succeeds at turn " + turn);
                 context.assertTrue(world.getBlockState(root).equals(expected), "rotation changes yaw alone and preserves variant, ALT and waterlogging");
                 current = expected;
             }
-            context.assertTrue(world.getBlockState(root).equals(before) && tool.getNbt().equals(nbt), "eight server LKM action-adapter rotations return the original state without modifying the item");
+            context.assertTrue(world.getBlockState(root).equals(firstRotation) && tool.getNbt().equals(nbt), "eight server LKM action-adapter rotations return the original state without modifying the item");
             context.complete();
         } finally { clear(world, root); player.discard(); }
     }
@@ -178,7 +178,7 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
                 clear(world, root); BlockPos support = root.offset(facing.getOpposite());
                 backing(world,root,before,Blocks.STONE.getDefaultState()); world.setBlockState(root, before, Block.NOTIFY_ALL);
                 world.removeBlock(support, false);
-                context.assertTrue(world.getBlockState(root).isAir(), "native unsupported ladder disappears when its backing is removed: " + before);
+                if(before.get(PrototypeLadderBlock.DIAGONAL)){context.assertTrue(world.getBlockState(root).equals(before)&&!before.getCollisionShape(world,root,ShapeContext.of(context.createMockSurvivalPlayer())).isEmpty(),"unsupported diagonal stays with player collider");continue;}context.assertTrue(world.getBlockState(root).isAir(), "native unsupported ladder disappears when its backing is removed: " + before);
                 List<ItemEntity> drops = world.getEntitiesByClass(ItemEntity.class, new Box(root).expand(2), entity -> entity.getStack().getItem() instanceof PrototypeLadderItem);
                 context.assertTrue(drops.size() == 1 && drops.get(0).getStack().getCount() == 1, "one support removal produces one item without duplication");
                 assertArt(context, before, drops.get(0).getStack(), "support-removal drop");
@@ -286,7 +286,7 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
                 ItemStack item=art(1,Profile.ALT);BlockPos clicked=root.offset(expected.get(PrototypeLadderBlock.FACING).getOpposite());
                 context.assertTrue(use(PrototypeArchitecture.LADDER_ITEM,world,player,item,clicked,expected.get(PrototypeLadderBlock.FACING)).isAccepted()&&world.getBlockState(root).equals(expected),"real eight-yaw placement accepts suitable partial supports and adjacent decor");
                 context.assertTrue(world.getBlockState(root.offset(decor)).isOf(Blocks.GOLD_BLOCK),"neighbor decor is preserved without bounding-box reservations");
-                if((yaw&1)!=0){Direction second=PrototypeLadderBlock.backingDirections(expected).get(1);world.setBlockState(root.offset(second),Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);context.assertTrue(world.getBlockState(root).isAir(),"removing either diagonal backing removes the unsupported section");}
+                if((yaw&1)!=0){Direction second=PrototypeLadderBlock.backingDirections(expected).get(1);world.setBlockState(root.offset(second),Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);context.assertTrue(world.getBlockState(root).equals(expected)&&!expected.getCollisionShape(world,root,ShapeContext.of(player)).isEmpty(),"removing either diagonal backing retains the section and enables player collision");}
                 for(SlabType half:List.of(SlabType.TOP,SlabType.BOTTOM)){
                     clear(world,root);backing(world,root,expected,Blocks.STONE_SLAB.getDefaultState().with(SlabBlock.TYPE,half));
                     context.assertTrue(expected.canPlaceAt(world,root),"a real centered attachment pad on the "+half+" slab face supports an ordinary section");
@@ -383,7 +383,7 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
             clear(world,root);world.setBlockState(root.down(),Blocks.STONE_SLAB.getDefaultState().with(SlabBlock.TYPE,SlabType.BOTTOM),Block.NOTIFY_ALL);ItemStack unsupported=art(0,Profile.ALT);
             context.assertTrue(!use(unsupported.getItem(),world,player,unsupported,root.down(),Direction.UP).isAccepted()&&world.getBlockState(root).isAir()&&unsupported.getCount()==1,"unsupported fractional foundation is explicitly refused; no floating new section or consumed item");
             clear(world,root);world.setBlockState(root.down(),Blocks.STONE_SLAB.getDefaultState().with(SlabBlock.TYPE,SlabType.TOP),Block.NOTIFY_ALL);player.setYaw(0);player.setHeadYaw(0);
-            for(int art=0;art<3;art++){BlockPos section=root.up(art);ItemStack item=art(art,Profile.ALT);context.assertTrue(use(item.getItem(),world,player,item,section.down(),Direction.UP).isAccepted(),"ordinary upper-face click installs a distinct artistic section atop surface/previoussection");BlockState actual=world.getBlockState(section);context.assertTrue(actual.get(PrototypeLadderBlock.FREESTANDING)&&!actual.get(PrototypeLadderBlock.SOURCE_CLONE)&&ordinaryOwner(world,section)&&actual.isOf(PrototypeArchitecture.ladderBlock(art)),"new top-standing section is the requested ordinary art type with a new native UUID without source/backing role");}
+            for(int art=0;art<3;art++){BlockPos section=root.up(art);ItemStack item=art(art,Profile.ALT);context.assertTrue(use(item.getItem(),world,player,item,section.down(),Direction.UP).isAccepted(),"ordinary upper-face click installs a distinct artistic section atop surface/previoussection");BlockState actual=world.getBlockState(section);context.assertTrue(actual.get(PrototypeLadderBlock.FREESTANDING)&&!actual.get(PrototypeLadderBlock.SOURCE_CLONE)&&ordinaryOwner(world,section)&&actual.isOf(PrototypeArchitecture.ladderBlock(0)),"new top-standing section is the canonical90006 type from any compatible alias with a new native UUID without source/backing role");}
             BlockState bottom=world.getBlockState(root),middle=world.getBlockState(root.up()),top=world.getBlockState(root.up(2));
             player.refreshPositionAndAngles(root.getX()+.5,root.getY()+.01,root.getZ()+.5,0,0);player.setHeadYaw(0);player.setVelocity(Vec3d.ZERO);player.setOnGround(false);double startY=player.getY();int climbing=0;
             for(int step=0;step<24;step++){if(player.isClimbing())climbing++;player.travel(new Vec3d(0,0,1));}
@@ -402,7 +402,7 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
         ServerWorld world=context.getWorld();BlockPos root=context.getAbsolutePos(ROOT);PlayerEntity player=context.createMockSurvivalPlayer();moveOutside(context,player);player.getAbilities().creativeMode=true;
         try{
             for(int art=0;art<3;art++){clear(world,root);BlockState expected=state(Direction.NORTH,art,Profile.ALT,false);world.setBlockState(root.south(),Blocks.STONE.getDefaultState());ItemStack creative=PrototypeArchitecture.ladderItem(art).getDefaultStack();creative.getOrCreateSubNbt("BlockStateTag").putString("profile","alt");context.assertTrue(use(creative.getItem(),world,player,creative,root.south(),Direction.NORTH).isAccepted()&&world.getBlockState(root).equals(expected),"each real Creative primary item deterministically installs its own art ID");
-                ItemStack picked=expected.getBlock().getPickStack(world,root,expected);assertArt(context,expected,picked,"Creative middle pick");String number=List.of("90006","90018","90019").get(art);context.assertTrue(dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(picked).temporaryId().equals(number)&&picked.getName().getString().contains(number)&&dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(expected).temporaryId().equals(number),"held/picked and placed debug type all display distinct expected TEMP"+number);
+                ItemStack picked=expected.getBlock().getPickStack(world,root,expected);assertArt(context,expected,picked,"Creative middle pick");String number="90006";context.assertTrue(dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(picked).temporaryId().equals(number)&&picked.getName().getString().contains(number)&&dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(expected).temporaryId().equals(number),"held/picked and placed debug type all display canonical expected TEMP"+number);
                 ItemStack tool=new ItemStack(PrototypeArchitecture.BUILDER_TOOL);tool.getOrCreateNbt().putInt("BuilderAction",1);context.assertTrue(!BuildingTool.applyBlock(player,root,BuildingTool.Action.VARIANT).isAccepted()&&world.getBlockState(root).equals(expected),"legacy VARIANT ordinal1 is retained but cannot change independent artistic type");
                 world.breakBlock(root,true,player);var drops=world.getEntitiesByClass(ItemEntity.class,new Box(root).expand(2),entity->entity.getStack().getItem() instanceof PrototypeLadderItem);context.assertTrue(drops.size()==1,"one native break has one canonical artistic drop");assertArt(context,expected,drops.get(0).getStack(),"distinct ID drop");
             }context.complete();
@@ -447,7 +447,7 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
         return PrototypeArchitecture.LADDER;
     }
     private static BlockState state(Direction facing, int variant, Profile profile, boolean wet) {
-        return PrototypeArchitecture.ladderBlock(variant).getDefaultState().with(PrototypeLadderBlock.FACING, facing).with(PrototypeLadderBlock.VARIANT, variant).with(PrototypeLadderBlock.PROFILE, profile).with(PrototypeLadderBlock.WATERLOGGED, wet);
+        return PrototypeArchitecture.ladderBlock(0).getDefaultState().with(PrototypeLadderBlock.FACING, facing).with(PrototypeLadderBlock.VARIANT, 0).with(PrototypeLadderBlock.PROFILE, profile).with(PrototypeLadderBlock.WATERLOGGED, wet);
     }
     private static ItemStack art(int variant, Profile profile) { return ladder().artisticStack(state(Direction.NORTH, variant, profile, false)); }
     private static ActionResult use(net.minecraft.item.Item item, ServerWorld world, PlayerEntity player, ItemStack stack, BlockPos clicked, Direction side) {
@@ -455,10 +455,10 @@ public final class PrototypeLadderGameTests implements FabricGameTest {
         return (item instanceof PrototypeLadderItem?stack.getItem():item).useOnBlock(new ItemUsageContext(player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.ofCenter(clicked).add(Vec3d.of(side.getVector()).multiply(.5)), side, clicked, false)));
     }
     private static void assertArt(TestContext context, BlockState expected, ItemStack stack, String reason) {
-        context.assertTrue(stack.isOf(PrototypeArchitecture.ladderItem(PrototypeLadderBlock.artVariant(expected))) && PrototypeLadderItem.variant(stack) == PrototypeLadderBlock.artVariant(expected) && PrototypeLadderItem.profile(stack) == expected.get(PrototypeLadderBlock.PROFILE), reason + " retains independent art ID and declared profile");
+        context.assertTrue(stack.isOf(PrototypeArchitecture.ladderItem(0)) && PrototypeLadderItem.variant(stack) == 0 && PrototypeLadderItem.profile(stack) == expected.get(PrototypeLadderBlock.PROFILE), reason + " retains canonical90006 and declared profile");
         NbtCompound tag = stack.getSubNbt("BlockStateTag");
         context.assertTrue(tag != null && tag.getKeys().equals(Set.of("variant", "profile")), reason + " carries artistic state without forcing a later facing or water state");
-        context.assertTrue(tag.contains("variant", 8) && tag.getString("variant").equals(Integer.toString(PrototypeLadderBlock.artVariant(expected)))
+        context.assertTrue(tag.contains("variant", 8) && tag.getString("variant").equals("0")
                 && tag.contains("profile", 8) && tag.getString("profile").equals(expected.get(PrototypeLadderBlock.PROFILE).asString()), reason + " stores exact valid NBT strings, including default variant 0 and BASE");
     }
     private static void assertPlaneBlocksMovement(TestContext context, VoxelShape shape, Direction.Axis axis) {

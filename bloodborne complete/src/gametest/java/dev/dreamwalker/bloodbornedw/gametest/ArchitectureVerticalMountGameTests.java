@@ -34,7 +34,7 @@ public final class ArchitectureVerticalMountGameTests implements FabricGameTest 
     public void everyCanonicalArchitectureMovesBothShapesAndKeepsUuidThroughResetAndTypedSave(TestContext t){
         ServerWorld w=t.getWorld();BlockPos root=t.getAbsolutePos(LOCAL);ServerPlayerEntity p=player(w);int checked=0;
         try{
-            for(var row:DebugCatalogue.entries().stream().filter(e->e.kind().equals("architecture")).toList()){
+            for(var row:DebugCatalogue.entries().stream().filter(e->e.kind().equals("architecture")&&!dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.retired(e.registryId().getPath())).toList()){
                 clear(w,root);Item item=Registries.ITEM.get(row.registryId());t.assertTrue(item!=Items.AIR,"canonical architecture has an item "+row.temporaryId());
                 w.setBlockState(root.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);p.setYaw(0);p.setSneaking(true);p.setPosition(root.getX()+20,root.getY()+5,root.getZ()+20);
                 ItemStack offered=new ItemStack(item);p.setStackInHand(Hand.MAIN_HAND,offered);
@@ -56,7 +56,7 @@ public final class ArchitectureVerticalMountGameTests implements FabricGameTest 
                 t.assertTrue(CompositeRuntime.remove(w,owner,p,false).outcome()==TransactionCore.Outcome.COMMITTED,"whole removal after reset "+row.temporaryId());
                 t.assertTrue(CompositeLedger.get(w).cells().stream().noneMatch(cell->CompositeLedger.get(w).at(cell).stream().anyMatch(c->c.owner().equals(owner))),"no stale helper or ledger survives deletion "+row.temporaryId());checked++;
             }
-            t.assertTrue(checked==18,"all eighteen canonical architecture types were placed and moved");t.complete();
+            t.assertTrue(checked==11,"all eleven retained canonical architecture types were placed and moved");t.complete();
         }finally{clear(w,root);p.discard();}
     }
     @GameTest(templateName="bloodborne_dw:window_test",tickLimit=120,batchId="architecture_vertical_mount")
@@ -97,7 +97,8 @@ public final class ArchitectureVerticalMountGameTests implements FabricGameTest 
     public void OneCombinedCreativeCatalogueOffersCanonicalTypesWeaponsEggsAndTwoDistinctTools(TestContext t){
         var offered=UnifiedCreativeCatalogue.canonicalItems();Set<Identifier> ids=new HashSet<>();for(ItemStack stack:offered){t.assertTrue(ids.add(Registries.ITEM.getId(stack.getItem()))&&stack.getSubNbt("CompositePayload")==null&&stack.getSubNbt("BlockEntityTag")==null&&(!stack.hasNbt()||!stack.getNbt().toString().contains("VerticalOffset")),"one canonical creative type item without instance UUID/height/provenance: "+Registries.ITEM.getId(stack.getItem())+"");}
         t.assertTrue(Registries.ITEM_GROUP.containsId(UnifiedCreativeCatalogue.ID)&&!Registries.ITEM_GROUP.containsId(new Identifier("bloodborne_dw","prototypes"))&&!Registries.ITEM_GROUP.containsId(new Identifier("bloodborne_dw","composite_prototypes"))&&!Registries.ITEM_GROUP.containsId(new Identifier("bloodborne_rp","adventures")),"combined mod registers one shared category, historical own groups removed");
-        for(String id:List.of("bloodborne_dw:builder_tool","bloodborne_dw:composite_builder","bloodborne_dw:prototype_glass_window_03","bloodborne_rp:saw_cleaver","bloodborne_rp:cleric_beast_spawn_egg"))t.assertTrue(ids.contains(new Identifier(id)),"shared creative catalogue includes "+id);
+        for(String id:List.of("bloodborne_dw:composite_builder","bloodborne_dw:prototype_glass_window_03","bloodborne_rp:saw_cleaver","bloodborne_rp:cleric_beast_spawn_egg"))t.assertTrue(ids.contains(new Identifier(id)),"shared creative catalogue includes "+id);
+        t.assertTrue(!ids.contains(new Identifier("bloodborne_dw:builder_tool"))&&ids.stream().noneMatch(id->id.getNamespace().equals("bloodborne_dw")&&dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.retired(id.getPath())),"90009 is the only offered tool; retired catalogue aliases remain hidden");
         t.assertTrue(!ids.contains(new Identifier("bloodborne_dw","wall_builder"))&&!ids.contains(new Identifier("bloodborne_dw","composite_cell"))&&!ids.contains(new Identifier("bloodborne_rp","furniture_8_placer")),"technical roles/retired duplicate aliases have no creative placement item");t.complete();
     }
     private static ServerPlayerEntity player(ServerWorld w){var p=new ServerPlayerEntity(w.getServer(),w,new GameProfile(UUID.randomUUID(),"VerticalMountTest")){@Override public void sendMessage(Text message,boolean overlay){}};p.getAbilities().allowModifyWorld=true;p.getAbilities().creativeMode=true;p.setPosition(0,200,0);return p;}

@@ -80,6 +80,15 @@ public final class CompositeRuntime {
         payload=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.nativePayload(world,root,next,payload);ObjectInstance object=instance(world,root,next,owner.instanceId(),payload);FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of(owner,object));
         return execute(access,core().transitionPayload(access,owner,object,checks(world,player,object,next.getBlock() instanceof CompositeRootBlock block?block:null)));
     }
+    public static TransactionCore.Result migrateCatalogue(ServerWorld world,Owner owner,BlockState next,NbtCompound payload) {
+        BlockPos pos=CompositeData.pos(owner.root());
+        if(!world.isChunkLoaded(pos))return rejected("unloaded_migration_root");
+        BlockState old=world.getBlockState(pos);
+        if(!dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.target(old).equals(next))return rejected("unreviewed_alias_migration");
+        ObjectInstance object=instance(world,pos,next,owner.instanceId(),payload);
+        FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of(object.owner(),object));
+        return execute(access,core().migrateAlias(access,owner,object,List.of()));
+    }
     private static void notifyOpenTransition(ServerWorld world,Owner owner,BlockState previous,BlockState next,PlayerEntity player,TransactionCore.Result result){
         if(result.outcome()!=TransactionCore.Outcome.COMMITTED||!(next.getBlock() instanceof CompositeRootBlock block)||!block.spec.id.getPath().equals("prototype_double_door")||!block.spec.openable||previous.get(CompositeRootBlock.OPEN)==next.get(CompositeRootBlock.OPEN))return;
         var ref=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.reference(world,CompositeData.pos(owner.root()));
@@ -174,15 +183,28 @@ public final class CompositeRuntime {
     }
     public static VoxelShape cellShape(BlockView world,BlockPos pos,boolean collision,BlockState fallback,ShapeContext context){
         World measuredWorld=!CompositeShapeSnapshots.worker(world)&&world instanceof World value?value:null;long started=measuredWorld==null?0:ArchitectureDiagnostics.begin(measuredWorld,true);
-        try{List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> boxes=new ArrayList<>();List<CompositeData.Contribution> entries=contributions(world,pos);for(var entry:entries)if(validOrDeferred(world,entry.owner()))boxes.addAll(collision?contextCollision(entry,pos,context):entry.shape().selection());if(entries.isEmpty()&&fallback.getBlock() instanceof CompositeRootBlock block){Footprint f=block.spec.footprint(fallback,0).get(Cell.ORIGIN);boxes.addAll(collision?f.collision():f.selection());}return shape(boxes);}
+        try{List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> boxes=new ArrayList<>();List<CompositeData.Contribution> entries=contributions(world,pos);for(var entry:entries)if(validOrDeferred(world,entry.owner()))boxes.addAll(collision?contextCollision(world,entry,pos,context):contextSelection(world,entry,pos,context));if(entries.isEmpty()&&fallback.getBlock() instanceof CompositeRootBlock block){Footprint f=block.spec.footprint(fallback,0).get(Cell.ORIGIN);boxes.addAll(collision||!f.collision().isEmpty()?f.collision():f.selection());}return shape(boxes);}
         finally{if(started!=0)ArchitectureDiagnostics.finish(measuredWorld,null,pos,collision?"architecture.cell_collision_shared_owners":"architecture.cell_selection_shared_owners",started);}
     }
-    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextCollision(CompositeData.Contribution entry,BlockPos cell,ShapeContext context){
+    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextSelection(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context) {
+        if(context instanceof EntityShapeContext actor&&actor.getEntity() instanceof PlayerEntity player&&dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player))return entry.shape().selection();
+        var physical=contextCollision(world,entry,cell,context);
+        if(!physical.isEmpty())return physical;
+        BlockState rootState=CompositeData.state(entry.rootData());
+        if(rootState.getBlock() instanceof CompositeRootBlock block&&block.spec.footprint(rootState,0).values().stream().anyMatch(part->!part.collision().isEmpty()))return List.of();
+        return entry.shape().selection();
+    }
+    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextCollision(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context){
         boolean player=context instanceof EntityShapeContext actor&&actor.getEntity() instanceof PlayerEntity;
         if(!player||!entry.owner().registryId().startsWith("bloodborne_dw:prototype_ladder")||!"true".equals(entry.rootData().properties().get("diagonal")))return entry.shape().collision();
         // Preserve native diagonal ladder's player-pass-through context. The
         // source pair's separately owned original beehive cube remains solid.
-        if(!"true".equals(entry.rootData().properties().get("source_clone")))return List.of();
+        if(!"true".equals(entry.rootData().properties().get("source_clone"))) {
+            BlockPos root=CompositeData.pos(entry.owner().root());
+            BlockState state=CompositeData.state(entry.rootData());
+            NbtCompound mount=CompositeData.nbt(entry.rootData().blockEntityNbt());
+            return dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock.hasBackingMount(state,world,root,mount.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY))?List.of():entry.shape().collision();
+        }
         NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());double x=entry.owner().root().x()+payload.getInt("NativeBackingX")-cell.getX(),y=entry.owner().root().y()+payload.getInt("NativeBackingY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY)-cell.getY(),z=entry.owner().root().z()+payload.getInt("NativeBackingZ")-cell.getZ();
         double a=Math.max(0,x),b=Math.max(0,y),c=Math.max(0,z),d=Math.min(1,x+1),e=Math.min(1,y+1),f=Math.min(1,z+1);
         return d>a&&e>b&&f>c?List.of(new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(a,b,c,d,e,f)):List.of();
@@ -197,18 +219,18 @@ public final class CompositeRuntime {
         long started=ArchitectureDiagnostics.begin(world,true);try{return targetsInternal(world,pos,player,true);}finally{ArchitectureDiagnostics.finish(world,null,pos,"architecture.target_query_shared_owners",started);}
     }
     private static List<Owner> targetsInternal(World world,BlockPos pos,PlayerEntity player,boolean cleanup){
-        if(player==null||!world.isChunkLoaded(pos))return List.of();Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(6));
+        if(player==null||!world.isChunkLoaded(pos))return List.of();boolean tool=dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player);Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(tool?6:player.isCreative()?5:4.5));
         record Hit(Owner owner,double distance){} List<Hit> hits=new ArrayList<>();
-        for(var contribution:contributions(world,pos)){if(!validOrDeferred(world,contribution.owner(),cleanup))continue;var hit=shape(contribution.shape().selection()).raycast(eye,end,pos);if(hit!=null)hits.add(new Hit(contribution.owner(),hit.getPos().squaredDistanceTo(eye)));}
+        for(var contribution:contributions(world,pos)){if(!validOrDeferred(world,contribution.owner(),cleanup))continue;var hit=shape(tool?contribution.shape().selection():contextSelection(world,contribution,pos,ShapeContext.of(player))).raycast(eye,end,pos);if(hit!=null)hits.add(new Hit(contribution.owner(),hit.getPos().squaredDistanceTo(eye)));}
         hits.sort(Comparator.comparingDouble(Hit::distance).thenComparing(Hit::owner));
         BlockState carrier=world.getBlockState(pos);if(!(carrier.getBlock() instanceof CompositeRootBlock)&&!carrier.isOf(CompositeArchitecture.CELL)&&!(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(carrier)&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.owner(world,pos)!=null)){
             BASE_SHAPE.set(true);try{var foreign=carrier.getOutlineShape(world,pos).raycast(eye,end,pos);if(foreign!=null){double distance=foreign.getPos().squaredDistanceTo(eye);hits.removeIf(hit->hit.distance>=distance-1e-8);}}finally{BASE_SHAPE.set(false);}
         }
         return hits.stream().map(Hit::owner).distinct().toList();
     }
-    public static Owner target(World world,BlockPos pos,PlayerEntity player){List<Owner> hits=targets(world,pos,player);if(hits.isEmpty())return null;Owner selected=SELECTED.get(player.getUuid());return hits.contains(selected)?selected:hits.get(0);}
+    public static Owner target(World world,BlockPos pos,PlayerEntity player){List<Owner> hits=targets(world,pos,player);if(hits.isEmpty())return null;Owner selected=dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player)?SELECTED.get(player.getUuid()):null;return hits.contains(selected)?selected:hits.get(0);}
     /** Diagnostic inspection must not queue stale-owner cleanup or alter selected owners. */
-    public static Owner targetReadOnly(World world,BlockPos pos,PlayerEntity player){List<Owner> hits=targetsInternal(world,pos,player,false);if(hits.isEmpty())return null;Owner selected=SELECTED.get(player.getUuid());return hits.contains(selected)?selected:hits.get(0);}
+    public static Owner targetReadOnly(World world,BlockPos pos,PlayerEntity player){List<Owner> hits=targetsInternal(world,pos,player,false);if(hits.isEmpty())return null;Owner selected=dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player)?SELECTED.get(player.getUuid()):null;return hits.contains(selected)?selected:hits.get(0);}
     public static List<Owner> targetsReadOnly(World world,BlockPos pos,PlayerEntity player){return targetsInternal(world,pos,player,false);}
     public static Owner soleNativeOwnerReadOnly(World world,BlockPos pos){BlockState state=world.getBlockState(pos);if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)&&!state.isOf(CompositeArchitecture.CELL))return null;List<Owner> owners=contributions(world,pos).stream().map(CompositeData.Contribution::owner).filter(owner->validOrDeferred(world,owner,false)).distinct().toList();if(owners.size()!=1)return null;Owner owner=owners.get(0);if(!world.isChunkLoaded(CompositeData.pos(owner.root())))return null;var entity=world.getBlockEntity(CompositeData.pos(owner.root()));return entity instanceof CompositeBlockEntity root&&owner.equals(root.resident())?owner:null;}
     public static Owner soleNativeOwner(World world,BlockPos pos){BlockState state=world.getBlockState(pos);if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)&&!state.isOf(CompositeArchitecture.CELL))return null;List<Owner> owners=contributions(world,pos).stream().map(CompositeData.Contribution::owner).filter(owner->validOrDeferred(world,owner)).distinct().toList();if(owners.size()!=1)return null;Owner owner=owners.get(0);if(!world.isChunkLoaded(CompositeData.pos(owner.root())))return null;var entity=world.getBlockEntity(CompositeData.pos(owner.root()));return entity instanceof CompositeBlockEntity root&&owner.equals(root.resident())?owner:null;}
@@ -256,12 +278,16 @@ public final class CompositeRuntime {
         if(!block.spec.requiredSupport)return;BlockPos below=root.add(block.spec.supportOffset.x(),block.spec.supportOffset.y(),block.spec.supportOffset.z());if(world.isChunkLoaded(below)){Double height=topHeight(world,below,cached.resident());if(height==null||Math.abs(height-1-cached.mountY())>1e-5)remove(world,cached.resident(),null,true);}
     });}
     public static void drain(ServerWorld world){Map<String,Runnable> tasks=PENDING.remove(world);if(tasks!=null)for(Runnable task:tasks.values()){long started=ArchitectureDiagnostics.begin(world,true);try{task.run();}finally{ArchitectureDiagnostics.finish(world,null,null,"architecture.deferred_owner_update_shared_queue",started);}}}
-    public static void chunkLoaded(ServerWorld world,ChunkPos chunk){CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
+    public static void chunkLoaded(ServerWorld world,ChunkPos chunk){
+        queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
+        CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
         BlockPos pos=CompositeData.pos(cell);scheduleCleanup(world,pos);
         // CHUNK_LOAD runs before this chunk's FULL future has completed. Never
         // ask World for a BE here: that would wait recursively for the same
         // future. Helper chunks retry the same owner when the assembly loads.
         for(var contribution:ledger.at(cell)){Owner owner=contribution.owner();
+            if(owner.registryId().startsWith("bloodborne_dw:prototype_wall")||owner.registryId().startsWith("bloodborne_dw:prototype_ladder"))
+                queue(world,"catalogue-migration-root:"+owner.instanceId(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedRoot(world,CompositeData.pos(owner.root())));
             if(!owner.registryId().equals("bloodborne_dw:prototype_tree"))continue;
             queue(world,"tree-accepted-normalize:"+owner.instanceId(),()->{
                 BlockPos root=CompositeData.pos(owner.root());var loaded=world.getChunkManager().getWorldChunk(root.getX()>>4,root.getZ()>>4);

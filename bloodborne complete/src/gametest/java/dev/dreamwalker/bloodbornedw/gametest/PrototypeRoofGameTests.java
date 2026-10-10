@@ -75,16 +75,16 @@ public final class PrototypeRoofGameTests implements FabricGameTest {
             clear(world,root);world.setBlockState(root.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);outside(player,root,0);test.assertTrue(place(player,art("base",1),root).isAccepted(),"source-normalized roof placed");
             test.assertTrue(!world.isSpaceEmpty(new Box(root.getX()+.03,root.getY()+.05,root.getZ()+.60,root.getX()+.15,root.getY()+.15,root.getZ()+.72)),"base cube has real player collision throughout its unit volume");
             test.assertTrue(world.isSpaceEmpty(new Box(root.getX()+.03,root.getY()+1.05,root.getZ()+.60,root.getX()+.15,root.getY()+1.15,root.getZ()+.72)),"sloped visual volume above the base cube remains physically empty");
-            var footprint=block().spec.footprint(world.getBlockState(root),0);boolean finGap=false;
+            player.setStackInHand(Hand.MAIN_HAND,CompositeArchitecture.BUILDER.getDefaultStack());var footprint=block().spec.footprint(world.getBlockState(root),0);boolean finGap=false;
             outer:for(var entry:footprint.entrySet())for(ObjectGeometry.Box selected:entry.getValue().selection()){
                 Vec3d middle=new Vec3d((selected.minX()+selected.maxX())/2,(selected.minY()+selected.maxY())/2,(selected.minZ()+selected.maxZ())/2);
                 Box probe=new Box(middle.x-.001,middle.y-.001,middle.z-.001,middle.x+.001,middle.y+.001,middle.z+.001);
                 VoxelShape solid=CompositeRuntime.shape(entry.getValue().collision());if(VoxelShapes.matchesAnywhere(solid,VoxelShapes.cuboid(probe),net.minecraft.util.function.BooleanBiFunction.AND))continue;
-                BlockPos cell=root.add(entry.getKey().x(),entry.getKey().y(),entry.getKey().z());VoxelShape outline=world.getBlockState(cell).getOutlineShape(world,cell);
+                BlockPos cell=root.add(entry.getKey().x(),entry.getKey().y(),entry.getKey().z());VoxelShape outline=world.getBlockState(cell).getOutlineShape(world,cell,ShapeContext.of(player));
                 Vec3d start=Vec3d.of(cell).add(middle).add(-.2,0,0),end=start.add(.4,0,0);
                 if(outline.raycast(start,end,cell)!=null){test.assertTrue(world.isSpaceEmpty(probe.offset(cell)),"source fin target is selection only and has no hard collision");finGap=true;break outer;}
             }
-            test.assertTrue(finGap,"at least one authored two-sided fin is targetable independently from hard collision");
+            player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);test.assertTrue(finGap,"at least one authored two-sided fin is targetable by90009 independently from hard collision");
             for(int yaw=1;yaw<8;yaw++){
                 BlockState next=world.getBlockState(root).with(CompositeRootBlock.ROTATION,yaw);test.assertTrue(CompositeRuntime.transition(world,owner(world,root),next,player).outcome()==Outcome.COMMITTED,"sloped footprint turns as one assembly at yaw "+yaw);
                 var parts=block().spec.footprint(next,0);double volume=0;Box enclosing=null;

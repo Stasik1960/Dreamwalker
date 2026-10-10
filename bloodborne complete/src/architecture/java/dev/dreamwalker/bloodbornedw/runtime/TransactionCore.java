@@ -97,6 +97,13 @@ public final class TransactionCore {
         return prepare(world,current,next,checks,true);
     }
     public Preparation removal(WorldAccess world, Owner current) { return prepare(world, Objects.requireNonNull(current), null, List.of()); }
+    /** Explicit alias migration: UUID and root cannot change, only the registry type. */
+    public Preparation migrateAlias(WorldAccess world,Owner current,ObjectInstance next,List<PlacementCheck> checks) {
+        Objects.requireNonNull(current);Objects.requireNonNull(next);
+        if(!current.instanceId().equals(next.owner().instanceId())||!current.root().equals(next.owner().root()))
+            return new Preparation(null,"migration_changes_instance_or_root");
+        return prepare(world,current,next,checks,true);
+    }
 
     private Preparation prepare(WorldAccess world, Owner current, ObjectInstance next, List<PlacementCheck> checks) {
         return prepare(world,current,next,checks,false);

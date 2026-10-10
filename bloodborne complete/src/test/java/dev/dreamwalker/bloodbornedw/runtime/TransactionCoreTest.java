@@ -48,6 +48,7 @@ public final class TransactionCoreTest {
         run("snapshots copy opaque bytes and state maps", TransactionCoreTest::immutableSnapshots);
         run("unchanged helpers refresh cached data and roll back separately", TransactionCoreTest::cachedRefresh);
         run("trusted functional payload transition preserves explicit adapter update", TransactionCoreTest::functionalPayload);
+        run("alias migration retains UUID/payload and atomically rewrites helpers", TransactionCoreTest::aliasMigration);
         System.out.println("PASS " + tests + " transaction core checks; Java " + System.getProperty("java.version"));
     }
 
@@ -266,6 +267,19 @@ public final class TransactionCoreTest {
         ObjectInstance after=new ObjectInstance(before.owner(),before.rootData().withNbt(new byte[]{3,1,4,9}),before.cells());world.remember(after);
         require(core.execute(world,core.transitionPayload(world,before.owner(),after,List.of())).outcome()==Outcome.COMMITTED,"explicit functional payload commits");
         require(Arrays.equals(world.read(before.owner().root()).data().blockEntityNbt(),new byte[]{3,1,4,9}),"trusted adapter payload is retained rather than replaced with stale mount data");
+    }
+    private static void aliasMigration() {
+        MemoryWorld world=new MemoryWorld();TransactionCore core=core();Cell root=new Cell(0,64,0);
+        ObjectInstance old=withPayload(world,instance(world,"retired",root,Map.of(Cell.ORIGIN,FULL,new Cell(1,0,0),FULL)),new byte[]{5,4,3});place(core,world,old);
+        Owner owner=new Owner(old.owner().instanceId(),"test:canonical",root);
+        ObjectInstance next=new ObjectInstance(owner,new BlockData("test:canonical",Map.of("shape","canonical"),new byte[]{5,4,3}),old.cells());world.remember(next);
+        require(!core.transition(world,old.owner(),next,List.of()).accepted(),"normal edits cannot change registry identity");
+        require(core.execute(world,core.migrateAlias(world,old.owner(),next,List.of())).outcome()==Outcome.COMMITTED,"explicit migration commits");
+        require(world.read(root).resident().equals(owner)&&world.read(root.add(new Cell(1,0,0))).guests().equals(List.of(owner)),"all memberships switch together, UUID stable");
+        require(Arrays.equals(world.read(root).data().blockEntityNbt(),new byte[]{5,4,3}),"typed payload exact");
+        require(!core.migrateAlias(world,owner,new ObjectInstance(new Owner(UUID.randomUUID(),"test:canonical",root),next.rootData(),next.cells()),List.of()).accepted(),"migration cannot replace UUID");
+        ObjectInstance reverse=new ObjectInstance(old.owner(),old.rootData(),old.cells());world.remember(reverse);world.failWrite=world.writes+2;var captured=world.copy();
+        require(core.execute(world,core.migrateAlias(world,owner,reverse,List.of())).outcome()==Outcome.ROLLED_BACK&&captured.equals(world.copy()),"failed migration restores whole assembly");
     }
     private static ObjectInstance withPayload(MemoryWorld world, ObjectInstance object, byte[] payload) {
         ObjectInstance result = new ObjectInstance(object.owner(), object.rootData().withNbt(payload), object.cells()); world.remember(result); return result;

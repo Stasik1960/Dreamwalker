@@ -26,5 +26,5 @@ public abstract class CompositeShapeMixin {
         if(!extra.isEmpty()||!CompositeRuntime.overlay(state,world,pos,false).isEmpty())result.setReturnValue(VoxelShapes.union(CompositeRuntime.nativeCollision(state,world,pos,context),extra));
     }
     @Inject(method="getOutlineShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;",at=@At("RETURN"),cancellable=true)
-    private void bloodborne$selection(BlockView world,BlockPos pos,ShapeContext context,CallbackInfoReturnable<VoxelShape> result){VoxelShape extra=CompositeRuntime.overlay((BlockState)(Object)this,world,pos,false);if(!extra.isEmpty())result.setReturnValue(VoxelShapes.union(result.getReturnValue(),extra));}
+    private void bloodborne$selection(BlockView world,BlockPos pos,ShapeContext context,CallbackInfoReturnable<VoxelShape> result){VoxelShape extra=CompositeRuntime.overlay((BlockState)(Object)this,world,pos,false,context);if(!extra.isEmpty())result.setReturnValue(VoxelShapes.union(result.getReturnValue(),extra));}
 }

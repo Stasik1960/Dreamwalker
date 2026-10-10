@@ -1,0 +1,118 @@
+{
+  "schema": "dw-base-v10-probe-output-v1",
+  "baselineCommit": "d5d78282b5df3d274a49be8e5b947bedc6bf3ecc",
+  "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+  "status": "EXPECTED_BASELINE_OBSERVATIONS_PRESENT",
+  "markerSha256": "ec155e582177bb8eb1329ba3348d626fbb4cf1c0c01ae6831d4f6898f655574e",
+  "productionArtifactOrigins": [
+    {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\dreamwalker-bb-v10-tool\\bloodborne complete\\build\\runtime-server-base-v10-probe-02\\mods\\dreamwalker-bb-fabric-1.20.1-0.1.0-prototype.5.jar",
+      "sha256": "cabd5b35777a4c69f6f95e4b0363ca5d33daadaddba08dbcd379fe03a1a753ee"
+    }
+  ],
+  "productionJarSha256": "cabd5b35777a4c69f6f95e4b0363ca5d33daadaddba08dbcd379fe03a1a753ee",
+  "observations": [
+    {
+      "id": "90008_from_nbt_stays_retired_item",
+      "expectedObservation": "ItemStack.fromNbt retains bloodborne_dw:builder_tool before any normal tick/use",
+      "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+      "expectedObservationPresent": true,
+      "status": "EXPECTED_OBSERVATION_PRESENT",
+      "actual": {
+        "registry": "bloodborne_dw:builder_tool",
+        "BuilderAction": 6
+      }
+    },
+    {
+      "id": "90002_rotate45_allows_odd_yaw",
+      "expectedObservation": "Native 90002 rotate45 changes yaw0 to yaw1 (45 degrees)",
+      "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+      "expectedObservationPresent": true,
+      "status": "EXPECTED_OBSERVATION_PRESENT",
+      "actual": {
+        "beforeYaw": 0,
+        "afterYaw": 1,
+        "registry": "bloodborne_dw:prototype_wall"
+      }
+    },
+    {
+      "id": "90002_without_bottom_support_is_refused",
+      "expectedObservation": "90002 canPlaceAt is false above an actual AIR block",
+      "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+      "expectedObservationPresent": true,
+      "status": "EXPECTED_OBSERVATION_PRESENT",
+      "actual": {
+        "canPlaceAt": false,
+        "below": "minecraft:air"
+      }
+    },
+    {
+      "id": "90006_diagonal_player_collision_empty_without_mounts",
+      "expectedObservation": "Diagonal ladder returns empty player collision despite all four mounting neighbors being AIR",
+      "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+      "expectedObservationPresent": true,
+      "status": "EXPECTED_OBSERVATION_PRESENT",
+      "actual": {
+        "playerCollisionEmpty": true,
+        "absentContextBoxes": 1,
+        "supportingNeighbors": 0
+      }
+    },
+    {
+      "id": "rp_open_then_close_accepted_same_tick",
+      "expectedObservation": "Actual door setOpen(true), then setOpen(false), accepts both before any animation tick",
+      "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+      "expectedObservationPresent": true,
+      "status": "EXPECTED_OBSERVATION_PRESENT",
+      "actual": {
+        "uuid": "44b9f871-f586-48f1-964b-9d7bab099008",
+        "openAccepted": true,
+        "stateAfterOpen": true,
+        "immediateCloseAccepted": true,
+        "stateAfterImmediateClose": false,
+        "interveningEntityTicks": 0
+      }
+    },
+    {
+      "id": "90020_south_uv_reuses_north_region_not_historical_source",
+      "expectedObservation": "window03 south UV is the horizontally mirrored north UV region, not original source south UV",
+      "scope": "INTERNAL_SERVER_LOGIC_NOT_CLIENT_INPUT",
+      "expectedObservationPresent": true,
+      "status": "EXPECTED_OBSERVATION_PRESENT",
+      "actual": {
+        "northUv": [
+          0.125,
+          10.25,
+          5.625,
+          15.75
+        ],
+        "southUv": [
+          5.625,
+          10.25,
+          0.125,
+          15.75
+        ],
+        "historicalSourceSouthUv": [
+          9.25,
+          7.25,
+          14.75,
+          12.75
+        ],
+        "horizontallyMirroredNorthUv": [
+          5.625,
+          10.25,
+          0.125,
+          15.75
+        ],
+        "southDiffersFromHistoricalSource": true
+      }
+    }
+  ],
+  "clientInputGuiRendering": "NOT_RUN",
+  "ordinaryProductionCodeModified": false,
+  "fixtureScope": "In-memory item/state queries and one temporary actual RP entity; no world block edits",
+  "temporaryFixtureRemoved": true,
+  "previousChunkForceFlagsRestored": true,
+  "expectedObservationCount": 6,
+  "observedCount": 6
+}

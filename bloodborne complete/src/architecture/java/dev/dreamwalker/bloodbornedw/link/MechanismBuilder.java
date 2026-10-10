@@ -34,6 +34,9 @@ public final class MechanismBuilder {
         }catch(IllegalArgumentException ignored){}return null;
     }
     public static ActionResult entity(PlayerEntity player,ItemStack stack,RpObjectEntity target){
+        return entity(player,stack,target,false);
+    }
+    public static ActionResult entity(PlayerEntity player,ItemStack stack,RpObjectEntity target,boolean reverse){
         if(!BuildPermissions.canEdit(player.getWorld(),player,target.getBlockPos())||!inReach(player,target))return ActionResult.FAIL;
         BuildingTool.Action action=BuildingTool.action(stack);
         if(action==BuildingTool.Action.DIAGNOSTICS){var snapshot=dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.snapshot((ServerWorld)player.getWorld(),player,target,Map.of("note","tool snapshot"));message(player,label(target)+" · диагностический снимок сохранён, объект не изменён.");return ActionResult.CONSUME;}
@@ -43,11 +46,12 @@ public final class MechanismBuilder {
             if(target.isMechanism()){NbtCompound source=new NbtCompound();source.putUuid("Instance",target.getUuid());source.putString("Dimension",target.getWorld().getRegistryKey().getValue().toString());source.putString("Asset",target.assetId());source.putLong("Pos",target.getBlockPos().asLong());stack.getOrCreateNbt().put(SOURCE,source);player.getInventory().markDirty();message(player,"Выбран рычаг "+label(target)+". Нажмите активный объект для "+(action==BuildingTool.Action.LINK?"связи.":"разрыва связи."));return ActionResult.CONSUME;}
             RpObjectEntity source=selected(player,stack);if(source==null){message(player,"Сначала выберите загруженный рычаг этим инструментом.");return ActionResult.FAIL;}
             if(!target.canBeLinked()){message(player,label(target)+" · статический объект, связь не поддерживается.");return ActionResult.FAIL;}
+            if(action==BuildingTool.Action.LINK&&MechanismLinks.targets(source).stream().anyMatch(ref->ref.key().equals(MechanismLinks.TargetRef.rp(target).key()))){message(player,"Уже связано. Подключено целей: "+MechanismLinks.targets(source).size());return ActionResult.CONSUME;}
             boolean done=action==BuildingTool.Action.LINK?source.addLink(target):source.removeLink(target.getUuid());
             message(player,(done?"Готово: ":"Не изменено: ")+label(source)+" → "+label(target)+(action==BuildingTool.Action.UNLINK?" · связь удалена":" · связь"));return done?ActionResult.CONSUME:ActionResult.FAIL;
         }
         if(action==BuildingTool.Action.DOGS){if(!target.supportsDogVisibility()){message(player,label(target)+" · нет отдельного отображения собаки.");return ActionResult.FAIL;}target.setDogsVisible(!target.dogsVisible());message(player,label(target)+" · собака "+(target.dogsVisible()?"видна":"скрыта"));return ActionResult.CONSUME;}
-        if(action==BuildingTool.Action.ROTATE){boolean changed=target.rotateByBuilder(player,target.getYaw()+45);message(player,label(target)+(changed?" · поворот 45°":" · поворот отклонён: физическое препятствие или права"));return changed?ActionResult.CONSUME:ActionResult.FAIL;}
+        if(action==BuildingTool.Action.ROTATE){boolean changed=target.rotateByBuilder(player,target.getYaw()+(reverse?-45:45));message(player,label(target)+(changed?" · поворот "+(reverse?-45:45)+"°":" · поворот отклонён: физическое препятствие или права"));return changed?ActionResult.CONSUME:ActionResult.FAIL;}
         message(player,label(target)+" · действие "+action.label+" для этого RP-объекта не поддерживается.");return ActionResult.FAIL;
     }
     public static ActionResult architecture(PlayerEntity player,ItemStack stack,MechanismLinks.TargetRef target){
@@ -56,6 +60,7 @@ public final class MechanismBuilder {
         var status=MechanismLinks.inspect(world.getServer(),target);if(status.availability()!=MechanismLinks.Availability.LOADED){message(player,"Этот объект не поддерживает активную связь.");return ActionResult.FAIL;}
         if(action==BuildingTool.Action.CONNECTIONS){incoming(player,target);return ActionResult.CONSUME;}
         RpObjectEntity source=selected(player,stack);if(source==null){message(player,"Сначала выберите загруженный рычаг этим инструментом.");return ActionResult.FAIL;}
+        if(action==BuildingTool.Action.LINK&&MechanismLinks.targets(source).stream().anyMatch(ref->ref.key().equals(target.key()))){message(player,"Уже связано. Подключено целей: "+MechanismLinks.targets(source).size());return ActionResult.CONSUME;}
         boolean done=action==BuildingTool.Action.LINK?MechanismLinks.link(source,target):action==BuildingTool.Action.UNLINK&&MechanismLinks.unlink(source,target.key());
         message(player,(done?"Готово: ":"Не изменено: ")+label(source)+" → "+label(target)+(action==BuildingTool.Action.UNLINK?" · связь удалена":" · связь"));return done?ActionResult.CONSUME:ActionResult.FAIL;
     }

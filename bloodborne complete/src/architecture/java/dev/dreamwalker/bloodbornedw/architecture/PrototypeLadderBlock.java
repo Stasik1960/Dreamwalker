@@ -90,7 +90,8 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
     }
     @Override public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,true,state,context);
-        if(state.get(DIAGONAL)&&context instanceof net.minecraft.block.EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity)return VoxelShapes.empty();
+        if(state.get(DIAGONAL)&&context instanceof net.minecraft.block.EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity
+                &&(state.get(SOURCE_CLONE)||hasBackingMount(state,world,pos,0)))return VoxelShapes.empty();
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:collision[yaw(state)];
     }
     public VoxelShape climbingShape(BlockState state){return sourcePhysical[yaw(state)];}
@@ -122,13 +123,14 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
                     // conversion selected the opposite corner and fell back to a flat wall.
                     for(int distance:new int[]{0,2,-2,4}) {
                         BlockState diagonal=withYaw(getDefaultState(),desired+distance);
-                        if(backingDirections(diagonal).contains(context.getSide().getOpposite())&&diagonal.canPlaceAt(world,pos))
+                        if(backingDirections(diagonal).contains(context.getSide().getOpposite())&&hasBackingMount(diagonal,world,pos,0))
                             return diagonal.with(WATERLOGGED,world.getFluidState(pos).getFluid()==Fluids.WATER);
                     }
                 }
             }
             BlockState clicked=getDefaultState().with(FACING,context.getSide());
             if(clicked.canPlaceAt(world,pos))return clicked.with(WATERLOGGED,world.getFluidState(pos).getFluid()==Fluids.WATER);
+            return null; // A clicked vertical face must have an actual attachment pad, not a fence's empty edge.
         }
         if (context.getPlayer() != null) {
             int desired = (MathHelper.floor(context.getPlayerYaw() / 45F + .5F) + 4) & 7;
@@ -157,6 +159,21 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         Direction first = state.get(FACING).getOpposite();
         return state.get(DIAGONAL) ? List.of(first, first.rotateYClockwise()) : List.of(first);
     }
+    /** Actual two mounting faces, including a fractional vertical move. No proximity test. */
+    public static boolean hasBackingMount(BlockState state,BlockView world,BlockPos root,double offset) {
+        if(!state.get(DIAGONAL))return false;
+        for(Direction direction:backingDirections(state)) {
+            VoxelShape available=VoxelShapes.empty();
+            for(int dy=(int)Math.floor(offset);dy<(int)Math.ceil(offset+1);dy++) {
+                BlockPos backing=root.offset(direction).up(dy);
+                if(world instanceof World loaded&&!loaded.isChunkLoaded(backing))return false;
+                VoxelShape actual=dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.nativeCollision(world,backing,ShapeContext.absent());
+                available=VoxelShapes.union(available,faceProjection(actual,direction.getOpposite()).offset(0,dy-offset,0));
+            }
+            if(!ordinaryAttachment(available,direction))return false;
+        }
+        return true;
+    }
     @Override public BlockState mirror(BlockState state, BlockMirror mirror) {
         int yaw = yaw(state);
         return withYaw(state, mirror == BlockMirror.LEFT_RIGHT ? 4-yaw : mirror == BlockMirror.FRONT_BACK ? -yaw : yaw);
@@ -165,7 +182,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.rawQuery()&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.loadedEntity(world,pos) instanceof dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity own&&own.payload().getBoolean("MountEdited"))return true;
         // Self-standing sections retain their existence after construction; removing one
         // section does not cascade through a vertical stack or turn it into a source clone.
-        if(state.get(FREESTANDING)&&!state.get(SOURCE_CLONE))return true;
+        if(!state.get(SOURCE_CLONE)&&(state.get(FREESTANDING)||state.get(DIAGONAL)))return true;
         VoxelShape section = state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:collision[yaw(state)];
         for (Direction direction : backingDirections(state)) {
             BlockPos backing = pos.offset(direction);
@@ -180,7 +197,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
     }
     @Override public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighbor, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if(state.get(FREESTANDING)&&!state.get(SOURCE_CLONE))return state;
+        if(!state.get(SOURCE_CLONE)&&(state.get(FREESTANDING)||state.get(DIAGONAL)))return state;
         if (!backingDirections(state).contains(direction)) return state;
         if (world instanceof World loaded) for (Direction backing : backingDirections(state)) if (!loaded.isChunkLoaded(pos.offset(backing))) return state;
         return state.canPlaceAt(world, pos) ? state : (state.get(WATERLOGGED) ? net.minecraft.block.Blocks.WATER.getDefaultState() : net.minecraft.block.Blocks.AIR.getDefaultState());
@@ -190,12 +207,12 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         if(state.get(SOURCE_CLONE)) return List.of(); // The shared owner drops one normal item for either part.
         return List.of(artisticStack(state));
     }
-    public ItemStack artisticStack(BlockState state) { ItemStack stack = new ItemStack(PrototypeArchitecture.ladderItem(artVariant(state))); copyArt(state, stack); return stack; }
+    public ItemStack artisticStack(BlockState state) { ItemStack stack = new ItemStack(PrototypeArchitecture.ladderItem(0)); copyArt(state, stack); return stack; }
     public static int artVariant(BlockState state){return state.getBlock() instanceof PrototypeLadderBlock block&&block.fixedVariant>=0?block.fixedVariant:state.get(VARIANT);}
     public int fixedVariant(){return fixedVariant;}
     private static void copyArt(BlockState state, ItemStack stack) {
         NbtCompound tag = stack.getOrCreateSubNbt("BlockStateTag");
-        tag.putString("variant", Integer.toString(artVariant(state)));
+        tag.putString("variant", "0");
         tag.putString("profile", state.get(PROFILE).asString());
     }
     private static JsonObject geometry() {

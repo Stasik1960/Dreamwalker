@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 /** Source-derived selection bounds and separately reviewed working geometry. */
 public final class RpObjectGeometry {
     private static final Set<String> CUSTOM = Set.of("stairs","ladder","npc_window","chandelier_small","wood_gate");
+    public static boolean surfaceMounted(String id){return custom(id)||id.equals("dog_cage")||id.equals("chandelier_large");}
     private record Cube(String bone, Box bounds) {}
     private record Geometry(Box bounds,List<Cube> cubes,List<Box> motionSelection) {}
     private static final Map<String,Geometry> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
@@ -105,9 +106,13 @@ public final class RpObjectGeometry {
     }
     private static boolean positive(Box box) { return box.getXLength()>1e-8&&box.getYLength()>1e-8&&box.getZLength()>1e-8; }
     public static List<Box> physicalBoxes(RpObjectEntity entity) { return worldBoxes(entity,localPhysical(entity)); }
+    /** Non-colliding decorations are targeted per source part, not by the tool's motion envelope. */
+    public static List<Box> ordinaryVisualBoxes(RpObjectEntity entity) {
+        return geometry(entity.assetId()).cubes.stream().map(c->transformBounds(entity,entity.assetId().equals("ladder")&&c.bone.equals("bottom")?c.bounds.offset(0,entity.ladderOffsetY()/16,entity.ladderOffsetZ()/16):c.bounds)).toList();
+    }
     public static List<Box> selectionBoxes(RpObjectEntity entity) {
         if(entity.assetId().equals("ladder")){List<Box> zones=new ArrayList<>(ladderZones(entity,.75,-1.8125,-1.25));zones.add(ladderPlatform());return worldBoxes(entity,zones);}
-        if(custom(entity.assetId()))return List.of(visualBounds(entity));
+        if(custom(entity.assetId())){var physical=physicalBoxes(entity);return physical.isEmpty()?geometry(entity.assetId()).cubes.stream().map(c->transformBounds(entity,c.bounds)).toList():physical;}
         // These boxes are selection only: no model AABB is promoted to movement physics.
         List<Box> selected=new ArrayList<>();for(Cube cube:geometry(entity.assetId()).cubes)selected.add(transformBounds(entity,cube.bounds));
         if(entity.selectionMotionActive())for(Box box:geometry(entity.assetId()).motionSelection)selected.add(transformBounds(entity,box));

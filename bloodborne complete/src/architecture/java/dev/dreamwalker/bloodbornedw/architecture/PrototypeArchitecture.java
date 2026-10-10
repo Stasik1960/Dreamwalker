@@ -12,6 +12,7 @@ import dev.dreamwalker.bloodbornedw.composite.CompositeRuntime;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -62,7 +63,18 @@ public final class PrototypeArchitecture {
         dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.registerMetrics("native_architecture",dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureMetrics::loadedNative);
         dev.dreamwalker.bloodbornedw.tool.BuilderServer.initialize();
         dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.registerMetrics("mechanism_rules",world->dev.dreamwalker.bloodbornedw.link.MechanismRules.metrics(world.getServer()));
-        BUILDER_TOOL = Registry.register(Registries.ITEM, id("builder_tool"), new BuildingTool());
+        // 90008 remains registered solely to deserialize old saves.  It is not a
+        // second offered tool: LegacyBuildingTool immediately upgrades stacks to
+        // the canonical 90009 item while preserving the per-stack menu state.
+        BUILDER_TOOL = Registry.register(Registries.ITEM, id("builder_tool"), new LegacyBuildingTool());
+        ServerEntityEvents.ENTITY_LOAD.register((entity, world) -> {
+            // Loaded legacy drops migrate without a chunk scan.  Container
+            // stacks remain readable under their old id and are converted once
+            // transferred to a player's inventory (inventoryTick above).
+            if (entity instanceof net.minecraft.entity.ItemEntity drop
+                    && drop.getStack().getItem() instanceof LegacyBuildingTool)
+                drop.setStack(LegacyBuildingTool.canonical(drop.getStack()));
+        });
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             for (String alias : List.of("bb", "bloodborne")) dispatcher.register(literal(alias).requires(source -> source.hasPermissionLevel(2))
                     .then(literal("rotate").executes(context -> targetCommand(context.getSource(), "rotate")))
