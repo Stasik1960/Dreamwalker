@@ -54,7 +54,8 @@
         },
         {
           "scenario": "TEXT_FIELD_FOCUS",
-          "result": "ERROR: focus click shows caret but periodic background refresh rebuilds clean form before first text input; two observed attempts left diagnostic note empty. BuilderScreen now preserves focused text editors across periodic refresh; awaits native retest."
+          "result": "ERROR: focus click shows caret but periodic background refresh rebuilds clean form before first text input; two observed attempts left diagnostic note empty. BuilderScreen now preserves focused text editors across periodic refresh; awaits native retest.",
+          "resolution": "Patched in current SHA61; native retest passed in run3 TEXT_FIELD_FOCUS. Original ERROR retained as historical evidence."
         }
       ],
       "changedJarEntriesVsPrevious": [
@@ -132,7 +133,7 @@
         },
         {
           "scenario": "ACTUAL_LAMP_ROUND_TRIPS",
-          "result": "PASS actual ordinary lamp menus: A→B→A and A→C→A, buttons selected for each leg. Native F3 observes arrivals B76.5,64,102.5; A68.5,64,102.5; C84.5,64,102.5; A68.5,64,102.5. At B only camera orientation changed using tp with unchanged relative ~ ~ ~ coordinates; no command transported player between nodes. Renaming, pending/unloaded cases and reentry remain pending.",
+          "result": "PASS actual ordinary lamp menus: A→B→A and A→C→A, buttons selected for each leg. Native F3 observes arrivals B76.5,64,102.5; A68.5,64,102.5; C84.5,64,102.5; A68.5,64,102.5. At B only camera orientation changed using tp with unchanged relative ~ ~ ~ coordinates; no command transported player between nodes. Rename and scoped direction subsequently checked in LAMP_RENAME_NEXT_LINK_AND_SCOPED_DIRECTION; pending/unloaded and reentry remain untested.",
           "screenshots": [
             "screenshots/2026-10-10_01.57.47.png",
             "screenshots/2026-10-10_01.59.04.png",

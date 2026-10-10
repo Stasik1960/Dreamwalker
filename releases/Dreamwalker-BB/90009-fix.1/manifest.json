@@ -175,15 +175,19 @@
     },
     {
       "file": "Отчёт_исправлений.md",
-      "sha256": "5d5dc31a81c25af03d764469969a9963c891f0257ef56f93ccdd6e3bdf175801"
+      "sha256": "6bb174d101b265a69f956d270fc4240dca9fe96d87321e7f675c8f482b21b92d"
     },
     {
       "file": "План_видимых_проверок.md",
-      "sha256": "4f9de4aed80959a3f9e589195cfaa191908100af15e86820990410ab5990e8ad"
+      "sha256": "cda7465b457308921dd33bbb3853d3bab9e65bc6a2066ea5538cf9548a925ff6"
     },
     {
       "file": "Управление_90009.md",
       "sha256": "2de5ec07c65b86bf003eac855b563460699fd5ab53848c516babe1b9372d68d7"
+    },
+    {
+      "file": "CONTINUE_90009_FOR_AI.md",
+      "sha256": "3a0e28c73d287591baf827bd75ddc1b4ccfb317a3c2150f655a0f553f9539ce1"
     },
     {
       "file": "Dreamwalker_BB_Gallery_90009.zip",
@@ -275,11 +279,11 @@
     },
     {
       "file": "evidence/REVIEW_90009_NATIVE_VISIBLE_20261010.json",
-      "sha256": "a7e95a62161ae8de421d96c6d447ec7a81e1b5ebec3bea4a628f2835d970c4ed"
+      "sha256": "0ddf6cd4cefa1b759f4217201be19ce0743c54875761edc963c092e026f936bb"
     },
     {
       "file": "evidence/REVIEW_90009_TEST_MATRIX.csv",
-      "sha256": "028949131da06227f1168e55b71110786a65c42ba228c6a1bb70ee15bd5e5a0a"
+      "sha256": "11beaacfc1fd8ef7038a0833e924e401a6be0538ac0d3c177ed9cd28c2dbdafe"
     },
     {
       "file": "evidence/runtime-client-controls-footer-visible-1920-scale4-01-latest.log",
@@ -315,11 +319,15 @@
     },
     {
       "file": "HANDOFF.md",
-      "sha256": "59561ee5b840f4af7ee51aef3cdece0978d4e2b3249242f481128e5003923e14"
+      "sha256": "0995a81d9443255ae421eb4e9fcc414b5f06e788373426c12ce03f91b50f0456"
     },
     {
       "file": "README.md",
-      "sha256": "58ceb1a7859b6c8273f23e968a20aa5c3b91b028d9e2881eb7bb38688face6c9"
+      "sha256": "6d2fa423acc1d01a08242d444dd318325cb8a04d92130d1466a44cf3fe4a19ff"
+    },
+    {
+      "file": "REVIEW_90009_ORIGINAL_REQUEST.txt",
+      "sha256": "d60afe5567d1e427730b30be620afb96ec978cd157ac8ec9aa15ad41867f6b1d"
     },
     {
       "file": "screenshots/2026-10-10_00.17.21.png",
@@ -440,5 +448,11 @@
     "dev/dreamwalker/bloodbornedw/tool/BuilderScreen.class"
   ],
   "currentServerReopenReport": "evidence/final-focus-archive-native60-01.json",
-  "verifiedArtifactCommit": "613bbca9b75a7c8d145469b0c41e4b49767f87be"
+  "verifiedArtifactCommit": "613bbca9b75a7c8d145469b0c41e4b49767f87be",
+  "documentationUpdate": {
+    "scope": "Docs only; no new builds or game tests; JAR and world ZIP unchanged",
+    "aiContinuationGuide": "CONTINUE_90009_FOR_AI.md",
+    "fullOriginalRequirements": "REVIEW_90009_ORIGINAL_REQUEST.txt",
+    "matrixColumns": "Implementation state, verified observations/evidence and exact remaining acceptance work separated for all32 tests"
+  }
 }

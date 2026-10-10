@@ -12,6 +12,43 @@
 
 Воспроизведение из исходников: задать `JAVA_HOME` на JDK17, затем `gradlew.bat --no-daemon -Dorg.gradle.java.home=ПУТЬ_К_JDK17 remapJar`. Проверки: `runRepairtest`, `transactionCheck`, `-Pgametest_run_name=90009-full-07 runGametest`. `--offline` использовался с уже заполненным локальным кэшем; для новой машины зависимости сначала должны быть доступны.
 
+## Актуальная сводка: исправлено, проверено, осталось
+
+Обновление документации 10 октября2026: новых игровых запусков, сборок и новых PASS не было. Следующей нейронке читать [CONTINUE_90009_FOR_AI.md](CONTINUE_90009_FOR_AI.md); полное исходное задание — [REVIEW_90009_ORIGINAL_REQUEST.txt](REVIEW_90009_ORIGINAL_REQUEST.txt).
+
+Статус реализации и статус проверки независимы. «Внесено в код» не равно «весь пользовательский сценарий подтверждён». Из32 строк матрицы30 имеют «Проверена внутренняя логика», T21/T22 — «Не проверено». Частичные настоящие игровые результаты записаны внутри строк; общего полного PASS нет.
+
+| Пункт | Что исправлено/доработано | Что уже проверено | Что ещё требуется |
+|---|---|---|---|
+|90008/90009 и выбор|Hidden compatible alias, NBT/legacy modes; pinned UUID/native input/actual view ray/per-player20undo|Internal migration/version/history; реальные выборы/ПКМ, две dog Ctrl+Z; ранний door rotation|Копия старого мира; default modifier wheel/Shift,20 native undo, overlap MMB/две руки/контекст|
+|GUI|6 вкладок/пагинация/footer; conflict overlap и clean text focus исправлены|6 вкладок1920scale4, обе страницы конфликтов, E-context; SHA61 clean editor после нескольких refresh без refocus|Все формы/длинные поля/resize/dirty/latency/concurrent save,1280/1920 normal/increased|
+|91007/08/09|Per-instance visibility всего дерева костей|Все3 hidden визуально;91007/08 returned Ctrl+Z; второй91009 visible независимо|Return91009, все same-type пары/анимации/reentry|
+|Рычаги и правила|Simple link без пустого правила, incremental targets; flags/scoped/idempotent/version доработаны,70 ticks/ANY/ALL semantics сохранены|Internal rules/70ticks/pending/manual; native lever1 открыл3 цели/read-only NBT, second click closeDoor1|Создать1→3 без меню с нуля, close всех3/lever2/actual clips; GUI ANY/ALL/delete/policy/pending|
+|Фонари|Autoreg UUID, отдельные name/line, rename→selected line, scoped direction|Actual A→B→A/A→C→A; node+line rename→LINK; только A→B при intact A↔C; B ordinary menu empty|Другие линии/back route, unlink/cooldown/unloaded/unsafe/cancel cleanup/reentry|
+|События|UUID сохранение/синхронизация доработаны; OP4 и ordered hooks после реального transition сохранены|Internal order/rights/idempotence/persistence|Настоящий редакторOP4, safe commands/open/close/readback/edit/remove/error/nonOP4/restart|
+|Диагностика|ACK/status/session/path/bounded buffers, стороны различены|Console60с; GUI61 Record60/mark/auto-stop/export linked2ZIP, CRC|Полный content/metrics/errors review, snapshot/manual stop/filters/folder/dedicated+client|
+|90002/12 и aliases|Cardinal normal fence/no-bottom; diagonal standalone/both-way guards; atomic loaded migration90013–17|Internal positions/neighbors/typed NBT/migration|Native place/angle/no-bottom/vanilla+mod neighbors/reentry; audit recipes/лишних ресурсов|
+|90003 и nameplates|Non-root roof overlap для блоков; renderer labels off, данные имён сохранены|Internal chest/root/obstructions; native клетки без nameplate|Native обычные/модовые blocks/physics/save; renamed RP hover/select/restart и NPC names|
+|90006/90018–19|Free diagonal physics, actual2supports passable, dynamic state и миграция с сохранением SourceClone pair|Internal support/collision/climbing/yaw/height/unload/NBT|Real player climb/walk/динамика/все направления/reentry;91069/86 регрессии|
+|90020|Исторические face/UV восстановлены, intrinsic−45 не возвращён|Exact source/UV/mounted-state checks|Visual обе стороны90004/10/20/planes/90°/missing textures; итоговый визуал ещё не принят|
+|Ordinary reach/parts и busy|Physical parts/visual fallback/server aim/occlusion; actual per-instance clip/repeat discard/один safe pending CLOSE|Actual server packet wrong/right aim и all-RP internal attacks; busy durations/pending tests|Native gaps/parts/height/mount/SurvivalCreative boundary/obstacle;spam рук/двух игроков/lever/sound/events/restart|
+|91030/13|Source-bottom anchor только этих типов; height/reset относительно исправленной базы|Ordinary item GameTest8 углов/.25/reset/typed UUIDPos|Native placement/visual angle/height/reset/reentry|
+|Галерея|Pristine full world103+18=121, real NPC, bounds+2/gap2/entry|Disk121 UUID/103 types; ZIP24 CRC/SHA; native entry; SHA61 dedicated reopen/save exit0|Полный visual/signs/nav/geometry обход и user stand scenarios на exact JAR|
+|Сеть/нагрузка|Server authority/version и bounded input/history/diag сохранены|Internal conflict/history/metrics|Два настоящих игрока, dedicated+client и controlled same-scene OFF/ON нагрузка|
+|Публикация|Source/JAR/ZIP/evidence отправлены отдельной веткой|Remote HEAD и downloaded JARZIP SHA;62 exact evidence Git blobs|После новых code fixes новая версия/доказательства/publication; НЕ принятаяv11|
+
+### Что не исправлено или пока не решено
+
+В проведённых наблюдениях нет записи о подтверждённом текущем дефекте, который обнаружили и явно оставили без патча: выявленные overlap/focus исправлены и затронутый native retest пройден. Это НЕ доказательство отсутствия остальных ошибок. Полная приёмка, часть игровых сценариев, двухклиентский тест и нагрузочный замер не завершены. Для событий/геометрии/миграции/busy преимущественно есть внутренние проверки, не полный native маршрут. Не помечать их «полностью исправлено» без оставшегося подтверждения.
+
+В изменённой локальной runtime-копии НЕ восстановлен B→A после one-way теста и НЕ возвращена91009 после hidden; клиентский reentry не выполнен. Это незавершённые шаги теста, не доказанные баги мода. Pristine ZIP отдельно содержит первоначальные A↔B/A↔C и visible каталог91009; временные E/R/G/scale3 в него не перенесены.
+
+Не проверены полная сборка пользователя/Kappa/resource pack. Объединение моделей в один блок НЕ входит в задачу: предложение пользователь отозвал.
+
+### Что намеренно не переделывалось
+
+Модели/текстуры и свойства вне явно перечисленных изменений,90011, отдельные91069/86/SourceClone pair roles,70-тактовый рычаг,32-тактовый single-pulse91094/static91088,48-тактовая RP лестница, CustomName/NPC names и vanilla reach. «Сохранено» не означает, что все регрессии уже визуально проверены.
+
 ## Причины и исправления
 
 | Случай | Причина и изменение | Подтверждение |
@@ -19,11 +56,11 @@
 | Многократное открытие меню и короткие клики | Закреплённый UUID и контекстные режимы; ввод теперь принимает нативное событие нажатия, а не опрашивает удержание раз в тик. Короткий отпуск до следующего тика больше не теряется | Настоящий ПКМ, первый ЛКМ, поворот закреплённой двери, Ctrl+Z и X; сочетания с колесом отдельно проверяет пользователь |
 | Выбор после смены взгляда | Серверный луч инструмента использовал интерполированное направление головы. Теперь выбор и проверка препятствий используют один луч по действительным yaw/pitch игрока | Настоящий выбор клетки; новый тест с противоположным headYaw, разворотом и каменным препятствием |
 | Сложные формы и двойное сохранение | Разделены рабочий выбор, источник, линия и черновик; сервер проверяет UUID, версии, порядковый номер и уникальный ID запроса. Черновик не стирается чужим обновлением | Внутренние тесты повторов/версий; в клиенте Esc → Остаться → Отмена формы и сохранение с ACK |
-| Рычаги | Простые связи создаются сразу без пустого группового правила; источник закреплён, следующие цели добавляются к нему. Сохранены ANY/ALL, признаки источников, порядок и задержка 70 тиков | Серверные тесты связей и правил; полный ручной маршрут 1→3 ещё проверяется |
-| Фонари | Автоматическая регистрация UUID-узлов, отдельные поля имён фонаря и линии, явные направления и пары. Переименование линии обновляет выбранную линию инструмента, следующий LINK не создаёт старую | Серверные тесты сети и переименования; настоящие переходы A→B→A и A→C→A ещё проверяются |
-| Собаки | Скрытие корневой кости теперь скрывает потомков; состояние заново применяется при каждом рендере конкретной сущности, включая возврат visible=true | Реальное исчезновение собаки 91007 после Save при сохранённой клетке; все три ID/повторный вход ещё проверяются |
+| Рычаги | Простые связи создаются сразу без пустого группового правила; источник закреплён, следующие цели добавляются к нему. Сохранены ANY/ALL, признаки источников, порядок и задержка 70 тиков | Серверные tests; native lever1 открыл3 stand цели, closeDoor1; новое создание1→3/close всех3 ещё нужны |
+| Фонари | Автоматическая регистрация UUID-узлов, отдельные поля имён фонаря и линии, явные направления и пары. Переименование линии обновляет выбранную линию инструмента, следующий LINK не создаёт старую | Native A→B→A/A→C→A, rename→LINK и scoped direction пройдены; оставшиеся случаи указаны в сводке |
+| Собаки | Скрытие корневой кости теперь скрывает потомков; состояние заново применяется при каждом рендере конкретной сущности, включая возврат visible=true | Все3 реально hidden,91007/08 returned Ctrl+Z, second91009 independent; return91009/reentry ещё нужны |
 | События | Два упорядоченных списка принадлежат UUID, сохраняются явно и исполняются только после реального изменения состояния. OP4 проверяется на сервере | Серверные тесты событий, прав, порядка и сохранения; клиентский редактор ещё проверяется |
-| Диагностика | Явные статус, session ID, ACK и действительные пути. Локальная кнопка открывает только проверенную клиентскую папку, не путь удалённого сервера | Тесты записи/автоостановки/экспорта; отдельный сервер с клиентом ещё проверяется |
+| Диагностика | Явные статус, session ID, ACK и действительные пути. Локальная кнопка открывает только проверенную клиентскую папку, не путь удалённого сервера | Internal и actual GUI61 Record60/mark/auto-stop/export2ZIP; dedicated+client/content review ещё нужны |
 
 Исходная v10 также проверена отдельным QA-зондом на её неизменённом JAR: шесть ожидаемых наблюдений подтверждены, включая отсутствие миграции 90008, недопустимый угол 90002, запрет без нижней опоры, пустую коллизию свободной диагональной лестницы, прерываемую дверь и дублированные UV 90020. Это внутреннее воспроизведение, не ручной прогон всех жалоб. Старый обёрточный отчёт ошибочно ожидал строку PASS вместо `EXPECTED_BASELINE_OBSERVATIONS_PRESENT`; исходный результат зонда сохранён, проверка обёртки исправлена. В настоящем клиенте исходной v10 воспроизведено наложение/обрезка меню при 1280×720 и Auto scale3.
 
@@ -83,4 +120,4 @@
 
 Последние изменения относительно полного серверного набора — только BuilderControlsScreen и BuilderScreen: устранены перекрытие предупреждений и потеря фокуса чистого текстового поля при периодических обновлениях. Затронутые GUI-проверки выполнены нативным вводом. Полные147 и focused14 относятся к предыдущей сборке, не выдаются за новый полный прогон SHA61. Последний SHA61 отдельно открыл/сохранил точный ZIP без QA, завершился exit0; сохранены121 UUID.
 
-На SHA61 реально скрыты все3 типа собак, 91007/91008 возвращены Ctrl+Z; независимость91009 от второго экземпляра видна, возврат/перезаход остаются. ПКМ рычага1 открыл3 цели, затем закрытие первой подтверждено. Реальные A→B→A/A→C→A выполнены; переименование имени/линии и следующий LINK, изменение только одной пары направления подтверждены. GUI60с/mark/auto-stop/export создали настоящие client/server ZIP с общим session ID. Все6 вкладок1920/scale4 доступны, но полный T21 не закрыт. Подробности, SHA, UUID и F2: REVIEW_90009_NATIVE_VISIBLE_20261010.json. Более ранние формулировки «ещё проверяются» в таблицах — историческая граница, актуальный итог указан здесь и в HANDOFF.md.
+На SHA61 реально скрыты все3 типа собак, 91007/91008 возвращены Ctrl+Z; независимость91009 от второго экземпляра видна, возврат/перезаход остаются. ПКМ рычага1 открыл3 цели, затем закрытие первой подтверждено. Реальные A→B→A/A→C→A выполнены; переименование имени/линии и следующий LINK, изменение только одной пары направления подтверждены. GUI60с/mark/auto-stop/export создали настоящие client/server ZIP с общим session ID. Все6 вкладок1920/scale4 доступны, но полный T21 не закрыт. Подробности, SHA, UUID и F2: REVIEW_90009_NATIVE_VISIBLE_20261010.json. Актуальный итог разделён на реализацию/проверку/остаток в начальной сводке; CONTINUE_90009_FOR_AI.md задаёт порядок продолжения.
