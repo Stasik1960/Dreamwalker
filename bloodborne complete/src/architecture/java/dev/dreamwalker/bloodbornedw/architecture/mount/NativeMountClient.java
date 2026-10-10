@@ -42,7 +42,6 @@ public final class NativeMountClient {
         var client=MinecraftClient.getInstance();BlockState state=entity.getCachedState();var model=client.getBlockRenderManager().getModel(state);
         matrices.push();matrices.translate(0,amount,0);
         var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(state);
-        if(dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.enabled())dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.visualModel(null,state,entity.resident().instanceId().toString(),entity.getPos(),new net.minecraft.util.Identifier(entity.resident().registryId()),model,"mounted-native-world-root-render");
         var layer=state.getBlock() instanceof dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallBlock?RenderLayer.getSolid():RenderLayer.getCutout();
         client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumers.getBuffer(layer),state,model,1,1,1,light,overlay);matrices.pop();
     }

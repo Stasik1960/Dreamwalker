@@ -5,7 +5,6 @@ import dev.dreamwalker.bloodbornedw.composite.*;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
 import dev.dreamwalker.bloodbornerp.object.*;
 import java.util.*;
-import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -17,17 +16,8 @@ import net.minecraft.test.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 
-/** Real tool callback, existing delayed RP procedure, shared state and stable architectural owner identity. */
+/** Ordinary interactions, delayed RP procedures, shared state and stable owner identity. */
 public final class MechanismLinksGameTests implements FabricGameTest {
-    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v9_mechanisms")
-    public void toolRmbMenuEntryDoesNotApplyLegacyModeOrChangeWorld(TestContext context){
-        ServerPlayerEntity player=context.createMockCreativeServerPlayerInWorld();RpObjectEntity lever=object(context,"lever_1",1,2,1),door=object(context,"door_1",3,2,1);
-        ItemStack tool=new ItemStack(CompositeArchitecture.BUILDER);action(tool,BuildingTool.Action.LINK);player.setStackInHand(Hand.MAIN_HAND,tool);
-        context.assertTrue(edit(player,lever).isAccepted(),"V10 RMB is consumed by menu entry (real GUI is separate client proof)");
-        context.assertTrue(!tool.getNbt().contains("BuilderLever"),"RMB does not select source by old hidden mode");
-        context.assertTrue(edit(player,door).isAccepted()&&!door.isOpen()&&MechanismLinks.targets(lever).isEmpty(),"RMB on door does not operate or create connections");
-        cleanup(lever,door);player.discard();context.complete();
-    }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v9_mechanisms")
     public void twoLeversUseTheActualDoorAndKeepOriginalSeventyTickDelay(TestContext context){
         ServerPlayerEntity player=context.createMockCreativeServerPlayerInWorld();RpObjectEntity a=object(context,"lever_1",1,2,1),b=object(context,"lever_2",3,2,1),door=object(context,"door_1",9,2,1),gate=object(context,"small_gate",13,2,1);
@@ -66,12 +56,18 @@ public final class MechanismLinksGameTests implements FabricGameTest {
         CompositeRuntime.remove(world,((CompositeBlockEntity)world.getBlockEntity(root)).resident(),null,false);cleanup(lever);context.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v9_mechanisms")
-    public void survivalHeldToolCannotOperateLeverAndRemovingToolRestoresGameplay(TestContext context){
+    public void survivalHoldingOrdinaryItemStillUsesLever(TestContext context){
         ServerPlayerEntity player=context.createMockCreativeServerPlayerInWorld();player.changeGameMode(net.minecraft.world.GameMode.SURVIVAL);RpObjectEntity lever=object(context,"lever_1",1,2,1),door=object(context,"door_1",9,2,1);lever.addLink(door);
-        ItemStack tool=new ItemStack(CompositeArchitecture.BUILDER);action(tool,BuildingTool.Action.LINK);player.setStackInHand(Hand.MAIN_HAND,tool);player.setPosition(lever.getX(),lever.getY(),lever.getZ()+1);
-        context.assertTrue(UseEntityCallback.EVENT.invoker().interact(player,context.getWorld(),Hand.MAIN_HAND,lever,null)==ActionResult.SUCCESS,"V10 any held tool consumes RMB and does not fall through to gameplay");
-        context.assertTrue(!tool.getNbt().contains("BuilderLever"),"survival cannot select/edit linkage");
-        lever.interact(player,Hand.MAIN_HAND);for(int i=0;i<70;i++)lever.tick();context.assertTrue(!door.isOpen(),"V10 held tool does not start original lever procedure");player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);context.assertTrue(lever.interact(player,Hand.MAIN_HAND).isAccepted(),"empty hand restores ordinary lever use");for(int i=0;i<70;i++)lever.tick();context.assertTrue(door.isOpen(),"ordinary empty-hand gameplay retains70ticks");cleanup(lever,door);player.discard();context.complete();
+        player.setStackInHand(Hand.MAIN_HAND,new ItemStack(net.minecraft.item.Items.STICK));player.setPosition(lever.getX(),lever.getY(),lever.getZ()+1);
+        context.assertTrue(lever.interact(player,Hand.MAIN_HAND).isAccepted(),"ordinary item does not block lever use");for(int i=0;i<70;i++)lever.tick();context.assertTrue(door.isOpen(),"ordinary gameplay retains the original 70 tick delay");cleanup(lever,door);player.discard();context.complete();
+    }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v9_mechanisms")
+    public void deletedLinkCannotReturnFromUnloadedLeversOldEntityNbt(TestContext context){
+        ServerWorld world=context.getWorld();RpObjectEntity lever=object(context,"lever_1",1,2,1),door=object(context,"door_1",9,2,1);
+        context.assertTrue(lever.addLink(door),"initial entity link imports");NbtCompound old=lever.writeNbt(new NbtCompound());var ref=MechanismLinks.TargetRef.rp(door);
+        lever.remove(Entity.RemovalReason.UNLOADED_TO_CHUNK);context.assertTrue(MechanismLinks.unlink(lever,ref.key()),"persistent pair can be removed while source is unloaded");
+        RpObjectEntity restored=ObjectRegistry.TYPES.get("lever_1").create(world);restored.readNbt(old);context.assertTrue(world.spawnEntity(restored),"old entity NBT restores the exact lever UUID");MechanismLinks.loaded(restored);
+        context.assertTrue(restored.links().isEmpty()&&MechanismLinks.targets(restored).isEmpty(),"authoritative saved graph removes stale entity Links rather than reimporting them");MechanismLinks.pulse(restored);context.assertTrue(!door.isOpen(),"deleted pair cannot actuate the former target");cleanup(restored,door);context.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v9_mechanisms")
     public void pulseOnlyGateDropsBusyRepeatsAndAcceptsNewIdleEventWithoutInventingOpen(TestContext context){
@@ -87,8 +83,6 @@ public final class MechanismLinksGameTests implements FabricGameTest {
         MechanismLinks.retryPending(world.getServer(),256);context.assertTrue(door.isOpen(),"retry cannot crush living occupant");occupant.discard();MechanismLinks.retryPending(world.getServer(),256);context.assertTrue(!door.isOpen()&&!door.activePhysicalBoxes().isEmpty()&&!MechanismLinks.pending(world.getServer(),ref),"intent commits to actual collision state once occupant leaves");cleanup(lever,door);context.complete();
     }
     private static void settle(RpObjectEntity object){var clip=object.asset().clip(object.isOpen()?"open":"close");int limit=clip==null?2:(int)Math.ceil(clip.seconds()*20)+2;for(int tick=0;object.animationBusy()&&tick<limit;tick++)object.tick();if(object.animationBusy())throw new AssertionError("Authored clip did not finish: "+object.assetId());}
-    private static void action(ItemStack stack,BuildingTool.Action action){stack.getOrCreateNbt().putInt("BuilderAction",action.ordinal());}
-    private static ActionResult edit(ServerPlayerEntity player,RpObjectEntity entity){player.setPosition(entity.getX(),entity.getY(),entity.getZ()+1);return UseEntityCallback.EVENT.invoker().interact(player,player.getWorld(),Hand.MAIN_HAND,entity,null);}
     private static RpObjectEntity object(TestContext context,String asset,int x,int y,int z){RpObjectEntity result=ObjectRegistry.TYPES.get(asset).create(context.getWorld());BlockPos pos=context.getAbsolutePos(new BlockPos(x,y,z));result.refreshPositionAndAngles(pos.getX()+.5,pos.getY(),pos.getZ()+.5,0,0);if(!context.getWorld().spawnEntity(result))throw new AssertionError("RP object spawn failed:"+asset);return result;}
-    private static void cleanup(RpObjectEntity... entities){for(var entity:entities)entity.removeByBuilder();}
+    private static void cleanup(RpObjectEntity... entities){for(var entity:entities)entity.removeObject();}
 }

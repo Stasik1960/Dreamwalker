@@ -1,13 +1,12 @@
 package dev.dreamwalker.bloodbornerp.lamp;
 
 import dev.dreamwalker.bloodbornerp.object.RpObjectEntity;
-import dev.dreamwalker.bloodbornerp.object.RpDiagnostics;
 import java.util.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
-/** Tool adapter. Every submitted UUID is an entity UUID, never a user-supplied node privilege. */
+/** Lamp command adapter. Every submitted UUID is an entity UUID, never a user-supplied node privilege. */
 public final class LampEditor {
  private static final Map<UUID,Selection> SELECTIONS=new HashMap<>();
  private static final int SELECTION_TICKS=36000,MAX_SELECTIONS=256,PAGE_SIZE=64;
@@ -38,7 +37,7 @@ public final class LampEditor {
   if(source==null){source=LampService.register(player,sourceLamp,LampPolicy.validName(request.lampName())?request.lampName():defaultName(sourceLamp));if(source==null)return refused("Не удалось зарегистрировать исходный фонарь.");}
   LampService.entityMoved(sourceLamp==null?sourceEntity(player,source):sourceLamp);
   String line=request.lineName()==null?"":request.lineName().strip();String name=request.lampName()==null?"":request.lampName().strip();
-  Map<String,Object> before=Map.of("name",source.name,"connectionCount",graph.connectionCount());boolean changed=false;String reason="";
+  boolean changed=false;String reason="";
   switch(request.action()){
    case REGISTER -> {reason="Фонарь зарегистрирован.";changed=true;}
    case RENAME -> {if(!LampPolicy.validName(name))return refused("Имя фонаря должно содержать 1–64 читаемых символа.");source.name=name;graph.markDirty();reason="Имя фонаря сохранено.";changed=true;}
@@ -62,7 +61,7 @@ public final class LampEditor {
    }
    default -> {return refused("Неподдерживаемое действие.");}
   }
-  RpDiagnostics.event(player.getServerWorld(),RpDiagnostics.typeIdForAsset("hunterlamp"),source.lamp.toString(),source.pos,"lamp_"+request.action().name().toLowerCase(Locale.ROOT),before,Map.of("name",source.name,"line",line,"bidirectional",request.bidirectional(),"connectionCount",graph.connectionCount()),changed?"COMMITTED":"REFUSED",changed?"explicit_instance_line_edit":"connection_edit_refused");
+
   return new Result(changed,reason,view(player,sourceId));
  }
  public static Map<String,Object> view(ServerPlayerEntity player,UUID entityId){return view(player,entityId,0);}
@@ -87,7 +86,7 @@ public final class LampEditor {
  }
  private static Map<String,Object> nodeView(MinecraftServer server,LampState.Node n){ServerWorld world=LampService.world(server,n.dimension);return Map.of("nodeUuid",n.id.toString(),"entityUuid",n.lamp.toString(),"name",n.name,"dimension",n.dimension,"position",List.of(n.origin.x,n.origin.y,n.origin.z),"loaded",world!=null&&LampService.loadedLamp(world,n.lamp)!=null);}
  private static RpObjectEntity sourceEntity(ServerPlayerEntity p,LampState.Node n){ServerWorld world=LampService.world(p.getServer(),n.dimension);return world==null?null:LampService.loadedLamp(world,n.lamp);}
- private static String defaultName(RpObjectEntity lamp){return "Фонарь ("+lamp.getBlockX()+", "+lamp.getBlockY()+", "+lamp.getBlockZ()+")";}
+ private static String defaultName(RpObjectEntity lamp){String base="Фонарь ("+lamp.getBlockX()+", "+lamp.getBlockY()+", "+lamp.getBlockZ()+")";var graph=LampService.state(((ServerWorld)lamp.getWorld()).getServer());String name=base;for(int suffix=2;suffix<=LampState.MAX_NODES+1;suffix++){String candidate=name;if(graph.nodes.values().stream().noneMatch(n->n.name.equals(candidate)))return name;name=base+" №"+suffix;}return name;}
  private static boolean allowed(ServerPlayerEntity p){return p!=null&&p.getServer()!=null&&p.hasPermissionLevel(2);}
  private static Result refused(String reason){return new Result(false,reason,Map.of("success",false,"reason",reason));}
  static void expire(MinecraftServer server){SELECTIONS.entrySet().removeIf(e->e.getValue().until<server.getTicks()||server.getPlayerManager().getPlayer(e.getKey())==null);}

@@ -20,10 +20,10 @@ public final class SourceLegacyPayload {
             boolean valid=incoming.contains(KEY,NbtElement.COMPOUND_TYPE);
             NbtCompound envelope=incoming.getCompound(KEY);
             valid=valid&&envelope.contains("Schema",NbtElement.INT_TYPE)&&envelope.getInt("Schema")==1&&envelope.contains("Original",NbtElement.COMPOUND_TYPE);
-            if(!valid)dev.dreamwalker.bloodbornerp.object.RpDiagnostics.error(entity,"source_payload_corruption","SourceLegacyPayload requires Schema INT 1 and Original COMPOUND; existing fallback behavior retained",null);
-            else if(envelope.getCompound("Original").contains(KEY))dev.dreamwalker.bloodbornerp.object.RpDiagnostics.error(entity,"source_payload_recursion","Original provenance unexpectedly contains another SourceLegacyPayload envelope",null);
+            if(!valid)dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("SourceLegacyPayload requires Schema INT 1 and Original COMPOUND; existing fallback behavior retained");
+            else if(envelope.getCompound("Original").contains(KEY))dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Original provenance unexpectedly contains another SourceLegacyPayload envelope");
         }
-        try{return read(incoming);}catch(RuntimeException failure){dev.dreamwalker.bloodbornerp.object.RpDiagnostics.error(entity,"source_payload_read","Unable to read typed source provenance",failure);throw failure;}
+        try{return read(incoming);}catch(RuntimeException failure){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Unable to read typed source provenance", failure);throw failure;}
     }
     /** Reuse the original envelope without recursively snapshotting subsequent saves. */
     public static NbtCompound read(NbtCompound incoming){
@@ -41,6 +41,6 @@ public final class SourceLegacyPayload {
         NbtCompound envelope=new NbtCompound();envelope.putInt("Schema",1);envelope.put("Original",original.copy());outgoing.put(KEY,envelope);
     }
     public static void write(NbtCompound outgoing,NbtCompound original,net.minecraft.entity.Entity entity){
-        try{write(outgoing,original);}catch(RuntimeException failure){dev.dreamwalker.bloodbornerp.object.RpDiagnostics.error(entity,"source_payload_write","Unable to preserve typed source provenance during save",failure);throw failure;}
+        try{write(outgoing,original);}catch(RuntimeException failure){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Unable to preserve typed source provenance during save", failure);throw failure;}
     }
 }

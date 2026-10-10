@@ -108,9 +108,6 @@ public final class VerticalMount {
         payload.putDouble(KEY,amount);payload.putBoolean("MountEdited",true);boolean previous=HEIGHT_EDIT.get();HEIGHT_EDIT.set(true);
         try{
             var result=CompositeRuntime.transitionPayload(world,own.resident(),state,payload,player);
-            if(dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.enabled(world))dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.record(world,
-                dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.type(state),own.resident().instanceId().toString(),root,"height",
-                Map.of("verticalOffset",before),Map.of("verticalOffset",amount,"fixedRoot",root.toShortString()),result.outcome().name(),result.reason());
             return result.outcome()==TransactionCore.Outcome.COMMITTED;
         }
         finally{HEIGHT_EDIT.set(previous);}

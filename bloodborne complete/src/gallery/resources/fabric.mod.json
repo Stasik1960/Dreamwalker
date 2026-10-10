@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "dreamwalker_gallery_author",
+  "version": "1.0.0",
+  "name": "Dreamwalker gallery authoring",
+  "environment": "server",
+  "entrypoints": {
+    "main": ["dev.dreamwalker.bloodbornedw.gallery.GalleryAuthor"]
+  },
+  "depends": {
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabricloader": ">=0.16.10",
+    "fabric-api": "*",
+    "bloodborne_dw": "*"
+  },
+  "description": "Optional authoring only. The saved gallery requires the production mod, never this add-on."
+}
