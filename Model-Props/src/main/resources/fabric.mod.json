@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "modelprops",
+  "version": "${version}",
+  "name": "Model Props",
+  "description": "Loads Java/Blockbench JSON models as inert handheld items with server-synchronized animations and sounds.",
+  "authors": ["Model Props contributors"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["ru.modelprops.ModelProps"],
+    "client": ["ru.modelprops.client.ModelPropsClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabric-api": ">=0.92.6+1.20.1"
+  }
+}
