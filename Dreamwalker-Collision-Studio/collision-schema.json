@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dreamwalker player collision authoring project v1",
+  "type": "object",
+  "required": ["schema", "schemaVersion", "unitsPerBlock", "source", "coordinates", "policy", "seatSize", "models"],
+  "properties": {
+    "schema": {"const": "dreamwalker.player-collision-project"},
+    "schemaVersion": {"const": 1},
+    "unitsPerBlock": {"const": 16},
+    "seatSize": {"const": [9.6, 1.6, 9.6]},
+    "source": {"type": "object", "required": ["repository", "commit", "release"]},
+    "coordinates": {"type": "object", "required": ["rotationOrder"], "properties": {"rotationOrder": {"const": "ZYX"}}},
+    "policy": {"type": "object", "required": ["scope", "operation"], "properties": {"scope": {"const": "players_only"}, "operation": {"const": "replace_per_exact_state"}}},
+    "models": {"type": "array", "items": {"type": "object", "required": ["registryId", "states"], "properties": {
+      "registryId": {"type": "string", "minLength": 1},
+      "states": {"type": "array", "items": {"type": "object", "required": ["key", "selector", "replace", "colliders", "seats"], "properties": {
+        "key": {"type": "string", "minLength": 1}, "selector": {"type": "object"}, "replace": {"const": true}, "reviewed": {"type": "boolean"},
+        "colliders": {"type": "array", "items": {"type": "object", "required": ["id", "center", "size", "rotation"], "properties": {"id": {"type": "string"}, "center": {"$ref": "#/$defs/vector"}, "rotation": {"$ref": "#/$defs/vector"}, "size": {"$ref": "#/$defs/positiveVector"}}}},
+        "seats": {"type": "array", "items": {"type": "object", "required": ["id", "surfaceCenter", "rotation", "size", "capacity", "trigger"], "properties": {"id": {"type": "string"}, "surfaceCenter": {"$ref": "#/$defs/vector"}, "rotation": {"$ref": "#/$defs/vector"}, "size": {"const": [9.6, 1.6, 9.6]}, "capacity": {"const": 1}, "trigger": {"const": "right_click_surface"}}}}
+      }}}
+    }}}
+  },
+  "$defs": {
+    "vector": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number", "minimum": -10000000, "maximum": 10000000}},
+    "positiveVector": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number", "exclusiveMinimum": 0, "maximum": 10000000}}
+  }
+}

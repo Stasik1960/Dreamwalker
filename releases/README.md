@@ -15,10 +15,14 @@ Java 17 и Fabric API; дополнительные требования ука�
 | DW Magic Connect 0.4.3 | [Скачать](DW_Magic_Connect/dw-magic-connect-0.4.3.jar) · [SHA-256](DW_Magic_Connect/dw-magic-connect-0.4.3.jar.sha256) | [Рации](../DW_Magic_Connect/README.md) |
 | DW Languages 0.1.0 | [Скачать](DW_Languages/dw-languages-0.1.0.jar) · [SHA-256](DW_Languages/dw-languages-0.1.0.jar.sha256) | [Языки](../DW_Languages/README.md) |
 | MC-Pool 0.1.14 | [Скачать](MC-Pool/pool-billiards-0.1.14.jar) · [SHA-256](MC-Pool/pool-billiards-0.1.14.jar.sha256) | [Бильярд](../MC-Pool/README.md) |
+| Model Props 1.3.1 | [Скачать](Model-Props/modelprops-fabric-1.20.1-1.3.1.jar) · [SHA-256](Model-Props/modelprops-fabric-1.20.1-1.3.1.jar.sha256) | [Модели, анимации и звуки](../Model-Props/README_RU.md) |
 
 Для раций и языков используйте RP Chat 0.1.16+. JAR RP Chat, DW Magic Connect и
 DW Languages предоставлены пользователем и опубликованы без пересборки.
 Наличие файла в каталоге не означает нового тестирования в рамках правок документации.
+
+Для Model Props требуется Fabric Loader 0.16.14+ и Fabric API. Устанавливайте один и
+тот же JAR на сервер и клиенты; версию 1.3.0 необходимо полностью заменить версией 1.3.1.
 
 ## Проверочные сборки и адаптеры
 
