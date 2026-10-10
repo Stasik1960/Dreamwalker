@@ -1,0 +1,31 @@
+{
+  "revision": "V11.1",
+  "baseCommit": "99e590730",
+  "productionJarSha256": "4d8ffb8c7c1c69b1be3e1323271db0b7b9e9670f153bc3221b9309df224c5a59",
+  "worldZipSha256": "352d55d10eb5369bb43c17e02711783569e92d39efe1e56484af838bcbc926a1",
+  "build": "PASS_JAVA17",
+  "gameTests": {
+    "passed": 41,
+    "failed": 0
+  },
+  "transactionChecks": {
+    "passed": 21
+  },
+  "gallery": {
+    "exhibits": 120,
+    "offeredItems": 102,
+    "realNpcs": 18,
+    "worldFiles": 151,
+    "exactTwoBlockGaps": true,
+    "productionOnlyReopen": true,
+    "authoringAddonRequired": false
+  },
+  "client": {
+    "actualWorldLoad": "PASS",
+    "visualAcceptance": "NOT_COMPLETED",
+    "captureFailure": "FrameArrived/window capture timed out after one recovery attempt",
+    "normalShutdown": "NOT_CONFIRMED; isolated test client stopped after capture failure",
+    "expectedOfflineAuthMessage": "InvalidCredentialsException401 because the isolated local account intentionally uses token0"
+  },
+  "manualTasks": "See ../../../bloodborne complete/docs/V11_TASKS.md"
+}

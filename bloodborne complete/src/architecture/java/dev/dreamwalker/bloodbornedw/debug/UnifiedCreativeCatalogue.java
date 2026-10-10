@@ -16,7 +16,7 @@ public final class UnifiedCreativeCatalogue {
     public static void initialize(){
         if(initialized)return;initialized=true;
         Registry.register(Registries.ITEM_GROUP,ID,FabricItemGroup.builder().displayName(Text.literal("Bloodborne · строительство и предметы"))
-            .icon(()->new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw","composite_builder"))))
+            .icon(()->new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw","prototype_double_door"))))
             .entries((context,entries)->canonicalItems().forEach(entries::add)).build());
     }
     private static int category(String kind){return switch(kind){case "architecture"->0;case "technical_tool"->1;case "rp_object"->2;case "rp_item"->3;case "rp_mob"->4;default->5;};}

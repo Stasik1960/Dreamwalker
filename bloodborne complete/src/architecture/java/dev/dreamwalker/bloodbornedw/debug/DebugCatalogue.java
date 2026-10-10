@@ -71,5 +71,5 @@ public final class DebugCatalogue {
     public static Text itemName(ItemStack stack,Text plain){Entry entry=entry(stack);return entry==null?plain:plain.copy().append(" ["+entry.temporaryId()+"]");}
     public static void appendTooltip(Identifier registry,List<Text> tooltip){Entry entry=entry(registry);if(entry!=null)tooltip.add(Text.literal(prefix(registry)+" · временный номер типа; окончательный ID не назначен · "+registry));}
     public static void itemTooltip(ItemStack stack,List<Text> tooltip){Entry entry=entry(stack);if(entry!=null)tooltip.add(Text.literal("TEMP ["+entry.temporaryId()+"] · временный номер типа; окончательный ID не назначен · "+Registries.ITEM.getId(stack.getItem())));}
-    public static int debug(ServerCommandSource source){return CatalogueDebug.inspect(source);}
+
 }

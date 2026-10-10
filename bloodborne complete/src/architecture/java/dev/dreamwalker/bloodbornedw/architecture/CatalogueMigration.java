@@ -52,16 +52,14 @@ public final class CatalogueMigration {
         payload=VerticalMount.nativePayload(world,pos,next,payload);
         var result=CompositeRuntime.migrateCatalogue(world,own.resident(),next,payload);
         if(result.outcome()!=TransactionCore.Outcome.COMMITTED)
-            dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.error(world,"MIGRATION",own.resident().instanceId().toString(),pos,
-                    "CATALOGUE_MIGRATION_DEFERRED",result.reason(),null);
+            dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn(result.reason());
     }
     public static boolean retired(String path) {
-        return path.equals("builder_tool")||path.equals("prototype_ladder_art_1")||path.equals("prototype_ladder_art_2")
+        return path.equals("builder_tool")||path.equals("composite_builder")||path.equals("wall_builder")||path.equals("prototype_ladder_art_1")||path.equals("prototype_ladder_art_2")
                 ||path.matches("prototype_wall_skin_[23457]");
     }
     public static ItemStack canonicalStack(ItemStack old) {
         if(old.isEmpty())return old;
-        if(old.getItem() instanceof LegacyBuildingTool)return LegacyBuildingTool.canonical(old);
         if(!(old.getItem() instanceof BlockItem item))return old;
         var block=item.getBlock();
         if(!(block instanceof PrototypeWallBlock)&&!(block instanceof PrototypeLadderBlock))return old;

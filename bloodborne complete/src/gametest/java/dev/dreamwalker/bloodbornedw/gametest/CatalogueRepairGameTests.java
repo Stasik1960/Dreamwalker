@@ -20,6 +20,42 @@ import net.minecraft.util.math.*;
 /** Real server-world checks; deliberately not labelled visual/keyboard acceptance. */
 public final class CatalogueRepairGameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
+    public void roof90003AllowsOtherBlocksInItsNonRootVolumeWithoutLosingMovementCollision(TestContext t) {
+        var w=t.getWorld();BlockPos root=t.getAbsolutePos(new BlockPos(3,3,3)),inside=root.east();
+        for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)w.getChunk(root.add(x*16,0,z*16));
+        var player=t.createMockSurvivalPlayer();player.setPosition(root.getX()+5,root.getY(),root.getZ()-5);
+        w.setBlockState(root.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
+        w.setBlockState(inside.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
+        var roof=CompositeArchitecture.kindBlock("prototype_roof");UUID roofUuid=UUID.randomUUID();
+        var payload=new NbtCompound();var shift=new NbtList();
+        shift.add(NbtDouble.of(.5));shift.add(NbtDouble.of(0));shift.add(NbtDouble.of(0));payload.put("SourceShift",shift);
+        try {
+            t.assertTrue(CompositeRuntime.place(w,root,roof.getDefaultState(),roofUuid,player,payload).outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED,"90003 roof installs with saved fractional source placement");
+            var owner=((CompositeBlockEntity)w.getBlockEntity(root)).resident();
+            t.assertTrue(w.getBlockState(inside).isOf(CompositeArchitecture.CELL),"roof protruding volume uses a helper outside its own root");
+            var body=new Box(root.getX()+1.1,root.getY()+.1,root.getZ()+.2,root.getX()+1.3,root.getY()+.8,root.getZ()+.8);
+            t.assertTrue(!w.isSpaceEmpty(body),"roof non-root collider still blocks player-sized movement before overlap");
+            var stone=new ItemStack(Blocks.STONE,2);player.setStackInHand(Hand.MAIN_HAND,stone);
+            var hit=new net.minecraft.util.hit.BlockHitResult(Vec3d.ofCenter(inside.down()).add(0,.5,0),Direction.UP,inside.down(),false);
+            t.assertTrue(stone.getItem().useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,hit)).isAccepted()&&w.getBlockState(inside).isOf(Blocks.STONE),"ordinary vanilla stone item can replace the roof helper inside roof collision");
+            t.assertTrue(((CompositeBlockEntity)w.getBlockEntity(root)).resident().equals(owner),"vanilla placement preserves roof root and UUID");
+            w.removeBlock(inside,false);CompositeRuntime.drain(w);
+            t.assertTrue(!w.isSpaceEmpty(body),"removing overlapping stone reveals the preserved roof movement collider");
+            var tree=CompositeArchitecture.kindBlock("prototype_tree");UUID treeUuid=UUID.randomUUID();
+            var installed=CompositeRuntime.place(w,inside,tree.getDefaultState(),treeUuid,player);
+            t.assertTrue(installed.outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED,"different composite block 90005 can occupy roof non-root physical volume: "+installed.reason());
+            t.assertTrue(((CompositeBlockEntity)w.getBlockEntity(root)).resident().equals(owner)&&!w.isSpaceEmpty(body),"different composite overlap retains roof identity and physical obstacle");
+            var rootAttempt=CompositeRuntime.place(w,root,tree.getDefaultState(),UUID.randomUUID(),player);
+            t.assertTrue(rootAttempt.outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.REJECTED,"accepted exception: roof actual root cell remains occupied");
+            CompositeRuntime.remove(w,((CompositeBlockEntity)w.getBlockEntity(inside)).resident(),player,false);
+            CompositeRuntime.remove(w,owner,player,false);t.complete();
+        } finally {
+            if(w.getBlockEntity(inside) instanceof CompositeBlockEntity own&&own.resident()!=null)CompositeRuntime.remove(w,own.resident(),null,false);
+            if(w.getBlockEntity(root) instanceof CompositeBlockEntity own&&own.resident()!=null)CompositeRuntime.remove(w,own.resident(),null,false);
+            player.discard();
+        }
+    }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void cageAndLargeChandelierOrdinaryItemsMountSourceBottomAndResetExactBase(TestContext t) {
         var w=t.getWorld();var location=t.getAbsolutePos(new BlockPos(3,3,3));
         for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)w.getChunk(location.add(x*16,0,z*16));
@@ -46,31 +82,11 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
             var saved=object.writeNbt(new NbtCompound());var loaded=ObjectRegistry.TYPES.get(id).create(w);loaded.readNbt(saved);
             t.assertTrue(loaded.getUuid().equals(uuid)&&loaded.getPos().equals(object.getPos())&&loaded.verticalOffset()==.25&&Math.abs(loaded.visualBounds().minY-(surface.y+.25))<1e-6,"typed save/read keeps UUID, compensated Pos and offset without double application");
             t.assertTrue(loaded.setVerticalOffset(0,p)&&loaded.getPos().equals(base)&&Math.abs(loaded.visualBounds().minY-surface.y)<1e-6,"reset restores exact original placement base");
-            object.removeByBuilder();loaded.discard();
+            object.removeObject();loaded.discard();
         }
         // Unrelated hanging/ordinary assets keep the old placement policy.
         t.assertTrue(!RpObjectGeometry.surfaceMounted("chest")&&!RpObjectGeometry.surfaceMounted("cage_obj_1"),"source-bottom exception is not applied to other RP objects");
         w.removeBlock(floor,false);p.discard();t.complete();
-    }
-    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
-    public void builderUsesViewDirectionRatherThanStaleHeadYaw(TestContext t) {
-        var w=t.getWorld();var cage=ObjectRegistry.TYPES.get("cage_obj_1").create(w);
-        BlockPos root=t.getAbsolutePos(new BlockPos(3,4,3));cage.setPosition(Vec3d.ofCenter(root));w.spawnEntity(cage);
-        var p=new net.minecraft.server.network.ServerPlayerEntity(w.getServer(),w,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"BuilderRayProbe"));
-        var connection=new net.minecraft.network.ClientConnection(net.minecraft.network.NetworkSide.SERVERBOUND) {
-            @Override public void send(net.minecraft.network.packet.Packet<?> packet) {}
-            @Override public void send(net.minecraft.network.packet.Packet<?> packet,net.minecraft.network.PacketCallbacks callbacks) {}
-        };
-        p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);
-        p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;
-        var box=cage.selectionBoxes().stream().min(java.util.Comparator.comparingDouble(b->b.minZ)).orElseThrow();var center=box.getCenter();
-        p.setPosition(center.x,center.y-p.getStandingEyeHeight(),box.minZ-2);p.setPitch(0);p.setYaw(0);p.setHeadYaw(180);
-        t.assertTrue(dev.dreamwalker.bloodbornedw.tool.BuilderServer.candidates(p).stream().anyMatch(ref->ref.instance().equals(cage.getUuid())),"builder selects aimed cage despite stale opposite head animation");
-        p.setYaw(180);p.setHeadYaw(0);
-        t.assertTrue(dev.dreamwalker.bloodbornedw.tool.BuilderServer.candidates(p).stream().noneMatch(ref->ref.instance().equals(cage.getUuid())),"builder cannot select cage behind authoritative view");
-        p.setYaw(0);w.setBlockState(BlockPos.ofFloored(center.x,center.y,box.minZ-1),Blocks.STONE.getDefaultState());
-        t.assertTrue(dev.dreamwalker.bloodbornedw.tool.BuilderServer.candidates(p).stream().noneMatch(ref->ref.instance().equals(cage.getUuid())),"ordinary obstacle truncates the same authoritative ray");
-        cage.discard();p.discard();t.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void realServerPacketRejectsWrongAimAndAcceptsPhysicalDoorPart(TestContext t) {
@@ -135,12 +151,20 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         t.assertTrue(oracle.get(WallBlock.WEST_SHAPE)==WallShape.NONE,"vanilla wall cannot connect back to90012");
         t.assertTrue(!((FenceBlock)Blocks.OAK_FENCE).canConnect(w.getBlockState(root),true,Direction.WEST),"fence cannot connect to90012 even full-face hint");
         t.assertTrue(!((PaneBlock)Blocks.GLASS_PANE).connectsTo(w.getBlockState(root),true),"pane cannot connect to90012");
+        // Fence gates use the WALLS tag directly instead of the wall/fence/pane
+        // connection helpers. A diagonal post must not lower their model either.
+        t.assertTrue(!w.getBlockState(root).isIn(net.minecraft.registry.tag.BlockTags.WALLS),"diagonal post is not a gate wall neighbor");
+        var gate=Blocks.OAK_FENCE_GATE.getDefaultState().with(FenceGateBlock.FACING,Direction.NORTH);
+        var nextGate=gate.getStateForNeighborUpdate(Direction.WEST,w.getBlockState(root),w,root.east(),root);
+        t.assertTrue(!nextGate.get(FenceGateBlock.IN_WALL),"fence gate keeps its ordinary height beside90012");
         w.setBlockState(root,normal.getDefaultState(),Block.NOTIFY_ALL);w.setBlockState(root.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);w.removeBlock(root.down(),false);
         t.assertTrue(w.getBlockState(root).isOf(normal),"removing bottom does not destroy90002");t.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=80,batchId="catalogue_repair")
     public void stackReadMigratesContainersDropsAndOldActionsWithoutLosingTypedNbt(TestContext t) {
-        for(String path:List.of("builder_tool","prototype_wall_skin_2","prototype_wall_skin_3","prototype_wall_skin_4","prototype_wall_skin_5","prototype_wall_skin_7","prototype_ladder_art_1","prototype_ladder_art_2")) {
+        for(String path:List.of("builder_tool","composite_builder","wall_builder"))
+            t.assertTrue(!Registries.ITEM.containsId(new Identifier("bloodborne_dw",path)),"removed tool has no registry item: "+path);
+        for(String path:List.of("prototype_wall_skin_2","prototype_wall_skin_3","prototype_wall_skin_4","prototype_wall_skin_5","prototype_wall_skin_7","prototype_ladder_art_1","prototype_ladder_art_2")) {
             ItemStack old=new ItemStack(Registries.ITEM.get(new Identifier("bloodborne_dw",path)),1);
             old.getOrCreateNbt().putInt("BuilderAction",6);old.getOrCreateNbt().putLong("OpaqueLong",Long.MIN_VALUE);old.setCustomName(net.minecraft.text.Text.literal("retained"));
             old.getOrCreateSubNbt("BlockStateTag").putString("rotation","3");

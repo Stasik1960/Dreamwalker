@@ -20,5 +20,5 @@ public final class ObjectPolicyGameTests implements FabricGameTest {
     }finally{server.getPlayerManager().removeFromOperators(p.getGameProfile());server.getCommandManager().executeWithPrefix(source,"scoreboard objectives remove "+objective);}cleanup(p,door);c.complete();}
     private static void settle(RpObjectEntity object){var clip=object.asset().clip(object.isOpen()?"open":"close");int limit=clip==null?2:(int)Math.ceil(clip.seconds()*20)+2;for(int tick=0;object.animationBusy()&&tick<limit;tick++)object.tick();if(object.animationBusy())throw new AssertionError("Actual authored clip remains busy after its full duration");}
     private static RpObjectEntity object(TestContext c,String asset,int x){var rp=ObjectRegistry.TYPES.get(asset).create(c.getWorld());var root=c.getAbsolutePos(new BlockPos(x,2,1));rp.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.5,0,0);c.getWorld().spawnEntity(rp);return rp;}
-    private static void cleanup(ServerPlayerEntity p,RpObjectEntity... objects){for(var o:objects)o.removeByBuilder();p.discard();}
+    private static void cleanup(ServerPlayerEntity p,RpObjectEntity... objects){for(var o:objects)o.removeObject();p.discard();}
 }

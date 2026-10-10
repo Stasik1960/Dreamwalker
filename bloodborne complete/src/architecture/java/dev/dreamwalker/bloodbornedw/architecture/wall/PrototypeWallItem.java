@@ -19,9 +19,6 @@ import net.minecraft.util.math.Direction;
 public final class PrototypeWallItem extends BlockItem {
     public PrototypeWallItem(PrototypeWallBlock block,Settings settings){super(block,settings);}
     @Override public ActionResult place(ItemPlacementContext context) {
-        return dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.nativePlacement(context,()->placeInternal(context));
-    }
-    private ActionResult placeInternal(ItemPlacementContext context) {
         int art=material(context.getStack());
         NbtCompound oldForm=context.getStack().getSubNbt("BlockStateTag");
         if(art!=0)art=(oldForm!=null&&oldForm.contains("rotation",8)?(integer(oldForm,"rotation",7)&1)!=0:art==1)?1:6;
@@ -60,8 +57,8 @@ public final class PrototypeWallItem extends BlockItem {
         return result;
     }
     @Override protected BlockState getPlacementState(ItemPlacementContext context) {
-        BlockPos pos=context.getBlockPos();if(!context.getWorld().isChunkLoaded(pos)){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal("unloaded_target_chunk");return null;}
-        BlockState state=getBlock().getPlacementState(context);if(state==null){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal("native_wall_placement_state_unavailable");return null;}
+        BlockPos pos=context.getBlockPos();if(!context.getWorld().isChunkLoaded(pos))return null;
+        BlockState state=getBlock().getPlacementState(context);if(state==null)return null;
         NbtCompound tag=context.getStack().getSubNbt("BlockStateTag");
         if(state.contains(PrototypeWallBlock.MATERIAL))state=state.with(PrototypeWallBlock.MATERIAL,material(context.getStack()));
         state=state.with(PrototypeWallBlock.PROFILE,profile(context.getStack()));
@@ -74,11 +71,11 @@ public final class PrototypeWallItem extends BlockItem {
             else state=state.with(PrototypeWallBlock.CONNECTIONS,PrototypeWallBlock.Connections.MANUAL).with(PrototypeWallBlock.ROTATION,yaw);
         }
         state=PrototypeWallBlock.canonicalForm(state);
-        if(!canPlace(context,state)){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal("native_canPlace_rejected; support_or_host_rules");return null;}
-        if(!context.getWorld().doesNotIntersectEntities(null,state.getCollisionShape(context.getWorld(),pos).offset(pos.getX(),pos.getY(),pos.getZ()))){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal("active_entity_intersection");return null;}
+        if(!canPlace(context,state))return null;
+        if(!context.getWorld().doesNotIntersectEntities(null,state.getCollisionShape(context.getWorld(),pos).offset(pos.getX(),pos.getY(),pos.getZ())))return null;
         String physicalConflict=dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.ordinaryPlacementConflict(context.getWorld(),
                 state.getCollisionShape(context.getWorld(),pos).getBoundingBoxes().stream().map(box->box.offset(pos)).toList(),null);
-        if(physicalConflict!=null){dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal(physicalConflict);if(context.getPlayer()!=null&&!context.getWorld().isClient)context.getPlayer().sendMessage(Text.literal("Ограда не установлена: твёрдое пересечение · "+physicalConflict),true);return null;}
+        if(physicalConflict!=null){if(context.getPlayer()!=null&&!context.getWorld().isClient)context.getPlayer().sendMessage(Text.literal("Ограда не установлена: твёрдое пересечение · "+physicalConflict),true);return null;}
         return state;
     }
     private static boolean validInteger(NbtCompound tag,String name,int maximum) {
@@ -93,6 +90,6 @@ public final class PrototypeWallItem extends BlockItem {
         super.appendTooltip(stack,world,lines,context);
         DebugCatalogue.itemTooltip(stack,lines);
         lines.add(Text.literal("Профиль "+profile(stack).asString().toUpperCase()+"; ALT без отдельного пакета использует BASE").formatted(Formatting.GRAY));
-        lines.add(Text.literal("AUTO: соединения и высота сторон по соседям; ручной поворот фиксирует форму").formatted(Formatting.GRAY));
+        lines.add(Text.literal(material(stack)==1?"Диагональный столб: только 45°, без соединения с соседями.":"Обычная ограда: соединения и высота сторон по соседям.").formatted(Formatting.GRAY));
     }
 }

@@ -16,7 +16,6 @@ public final class RpObjectGeometry {
     private record Cube(String bone, Box bounds) {}
     private record Geometry(Box bounds,List<Cube> cubes,List<Box> motionSelection) {}
     private static final Map<String,Geometry> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
-    private static final java.util.concurrent.atomic.LongAdder CACHE_HITS=new java.util.concurrent.atomic.LongAdder(),CACHE_LOADS=new java.util.concurrent.atomic.LongAdder(),CACHE_FAILURES=new java.util.concurrent.atomic.LongAdder();
     private RpObjectGeometry() {}
     public static boolean custom(String id) { return CUSTOM.contains(id); }
     private static Vec3d vector(JsonObject object,String key) {
@@ -31,9 +30,8 @@ public final class RpObjectGeometry {
         a=Math.toRadians(degrees.z);c=Math.cos(a);s=Math.sin(a);return new Vec3d(v.x*c-v.y*s,v.x*s+v.y*c,v.z).add(pivot);
     }
     private static Geometry geometry(String id) {
-        Geometry cached=CACHE.get(id);if(cached!=null){CACHE_HITS.increment();return cached;}
+        Geometry cached=CACHE.get(id);if(cached!=null)return cached;
         return CACHE.computeIfAbsent(id,key->{
-            CACHE_LOADS.increment();
             String path="/assets/bloodborne_rp/"+AssetCatalog.get(key).model();
             try(var stream=RpObjectGeometry.class.getResourceAsStream(path)) {
                 if(stream==null)throw new IllegalStateException("Missing reviewed geometry "+path);
@@ -54,10 +52,9 @@ public final class RpObjectGeometry {
                 }
                 if(whole==null)throw new IllegalStateException("Empty RP model "+key);
                 return new Geometry(whole,List.copyOf(values),motionSelection(key,values,lookup));
-            }catch(Exception error){CACHE_FAILURES.increment();RpDiagnostics.error(null,RpDiagnostics.typeIdForAsset(key),null,null,"source_geometry_cache","Cannot decode exact reviewed RP geometry "+key,error);throw new IllegalStateException("Invalid reviewed RP geometry "+key,error);}
+            }catch(Exception error){throw new IllegalStateException("Invalid reviewed RP geometry "+key,error);}
         });
     }
-    public static Map<String,Object> cacheMetrics(){return Map.of("entries",CACHE.size(),"hits",CACHE_HITS.sum(),"loadAttempts",CACHE_LOADS.sum(),"loadFailures",CACHE_FAILURES.sum(),"scope","shared JVM source-geometry cache; client/server values must not be added");}
     private static Box bounds(List<Vec3d> points) {
         double[] min={Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY},max={Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY};
         for(Vec3d v:points){double[] p={v.x,v.y,v.z};for(int a=0;a<3;a++){min[a]=Math.min(min[a],p[a]);max[a]=Math.max(max[a],p[a]);}}

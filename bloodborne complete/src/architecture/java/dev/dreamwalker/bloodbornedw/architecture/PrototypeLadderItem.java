@@ -18,9 +18,6 @@ import net.minecraft.world.World;
 public final class PrototypeLadderItem extends BlockItem {
     public PrototypeLadderItem(PrototypeLadderBlock block, Settings settings) { super(block, settings); }
     @Override public ActionResult place(ItemPlacementContext context) {
-        return dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.nativePlacement(context,()->placeInternal(context));
-    }
-    private ActionResult placeInternal(ItemPlacementContext context) {
         if(context.getPlayer()!=null&&(!context.getPlayer().getAbilities().allowModifyWorld||!context.getWorld().canPlayerModifyAt(context.getPlayer(),context.getBlockPos())))
             return fail(context,"нет права изменять этот участок");
         if(!context.getWorld().isChunkLoaded(context.getBlockPos()))return fail(context,"участок не загружен");
@@ -56,11 +53,10 @@ public final class PrototypeLadderItem extends BlockItem {
         @Override public ItemStack getStack(){return working==null?super.getStack():working;}
     }
     private static ActionResult fail(ItemPlacementContext context,String reason){
-        dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal(reason);
         if(context.getPlayer()!=null&&!context.getWorld().isClient)context.getPlayer().sendMessage(Text.literal("Лестница не установлена: "+reason+"."),true);
         return ActionResult.FAIL;
     }
-    private static void reason(ItemPlacementContext context,String reason){if(context instanceof PreparedContext prepared)prepared.reason=reason;dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.refusal(reason);}
+    private static void reason(ItemPlacementContext context,String reason){if(context instanceof PreparedContext prepared)prepared.reason=reason;}
     @Override protected BlockState getPlacementState(ItemPlacementContext context) {
         BlockPos pos = context.getBlockPos();
         if (!context.getWorld().isChunkLoaded(pos)){reason(context,"участок не загружен");return null;}
@@ -93,6 +89,6 @@ public final class PrototypeLadderItem extends BlockItem {
         DebugCatalogue.itemTooltip(stack,lines);
         lines.add(Text.literal("Профиль: " + profile(stack).asString().toUpperCase()).formatted(Formatting.GRAY));
         lines.add(Text.literal("Боковая грань: пристенно/в угол; верхняя: самостоятельная секция и вертикальная сборка.").formatted(Formatting.GRAY));
-        lines.add(Text.literal("Диагональ: две опоры угла; оформление — строительным инструментом.").formatted(Formatting.GRAY));
+        lines.add(Text.literal("Диагональ без двух боковых опор имеет коллизию для игрока.").formatted(Formatting.GRAY));
     }
 }

@@ -126,7 +126,7 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
  }
 
  @Override public void tick() {
-  long diagnosticsStarted=dev.dreamwalker.bloodbornerp.object.RpDiagnostics.begin(this,"rp.mob_tick_including_ai");try {
+
   super.tick();
   if (animationTicks > 0 && --animationTicks == 0) getDataTracker().set(ATTACK_VARIANT, 0);
   if (isFrozen()) {
@@ -134,7 +134,7 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
    setVelocity(Vec3d.ZERO);
   }
   if (!getWorld().isClient && bossBar != null) bossBar.setPercent(MathHelper.clamp(getHealth() / getMaxHealth(), 0.0F, 1.0F));
-  }finally{dev.dreamwalker.bloodbornerp.object.RpDiagnostics.finish(this,"rp.mob_tick_including_ai",diagnosticsStarted);}
+
  }
 
  @Override public boolean canMoveVoluntarily() { return !isFrozen() && super.canMoveVoluntarily(); }

@@ -11,19 +11,19 @@ import java.util.List;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 
-/** Simple cached collision and independent one-box selection from authored bounds.
+/** Simple cached collision from authored bounds; ordinary selection uses the same shape.
  * Cardinal collision uses post/arm rectangles at native wall height1.5; diagonal
  * collision uses one coarse root-cell rectangle. Neither reserves neighbor cells.
  */
 final class WallGeometry {
-    private final List<double[]> post,low,tall;
-    private final VoxelShape[] collision=new VoxelShape[256],outline=new VoxelShape[1296];
+    private final List<double[]> post,low;
+    private final VoxelShape[] collision=new VoxelShape[256];
     WallGeometry(){
         try(InputStream stream=WallGeometry.class.getResourceAsStream("/bloodborne_dw/prototype-wall.json")){
             if(stream==null)throw new IllegalStateException("Missing original wall geometry");
             JsonObject value=JsonParser.parseReader(new InputStreamReader(stream,StandardCharsets.UTF_8)).getAsJsonObject();
             if(value.get("schemaVersion").getAsInt()!=1||value.get("units").getAsInt()!=16)throw new IllegalStateException("Invalid wall geometry schema");
-            post=boxes(value.getAsJsonArray("post"));low=boxes(value.getAsJsonArray("low"));tall=boxes(value.getAsJsonArray("tall"));
+            post=boxes(value.getAsJsonArray("post"));low=boxes(value.getAsJsonArray("low"));
         }catch(java.io.IOException failure){throw new IllegalStateException("Cannot load wall geometry",failure);}
     }
     synchronized VoxelShape collision(int sides,boolean includePost,int yaw){
@@ -36,12 +36,6 @@ final class WallGeometry {
         if((yaw&1)!=0){if(!parts.isEmpty())result=cuboid(bounds(parts));}
         else{for(double[] box:parts)result=VoxelShapes.union(result,cuboid(box));result=result.simplify();}
         return collision[key]=result;
-    }
-    synchronized VoxelShape outline(int sides,boolean includePost,int yaw){
-        int key=sides+(includePost?81:0)+yaw*162;VoxelShape cached=outline[key];if(cached!=null)return cached;
-        List<double[]> parts=new ArrayList<>(5);if(includePost)for(double[] box:post)parts.add(rotated(box,yaw,box[4]));
-        int value=sides;for(int direction=0;direction<4;direction++){int shape=value%3;value/=3;if(shape!=0)for(double[] box:shape==2?tall:low)parts.add(rotated(box,(yaw+direction*2)&7,box[4]));}
-        return outline[key]=parts.isEmpty()?VoxelShapes.empty():cuboid(bounds(parts));
     }
     private static VoxelShape cuboid(double[] box){return VoxelShapes.cuboid(box[0],box[1],box[2],box[3],box[4],box[5]);}
     private static double[] bounds(List<double[]> parts){double[] result={1,Double.POSITIVE_INFINITY,1,0,Double.NEGATIVE_INFINITY,0};for(double[] box:parts){for(int i=0;i<3;i++){result[i]=Math.min(result[i],box[i]);result[i+3]=Math.max(result[i+3],box[i+3]);}}return result;}

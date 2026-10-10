@@ -1,9 +1,0 @@
-{
-  "schema": "dreamwalker-optional-client-verifier-history-v1",
-  "status": "FAIL_VERIFIER_THREAD_CPU_POSITIVE_ONLY_ASSUMPTION",
-  "production_jar_sha256": "ed43404d01b2b861a378bdb7dae6d57f36cccd6554461cfaeafbb8bccc82e1d8",
-  "wrapper": "reports/CLIENT_FULL_KAPPA_V9_RELEASE11.json",
-  "observed_error": "Actual positive raw samples are absent: OFF_AFTER CPU",
-  "correction": "Thread CPU clock deltas may legitimately be zero; validate nonnegative integer population. Wall frame deltas remain strictly positive. Retention/identity/ACK/export gates unchanged.",
-  "runtime_failure_inferred": false
-}

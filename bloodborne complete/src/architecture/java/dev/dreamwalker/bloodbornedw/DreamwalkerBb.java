@@ -39,7 +39,7 @@ public final class DreamwalkerBb implements ModInitializer, PreLaunchEntrypoint 
 
     @Override public void onInitialize() {
         rejectStandaloneRp();
-        LOG.info("Dreamwalker BB source-backed prototype checkpoint; final catalog IDs are not frozen");
+        LOG.info("Dreamwalker BB V11: preserved architecture and RP, editor and diagnostic recorder removed");
         SourceTechnicalLight.initialize();
         PrototypeArchitecture.initialize();
         PrototypeWallArchitecture.initialize();
