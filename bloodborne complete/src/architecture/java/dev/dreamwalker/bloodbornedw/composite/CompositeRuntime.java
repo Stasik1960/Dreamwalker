@@ -136,13 +136,13 @@ public final class CompositeRuntime {
     public static Double topHeight(World world,BlockPos support,Owner exclude){
         if(!world.isChunkLoaded(support))return null;BlockState state=world.getBlockState(support);VoxelShape shape;
         BASE_SHAPE.set(true);try{shape=state.getBlock() instanceof CompositeRootBlock||state.isOf(CompositeArchitecture.CELL)?VoxelShapes.empty():state.getCollisionShape(world,support);}finally{BASE_SHAPE.set(false);}
-        for(var contribution:contributions(world,support))if(!contribution.owner().equals(exclude))shape=VoxelShapes.union(shape,shape(contribution.shape().collision()));
+        for(var contribution:contributions(world,support))if(!contribution.owner().equals(exclude))shape=VoxelShapes.union(shape,shape(physicalParts(contribution,support)));
         double max=Double.NEGATIVE_INFINITY;for(var box:shape.getBoundingBoxes())if(box.minX<=.5&&box.maxX>=.5&&box.minZ<=.5&&box.maxZ>=.5)max=Math.max(max,box.maxY);
         return Double.isFinite(max)&&max>0?max:null;
     }
     public static Double bottomHeight(World world,BlockPos support){
         if(!world.isChunkLoaded(support))return null;VoxelShape shape=nativeCollision(world,support,ShapeContext.absent());
-        for(var contribution:contributions(world,support))shape=VoxelShapes.union(shape,shape(contribution.shape().collision()));
+        for(var contribution:contributions(world,support))shape=VoxelShapes.union(shape,shape(physicalParts(contribution,support)));
         double min=Double.POSITIVE_INFINITY;for(var b:shape.getBoundingBoxes())if(b.minX<=.5&&b.maxX>=.5&&b.minZ<=.5&&b.maxZ>=.5)min=Math.min(min,b.minY);
         return Double.isFinite(min)?min:null;
     }
@@ -157,20 +157,25 @@ public final class CompositeRuntime {
         return cellShape(world,pos,collision,fallback,ShapeContext.absent());
     }
     public static VoxelShape cellShape(BlockView world,BlockPos pos,boolean collision,BlockState fallback,ShapeContext context){
-        List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> boxes=new ArrayList<>();List<CompositeData.Contribution> entries=contributions(world,pos);for(var entry:entries)if(validOrDeferred(world,entry.owner()))boxes.addAll(collision?contextCollision(world,entry,pos,context):contextSelection(world,entry,pos,context));if(entries.isEmpty()&&fallback.getBlock() instanceof CompositeRootBlock block){Footprint f=block.spec.footprint(fallback,0).get(Cell.ORIGIN);boxes.addAll(collision||!f.collision().isEmpty()?f.collision():f.selection());}return shape(boxes);
+        List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> boxes=new ArrayList<>();List<CompositeData.Contribution> entries=contributions(world,pos);for(var entry:entries)if(validOrDeferred(world,entry.owner()))boxes.addAll(collision?physicalParts(entry,pos):contextSelection(world,entry,pos,context));if(entries.isEmpty()&&fallback.getBlock() instanceof CompositeRootBlock block){Footprint f=block.spec.footprint(fallback,0).get(Cell.ORIGIN);boxes.addAll(collision||!f.collision().isEmpty()?f.collision():f.selection());}return shape(boxes);
     }
     private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextSelection(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context) {
-        var physical=contextCollision(world,entry,cell,context);
-        if(!physical.isEmpty())return physical;
+        var selected=selectionParts(world,entry,cell,context);
+        if(!selected.isEmpty())return selected;
         BlockState rootState=CompositeData.state(entry.rootData());
         if(rootState.getBlock() instanceof CompositeRootBlock block&&block.spec.footprint(rootState,0).values().stream().anyMatch(part->!part.collision().isEmpty()))return List.of();
         return entry.shape().selection();
     }
-    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextCollision(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context){
+    /** Saved angular ladder geometry cannot restore a removed physical collider. */
+    public static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> physicalParts(CompositeData.Contribution entry,BlockPos cell){
+        if(!entry.owner().registryId().startsWith("bloodborne_dw:prototype_ladder")||!"true".equals(entry.rootData().properties().get("diagonal")))return entry.shape().collision();
+        return "true".equals(entry.rootData().properties().get("source_clone"))?sourceBackingParts(entry,cell):List.of();
+    }
+    /** Keep the pre-existing aiming outline independent of pass-through physics. */
+    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> selectionParts(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context){
         boolean player=context instanceof EntityShapeContext actor&&actor.getEntity() instanceof PlayerEntity;
         if(!player||!entry.owner().registryId().startsWith("bloodborne_dw:prototype_ladder")||!"true".equals(entry.rootData().properties().get("diagonal")))return entry.shape().collision();
-        // Preserve native diagonal ladder's player-pass-through context. The
-        // source pair's separately owned original beehive cube remains solid.
+        // The thin player outline of an unsupported mounted section is retained.
         if(!"true".equals(entry.rootData().properties().get("source_clone"))) {
             BlockPos root=CompositeData.pos(entry.owner().root());
             BlockState state=CompositeData.state(entry.rootData());
@@ -179,14 +184,19 @@ public final class CompositeRuntime {
             if(dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock.hasBackingMount(state,world,root,offset))return List.of();
             if(!(state.getBlock() instanceof dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock ladder))return entry.shape().collision();
             List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> thin=new ArrayList<>();
-            for(var box:ladder.ordinaryPlayerCollision(state).getBoundingBoxes()){
+            for(var box:ladder.ordinaryDiagonalOutline(state).getBoundingBoxes()){
                 var moved=box.offset(root.getX()-cell.getX(),root.getY()+offset-cell.getY(),root.getZ()-cell.getZ());
                 double a=Math.max(0,moved.minX),b=Math.max(0,moved.minY),c=Math.max(0,moved.minZ),d=Math.min(1,moved.maxX),e=Math.min(1,moved.maxY),f=Math.min(1,moved.maxZ);
                 if(d>a&&e>b&&f>c)thin.add(new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(a,b,c,d,e,f));
             }
             return thin;
         }
-        NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());double x=entry.owner().root().x()+payload.getInt("NativeBackingX")-cell.getX(),y=entry.owner().root().y()+payload.getInt("NativeBackingY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY)-cell.getY(),z=entry.owner().root().z()+payload.getInt("NativeBackingZ")-cell.getZ();
+        return sourceBackingParts(entry,cell);
+    }
+    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> sourceBackingParts(CompositeData.Contribution entry,BlockPos cell){
+        NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());
+        if(!payload.contains("NativeBackingX"))return List.of();
+        double x=entry.owner().root().x()+payload.getInt("NativeBackingX")-cell.getX(),y=entry.owner().root().y()+payload.getInt("NativeBackingY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY)-cell.getY(),z=entry.owner().root().z()+payload.getInt("NativeBackingZ")-cell.getZ();
         double a=Math.max(0,x),b=Math.max(0,y),c=Math.max(0,z),d=Math.min(1,x+1),e=Math.min(1,y+1),f=Math.min(1,z+1);
         return d>a&&e>b&&f>c?List.of(new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(a,b,c,d,e,f)):List.of();
     }

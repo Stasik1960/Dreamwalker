@@ -1,0 +1,85 @@
+{
+  "schema": "dreamwalker-independent-production-jar-entry-compare-v1",
+  "status": "PASS",
+  "baselineJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\releases\\Dreamwalker-BB\\v11.2\\dreamwalker-bb-fabric-1.20.1-0.1.0-v11.2.jar",
+  "baselineJarSha256": "c285792d3f471b43f9104787fb2879da1a1492273b25191ae85787722c694285",
+  "newJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v11.3.jar",
+  "newJarSha256": "6a45ab4ffd1b189cecbf9e60ca95b9bec0fdf854deed33e806bcfa557b145340",
+  "oldVersion": "0.1.0-v11.2",
+  "newVersion": "0.1.0-v11.3",
+  "zipCrcValidation": "PASS",
+  "duplicateEntries": false,
+  "beforeEntryCount": 1185,
+  "afterEntryCount": 1185,
+  "allAssetEntries": 933,
+  "modelTextureAnimationGeoEntries": 505,
+  "allAssetsByteEquivalent": true,
+  "modelTextureAnimationGeoByteEquivalent": true,
+  "fabricMetadataExceptVersionEquivalent": true,
+  "expectedClassFamilies": [
+    "dev/dreamwalker/bloodbornedw/architecture/PlacementPhysics",
+    "dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderBlock",
+    "dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderItem",
+    "dev/dreamwalker/bloodbornedw/architecture/mount/VerticalMount",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime"
+  ],
+  "changedEntries": [
+    {
+      "path": "bloodborne_dw/prototype-ladder.json",
+      "change": "CHANGED",
+      "beforeSha256": "0b346617a2f34b84809291516026a0d439759d4403db8ce8efdc6de969206c89",
+      "afterSha256": "481d172172ad35dea30c4865a17998c593224719d4d0a9180e5b73443ef43dca"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/architecture/PlacementPhysics.class",
+      "change": "CHANGED",
+      "beforeSha256": "23da7ee5cb11885fdd425d0b78f0e753bc007e5244c5fe06092ac3eaeb7fa613",
+      "afterSha256": "6eedc87eed1e00b4a2dcd93a62fe7717294c27d4efada3fde07bd0c137ced0a6"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderBlock$1.class",
+      "change": "CHANGED",
+      "beforeSha256": "caeaef9a23ae21ef1c4650268bc1a70de5f2adfbec6de69d3f2165a67c5b4c1c",
+      "afterSha256": "6f6fe18b75af5ac74251398b37891c36b63ce804d09296eba810ab22abea15b2"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderBlock.class",
+      "change": "CHANGED",
+      "beforeSha256": "55556e5ee1f2dc5f0e328490c582ab290020e7e2276b0e0562881db34f338be5",
+      "afterSha256": "5856293c2b0a69c89becb9f21c023d1ab6436c225fc3df0767ce03d745e2d4f1"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/architecture/PrototypeLadderItem.class",
+      "change": "CHANGED",
+      "beforeSha256": "d2d124ea06dd26fbde14a1eead5c7c49cce12f29a6f91d31442c4db1bde01ef6",
+      "afterSha256": "5595139a34fc85e6aabd81d315468c03e5a0698177c62286384d1620a6f53c7b"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/architecture/mount/VerticalMount.class",
+      "change": "CHANGED",
+      "beforeSha256": "55c44c301c50962438b3740684ed74815ea6321d62bd07d6764b25cb819a124f",
+      "afterSha256": "10305d42fac6c0ef8fa5e22cda9888668b75f968577f89537246f9bfdba929ed"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime$1Hit.class",
+      "change": "CHANGED",
+      "beforeSha256": "18cb1a300462fb5f98f73356ff388c92f74d5a7a4153b90a8f7ada3fa4a5740e",
+      "afterSha256": "3ee146aacaf4769ff839211cd806588a92b845f0a31c55d4ec6ffea457943b81"
+    },
+    {
+      "path": "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.class",
+      "change": "CHANGED",
+      "beforeSha256": "9e28cf2ab9a3d273f06a622d9ee5550bef6910c0675ed0834e9aee2cfea1644f",
+      "afterSha256": "535723e60a64b6cdf1c9851673de18a2964c5e3afa3e05cd1ba262cda83e1995"
+    },
+    {
+      "path": "fabric.mod.json",
+      "change": "CHANGED",
+      "beforeSha256": "c8db0776ff894477b9cbc8108dd9cb4f4da5485d9b4f9e88bfb1448337fb53ae",
+      "afterSha256": "bcd75d6a07d96f9529dfe3bf53cf9324255dfae4d4b6a50bcd0fa9fe3df7c626"
+    }
+  ],
+  "unexpectedChangedEntries": [],
+  "visualChangedEntries": [],
+  "scope": "Uncompressed entry bytes and native metadata only. This establishes preserved artwork/resources, not runtime movement or full visual/gameplay acceptance of the new SHA."
+}

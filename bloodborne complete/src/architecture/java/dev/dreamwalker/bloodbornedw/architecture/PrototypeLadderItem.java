@@ -89,6 +89,6 @@ public final class PrototypeLadderItem extends BlockItem {
         DebugCatalogue.itemTooltip(stack,lines);
         lines.add(Text.literal("Профиль: " + profile(stack).asString().toUpperCase()).formatted(Formatting.GRAY));
         lines.add(Text.literal("Боковая грань: пристенно/в угол; верхняя: самостоятельная секция и вертикальная сборка.").formatted(Formatting.GRAY));
-        lines.add(Text.literal("Диагональ без двух боковых опор имеет коллизию для игрока.").formatted(Formatting.GRAY));
+        lines.add(Text.literal("При установке под 45° коллизия отсутствует.").formatted(Formatting.GRAY));
     }
 }

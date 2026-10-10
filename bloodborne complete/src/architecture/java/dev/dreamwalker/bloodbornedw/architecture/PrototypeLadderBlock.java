@@ -48,7 +48,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
     public static final BooleanProperty FREESTANDING = BooleanProperty.of("freestanding");
     private final int fixedVariant;
     private final VoxelShape[] collision;
-    private final VoxelShape[] playerCollision;
+    private final VoxelShape[] diagonalOutline;
     private final VoxelShape[] outline;
     private final VoxelShape[] sourcePhysical=new VoxelShape[8];
 
@@ -67,7 +67,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         this.fixedVariant=fixedVariant;
         JsonObject geometry = geometry();
         collision = shapes(geometry.getAsJsonArray("northCollision"));
-        playerCollision = shapes(geometry.getAsJsonArray("northCollision"),true);
+        diagonalOutline = shapes(geometry.getAsJsonArray("northCollision"),true);
         outline = shapes(geometry.getAsJsonArray("northOutline"));
         for(int yaw=0;yaw<8;yaw++)sourcePhysical[yaw]=cheapRotate(new Box(0,0,13/16.0,1,1,1),yaw);
         setDefaultState(getDefaultState().with(VARIANT, Math.max(0,fixedVariant)).with(PROFILE, Profile.BASE).with(DIAGONAL, false).with(SOURCE_CLONE, false).with(FREESTANDING,false));
@@ -88,19 +88,18 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
     }
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state,context);
-        if(state.get(DIAGONAL)&&!state.get(SOURCE_CLONE)&&!hasBackingMount(state,world,pos,0))return playerCollision[yaw(state)];
+        if(state.get(DIAGONAL)&&!state.get(SOURCE_CLONE)&&!hasBackingMount(state,world,pos,0))return diagonalOutline[yaw(state)];
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:outline[yaw(state)];
     }
     @Override public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        // Angular sections are decorative/pass-through in every physical context,
+        // including old vertically shifted native owners.
+        if(state.get(DIAGONAL))return VoxelShapes.empty();
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,true,state,context);
-        if(state.get(DIAGONAL)&&context instanceof net.minecraft.block.EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity){
-            if(state.get(SOURCE_CLONE)||hasBackingMount(state,world,pos,0))return VoxelShapes.empty();
-            return playerCollision[yaw(state)];
-        }
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:collision[yaw(state)];
     }
-    /** Cached thin section, also used for contextual saved owner contributions. */
-    public VoxelShape ordinaryPlayerCollision(BlockState state){return playerCollision[yaw(state)];}
+    /** Retained thin aiming outline, also used by saved vertically shifted owners. */
+    public VoxelShape ordinaryDiagonalOutline(BlockState state){return diagonalOutline[yaw(state)];}
     public VoxelShape climbingShape(BlockState state){return sourcePhysical[yaw(state)];}
     @Override public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) { return VoxelShapes.empty(); }
     @Override public BlockState getPlacementState(ItemPlacementContext context) {

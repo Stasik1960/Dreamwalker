@@ -1,0 +1,86 @@
+{
+  "revision": "V11.3",
+  "deliveryStatus": "LOCAL_CANDIDATE_SCOPED_NATIVE_ACCEPTANCE_COMPLETE",
+  "productionJarSha256": "6a45ab4ffd1b189cecbf9e60ca95b9bec0fdf854deed33e806bcfa557b145340",
+  "worldZipSha256": "8d19d5dcc1437c2c542c4896245f28c65b15d41974c5bb602b14ac3ae9797721",
+  "change": "Physical collision for diagonal90006 removed in every query context by explicit user request; cardinal shape/outline preserved. Prior fixes and asset content retained.",
+  "build": "PASS_JAVA17",
+  "gameTests": {
+    "passed": 42,
+    "failed": 0,
+    "errors": 0
+  },
+  "transactionChecks": {
+    "passed": 21
+  },
+  "productionJar": {
+    "fabricMetadataVersion": "0.1.0-v11.3",
+    "qaEditorAndRecorderClassesAbsent": true
+  },
+  "gallery": {
+    "source": "Fresh current-catalogue row authoring with V11.3; not a manual or dense visual QA scene",
+    "exhibits": 120,
+    "offeredItems": 102,
+    "realNpcs": 18,
+    "exactTwoBlockGaps": true,
+    "boundsPlusTwo": true,
+    "productionOnlyReopen": true,
+    "identitiesPosesAndTypedStatesUnchanged": true,
+    "qaAddonRequired": false,
+    "worldFiles": 153,
+    "embeddedAcceptanceSnapshot": "Preparation-time pending snapshot preserved inside byte-immutable gallery ZIP; current external QA.json/_ACCEPTANCE.md describe subsequent native checks"
+  },
+  "assetLineage": {
+    "report": "ASSET-LINEAGE.json",
+    "reportSha256": "a5bea512fc304b01188610157f46398d7b1368185839d65e8f2a2a3c93123929",
+    "scope": "V11.2/V11.3 ZIP-entry byte comparison; earlier native game evidence retains its earlier productionSHA"
+  },
+  "freshActualClient": {
+    "dog91007FourExteriorViews": {
+      "status": "PASS_DOG_VISUAL_PRESENCE_REAR_AND_WEST",
+      "nativeOriginalFramesReviewed": 4,
+      "rearAndWest": "DOG_VISIBLE",
+      "eastAndNorth": "OCCLUDED; NO_INDEPENDENT_VISIBILITY_PASS",
+      "reviewSha256": "d995e55bf9b172cfc1d258d2de314b05a486f029fb4f44c38717a35927ae7e0e",
+      "captureSha256": "79343dc96c6f6ad80e0e9099eb5b5e60b5c4ce2f4a3d517bac27d3760b342987",
+      "scope": "Native static visual presence in BASE on V11.3; no animation/hiding/restore gameplay claim"
+    },
+    "twoRealClientActiveStreamingDoorAndVanillaLoad": {
+      "status": "PASS_NATIVE_TWO_REAL_CLIENT_ACTIVITY_PROFILE",
+      "productionJarSha256": "6a45ab4ffd1b189cecbf9e60ca95b9bec0fdf854deed33e806bcfa557b145340",
+      "measuredSeconds": 659.5,
+      "nativeTicks": 13191,
+      "nativeTicksPerSecond": 20.0,
+      "twoRealClients": true,
+      "nativeActivityFrames": 240,
+      "nativeCaptureFramesVerifiedTotal": 244,
+      "firstWorldTick": 211434,
+      "lastWorldTick": 224044,
+      "scene": "119 saved main catalogue exhibits with18 NoAI NPCs; 49 forced chunks0..6. Additional8 ladderdemo/support sections and prior realitem140 in chunks7/8 are saved but not claimed always loaded",
+      "normalServerExit": 0,
+      "normalClientClose": true,
+      "serverSaved": true,
+      "scope": "Real foreground B native use actions and ordinary spectator TP streaming by A; discrete native frame/state and vanilla TPS evidence",
+      "actualNativeF8Events": 10,
+      "minimumF8IntervalSeconds": 18.586,
+      "cantKeepUpCount": 0,
+      "newModExceptionBlocks": 0,
+      "unclassifiedErrorOrExceptionBlocks": 0,
+      "knownLogScopes": "Ordinary QA teleport moved-too-quickly warnings; vanilla shader Sampler2; offline Mojang auth401; absent optional ReachEntityAttributes. Exact counts/proof lines are in bundled load report.",
+      "aiBenchmark": false
+    },
+    "diagonal90006Climb": "CANCELLED_BY_USER; NO_DIAGONAL_COLLISION_REQUESTED",
+    "manualHeldInput": "NO_CLAIM"
+  },
+  "limits": "Native discrete PNG/state/vanillaTPS will not claim continuous video, FPS/MSPT, AI/combat, every animation or complete artpack/gameplay acceptance",
+  "V11_1AndV11_2ByteUnchanged": true,
+  "pendingDetails": "_ACCEPTANCE.md",
+  "evidenceArchive": {
+    "file": "QA-EVIDENCE.zip",
+    "sha256": "051d87c0529ad6523a5779c0fdcf661ab0f6326c091acf4fff377932eaf17e9a",
+    "bytes": 6742036,
+    "nativeCapturePngIntegrityVerified": 244,
+    "crcVerified": true,
+    "completeLogsProfilesQaModsAndWorldsExcluded": true
+  }
+}

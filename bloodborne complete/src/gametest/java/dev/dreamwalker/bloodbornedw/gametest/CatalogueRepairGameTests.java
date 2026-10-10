@@ -185,61 +185,101 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         NbtCompound saved=own.createNbt();CatalogueMigration.loadedRoot(w,root);t.assertTrue(saved.equals(((CompositeBlockEntity)w.getBlockEntity(root)).createNbt()),"second migration creates no duplicate");t.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="catalogue_repair")
-    public void diagonalLadderMaskUsesBothActualMountFacesAndUpdatesImmediately(TestContext t) {
+    public void diagonalLadderCollisionStaysEmptyWithOrWithoutActualMountFaces(TestContext t) {
         var w=t.getWorld();BlockPos root=t.getAbsolutePos(new BlockPos(3,3,3));var p=t.createMockCreativeServerPlayerInWorld();p.setPosition(root.getX()+5,root.getY(),root.getZ()+5);
         var ladder=(PrototypeLadderBlock)PrototypeArchitecture.ladderItem(0).getBlock();
+        var npc=net.minecraft.entity.EntityType.ZOMBIE.create(w);
+        var contexts=List.of(ShapeContext.absent(),ShapeContext.of(p),ShapeContext.of(npc));
         for(int yaw:new int[]{1,3,5,7}) {
             var state=PrototypeLadderBlock.withYaw(ladder.getDefaultState(),yaw);w.setBlockState(root,state,Block.NOTIFY_ALL);
-            t.assertTrue(!state.getCollisionShape(w,root,ShapeContext.of(p)).isEmpty(),"unsupported diagonal has player collider "+yaw);
+            for(var context:contexts)t.assertTrue(state.getCollisionShape(w,root,context).isEmpty(),"unsupported diagonal has no physical collider in any context "+yaw);
             for(Direction dir:PrototypeLadderBlock.backingDirections(state))w.setBlockState(root.offset(dir),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
-            t.assertTrue(state.getCollisionShape(w,root,ShapeContext.of(p)).isEmpty(),"two actual side supports retain pass-through "+yaw);
+            for(var context:contexts)t.assertTrue(state.getCollisionShape(w,root,context).isEmpty(),"two actual side supports retain pass-through in every context "+yaw);
             w.removeBlock(root.offset(PrototypeLadderBlock.backingDirections(state).get(0)),false);
-            t.assertTrue(!state.getCollisionShape(w,root,ShapeContext.of(p)).isEmpty()&&w.getBlockState(root).isOf(ladder),"removing one support restores collider without re-placement "+yaw);
+            for(var context:contexts)t.assertTrue(state.getCollisionShape(w,root,context).isEmpty()&&w.getBlockState(root).isOf(ladder),"removing one support cannot restore an angular collider "+yaw);
+            t.assertTrue(!state.getOutlineShape(w,root,ShapeContext.of(p)).isEmpty(),"pass-through section keeps its aiming outline "+yaw);
+            for(var context:contexts)t.assertTrue(ladder.getCollisionShape(state.with(PrototypeLadderBlock.SOURCE_CLONE,true),w,root,context).isEmpty(),"source-clone angular section itself is also pass-through "+yaw);
             for(Direction dir:PrototypeLadderBlock.backingDirections(state))w.removeBlock(root.offset(dir),false);
         }
-        p.discard();t.complete();
+        p.discard();npc.discard();t.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="catalogue_repair")
-    public void diagonalLadderThinPlayerPhysicsClimbsWithoutFillingEmptyCorners(TestContext t) {
+    public void ordinaryLadderItemAndSavedAngularOwnersHaveNoPhysicalColliderButRetainOutline(TestContext t) {
         var w=t.getWorld();BlockPos root=t.getAbsolutePos(new BlockPos(3,3,3));
-        var p=t.createMockSurvivalPlayer();var ladder=(PrototypeLadderBlock)PrototypeArchitecture.ladderItem(0).getBlock();
-        var state=PrototypeLadderBlock.withYaw(ladder.getDefaultState(),1).with(PrototypeLadderBlock.FREESTANDING,true);
+        var p=new net.minecraft.server.network.ServerPlayerEntity(w.getServer(),w,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"AngularLadderProbe"));
+        var connection=new net.minecraft.network.ClientConnection(net.minecraft.network.NetworkSide.SERVERBOUND) {
+            @Override public void send(net.minecraft.network.packet.Packet<?> packet) {}
+            @Override public void send(net.minecraft.network.packet.Packet<?> packet,net.minecraft.network.PacketCallbacks callbacks) {}
+        };
+        p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);
+        p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;
+        var npc=net.minecraft.entity.EntityType.ZOMBIE.create(w);
+        var contexts=List.of(ShapeContext.absent(),ShapeContext.of(p),ShapeContext.of(npc));
+        var ladder=(PrototypeLadderBlock)PrototypeArchitecture.ladderItem(0).getBlock();
         try {
-            for(int x=-1;x<=1;x++)for(int z=-1;z<=2;z++)w.setBlockState(root.add(x,-1,z),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
-            for(int y=0;y<4;y++)w.setBlockState(root.up(y),state,Block.NOTIFY_ALL);
-            t.assertTrue(w.getBlockState(root).isIn(net.minecraft.registry.tag.BlockTags.CLIMBABLE),"actual registered90006 remains in native climbable tag");
-            Box emptyCorner=new Box(.35,.1,.45,.45,.9,.55).offset(root);
-            t.assertTrue(w.isSpaceEmpty(p,emptyCorner),"empty space beside diagonal strip is not the old filled coarse rectangle");
-            p.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.05,0,0);p.setVelocity(Vec3d.ZERO);
-            t.assertTrue(w.isSpaceEmpty(p,p.getBoundingBox())&&p.isClimbing(),"unshifted free native player starts outside solid strip with feet in climbable cell");
-            double peak=p.getY();boolean stopped=false;
-            for(int tick=0;tick<55;tick++){p.travel(new Vec3d(0,0,1));peak=Math.max(peak,p.getY());stopped|=p.horizontalCollision;}
-            t.assertTrue(stopped&&peak-root.getY()>2.5,"actual native travel climbs free thin strip beyond a single jump; peak="+peak+" pos="+p.getPos());
-            for(int y=0;y<4;y++)for(Direction side:PrototypeLadderBlock.backingDirections(state))w.setBlockState(root.up(y).offset(side),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
-            p.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()+.05,0,0);p.setVelocity(Vec3d.ZERO);
-            t.assertTrue(state.getCollisionShape(w,root,ShapeContext.of(p)).isEmpty(),"two actual side supports retain empty player collider");
-            peak=p.getY();double furthest=p.getZ();
-            for(int tick=0;tick<55;tick++){p.travel(new Vec3d(0,0,1));peak=Math.max(peak,p.getY());furthest=Math.max(furthest,p.getZ());}
-            t.assertTrue(furthest-root.getZ()>.6&&peak-root.getY()>2.5,"native player enters supported cell and climbs against actual SOUTH support; peak="+peak+" pos="+p.getPos());
-            // Legacy mounted saves contain context-free coarse NativeGeometry.
-            // The contextual overlay must not reintroduce that filled corner.
-            var legacy=VerticalMount.nativePayload(w,root,state,new NbtCompound());legacy.putDouble(VerticalMount.KEY,.25);
-            p.setPosition(root.getX()+5,root.getY(),root.getZ()+5);p.setVelocity(Vec3d.ZERO);
-            for(int y=0;y<4;y++){w.removeBlock(root.up(y),false);for(Direction side:PrototypeLadderBlock.backingDirections(state))w.removeBlock(root.up(y).offset(side),false);}
-            w.setBlockState(root,state,Block.NOTIFY_ALL);VerticalMount.placed(w,root,state);
-            var nativeOwner=((CompositeBlockEntity)w.getBlockEntity(root)).resident();
-            t.assertTrue(nativeOwner!=null,"ordinary native ladder fixture has its persistent root owner");
-            var placed=CompositeRuntime.transitionPayload(w,nativeOwner,state,legacy,p);
-            t.assertTrue(placed.outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED,"legacy fractional diagonal fixture installs: "+placed.reason());
-            t.assertTrue(w.isSpaceEmpty(p,emptyCorner.offset(0,.25,0)),"saved coarse footprint cannot fill thin diagonal player's empty corner");
-            t.assertTrue(!net.minecraft.util.shape.VoxelShapes.matchesAnywhere(w.getBlockState(root).getOutlineShape(w,root,ShapeContext.of(p)),net.minecraft.util.shape.VoxelShapes.cuboid(emptyCorner.offset(-root.getX(),.25-root.getY(),-root.getZ())),net.minecraft.util.function.BooleanBiFunction.AND),"mounted player outline also excludes the saved coarse empty corner");
-            CompositeRuntime.remove(w,((CompositeBlockEntity)w.getBlockEntity(root)).resident(),p,false);
+            w.setBlockState(root.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
+            for(int yaw=0;yaw<8;yaw++) {
+                p.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()-5,yaw*45,0);
+                var stack=PrototypeArchitecture.ladderItem(0).getDefaultStack();p.setStackInHand(Hand.MAIN_HAND,stack);
+                var hit=new net.minecraft.util.hit.BlockHitResult(Vec3d.ofCenter(root.down()).add(0,.5,0),Direction.UP,root.down(),false);
+                t.assertTrue(stack.getItem().useOnBlock(new ItemUsageContext(p,Hand.MAIN_HAND,hit)).isAccepted(),"ordinary registered90006 item places yaw "+yaw);
+                var placed=w.getBlockState(root);
+                t.assertTrue(placed.isOf(ladder)&&PrototypeLadderBlock.yaw(placed)==yaw&&placed.get(PrototypeLadderBlock.FREESTANDING)&&!placed.get(PrototypeLadderBlock.SOURCE_CLONE),"placement derives orientation and ordinary state from real item context");
+                t.assertTrue(w.getBlockEntity(root) instanceof CompositeBlockEntity own&&own.resident()!=null,"ordinary item retains its native resident owner");
+                for(var context:contexts) {
+                    var actual=placed.getCollisionShape(w,root,context);
+                    if((yaw&1)!=0)t.assertTrue(actual.isEmpty(),"angular ordinary item has no collider in absent/player/NPC context "+yaw);
+                    else {
+                        var authored=new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(0,0,13.19785/16,1,1,1).rotate(yaw/2);
+                        var expected=net.minecraft.util.shape.VoxelShapes.cuboid(authored.minX(),authored.minY(),authored.minZ(),authored.maxX(),authored.maxY(),authored.maxZ());
+                        t.assertTrue(!net.minecraft.util.shape.VoxelShapes.matchesAnywhere(actual,expected,net.minecraft.util.function.BooleanBiFunction.NOT_SAME),"cardinal authored collider remains exactly unchanged "+yaw);
+                    }
+                }
+                var outline=placed.getOutlineShape(w,root,ShapeContext.of(p));
+                t.assertTrue(!outline.isEmpty(),"ordinary pass-through item retains a visible aiming outline "+yaw);
+                var center=outline.getBoundingBoxes().get(0).getCenter().add(Vec3d.of(root));
+                t.assertTrue(outline.raycast(center.add(0,0,-2),center.add(0,0,2),root)!=null,"outline remains a real raycast target "+yaw);
+                if(yaw<7){w.removeBlock(root,false);CompositeRuntime.drain(w);}
+            }
+            // Load an old fractional owner with deliberately nonempty cached
+            // physical prisms, rather than regenerating it through new geometry.
+            var state=w.getBlockState(root);var own=(CompositeBlockEntity)w.getBlockEntity(root);var owner=own.resident();
+            var legacy=VerticalMount.nativePayload(w,root,state,new NbtCompound());legacy.putDouble(VerticalMount.KEY,.25);legacy.putString("Opaque","preserved");
+            var coarse=new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(0,0,0,1,1,1);
+            legacy.getCompound("NativeGeometry").put("collision",CompositeData.boxes(List.of(coarse)));
+            legacy.getCompound("NativeGeometry").put("selection",CompositeData.boxes(List.of(coarse)));
+            var rootData=CompositeData.data(state,legacy);
+            var bottom=new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(0,.25,0,1,1,1);
+            var top=new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(0,0,0,1,.25,1);
+            var lower=CompositeData.contribution(CompositeData.contribution(new CompositeData.Contribution(owner,rootData,new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Footprint(List.of(bottom),List.of(bottom)))));
+            var upper=CompositeData.contribution(CompositeData.contribution(new CompositeData.Contribution(owner,rootData,new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Footprint(List.of(top),List.of(top)))));
+            var saved=own.createNbt();saved.put("payload",legacy);saved.put("owners",CompositeData.contributions(List.of(lower)));own.readNbt(saved);
+            w.setBlockState(root.up(),CompositeArchitecture.CELL.getDefaultState(),Block.NOTIFY_ALL);
+            ((CompositeBlockEntity)w.getBlockEntity(root.up())).set(null,List.of(upper),new NbtCompound());
+            CompositeLedger.get(w).put(CompositeData.cell(root),List.of(lower));CompositeLedger.get(w).put(CompositeData.cell(root.up()),List.of(upper));
+            t.assertTrue(VerticalMount.shifted(w,root)&&!CompositeRuntime.contributions(w,root).get(0).shape().collision().isEmpty(),"loaded owner contains actual old coarse collision and fractional offset");
+            for(var cell:List.of(root,root.up()))for(var context:contexts) {
+                t.assertTrue(CompositeRuntime.cellShape(w,cell,true,w.getBlockState(cell),context).isEmpty(),"loaded root/helper collision is empty in every context");
+                t.assertTrue(!CompositeRuntime.cellShape(w,cell,false,w.getBlockState(cell),context).isEmpty(),"loaded root/helper retains selection in every context");
+                t.assertTrue(w.getBlockState(cell).getCollisionShape(w,cell,context).isEmpty(),"native/helper collision hook cannot restore the old collider");
+            }
+            Box inside=new Box(.1,.3,.1,.9,1.2,.9).offset(root);
+            t.assertTrue(w.isSpaceEmpty(p,inside)&&w.isSpaceEmpty(npc,inside),"old coarse owner does not obstruct player or living NPC bodies");
+            var object=CompositeRuntime.instance(w,root,state,owner.instanceId(),legacy);
+            t.assertTrue(PlacementPhysics.physicalBoxes(object).isEmpty(),"old NativeGeometry cannot regenerate physical placement prisms");
+            t.assertTrue(CompositeRuntime.topHeight(w,root,null)==null&&CompositeRuntime.bottomHeight(w,root)==null,"old angular collider is not a physical support surface");
+            t.assertTrue(PlacementPhysics.conflict(w,List.of(inside),null,null)==null,"ordinary placement conflict also ignores old cached angular collision");
+            t.assertTrue(own.resident().equals(owner)&&own.payload().equals(legacy)&&!own.contributions().get(0).shape().collision().isEmpty(),"read-time filtering preserves UUID, typed payload and old saved contribution");
+            var source=state.with(PrototypeLadderBlock.SOURCE_CLONE,true);var sourcePayload=legacy.copy();sourcePayload.putInt("NativeBackingX",1);sourcePayload.putInt("NativeBackingY",0);sourcePayload.putInt("NativeBackingZ",0);
+            var sourceEntry=new CompositeData.Contribution(owner,CompositeData.data(source,sourcePayload),lower.shape());
+            t.assertTrue(CompositeRuntime.physicalParts(sourceEntry,root).isEmpty()&&!CompositeRuntime.physicalParts(sourceEntry,root.east()).isEmpty(),"source angular rail is empty while its separately owned original backing cube remains physical");
+            var sourceFootprint=VerticalMount.nativeFootprint(w,root,source,sourcePayload);
+            t.assertTrue(sourceFootprint.get(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell.ORIGIN).collision().isEmpty()&&sourceFootprint.entrySet().stream().anyMatch(e->e.getKey().x()==1&&!e.getValue().collision().isEmpty()),"legacy native footprint also preserves only the source backing cube");
             t.complete();
         } finally {
             if(w.getBlockEntity(root) instanceof CompositeBlockEntity own&&own.resident()!=null)CompositeRuntime.remove(w,own.resident(),null,false);
-            p.discard();
-            for(int y=0;y<4;y++){w.removeBlock(root.up(y),false);for(Direction side:PrototypeLadderBlock.backingDirections(state))w.removeBlock(root.up(y).offset(side),false);}
-            for(int x=-1;x<=1;x++)for(int z=-1;z<=2;z++)w.removeBlock(root.add(x,-1,z),false);
+            CompositeLedger.get(w).put(CompositeData.cell(root),List.of());CompositeLedger.get(w).put(CompositeData.cell(root.up()),List.of());
+            p.discard();npc.discard();w.removeBlock(root.up(),false);w.removeBlock(root.down(),false);
         }
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="catalogue_repair")
