@@ -150,7 +150,7 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
   if(assetId.equals("wood_gate"))return requestWoodGatePulse(player,hand)?ActionResult.CONSUME:ActionResult.FAIL;
   if(hand!=Hand.MAIN_HAND)return ActionResult.PASS;
   if(assetId.equals("hunterlamp")&&player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer){dev.dreamwalker.bloodbornerp.lamp.LampService.open(serverPlayer,this);return ActionResult.CONSUME;}
-  if(isMechanism()){if(isOpen())return ActionResult.FAIL;resolveLegacyLinks();if(!setOpen(true))return ActionResult.FAIL;if(player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer)dev.dreamwalker.bloodbornedw.link.MechanismLinks.noteInitiator(this,serverPlayer);leverPulseTicks=70;return ActionResult.CONSUME;}
+  if(isMechanism()){if(player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer&&dev.dreamwalker.bloodbornedw.link.MechanismLinks.useLinkedLever(this,serverPlayer))return ActionResult.CONSUME;if(isOpen())return ActionResult.FAIL;resolveLegacyLinks();if(!setOpen(true))return ActionResult.FAIL;if(player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer)dev.dreamwalker.bloodbornedw.link.MechanismLinks.noteInitiator(this,serverPlayer);leverPulseTicks=70;return ActionResult.CONSUME;}
   if(PASSAGES.contains(assetId)||assetId.equals("chest")||assetId.equals("ladder")){return setOpen(!isOpen())?ActionResult.CONSUME:ActionResult.FAIL;} return ActionResult.PASS;
  }
  private void resolveLegacyLinks(){

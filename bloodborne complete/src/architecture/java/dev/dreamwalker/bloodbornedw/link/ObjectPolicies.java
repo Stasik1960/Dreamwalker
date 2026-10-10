@@ -33,9 +33,12 @@ public final class ObjectPolicies extends PersistentState {
         if(!leversOnly(player.getServer(),ref)){noteInitiator(player.getServerWorld(),ref,player);return true;}
         long now=System.nanoTime(),last=NOTICES.getOrDefault(player.getUuid(),0L);if(now-last>1_000_000_000L){player.sendMessage(Text.literal("не поддаётся"),false);if(NOTICES.size()>=256)NOTICES.remove(NOTICES.keySet().iterator().next());NOTICES.put(player.getUuid(),now);}return false;
     }
-    public static boolean setManual(ServerPlayerEntity player,MechanismLinks.TargetRef ref,boolean only){
+    static boolean canSetManual(ServerPlayerEntity player,MechanismLinks.TargetRef ref){
         if(!dev.dreamwalker.bloodbornedw.architecture.BuildPermissions.canEdit(player)||MechanismLinks.inspect(player.getServer(),ref).availability()!=MechanismLinks.Availability.LOADED)return false;
-        ObjectPolicies s=get(player.getServer());if(s.entries.size()>=LIMIT&&!s.entries.containsKey(ref.key()))return false;Policy p=s.entries.computeIfAbsent(ref.key(),k->new Policy());p.ref=ref;p.leversOnly=only;s.markDirty();return true;
+        ObjectPolicies s=get(player.getServer());return s.entries.size()<LIMIT||s.entries.containsKey(ref.key());
+    }
+    public static boolean setManual(ServerPlayerEntity player,MechanismLinks.TargetRef ref,boolean only){
+        if(!canSetManual(player,ref))return false;ObjectPolicies s=get(player.getServer());Policy p=s.entries.computeIfAbsent(ref.key(),k->new Policy());p.ref=ref;p.leversOnly=only;s.markDirty();return true;
     }
     public static List<String> commands(MinecraftServer server,MechanismLinks.TargetRef ref,boolean open){Policy p=get(server).entries.get(ref.key());return p==null?List.of():open?p.opened:p.closed;}
     public static boolean setCommands(ServerPlayerEntity player,MechanismLinks.TargetRef ref,boolean open,List<String> commands){

@@ -24,6 +24,7 @@ from world_io import Tag, RegionFile, read_nbt, write_nbt, compound, section_blo
 ROOT = Path(__file__).resolve().parents[1]
 STATUS = 'PASS_AUTHORED_REQUIRES_PRODUCTION_REOPEN'
 WORLD_NAME = 'Dreamwalker-BB-v11-Gallery'
+V12_TOOL = 'bloodborne_dw:bb_tool'
 REMOVED_NUMBERS = {'90008', '90009', '90013', '90014', '90015', '90016', '90017', '90018', '90019'}
 REMOVED_ITEMS = {'bloodborne_dw:builder_tool', 'bloodborne_dw:composite_builder'}
 
@@ -44,7 +45,7 @@ def read(path):
 def save(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
+    path.write_bytes((json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode('utf8'))
 
 
 def plain(tag):
@@ -85,11 +86,12 @@ def ordinary_files(directory):
 
 
 def prepare_entry(world, manifest):
+    revision = manifest.get('revision', 'V11')
     level = read_nbt(world / 'level.dat')
     data = compound(compound(level.root)['Data'])
     data['allowCommands'] = Tag(1, 1)
     data['GameType'] = Tag(3, 1)
-    data['LevelName'] = Tag(8, 'Dreamwalker BB v11 · Gallery')
+    data['LevelName'] = Tag(8, 'Dreamwalker BB ' + revision.lower() + ' · Gallery')
     packs = compound(data['DataPacks'])
     enabled = packs['Enabled'].value
     name = 'file/dw_gallery_entry'
@@ -121,14 +123,39 @@ def prepare_entry(world, manifest):
         row['visitFunction'] = function;row['camera'] = camera
         index.append([key, row['id'], row['name'], row['kind'], row['registry'], row['item'], *camera, '/function ' + function])
     with (world / 'GALLERY-INDEX.csv').open('w', encoding='utf-8-sig', newline='') as stream:
-        writer = csv.writer(stream)
+        writer = csv.writer(stream, lineterminator='\n')
         writer.writerow(['visit_key', 'id', 'name', 'kind', 'registry', 'item', 'x', 'y', 'z', 'yaw', 'pitch', 'command'])
         writer.writerows(index)
-    readme = 'Dreamwalker BB v11 gallery navigation\n\n'
+    readme = 'Dreamwalker BB ' + revision.lower() + ' gallery navigation\n\n'
     readme += 'Use /function dw_gallery:visit/<ID> to jump to an exhibit; for example /function dw_gallery:visit/90006.\n'
     readme += 'Shared NPC/spawn-egg IDs use npc_<ID> and item_<ID>. Items without numeric IDs use item_<registry_path>.\n'
     readme += 'GALLERY-INDEX.csv contains every command and camera coordinate. gallery-manifest.json has the same index.\n'
     readme += 'All platforms continue east with exactly2 blocks between adjacent edges.\n'
+    if revision == 'V12':
+        tool = next(row for row in manifest['exhibits'] if row['item'] == V12_TOOL)
+        readme += 'BB tool: /function ' + tool['visitFunction'] + '; /function dw_gallery:tool grants a usable copy.\n'
+        instructions = (
+            'BB инструмент V12\n\n'
+            'Получить инструмент: /function dw_gallery:tool. В рамке находится отдельный каталожный экземпляр.\n'
+            'ПКМ переключает пять режимов по кругу; ЛКМ применяет выбранный режим к объекту.\n'
+            'Вверх/вниз: сдвиг на один блок; пересечение физической геометрии допустимо.\n'
+            'Особый: собаки скрываются/возвращаются; двери переключаются вручную или только рычагами;\n'
+            'до шести выбранных рычагов и открываемая цель образуют ALL-связку; два фонаря образуют пару.\n'
+            'Повтор активного рычага до полного ALL ничего не меняет; после полного ALL любой рычаг закрывает цель и сбрасывает группу.\n'
+            'Обычный ПКМ фонаря переносит к парному фонарю в обе стороны.\n'
+            'Для других объектов особый режим переключает BASE/ALT, если у данного объекта есть оба варианта.\n'
+            'Консоль: многострочные команды и личный/общий лимит 1..999999; по умолчанию 999999.\n'
+            'Команды дополняют обычное взаимодействие с объектом; настройки сохраняются.\n'
+            'Удаление: очищается вся связка, а команды и счётчики — только у выбранного объекта.\n'
+            'Разрушение участника также очищает всю связку и команды разрушенного объекта; команды остальных участников сохраняются.\n'
+            '/bb select <радиус>: после выбора объектом применить ALT к объектам того же ID в радиусе.\n'
+            '/bb none сбрасывает текущий выбор. Читайте сообщения инструмента в игровом чате.\n'
+            'Проверочные связки и нажатия не запускаются при открытии этой галереи.\n')
+        (world / 'TOOL-INSTRUCTIONS.txt').write_bytes(instructions.encode('utf8'))
+        commands = 'give @s ' + V12_TOOL + '\ntellraw @s ' + json.dumps({
+            'text': 'BB инструмент: ПКМ — режим, ЛКМ — применить. /bb select <радиус>; /bb none. Подробнее: TOOL-INSTRUCTIONS.txt.',
+            'color': 'gold'}, ensure_ascii=False) + '\n'
+        (visits.parent / 'tool.mcfunction').write_bytes(commands.encode('utf8'))
     (world / 'GALLERY-NAVIGATION.txt').write_text(readme, encoding='utf8')
 
 
@@ -147,8 +174,15 @@ def verify_world(world, manifest, manifest_path):
             'Gallery does not cover every offered current item exactly once')
     require(len(set(npcs)) == len(npcs) and set(npcs) == set(manifest['expectedNpcs']),
             'Gallery does not cover each real NPC exactly once')
-    require(not set(offered) & REMOVED_ITEMS and not any(r['id'] in REMOVED_NUMBERS for r in rows),
+    require(not set(offered) & REMOVED_ITEMS and not any(r['id'] in REMOVED_NUMBERS and r['item'] != V12_TOOL for r in rows),
             'Removed tool or retired art appears in gallery')
+    if manifest.get('revision') == 'V12':
+        tool = [r for r in rows if r['item'] == V12_TOOL]
+        require(len(tool) == 1 and tool[0]['representation'] == 'item_frame',
+                'V12 BB tool must be displayed once as a non-placeable item in a frame')
+        require((world / 'TOOL-INSTRUCTIONS.txt').is_file() and
+                V12_TOOL in (world / 'datapacks/dw_gallery_entry/data/dw_gallery/functions/tool.mcfunction').read_text(encoding='utf8'),
+                'V12 gallery tool instructions/grant function missing')
     previous = None
     samples = {}
     for row in rows:
@@ -258,14 +292,20 @@ def main():
     parser.add_argument('--run-name', default=None)
     parser.add_argument('--java-home', type=Path)
     parser.add_argument('--loader', choices=('0.16.10',), default='0.16.10')
+    parser.add_argument('--revision', choices=('V11', 'V12'), default='V11')
     args = parser.parse_args()
     jar = args.jar.resolve();qa = args.qa_jar.resolve();output = args.output.resolve()
     require(not output.exists(), 'Refusing to overwrite a release/evidence directory')
     require(jar.is_file() and qa.is_file(), 'Production and gallery authoring JARs must already be built')
+    with zipfile.ZipFile(jar) as archive:
+        metadata = json.loads(archive.read('fabric.mod.json'))
+    require(args.revision != 'V12' or metadata.get('version', '').lower().endswith('-v12'),
+            'V12 gallery requires a verified V12 production JAR, not an earlier revision')
     output.mkdir(parents=True)
-    artifact = sha(jar);name = args.run_name or ('v11-gallery-' + artifact[:12])
+    artifact = sha(jar);name = args.run_name or (args.revision.lower() + '-gallery-' + artifact[:12])
+    world_name = WORLD_NAME if args.revision == 'V11' else 'Dreamwalker-BB-v12-Gallery'
     marker = output / 'gallery-input.json'
-    save(marker, {'schema': 'dreamwalker-v11-gallery-input-v1', 'revision': 'V11',
+    save(marker, {'schema': 'dreamwalker-v11-gallery-input-v1', 'revision': args.revision,
                   'guard': 'FRESH_ISOLATED_CATALOGUE_GALLERY_ONLY', 'productionJarSha256': artifact})
     common = ['--jar', str(jar), '--loader', args.loader,
               '--accepted-eula-file', str(args.accepted_eula_file.resolve()), '--startup-timeout', '180', '--shutdown-timeout', '90']
@@ -278,6 +318,8 @@ def main():
     require(authored.get('status') == 'PASS' and not authored.get('errors'), 'Authoring server failed or logged an error')
     manifest_path = Path(authored['gallery']['path']);manifest = read(manifest_path)
     require(manifest['productionJarSha256'] == artifact, 'Gallery is bound to another production JAR')
+    require(manifest.get('revision', 'V11') == args.revision, 'Gallery revision differs from requested revision')
+    manifest['modVersion'] = metadata['version']
     author_world = Path(authored['run_directory']) / 'isolated-smoke-world'
     prepare_entry(author_world, manifest)
     indexed_manifest_path = output / 'gallery-manifest.json'
@@ -295,29 +337,32 @@ def main():
     after = verify_world(final_world, manifest, indexed_manifest_path)
     require(before['stableExhibits'] == after['stableExhibits'], 'Saved exhibit identity/pose/settings changed on production reopen')
     save(output / 'gallery-production-disk.json', after)
+    manifest['productionReopen'] = {'status': 'PASS_PRODUCTION_ONLY_' + args.revision,
+        'verifiedExhibits': after['verifiedExhibits'], 'identitiesPosesAndTypedStatesUnchanged': True,
+        'boundsPlusTwo': True, 'exactTwoBlockGaps': True}
     save(output / 'gallery-manifest.json', manifest)
-    archive = output / (WORLD_NAME + '.zip')
+    archive = output / (world_name + '.zip')
     files = sorted(ordinary_files(final_world), key=lambda p: p.relative_to(final_world).as_posix())
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as package:
         for path in files:
-            package.write(path, WORLD_NAME + '/' + path.relative_to(final_world).as_posix())
-        package.writestr(WORLD_NAME + '/gallery-manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
-        package.writestr(WORLD_NAME + '/GALLERY.txt',
-            'Dreamwalker BB v11 / Minecraft 1.20.1 Fabric\n'
+            package.write(path, world_name + '/' + path.relative_to(final_world).as_posix())
+        package.writestr(world_name + '/gallery-manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
+        package.writestr(world_name + '/GALLERY.txt',
+            'Dreamwalker BB ' + args.revision.lower() + ' / Minecraft 1.20.1 Fabric\n'
             'Unzip this folder into .minecraft/saves. Install the production mod and its dependencies.\n'
             'Creative mode, coordinates and commands enabled; first entry starts at 0.5 64 -5.5.\n'
             'Exhibits continue east. All current items and NPCs are indexed in gallery-manifest.json.\n'
             'Jump to exhibits with /function dw_gallery:visit/<ID>; see GALLERY-INDEX.csv for exact commands.\n'
             'Platform footprint = integer player collision bounds +2 on every side; adjacent edges have a 2-block gap.\n'
             'Collision-free displays use visual bounds; framed items include their support block.\n'
-            'No editor/tool or QA add-on is required by this saved world.\n'
+            'No QA add-on is required by this saved world; V12 offers its current BB tool as one framed exhibit.\n'
             'Authoring, saved NBT and production-only restart verified. Human visual/gameplay acceptance is separate.\n')
     with zipfile.ZipFile(archive) as package:
-        require(package.testzip() is None and WORLD_NAME + '/level.dat' in package.namelist(), 'World archive failed CRC/layout verification')
+        require(package.testzip() is None and world_name + '/level.dat' in package.namelist(), 'World archive failed CRC/layout verification')
         for path in files:
-            require(hashlib.sha256(package.read(WORLD_NAME + '/' + path.relative_to(final_world).as_posix())).hexdigest() == sha(path),
+            require(hashlib.sha256(package.read(world_name + '/' + path.relative_to(final_world).as_posix())).hexdigest() == sha(path),
                     'Packaged world file bytes differ')
-    result = {'status': 'PASS_V11_GALLERY_PACKAGE', 'productionJarSha256': artifact,
+    result = {'status': 'PASS_' + args.revision + '_GALLERY_PACKAGE', 'revision': args.revision, 'productionJarSha256': artifact,
               'worldZip': str(archive), 'worldZipSha256': sha(archive), 'worldFiles': len(files),
               'offeredItems': after['offeredItems'], 'realNpcs': after['realNpcs'], 'exhibits': after['verifiedExhibits'],
               'authoringAddonRequired': False, 'productionOnlyReopen': True, 'exactTwoBlockGaps': True,

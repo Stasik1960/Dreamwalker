@@ -1,0 +1,2668 @@
+{
+  "schema": "dreamwalker-v12-native-acceptance-v1",
+  "productionJarSha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "G1",
+      "name": "G1 Каталог",
+      "nativeAction": "Открыть свежую галерею",
+      "assert": "Ровно один bb_tool в рамке; все текущие предметы и NPC; понятные инструкции и `/function dw_gallery:tool`",
+      "status": "PASS",
+      "evidence": "Fresh row gallery opened; native bb_tool frame screenshot + production-only disk121 census/function tool."
+    },
+    {
+      "case": "T1",
+      "name": "T1 Режимы",
+      "nativeAction": "Пять ПКМ инструментом, затем шестой",
+      "assert": "Пять режимов по кругу; шестой возвращает первый; переключение не применяет действие",
+      "status": "PASS",
+      "evidence": "Native F8→SelectedItem.BBMode queries 1,2,3,4,0,1; mode did not change a target."
+    },
+    {
+      "case": "T2",
+      "name": "T2 Сдвиг",
+      "nativeAction": "Вверх ЛКМ, затем вниз ЛКМ; повтор внутри занятого объёма",
+      "assert": "Y меняется ровно на +1/-1; ID, UUID и прочие настройки сохраняются; пересечение не блокирует операцию",
+      "status": "PASS",
+      "evidence": "Native F9 moved original cage UUID down into stone floor64→63 and up63→64, offsets−1→0; native frames and vanilla Pos queries."
+    },
+    {
+      "case": "T3",
+      "name": "T3 Собака",
+      "nativeAction": "Особый режим: скрыть и вернуть",
+      "assert": "`DogsVisible` меняется false→true, нативные кадры подтверждают видимость; это не удаление клетки",
+      "status": "PASS",
+      "evidence": "Native F9 changes DogsVisible true→false→true; same-camera native before/hidden frames and exact unchanged cage UUID."
+    },
+    {
+      "case": "T4",
+      "name": "T4 Дверь",
+      "nativeAction": "Переключить manual/levers-only, обычный ПКМ в каждом состоянии",
+      "assert": "Manual выполняет прежнее действие; levers-only оставляет Open без изменения и сообщает «не поддаётся»",
+      "status": "PASS",
+      "evidence": "Native tool toggles manual/levers-only; normal F8 reports exact не поддаётся/Open0, returned manual F8 opens; two native F8 inputs during transition retain Open1, later ordinary F8 closes."
+    },
+    {
+      "case": "T5",
+      "name": "T5 ALL",
+      "nativeAction": "Выбрать 6 разных рычагов, затем цель",
+      "assert": "Одна постоянная ALL-группа: ровно 6 источников и эта цель, исходно все флаги false",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T6",
+      "name": "T6 Переполнение",
+      "nativeAction": "При выборе попытаться добавить 7-й рычаг",
+      "assert": "«слишком много рычагов в связке!»; состав остаётся 6, посторонняя группа не создаётся",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T7",
+      "name": "T7 Неполный ALL",
+      "nativeAction": "Обычные ПКМ на первых пяти; повтор уже активного",
+      "assert": "Цель остаётся закрытой, повторы не меняют флаги; «Механизм работает, но чего-то не хватает...»",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T8",
+      "name": "T8 Полный ALL",
+      "nativeAction": "Активировать шестой, затем после окончания анимации любой источник",
+      "assert": "Цель открывается, «Что-то открылось...»; следующее нажатие закрывает цель и сбрасывает все 6 флагов",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T9",
+      "name": "T9 Повтор анимации",
+      "nativeAction": "Повторить обычное взаимодействие до конца перехода",
+      "assert": "Не создаётся новый переход и не обрывается текущая анимация",
+      "status": "PASS",
+      "evidence": "Native tool toggles manual/levers-only; normal F8 reports exact не поддаётся/Open0, returned manual F8 opens; two native F8 inputs during transition retain Open1, later ordinary F8 closes."
+    },
+    {
+      "case": "T10",
+      "name": "T10 Фонари",
+      "nativeAction": "Особым режимом выбрать два; обычный ПКМ A→B и B→A",
+      "assert": "Пара двунаправленна; перемещение находится у второго реального объекта, не у устаревшего UUID",
+      "status": "PASS",
+      "evidence": "Actual tool F9 paired two hunterlamp; ordinary F8 A→B at [-5.5,64,24.5] and B→A [-33.5,64,24.5], F2 23.56.52/23.57.03, no GUI."
+    },
+    {
+      "case": "T11",
+      "name": "T11 BASE/ALT",
+      "nativeAction": "Особый режим на объекте с двумя вариантами, затем на объекте без ALT",
+      "assert": "Переключение доступного варианта; отсутствие ALT не повреждает объект",
+      "status": "PASS",
+      "evidence": "Ordinary real3roof placement, F9 singleBASE/ALT; nativechat /bb select6 -> first2ALT verified serverstate, outsideBASE; /bb none -> firstBASE neighborALT. F9 stone lackingALT unchanged. Native F2radius23:04:02 and consoleIF assertions; otherIDs predicate also actualGameTest."
+    },
+    {
+      "case": "T12",
+      "name": "T12 Радиус",
+      "nativeAction": "Выбрать объект; `/bb select <radius>`; затем `/bb none`",
+      "assert": "ALT применяется только к тому же ID в радиусе; третий за радиусом и другой ID не меняются; выбор очищен",
+      "status": "PASS",
+      "evidence": "Ordinary real3roof placement, F9 singleBASE/ALT; nativechat /bb select6 -> first2ALT verified serverstate, outsideBASE; /bb none -> firstBASE neighborALT. F9 stone lackingALT unchanged. Native F2radius23:04:02 and consoleIF assertions; otherIDs predicate also actualGameTest."
+    },
+    {
+      "case": "C1",
+      "name": "C1 Консоль",
+      "nativeAction": "Режим console: открыть GUI, ввести несколько строк и сохранить",
+      "assert": "Все строки сохранены и выполняются в заданном порядке; обычное действие объекта также происходит",
+      "status": "PASS",
+      "evidence": "GUI F9 on cage accepted two lines (F2 23.59.25) and real F8 produced both scoreboards exactly2. Separate door GUI #door global2: F8 simultaneously #door1 and Open1 (23.00.43)."
+    },
+    {
+      "case": "C2",
+      "name": "C2 Границы",
+      "nativeAction": "Значения 1/999999, 0/1000000 и новое окно без настройки",
+      "assert": "Валидные границы принимаются; недопустимые отвергаются без изменения данных; default999999",
+      "status": "PASS",
+      "evidence": "Native new GUI defaults999999, zero rejected in GUI and preserved editor (00.59.33), valid1/1 saved via GUI; valid999999 preserved in other bindings. Real server GameTest additionally rejects1000000/zero unchanged, all58PASS. GUI fields bounded to6digits."
+    },
+    {
+      "case": "C3",
+      "name": "C3 Личный лимит",
+      "nativeAction": "Лимит2: игрокA три раза; затем игрокB один раз",
+      "assert": "СчётчикA выполняется дважды, третье действие не запускает команды; первый раз B выполняется независимо",
+      "status": "PASS",
+      "evidence": "Native A three F8 -> personal2/global2, B one -> B1/A2/global3. Saved perUUID counts, F2 second-player-limits."
+    },
+    {
+      "case": "C4",
+      "name": "C4 Общий лимит",
+      "nativeAction": "Лимит2: A один раз, B два раза",
+      "assert": "Всего две команды независимо от игрока; третье взаимодействие сохраняет обычное действие объекта",
+      "status": "PASS",
+      "evidence": "A door click #door1/Open1; B click #door2/Open0; B third click #door remains2/Open1: normal action preserved after shared exhaustion. Real native F8, saved console23:02:22/30 and F2global-spent-normal-action."
+    },
+    {
+      "case": "P1",
+      "name": "P1 Сохранение",
+      "nativeAction": "save-all flush, штатно закрыть клиент/сервер, повторно зайти",
+      "assert": "UUID, позиции, ALL-состав/флаги, lamp-пара, lock, команды, лимиты и использованные счётчики сохраняются",
+      "status": "PASS",
+      "evidence": "Normal Sky AltF4 clients and qa-normal-stop server Exit0, byte-verified fresh saved-world copy, real rejoin A. Independent before/after snapshots semanticState identical differences[] for UUID/Pos/Open, ALL6/Active6, policies/pairs/bindings/limits/counters. Native F8 cage exhausted staysA2/global3; lampF8stillteleports. Fresh server copies the world only, so OP4 editor authorization must be granted separately; native editor attempt correctly denied without OP4."
+    },
+    {
+      "case": "P2",
+      "name": "P2 Загруженная дверь",
+      "nativeAction": "Первый кадр после входа при заранее устойчивом Open=true",
+      "assert": "`isOpen=true`, `animationBusy=false`; лишний переход при загрузке не появился",
+      "status": "PASS",
+      "evidence": "First native F2 after rejoin00:07:32 shows same stable open door as pre-rejoin00:05:35; saved+liveOpen1. Actual GameTest reload transition-lock assertion and restoringData load path supplement visual verdict (no claim of per-tick capture)."
+    },
+    {
+      "case": "D1",
+      "name": "D1 Удаление",
+      "nativeAction": "Режим remove на участнике действующей группы с командами",
+      "assert": "Вся связка очищается; команды/счётчики удаляются только у выбранного объекта. Привязки команд других участников и других групп сохраняются",
+      "status": "PASS",
+      "evidence": "Actual native CLEAR F9 on lever1 removed all6group; persisted Groups[]; selected lever1 binding absent while cage3used and door2used preserved (data NBT)."
+    },
+    {
+      "case": "D2",
+      "name": "D2 Разрушение",
+      "nativeAction": "Создать маленькую новую группу; обычным инструментом сломать участника",
+      "assert": "Вся его связка и команды разрушенного объекта очищены; команды остальных участников сохраняются, после save/rejoin связь не воскресает",
+      "status": "PASS",
+      "evidence": "Native SPECIAL lever7→door then ordinary empty-hand F9 destroyedlever7, groupNBT[] with2unrelatedbindings preserved. Rejoin query BROKEN_LEVER_NOT_RESURRECTED and semantic compare preserve missing7; no group resurrection. Destroyed-object command cleanup also actualserverGameTest."
+    },
+    {
+      "case": "L1",
+      "name": "L1 Контур90006",
+      "nativeAction": "Поставить обычную и45°, навести прицел, сломать реальным ЛКМ",
+      "assert": "У каждой авторской секции один AABB-контура; native outline/raycast/break работают, угловая физическая коллизия остаётся пустой",
+      "status": "PASS",
+      "evidence": "Ordinary BlockItem F8 placement cardinal/45, native F2 23.57.29/38 simple contour and native empty-hand F9 both removed roots; server IF AIR proofs. Actual GameTest verifies diagonal collision EMPTY."
+    }
+  ],
+  "actions": [
+    {
+      "utc": "2026-10-10T20:48:12.273Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool",
+        "tp dwqa12_a 0.5 64 -5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:48:22.074Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:48:22.875Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:48:22.876Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a SelectedItem",
+        "data get entity dwqa12_a Pos"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:48:29.742Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:48:29.750Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a SelectedItem.tag.BBMode"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:48:46.094Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:48:46.095Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a SelectedItem.tag.BBMode"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:49:10.129Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:49:10.129Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a SelectedItem.tag.BBMode"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:49:16.105Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:49:16.106Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a SelectedItem.tag.BBMode",
+        "tp dwqa12_a 877.5 64 -0.0625 0 17.597"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:49:35.145Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:49:35.971Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:49:35.972Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a SelectedItem.tag.BBMode",
+        "tp dwqa12_a -46 64 23 0 8"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:49:48.983Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:49:56.087Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:49:56.088Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 Pos",
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 VerticalOffset"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:50:03.070Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:50:03.914Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:50:04.708Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:50:05.447Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:50:06.213Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:50:07.008Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:50:07.009Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 Pos",
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 VerticalOffset"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:50:28.526Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:50:29.235Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:50:30.068Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:50:30.862Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:50:30.863Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 DogsVisible"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:50:51.050Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:50:51.743Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:50:51.744Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 DogsVisible",
+        "tp dwqa12_a -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:50:59.156Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:50:59.865Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:50:59.871Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:51:09.178Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:51:10.050Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:51:10.052Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:51:17.037Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:51:17.038Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:51:36.237Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:51:37.051Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:51:37.052Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:51:37.920Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:51:45.076Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:51:45.077Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:51:45.869Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:52:00.095Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:52:09.053Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:52:09.827Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:55:27.753Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -35.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:29.284Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:29.284Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -31.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:31.020Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:31.021Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -27.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:32.771Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:32.772Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -23.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:34.330Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:34.331Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -19.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:35.909Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:35.910Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -15.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:37.546Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:38.477Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:55:43.964Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:45.399Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:55:46.259Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:55:52.542Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:53.836Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:55.686Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:55:55.687Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -35.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:57.352Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:55:57.353Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -31.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:55:59.098Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:55:59.099Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -27.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:00.637Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:56:00.643Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -23.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:02.414Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:56:02.415Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:04.102Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:56:04.109Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "data get entity adba3a59-b3fb-544d-b33a-0cf81c90ece0 Open"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:05.846Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:56:18.055Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -19.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:19.797Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:56:19.798Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:21.373Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:56:30.348Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:32.066Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:56:32.069Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:33.742Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:56:41.026Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -35.5 64 21.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:42.583Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:56:47.558Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:56:47.559Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -7.5 64 21.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:49.474Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:56:49.475Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air",
+        "tp dwqa12_a -35.5 64 21.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:51.036Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:56:51.037Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a Pos"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:56:52.715Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:57:01.157Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -7.5 64 21.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:02.469Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:57:02.475Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a Pos",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:04.031Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:57:17.122Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:prototype_roof 3"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:17.958Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -43.5 64 -2.5 0 90"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:19.607Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:57:19.608Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 -2.5 0 90"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:22.084Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:57:22.085Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -27.5 64 -2.5 0 90"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:23.893Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:57:23.894Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:prototype_ladder 2",
+        "tp dwqa12_a -17.5 64 -2.5 0 90"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:25.568Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:57:25.569Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -11.5 64 -2.5 45 90"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:27.256Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:57:27.257Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "save-all flush",
+        "execute if block -18 64 -3 bloodborne_dw:prototype_ladder run say CARDINAL_LADDER_PRESENT",
+        "execute if block -12 64 -3 bloodborne_dw:prototype_ladder run say DIAGONAL_LADDER_PRESENT"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:27.994Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -11.5 64 -5 0 15",
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:29.666Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:57:37.103Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:57:37.104Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -12 64 -3 minecraft:air run say DIAGONAL_NORMAL_BREAK_PASS",
+        "tp dwqa12_a -17.5 64 -4.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:38.724Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:57:45.674Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:57:45.675Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -18 64 -3 minecraft:air run say CARDINAL_NORMAL_BREAK_PASS",
+        "execute if block -12 64 -3 minecraft:air run say DIAGONAL_NORMAL_BREAK_PASS",
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -43.5 64 -5.5 0 20"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:57:48.108Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:57:59.298Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:57:59.299Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say SINGLE_ALT_PASS",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=base] run say NEIGHBOR_BASE_PASS",
+        "execute as dwqa12_a run bb select 6"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:01.003Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:58:01.004Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=base] run say RADIUS_FIRST_BASE",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=base] run say RADIUS_SECOND_BASE",
+        "execute if block -28 64 -3 bloodborne_dw:prototype_roof[profile=base] run say OUTSIDE_BASE",
+        "execute as dwqa12_a run bb none"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:02.641Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:58:02.642Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say NONE_SINGLE_ALT",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=base] run say NONE_NEIGHBOR_BASE"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:05.318Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:58:14.190Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a Inventory",
+        "execute if block -44 64 -3 minecraft:air run say ROOF_ROOT_IS_AIR",
+        "execute if block -44 63 -3 minecraft:smooth_stone run say FLOOR_PRESENT"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:15.927Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "t"
+    },
+    {
+      "utc": "2026-10-10T20:58:16.740Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:58:27.731Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Escape"
+    },
+    {
+      "utc": "2026-10-10T20:58:27.732Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:prototype_roof 3"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:29.124Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -43.5 64 -5.3 0 30"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:31.114Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:58:31.121Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 -5.3 0 30"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:32.778Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:58:32.784Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -27.5 64 -5.3 0 30"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:35.424Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:58:35.424Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof run say ROOF1_PRESENT",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof run say ROOF2_PRESENT",
+        "execute if block -28 64 -3 bloodborne_dw:prototype_roof run say ROOF3_PRESENT",
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -43.5 64 -5.3 0 25"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:37.121Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:58:43.072Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:58:43.073Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say SINGLE_ALT_PASS",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=base] run say NEIGHBOR_BASE_PASS"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:44.736Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "t"
+    },
+    {
+      "utc": "2026-10-10T20:58:45.644Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:58:53.867Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T20:58:54.641Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:58:54.642Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=base] run say RADIUS_FIRST_BASE",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=base] run say RADIUS_SECOND_BASE",
+        "execute if block -28 64 -3 bloodborne_dw:prototype_roof[profile=base] run say OUTSIDE_BASE"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:58:56.344Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "t"
+    },
+    {
+      "utc": "2026-10-10T20:58:57.251Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:59:07.241Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T20:59:08.039Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:59:08.039Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say NONE_SINGLE_ALT",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=base] run say NONE_NEIGHBOR_BASE",
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:3}",
+        "tp dwqa12_a -45.5 64 25.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:59:09.783Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T20:59:10.617Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:59:24.349Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:25.088Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Control_L+a"
+    },
+    {
+      "utc": "2026-10-10T20:59:25.963Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:59:31.305Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:32.146Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:32.923Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T20:59:33.744Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:59:45.137Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Shift_L+Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:46.021Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Shift_L+Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:46.821Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Control_L+a"
+    },
+    {
+      "utc": "2026-10-10T20:59:47.616Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T20:59:54.900Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:55.744Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T20:59:56.535Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T20:59:56.536Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air"
+      ]
+    },
+    {
+      "utc": "2026-10-10T20:59:58.317Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T20:59:59.209Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:00:00.053Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:00:00.054Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get dwqa12_a dw_v12_personal",
+        "scoreboard players get #global dw_v12_global",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:00:01.715Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:00:12.777Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:00:13.978Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:00:13.985Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:3}"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:00:16.341Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:00:17.116Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:00:22.932Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T21:00:23.659Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T21:00:24.497Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Control_L+a"
+    },
+    {
+      "utc": "2026-10-10T21:00:25.264Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:00:39.857Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T21:00:40.633Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T21:00:40.634Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:00:42.099Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:00:42.106Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get #door dw_v12_global",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:00:43.753Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:02:07.007Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "gamemode creative dwqa12_b",
+        "item replace entity dwqa12_b hotbar.0 with minecraft:air",
+        "tp dwqa12_b -45.5 64 25.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:08.341Z",
+      "source": "Native Sky key, player B",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:02:08.342Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get dwqa12_b dw_v12_personal",
+        "scoreboard players get dwqa12_a dw_v12_personal",
+        "scoreboard players get #global dw_v12_global",
+        "tp dwqa12_b -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:10.145Z",
+      "source": "Native Sky key, player B",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:02:10.146Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get #door dw_v12_global",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:12.647Z",
+      "source": "Native Sky key, player B",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:02:19.408Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -45.5 64 0.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:21.742Z",
+      "source": "Native Sky key, player B",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:02:21.743Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get #door dw_v12_global",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:23.514Z",
+      "source": "Native Sky key, player B",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:02:29.387Z",
+      "source": "Native Sky key, player B",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:02:29.387Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get #door dw_v12_global",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:31.665Z",
+      "source": "Native Sky key, player B",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:02:37.037Z",
+      "source": "Native Sky key, player B",
+      "key": "Alt_L+F4"
+    },
+    {
+      "utc": "2026-10-10T21:02:44.383Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:3}",
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:02:46.603Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:02:47.372Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:02:55.749Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T21:02:56.455Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Control_L+a"
+    },
+    {
+      "utc": "2026-10-10T21:02:57.142Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:03:03.430Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T21:03:04.134Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Control_L+a"
+    },
+    {
+      "utc": "2026-10-10T21:03:04.862Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:03:15.690Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Tab"
+    },
+    {
+      "utc": "2026-10-10T21:03:16.475Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T21:03:16.475Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:17.538Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:4}"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:19.542Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:03:19.547Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:21.774Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:03:35.014Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -15.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:36.115Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:03:36.116Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:37.442Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:03:37.443Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -15.5 64 5.5 0 15",
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:39.586Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:03:39.587Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute unless entity 4e540727-79ea-55ef-ab08-688350fda937 run say BROKEN_LINK_LEVER_GONE",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:41.116Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:03:47.552Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}",
+        "tp dwqa12_a -43.5 64 -5.3 0 25"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:03:49.616Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:03:50.413Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "t"
+    },
+    {
+      "utc": "2026-10-10T21:03:51.212Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:03:59.662Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T21:04:00.427Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:00.428Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say RADIUS_FIRST_ALT",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say RADIUS_SECOND_ALT",
+        "execute if block -28 64 -3 bloodborne_dw:prototype_roof[profile=base] run say OUTSIDE_STILL_BASE"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:02.803Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "t"
+    },
+    {
+      "utc": "2026-10-10T21:04:03.569Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:04:14.188Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Return"
+    },
+    {
+      "utc": "2026-10-10T21:04:14.965Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:14.966Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -44 64 -3 bloodborne_dw:prototype_roof[profile=base] run say NONE_FIRST_BASE",
+        "execute if block -40 64 -3 bloodborne_dw:prototype_roof[profile=alt] run say NONE_SECOND_KEEPS_ALT",
+        "tp dwqa12_a -45.5 64 0.5 0 90"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:16.530Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:16.531Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "execute if block -46 63 0 minecraft:smooth_stone run say NO_ALT_STONE_UNCHANGED"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:18.170Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:04:38.162Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:2}"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:38.690Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:40.458Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:40.459Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -35.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:42.730Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:42.730Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -31.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:44.229Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:44.229Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -27.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:45.674Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:45.675Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -23.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:47.213Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:47.214Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -19.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:48.510Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:48.511Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:50.585Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:04:50.592Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "item replace entity dwqa12_a hotbar.0 with minecraft:air",
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:04:53.054Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:04:53.055Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:11.328Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -39.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:13.355Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:05:13.356Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -35.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:15.804Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:05:15.805Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -31.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:17.310Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:05:17.310Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -27.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:18.680Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:05:18.686Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -23.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:20.222Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:05:20.223Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -19.5 64 5.5 0 15"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:21.909Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:05:21.910Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -7.5 64 5.5 0 0",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:23.283Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:05:34.772Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -5.5 64 0.5 0 0",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:05:36.355Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:05:37.189Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Alt_L+F4"
+    },
+    {
+      "utc": "2026-10-10T21:06:53.954Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open",
+        "execute unless entity 4e540727-79ea-55ef-ab08-688350fda937 run say BROKEN_LEVER_NOT_RESURRECTED",
+        "save-all flush"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:07:33.162Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:08:01.992Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "tp dwqa12_a -45.5 64 25.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:08:03.239Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:08:03.240Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "scoreboard players get dwqa12_a dw_v12_personal",
+        "scoreboard players get #global dw_v12_global",
+        "tp dwqa12_a -35.5 64 21.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:08:05.621Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F8"
+    },
+    {
+      "utc": "2026-10-10T21:08:05.622Z",
+      "source": "vanilla server console (setup/navigation/query)",
+      "commands": [
+        "data get entity dwqa12_a Pos",
+        "item replace entity dwqa12_a hotbar.0 with bloodborne_dw:bb_tool{BBMode:3}",
+        "tp dwqa12_a -7.5 64 5.5 0 0"
+      ]
+    },
+    {
+      "utc": "2026-10-10T21:08:07.277Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F9"
+    },
+    {
+      "utc": "2026-10-10T21:08:08.083Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "F2"
+    },
+    {
+      "utc": "2026-10-10T21:08:22.468Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Escape"
+    },
+    {
+      "utc": "2026-10-10T21:08:23.140Z",
+      "source": "native Sky key in Minecraft A",
+      "key": "Alt_L+F4"
+    }
+  ],
+  "frames": [
+    {
+      "label": "gallery-and-tool-up",
+      "utc": "2026-10-10T20:48:22.075Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.48.21.png",
+      "sha256": "256f46ce465bcf8862affe87f3fc415c5683ee03f05b17569b23615fc9255c88",
+      "bytes": 146757,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "new-gallery-tool-frame",
+      "utc": "2026-10-10T20:49:35.145Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.49.34.png",
+      "sha256": "12615449b1bed0210795ed24e0fb50909cb37e672088b5bb2349659f737db181",
+      "bytes": 132523,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/002-new-gallery-tool-frame.png"
+    },
+    {
+      "label": "dog-before-move",
+      "utc": "2026-10-10T20:49:48.983Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.49.48.png",
+      "sha256": "dc5bb8716c62815ab444b569ee9519b93ba41c7d852057623f170ed71841dd63",
+      "bytes": 142354,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "dog-down-through-floor",
+      "utc": "2026-10-10T20:50:03.071Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.50.02.png",
+      "sha256": "5a5cd8ee195b4e3ac97cf05488a91551918dc9debec0ab262d9630ff762dddbf",
+      "bytes": 132517,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/004-dog-down-through-floor.png"
+    },
+    {
+      "label": "dog-up-restored",
+      "utc": "2026-10-10T20:50:28.527Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.50.27.png",
+      "sha256": "7703a1c85e42545d34c8a37d34db8995b7ef4bca40ea9001c2adb0b588bd1887",
+      "bytes": 142220,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "dog-hidden",
+      "utc": "2026-10-10T20:50:51.050Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.50.50.png",
+      "sha256": "9d7dc80e6b715ec8d44954eea0e7360f6736bb13f8123a566c8b0747ed0645a3",
+      "bytes": 140916,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/006-dog-hidden.png"
+    },
+    {
+      "label": "door-special-target",
+      "utc": "2026-10-10T20:50:59.156Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.50.58.png",
+      "sha256": "02fe4b82055a588264e7185808502b88ee92c0ba555a5520298b759404aad029",
+      "bytes": 99654,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "door-rejects-manual",
+      "utc": "2026-10-10T20:51:10.050Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.51.09.png",
+      "sha256": "934365c5dbf2e255bcf85c1fa4b96d1ac7f44b3abf0dea31b95645881f496996",
+      "bytes": 95777,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/008-door-rejects-manual.png"
+    },
+    {
+      "label": "manual-door-repeat-animation",
+      "utc": "2026-10-10T20:51:37.920Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.51.37.png",
+      "sha256": "339e7cebad7adfb5ceb381e8c5975bc39487961d2ff2b8c1a71ece519e0a064c",
+      "bytes": 95974,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "lever1-target",
+      "utc": "2026-10-10T20:51:45.869Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.51.45.png",
+      "sha256": "df1564e8641925029eafbc3b2ad125ccff7dc8b05923230c934a0701f4857ff8",
+      "bytes": 97943,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "lever1-settled-target",
+      "utc": "2026-10-10T20:52:00.095Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.51.59.png",
+      "sha256": "3a5ca32430f05232d5d1aa84a208379e2e9986ebf6079dc19aba45ea1dbe0967",
+      "bytes": 120988,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "lever1-selected",
+      "utc": "2026-10-10T20:52:09.827Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.52.09.png",
+      "sha256": "6d1e321a523078c99b40472c10a41f27c6e403859b128e7838ccee463ba56181",
+      "bytes": 123564,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "seven-lever-limit",
+      "utc": "2026-10-10T20:55:38.477Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.55.37.png",
+      "sha256": "4e3aa976db0b8a326c121252d9595d36741a8da1700c6344c56bb91588a4ff22",
+      "bytes": 113362,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/013-seven-lever-limit.png"
+    },
+    {
+      "label": "all-six-bound",
+      "utc": "2026-10-10T20:55:46.259Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.55.45.png",
+      "sha256": "a09f7c736074fcf4c83104e2d034cb114b4c4e38d5387906d48e68bce9214c67",
+      "bytes": 107816,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "partial-all-repeat-noop",
+      "utc": "2026-10-10T20:56:05.847Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.56.04.png",
+      "sha256": "c72eb1f4f542d0edfbc7e4b65f66a590aad4442c1623f467f3acfe6eba4b3ab8",
+      "bytes": 137931,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/015-partial-all-repeat-noop.png"
+    },
+    {
+      "label": "all-six-opens",
+      "utc": "2026-10-10T20:56:21.373Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.56.21.png",
+      "sha256": "322ca61ca1920a5f00be6cebe467999fb95b4c9ba167f4397de998b1623e4088",
+      "bytes": 125876,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/016-all-six-opens.png"
+    },
+    {
+      "label": "all-reset-closes",
+      "utc": "2026-10-10T20:56:33.742Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.56.33.png",
+      "sha256": "f9abd87d17ccfc85c5472b7cf41d2bb483a7bd87b671c314377416db9b81a304",
+      "bytes": 128474,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "lamp-a-special-target",
+      "utc": "2026-10-10T20:56:42.583Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.56.42.png",
+      "sha256": "006487bcf115078c41fa109b300e2d9583ddb543f9c09b23944c8fe6f17e252a",
+      "bytes": 127210,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "lamp-a-to-b",
+      "utc": "2026-10-10T20:56:52.715Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.56.52.png",
+      "sha256": "db878c290e1fcd939c965b07d42efbabe0cb547f09e368d4e987dde8a69dae03",
+      "bytes": 121629,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/019-lamp-a-to-b.png"
+    },
+    {
+      "label": "lamp-b-to-a",
+      "utc": "2026-10-10T20:57:04.031Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.57.03.png",
+      "sha256": "4ce339bed218468abe42c7d46d0ec42b84f6b35ea9f44654e06d16b7a8ecc3a0",
+      "bytes": 101146,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/020-lamp-b-to-a.png"
+    },
+    {
+      "label": "ladder-diagonal-simple-outline",
+      "utc": "2026-10-10T20:57:29.667Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.57.29.png",
+      "sha256": "5990d19e9f6f311bc56a009c70a5ff6a0f80a5049644316f47875d299c7278a2",
+      "bytes": 147624,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/021-ladder-diagonal-simple-outline.png"
+    },
+    {
+      "label": "ladder-cardinal-outline",
+      "utc": "2026-10-10T20:57:38.724Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.57.38.png",
+      "sha256": "e4eb25642c8eae5345c9534fb4d156528a979e2a7429caf8bcea77321f266642",
+      "bytes": 147151,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/022-ladder-cardinal-outline.png"
+    },
+    {
+      "label": "roof-alternate-target",
+      "utc": "2026-10-10T20:57:48.109Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.57.47.png",
+      "sha256": "7a720627c47224240b7f2fddf09b93104b3712e4ee5f83350da83354d17617d0",
+      "bytes": 132135,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "radius-and-none",
+      "utc": "2026-10-10T20:58:05.319Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.58.04.png",
+      "sha256": "5b449e4a70986dbd2cf604d5409bad305f91aece275631d8b15b4c3ba3ea11ac",
+      "bytes": 111291,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "chat-for-bb-select",
+      "utc": "2026-10-10T20:58:16.740Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.58.16.png",
+      "sha256": "0f9195fa8d8accd4dd2fbd96436ae98d9cab80e6d52e37040ca2a54bcd753292",
+      "bytes": 144940,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "roof-installed-target",
+      "utc": "2026-10-10T20:58:37.122Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.58.36.png",
+      "sha256": "7ab6c7b27fcbe142aff69033b0ca8a48e3dceb15998d41e6397cdc9793767557",
+      "bytes": 148844,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "bb-select-chat-focus",
+      "utc": "2026-10-10T20:58:45.644Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.58.44.png",
+      "sha256": "7ab1be90e099d7d437c48e983515c315fae41e0cbd5ab702b80fb2a24c66ffa2",
+      "bytes": 164234,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "bb-none-chat-focus",
+      "utc": "2026-10-10T20:58:57.251Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.58.56.png",
+      "sha256": "83fc07336d9fbac0991d3fe12888b660fbc51bd2a04019512399a0a8d5841add",
+      "bytes": 161200,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "commands-default-gui",
+      "utc": "2026-10-10T20:59:10.617Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.59.09.png",
+      "sha256": "1cf25ccbd5adf6a23593005163c6bb99e8d879b66222b0fa618d47df4fb848a2",
+      "bytes": 92132,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "personal-limit-focus",
+      "utc": "2026-10-10T20:59:25.963Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.59.25.png",
+      "sha256": "5075241c5bb543d75d47c92a1bf016fbfdee725f241d2b6371dc2d6744e64345",
+      "bytes": 90449,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/030-personal-limit-focus.png"
+    },
+    {
+      "label": "zero-limit-rejected",
+      "utc": "2026-10-10T20:59:33.745Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.59.33.png",
+      "sha256": "9c8aa573ad118845d6ab597fb4c5bde9125204aaec011e040adc5afc601a516e",
+      "bytes": 92140,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/031-zero-limit-rejected.png"
+    },
+    {
+      "label": "personal-field-retry-focus",
+      "utc": "2026-10-10T20:59:47.617Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-10_23.59.46.png",
+      "sha256": "8d68865c22fab3a56eb5091705f8a68a75eb45c9b5bbe5caee73f53746b650df",
+      "bytes": 90441,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "personal-limit-a-two-of-three",
+      "utc": "2026-10-10T21:00:01.715Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.00.01.png",
+      "sha256": "6fba55537e511b60b10b24f186f59967e69e89ed4b776a79bf5075b3e8831e41",
+      "bytes": 141673,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/033-personal-limit-a-two-of-three.png"
+    },
+    {
+      "label": "door-commands-default",
+      "utc": "2026-10-10T21:00:17.116Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.00.16.png",
+      "sha256": "b66a805134f8f78b146dd2ea42eff531945245ede39fd6432ec2f126dbad8103",
+      "bytes": 80256,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "global-limit-focus",
+      "utc": "2026-10-10T21:00:25.264Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.00.24.png",
+      "sha256": "50adc5d010c1428d3ae93b5a34feb8626b3c17e670e4beedc567d34a1f8e20a8",
+      "bytes": 74160,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "door-command-plus-normal-open",
+      "utc": "2026-10-10T21:00:43.754Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.00.43.png",
+      "sha256": "5d05c727d49e192992c8580e26b61c329b67d9b78d8122e5a027a06ecaefba0f",
+      "bytes": 102128,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "second-player-limits",
+      "utc": "2026-10-10T21:02:12.647Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-b/screenshots/2026-10-11_00.02.11.png",
+      "sha256": "6e70ddabb8b9c279ef348700ea0576816e1221826bbda45ba243cd0ff2a9b86a",
+      "bytes": 44629,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "shared-limit-second-use",
+      "utc": "2026-10-10T21:02:23.514Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-b/screenshots/2026-10-11_00.02.22.png",
+      "sha256": "224c3c9078833632cf22fa2e44f4244189d445b0b8675a7b7946c320cceea2bc",
+      "bytes": 97705,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "global-spent-normal-action",
+      "utc": "2026-10-10T21:02:31.665Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-b/screenshots/2026-10-11_00.02.30.png",
+      "sha256": "40823bb863e46339128be7bc36fedb0881c76d7cb8a44edbe2731e122974b870",
+      "bytes": 99798,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/039-global-spent-normal-action.png"
+    },
+    {
+      "label": "lever-clear-command-gui",
+      "utc": "2026-10-10T21:02:47.373Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.02.46.png",
+      "sha256": "f927d617425d72e857b1c2fbece43a7d3302015120b50b79c79d2903b6f40422",
+      "bytes": 70901,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "minimum-personal-focus",
+      "utc": "2026-10-10T21:02:57.143Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.02.56.png",
+      "sha256": "021baaf9d17597c4db292590aa74365923e398def0aa28c9b26cf3b3e76bf53f",
+      "bytes": 66845,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "minimum-global-focus",
+      "utc": "2026-10-10T21:03:04.863Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.03.04.png",
+      "sha256": "189c4e45785b134f468aa39baaccb16de59eeffec947a0d553f4faca45f93ced",
+      "bytes": 68033,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "clear-whole-six-group",
+      "utc": "2026-10-10T21:03:21.775Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.03.20.png",
+      "sha256": "e48e99cc6d9b4cc06af223a64ae186619d47b4d1e57be47a1c7482ba6abfc4e2",
+      "bytes": 131481,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/043-clear-whole-six-group.png"
+    },
+    {
+      "label": "break-linked-lever-cleans-group",
+      "utc": "2026-10-10T21:03:41.116Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.03.40.png",
+      "sha256": "a3847283961d49aebb69f186283497332b2ce9b7cbfe3e5156910aac9fe8777a",
+      "bytes": 108447,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/044-break-linked-lever-cleans-group.png"
+    },
+    {
+      "label": "radius-repeat-chat-focus",
+      "utc": "2026-10-10T21:03:51.212Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.03.50.png",
+      "sha256": "f587173db553b622963e4ac82ea7fe2ae587bbfe74c4bc2a5e443a2988d29d8f",
+      "bytes": 164725,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "none-final-chat-focus",
+      "utc": "2026-10-10T21:04:03.569Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.04.02.png",
+      "sha256": "cab0eea07ac41d53a49d9f3558f37f216f0ff5cb653b465437ab5e0f4c333ac1",
+      "bytes": 161941,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/046-none-final-chat-focus.png"
+    },
+    {
+      "label": "no-alt-safe-and-radius-complete",
+      "utc": "2026-10-10T21:04:18.170Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.04.17.png",
+      "sha256": "3585d9f03f6a1be03a49145c43ef7b4e36d0432e074b9eb1299955706e9ff105",
+      "bytes": 45018,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "pre-rejoin-stable-open",
+      "utc": "2026-10-10T21:05:23.283Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.05.22.png",
+      "sha256": "8a90deac1839a795bec68965b065ae907f6aa96124c2a8e30754b427c8c0a09b",
+      "bytes": 108606,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    },
+    {
+      "label": "pre-rejoin-whole-open-door",
+      "utc": "2026-10-10T21:05:36.355Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-a/screenshots/2026-10-11_00.05.35.png",
+      "sha256": "0500d597a958ebb6ec9613b8bbf8cb5f1f9c3049cabab75e78c6f5b43a1d3678",
+      "bytes": 121835,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/049-pre-rejoin-whole-open-door.png"
+    },
+    {
+      "label": "first-rejoin-stable-open",
+      "utc": "2026-10-10T21:07:33.163Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-rejoin-a/screenshots/2026-10-11_00.07.32.png",
+      "sha256": "5425c6ee5eab7a5284b29aea99569bed8e4de7dec50860bec2199f6900111732",
+      "bytes": 157548,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": true,
+      "evidencePath": "native/050-first-rejoin-stable-open.png"
+    },
+    {
+      "label": "rejoin-editor-op4-required",
+      "utc": "2026-10-10T21:08:08.083Z",
+      "sourceRelativePath": "build/runtime-client-v12-native-rejoin-a/screenshots/2026-10-11_00.08.07.png",
+      "sha256": "cc86675067af4d041afe88dddf3fefdaf0fbf713dc3e9614c3c643872c98e36a",
+      "bytes": 97607,
+      "dimensions": [
+        960,
+        540
+      ],
+      "selected": false,
+      "evidencePath": null
+    }
+  ],
+  "completedUtc": "2026-10-10T21:08:23.142Z",
+  "verificationScope": "22 actual native gameplay cases with server-state and real GameTest supplementary assertions; no held-movement test and no new angular physical collision requested.",
+  "evidence": [
+    {
+      "sha256": "d2cceed3d5d3d786e99b82fdcb8be1b5942c971af530396d5e6f2e6f828e23b4",
+      "path": "evidence/native-state-before-rejoin.json",
+      "sourceRelativePath": "build/v12-delivery/native-state-before-rejoin.json",
+      "bytes": 1403580
+    },
+    {
+      "sha256": "bf8bdb027f1bd517e367b62de793bb97b303b585b1c75666a9f47d84c746794c",
+      "path": "evidence/native-state-after-rejoin.json",
+      "sourceRelativePath": "build/v12-delivery/native-state-after-rejoin.json",
+      "bytes": 1395177
+    },
+    {
+      "sha256": "2732658aabce229ac874b130e47325784f144c86d481472831d6a21c9e4e1be2",
+      "path": "evidence/native-server.json",
+      "sourceRelativePath": "build/v12-delivery/native-server.json",
+      "bytes": 75697
+    },
+    {
+      "sha256": "a7fa05fbf1e4214d5cce0404f0cd4b357f20581536b1890cd2d33a36cd42121e",
+      "path": "evidence/native-rejoin-server.json",
+      "sourceRelativePath": "build/v12-delivery/native-rejoin-server.json",
+      "bytes": 48094
+    },
+    {
+      "sha256": "9343f93eb2e1ac869dc018e76b9f8905c9c90b62578cabe738b71d18c8249c4b",
+      "path": "evidence/native-client-a.json",
+      "sourceRelativePath": "build/v12-delivery/native-client-a.json",
+      "bytes": 600076
+    },
+    {
+      "sha256": "3dd02ab34caa2b0ee29aadca02934c7ef187c268047c975a451aab5e16b7f44d",
+      "path": "evidence/native-client-b.json",
+      "sourceRelativePath": "build/v12-delivery/native-client-b.json",
+      "bytes": 600075
+    },
+    {
+      "sha256": "31e9dfba24bd1a6b2616ba5e0502766339483776753d3834b6c2f9e567fe3069",
+      "path": "evidence/native-rejoin-client.json",
+      "sourceRelativePath": "build/v12-delivery/native-rejoin-client.json",
+      "bytes": 600517
+    },
+    {
+      "sha256": "47afe34ae3ab8d2764f18952ff98247a4211591dbd79e6891c2cb1e7854e7e3b",
+      "path": "evidence/runtime-server-v12-native-launch-console.log",
+      "sourceRelativePath": "build/runtime-server-v12-native/launch-console.log",
+      "bytes": 36547
+    },
+    {
+      "sha256": "8d6a8a80286e69aa0151b8b7f965fec3a66b211430f6e209137da20daf7f4cda",
+      "path": "evidence/runtime-server-v12-native-rejoin-launch-console.log",
+      "sourceRelativePath": "build/runtime-server-v12-native-rejoin/launch-console.log",
+      "bytes": 14667
+    }
+  ],
+  "provenance": {
+    "originalReportRelativePath": "build/v12-delivery/native-acceptance.json",
+    "originalReportSha256": "63e740b22590243dae972dc8a5c28144bcebdf050d5c1de435c9e7561d4dca66",
+    "productionJarSha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+    "closedGalleryZipSha256": "2b761218d600ac462b641afc6fcfbec64a3ac8a217534f60f4db93ae53f80dc5",
+    "nativePngIntegrityVerified": 51,
+    "selectedNativePngs": 20,
+    "bundledEvidenceReferences": 9,
+    "evidencePaths": "Relative paths resolve inside QA-EVIDENCE.zip; copied reference files retain their original hash-bound bytes.",
+    "selection": "Explicit frame labels",
+    "scope": "Root-reported22 native functional cases; PNG integrity is verified separately. This is not continuous video, FPS/MSPT or AI/combat measurement."
+  }
+}

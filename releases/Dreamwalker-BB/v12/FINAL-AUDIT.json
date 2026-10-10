@@ -1,0 +1,440 @@
+{
+  "schema": "dreamwalker-v12-delivery-audit-v1",
+  "status": "COMPLETED_ALL_PASS",
+  "utc": "2026-10-10T21:13:55.727488+00:00",
+  "modVersion": "0.1.0-v12",
+  "checksPassed": 12,
+  "checksFailed": 0,
+  "checksPending": 0,
+  "checks": [
+    {
+      "check": "metadata",
+      "status": "PASS",
+      "details": {
+        "artifact": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.jar",
+          "sha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+          "bytes": 32819785
+        },
+        "metadata": {
+          "schemaVersion": 1,
+          "id": "bloodborne_dw",
+          "version": "0.1.0-v12",
+          "name": "dreamwalker-bb-fabric-1.20.1",
+          "description": "Dreamwalker BB V12: architecture, Bloodborne RP and a simple five-mode construction tool.",
+          "authors": [
+            "Dreamwalker project"
+          ],
+          "license": "All-Rights-Reserved",
+          "environment": "*",
+          "provides": [
+            "bloodborne_rp"
+          ],
+          "mixins": [
+            "bloodborne_dw.composite.mixins.json"
+          ],
+          "entrypoints": {
+            "preLaunch": [
+              "dev.dreamwalker.bloodbornedw.DreamwalkerBb"
+            ],
+            "main": [
+              "dev.dreamwalker.bloodbornedw.DreamwalkerBb",
+              "dev.dreamwalker.bloodbornerp.BloodborneRp"
+            ],
+            "client": [
+              "dev.dreamwalker.bloodbornedw.architecture.PrototypeArchitectureClient",
+              "dev.dreamwalker.bloodbornerp.client.BloodborneRpClient"
+            ]
+          },
+          "depends": {
+            "fabricloader": ">=0.16.10",
+            "minecraft": "1.20.1",
+            "java": ">=17",
+            "fabric-api": ">=0.92.9+1.20.1",
+            "geckolib": ">=4.4.9 <5"
+          },
+          "breaks": {
+            "bloodborne_complete": "*"
+          }
+        }
+      }
+    },
+    {
+      "check": "tool",
+      "status": "PASS",
+      "details": {
+        "registry": "bloodborne_dw:bb_tool",
+        "model": {
+          "parent": "minecraft:item/handheld",
+          "textures": {
+            "layer0": "bloodborne_dw:item/composite_builder"
+          }
+        },
+        "iconBytes": 140
+      }
+    },
+    {
+      "check": "lamps",
+      "status": "PASS",
+      "details": {
+        "obsoleteClassesAbsent": true,
+        "directPairApiPresent": true,
+        "scope": "Packaged implementation integrity; native P1/P2 prove gameplay separately"
+      }
+    },
+    {
+      "check": "angular",
+      "status": "PASS",
+      "details": {
+        "diagonalPhysicalEarlyEmptyReturn": true,
+        "stripHelperAbsent": true,
+        "scope": "Packaged contract; cardinal/legacy/outline behavior also checked by native GameTests"
+      }
+    },
+    {
+      "check": "staging",
+      "status": "PASS",
+      "details": {
+        "activeConsumers": [],
+        "currentOverrides": 0,
+        "scope": "No configured/automatic replacement physics; OBB parser and register API are staging only"
+      }
+    },
+    {
+      "check": "gallery",
+      "status": "PASS",
+      "details": {
+        "manifest": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\gallery-manifest.json",
+          "sha256": "c74e8323d6b7106e78b2ae6853750a80497e91af83256bf2460ed6406c605710",
+          "bytes": 125085
+        },
+        "index": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\GALLERY-INDEX.csv",
+          "sha256": "c0bd01e71ad3cf3d080f824ad9d26624dc37c9de60c37e325dd7b84ff709a209",
+          "bytes": 18488
+        },
+        "world": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\Dreamwalker-BB-v12-Gallery.zip",
+          "sha256": "2b761218d600ac462b641afc6fcfbec64a3ac8a217534f60f4db93ae53f80dc5",
+          "bytes": 1295439
+        },
+        "exhibits": 121,
+        "offeredItems": 103,
+        "realNpcs": 18,
+        "productionReopen": {
+          "status": "PASS_PRODUCTION_ONLY_V12",
+          "verifiedExhibits": 121,
+          "identitiesPosesAndTypedStatesUnchanged": true,
+          "boundsPlusTwo": true,
+          "exactTwoBlockGaps": true
+        }
+      }
+    },
+    {
+      "check": "tests",
+      "status": "PASS",
+      "details": {
+        "total": 58,
+        "passed": 58,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "xml": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\GAME-TESTS.xml",
+          "sha256": "ffef0eb940139c0df2941b81bff64605e5e7635cadb89420d908e71ac02eb649",
+          "bytes": 9147
+        },
+        "minimumExpected": 57,
+        "fixedCountExpectation": false
+      }
+    },
+    {
+      "check": "transaction",
+      "status": "PASS",
+      "details": {
+        "passed": 21,
+        "java": "17.0.15",
+        "log": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-check.log",
+          "sha256": "005c0f779b5019d0792b37f2f892409c37f33a74a9ab5913c6c82f02ee7ebd18",
+          "bytes": 33932
+        },
+        "fixedCountExpectation": false
+      }
+    },
+    {
+      "check": "native",
+      "status": "PASS",
+      "details": {
+        "casesPassed": 22,
+        "review": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-acceptance.json",
+          "sha256": "63e740b22590243dae972dc8a5c28144bcebdf050d5c1de435c9e7561d4dca66",
+          "bytes": 77761
+        },
+        "verifiedEvidenceReferences": [
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-state-before-rejoin.json",
+            "sha256": "d2cceed3d5d3d786e99b82fdcb8be1b5942c971af530396d5e6f2e6f828e23b4",
+            "bytes": 1403580
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-state-after-rejoin.json",
+            "sha256": "bf8bdb027f1bd517e367b62de793bb97b303b585b1c75666a9f47d84c746794c",
+            "bytes": 1395177
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-server.json",
+            "sha256": "2732658aabce229ac874b130e47325784f144c86d481472831d6a21c9e4e1be2",
+            "bytes": 75697
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-rejoin-server.json",
+            "sha256": "a7fa05fbf1e4214d5cce0404f0cd4b357f20581536b1890cd2d33a36cd42121e",
+            "bytes": 48094
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-client-a.json",
+            "sha256": "9343f93eb2e1ac869dc018e76b9f8905c9c90b62578cabe738b71d18c8249c4b",
+            "bytes": 600076
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-client-b.json",
+            "sha256": "3dd02ab34caa2b0ee29aadca02934c7ef187c268047c975a451aab5e16b7f44d",
+            "bytes": 600075
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-rejoin-client.json",
+            "sha256": "31e9dfba24bd1a6b2616ba5e0502766339483776753d3834b6c2f9e567fe3069",
+            "bytes": 600517
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v12-native\\launch-console.log",
+            "sha256": "47afe34ae3ab8d2764f18952ff98247a4211591dbd79e6891c2cb1e7854e7e3b",
+            "bytes": 36547
+          },
+          {
+            "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v12-native-rejoin\\launch-console.log",
+            "sha256": "8d6a8a80286e69aa0151b8b7f965fec3a66b211430f6e209137da20daf7f4cda",
+            "bytes": 14667
+          }
+        ],
+        "scope": "Supplied native review verdicts, not an inference of gameplay from file presence"
+      }
+    },
+    {
+      "check": "modelpacks",
+      "status": "PASS",
+      "details": {
+        "source": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-compat\\modelpacks-input\\dreamwalker-modelpacks-0.1.0.jar",
+          "sha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827",
+          "bytes": 44349
+        },
+        "originalArchive": {
+          "path": "C:\\Users\\vakir\\Downloads\\Dreamwalker-ModelPacks-Fabric-1.20.1.zip",
+          "sha256": "1003b49b295e7d40e7b8122ae2d24faad5c2be0258369a2586248c906862665b",
+          "bytes": 107835
+        },
+        "archiveMember": "dreamwalker-modelpacks-0.1.0.jar",
+        "metadata": {
+          "schemaVersion": 1,
+          "id": "dreamwalker_modelpacks",
+          "version": "0.1.0",
+          "name": "Dreamwalker Model Packs",
+          "environment": "*",
+          "entrypoints": {
+            "main": [
+              "dev.dreamwalker.modelpacks.ModelPacks"
+            ],
+            "client": [
+              "dev.dreamwalker.modelpacks.PackClient"
+            ]
+          },
+          "mixins": [
+            "dreamwalker-modelpacks.mixins.json"
+          ],
+          "depends": {
+            "fabricloader": ">=0.16.10",
+            "fabric-api": "*",
+            "minecraft": "1.20.1",
+            "java": ">=17"
+          }
+        }
+      }
+    },
+    {
+      "check": "compatibility",
+      "status": "PASS",
+      "details": {
+        "profiles": [
+          {
+            "profile": {
+              "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-server.json",
+              "sha256": "2732658aabce229ac874b130e47325784f144c86d481472831d6a21c9e4e1be2",
+              "bytes": 75697
+            },
+            "extraMods": [
+              {
+                "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-compat\\modelpacks-input\\dreamwalker-modelpacks-0.1.0.jar",
+                "id": "dreamwalker_modelpacks",
+                "version": "0.1.0",
+                "metadata": {
+                  "schemaVersion": 1,
+                  "id": "dreamwalker_modelpacks",
+                  "version": "0.1.0",
+                  "name": "Dreamwalker Model Packs",
+                  "environment": "*",
+                  "entrypoints": {
+                    "main": [
+                      "dev.dreamwalker.modelpacks.ModelPacks"
+                    ],
+                    "client": [
+                      "dev.dreamwalker.modelpacks.PackClient"
+                    ]
+                  },
+                  "mixins": [
+                    "dreamwalker-modelpacks.mixins.json"
+                  ],
+                  "depends": {
+                    "fabricloader": ">=0.16.10",
+                    "fabric-api": "*",
+                    "minecraft": "1.20.1",
+                    "java": ">=17"
+                  }
+                },
+                "sha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827",
+                "bytes": 44349,
+                "runtimePath": "mods/dreamwalker-modelpacks-0.1.0.jar",
+                "copyByteVerification": "PASS",
+                "copiedSha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827"
+              }
+            ],
+            "packDirectory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v12-native\\config\\dreamwalker_modelpacks\\packs",
+            "packEntries": 0
+          },
+          {
+            "profile": {
+              "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-client-a.json",
+              "sha256": "9343f93eb2e1ac869dc018e76b9f8905c9c90b62578cabe738b71d18c8249c4b",
+              "bytes": 600076
+            },
+            "extraMods": [
+              {
+                "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-compat\\modelpacks-input\\dreamwalker-modelpacks-0.1.0.jar",
+                "id": "dreamwalker_modelpacks",
+                "version": "0.1.0",
+                "metadata": {
+                  "schemaVersion": 1,
+                  "id": "dreamwalker_modelpacks",
+                  "version": "0.1.0",
+                  "name": "Dreamwalker Model Packs",
+                  "environment": "*",
+                  "entrypoints": {
+                    "main": [
+                      "dev.dreamwalker.modelpacks.ModelPacks"
+                    ],
+                    "client": [
+                      "dev.dreamwalker.modelpacks.PackClient"
+                    ]
+                  },
+                  "mixins": [
+                    "dreamwalker-modelpacks.mixins.json"
+                  ],
+                  "depends": {
+                    "fabricloader": ">=0.16.10",
+                    "fabric-api": "*",
+                    "minecraft": "1.20.1",
+                    "java": ">=17"
+                  }
+                },
+                "sha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827",
+                "bytes": 44349,
+                "runtimePath": "mods/dreamwalker-modelpacks-0.1.0.jar",
+                "copyByteVerification": "PASS",
+                "copiedSha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827"
+              }
+            ],
+            "packDirectory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v12-native-a\\config\\dreamwalker_modelpacks\\packs",
+            "packEntries": 0
+          },
+          {
+            "profile": {
+              "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-delivery\\native-client-b.json",
+              "sha256": "3dd02ab34caa2b0ee29aadca02934c7ef187c268047c975a451aab5e16b7f44d",
+              "bytes": 600075
+            },
+            "extraMods": [
+              {
+                "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-compat\\modelpacks-input\\dreamwalker-modelpacks-0.1.0.jar",
+                "id": "dreamwalker_modelpacks",
+                "version": "0.1.0",
+                "metadata": {
+                  "schemaVersion": 1,
+                  "id": "dreamwalker_modelpacks",
+                  "version": "0.1.0",
+                  "name": "Dreamwalker Model Packs",
+                  "environment": "*",
+                  "entrypoints": {
+                    "main": [
+                      "dev.dreamwalker.modelpacks.ModelPacks"
+                    ],
+                    "client": [
+                      "dev.dreamwalker.modelpacks.PackClient"
+                    ]
+                  },
+                  "mixins": [
+                    "dreamwalker-modelpacks.mixins.json"
+                  ],
+                  "depends": {
+                    "fabricloader": ">=0.16.10",
+                    "fabric-api": "*",
+                    "minecraft": "1.20.1",
+                    "java": ">=17"
+                  }
+                },
+                "sha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827",
+                "bytes": 44349,
+                "runtimePath": "mods/dreamwalker-modelpacks-0.1.0.jar",
+                "copyByteVerification": "PASS",
+                "copiedSha256": "a23dbdf32d288eb0249de4f1c3146dfe122354e77a62dba699651c8b17f1a827"
+              }
+            ],
+            "packDirectory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v12-native-b\\config\\dreamwalker_modelpacks\\packs",
+            "packEntries": 0
+          }
+        ],
+        "actualJoinedClients": [
+          "dwqa12_a",
+          "dwqa12_b"
+        ],
+        "serverConsole": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v12-native\\launch-console.log",
+          "sha256": "47afe34ae3ab8d2764f18952ff98247a4211591dbd79e6891c2cb1e7854e7e3b",
+          "bytes": 36547
+        },
+        "scope": "Both mods loaded, real client joined, byte-identical externalJAR and empty pack configs; no replacement-physics claim"
+      }
+    },
+    {
+      "check": "release",
+      "status": "PASS",
+      "details": {
+        "QA": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\QA.json",
+          "sha256": "e877eba9909a9af0240ac0059bb0916bbda760e64228bd4863d3e322307b317d",
+          "bytes": 16883
+        },
+        "evidence": {
+          "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\..\\releases\\Dreamwalker-BB\\v12\\QA-EVIDENCE.zip",
+          "sha256": "6a3bb1839321427b511fde48fcd37d2ff76b3f9131b85327fb88a3b80f6e6449",
+          "bytes": 2882652
+        },
+        "externalJarsBundled": false
+      }
+    }
+  ],
+  "execution": "Read-only file/ZIP/class/XML/log inspection; no Minecraft, JVM or build launch",
+  "completionRule": "Every integrity, native22-case and real combined-runtime check must PASS"
+}

@@ -59,6 +59,8 @@ public final class CompositeShapeSnapshots {
     private static CellData data(BlockView view,BlockPos pos){if(!(view instanceof World world)||pos==null)return CellData.EMPTY;Published cache=cache(world,false);return cache==null?CellData.EMPTY:worker(view)?cache.at(CompositeData.cell(pos)):cache.current(CompositeData.cell(pos));}
     public static List<CompositeData.Contribution> contributions(BlockView view,BlockPos pos){return data(view,pos).entries();}
     public static Owner owner(BlockView view,BlockPos pos){CellData data=data(view,pos);if(data.root!=null)return data.root.resident();for(var entry:data.entries())if(entry.owner().root().equals(CompositeData.cell(pos)))return entry.owner();return null;}
+    /** Existing attached native roots also have owners before their first height edit. */
+    public static Set<Owner> attachedOwners(World world){Published published=cache(world,false);if(published==null)return Set.of();Set<Owner> owners=new HashSet<>();for(var cells:published.chunks.values())for(var data:cells.values())if(data.root()!=null&&data.root().resident()!=null)owners.add(data.root().resident());return Set.copyOf(owners);}
     /** Known replacement UUIDs are rejected. Missing/unloaded root metadata is
      * deferred, just as an unloaded owner is on the authoritative main thread. */
     public static boolean validOrDeferred(BlockView view,Owner owner){Root root=data(view,CompositeData.pos(owner.root())).root;return root==null||owner.equals(root.resident());}

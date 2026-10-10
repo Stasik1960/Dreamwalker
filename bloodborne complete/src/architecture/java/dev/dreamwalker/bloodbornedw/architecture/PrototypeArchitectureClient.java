@@ -33,5 +33,6 @@ public final class PrototypeArchitectureClient implements ClientModInitializer {
         }
         PrototypeWallArchitecture.initializeClient();
         CompositeArchitecture.initializeClient();
+        dev.dreamwalker.bloodbornedw.tool.BbToolClient.initialize();
     }
 }

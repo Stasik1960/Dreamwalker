@@ -50,7 +50,7 @@
       16
     ],
     "backing": "Two real touching vertical faces. Ordinary sections require one centered 2x4-pixel contact pad on either vertical half; top/bottom slabs and suitable stair faces work. Source installations retain original full-face backing checks.",
-    "representation": "empty_diagonal_collision_for_all_entity_contexts; cached_thin_diagonal_selection"
+    "representation": "empty_diagonal_collision_for_all_entity_contexts; cached_simple_diagonal_selection"
   },
   "note": "One ordinary ladder cell with no helpers; authored rail protrusions do not reserve neighbors. Cardinal collision remains unchanged. Diagonal sections have no physical collision, regardless of backing or entity context; selection remains available. Saved native geometry is filtered by the same diagonal rule without changing NBT. Visual, collision, selection and support are distinct contracts.",
   "render_mount": {
