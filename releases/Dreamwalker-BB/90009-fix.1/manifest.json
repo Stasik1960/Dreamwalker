@@ -258,12 +258,16 @@
       "sha256": "83d09fe4f582ba2b1aff8055b7cc3603e7669bca9a58e8a8ab2d1b50ef1763fd"
     },
     {
+      "file": "evidence/GITHUB_PUBLICATION.json",
+      "sha256": "da8592ee15039ce83c8a1eb21187d504eef25a8dd57ac63f0d9f0bce53e74100"
+    },
+    {
       "file": "evidence/native-server-diagnostics60.json",
       "sha256": "6e3045ff0008bd59409b793d13662119f548c38d9ad83b97735c729b0825530f"
     },
     {
       "file": "evidence/production-source-provenance.json",
-      "sha256": "16f7b913b1ba61fa4366a76b111fe3b3b4f4caf7960b87e4427a74acfa5c6c09"
+      "sha256": "138c4e4e464ad7572731b5cf505cde99e32eff01e5f6acf99079a39a566829e5"
     },
     {
       "file": "evidence/REVIEW_90009_CLIENT_INPUT_OBSERVATIONS.json",
@@ -415,7 +419,7 @@
     }
   ],
   "productionInputFingerprint": "33a8c8a187e2e02711be74c6d39765f44f59d84f9ef4db3fb6dd08bdfb07e4c3",
-  "publication": "PREPARED_FOR_USER_REQUESTED_GITHUB_HANDOFF",
+  "publication": "PUBLISHED_BRANCH_HANDOFF; artifact download verification in evidence/GITHUB_PUBLICATION.json",
   "visibleTests": "PARTIAL; user ended testing today; next person must finish per HANDOFF.md",
   "nativeServerDiagnostics60": {
     "status": "PASS_NATIVE_SERVER_CONSOLE_DEFAULT60_AUTO_STOP_MARK_EXPORT",
@@ -435,5 +439,6 @@
     "dev/dreamwalker/bloodbornedw/tool/BuilderScreen$1.class",
     "dev/dreamwalker/bloodbornedw/tool/BuilderScreen.class"
   ],
-  "currentServerReopenReport": "evidence/final-focus-archive-native60-01.json"
+  "currentServerReopenReport": "evidence/final-focus-archive-native60-01.json",
+  "verifiedArtifactCommit": "613bbca9b75a7c8d145469b0c41e4b49767f87be"
 }
