@@ -1,0 +1,2775 @@
+Compiled from "SourceFile"
+public class apa {
+  private static final long h;
+
+  private static final long i;
+
+  private static final long j;
+
+  private static final long k;
+
+  public static final float a;
+
+  public static final float b;
+
+  public static final float c;
+
+  public static final float d;
+
+  public static final float e;
+
+  public static final float f;
+
+  public static final float g;
+
+  private static final float l;
+
+  private static final float[] m;
+
+  private static final apf n;
+
+  private static final int[] o;
+
+  private static final double p;
+
+  private static final int q;
+
+  private static final int r;
+
+  private static final double s;
+
+  private static final double[] t;
+
+  private static final double[] u;
+
+  public apa();
+    Code:
+       0: aload_0
+       1: invokespecial #66                 // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static float a(float);
+    Code:
+       0: getstatic     #71                 // Field m:[F
+       3: fload_0
+       4: ldc           #43                 // float 10430.378f
+       6: fmul
+       7: f2i
+       8: ldc           #72                 // int 65535
+      10: iand
+      11: faload
+      12: freturn
+
+  public static float b(float);
+    Code:
+       0: getstatic     #71                 // Field m:[F
+       3: fload_0
+       4: ldc           #43                 // float 10430.378f
+       6: fmul
+       7: ldc           #74                 // float 16384.0f
+       9: fadd
+      10: f2i
+      11: ldc           #72                 // int 65535
+      13: iand
+      14: faload
+      15: freturn
+
+  public static float c(float);
+    Code:
+       0: fload_0
+       1: f2d
+       2: invokestatic  #80                 // Method java/lang/Math.sqrt:(D)D
+       5: d2f
+       6: freturn
+
+  public static int d(float);
+    Code:
+       0: fload_0
+       1: f2i
+       2: istore_1
+       3: fload_0
+       4: iload_1
+       5: i2f
+       6: fcmpg
+       7: ifge          16
+      10: iload_1
+      11: iconst_1
+      12: isub
+      13: goto          17
+      16: iload_1
+      17: ireturn
+
+  public static int a(double);
+    Code:
+       0: dload_0
+       1: d2i
+       2: istore_2
+       3: dload_0
+       4: iload_2
+       5: i2d
+       6: dcmpg
+       7: ifge          16
+      10: iload_2
+      11: iconst_1
+      12: isub
+      13: goto          17
+      16: iload_2
+      17: ireturn
+
+  public static long b(double);
+    Code:
+       0: dload_0
+       1: d2l
+       2: lstore_2
+       3: dload_0
+       4: lload_2
+       5: l2d
+       6: dcmpg
+       7: ifge          16
+      10: lload_2
+      11: lconst_1
+      12: lsub
+      13: goto          17
+      16: lload_2
+      17: lreturn
+
+  public static float e(float);
+    Code:
+       0: fload_0
+       1: invokestatic  #87                 // Method java/lang/Math.abs:(F)F
+       4: freturn
+
+  public static int a(int);
+    Code:
+       0: iload_0
+       1: invokestatic  #90                 // Method java/lang/Math.abs:(I)I
+       4: ireturn
+
+  public static int f(float);
+    Code:
+       0: fload_0
+       1: f2i
+       2: istore_1
+       3: fload_0
+       4: iload_1
+       5: i2f
+       6: fcmpl
+       7: ifle          16
+      10: iload_1
+      11: iconst_1
+      12: iadd
+      13: goto          17
+      16: iload_1
+      17: ireturn
+
+  public static int c(double);
+    Code:
+       0: dload_0
+       1: d2i
+       2: istore_2
+       3: dload_0
+       4: iload_2
+       5: i2d
+       6: dcmpl
+       7: ifle          16
+      10: iload_2
+      11: iconst_1
+      12: iadd
+      13: goto          17
+      16: iload_2
+      17: ireturn
+
+  public static int a(int, int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: invokestatic  #95                 // Method java/lang/Math.max:(II)I
+       5: iload_2
+       6: invokestatic  #98                 // Method java/lang/Math.min:(II)I
+       9: ireturn
+
+  public static float a(float, float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: fcmpg
+       3: ifge          8
+       6: fload_1
+       7: freturn
+       8: fload_0
+       9: fload_2
+      10: invokestatic  #103                // Method java/lang/Math.min:(FF)F
+      13: freturn
+
+  public static double a(double, double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: dcmpg
+       3: ifge          8
+       6: dload_2
+       7: dreturn
+       8: dload_0
+       9: dload         4
+      11: invokestatic  #107                // Method java/lang/Math.min:(DD)D
+      14: dreturn
+
+  public static double b(double, double, double);
+    Code:
+       0: dload         4
+       2: dconst_0
+       3: dcmpg
+       4: ifge          9
+       7: dload_0
+       8: dreturn
+       9: dload         4
+      11: dconst_1
+      12: dcmpl
+      13: ifle          18
+      16: dload_2
+      17: dreturn
+      18: dload         4
+      20: dload_0
+      21: dload_2
+      22: invokestatic  #109                // Method d:(DDD)D
+      25: dreturn
+
+  public static float b(float, float, float);
+    Code:
+       0: fload_2
+       1: fconst_0
+       2: fcmpg
+       3: ifge          8
+       6: fload_0
+       7: freturn
+       8: fload_2
+       9: fconst_1
+      10: fcmpl
+      11: ifle          16
+      14: fload_1
+      15: freturn
+      16: fload_2
+      17: fload_0
+      18: fload_1
+      19: invokestatic  #111                // Method i:(FFF)F
+      22: freturn
+
+  public static double a(double, double);
+    Code:
+       0: dload_0
+       1: dconst_0
+       2: dcmpg
+       3: ifge          9
+       6: dload_0
+       7: dneg
+       8: dstore_0
+       9: dload_2
+      10: dconst_0
+      11: dcmpg
+      12: ifge          18
+      15: dload_2
+      16: dneg
+      17: dstore_2
+      18: dload_0
+      19: dload_2
+      20: invokestatic  #113                // Method java/lang/Math.max:(DD)D
+      23: dreturn
+
+  public static int a(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: invokestatic  #116                // Method java/lang/Math.floorDiv:(II)I
+       5: ireturn
+
+  public static int a(apf, int, int);
+    Code:
+       0: iload_1
+       1: iload_2
+       2: if_icmplt     7
+       5: iload_1
+       6: ireturn
+       7: aload_0
+       8: iload_2
+       9: iload_1
+      10: isub
+      11: iconst_1
+      12: iadd
+      13: invokeinterface #121,  2          // InterfaceMethod apf.a:(I)I
+      18: iload_1
+      19: iadd
+      20: ireturn
+
+  public static float a(apf, float, float);
+    Code:
+       0: fload_1
+       1: fload_2
+       2: fcmpl
+       3: iflt          8
+       6: fload_1
+       7: freturn
+       8: aload_0
+       9: invokeinterface #125,  1          // InterfaceMethod apf.i:()F
+      14: fload_2
+      15: fload_1
+      16: fsub
+      17: fmul
+      18: fload_1
+      19: fadd
+      20: freturn
+
+  public static double a(apf, double, double);
+    Code:
+       0: dload_1
+       1: dload_3
+       2: dcmpl
+       3: iflt          8
+       6: dload_1
+       7: dreturn
+       8: aload_0
+       9: invokeinterface #129,  1          // InterfaceMethod apf.j:()D
+      14: dload_3
+      15: dload_1
+      16: dsub
+      17: dmul
+      18: dload_1
+      19: dadd
+      20: dreturn
+
+  public static boolean a(float, float);
+    Code:
+       0: fload_1
+       1: fload_0
+       2: fsub
+       3: invokestatic  #87                 // Method java/lang/Math.abs:(F)F
+       6: ldc           #40                 // float 1.0E-5f
+       8: fcmpg
+       9: ifge          16
+      12: iconst_1
+      13: goto          17
+      16: iconst_0
+      17: ireturn
+
+  public static boolean b(double, double);
+    Code:
+       0: dload_2
+       1: dload_0
+       2: dsub
+       3: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+       6: ldc2_w        #134                // double 9.999999747378752E-6d
+       9: dcmpg
+      10: ifge          17
+      13: iconst_1
+      14: goto          18
+      17: iconst_0
+      18: ireturn
+
+  public static int b(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: invokestatic  #138                // Method java/lang/Math.floorMod:(II)I
+       5: ireturn
+
+  public static float b(float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: frem
+       3: fload_1
+       4: fadd
+       5: fload_1
+       6: frem
+       7: freturn
+
+  public static double c(double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: drem
+       3: dload_2
+       4: dadd
+       5: dload_2
+       6: drem
+       7: dreturn
+
+  public static boolean c(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: irem
+       3: ifne          10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: ireturn
+
+  public static int b(int);
+    Code:
+       0: iload_0
+       1: sipush        360
+       4: irem
+       5: istore_1
+       6: iload_1
+       7: sipush        180
+      10: if_icmplt     19
+      13: iinc_w        1, -360
+      19: iload_1
+      20: sipush        -180
+      23: if_icmpge     32
+      26: iinc_w        1, 360
+      32: iload_1
+      33: ireturn
+
+  public static float g(float);
+    Code:
+       0: fload_0
+       1: ldc           #140                // float 360.0f
+       3: frem
+       4: fstore_1
+       5: fload_1
+       6: ldc           #141                // float 180.0f
+       8: fcmpl
+       9: iflt          17
+      12: fload_1
+      13: ldc           #140                // float 360.0f
+      15: fsub
+      16: fstore_1
+      17: fload_1
+      18: ldc           #142                // float -180.0f
+      20: fcmpg
+      21: ifge          29
+      24: fload_1
+      25: ldc           #140                // float 360.0f
+      27: fadd
+      28: fstore_1
+      29: fload_1
+      30: freturn
+
+  public static double d(double);
+    Code:
+       0: dload_0
+       1: ldc2_w        #143                // double 360.0d
+       4: drem
+       5: dstore_2
+       6: dload_2
+       7: ldc2_w        #145                // double 180.0d
+      10: dcmpl
+      11: iflt          20
+      14: dload_2
+      15: ldc2_w        #143                // double 360.0d
+      18: dsub
+      19: dstore_2
+      20: dload_2
+      21: ldc2_w        #147                // double -180.0d
+      24: dcmpg
+      25: ifge          34
+      28: dload_2
+      29: ldc2_w        #143                // double 360.0d
+      32: dadd
+      33: dstore_2
+      34: dload_2
+      35: dreturn
+
+  public static float c(float, float);
+    Code:
+       0: fload_1
+       1: fload_0
+       2: fsub
+       3: invokestatic  #150                // Method g:(F)F
+       6: freturn
+
+  public static float d(float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: invokestatic  #152                // Method c:(FF)F
+       5: invokestatic  #154                // Method e:(F)F
+       8: freturn
+
+  public static float c(float, float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: invokestatic  #152                // Method c:(FF)F
+       5: fstore_3
+       6: fload_3
+       7: fload_2
+       8: fneg
+       9: fload_2
+      10: invokestatic  #156                // Method a:(FFF)F
+      13: fstore        4
+      15: fload_1
+      16: fload         4
+      18: fsub
+      19: freturn
+
+  public static float d(float, float, float);
+    Code:
+       0: fload_2
+       1: invokestatic  #154                // Method e:(F)F
+       4: fstore_2
+       5: fload_0
+       6: fload_1
+       7: fcmpg
+       8: ifge          20
+      11: fload_0
+      12: fload_2
+      13: fadd
+      14: fload_0
+      15: fload_1
+      16: invokestatic  #156                // Method a:(FFF)F
+      19: freturn
+      20: fload_0
+      21: fload_2
+      22: fsub
+      23: fload_1
+      24: fload_0
+      25: invokestatic  #156                // Method a:(FFF)F
+      28: freturn
+
+  public static float e(float, float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: invokestatic  #152                // Method c:(FF)F
+       5: fstore_3
+       6: fload_0
+       7: fload_0
+       8: fload_3
+       9: fadd
+      10: fload_2
+      11: invokestatic  #160                // Method d:(FFF)F
+      14: freturn
+
+  public static int a(java.lang.String, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokestatic  #166                // Method org/apache/commons/lang3/math/NumberUtils.toInt:(Ljava/lang/String;I)I
+       5: ireturn
+
+  public static int c(int);
+    Code:
+       0: iload_0
+       1: iconst_1
+       2: isub
+       3: istore_1
+       4: iload_1
+       5: iload_1
+       6: iconst_1
+       7: ishr
+       8: ior
+       9: istore_1
+      10: iload_1
+      11: iload_1
+      12: iconst_2
+      13: ishr
+      14: ior
+      15: istore_1
+      16: iload_1
+      17: iload_1
+      18: iconst_4
+      19: ishr
+      20: ior
+      21: istore_1
+      22: iload_1
+      23: iload_1
+      24: bipush        8
+      26: ishr
+      27: ior
+      28: istore_1
+      29: iload_1
+      30: iload_1
+      31: bipush        16
+      33: ishr
+      34: ior
+      35: istore_1
+      36: iload_1
+      37: iconst_1
+      38: iadd
+      39: ireturn
+
+  public static boolean d(int);
+    Code:
+       0: iload_0
+       1: ifeq          16
+       4: iload_0
+       5: iload_0
+       6: iconst_1
+       7: isub
+       8: iand
+       9: ifne          16
+      12: iconst_1
+      13: goto          17
+      16: iconst_0
+      17: ireturn
+
+  public static int e(int);
+    Code:
+       0: iload_0
+       1: invokestatic  #170                // Method d:(I)Z
+       4: ifeq          11
+       7: iload_0
+       8: goto          15
+      11: iload_0
+      12: invokestatic  #172                // Method c:(I)I
+      15: istore_0
+      16: getstatic     #174                // Field o:[I
+      19: iload_0
+      20: i2l
+      21: ldc2_w        #175                // long 125613361l
+      24: lmul
+      25: bipush        27
+      27: lshr
+      28: l2i
+      29: bipush        31
+      31: iand
+      32: iaload
+      33: ireturn
+
+  public static int f(int);
+    Code:
+       0: iload_0
+       1: invokestatic  #178                // Method e:(I)I
+       4: iload_0
+       5: invokestatic  #170                // Method d:(I)Z
+       8: ifeq          15
+      11: iconst_0
+      12: goto          16
+      15: iconst_1
+      16: isub
+      17: ireturn
+
+  public static int f(float, float, float);
+    Code:
+       0: iconst_0
+       1: fload_0
+       2: ldc           #180                // float 255.0f
+       4: fmul
+       5: invokestatic  #182                // Method d:(F)I
+       8: fload_1
+       9: ldc           #180                // float 255.0f
+      11: fmul
+      12: invokestatic  #182                // Method d:(F)I
+      15: fload_2
+      16: ldc           #180                // float 255.0f
+      18: fmul
+      19: invokestatic  #182                // Method d:(F)I
+      22: invokestatic  #185                // Method aok$b.a:(IIII)I
+      25: ireturn
+
+  public static float h(float);
+    Code:
+       0: fload_0
+       1: fload_0
+       2: invokestatic  #182                // Method d:(F)I
+       5: i2f
+       6: fsub
+       7: freturn
+
+  public static double e(double);
+    Code:
+       0: dload_0
+       1: dload_0
+       2: invokestatic  #187                // Method b:(D)J
+       5: l2d
+       6: dsub
+       7: dreturn
+
+  public static long a(hz);
+    Code:
+       0: aload_0
+       1: invokevirtual #194                // Method hz.u:()I
+       4: aload_0
+       5: invokevirtual #197                // Method hz.v:()I
+       8: aload_0
+       9: invokevirtual #200                // Method hz.w:()I
+      12: invokestatic  #203                // Method b:(III)J
+      15: lreturn
+
+  public static long b(int, int, int);
+    Code:
+       0: iload_0
+       1: ldc           #205                // int 3129871
+       3: imul
+       4: i2l
+       5: iload_2
+       6: i2l
+       7: ldc2_w        #206                // long 116129781l
+      10: lmul
+      11: lxor
+      12: iload_1
+      13: i2l
+      14: lxor
+      15: lstore_3
+      16: lload_3
+      17: lload_3
+      18: lmul
+      19: ldc2_w        #208                // long 42317861l
+      22: lmul
+      23: lload_3
+      24: ldc2_w        #210                // long 11l
+      27: lmul
+      28: ladd
+      29: lstore_3
+      30: lload_3
+      31: bipush        16
+      33: lshr
+      34: lreturn
+
+  public static java.util.UUID a(apf);
+    Code:
+       0: aload_0
+       1: invokeinterface #215,  1          // InterfaceMethod apf.g:()J
+       6: ldc2_w        #216                // long -61441l
+       9: land
+      10: ldc2_w        #21                 // long 16384l
+      13: lor
+      14: lstore_1
+      15: aload_0
+      16: invokeinterface #215,  1          // InterfaceMethod apf.g:()J
+      21: ldc2_w        #218                // long 4611686018427387903l
+      24: land
+      25: ldc2_w        #27                 // long -9223372036854775808l
+      28: lor
+      29: lstore_3
+      30: new           #221                // class java/util/UUID
+      33: dup
+      34: lload_1
+      35: lload_3
+      36: invokespecial #224                // Method java/util/UUID."<init>":(JJ)V
+      39: areturn
+
+  public static java.util.UUID a();
+    Code:
+       0: getstatic     #227                // Field n:Lapf;
+       3: invokestatic  #229                // Method a:(Lapf;)Ljava/util/UUID;
+       6: areturn
+
+  public static double c(double, double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: dsub
+       3: dload         4
+       5: dload_2
+       6: dsub
+       7: ddiv
+       8: dreturn
+
+  public static float g(float, float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: fsub
+       3: fload_2
+       4: fload_1
+       5: fsub
+       6: fdiv
+       7: freturn
+
+  public static boolean a(eei, eei, eed);
+    Code:
+       0: aload_2
+       1: getfield      #234                // Field eed.a:D
+       4: aload_2
+       5: getfield      #236                // Field eed.d:D
+       8: dadd
+       9: ldc2_w        #237                // double 0.5d
+      12: dmul
+      13: dstore_3
+      14: aload_2
+      15: getfield      #236                // Field eed.d:D
+      18: aload_2
+      19: getfield      #234                // Field eed.a:D
+      22: dsub
+      23: ldc2_w        #237                // double 0.5d
+      26: dmul
+      27: dstore        5
+      29: aload_0
+      30: getfield      #242                // Field eei.c:D
+      33: dload_3
+      34: dsub
+      35: dstore        7
+      37: dload         7
+      39: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+      42: dload         5
+      44: dcmpl
+      45: ifle          62
+      48: dload         7
+      50: aload_1
+      51: getfield      #242                // Field eei.c:D
+      54: dmul
+      55: dconst_0
+      56: dcmpl
+      57: iflt          62
+      60: iconst_0
+      61: ireturn
+      62: aload_2
+      63: getfield      #244                // Field eed.b:D
+      66: aload_2
+      67: getfield      #246                // Field eed.e:D
+      70: dadd
+      71: ldc2_w        #237                // double 0.5d
+      74: dmul
+      75: dstore        9
+      77: aload_2
+      78: getfield      #246                // Field eed.e:D
+      81: aload_2
+      82: getfield      #244                // Field eed.b:D
+      85: dsub
+      86: ldc2_w        #237                // double 0.5d
+      89: dmul
+      90: dstore        11
+      92: aload_0
+      93: getfield      #247                // Field eei.d:D
+      96: dload         9
+      98: dsub
+      99: dstore        13
+     101: dload         13
+     103: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     106: dload         11
+     108: dcmpl
+     109: ifle          126
+     112: dload         13
+     114: aload_1
+     115: getfield      #247                // Field eei.d:D
+     118: dmul
+     119: dconst_0
+     120: dcmpl
+     121: iflt          126
+     124: iconst_0
+     125: ireturn
+     126: aload_2
+     127: getfield      #248                // Field eed.c:D
+     130: aload_2
+     131: getfield      #250                // Field eed.f:D
+     134: dadd
+     135: ldc2_w        #237                // double 0.5d
+     138: dmul
+     139: dstore        15
+     141: aload_2
+     142: getfield      #250                // Field eed.f:D
+     145: aload_2
+     146: getfield      #248                // Field eed.c:D
+     149: dsub
+     150: ldc2_w        #237                // double 0.5d
+     153: dmul
+     154: dstore        17
+     156: aload_0
+     157: getfield      #251                // Field eei.e:D
+     160: dload         15
+     162: dsub
+     163: dstore        19
+     165: dload         19
+     167: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     170: dload         17
+     172: dcmpl
+     173: ifle          190
+     176: dload         19
+     178: aload_1
+     179: getfield      #251                // Field eei.e:D
+     182: dmul
+     183: dconst_0
+     184: dcmpl
+     185: iflt          190
+     188: iconst_0
+     189: ireturn
+     190: aload_1
+     191: getfield      #242                // Field eei.c:D
+     194: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     197: dstore        21
+     199: aload_1
+     200: getfield      #247                // Field eei.d:D
+     203: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     206: dstore        23
+     208: aload_1
+     209: getfield      #251                // Field eei.e:D
+     212: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     215: dstore        25
+     217: aload_1
+     218: getfield      #247                // Field eei.d:D
+     221: dload         19
+     223: dmul
+     224: aload_1
+     225: getfield      #251                // Field eei.e:D
+     228: dload         13
+     230: dmul
+     231: dsub
+     232: dstore        27
+     234: dload         27
+     236: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     239: dload         11
+     241: dload         25
+     243: dmul
+     244: dload         17
+     246: dload         23
+     248: dmul
+     249: dadd
+     250: dcmpl
+     251: ifle          256
+     254: iconst_0
+     255: ireturn
+     256: aload_1
+     257: getfield      #251                // Field eei.e:D
+     260: dload         7
+     262: dmul
+     263: aload_1
+     264: getfield      #242                // Field eei.c:D
+     267: dload         19
+     269: dmul
+     270: dsub
+     271: dstore        27
+     273: dload         27
+     275: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     278: dload         5
+     280: dload         25
+     282: dmul
+     283: dload         17
+     285: dload         21
+     287: dmul
+     288: dadd
+     289: dcmpl
+     290: ifle          295
+     293: iconst_0
+     294: ireturn
+     295: aload_1
+     296: getfield      #242                // Field eei.c:D
+     299: dload         13
+     301: dmul
+     302: aload_1
+     303: getfield      #247                // Field eei.d:D
+     306: dload         7
+     308: dmul
+     309: dsub
+     310: dstore        27
+     312: dload         27
+     314: invokestatic  #133                // Method java/lang/Math.abs:(D)D
+     317: dload         5
+     319: dload         23
+     321: dmul
+     322: dload         11
+     324: dload         21
+     326: dmul
+     327: dadd
+     328: dcmpg
+     329: ifge          336
+     332: iconst_1
+     333: goto          337
+     336: iconst_0
+     337: ireturn
+
+  public static double d(double, double);
+    Code:
+       0: dload_2
+       1: dload_2
+       2: dmul
+       3: dload_0
+       4: dload_0
+       5: dmul
+       6: dadd
+       7: dstore        4
+       9: dload         4
+      11: invokestatic  #270                // Method java/lang/Double.isNaN:(D)Z
+      14: ifeq          21
+      17: ldc2_w        #271                // double NaNd
+      20: dreturn
+      21: dload_0
+      22: dconst_0
+      23: dcmpg
+      24: ifge          31
+      27: iconst_1
+      28: goto          32
+      31: iconst_0
+      32: istore        6
+      34: iload         6
+      36: ifeq          42
+      39: dload_0
+      40: dneg
+      41: dstore_0
+      42: dload_2
+      43: dconst_0
+      44: dcmpg
+      45: ifge          52
+      48: iconst_1
+      49: goto          53
+      52: iconst_0
+      53: istore        7
+      55: iload         7
+      57: ifeq          63
+      60: dload_2
+      61: dneg
+      62: dstore_2
+      63: dload_0
+      64: dload_2
+      65: dcmpl
+      66: ifle          73
+      69: iconst_1
+      70: goto          74
+      73: iconst_0
+      74: istore        8
+      76: iload         8
+      78: ifeq          89
+      81: dload_2
+      82: dstore        9
+      84: dload_0
+      85: dstore_2
+      86: dload         9
+      88: dstore_0
+      89: dload         4
+      91: invokestatic  #274                // Method g:(D)D
+      94: dstore        9
+      96: dload_2
+      97: dload         9
+      99: dmul
+     100: dstore_2
+     101: dload_0
+     102: dload         9
+     104: dmul
+     105: dstore_0
+     106: getstatic     #276                // Field s:D
+     109: dload_0
+     110: dadd
+     111: dstore        11
+     113: dload         11
+     115: invokestatic  #279                // Method java/lang/Double.doubleToRawLongBits:(D)J
+     118: l2i
+     119: istore        13
+     121: getstatic     #281                // Field t:[D
+     124: iload         13
+     126: daload
+     127: dstore        14
+     129: getstatic     #283                // Field u:[D
+     132: iload         13
+     134: daload
+     135: dstore        16
+     137: dload         11
+     139: getstatic     #276                // Field s:D
+     142: dsub
+     143: dstore        18
+     145: dload_0
+     146: dload         16
+     148: dmul
+     149: dload_2
+     150: dload         18
+     152: dmul
+     153: dsub
+     154: dstore        20
+     156: ldc2_w        #284                // double 6.0d
+     159: dload         20
+     161: dload         20
+     163: dmul
+     164: dadd
+     165: dload         20
+     167: dmul
+     168: ldc2_w        #52                 // double 0.16666666666666666d
+     171: dmul
+     172: dstore        22
+     174: dload         14
+     176: dload         22
+     178: dadd
+     179: dstore        24
+     181: iload         8
+     183: ifeq          194
+     186: ldc2_w        #286                // double 1.5707963267948966d
+     189: dload         24
+     191: dsub
+     192: dstore        24
+     194: iload         7
+     196: ifeq          207
+     199: ldc2_w        #288                // double 3.141592653589793d
+     202: dload         24
+     204: dsub
+     205: dstore        24
+     207: iload         6
+     209: ifeq          217
+     212: dload         24
+     214: dneg
+     215: dstore        24
+     217: dload         24
+     219: dreturn
+
+  public static float i(float);
+    Code:
+       0: fload_0
+       1: invokestatic  #295                // Method org/joml/Math.invsqrt:(F)F
+       4: freturn
+
+  public static double f(double);
+    Code:
+       0: dload_0
+       1: invokestatic  #297                // Method org/joml/Math.invsqrt:(D)D
+       4: dreturn
+
+  public static double g(double);
+    Code:
+       0: ldc2_w        #237                // double 0.5d
+       3: dload_0
+       4: dmul
+       5: dstore_2
+       6: dload_0
+       7: invokestatic  #279                // Method java/lang/Double.doubleToRawLongBits:(D)J
+      10: lstore        4
+      12: ldc2_w        #298                // long 6910469410427058090l
+      15: lload         4
+      17: iconst_1
+      18: lshr
+      19: lsub
+      20: lstore        4
+      22: lload         4
+      24: invokestatic  #303                // Method java/lang/Double.longBitsToDouble:(J)D
+      27: dstore_0
+      28: dload_0
+      29: ldc2_w        #304                // double 1.5d
+      32: dload_2
+      33: dload_0
+      34: dmul
+      35: dload_0
+      36: dmul
+      37: dsub
+      38: dmul
+      39: dstore_0
+      40: dload_0
+      41: dreturn
+
+  public static float j(float);
+    Code:
+       0: fload_0
+       1: invokestatic  #310                // Method java/lang/Float.floatToIntBits:(F)I
+       4: istore_1
+       5: ldc_w         #311                // int 1419967116
+       8: iload_1
+       9: iconst_3
+      10: idiv
+      11: isub
+      12: istore_1
+      13: iload_1
+      14: invokestatic  #315                // Method java/lang/Float.intBitsToFloat:(I)F
+      17: fstore_2
+      18: ldc_w         #316                // float 0.6666667f
+      21: fload_2
+      22: fmul
+      23: fconst_1
+      24: ldc_w         #317                // float 3.0f
+      27: fload_2
+      28: fmul
+      29: fload_2
+      30: fmul
+      31: fload_0
+      32: fmul
+      33: fdiv
+      34: fadd
+      35: fstore_2
+      36: ldc_w         #316                // float 0.6666667f
+      39: fload_2
+      40: fmul
+      41: fconst_1
+      42: ldc_w         #317                // float 3.0f
+      45: fload_2
+      46: fmul
+      47: fload_2
+      48: fmul
+      49: fload_0
+      50: fmul
+      51: fdiv
+      52: fadd
+      53: fstore_2
+      54: fload_2
+      55: freturn
+
+  public static int h(float, float, float);
+    Code:
+       0: fload_0
+       1: ldc_w         #318                // float 6.0f
+       4: fmul
+       5: f2i
+       6: bipush        6
+       8: irem
+       9: istore_3
+      10: fload_0
+      11: ldc_w         #318                // float 6.0f
+      14: fmul
+      15: iload_3
+      16: i2f
+      17: fsub
+      18: fstore        4
+      20: fload_2
+      21: fconst_1
+      22: fload_1
+      23: fsub
+      24: fmul
+      25: fstore        5
+      27: fload_2
+      28: fconst_1
+      29: fload         4
+      31: fload_1
+      32: fmul
+      33: fsub
+      34: fmul
+      35: fstore        6
+      37: fload_2
+      38: fconst_1
+      39: fconst_1
+      40: fload         4
+      42: fsub
+      43: fload_1
+      44: fmul
+      45: fsub
+      46: fmul
+      47: fstore        7
+      49: iload_3
+      50: tableswitch   { // 0 to 5
+
+                     0: 88
+
+                     1: 102
+
+                     2: 116
+
+                     3: 130
+
+                     4: 144
+
+                     5: 158
+               default: 172
+          }
+      88: fload_2
+      89: fstore        8
+      91: fload         7
+      93: fstore        9
+      95: fload         5
+      97: fstore        10
+      99: goto          188
+     102: fload         6
+     104: fstore        8
+     106: fload_2
+     107: fstore        9
+     109: fload         5
+     111: fstore        10
+     113: goto          188
+     116: fload         5
+     118: fstore        8
+     120: fload_2
+     121: fstore        9
+     123: fload         7
+     125: fstore        10
+     127: goto          188
+     130: fload         5
+     132: fstore        8
+     134: fload         6
+     136: fstore        9
+     138: fload_2
+     139: fstore        10
+     141: goto          188
+     144: fload         7
+     146: fstore        8
+     148: fload         5
+     150: fstore        9
+     152: fload_2
+     153: fstore        10
+     155: goto          188
+     158: fload_2
+     159: fstore        8
+     161: fload         5
+     163: fstore        9
+     165: fload         6
+     167: fstore        10
+     169: goto          188
+     172: new           #320                // class java/lang/RuntimeException
+     175: dup
+     176: fload_0
+     177: fload_1
+     178: fload_2
+     179: invokedynamic #332,  0            // InvokeDynamic #0:makeConcatWithConstants:(FFF)Ljava/lang/String;
+     184: invokespecial #335                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     187: athrow
+     188: iconst_0
+     189: fload         8
+     191: ldc           #180                // float 255.0f
+     193: fmul
+     194: f2i
+     195: iconst_0
+     196: sipush        255
+     199: invokestatic  #337                // Method a:(III)I
+     202: fload         9
+     204: ldc           #180                // float 255.0f
+     206: fmul
+     207: f2i
+     208: iconst_0
+     209: sipush        255
+     212: invokestatic  #337                // Method a:(III)I
+     215: fload         10
+     217: ldc           #180                // float 255.0f
+     219: fmul
+     220: f2i
+     221: iconst_0
+     222: sipush        255
+     225: invokestatic  #337                // Method a:(III)I
+     228: invokestatic  #185                // Method aok$b.a:(IIII)I
+     231: ireturn
+
+  public static int g(int);
+    Code:
+       0: iload_0
+       1: iload_0
+       2: bipush        16
+       4: iushr
+       5: ixor
+       6: istore_0
+       7: iload_0
+       8: ldc_w         #351                // int -2048144789
+      11: imul
+      12: istore_0
+      13: iload_0
+      14: iload_0
+      15: bipush        13
+      17: iushr
+      18: ixor
+      19: istore_0
+      20: iload_0
+      21: ldc_w         #352                // int -1028477387
+      24: imul
+      25: istore_0
+      26: iload_0
+      27: iload_0
+      28: bipush        16
+      30: iushr
+      31: ixor
+      32: istore_0
+      33: iload_0
+      34: ireturn
+
+  public static int a(int, int, java.util.function.IntPredicate);
+    Code:
+       0: iload_1
+       1: iload_0
+       2: isub
+       3: istore_3
+       4: iload_3
+       5: ifle          51
+       8: iload_3
+       9: iconst_2
+      10: idiv
+      11: istore        4
+      13: iload_0
+      14: iload         4
+      16: iadd
+      17: istore        5
+      19: aload_2
+      20: iload         5
+      22: invokeinterface #358,  2          // InterfaceMethod java/util/function/IntPredicate.test:(I)Z
+      27: ifeq          36
+      30: iload         4
+      32: istore_3
+      33: goto          48
+      36: iload         5
+      38: iconst_1
+      39: iadd
+      40: istore_0
+      41: iload_3
+      42: iload         4
+      44: iconst_1
+      45: iadd
+      46: isub
+      47: istore_3
+      48: goto          4
+      51: iload_0
+      52: ireturn
+
+  public static int a(float, int, int);
+    Code:
+       0: iload_1
+       1: fload_0
+       2: iload_2
+       3: iload_1
+       4: isub
+       5: i2f
+       6: fmul
+       7: invokestatic  #182                // Method d:(F)I
+      10: iadd
+      11: ireturn
+
+  public static float i(float, float, float);
+    Code:
+       0: fload_1
+       1: fload_0
+       2: fload_2
+       3: fload_1
+       4: fsub
+       5: fmul
+       6: fadd
+       7: freturn
+
+  public static double d(double, double, double);
+    Code:
+       0: dload_2
+       1: dload_0
+       2: dload         4
+       4: dload_2
+       5: dsub
+       6: dmul
+       7: dadd
+       8: dreturn
+
+  public static double a(double, double, double, double, double, double);
+    Code:
+       0: dload_2
+       1: dload_0
+       2: dload         4
+       4: dload         6
+       6: invokestatic  #109                // Method d:(DDD)D
+       9: dload_0
+      10: dload         8
+      12: dload         10
+      14: invokestatic  #109                // Method d:(DDD)D
+      17: invokestatic  #109                // Method d:(DDD)D
+      20: dreturn
+
+  public static double a(double, double, double, double, double, double, double, double, double, double, double);
+    Code:
+       0: dload         4
+       2: dload_0
+       3: dload_2
+       4: dload         6
+       6: dload         8
+       8: dload         10
+      10: dload         12
+      12: invokestatic  #364                // Method a:(DDDDDD)D
+      15: dload_0
+      16: dload_2
+      17: dload         14
+      19: dload         16
+      21: dload         18
+      23: dload         20
+      25: invokestatic  #364                // Method a:(DDDDDD)D
+      28: invokestatic  #109                // Method d:(DDD)D
+      31: dreturn
+
+  public static float a(float, float, float, float, float);
+    Code:
+       0: ldc_w         #366                // float 0.5f
+       3: fconst_2
+       4: fload_2
+       5: fmul
+       6: fload_3
+       7: fload_1
+       8: fsub
+       9: fload_0
+      10: fmul
+      11: fadd
+      12: fconst_2
+      13: fload_1
+      14: fmul
+      15: ldc_w         #367                // float 5.0f
+      18: fload_2
+      19: fmul
+      20: fsub
+      21: ldc_w         #368                // float 4.0f
+      24: fload_3
+      25: fmul
+      26: fadd
+      27: fload         4
+      29: fsub
+      30: fload_0
+      31: fmul
+      32: fload_0
+      33: fmul
+      34: fadd
+      35: ldc_w         #317                // float 3.0f
+      38: fload_2
+      39: fmul
+      40: fload_1
+      41: fsub
+      42: ldc_w         #317                // float 3.0f
+      45: fload_3
+      46: fmul
+      47: fsub
+      48: fload         4
+      50: fadd
+      51: fload_0
+      52: fmul
+      53: fload_0
+      54: fmul
+      55: fload_0
+      56: fmul
+      57: fadd
+      58: fmul
+      59: freturn
+
+  public static double h(double);
+    Code:
+       0: dload_0
+       1: dload_0
+       2: dmul
+       3: dload_0
+       4: dmul
+       5: dload_0
+       6: dload_0
+       7: ldc2_w        #284                // double 6.0d
+      10: dmul
+      11: ldc2_w        #369                // double 15.0d
+      14: dsub
+      15: dmul
+      16: ldc2_w        #371                // double 10.0d
+      19: dadd
+      20: dmul
+      21: dreturn
+
+  public static double i(double);
+    Code:
+       0: ldc2_w        #373                // double 30.0d
+       3: dload_0
+       4: dmul
+       5: dload_0
+       6: dmul
+       7: dload_0
+       8: dconst_1
+       9: dsub
+      10: dmul
+      11: dload_0
+      12: dconst_1
+      13: dsub
+      14: dmul
+      15: dreturn
+
+  public static int j(double);
+    Code:
+       0: dload_0
+       1: dconst_0
+       2: dcmpl
+       3: ifne          8
+       6: iconst_0
+       7: ireturn
+       8: dload_0
+       9: dconst_0
+      10: dcmpl
+      11: ifle          18
+      14: iconst_1
+      15: goto          19
+      18: iconst_m1
+      19: ireturn
+
+  public static float j(float, float, float);
+    Code:
+       0: fload_1
+       1: fload_0
+       2: fload_2
+       3: fload_1
+       4: fsub
+       5: invokestatic  #150                // Method g:(F)F
+       8: fmul
+       9: fadd
+      10: freturn
+
+  public static float e(float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: frem
+       3: fload_1
+       4: ldc_w         #366                // float 0.5f
+       7: fmul
+       8: fsub
+       9: invokestatic  #87                 // Method java/lang/Math.abs:(F)F
+      12: fload_1
+      13: ldc_w         #375                // float 0.25f
+      16: fmul
+      17: fsub
+      18: fload_1
+      19: ldc_w         #375                // float 0.25f
+      22: fmul
+      23: fdiv
+      24: freturn
+
+  public static float k(float);
+    Code:
+       0: fload_0
+       1: fload_0
+       2: fmul
+       3: freturn
+
+  public static double k(double);
+    Code:
+       0: dload_0
+       1: dload_0
+       2: dmul
+       3: dreturn
+
+  public static int h(int);
+    Code:
+       0: iload_0
+       1: iload_0
+       2: imul
+       3: ireturn
+
+  public static long a(long);
+    Code:
+       0: lload_0
+       1: lload_0
+       2: lmul
+       3: lreturn
+
+  public static double a(double, double, double, double, double);
+    Code:
+       0: dload         6
+       2: dload         8
+       4: dload_0
+       5: dload_2
+       6: dload         4
+       8: invokestatic  #379                // Method c:(DDD)D
+      11: invokestatic  #381                // Method b:(DDD)D
+      14: dreturn
+
+  public static float b(float, float, float, float, float);
+    Code:
+       0: fload_3
+       1: fload         4
+       3: fload_0
+       4: fload_1
+       5: fload_2
+       6: invokestatic  #383                // Method g:(FFF)F
+       9: invokestatic  #385                // Method b:(FFF)F
+      12: freturn
+
+  public static double b(double, double, double, double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: dload         4
+       4: invokestatic  #379                // Method c:(DDD)D
+       7: dload         6
+       9: dload         8
+      11: invokestatic  #109                // Method d:(DDD)D
+      14: dreturn
+
+  public static float c(float, float, float, float, float);
+    Code:
+       0: fload_0
+       1: fload_1
+       2: fload_2
+       3: invokestatic  #383                // Method g:(FFF)F
+       6: fload_3
+       7: fload         4
+       9: invokestatic  #111                // Method i:(FFF)F
+      12: freturn
+
+  public static double l(double);
+    Code:
+       0: dload_0
+       1: ldc2_w        #386                // double 2.0d
+       4: dload_0
+       5: ldc2_w        #388                // double 3000.0d
+       8: dmul
+       9: invokestatic  #391                // Method a:(D)I
+      12: i2l
+      13: invokestatic  #394                // InterfaceMethod apf.a:(J)Lapf;
+      16: invokeinterface #129,  1          // InterfaceMethod apf.j:()D
+      21: dmul
+      22: dconst_1
+      23: dsub
+      24: ldc2_w        #395                // double 1.0E-7d
+      27: dmul
+      28: ldc2_w        #386                // double 2.0d
+      31: ddiv
+      32: dadd
+      33: dreturn
+
+  public static int d(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: invokestatic  #398                // Method e:(II)I
+       5: iload_1
+       6: imul
+       7: ireturn
+
+  public static int e(int, int);
+    Code:
+       0: iload_0
+       1: ineg
+       2: iload_1
+       3: invokestatic  #116                // Method java/lang/Math.floorDiv:(II)I
+       6: ineg
+       7: ireturn
+
+  public static int b(apf, int, int);
+    Code:
+       0: aload_0
+       1: iload_2
+       2: iload_1
+       3: isub
+       4: iconst_1
+       5: iadd
+       6: invokeinterface #121,  2          // InterfaceMethod apf.a:(I)I
+      11: iload_1
+      12: iadd
+      13: ireturn
+
+  public static float b(apf, float, float);
+    Code:
+       0: aload_0
+       1: invokeinterface #125,  1          // InterfaceMethod apf.i:()F
+       6: fload_2
+       7: fload_1
+       8: fsub
+       9: fmul
+      10: fload_1
+      11: fadd
+      12: freturn
+
+  public static float c(apf, float, float);
+    Code:
+       0: fload_1
+       1: aload_0
+       2: invokeinterface #400,  1          // InterfaceMethod apf.k:()D
+       7: d2f
+       8: fload_2
+       9: fmul
+      10: fadd
+      11: freturn
+
+  public static double e(double, double);
+    Code:
+       0: dload_0
+       1: dload_0
+       2: dmul
+       3: dload_2
+       4: dload_2
+       5: dmul
+       6: dadd
+       7: dreturn
+
+  public static double f(double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: invokestatic  #402                // Method e:(DD)D
+       5: invokestatic  #80                 // Method java/lang/Math.sqrt:(D)D
+       8: dreturn
+
+  public static double e(double, double, double);
+    Code:
+       0: dload_0
+       1: dload_0
+       2: dmul
+       3: dload_2
+       4: dload_2
+       5: dmul
+       6: dadd
+       7: dload         4
+       9: dload         4
+      11: dmul
+      12: dadd
+      13: dreturn
+
+  public static double f(double, double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: dload         4
+       4: invokestatic  #404                // Method e:(DDD)D
+       7: invokestatic  #80                 // Method java/lang/Math.sqrt:(D)D
+      10: dreturn
+
+  public static int a(double, int);
+    Code:
+       0: dload_0
+       1: iload_2
+       2: i2d
+       3: ddiv
+       4: invokestatic  #391                // Method a:(D)I
+       7: iload_2
+       8: imul
+       9: ireturn
+
+  public static java.util.stream.IntStream c(int, int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: iload_2
+       3: iconst_1
+       4: invokestatic  #409                // Method a:(IIII)Ljava/util/stream/IntStream;
+       7: areturn
+
+  public static java.util.stream.IntStream a(int, int, int, int);
+    Code:
+       0: iload_1
+       1: iload_2
+       2: if_icmple     40
+       5: new           #411                // class java/lang/IllegalArgumentException
+       8: dup
+       9: getstatic     #417                // Field java/util/Locale.ROOT:Ljava/util/Locale;
+      12: ldc_w         #419                // String upperbound %d expected to be > lowerBound %d
+      15: iconst_2
+      16: anewarray     #4                  // class java/lang/Object
+      19: dup
+      20: iconst_0
+      21: iload_2
+      22: invokestatic  #425                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      25: aastore
+      26: dup
+      27: iconst_1
+      28: iload_1
+      29: invokestatic  #425                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      32: aastore
+      33: invokestatic  #431                // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      36: invokespecial #432                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      39: athrow
+      40: iload_3
+      41: iconst_1
+      42: if_icmpge     73
+      45: new           #411                // class java/lang/IllegalArgumentException
+      48: dup
+      49: getstatic     #417                // Field java/util/Locale.ROOT:Ljava/util/Locale;
+      52: ldc_w         #434                // String steps expected to be >= 1, was %d
+      55: iconst_1
+      56: anewarray     #4                  // class java/lang/Object
+      59: dup
+      60: iconst_0
+      61: iload_3
+      62: invokestatic  #425                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      65: aastore
+      66: invokestatic  #431                // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      69: invokespecial #432                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      72: athrow
+      73: iload_0
+      74: iload_1
+      75: if_icmplt     83
+      78: iload_0
+      79: iload_2
+      80: if_icmple     87
+      83: invokestatic  #440                // InterfaceMethod java/util/stream/IntStream.empty:()Ljava/util/stream/IntStream;
+      86: areturn
+      87: iload_0
+      88: iload_0
+      89: iload_1
+      90: iload_2
+      91: invokedynamic #455,  0            // InvokeDynamic #1:test:(III)Ljava/util/function/IntPredicate;
+      96: iload_0
+      97: iload_3
+      98: iload_2
+      99: iload_1
+     100: invokedynamic #464,  0            // InvokeDynamic #2:applyAsInt:(IIII)Ljava/util/function/IntUnaryOperator;
+     105: invokestatic  #468                // InterfaceMethod java/util/stream/IntStream.iterate:(ILjava/util/function/IntPredicate;Ljava/util/function/IntUnaryOperator;)Ljava/util/stream/IntStream;
+     108: areturn
+
+  private static int a(int, int, int, int, int);
+    Code:
+       0: iload         4
+       2: iload_0
+       3: if_icmpgt     10
+       6: iconst_1
+       7: goto          11
+      10: iconst_0
+      11: istore        5
+      13: iload_0
+      14: iload         4
+      16: isub
+      17: invokestatic  #90                 // Method java/lang/Math.abs:(I)I
+      20: istore        6
+      22: iload_0
+      23: iload         6
+      25: iadd
+      26: iload_1
+      27: iadd
+      28: iload_2
+      29: if_icmpgt     36
+      32: iconst_1
+      33: goto          37
+      36: iconst_0
+      37: istore        7
+      39: iload         5
+      41: ifeq          49
+      44: iload         7
+      46: ifne          75
+      49: iload_0
+      50: iload         6
+      52: isub
+      53: iload         5
+      55: ifeq          62
+      58: iload_1
+      59: goto          63
+      62: iconst_0
+      63: isub
+      64: istore        8
+      66: iload         8
+      68: iload_3
+      69: if_icmplt     75
+      72: iload         8
+      74: ireturn
+      75: iload_0
+      76: iload         6
+      78: iadd
+      79: iload_1
+      80: iadd
+      81: ireturn
+
+  private static boolean b(int, int, int, int);
+    Code:
+       0: iload_0
+       1: iload_3
+       2: isub
+       3: invokestatic  #90                 // Method java/lang/Math.abs:(I)I
+       6: istore        4
+       8: iload_0
+       9: iload         4
+      11: isub
+      12: iload_1
+      13: if_icmpge     24
+      16: iload_0
+      17: iload         4
+      19: iadd
+      20: iload_2
+      21: if_icmpgt     28
+      24: iconst_1
+      25: goto          29
+      28: iconst_0
+      29: ireturn
+
+  private static void a(float[]);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: iload_1
+       3: aload_0
+       4: arraylength
+       5: if_icmpge     35
+       8: aload_0
+       9: iload_1
+      10: iload_1
+      11: i2d
+      12: ldc2_w        #288                // double 3.141592653589793d
+      15: dmul
+      16: ldc2_w        #386                // double 2.0d
+      19: dmul
+      20: ldc2_w        #470                // double 65536.0d
+      23: ddiv
+      24: invokestatic  #474                // Method java/lang/Math.sin:(D)D
+      27: d2f
+      28: fastore
+      29: iinc          1, 1
+      32: goto          2
+      35: return
+
+  static {};
+    Code:
+       0: fconst_2
+       1: invokestatic  #477                // Method c:(F)F
+       4: putstatic     #479                // Field g:F
+       7: ldc_w         #480                // int 65536
+      10: newarray       float
+      12: invokedynamic #490,  0            // InvokeDynamic #3:accept:()Ljava/util/function/Consumer;
+      17: invokestatic  #495                // Method ac.a:(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;
+      20: checkcast     #496                // class "[F"
+      23: putstatic     #71                 // Field m:[F
+      26: invokestatic  #499                // InterfaceMethod apf.b:()Lapf;
+      29: putstatic     #227                // Field n:Lapf;
+      32: bipush        32
+      34: newarray       int
+      36: dup
+      37: iconst_0
+      38: iconst_0
+      39: iastore
+      40: dup
+      41: iconst_1
+      42: iconst_1
+      43: iastore
+      44: dup
+      45: iconst_2
+      46: bipush        28
+      48: iastore
+      49: dup
+      50: iconst_3
+      51: iconst_2
+      52: iastore
+      53: dup
+      54: iconst_4
+      55: bipush        29
+      57: iastore
+      58: dup
+      59: iconst_5
+      60: bipush        14
+      62: iastore
+      63: dup
+      64: bipush        6
+      66: bipush        24
+      68: iastore
+      69: dup
+      70: bipush        7
+      72: iconst_3
+      73: iastore
+      74: dup
+      75: bipush        8
+      77: bipush        30
+      79: iastore
+      80: dup
+      81: bipush        9
+      83: bipush        22
+      85: iastore
+      86: dup
+      87: bipush        10
+      89: bipush        20
+      91: iastore
+      92: dup
+      93: bipush        11
+      95: bipush        15
+      97: iastore
+      98: dup
+      99: bipush        12
+     101: bipush        25
+     103: iastore
+     104: dup
+     105: bipush        13
+     107: bipush        17
+     109: iastore
+     110: dup
+     111: bipush        14
+     113: iconst_4
+     114: iastore
+     115: dup
+     116: bipush        15
+     118: bipush        8
+     120: iastore
+     121: dup
+     122: bipush        16
+     124: bipush        31
+     126: iastore
+     127: dup
+     128: bipush        17
+     130: bipush        27
+     132: iastore
+     133: dup
+     134: bipush        18
+     136: bipush        13
+     138: iastore
+     139: dup
+     140: bipush        19
+     142: bipush        23
+     144: iastore
+     145: dup
+     146: bipush        20
+     148: bipush        21
+     150: iastore
+     151: dup
+     152: bipush        21
+     154: bipush        19
+     156: iastore
+     157: dup
+     158: bipush        22
+     160: bipush        16
+     162: iastore
+     163: dup
+     164: bipush        23
+     166: bipush        7
+     168: iastore
+     169: dup
+     170: bipush        24
+     172: bipush        26
+     174: iastore
+     175: dup
+     176: bipush        25
+     178: bipush        12
+     180: iastore
+     181: dup
+     182: bipush        26
+     184: bipush        18
+     186: iastore
+     187: dup
+     188: bipush        27
+     190: bipush        6
+     192: iastore
+     193: dup
+     194: bipush        28
+     196: bipush        11
+     198: iastore
+     199: dup
+     200: bipush        29
+     202: iconst_5
+     203: iastore
+     204: dup
+     205: bipush        30
+     207: bipush        10
+     209: iastore
+     210: dup
+     211: bipush        31
+     213: bipush        9
+     215: iastore
+     216: putstatic     #174                // Field o:[I
+     219: ldc2_w        #500                // long 4805340802404319232l
+     222: invokestatic  #303                // Method java/lang/Double.longBitsToDouble:(J)D
+     225: putstatic     #276                // Field s:D
+     228: sipush        257
+     231: newarray       double
+     233: putstatic     #281                // Field t:[D
+     236: sipush        257
+     239: newarray       double
+     241: putstatic     #283                // Field u:[D
+     244: iconst_0
+     245: istore_0
+     246: iload_0
+     247: sipush        257
+     250: if_icmpge     286
+     253: iload_0
+     254: i2d
+     255: ldc2_w        #502                // double 256.0d
+     258: ddiv
+     259: dstore_1
+     260: dload_1
+     261: invokestatic  #506                // Method java/lang/Math.asin:(D)D
+     264: dstore_3
+     265: getstatic     #283                // Field u:[D
+     268: iload_0
+     269: dload_3
+     270: invokestatic  #509                // Method java/lang/Math.cos:(D)D
+     273: dastore
+     274: getstatic     #281                // Field t:[D
+     277: iload_0
+     278: dload_3
+     279: dastore
+     280: iinc          0, 1
+     283: goto          246
+     286: return
+}
+Compiled from "SourceFile"
+public class fxd implements fwr {
+  private final int a;
+
+  private final java.util.List<bcj$b<fwr>> b;
+
+  private final fwr c;
+
+  public fxd(java.util.List<bcj$b<fwr>>);
+    Code:
+       0: aload_0
+       1: invokespecial #31                 // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #33                 // Field b:Ljava/util/List;
+       9: aload_0
+      10: aload_1
+      11: invokestatic  #38                 // Method bck.a:(Ljava/util/List;)I
+      14: putfield      #40                 // Field a:I
+      17: aload_0
+      18: aload_1
+      19: iconst_0
+      20: invokeinterface #46,  2           // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      25: checkcast     #11                 // class bcj$b
+      28: invokevirtual #49                 // Method bcj$b.b:()Ljava/lang/Object;
+      31: checkcast     #6                  // class fwr
+      34: putfield      #51                 // Field c:Lfwr;
+      37: return
+
+  public java.util.List<fkr> a(dcb, ha, apf);
+    Code:
+       0: aload_0
+       1: getfield      #33                 // Field b:Ljava/util/List;
+       4: aload_3
+       5: invokeinterface #63,  1           // InterfaceMethod apf.g:()J
+      10: l2i
+      11: invokestatic  #69                 // Method java/lang/Math.abs:(I)I
+      14: aload_0
+      15: getfield      #40                 // Field a:I
+      18: irem
+      19: invokestatic  #72                 // Method bck.a:(Ljava/util/List;I)Ljava/util/Optional;
+      22: aload_1
+      23: aload_2
+      24: aload_3
+      25: invokedynamic #91,  0             // InvokeDynamic #0:apply:(Ldcb;Lha;Lapf;)Ljava/util/function/Function;
+      30: invokevirtual #97                 // Method java/util/Optional.map:(Ljava/util/function/Function;)Ljava/util/Optional;
+      33: invokestatic  #103                // Method java/util/Collections.emptyList:()Ljava/util/List;
+      36: invokevirtual #106                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+      39: checkcast     #42                 // class java/util/List
+      42: areturn
+
+  public boolean a();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #114,  1          // InterfaceMethod fwr.a:()Z
+       9: ireturn
+
+  public boolean b();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #116,  1          // InterfaceMethod fwr.b:()Z
+       9: ireturn
+
+  public boolean c();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #118,  1          // InterfaceMethod fwr.c:()Z
+       9: ireturn
+
+  public boolean d();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #121,  1          // InterfaceMethod fwr.d:()Z
+       9: ireturn
+
+  public fuv e();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #125,  1          // InterfaceMethod fwr.e:()Lfuv;
+       9: areturn
+
+  public fld f();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #129,  1          // InterfaceMethod fwr.f:()Lfld;
+       9: areturn
+
+  public flb g();
+    Code:
+       0: aload_0
+       1: getfield      #51                 // Field c:Lfwr;
+       4: invokeinterface #132,  1          // InterfaceMethod fwr.g:()Lflb;
+       9: areturn
+
+  private static java.util.List a(dcb, ha, apf, bcj$b);
+    Code:
+       0: aload_3
+       1: invokevirtual #49                 // Method bcj$b.b:()Ljava/lang/Object;
+       4: checkcast     #6                  // class fwr
+       7: aload_0
+       8: aload_1
+       9: aload_2
+      10: invokeinterface #134,  4          // InterfaceMethod fwr.a:(Ldcb;Lha;Lapf;)Ljava/util/List;
+      15: areturn
+}
+Compiled from "SourceFile"
+public class fxa implements fwr {
+  private final java.util.List<org.apache.commons.lang3.tuple.Pair<java.util.function.Predicate<dcb>, fwr>> g;
+
+  protected final boolean a;
+
+  protected final boolean b;
+
+  protected final boolean c;
+
+  protected final fuv d;
+
+  protected final fld e;
+
+  protected final flb f;
+
+  private final java.util.Map<dcb, java.util.BitSet> h;
+
+  public fxa(java.util.List<org.apache.commons.lang3.tuple.Pair<java.util.function.Predicate<dcb>, fwr>>);
+    Code:
+       0: aload_0
+       1: invokespecial #36                 // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #38                 // class it/unimi/dsi/fastutil/objects/Object2ObjectOpenCustomHashMap
+       8: dup
+       9: invokestatic  #44                 // Method ac.k:()Lit/unimi/dsi/fastutil/Hash$Strategy;
+      12: invokespecial #47                 // Method it/unimi/dsi/fastutil/objects/Object2ObjectOpenCustomHashMap."<init>":(Lit/unimi/dsi/fastutil/Hash$Strategy;)V
+      15: putfield      #49                 // Field h:Ljava/util/Map;
+      18: aload_0
+      19: aload_1
+      20: putfield      #51                 // Field g:Ljava/util/List;
+      23: aload_1
+      24: invokeinterface #57,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      29: invokeinterface #63,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      34: checkcast     #65                 // class org/apache/commons/lang3/tuple/Pair
+      37: invokevirtual #68                 // Method org/apache/commons/lang3/tuple/Pair.getRight:()Ljava/lang/Object;
+      40: checkcast     #6                  // class fwr
+      43: astore_2
+      44: aload_0
+      45: aload_2
+      46: invokeinterface #71,  1           // InterfaceMethod fwr.a:()Z
+      51: putfield      #73                 // Field a:Z
+      54: aload_0
+      55: aload_2
+      56: invokeinterface #75,  1           // InterfaceMethod fwr.b:()Z
+      61: putfield      #77                 // Field b:Z
+      64: aload_0
+      65: aload_2
+      66: invokeinterface #79,  1           // InterfaceMethod fwr.c:()Z
+      71: putfield      #81                 // Field c:Z
+      74: aload_0
+      75: aload_2
+      76: invokeinterface #84,  1           // InterfaceMethod fwr.e:()Lfuv;
+      81: putfield      #86                 // Field d:Lfuv;
+      84: aload_0
+      85: aload_2
+      86: invokeinterface #89,  1           // InterfaceMethod fwr.f:()Lfld;
+      91: putfield      #91                 // Field e:Lfld;
+      94: aload_0
+      95: aload_2
+      96: invokeinterface #94,  1           // InterfaceMethod fwr.g:()Lflb;
+     101: putfield      #96                 // Field f:Lflb;
+     104: return
+
+  public java.util.List<fkr> a(dcb, ha, apf);
+    Code:
+       0: aload_1
+       1: ifnonnull     8
+       4: invokestatic  #110                // Method java/util/Collections.emptyList:()Ljava/util/List;
+       7: areturn
+       8: aload_0
+       9: getfield      #49                 // Field h:Ljava/util/Map;
+      12: aload_1
+      13: invokeinterface #116,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      18: checkcast     #118                // class java/util/BitSet
+      21: astore        4
+      23: aload         4
+      25: ifnonnull     113
+      28: new           #118                // class java/util/BitSet
+      31: dup
+      32: invokespecial #119                // Method java/util/BitSet."<init>":()V
+      35: astore        4
+      37: iconst_0
+      38: istore        5
+      40: iload         5
+      42: aload_0
+      43: getfield      #51                 // Field g:Ljava/util/List;
+      46: invokeinterface #123,  1          // InterfaceMethod java/util/List.size:()I
+      51: if_icmpge     100
+      54: aload_0
+      55: getfield      #51                 // Field g:Ljava/util/List;
+      58: iload         5
+      60: invokeinterface #126,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      65: checkcast     #65                 // class org/apache/commons/lang3/tuple/Pair
+      68: astore        6
+      70: aload         6
+      72: invokevirtual #129                // Method org/apache/commons/lang3/tuple/Pair.getLeft:()Ljava/lang/Object;
+      75: checkcast     #131                // class java/util/function/Predicate
+      78: aload_1
+      79: invokeinterface #135,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+      84: ifeq          94
+      87: aload         4
+      89: iload         5
+      91: invokevirtual #139                // Method java/util/BitSet.set:(I)V
+      94: iinc          5, 1
+      97: goto          40
+     100: aload_0
+     101: getfield      #49                 // Field h:Ljava/util/Map;
+     104: aload_1
+     105: aload         4
+     107: invokeinterface #143,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     112: pop
+     113: invokestatic  #149                // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+     116: astore        5
+     118: aload_3
+     119: invokeinterface #154,  1          // InterfaceMethod apf.g:()J
+     124: lstore        6
+     126: iconst_0
+     127: istore        8
+     129: iload         8
+     131: aload         4
+     133: invokevirtual #163                // Method java/util/BitSet.length:()I
+     136: if_icmpge     195
+     139: aload         4
+     141: iload         8
+     143: invokevirtual #166                // Method java/util/BitSet.get:(I)Z
+     146: ifeq          189
+     149: aload         5
+     151: aload_0
+     152: getfield      #51                 // Field g:Ljava/util/List;
+     155: iload         8
+     157: invokeinterface #126,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+     162: checkcast     #65                 // class org/apache/commons/lang3/tuple/Pair
+     165: invokevirtual #68                 // Method org/apache/commons/lang3/tuple/Pair.getRight:()Ljava/lang/Object;
+     168: checkcast     #6                  // class fwr
+     171: aload_1
+     172: aload_2
+     173: lload         6
+     175: invokestatic  #169                // InterfaceMethod apf.a:(J)Lapf;
+     178: invokeinterface #171,  4          // InterfaceMethod fwr.a:(Ldcb;Lha;Lapf;)Ljava/util/List;
+     183: invokeinterface #175,  2          // InterfaceMethod java/util/List.addAll:(Ljava/util/Collection;)Z
+     188: pop
+     189: iinc          8, 1
+     192: goto          129
+     195: aload         5
+     197: areturn
+
+  public boolean a();
+    Code:
+       0: aload_0
+       1: getfield      #73                 // Field a:Z
+       4: ireturn
+
+  public boolean b();
+    Code:
+       0: aload_0
+       1: getfield      #77                 // Field b:Z
+       4: ireturn
+
+  public boolean c();
+    Code:
+       0: aload_0
+       1: getfield      #81                 // Field c:Z
+       4: ireturn
+
+  public boolean d();
+    Code:
+       0: iconst_0
+       1: ireturn
+
+  public fuv e();
+    Code:
+       0: aload_0
+       1: getfield      #86                 // Field d:Lfuv;
+       4: areturn
+
+  public fld f();
+    Code:
+       0: aload_0
+       1: getfield      #91                 // Field e:Lfld;
+       4: areturn
+
+  public flb g();
+    Code:
+       0: aload_0
+       1: getfield      #96                 // Field f:Lflb;
+       4: areturn
+}
+Compiled from "SourceFile"
+public interface dgz extends apf {
+  public static final float b;
+
+  public static final double c;
+
+  public abstract int c(int);
+
+  public default int f();
+    Code:
+       0: aload_0
+       1: bipush        32
+       3: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+       8: ireturn
+
+  public default int a(int);
+    Code:
+       0: iload_1
+       1: ifgt          14
+       4: new           #24                 // class java/lang/IllegalArgumentException
+       7: dup
+       8: ldc           #26                 // String Bound must be positive
+      10: invokespecial #30                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      13: athrow
+      14: iload_1
+      15: iload_1
+      16: iconst_1
+      17: isub
+      18: iand
+      19: ifne          39
+      22: iload_1
+      23: i2l
+      24: aload_0
+      25: bipush        31
+      27: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+      32: i2l
+      33: lmul
+      34: bipush        31
+      36: lshr
+      37: l2i
+      38: ireturn
+      39: aload_0
+      40: bipush        31
+      42: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+      47: istore_2
+      48: iload_2
+      49: iload_1
+      50: irem
+      51: istore_3
+      52: iload_2
+      53: iload_3
+      54: isub
+      55: iload_1
+      56: iconst_1
+      57: isub
+      58: iadd
+      59: iflt          39
+      62: iload_3
+      63: ireturn
+
+  public default long g();
+    Code:
+       0: aload_0
+       1: bipush        32
+       3: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+       8: istore_1
+       9: aload_0
+      10: bipush        32
+      12: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+      17: istore_2
+      18: iload_1
+      19: i2l
+      20: bipush        32
+      22: lshl
+      23: lstore_3
+      24: lload_3
+      25: iload_2
+      26: i2l
+      27: ladd
+      28: lreturn
+
+  public default boolean h();
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+       7: ifeq          14
+      10: iconst_1
+      11: goto          15
+      14: iconst_0
+      15: ireturn
+
+  public default float i();
+    Code:
+       0: aload_0
+       1: bipush        24
+       3: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+       8: i2f
+       9: ldc           #10                 // float 5.9604645E-8f
+      11: fmul
+      12: freturn
+
+  public default double j();
+    Code:
+       0: aload_0
+       1: bipush        26
+       3: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+       8: istore_1
+       9: aload_0
+      10: bipush        27
+      12: invokeinterface #19,  2           // InterfaceMethod c:(I)I
+      17: istore_2
+      18: iload_1
+      19: i2l
+      20: bipush        27
+      22: lshl
+      23: iload_2
+      24: i2l
+      25: ladd
+      26: lstore_3
+      27: lload_3
+      28: l2d
+      29: ldc2_w        #13                 // double 1.1102230246251565E-16d
+      32: dmul
+      33: dreturn
+}
+Compiled from "SourceFile"
+public class dhl implements dgz {
+  private static final int d;
+
+  private static final long e;
+
+  private static final long f;
+
+  private static final long g;
+
+  private final java.util.concurrent.atomic.AtomicLong h;
+
+  private final dhm i;
+
+  public dhl(long);
+    Code:
+       0: aload_0
+       1: invokespecial #32                 // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #34                 // class java/util/concurrent/atomic/AtomicLong
+       8: dup
+       9: invokespecial #35                 // Method java/util/concurrent/atomic/AtomicLong."<init>":()V
+      12: putfield      #37                 // Field h:Ljava/util/concurrent/atomic/AtomicLong;
+      15: aload_0
+      16: new           #39                 // class dhm
+      19: dup
+      20: aload_0
+      21: invokespecial #42                 // Method dhm."<init>":(Lapf;)V
+      24: putfield      #44                 // Field i:Ldhm;
+      27: aload_0
+      28: lload_1
+      29: invokevirtual #47                 // Method b:(J)V
+      32: return
+
+  public apf d();
+    Code:
+       0: new           #2                  // class dhl
+       3: dup
+       4: aload_0
+       5: invokevirtual #54                 // Method g:()J
+       8: invokespecial #56                 // Method "<init>":(J)V
+      11: areturn
+
+  public dhx e();
+    Code:
+       0: new           #9                  // class dhl$a
+       3: dup
+       4: aload_0
+       5: invokevirtual #54                 // Method g:()J
+       8: invokespecial #58                 // Method dhl$a."<init>":(J)V
+      11: areturn
+
+  public void b(long);
+    Code:
+       0: aload_0
+       1: getfield      #37                 // Field h:Ljava/util/concurrent/atomic/AtomicLong;
+       4: aload_0
+       5: getfield      #37                 // Field h:Ljava/util/concurrent/atomic/AtomicLong;
+       8: invokevirtual #61                 // Method java/util/concurrent/atomic/AtomicLong.get:()J
+      11: lload_1
+      12: ldc2_w        #19                 // long 25214903917l
+      15: lxor
+      16: ldc2_w        #16                 // long 281474976710655l
+      19: land
+      20: invokevirtual #65                 // Method java/util/concurrent/atomic/AtomicLong.compareAndSet:(JJ)Z
+      23: ifne          33
+      26: ldc           #67                 // String LegacyRandomSource
+      28: aconst_null
+      29: invokestatic  #72                 // Method apu.a:(Ljava/lang/String;Ljava/lang/Thread;)Ly;
+      32: athrow
+      33: aload_0
+      34: getfield      #44                 // Field i:Ldhm;
+      37: invokevirtual #74                 // Method dhm.a:()V
+      40: return
+
+  public int c(int);
+    Code:
+       0: aload_0
+       1: getfield      #37                 // Field h:Ljava/util/concurrent/atomic/AtomicLong;
+       4: invokevirtual #61                 // Method java/util/concurrent/atomic/AtomicLong.get:()J
+       7: lstore_2
+       8: lload_2
+       9: ldc2_w        #19                 // long 25214903917l
+      12: lmul
+      13: ldc2_w        #22                 // long 11l
+      16: ladd
+      17: ldc2_w        #16                 // long 281474976710655l
+      20: land
+      21: lstore        4
+      23: aload_0
+      24: getfield      #37                 // Field h:Ljava/util/concurrent/atomic/AtomicLong;
+      27: lload_2
+      28: lload         4
+      30: invokevirtual #65                 // Method java/util/concurrent/atomic/AtomicLong.compareAndSet:(JJ)Z
+      33: ifne          43
+      36: ldc           #67                 // String LegacyRandomSource
+      38: aconst_null
+      39: invokestatic  #72                 // Method apu.a:(Ljava/lang/String;Ljava/lang/Thread;)Ly;
+      42: athrow
+      43: lload         4
+      45: bipush        48
+      47: iload_1
+      48: isub
+      49: lshr
+      50: l2i
+      51: ireturn
+
+  public double k();
+    Code:
+       0: aload_0
+       1: getfield      #44                 // Field i:Ldhm;
+       4: invokevirtual #82                 // Method dhm.b:()D
+       7: dreturn
+}
+Compiled from "SourceFile"
+public class bck {
+  private bck();
+    Code:
+       0: aload_0
+       1: invokespecial #9                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static int a(java.util.List<? extends bcj>);
+    Code:
+       0: lconst_0
+       1: lstore_1
+       2: aload_0
+       3: invokeinterface #20,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       8: astore_3
+       9: aload_3
+      10: invokeinterface #26,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      15: ifeq          46
+      18: aload_3
+      19: invokeinterface #30,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      24: checkcast     #32                 // class bcj
+      27: astore        4
+      29: lload_1
+      30: aload         4
+      32: invokeinterface #35,  1           // InterfaceMethod bcj.a:()Lbci;
+      37: invokevirtual #40                 // Method bci.a:()I
+      40: i2l
+      41: ladd
+      42: lstore_1
+      43: goto          9
+      46: lload_1
+      47: ldc2_w        #41                 // long 2147483647l
+      50: lcmp
+      51: ifle          64
+      54: new           #44                 // class java/lang/IllegalArgumentException
+      57: dup
+      58: ldc           #46                 // String Sum of weights must be <= 2147483647
+      60: invokespecial #49                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      63: athrow
+      64: lload_1
+      65: l2i
+      66: ireturn
+
+  public static <T extends bcj> java.util.Optional<T> a(apf, java.util.List<T>, int);
+    Code:
+       0: iload_2
+       1: ifge          20
+       4: new           #44                 // class java/lang/IllegalArgumentException
+       7: dup
+       8: ldc           #60                 // String Negative total weight in getRandomItem
+      10: invokespecial #49                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      13: invokestatic  #66                 // Method ac.b:(Ljava/lang/Throwable;)Ljava/lang/Throwable;
+      16: checkcast     #44                 // class java/lang/IllegalArgumentException
+      19: athrow
+      20: iload_2
+      21: ifne          28
+      24: invokestatic  #72                 // Method java/util/Optional.empty:()Ljava/util/Optional;
+      27: areturn
+      28: aload_0
+      29: iload_2
+      30: invokeinterface #77,  2           // InterfaceMethod apf.a:(I)I
+      35: istore_3
+      36: aload_1
+      37: iload_3
+      38: invokestatic  #80                 // Method a:(Ljava/util/List;I)Ljava/util/Optional;
+      41: areturn
+
+  public static <T extends bcj> java.util.Optional<T> a(java.util.List<T>, int);
+    Code:
+       0: aload_0
+       1: invokeinterface #20,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       6: astore_2
+       7: aload_2
+       8: invokeinterface #26,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          50
+      16: aload_2
+      17: invokeinterface #30,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #32                 // class bcj
+      25: astore_3
+      26: iload_1
+      27: aload_3
+      28: invokeinterface #35,  1           // InterfaceMethod bcj.a:()Lbci;
+      33: invokevirtual #40                 // Method bci.a:()I
+      36: isub
+      37: istore_1
+      38: iload_1
+      39: ifge          47
+      42: aload_3
+      43: invokestatic  #89                 // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;
+      46: areturn
+      47: goto          7
+      50: invokestatic  #72                 // Method java/util/Optional.empty:()Ljava/util/Optional;
+      53: areturn
+
+  public static <T extends bcj> java.util.Optional<T> a(apf, java.util.List<T>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_1
+       3: invokestatic  #94                 // Method a:(Ljava/util/List;)I
+       6: invokestatic  #96                 // Method a:(Lapf;Ljava/util/List;I)Ljava/util/Optional;
+       9: areturn
+}

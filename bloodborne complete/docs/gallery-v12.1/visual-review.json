@@ -1,0 +1,51 @@
+{
+  "schema": "dreamwalker-flat-gallery-visual-review-v1",
+  "status": "PASS",
+  "productionJarSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+  "captureSha256": "50c8edb99042376a65bd52558ccea69122605c4c0edc617d397a94115ded5da3",
+  "reviewedFrames": 24,
+  "reviewedFilenames": [
+    "gallery-01-bloodborne_dw_prototype_double_door.png",
+    "gallery-02-bloodborne_rp_wood_gate.png",
+    "gallery-03-bloodborne_rp_elevator.png",
+    "gallery-04-bloodborne_dw_source__wall_dec_bottom_variant_0_.png",
+    "gallery-05-bloodborne_dw_source_assembly_white_stained_glass_pane_variant_6_.png",
+    "gallery-06-bloodborne_dw_source_black_concrete_powder_variant_0_.png",
+    "gallery-07-bloodborne_dw_source_1_spirelamp_001_variant_0_.png",
+    "gallery-08-bloodborne_dw_source_assembly_yellow_stained_glass_pane_variant_6_.png",
+    "gallery-09-bloodborne_dw_source_stairs_axed_exposed_cut_copper_stairs_outer_3_varia.png",
+    "gallery-10-bloodborne_dw_source_jungle_trapdoor_bottom_variant_0_.png",
+    "gallery-11-source-defect_minecraft_block_tinted_flower_pot_cross.png",
+    "gallery-12-bloodborne_dw_prototype_wall.png",
+    "gallery-13-bloodborne_dw_prototype_ladder.png",
+    "gallery-14-bloodborne_rp_babycart.png",
+    "gallery-15-bloodborne_dw_source_gothic_window_left_variant_0_.png",
+    "gallery-16-bloodborne_dw_source_assembly_yellow_stained_glass_pane_variant_0_.png",
+    "gallery-17-bloodborne_dw_source_addon_statue_2_variant_0_.png",
+    "gallery-18-bloodborne_dw_source_addon_statue_3_variant_0_.png",
+    "gallery-19-bloodborne_dw_source_addon_bag_4_variant_0_.png",
+    "gallery-20-bloodborne_dw_source_addon_bag_5_variant_0_.png",
+    "gallery-21-bloodborne_rp_ladder.png",
+    "gallery-22-bloodborne_rp_cage_obj_2.png",
+    "gallery-23-bloodborne_rp_cage_obj_1.png",
+    "gallery-24-bloodborne_rp_cage_obj_3.png"
+  ],
+  "method": "Primary agent inspected all 24 original Minecraft 1280x720 native framebuffer PNGs with view_image in four batches of six.",
+  "scope": "Visual sample of all four sections; full platform/exhibit inventory is verified separately from saved NBT and model envelopes.",
+  "observations": [
+    "Blue V12, green new, yellow absent, red error platforms visible; grass gaps and aligned grid preserved.",
+    "Russian signs, ID and category readable from the camera side after copying sign front text to back text.",
+    "Sampled native blocks, original RP entity models, new and map-absent art render with textures and transparency.",
+    "Large RP elevator, ladder and cage assemblies visible as whole objects above their separate assigned podiums; original transforms retained.",
+    "Error section: valid trapdoor model visible; source-defect diagnostic shown explicitly as red transparent glass and sign without fabricated mod ID.",
+    "Vanilla grass, concrete, stone and oak signs retain normal appearance without source resource pack.",
+    "No sampled missing-texture magenta checkerboard, overlapping exhibit platforms or model clipping by the gallery floor found."
+  ],
+  "limitations": [
+    "24 rendered samples, not a screenshot of each of 1885 exhibits.",
+    "Raised and hanging art retains source geometry and existing placement transforms.",
+    "Physical mouse and keyboard interaction cycle for every object NOT_RUN."
+  ],
+  "checkedBy": "/root",
+  "date": "2026-10-11"
+}

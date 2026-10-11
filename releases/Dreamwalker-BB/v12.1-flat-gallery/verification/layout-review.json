@@ -1,0 +1,140 @@
+{
+  "status": "PASS",
+  "manifest": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\flat-gallery\\gallery-manifest.json",
+  "manifestSha256": "35a719ca53f886ca077e96708154ed8fd952ffe25dafa91301377591a0682cf7",
+  "privateGeometryEnvelopes": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\gallery-platform-envelopes.json",
+  "geometrySha256": "c83ea49e10be361c83c0c392f4d77001920b05bfb808b1bccce69d652cc7bfa4",
+  "platforms": 1942,
+  "realBuildingObjects": 1885,
+  "diagnosticPlaceholders": 57,
+  "sections": {
+    "v12": {
+      "count": 80,
+      "firstRow": 0,
+      "lastRow": 4,
+      "floor": "minecraft:light_blue_concrete"
+    },
+    "new": {
+      "count": 1682,
+      "firstRow": 5,
+      "lastRow": 110,
+      "floor": "minecraft:lime_concrete"
+    },
+    "absent": {
+      "count": 120,
+      "firstRow": 111,
+      "lastRow": 118,
+      "floor": "minecraft:yellow_concrete"
+    },
+    "error": {
+      "count": 60,
+      "firstRow": 119,
+      "lastRow": 122,
+      "floor": "minecraft:red_concrete"
+    }
+  },
+  "independentPrivateModelEnvelopeChecks": 1816,
+  "pairwisePlatformGapChecks": 1884711,
+  "horizontalExactGapChecks": 1819,
+  "verticalExactGapChecks": 1904,
+  "allGapBlocks": 2,
+  "aboveFloorAndInsideBuildHeight": "PASS",
+  "labels": {
+    "manifestBothSides": true,
+    "bothSidesCount": 1947,
+    "cornerFixturesDoNotIntersectEnvelopes": true,
+    "categoryIdentityAndFloorColour": "PASS"
+  },
+  "raisedRootCount": 167,
+  "raisedRootExamples": [
+    {
+      "key": "bloodborne_dw:prototype_thin_window",
+      "rootY": 65,
+      "plannedBottomY": 64.0,
+      "actualBottomY": 64.1875
+    },
+    {
+      "key": "bloodborne_dw:prototype_glass_window_02",
+      "rootY": 65,
+      "plannedBottomY": 64.0,
+      "actualBottomY": 64.1875
+    },
+    {
+      "key": "bloodborne_dw:prototype_glass_window_03",
+      "rootY": 65,
+      "plannedBottomY": 64.0,
+      "actualBottomY": 64.1875
+    },
+    {
+      "key": "bloodborne_rp:babycart",
+      "rootY": 65,
+      "plannedBottomY": 64.96823167744571,
+      "actualBottomY": 64.96823167744571
+    },
+    {
+      "key": "bloodborne_rp:boat",
+      "rootY": 65,
+      "plannedBottomY": 64.973431875,
+      "actualBottomY": 64.973431875
+    },
+    {
+      "key": "bloodborne_rp:cabriolet_closed",
+      "rootY": 65,
+      "plannedBottomY": 64.8125,
+      "actualBottomY": 64.8125
+    },
+    {
+      "key": "bloodborne_rp:cabriolet_open",
+      "rootY": 65,
+      "plannedBottomY": 64.8125,
+      "actualBottomY": 64.8125
+    },
+    {
+      "key": "bloodborne_rp:cage_obj_1",
+      "rootY": 78,
+      "plannedBottomY": 64.28803586860352,
+      "actualBottomY": 64.28803586860352
+    },
+    {
+      "key": "bloodborne_rp:cage_obj_2",
+      "rootY": 78,
+      "plannedBottomY": 64.17264747971507,
+      "actualBottomY": 64.17264747971507
+    },
+    {
+      "key": "bloodborne_rp:cage_obj_3",
+      "rootY": 78,
+      "plannedBottomY": 64.28803586860352,
+      "actualBottomY": 64.28803586860352
+    },
+    {
+      "key": "bloodborne_rp:carriage",
+      "rootY": 65,
+      "plannedBottomY": 64.9375,
+      "actualBottomY": 64.9375
+    },
+    {
+      "key": "bloodborne_rp:coffin_1",
+      "rootY": 65,
+      "plannedBottomY": 64.9549620861955,
+      "actualBottomY": 64.9549620861955
+    }
+  ],
+  "materialRenderingNote": "Two V12 wall exhibits use their existing manual tall arm to show distinct material; diagonal post keeps its canonical restricted state.",
+  "scope": "Read-only manifest/private-model layout review. Saved-world persistence, native model baking and actual client screenshots are separate evidence.",
+  "risks": [
+    {
+      "status": "ACCEPTED_LAYOUT_CHOICE",
+      "detail": "Negative source Y is handled by integer raising. Some objects sit above the platform; this keeps all model geometry visible and inside build height."
+    },
+    {
+      "status": "NOT_A_SOURCE_OBJECT",
+      "detail": "57 damaged or missing source paths use labelled red-glass diagnostics; these are explicitly not authored blocks."
+    },
+    {
+      "status": "OUTSIDE_EXHIBIT_GRID",
+      "detail": "Welcome/category sign stands are navigation fixtures outside the podium grid; grid gap checks cover all 1942 individual exhibit platforms."
+    }
+  ],
+  "failures": []
+}
