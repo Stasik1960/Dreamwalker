@@ -17,16 +17,18 @@ def main():
     remaining=copy.deepcopy(base['remainingCatalogue']);catalogue=copy.deepcopy(base['debugCatalogue'])
     bypath={r['path']:r for r in remaining['objects']};byid={r['registryId']:r for r in catalogue['entries']}
     groups=[];mappings=[];retired=set()
-    previousfile=RES/'imported-type-aliases.json'
+    stairfile=DOC/'stair-review/functional-type-fragment.json'
     currentprimaries={group['mainRegistryId'] for group in plan['groups']}
-    if previousfile.exists():
-        previous=json.loads(previousfile.read_text(encoding='utf8'))
-        for group in previous.get('groups',[]):
-            primary=group['primaryRegistryId']
-            if group['kind']=='artwork' and primary not in currentprimaries:
-                path=primary.split(':')[1]
-                assert path.startswith('source_') and path in base['descriptors']
-                write(RES/'composite'/f'{path}.json',base['descriptors'][path])
+    if stairfile.exists():
+        currentprimaries.update(group['primaryRegistryId'] for group in json.loads(stairfile.read_text(encoding='utf8'))['groups'])
+    # A primary can cease being primary across several successive plans. The
+    # immediately previous manifest alone cannot find every stale union.
+    # Hidden adapters keep the entire genuine baseline descriptor, and only
+    # the final active primaries carry generated functional/union descriptors.
+    for path,descriptor in base['descriptors'].items():
+        assert path.startswith('source_')
+        if 'bloodborne_dw:'+path not in currentprimaries:
+            write(RES/'composite'/f'{path}.json',descriptor)
     for group in plan['groups']:
         primary=group['mainRegistryId'];path=primary.split(':')[1];assert path.startswith('source_')
         descriptor=copy.deepcopy(base['descriptors'][path]);descriptor['variants']=[];names=[]
