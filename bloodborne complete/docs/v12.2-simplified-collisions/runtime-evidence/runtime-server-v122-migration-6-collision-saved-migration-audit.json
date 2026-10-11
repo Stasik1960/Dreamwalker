@@ -1,0 +1,108 @@
+{
+  "schema": "dreamwalker-v122-saved-new-collision-migration-v1",
+  "status": "PASS",
+  "source": "Independent byte-copied prior v12.1 gallery world, not original v16 map",
+  "foreignInventoryWitness": "QA-copy-only vanilla chest sharing a saved NEW owner cell",
+  "occupiedNewRootWitness": "Actual living entity retained inside NEW replacement volume on isolated QA copy",
+  "occupiedRegistry": "bloodborne_dw:source_acacia_fence_gate",
+  "occupiedCell": "Cell[x\u003d133, y\u003d66, z\u003d130]",
+  "ordinaryOccupiedRebakeRefusal": "entity_obstruction:Cell[x\u003d133, y\u003d66, z\u003d130]",
+  "witnessIntersectionChecked": true,
+  "witnessIsCollidable": false,
+  "ordinaryAdapterEntityIntersection": true,
+  "selectedSavedObjects": 11,
+  "unchangedForeignCarriers": 1,
+  "foreignInventoryAndCarrierNbt": "PASS_ACTUAL_VANILLA_INVENTORY_AND_NATIVE_STATES_EXACT",
+  "existingLivingEntityRetained": "PASS",
+  "changedSavedNewObjects": 6,
+  "unchangedV12Controls": 4,
+  "cases": [
+    {
+      "registryId": "bloodborne_dw:prototype_double_door",
+      "uuid": "1d3d42d3-77fc-449b-9299-f228105f4699",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:prototype_roof",
+      "uuid": "85f5986e-ed41-42cb-b829-91b89f47e4b2",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:prototype_tree",
+      "uuid": "35157091-0b6d-4c01-ac68-5a97ca50eaff",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "uuid": "12a560cd-ec22-43df-b7db-0b0c2d4c9f39",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:source_acacia_fence_gate",
+      "uuid": "1ecbe6c7-faf5-4dfa-b9f2-66a1f8bff224",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 12,
+      "afterPhysicalParts": 9
+    },
+    {
+      "registryId": "bloodborne_dw:source_bricks",
+      "uuid": "34548a79-ea00-422f-84d0-face23816fe5",
+      "status": "PASS_ALREADY_SIMPLE_CONTROL",
+      "beforePhysicalParts": 1,
+      "afterPhysicalParts": 1
+    },
+    {
+      "registryId": "bloodborne_dw:source_deepslate_iron_ore",
+      "uuid": "34eec30d-6377-475f-8c5a-7744295dde57",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 3,
+      "afterPhysicalParts": 7
+    },
+    {
+      "registryId": "bloodborne_dw:source_hold_ladder_01",
+      "uuid": "7d4cdae4-3df4-4c84-80ec-2a1ba2f20ffc",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 23,
+      "afterPhysicalParts": 5
+    },
+    {
+      "registryId": "bloodborne_dw:source_hold_ladder_02",
+      "uuid": "9f3a8138-88b4-41fc-9193-b1c800b9d583",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 8,
+      "afterPhysicalParts": 2
+    },
+    {
+      "registryId": "bloodborne_dw:source_hold_ladder_03",
+      "uuid": "a86957ab-005e-4f54-892c-b3ab35baa8f6",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 16,
+      "afterPhysicalParts": 4
+    },
+    {
+      "registryId": "bloodborne_dw:source_potted_flowering_azalea_bush",
+      "uuid": "9531a8ac-a539-4e65-a801-5fac4e3eee59",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 6,
+      "afterPhysicalParts": 1
+    },
+    {
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_bottom",
+      "beforeBindings": 3,
+      "afterBindings": 0,
+      "status": "PASS_RETIRED_ROOT_AND_CACHED_PHYSICS_REMOVED"
+    },
+    {
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_open",
+      "beforeBindings": 3,
+      "afterBindings": 0,
+      "status": "PASS_RETIRED_ROOT_AND_CACHED_PHYSICS_REMOVED"
+    },
+    {
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_open",
+      "beforeBindings": 3,
+      "afterBindings": 0,
+      "status": "PASS_RETIRED_ROOT_AND_CACHED_PHYSICS_REMOVED"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "dreamwalker-client3-helper-config-failure-history-v1",
+  "status": "FAIL_INITIALIZATION",
+  "productionJarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "addonSha256": "25c3a3224f0977e485a955dfb88be8de0b9d644bdf6aafee83d790b1e72f6a79",
+  "reason": "Client-only mixin package was the same as ordinary QA entrypoint package; Mixin IllegalClassLoadError",
+  "correction": "Generated helper5/version1.2.4 moves mixin into gallery.capture.mixin",
+  "files": [
+    {
+      "archived": "CLIENT-PROFILE.json",
+      "original": "build\\gallery-v122\\client-profile-3.json",
+      "bytes": 1547318,
+      "sha256": "938b69f653f1380223ad1744d2819417bc0664c80cac3494d45b6b8085fda78c"
+    },
+    {
+      "archived": "CRASH.txt",
+      "original": "build\\runtime-client-flatgallery-v122-client-3\\crash-reports\\crash-2026-10-11_21.06.42-client.txt",
+      "bytes": 19181,
+      "sha256": "757210a249a5ae6b3abf921528eb71442255dc6d3248301314866f47f3037ed4"
+    },
+    {
+      "archived": "LAUNCH-CONSOLE.log",
+      "original": "build\\runtime-client-flatgallery-v122-client-3\\launch-console.log",
+      "bytes": 24779,
+      "sha256": "e101fb40e7ac631f8b928f4cdbeb9662daa685a3c521e9ec61e5173cb8c37551"
+    },
+    {
+      "archived": "HELPER4-BUILD.json",
+      "original": "build\\gallery-v122-addon-4\\build-report.json",
+      "bytes": 959,
+      "sha256": "161ce8798ae12a9d146b491e41173f78b8a32c4e5749ccf817449d05de1b7121"
+    },
+    {
+      "archived": "HELPER4-CONFIG-PROOF.json",
+      "original": "docs\\gallery-v12.2\\QA-CAPTURE-CONFIG-PROOF.json",
+      "bytes": 2742,
+      "sha256": "1b91cad0c8087b7794ceba0aa55f2aa3ec58da0d8418bc51501345a7a345cde9"
+    },
+    {
+      "archived": "FlatGalleryV122ClientCapture.java",
+      "original": "build\\gallery-v122-addon-4\\generated-java\\dev\\dreamwalker\\bloodbornedw\\gallery\\FlatGalleryV122ClientCapture.java",
+      "bytes": 18232,
+      "sha256": "be5e81bde9fad0953516c5076f2b570822a2cbefc68883c00f12ac6f2f789860"
+    },
+    {
+      "archived": "FlatGalleryV122CameraMixin.java",
+      "original": "build\\gallery-v122-addon-4\\generated-java\\dev\\dreamwalker\\bloodbornedw\\gallery\\FlatGalleryV122CameraMixin.java",
+      "bytes": 725,
+      "sha256": "f6d20f0cd1c3ad0d8a86b73c8c39ed5a75604f5cdf8285f257296199a9d09204"
+    },
+    {
+      "archived": "MIXIN-CONFIG.json",
+      "original": "build\\gallery-v122-addon-4\\resources\\dreamwalker-gallery-v122-capture.mixins.json",
+      "bytes": 244,
+      "sha256": "01486dcf7a0d422f9d1720c6393111a82ff3256d3c014808ad869d2bc9730afb"
+    },
+    {
+      "archived": "FABRIC-METADATA.json",
+      "original": "build\\gallery-v122-addon-4\\resources\\fabric.mod.json",
+      "bytes": 778,
+      "sha256": "b9a0d6ad30d457b65db4cfdddea4317f72ceb2e76819ffc91c5117f8893cf691"
+    }
+  ]
+}

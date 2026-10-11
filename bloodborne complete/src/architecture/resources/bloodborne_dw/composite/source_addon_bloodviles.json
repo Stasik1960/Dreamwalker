@@ -38,80 +38,8 @@
               ],
               "to": [
                 15.5,
-                8.0,
-                12.5
-              ]
-            },
-            {
-              "from": [
-                1.5,
-                0.425,
-                4.0
-              ],
-              "to": [
-                5.5,
-                9.425,
-                8.0
-              ]
-            },
-            {
-              "from": [
-                1.75,
-                0.175,
-                8.25
-              ],
-              "to": [
-                5.75,
-                9.175,
-                12.25
-              ]
-            },
-            {
-              "from": [
-                6.0,
-                0.175,
-                8.25
-              ],
-              "to": [
-                10.0,
-                9.175,
-                12.25
-              ]
-            },
-            {
-              "from": [
-                6.0,
-                0.675,
-                4.0
-              ],
-              "to": [
-                10.0,
                 9.675,
-                8.0
-              ]
-            },
-            {
-              "from": [
-                10.5,
-                0.225,
-                4.0
-              ],
-              "to": [
-                14.5,
-                9.225,
-                8.0
-              ]
-            },
-            {
-              "from": [
-                11.0,
-                0.225,
-                8.25
-              ],
-              "to": [
-                15.0,
-                9.225,
-                12.25
+                12.5
               ]
             }
           ],
@@ -368,6 +296,120 @@
                 11
               ]
             }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  3.5
+                ],
+                "to": [
+                  15.5,
+                  9.675,
+                  12.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  9.675,
+                  16.48528137
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  12.5,
+                  9.675,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  9.675,
+                  16.48528137
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  3.5
+                ],
+                "to": [
+                  15.5,
+                  9.675,
+                  12.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  9.675,
+                  16.48528137
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  12.5,
+                  9.675,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.48528137,
+                  0.0,
+                  -0.48528137
+                ],
+                "to": [
+                  16.48528137,
+                  9.675,
+                  16.48528137
+                ]
+              }
+            ]
           ]
         }
       },
@@ -410,6 +452,7 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
-  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
 }

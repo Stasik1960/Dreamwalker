@@ -1,0 +1,104 @@
+Новая V12.2 галерея: создание, production-only серверное открытие/сохранение и NBT — PASS.
+Клиент-4 открыл галерею, штатно сохранил её и закрылся — PASS.
+1905 сохранённых объектов до/после сравнения — PASS; 37 отдельных native кадров — visual PASS.
+
+Неизменяемый передаваемый источник мира:
+build/runtime-server-flatgallery-v122-reopen-2/isolated-smoke-world
+Manifest: build/gallery-v122/gallery-manifest-3.json
+SHA-256 manifest: 9c85912f02889bc48c4a3db18e326d5b7c5fe3126555671e63df03557196a866
+Combined JAR: build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar
+SHA-256 JAR: ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32
+
+Все 1905 станций созданы настоящим author-3 сервером, затем production-only
+reopen-2 сервер открыл независимую побайтно проверенную копию. Оба сервера:
+PASS, exit0, errors=[], штатные All chunks saved и All dimensions saved.
+При production-only открытии extraMods=[]: QA author и исходный RP не нужны.
+
+1905 отдельных платформ:
+80 — строительные варианты/объекты исходной V12 (11 native +69 RP);
+1682 — новые строительные варианты;
+120 — строительные варианты, отсутствовавшие на исходной карте;
+23 — доступные Creative предметы V12, не размещаемые как строительные объекты, в рамках.
+В рамках: 18 яиц, 4 оружия/флакона и инструмент BB; яйца не создают мобов.
+Красных повреждённых/диагностических платформ нет. Все 60 прежних красных
+станций исключены: 3 повреждённых варианта удалённых типов и 57 диагностик,
+которые не являлись зарегистрированными блоками. ID 93148/93149 не восстановлены.
+
+Платформы: ceil(видимая ширина/длина текущей модели)+2 клетки.
+88 сеток по одинаковому размеру; между краями ровно 2 пустые клетки.
+Проверены все 28221 клетки, 1717 горизонтальных и 1515 вертикальных промежутков;
+пересечений между сетками нет.
+
+1813 архитектурных моделей проверены по точному combined JAR и сохранённым
+MountY/VerticalOffset/SourceShift; 69 RP объектов — по Gecko cube/bone transform
+и сохранённым Pos/Rotation/Scale; 23 рамки — по Item/Facing/Fixed/UUID/креплению.
+Нижняя видимая грань находится на Y64, поверхности платформы.
+Техническое исключение: 43 исходные плоскости нулевой Y-толщины подняты
+только в галерее на 1/1024 блока против z-fighting. Точный список и величина
+есть в manifest/verifier. Исходная геометрия и физика для этого не менялись.
+
+Все 1905 русских подписей проверены с обеих сторон по сохранённому NBT.
+Фактическая labelPos отличается от root и не пересекает визуальную модель.
+Два прежних случая совпадения угла с root (bag_2 и copper stairs outer1)
+имеют отдельные угловые таблички и входят в обязательные клиентские кадры.
+
+Полное сравнение всех 1905 объектов до/после production-only открытия — PASS:
+ID, состояния, UUID, typed resident, 25560 owner contribution cells,
+12998 foreign carrier ledger contributions, mount payload, RP pose и рамки.
+NBT verifier не записывает мир и сверяет его файловые хеши до/после чтения.
+Передаваемый источник после normal save/stop больше не изменяется; клиент
+открывает ещё одну независимую копию. Original v16, прежняя галерея V12.1,
+неудачный author-1 и прежние author-2/reopen-1 миры не перезаписывались.
+
+Полные актуальные доказательства: QA-BUILD, PLAN-REVIEW, SERVER-AUTHOR,
+DISK-BEFORE, SERVER-PRODUCTION-REOPEN, DISK-SERVER-AFTER, GALLERY-MANIFEST.
+LABEL-PREAUTHOR-PROOF в финальном проходе проверяет завершённый manifest
+и фактические labelPos; его proofTiming=COMPLETED_AUTHOR_MANIFEST_READ_ONLY.
+Предшествующий author-1 FAIL и исправление только QA подписей сохранены отдельно:
+AUTHOR1-SAVED-FAIL.json и AUTHOR1-RESOLUTION-RU.txt.
+Вложенный source catalogue сохраняет исторические описательные поля V12.1,
+включая diagnosticPolicy; они описывают прежние станции. Текущий состав
+определяется фактическими exhibits/1905, removedRedExhibits/60 и проверкой 0 diagnostics.
+
+Client-4 native capture: CAPTURE_COMPLETE, 37/37. Saved NBT/collector: PASS.
+Все 1905 объектов, 0 диагностик и manifest 9c859... повторно подтверждены;
+независимый передаваемый источник галереи не изменился. Native normal save/stop
+записан 21:13:47–21:13:48, All chunks saved / All dimensions saved.
+Live client checks: 20 root state/UUID и 17 entity UUID; localModWorldErrors=[].
+Визуальная приёмка: PASS, root просмотрел все 37 отдельных native PNG.
+Точные capture/file SHA и выводы записаны в visual-review.json.
+Кадры 2/16/18/19/20/21 имеют частичное заслонение соседними объектами при
+выбранном ракурсе; кадр 5 обрезает близкую арку. Это ограничения обзорных
+кадров, и визуальный PASS не подтверждает каждый закрытый пиксель.
+Все три planar-модели, два исправленных root/label случая и рамки просмотрены.
+План ровно 37 нативных кадров: build/gallery-v122/client-capture-input-2.json.
+В нём все секции, V12 native/RP, посадка клеток/люстр/лестниц, 3 planar-модели,
+два исправленных root/label случая, рамки оружия/BBtool/яиц.
+Client-2 открыл мир и записал 32 кадра, но capture завершился FAIL_CAPTURE
+на ожидании камеры кадра 33. Позднейший read-only snapshot перед штатным
+закрытием показал другую позицию/ориентацию игрока. Он сделан после timeout
+и не доказывает точную позу в момент сбоя. Чанк загружен, окно видно.
+Исходный FAIL и native normal close сохранены в history/client2-camera-agent.
+Helper4 1.2.3 получил initialization FAIL из-за общего namespace mixin и QA
+entrypoints. Crash/console/profile/config с SHA сохранены в history/client3-helper-config.
+Helper5 1.2.4 использует отдельный gallery.capture.mixin и удерживает камеру
+перед Camera.update; это только QA.
+Production JAR и передаваемый мир не менялись. QA-CAPTURE-BUILD и
+QA-CAPTURE-CONFIG-PROOF подтверждают сборку и неизменность строгих live checks;
+это статические проверки, не замена actual capture/визуальному просмотру.
+Завершён отдельный client-4 запуск с тем же планом 37 кадров:
+profile build/gallery-v122/client-profile-4.json;
+native capture build/runtime-client-flatgallery-v122-client-4/client-capture-output.json;
+saved compare build/gallery-v122/disk-client-after-4.json;
+collector docs/gallery-v12.2/client-runtime.json;
+Root отдельно просмотрел все 37 фактических изображений.
+Переносимые byte-checked копии доказательств: CLIENT-CAPTURE-OUTPUT.json,
+CLIENT-PROFILE.json, DISK-CLIENT-AFTER.json, CLIENT-LAUNCH-CONSOLE.log,
+CLIENT-LATEST.log; их SHA/источники перечислены в CLIENT-PORTABLE-EVIDENCE.json.
+Поле visualReview=PENDING_SEPARATE_PIXEL_REVIEW в runtime collector означает
+отдельную выдачу pixel review: её фактический итог PASS дан в visual-review.json.
+Ожидаемый offline dummy-token HTTP401 и известные warnings сохранены в
+client-runtime.json и native logs; онлайн-авторизация не проверялась.
+CAPTURE_COMPLETE и сборка сами по себе не означают визуальный PASS.
+Ручной полный цикл мышью/клавиатурой для каждого варианта: NOT_RUN.
+Исчерпывающий визуальный просмотр всех 1882 строительных объектов/предложенных вариантов: NOT_RUN.

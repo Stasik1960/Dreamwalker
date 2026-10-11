@@ -136,13 +136,13 @@ public final class CompositeRuntime {
     public static Double topHeight(World world,BlockPos support,Owner exclude){
         if(!world.isChunkLoaded(support))return null;BlockState state=world.getBlockState(support);VoxelShape shape;
         BASE_SHAPE.set(true);try{shape=state.getBlock() instanceof CompositeRootBlock||state.isOf(CompositeArchitecture.CELL)?VoxelShapes.empty():state.getCollisionShape(world,support);}finally{BASE_SHAPE.set(false);}
-        for(var contribution:contributions(world,support))if(!contribution.owner().equals(exclude))shape=VoxelShapes.union(shape,shape(physicalParts(contribution,support)));
+        for(var contribution:contributions(world,support))if(!contribution.owner().equals(exclude))shape=VoxelShapes.union(shape,ImportedPhysicalShapes.physical(contribution,support));
         double max=Double.NEGATIVE_INFINITY;for(var box:shape.getBoundingBoxes())if(box.minX<=.5&&box.maxX>=.5&&box.minZ<=.5&&box.maxZ>=.5)max=Math.max(max,box.maxY);
         return Double.isFinite(max)&&max>0?max:null;
     }
     public static Double bottomHeight(World world,BlockPos support){
         if(!world.isChunkLoaded(support))return null;VoxelShape shape=nativeCollision(world,support,ShapeContext.absent());
-        for(var contribution:contributions(world,support))shape=VoxelShapes.union(shape,shape(physicalParts(contribution,support)));
+        for(var contribution:contributions(world,support))shape=VoxelShapes.union(shape,ImportedPhysicalShapes.physical(contribution,support));
         double min=Double.POSITIVE_INFINITY;for(var b:shape.getBoundingBoxes())if(b.minX<=.5&&b.maxX>=.5&&b.minZ<=.5&&b.maxZ>=.5)min=Math.min(min,b.minY);
         return Double.isFinite(min)?min:null;
     }
@@ -157,9 +157,12 @@ public final class CompositeRuntime {
         return cellShape(world,pos,collision,fallback,ShapeContext.absent());
     }
     public static VoxelShape cellShape(BlockView world,BlockPos pos,boolean collision,BlockState fallback,ShapeContext context){
+        if(collision){var imported=ImportedPhysicalShapes.collision(world,pos,fallback);if(imported.isPresent())return imported.get();}
+        if(!collision&&fallback.getBlock() instanceof CompositeRootBlock block&&block.spec.simplePhysicalCollision&&contributions(world,pos).isEmpty())return shape(ImportedLegacyOutline.fallback(block,fallback));
         List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> boxes=new ArrayList<>();List<CompositeData.Contribution> entries=contributions(world,pos);for(var entry:entries)if(validOrDeferred(world,entry.owner()))boxes.addAll(collision?physicalParts(entry,pos):contextSelection(world,entry,pos,context));if(entries.isEmpty()&&fallback.getBlock() instanceof CompositeRootBlock block){Footprint f=block.spec.footprint(fallback,0).get(Cell.ORIGIN);boxes.addAll(collision||!f.collision().isEmpty()?f.collision():f.selection());}return shape(boxes);
     }
     private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextSelection(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context) {
+        var imported=ImportedLegacyOutline.selection(entry,cell);if(imported.isPresent())return imported.get();
         var selected=selectionParts(world,entry,cell,context);
         if(!selected.isEmpty())return selected;
         BlockState rootState=CompositeData.state(entry.rootData());
@@ -247,6 +250,7 @@ public final class CompositeRuntime {
     public static void refreshNative(ServerWorld world,BlockPos pos){queue(world,"native-mounted-refresh:"+pos.asLong(),()->{if(!world.isChunkLoaded(pos)||!(world.getBlockEntity(pos) instanceof CompositeBlockEntity own)||own.resident()==null||own.contributions().isEmpty()||!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(world.getBlockState(pos)))return;BlockState state=world.getBlockState(pos);NbtCompound next=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.nativePayload(world,pos,state,own.payload());if(next.equals(own.payload())&&own.contributions().stream().filter(entry->entry.owner().equals(own.resident())).allMatch(entry->entry.rootData().properties().equals(CompositeData.data(state,next).properties())))return;transitionPayload(world,own.resident(),state,next,null);});}
     public static void scheduleCleanup(ServerWorld world,BlockPos pos){
         List<CompositeData.Contribution> entries=List.copyOf(contributions(world,pos));for(var entry:entries)queue(world,"cleanup:"+entry.owner().instanceId(),()->{
+            if(ImportedCollisionMigration.pending(world,entry.owner()))return;
             BlockState rootState=CompositeData.state(entry.rootData());if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(rootState))return;
             NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());
             for(Cell offset:instance(world,CompositeData.pos(entry.owner().root()),rootState,entry.owner().instanceId(),payload).cells().keySet()){Cell cell=entry.owner().root().add(offset);if(!world.isChunkLoaded(CompositeData.pos(cell)))continue;FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of());execute(access,core().pruneStale(access,cell));}
@@ -263,6 +267,7 @@ public final class CompositeRuntime {
     }
     public static void chunkLoaded(ServerWorld world,ChunkPos chunk){
         queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
+        queue(world,"imported-physical-migration-chunk:"+chunk.toLong(),()->ImportedCollisionMigration.loadedChunk(world,chunk));
         CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
         BlockPos pos=CompositeData.pos(cell);scheduleCleanup(world,pos);
         // CHUNK_LOAD runs before this chunk's FULL future has completed. Never

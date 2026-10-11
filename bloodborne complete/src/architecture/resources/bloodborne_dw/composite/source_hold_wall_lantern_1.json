@@ -32,216 +32,12 @@
           "collision": [
             {
               "from": [
-                2,
-                7,
-                1
-              ],
-              "to": [
-                14,
-                20,
-                3
-              ]
-            },
-            {
-              "from": [
-                3,
-                7,
-                0
-              ],
-              "to": [
-                13,
-                20,
-                1
-              ]
-            },
-            {
-              "from": [
-                3,
-                7,
-                3
-              ],
-              "to": [
-                13,
-                20,
-                4
-              ]
-            },
-            {
-              "from": [
-                3,
-                8,
-                2
-              ],
-              "to": [
-                13,
-                19,
-                3
-              ]
-            },
-            {
-              "from": [
-                4,
-                7,
-                -1
-              ],
-              "to": [
-                12,
-                20,
-                0
-              ]
-            },
-            {
-              "from": [
-                4,
-                7,
-                4
-              ],
-              "to": [
-                12,
-                20,
-                5
-              ]
-            },
-            {
-              "from": [
-                4,
-                8,
-                1
-              ],
-              "to": [
-                12,
-                19,
-                2
-              ]
-            },
-            {
-              "from": [
-                5,
-                7,
-                -2
-              ],
-              "to": [
-                11,
-                20,
-                -1
-              ]
-            },
-            {
-              "from": [
-                5,
-                7,
-                5
-              ],
-              "to": [
-                11,
-                20,
-                6
-              ]
-            },
-            {
-              "from": [
-                5,
-                8,
-                0
-              ],
-              "to": [
-                11,
-                19,
-                1
-              ]
-            },
-            {
-              "from": [
-                6,
-                7,
-                -3
-              ],
-              "to": [
-                10,
-                20,
-                -2
-              ]
-            },
-            {
-              "from": [
-                6,
-                7,
-                6
-              ],
-              "to": [
-                10,
-                20,
-                7
-              ]
-            },
-            {
-              "from": [
-                6,
-                8,
-                -1
-              ],
-              "to": [
-                10,
-                19,
-                0
-              ]
-            },
-            {
-              "from": [
-                7,
-                7,
-                -4
-              ],
-              "to": [
-                9,
-                20,
-                -3
-              ]
-            },
-            {
-              "from": [
-                7,
-                7,
-                7
-              ],
-              "to": [
-                9,
-                20,
-                8
-              ]
-            },
-            {
-              "from": [
-                7,
-                8,
-                -2
-              ],
-              "to": [
-                9,
-                19,
-                -1
-              ]
-            },
-            {
-              "from": [
+                2.34314575,
                 7.0,
-                14.0,
-                29.25
+                -3.40685425
               ],
               "to": [
-                9.0,
-                41.0,
-                31.25
-              ]
-            },
-            {
-              "from": [
-                7.75,
-                14.0,
-                0.25
-              ],
-              "to": [
-                8.25,
+                13.65685425,
                 41.0,
                 31.25
               ]
@@ -680,6 +476,120 @@
                 7
               ]
             }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  2.34314575,
+                  7.0,
+                  -3.40685425
+                ],
+                "to": [
+                  13.65685425,
+                  41.0,
+                  31.25
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.14733944,
+                  7.0,
+                  -0.06586399
+                ],
+                "to": [
+                  16.06586399,
+                  41.0,
+                  25.14733944
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.25,
+                  7.0,
+                  2.34314575
+                ],
+                "to": [
+                  19.40685425,
+                  41.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.14733944,
+                  7.0,
+                  -9.14733944
+                ],
+                "to": [
+                  16.06586399,
+                  41.0,
+                  16.06586399
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  7.0,
+                  -15.25
+                ],
+                "to": [
+                  13.65685425,
+                  41.0,
+                  19.40685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.06586399,
+                  7.0,
+                  -9.14733944
+                ],
+                "to": [
+                  25.14733944,
+                  41.0,
+                  16.06586399
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -3.40685425,
+                  7.0,
+                  2.34314575
+                ],
+                "to": [
+                  31.25,
+                  41.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.06586399,
+                  7.0,
+                  -0.06586399
+                ],
+                "to": [
+                  25.14733944,
+                  41.0,
+                  25.14733944
+                ]
+              }
+            ]
           ]
         }
       },
@@ -722,6 +632,7 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
-  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
 }

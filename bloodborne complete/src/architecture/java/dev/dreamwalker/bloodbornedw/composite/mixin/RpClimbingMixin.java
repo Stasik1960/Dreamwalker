@@ -26,6 +26,8 @@ public abstract class RpClimbingMixin {
         if(mounted.isPresent()){climbingPos=mounted;cir.setReturnValue(true);return;}
         if(cir.getReturnValue())return;
         Box body=mover.getBoundingBox();
+        var imported=dev.dreamwalker.bloodbornedw.composite.ImportedLadderClimbing.climbing(mover.getWorld(),body);
+        if(imported.isPresent()){climbingPos=imported;cir.setReturnValue(true);return;}
         for(RpObjectEntity object:dev.dreamwalker.bloodbornerp.object.RpObjectIndex.in(mover.getWorld(),body))
             if(object.assetId().equals("ladder"))
             for(Box zone:object.climbingBoxes())if(PlacementPhysics.overlaps(body,zone)) {

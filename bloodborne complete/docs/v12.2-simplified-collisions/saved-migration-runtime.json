@@ -1,0 +1,210 @@
+{
+  "schema": "dreamwalker-v122-saved-new-collision-migration-v1",
+  "status": "PASS",
+  "source": "Independent byte-copied prior v12.1 gallery world, not original v16 map",
+  "foreignInventoryWitness": "QA-copy-only vanilla chest sharing a saved NEW owner cell",
+  "occupiedNewRootWitness": "Actual living entity retained inside NEW replacement volume on isolated QA copy",
+  "occupiedRegistry": "bloodborne_dw:source_acacia_fence_gate",
+  "occupiedCell": "Cell[x=133, y=66, z=130]",
+  "ordinaryOccupiedRebakeRefusal": "entity_obstruction:Cell[x=133, y=66, z=130]",
+  "witnessIntersectionChecked": true,
+  "witnessIsCollidable": false,
+  "ordinaryAdapterEntityIntersection": true,
+  "selectedSavedObjects": 11,
+  "unchangedForeignCarriers": 1,
+  "foreignInventoryAndCarrierNbt": "PASS_ACTUAL_VANILLA_INVENTORY_AND_NATIVE_STATES_EXACT",
+  "existingLivingEntityRetained": "PASS",
+  "changedSavedNewObjects": 6,
+  "unchangedV12Controls": 4,
+  "cases": [
+    {
+      "registryId": "bloodborne_dw:prototype_double_door",
+      "uuid": "1d3d42d3-77fc-449b-9299-f228105f4699",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:prototype_roof",
+      "uuid": "85f5986e-ed41-42cb-b829-91b89f47e4b2",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:prototype_tree",
+      "uuid": "35157091-0b6d-4c01-ac68-5a97ca50eaff",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:prototype_ladder",
+      "uuid": "12a560cd-ec22-43df-b7db-0b0c2d4c9f39",
+      "status": "PASS_V12_TYPED_NBT_EXACT"
+    },
+    {
+      "registryId": "bloodborne_dw:source_acacia_fence_gate",
+      "uuid": "1ecbe6c7-faf5-4dfa-b9f2-66a1f8bff224",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 12,
+      "afterPhysicalParts": 9
+    },
+    {
+      "registryId": "bloodborne_dw:source_bricks",
+      "uuid": "34548a79-ea00-422f-84d0-face23816fe5",
+      "status": "PASS_ALREADY_SIMPLE_CONTROL",
+      "beforePhysicalParts": 1,
+      "afterPhysicalParts": 1
+    },
+    {
+      "registryId": "bloodborne_dw:source_deepslate_iron_ore",
+      "uuid": "34eec30d-6377-475f-8c5a-7744295dde57",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 3,
+      "afterPhysicalParts": 7
+    },
+    {
+      "registryId": "bloodborne_dw:source_hold_ladder_01",
+      "uuid": "7d4cdae4-3df4-4c84-80ec-2a1ba2f20ffc",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 23,
+      "afterPhysicalParts": 5
+    },
+    {
+      "registryId": "bloodborne_dw:source_hold_ladder_02",
+      "uuid": "9f3a8138-88b4-41fc-9193-b1c800b9d583",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 8,
+      "afterPhysicalParts": 2
+    },
+    {
+      "registryId": "bloodborne_dw:source_hold_ladder_03",
+      "uuid": "a86957ab-005e-4f54-892c-b3ab35baa8f6",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 16,
+      "afterPhysicalParts": 4
+    },
+    {
+      "registryId": "bloodborne_dw:source_potted_flowering_azalea_bush",
+      "uuid": "9531a8ac-a539-4e65-a801-5fac4e3eee59",
+      "status": "PASS_SAVED_NEW_REBAKED",
+      "beforePhysicalParts": 6,
+      "afterPhysicalParts": 1
+    },
+    {
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_bottom",
+      "beforeBindings": 3,
+      "afterBindings": 0,
+      "status": "PASS_RETIRED_ROOT_AND_CACHED_PHYSICS_REMOVED"
+    },
+    {
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_open",
+      "beforeBindings": 3,
+      "afterBindings": 0,
+      "status": "PASS_RETIRED_ROOT_AND_CACHED_PHYSICS_REMOVED"
+    },
+    {
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_open",
+      "beforeBindings": 3,
+      "afterBindings": 0,
+      "status": "PASS_RETIRED_ROOT_AND_CACHED_PHYSICS_REMOVED"
+    }
+  ],
+  "productionJarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "addonSha256": "d33c5baa7abe3b8fd9628d95f6336585faa84d865ee8857549365c99329ff485",
+  "normalDedicatedServerShutdown": "PASS",
+  "unexpectedServerErrorCount": 0,
+  "dedicatedServerEvidence": {
+    "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v122-runtime\\migration-server-6.json",
+    "sha256": "ddf70ce1230d911bebd05bf0dc0411d99e569b94dc0d7527e91ad894af1ffa26",
+    "sourceBundleCopy": "runtime-evidence/v122-runtime-migration-server-6.json",
+    "console": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-migration-6\\launch-console.log",
+    "consoleSha256": "0078e360da8f0b7ed2cc386033a01679dffc4792f4c5ecca674177eeb15caa07",
+    "consoleSourceBundleCopy": "runtime-evidence/runtime-server-v122-migration-6-launch-console.log"
+  },
+  "actualQaEvidence": {
+    "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-migration-6\\collision-saved-migration-audit.json",
+    "sha256": "29b62743aeb36c1b90097a2a97cd5d4f95ff362c3c57e58c7c66334487ea23cb",
+    "sourceBundleCopy": "runtime-evidence/runtime-server-v122-migration-6-collision-saved-migration-audit.json"
+  },
+  "expectedWarnings": [
+    "[20:23:49] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+  ],
+  "previousDerivedGallerySourceUnchanged": true,
+  "retirementWarnings": [],
+  "resolvedProductionDefects": [
+    {
+      "failure": "A queued cleanup closure decoded a retired registry's old open property through Minecraft AIR after the retirement transaction, crashing an old saved-world load.",
+      "affectedArtifactSha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+      "evidence": [
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v122-runtime\\migration-server-2.json",
+          "sha256": "5f454b950484a41a3cf482cb8b8c86d316d49bc3b3e0d052a28624517433856f",
+          "sourceBundleCopy": "runtime-evidence/v122-runtime-migration-server-2.json"
+        },
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-migration-2\\crash-reports\\crash-2026-10-11_19.57.32-server.txt",
+          "sha256": "242105d94374561f985b06341fb5b2bc9bce13af7e4cee20788cbfafafdfb332",
+          "sourceBundleCopy": "runtime-evidence/crash-reports-crash-2026-10-11_19.57.32-server.txt"
+        }
+      ],
+      "verifiedResolution": "An exact two-ID retirement guard suppresses captured obsolete cleanup closures; retirement transaction removes only those owners' cached bindings. Final old-world load verifies all three retired variants have zero bindings and preserves V12/foreign NBT.",
+      "finalRetestArtifactSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+      "finalRetestStatus": "PASS"
+    },
+    {
+      "failure": "A native blocking ArmorStand in a changed source_acacia_fence_gate cell caused entity_obstruction and left the old saved NEW physical defaults unchanged.",
+      "affectedArtifactSha256": "a90a2e120363e08d1944b72a706905a94f967836f71377d8a7a154a72497c2e7",
+      "evidence": [
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-migration-5\\collision-saved-migration-audit.json",
+          "sha256": "2d8ffc9bc3984b1cfa95ed8c7765930bc58074c1682d67849f52e79f7dd099f8",
+          "sourceBundleCopy": "runtime-evidence/runtime-server-v122-migration-5-collision-saved-migration-audit.json"
+        },
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v122-runtime\\migration-server-5.json",
+          "sha256": "97e90ae46674468d1603cf001d53fdc08842cefec38cc14b02c4b384f7e754fe",
+          "sourceBundleCopy": "runtime-evidence/v122-runtime-migration-server-5.json"
+        }
+      ],
+      "verifiedResolution": "Only the admitted same-UUID loaded-BE migration adapter waives entity obstruction for automatic rebaking. Ordinary placement and rotation keep their original entity policy. Final old-world test reproduces ordinary refusal and verifies migration completion with the same living entity retained.",
+      "finalRetestArtifactSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+      "finalRetestStatus": "PASS"
+    }
+  ],
+  "correctedQaFixtureAssumptions": [
+    {
+      "failure": "A protected V12 native ladder may legitimately have an empty saved helper ledger; the initial fixture required an origin contribution for every V12 object.",
+      "affectedArtifactSha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+      "evidence": [
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v122-runtime\\migration-server-1.json",
+          "sha256": "8a67aa2e4399c05715c4160ff2c38fd42ca37e03c42d54b62ed28f44b46ffd43",
+          "sourceBundleCopy": "runtime-evidence/v122-runtime-migration-server-1.json"
+        }
+      ],
+      "verifiedResolution": "The origin membership requirement applies only to saved NEW composite roots. Protected V12 full typed NBT and ledger, including an empty ledger, are compared exactly.",
+      "finalRetestArtifactSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+      "finalRetestStatus": "PASS"
+    },
+    {
+      "failure": "The first occupied witness used a nonblocking native pig; the next witness intersected an unchanged local stair part which needed no entity recheck.",
+      "affectedArtifactSha256": "a90a2e120363e08d1944b72a706905a94f967836f71377d8a7a154a72497c2e7",
+      "evidence": [
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v122-runtime\\migration-server-3.json",
+          "sha256": "16053b3fcec80ecd5fdc1c3b1896543f4899e16734891c128e9de3a5bbd42ae4",
+          "sourceBundleCopy": "runtime-evidence/v122-runtime-migration-server-3.json"
+        },
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v122-runtime\\migration-server-4.json",
+          "sha256": "bba65719ba914cf89f7792a087ef1270052ea81baff41683351332d9a0bc265a",
+          "sourceBundleCopy": "runtime-evidence/v122-runtime-migration-server-4.json"
+        },
+        {
+          "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-migration-4\\collision-saved-migration-audit.json",
+          "sha256": "0b4936afd8b468cdf5d080bd460083cb4f35c1622989c7d4ceb8af99fbac3030",
+          "sourceBundleCopy": "runtime-evidence/runtime-server-v122-migration-4-collision-saved-migration-audit.json"
+        }
+      ],
+      "verifiedResolution": "Use a native ArmorStand with measured intersectionChecked=true, choose a cell with actually changed saved/current collision lists, verify direct adapter intersection, and require the ordinary transaction's measured entity refusal.",
+      "finalRetestArtifactSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+      "finalRetestStatus": "PASS"
+    }
+  ]
+}

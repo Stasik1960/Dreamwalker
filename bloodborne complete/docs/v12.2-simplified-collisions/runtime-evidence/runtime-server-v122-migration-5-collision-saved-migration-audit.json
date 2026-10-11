@@ -1,0 +1,16 @@
+{
+  "schema": "dreamwalker-v122-saved-new-collision-migration-v1",
+  "status": "FAIL",
+  "source": "Independent byte-copied prior v12.1 gallery world, not original v16 map",
+  "foreignInventoryWitness": "QA-copy-only vanilla chest sharing a saved NEW owner cell",
+  "occupiedNewRootWitness": "Actual living entity retained inside NEW replacement volume on isolated QA copy",
+  "occupiedRegistry": "bloodborne_dw:source_acacia_fence_gate",
+  "occupiedCell": "Cell[x\u003d133, y\u003d66, z\u003d130]",
+  "ordinaryOccupiedRebakeRefusal": "entity_obstruction:Cell[x\u003d133, y\u003d66, z\u003d130]",
+  "witnessIntersectionChecked": true,
+  "witnessIsCollidable": false,
+  "ordinaryAdapterEntityIntersection": true,
+  "selectedSavedObjects": 11,
+  "failure": "java.lang.AssertionError: Old saved NEW object still uses old physical shapes or stale membership bloodborne_dw:source_acacia_fence_gate",
+  "trace": "java.lang.AssertionError: Old saved NEW object still uses old physical shapes or stale membership bloodborne_dw:source_acacia_fence_gate\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SavedImportedCollisionRuntimeAudit.require(SavedImportedCollisionRuntimeAudit.java:161)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SavedImportedCollisionRuntimeAudit.tick(SavedImportedCollisionRuntimeAudit.java:133)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit.lambda$onInitialize$1(SimpleCollisionRuntimeAudit.java:55)\r\n\tat knot//net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.lambda$static$2(ServerTickEvents.java:43)\r\n\tat knot//net.minecraft.server.MinecraftServer.handler$zeg000$fabric-lifecycle-events-v1$onEndTick(MinecraftServer.java:2362)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_3748(MinecraftServer.java:847)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29741(MinecraftServer.java:671)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265)\r\n\tat java.base/java.lang.Thread.run(Thread.java:840)\r\n"
+}

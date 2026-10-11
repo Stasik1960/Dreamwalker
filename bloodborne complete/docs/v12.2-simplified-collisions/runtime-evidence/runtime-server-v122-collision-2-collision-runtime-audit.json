@@ -1,0 +1,95 @@
+{
+  "schema": "dreamwalker-v122-simple-collision-runtime-v1",
+  "status": "FAIL",
+  "method": "Actual Minecraft dedicated server registry, CompositeSpec footprint, ordinary player movement, placement/copy/typed NBT/removal. No real author export and no physical keyboard/mouse input.",
+  "newRegistryCount": 1045,
+  "offeredVariantCount": 1802,
+  "completedVariants": 1802,
+  "exactGeometryStates": 57664,
+  "movementAndTransactions": [
+    {
+      "role": "source_bricks",
+      "registryId": "bloodborne_dw:source_bricks",
+      "rotation": 0,
+      "open": false,
+      "sideCollision": "PASS_ACTUAL_PLAYER_MOVE",
+      "allowedX": 0.699999988079071,
+      "topSupport": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_bricks",
+      "registryId": "bloodborne_dw:source_bricks",
+      "rotation": 1,
+      "open": false,
+      "sideCollision": "PASS_ACTUAL_PLAYER_MOVE",
+      "allowedX": 0.699999988079071,
+      "topSupport": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_bricks",
+      "registryId": "bloodborne_dw:source_bricks",
+      "rotation": 2,
+      "open": false,
+      "sideCollision": "PASS_ACTUAL_PLAYER_MOVE",
+      "allowedX": 0.699999988079071,
+      "topSupport": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_bricks",
+      "registryId": "bloodborne_dw:source_bricks",
+      "rotation": 7,
+      "open": false,
+      "sideCollision": "PASS_ACTUAL_PLAYER_MOVE",
+      "allowedX": 0.699999988079071,
+      "topSupport": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_addon_grass_0",
+      "registryId": "bloodborne_dw:source_addon_grass_0",
+      "rotation": 0,
+      "open": false,
+      "passThrough": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_addon_grass_0",
+      "registryId": "bloodborne_dw:source_addon_grass_0",
+      "rotation": 1,
+      "open": false,
+      "passThrough": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_addon_grass_0",
+      "registryId": "bloodborne_dw:source_addon_grass_0",
+      "rotation": 2,
+      "open": false,
+      "passThrough": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    },
+    {
+      "role": "source_addon_grass_0",
+      "registryId": "bloodborne_dw:source_addon_grass_0",
+      "rotation": 7,
+      "open": false,
+      "passThrough": "PASS_ACTUAL_PLAYER_MOVE",
+      "typedNbtPickWholeRemoval": "PASS",
+      "status": "PASS"
+    }
+  ],
+  "exactReplacementParserSyntheticContract": "PASS_DATA_ONLY_NOT_AUTHOR_IMPORT",
+  "failedCase": 1802,
+  "failure": "java.lang.AssertionError: Ordinary player cannot step over the low physical pot",
+  "stackTrace": "java.lang.AssertionError: Ordinary player cannot step over the low physical pot\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit.require(SimpleCollisionRuntimeAudit.java:63)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit$Audit.fixture(SimpleCollisionRuntimeAudit.java:221)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit$Audit.fixture(SimpleCollisionRuntimeAudit.java:170)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit$Audit.representativeFixtures(SimpleCollisionRuntimeAudit.java:163)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit$Audit.tick(SimpleCollisionRuntimeAudit.java:107)\r\n\tat knot//dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit.lambda$onInitialize$1(SimpleCollisionRuntimeAudit.java:58)\r\n\tat knot//net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.lambda$static$2(ServerTickEvents.java:43)\r\n\tat knot//net.minecraft.server.MinecraftServer.handler$zeg000$fabric-lifecycle-events-v1$onEndTick(MinecraftServer.java:2362)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_3748(MinecraftServer.java:847)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29741(MinecraftServer.java:671)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265)\r\n\tat java.base/java.lang.Thread.run(Thread.java:840)\r\n"
+}

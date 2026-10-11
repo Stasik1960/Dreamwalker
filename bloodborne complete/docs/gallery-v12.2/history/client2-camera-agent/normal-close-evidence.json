@@ -1,0 +1,142 @@
+{
+  "status": "PASS_NATIVE_SNAPSHOT_AND_NORMAL_SHUTDOWN",
+  "targetPid": 128096,
+  "expectedQaGameDirectory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-flatgallery-v122-client-2",
+  "productionJarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "snapshot": {
+    "schema": "dreamwalker-client2-readonly-camera-probe-v1",
+    "pid": 128096,
+    "timeUtc": "2026-10-11T17:58:43.750553800Z",
+    "thread": "Render thread",
+    "expectedCamera": [
+      42.625,
+      64.78,
+      1158.0,
+      14.0362,
+      16.795
+    ],
+    "noHotswapOrTransformers": true,
+    "windowFocused": false,
+    "currentScreen": null,
+    "playerPresent": true,
+    "worldPresent": true,
+    "playerXYZ": [
+      30.547124580237732,
+      67.39949008752146,
+      1164.5292739580152
+    ],
+    "playerYawPitch": [
+      242.7923,
+      39.5952
+    ],
+    "playerBlockPos": "class_2338{x=30, y=67, z=1164}",
+    "playerVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "playerSpectator": true,
+    "playerNoClip": true,
+    "playerFlying": true,
+    "playerChunkLoaded": true,
+    "renderCameraXYZ": [
+      30.547124580237732,
+      69.01948997308054,
+      1164.5292739580152
+    ],
+    "renderCameraYawPitch": [
+      242.7923,
+      39.5952
+    ],
+    "framebuffer": [
+      1280,
+      720
+    ],
+    "windowIconified": false,
+    "windowVisible": true,
+    "status": "PASS_SNAPSHOT",
+    "normalCloseMethod": "MinecraftClient.scheduleStop / method_1592",
+    "scheduleStopInvoked": true
+  },
+  "playerSavedNbt": {
+    "file": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-flatgallery-v122-client-2\\saves\\prototype-fixture\\playerdata\\98d0fc2d-e7a9-3f38-8784-2c69b5a1666f.dat",
+    "sha256": "4c7bd009bb3d2267efa3afb2927407e610260ade74e94aa4d59ca02a85394aa7",
+    "position": [
+      30.547124580237732,
+      67.39949008752146,
+      1164.5292739580152
+    ],
+    "rotation": [
+      -117.20770263671875,
+      39.59519958496094
+    ],
+    "positionMatchesRenderThreadSnapshot": "PASS",
+    "rotationDeltaModulo360": [
+      -2.6367187615505827e-06,
+      -4.150390608970156e-07
+    ],
+    "rotationMatchesRenderThreadSnapshot": "PASS"
+  },
+  "normalShutdownAllDimensionsSaved": true,
+  "noForceTermination": true,
+  "noTransformersOrHotswap": true,
+  "originalCaptureStatus": "FAIL_CAPTURE",
+  "originalCaptureFailure": "java.lang.IllegalStateException: Camera did not settle: gallery-33-bloodborne_dw_source_assembly_yellow_stained_glass_pane_variant_0_.png",
+  "originalSuccessfulCapturedFrames": 32,
+  "inferenceLimit": "The snapshot was sampled after capture failure; the later pose mismatch cannot establish the original cause of that failure.",
+  "resolvedInitialToolAssumption": "Windows ProcessHandle.info().commandLine() was unavailable; CIM had already verified the exact PID/gameDir. Restricting the PID and verifying the loaded QA class before scheduleStop allowed normal Attach API completion.",
+  "evidence": [
+    {
+      "file": "CameraProbeAgent.java",
+      "sha256": "733ba5cf1d7599b017188323efe68a579e87f1ba42762c2e3e313196d00bdaa2"
+    },
+    {
+      "file": "AttachClientProbe.java",
+      "sha256": "7403c25d984f4400449e9b1a18d4f6f7ce0a145aa6ffb1976ef2c0eeb0c41cac"
+    },
+    {
+      "file": "run_attach.py",
+      "sha256": "6918191d97034a23e8094cdf3df6ce598c8af1075030400bb0a1c0a2c4bd18d3"
+    },
+    {
+      "file": "preserve_evidence.py",
+      "sha256": "375980f4344479ddc44d2a02c90e4f532fcab244599daa6a1e6a1a9f68d0a7a5"
+    },
+    {
+      "file": "attach-report.json",
+      "sha256": "879e852b31ef787a9f71efee75c8370c5988ab26b35498bcfd3d8e9b8d6e8c44"
+    },
+    {
+      "file": "attach-report-attempt1.json",
+      "sha256": "8c2e937c688d4d9c6972c745f4c36d13e57881494306bd578e3906b6b4524ede"
+    },
+    {
+      "file": "tool.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "tool-attempt1.log",
+      "sha256": "ea178ccee420aa8cac7448392a9700504da0171cab7e99ef62db5f08df4b70b6"
+    },
+    {
+      "file": "client2-failed-camera-probe.json",
+      "sha256": "6ab0357504b66c94e653db2d9040d2fa8a284b0f77ad41e238bdb5f314a8007e"
+    },
+    {
+      "file": "latest.log",
+      "sha256": "fe6592fead1738cffbc9734a8e67b621f1fe006062ca4ada1981390ed6899811"
+    },
+    {
+      "file": "client-capture-output.json",
+      "sha256": "404d866473c96acbc7bcfc7095da3a8885410d321b9cab4d1984a5203b449c94"
+    },
+    {
+      "file": "launch-console.log",
+      "sha256": "fe6592fead1738cffbc9734a8e67b621f1fe006062ca4ada1981390ed6899811"
+    },
+    {
+      "file": "client-profile.json",
+      "sha256": "ae1149c0bbf3f3c61b65ac70727b538b80635413652904c2fb4d170d26c2e4c1"
+    }
+  ]
+}

@@ -22,12 +22,19 @@ public final class CompositeSpec {
     public final boolean translucent;
     public final List<Variant> variants;
     public final boolean openable, requiredSupport;
+    public final boolean simplePhysicalCollision;
+    public final Bounds importedClimbingBounds;
     public final Cell supportOffset;
     public final Set<Cell> essential;
     private final Map<String, Map<Cell, Footprint>> shapes = new java.util.concurrent.ConcurrentHashMap<>();
+    private final Map<Pose,List<List<Bounds>>> simpleRotations = new IdentityHashMap<>();
     private CompositeSpec(JsonObject document) {
         if (document.get("schemaVersion").getAsInt() != 1 || document.get("units").getAsInt() != 16) throw new IllegalArgumentException("Unsupported composite geometry schema");
         id = new Identifier(document.get("id").getAsString()); displayName = document.has("displayName") ? document.get("displayName").getAsString() : id.getPath();
+        simplePhysicalCollision = document.has("simplePhysicalCollision") && document.get("simplePhysicalCollision").getAsBoolean();
+        if (simplePhysicalCollision && (!id.getNamespace().equals("bloodborne_dw") || !id.getPath().startsWith("source_"))) throw new IllegalArgumentException("Simple collision is restricted to newly imported objects: " + id);
+        importedClimbingBounds = document.has("importedClimbingBounds") ? bound(document.getAsJsonObject("importedClimbingBounds")) : null;
+        if (importedClimbingBounds != null && (!simplePhysicalCollision || !Set.of("source_hold_ladder_02","source_hold_ladder_03").contains(id.getPath()))) throw new IllegalArgumentException("Unreviewed imported climbing zone: " + id);
         translucent = document.has("layer") && document.get("layer").getAsString().equals("translucent");
         openable = document.has("openable") && document.get("openable").getAsBoolean();
         JsonObject support = document.has("support") ? document.getAsJsonObject("support") : new JsonObject();
@@ -40,7 +47,10 @@ public final class CompositeSpec {
         List<Variant> parsed = new ArrayList<>();
         for (JsonElement value : document.getAsJsonArray("variants")) {
             JsonObject row=value.getAsJsonObject(),poses = row.getAsJsonObject("poses"); Pose closed = pose(poses.getAsJsonObject("closed"));
-            parsed.add(new Variant(closed, poses.has("open") ? pose(poses.getAsJsonObject("open")) : closed,
+            Pose open = poses.has("open") ? pose(poses.getAsJsonObject("open")) : closed;
+            readSimpleRotations(closed,poses.getAsJsonObject("closed"));
+            if (poses.has("open")) readSimpleRotations(open,poses.getAsJsonObject("open"));
+            parsed.add(new Variant(closed, open,
                     row.has("visibleBounds")?bound(row.getAsJsonObject("visibleBounds")):null,
                     row.has("mountedPlaneBounds")?bound(row.getAsJsonObject("mountedPlaneBounds")):null,number(row,"mountAlignmentYaw",0)));
         }
@@ -52,6 +62,11 @@ public final class CompositeSpec {
             if (input == null) throw new IllegalStateException("Missing composite descriptor: " + path);
             return new CompositeSpec(JsonParser.parseReader(new InputStreamReader(input, StandardCharsets.UTF_8)).getAsJsonObject());
         } catch (IOException failure) { throw new IllegalStateException("Cannot load composite " + path, failure); }
+    }
+    /** Unregistered historical NEW geometry for aiming only; never physics opt-in. */
+    static CompositeSpec legacyOutlineSpec(JsonObject document) {
+        if (document.has("simplePhysicalCollision") || document.has("simpleCollisionByRotation")) throw new IllegalArgumentException("Historical outlines cannot opt into new physics");
+        return new CompositeSpec(document);
     }
     public Pose pose(BlockState state) {
         int variant = state.get(CompositeRootBlock.VARIANT);
@@ -74,7 +89,10 @@ public final class CompositeSpec {
                 // The reviewed roof uses exactly one axis-aligned base cube.
                 // Visual yaw never expands it into strips or a rotated AABB.
                 int physicalYaw = id.getPath().equals("prototype_roof") ? 0 : state.get(CompositeRootBlock.ROTATION);
-                for (Bounds bounds : pose.collision) distribute(bounds, physicalYaw, mountY, collision);
+                if (simplePhysicalCollision) {
+                    collision.putAll(simplePhysicalFootprint(state,mountY,0,0,0));
+                }
+                else for (Bounds bounds : pose.collision) distribute(bounds, physicalYaw, mountY, collision);
                 for (Bounds bounds : pose.selection) distribute(bounds, state.get(CompositeRootBlock.ROTATION), mountY, selection);
             }
             TreeSet<Cell> cells = new TreeSet<>(collision.keySet()); cells.addAll(selection.keySet()); cells.add(Cell.ORIGIN);
@@ -114,6 +132,15 @@ public final class CompositeSpec {
         }
         return List.copyOf(result);
     }
+    private void readSimpleRotations(Pose pose,JsonObject object) {
+        if (!object.has("simpleCollisionByRotation")) return;
+        if (!simplePhysicalCollision) throw new IllegalArgumentException("Unreviewed oriented simple collision: " + id);
+        JsonArray values=object.getAsJsonArray("simpleCollisionByRotation");
+        if(values.size()!=8)throw new IllegalArgumentException("Expected eight simple collision orientations");
+        List<List<Bounds>> parsed=new ArrayList<>();
+        for(JsonElement value:values){JsonObject container=new JsonObject();container.add("collision",value);List<Bounds> boxes=bounds(container,"collision");if(boxes.size()>3)throw new IllegalArgumentException("Simple collision box budget: "+id);parsed.add(boxes);}
+        simpleRotations.put(pose,List.copyOf(parsed));
+    }
     private static double number(JsonObject object,String field,double fallback) { return object.has(field) ? object.get(field).getAsDouble() : fallback; }
     private static Vec optionalVec(JsonObject object,String field,Vec fallback) { return object.has(field) ? vec(object.getAsJsonArray(field)) : fallback; }
     private static Vec vec(JsonArray values) {
@@ -123,6 +150,18 @@ public final class CompositeSpec {
         return new Vec(x,y,z);
     }
     /** Diagonal thin boxes use a 1/16-block conservative raster, never their filled AABB. */
+    public Map<Cell,List<Box>> simplePhysicalFootprint(BlockState state,double mountY,double shiftX,double shiftY,double shiftZ) {
+        if(!simplePhysicalCollision)throw new IllegalArgumentException("Only newly imported defaults may use simple physical footprint");
+        Pose current=pose(state);List<List<Bounds>> rotations=simpleRotations.get(current);
+        int rotation=state.get(CompositeRootBlock.ROTATION);
+        List<Bounds> boxes=rotations==null?current.collision:rotations.get(rotation&7);
+        TreeMap<Cell,List<Box>> result=new TreeMap<>();
+        List<ImportedCollisionMath.Box> values = new ArrayList<>();
+        for (Bounds b : boxes) values.add(new ImportedCollisionMath.Box(b.from.x/16,b.from.y/16,b.from.z/16,b.to.x/16,b.to.y/16,b.to.z/16));
+        for (ImportedCollisionMath.Box b : ImportedCollisionMath.transform(values,rotations==null?rotation:0,mountY,true,shiftX,shiftY,shiftZ)) clip(b.x0(),b.y0(),b.z0(),b.x1(),b.y1(),b.z1(),result);
+        return result;
+    }
+    /** Existing V12 physical shapes and all outline shapes retain their raster. */
     private static void distribute(Bounds bounds,int rotation,double mountY,Map<Cell,List<Box>> result) {
         double minY=bounds.from.y/16+mountY,maxY=bounds.to.y/16+mountY;
         double[][] polygon=new double[4][2]; double angle=Math.toRadians(rotation*45),c=Math.cos(angle),s=Math.sin(angle);

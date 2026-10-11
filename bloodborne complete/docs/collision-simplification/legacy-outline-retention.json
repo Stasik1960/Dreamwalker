@@ -1,0 +1,26 @@
+{
+  "schema": "dreamwalker-v122-legacy-outline-retention-v1",
+  "status": "PASS_EXACT_ORIGINAL_DATA_PACKAGED",
+  "resource": "src\\architecture\\resources\\bloodborne_dw\\imported-legacy-outlines.json.gz",
+  "resourceSha256": "58e50deb49f77e0276b8383879579644f3c88696ed2998a3efbde331257d6bef",
+  "sourceHistorySha256": "7cd83557159e84fb68baa002e58593852201e882098082212f3a44bf53f57723",
+  "objects": 1045,
+  "variants": 1802,
+  "poses": 1803,
+  "originalAimingBoxes": 28225,
+  "descriptorFilesUnchanged": 1045,
+  "retiredIdsExcluded": [
+    "bloodborne_dw:source_jungle_trapdoor_bottom",
+    "bloodborne_dw:source_jungle_trapdoor_open"
+  ],
+  "confirmedPreFixRegression": {
+    "id": "bloodborne_dw:source_potted_fern",
+    "ray": "Vertical through local x=z=8/16; downward from above pot.",
+    "oldAimingHitY": 0.25,
+    "simplifiedPhysicalHitY": 0.375,
+    "oldBoxes": 5,
+    "simplifiedPhysicalBoxes": 1
+  },
+  "runtimeStrategy": "Unregistered CompositeSpec without new physical marker reuses original CompositeSpec distribution and CompositeSourceShift. Only NEW contextSelection/empty-ledger root outline fallback read this archive. Existing selection lists, V12 behavior and physical defaults remain untouched.",
+  "limitations": "Data provenance and source-path proof; actual outline/raycast/picking need Minecraft QA after rebuild."
+}

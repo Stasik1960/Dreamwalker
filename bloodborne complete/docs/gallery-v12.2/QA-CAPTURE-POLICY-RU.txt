@@ -1,0 +1,38 @@
+QA capture helper5, версия 1.2.4, production SHA ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32.
+Это вспомогательный JAR проверки. Он не включается в конечный мод и не нужен для игры в галерее.
+
+После client-2 FAIL_CAPTURE на кадре 33 поздний native snapshot выявил
+позицию/ориентацию, отличающиеся от заданного tp. Snapshot был после timeout,
+поэтому точное состояние камеры в момент timeout неизвестно.
+Исторический FAIL, probe и штатное сохранение/закрытие сохранены отдельно.
+
+Свежий класс FlatGalleryV122ClientCapture генерируется в build/generated-java.
+Старый FlatGalleryClientCapture.java не редактируется. Генерируемый client-only
+Mixin GameRenderer.renderWorld HEAD (Minecraft 1.20.1 intermediary method_3188)
+находится в отдельном dev.dreamwalker.bloodbornedw.gallery.capture.mixin
+и держит заданные feet XYZ/yaw/pitch до Camera.update и построения view matrices.
+Этот пакет не включает обычные QA entrypoints. Helper4/client-3 initialization FAIL
+из-за общего namespace сохранён в history/client3-helper-config с exact SHA.
+На ticks/render очищаются клавиши, обнуляется скорость, сбрасывается прежняя
+интерполяционная поза игрока, включаются first-person и скрытие HUD только
+при активном проверенном fresh capture marker. Блоки и содержимое мира не пишутся.
+
+Прежние atCamera, root registry/state/UUID и entity UUID проверки сохранены
+побайтно. Допуски прежние: расстояние <0.05 блока, yaw/pitch <0.5 градуса.
+END native render дополнительно сверяет фактическую Camera и focusedEntity;
+actualRenderedCamera и poseCorrections пишутся для каждого кадра.
+PNG остаются native ScreenshotRecorder framebuffer, без синтеза изображения.
+
+FAIL сохраняет actual pose/render readiness/screen/focus/chunk diagnostics.
+При quitAfterCapture штатный MinecraftClient.scheduleStop выполняется как
+после успеха, так и после FAIL. FAIL не превращается в PASS.
+
+QA-CAPTURE-BUILD.json — actual offline build PASS и неизменность production JAR.
+QA-CAPTURE-CONFIG-PROOF.json — read-only hash/config/selector/check-preservation PASS.
+Эти статические доказательства не объявляют runtime или visual PASS.
+Client-4 использует прежний input2 с теми же 37 камерами и manifest3; source world immutable.
+Итог actual client-4: 37/37 CAPTURE_COMPLETE, 37 native PNG visual PASS,
+штатное закрытие/сохранение PASS и повторное сравнение 1905 объектов PASS.
+Доказательства и ограничения — client-runtime.json, visual-review.json,
+DISK-CLIENT-AFTER.json и SERVER-AND-SAVED-REPORT-RU.txt.
+Ручное управление мышью/клавиатурой каждым вариантом: NOT_RUN.

@@ -33,205 +33,13 @@
             {
               "from": [
                 -16.0,
-                0.08743299,
-                2.5
+                -0.0,
+                2.0
               ],
               "to": [
                 32.0,
                 32.08743299,
-                13.5
-              ]
-            },
-            {
-              "from": [
-                -15,
-                0,
-                2
-              ],
-              "to": [
-                -13,
-                1,
-                14
-              ]
-            },
-            {
-              "from": [
-                -15,
-                1,
-                2
-              ],
-              "to": [
-                -12,
-                2,
-                14
-              ]
-            },
-            {
-              "from": [
-                -14,
-                2,
-                2
-              ],
-              "to": [
-                -12,
-                3,
-                14
-              ]
-            },
-            {
-              "from": [
-                -14,
-                3,
-                2
-              ],
-              "to": [
-                -11,
-                4,
-                14
-              ]
-            },
-            {
-              "from": [
-                -13,
-                4,
-                2
-              ],
-              "to": [
-                -11,
-                5,
-                14
-              ]
-            },
-            {
-              "from": [
-                -13,
-                5,
-                2
-              ],
-              "to": [
-                -10,
-                7,
-                14
-              ]
-            },
-            {
-              "from": [
-                -12,
-                7,
-                2
-              ],
-              "to": [
-                -10,
-                8,
-                14
-              ]
-            },
-            {
-              "from": [
-                4.0,
-                19.08743299,
-                4.0
-              ],
-              "to": [
-                12.0,
-                32.08743299,
-                12.0
-              ]
-            },
-            {
-              "from": [
-                4.5,
-                9.58743299,
-                2.0
-              ],
-              "to": [
-                11.5,
-                18.58743299,
                 14.0
-              ]
-            },
-            {
-              "from": [
-                26,
-                5,
-                2
-              ],
-              "to": [
-                29,
-                7,
-                14
-              ]
-            },
-            {
-              "from": [
-                26,
-                7,
-                2
-              ],
-              "to": [
-                28,
-                8,
-                14
-              ]
-            },
-            {
-              "from": [
-                27,
-                3,
-                2
-              ],
-              "to": [
-                30,
-                4,
-                14
-              ]
-            },
-            {
-              "from": [
-                27,
-                4,
-                2
-              ],
-              "to": [
-                29,
-                5,
-                14
-              ]
-            },
-            {
-              "from": [
-                28,
-                1,
-                2
-              ],
-              "to": [
-                31,
-                2,
-                14
-              ]
-            },
-            {
-              "from": [
-                28,
-                2,
-                2
-              ],
-              "to": [
-                30,
-                3,
-                14
-              ]
-            },
-            {
-              "from": [
-                29,
-                0,
-                2
-              ],
-              "to": [
-                31,
-                1,
-                14
               ]
             }
           ],
@@ -740,6 +548,120 @@
                 14
               ]
             }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  -0.0,
+                  2.0
+                ],
+                "to": [
+                  32.0,
+                  32.08743299,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.85965005,
+                  -0.0,
+                  -12.85965005
+                ],
+                "to": [
+                  28.85965005,
+                  32.08743299,
+                  28.85965005
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  -0.0,
+                  -16.0
+                ],
+                "to": [
+                  14.0,
+                  32.08743299,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.85965005,
+                  -0.0,
+                  -12.85965005
+                ],
+                "to": [
+                  28.85965005,
+                  32.08743299,
+                  28.85965005
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  -0.0,
+                  2.0
+                ],
+                "to": [
+                  32.0,
+                  32.08743299,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.85965005,
+                  -0.0,
+                  -12.85965005
+                ],
+                "to": [
+                  28.85965005,
+                  32.08743299,
+                  28.85965005
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  -0.0,
+                  -16.0
+                ],
+                "to": [
+                  14.0,
+                  32.08743299,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.85965005,
+                  -0.0,
+                  -12.85965005
+                ],
+                "to": [
+                  28.85965005,
+                  32.08743299,
+                  28.85965005
+                ]
+              }
+            ]
           ]
         }
       },
@@ -780,6 +702,7 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
-  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
 }

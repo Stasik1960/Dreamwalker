@@ -1,0 +1,69 @@
+{
+  "schema": "dreamwalker-v122-native-capture-helper-static-proof-v1",
+  "status": "PASS",
+  "productionJarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "addonSha256": "25c3a3224f0977e485a955dfb88be8de0b9d644bdf6aafee83d790b1e72f6a79",
+  "buildReportSha256": "161ce8798ae12a9d146b491e41173f78b8a32c4e5749ccf817449d05de1b7121",
+  "legacyCaptureSourceSha256": "cd736059aae06a103aa6c9e49a57da4c5f2f953217ab25b364e05bbedf04bd05",
+  "generatedCaptureSourceSha256": "be5e81bde9fad0953516c5076f2b570822a2cbefc68883c00f12ac6f2f789860",
+  "generatedMixinSourceSha256": "f6d20f0cd1c3ad0d8a86b73c8c39ed5a75604f5cdf8285f257296199a9d09204",
+  "mappingsSha256": "af9c596e91f530e6ad07f78d2d7b58a77e97dac28651f21d096b7c4146524d3e",
+  "metadata": {
+    "schemaVersion": 1,
+    "id": "dreamwalker_gallery_author",
+    "version": "1.2.3",
+    "name": "Dreamwalker flat gallery author and verifier",
+    "environment": "*",
+    "entrypoints": {
+      "main": [
+        "dev.dreamwalker.bloodbornedw.gallery.FlatGalleryV122Author"
+      ],
+      "client": [
+        "dev.dreamwalker.bloodbornedw.gallery.FlatGalleryV122ClientCapture"
+      ]
+    },
+    "depends": {
+      "minecraft": "1.20.1",
+      "java": ">=17",
+      "fabricloader": ">=0.16.10",
+      "fabric-api": "*",
+      "bloodborne_dw": "*"
+    },
+    "description": "Explicit-marker QA only. Saved gallery opens with production mod and dependencies.",
+    "mixins": [
+      {
+        "config": "dreamwalker-gallery-v122-capture.mixins.json",
+        "environment": "client"
+      }
+    ]
+  },
+  "mixinConfig": {
+    "required": true,
+    "minVersion": "0.8",
+    "package": "dev.dreamwalker.bloodbornedw.gallery",
+    "compatibilityLevel": "JAVA_17",
+    "client": [
+      "FlatGalleryV122CameraMixin"
+    ],
+    "injectors": {
+      "defaultRequire": 1
+    }
+  },
+  "criticalChecksUnchanged": [
+    "checkRoot",
+    "checkEntity",
+    "atCamera"
+  ],
+  "helperClasses": [
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122Author$Author$1.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122Author$Author$2.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122Author$Author.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122Author$Exhibit.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122Author$Station.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122Author.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122CameraMixin.class",
+    "dev/dreamwalker/bloodbornedw/gallery/FlatGalleryV122ClientCapture.class"
+  ],
+  "normalStopOnFailure": true,
+  "runtimeCaptureStatus": "NOT_RUN_BY_THIS_STATIC_PROOF"
+}

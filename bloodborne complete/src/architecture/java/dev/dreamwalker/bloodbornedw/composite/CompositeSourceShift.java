@@ -31,9 +31,10 @@ public final class CompositeSourceShift {
         Map<Cell,Footprint> known=CACHE.get(key);if(known!=null)return known;
         Shift shift=world(state,payload);TreeMap<Cell,List<Box>> collision=new TreeMap<>(),selection=new TreeMap<>();
         for(var entry:spec.footprint(state,mount).entrySet()){
-            distribute(entry.getKey(),entry.getValue().collision(),shift,collision);
+            if(!spec.simplePhysicalCollision)distribute(entry.getKey(),entry.getValue().collision(),shift,collision);
             distribute(entry.getKey(),entry.getValue().selection(),shift,selection);
         }
+        if(spec.simplePhysicalCollision)collision.putAll(spec.simplePhysicalFootprint(state,mount,shift.x,shift.y,shift.z));
         TreeSet<Cell> cells=new TreeSet<>(collision.keySet());cells.addAll(selection.keySet());cells.add(Cell.ORIGIN);
         if(cells.size()>4096)throw new IllegalArgumentException("Source-shift cell budget exceeded");
         TreeMap<Cell,Footprint> result=new TreeMap<>();for(Cell cell:cells)result.put(cell,new Footprint(List.copyOf(collision.getOrDefault(cell,List.of())),List.copyOf(selection.getOrDefault(cell,List.of()))));

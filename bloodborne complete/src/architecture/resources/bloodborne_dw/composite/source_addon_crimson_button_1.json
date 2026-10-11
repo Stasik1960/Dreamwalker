@@ -33,121 +33,13 @@
             {
               "from": [
                 8.5,
-                12.0,
-                5.0
-              ],
-              "to": [
-                15.5,
-                14.0,
-                11.0
-              ]
-            },
-            {
-              "from": [
-                8.5,
-                20.0,
-                5.0
-              ],
-              "to": [
-                15.5,
-                22.0,
-                11.0
-              ]
-            },
-            {
-              "from": [
-                9.5,
-                14.0,
-                6.0
-              ],
-              "to": [
-                14.5,
-                20.0,
-                10.0
-              ]
-            },
-            {
-              "from": [
-                10.5,
                 0.0,
-                6.5
-              ],
-              "to": [
-                13.5,
-                21.0,
-                9.5
-              ]
-            },
-            {
-              "from": [
-                24.5,
-                12.0,
                 5.0
               ],
               "to": [
                 31.5,
-                14.0,
-                11.0
-              ]
-            },
-            {
-              "from": [
-                24.5,
-                20.0,
-                5.0
-              ],
-              "to": [
-                31.5,
-                22.0,
-                11.0
-              ]
-            },
-            {
-              "from": [
-                25.5,
-                14.0,
-                6.0
-              ],
-              "to": [
-                30.5,
-                20.0,
-                10.0
-              ]
-            },
-            {
-              "from": [
-                25.5,
-                42.0,
-                6.0
-              ],
-              "to": [
-                30.5,
-                44.0,
-                10.0
-              ]
-            },
-            {
-              "from": [
-                25.5,
-                46.0,
-                6.0
-              ],
-              "to": [
-                30.5,
                 48.0,
-                10.0
-              ]
-            },
-            {
-              "from": [
-                26.5,
-                0.0,
-                6.5
-              ],
-              "to": [
-                29.5,
-                47.0,
-                9.5
+                11.0
               ]
             }
           ],
@@ -296,6 +188,120 @@
                 9.5
               ]
             }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  8.5,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  31.5,
+                  48.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.23223305,
+                  0.0,
+                  6.23223305
+                ],
+                "to": [
+                  26.7383297,
+                  48.0,
+                  26.7383297
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  8.5
+                ],
+                "to": [
+                  11.0,
+                  48.0,
+                  31.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -10.7383297,
+                  0.0,
+                  6.23223305
+                ],
+                "to": [
+                  9.76776695,
+                  48.0,
+                  26.7383297
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.5,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  7.5,
+                  48.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -10.7383297,
+                  0.0,
+                  -10.7383297
+                ],
+                "to": [
+                  9.76776695,
+                  48.0,
+                  9.76776695
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  -15.5
+                ],
+                "to": [
+                  11.0,
+                  48.0,
+                  7.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.23223305,
+                  0.0,
+                  -10.7383297
+                ],
+                "to": [
+                  26.7383297,
+                  48.0,
+                  9.76776695
+                ]
+              }
+            ]
           ]
         }
       },
@@ -338,6 +344,7 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
-  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
 }

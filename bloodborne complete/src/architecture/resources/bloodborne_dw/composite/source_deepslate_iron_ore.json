@@ -32,14 +32,38 @@
           "collision": [
             {
               "from": [
-                0.0,
-                0.0,
-                0.0
+                0,
+                0,
+                0
               ],
               "to": [
-                16.0,
-                48.0,
-                16.0
+                2,
+                48,
+                16
+              ]
+            },
+            {
+              "from": [
+                14,
+                0,
+                0
+              ],
+              "to": [
+                16,
+                48,
+                16
+              ]
+            },
+            {
+              "from": [
+                2,
+                40,
+                0
+              ],
+              "to": [
+                14,
+                48,
+                16
               ]
             }
           ],
@@ -56,6 +80,216 @@
                 16.0
               ]
             }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0,
+                  0,
+                  0
+                ],
+                "to": [
+                  2,
+                  48,
+                  16
+                ]
+              },
+              {
+                "from": [
+                  14,
+                  0,
+                  0
+                ],
+                "to": [
+                  16,
+                  48,
+                  16
+                ]
+              },
+              {
+                "from": [
+                  2,
+                  40,
+                  0
+                ],
+                "to": [
+                  14,
+                  48,
+                  16
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  40,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  48,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0,
+                  0,
+                  0
+                ],
+                "to": [
+                  16,
+                  48,
+                  2
+                ]
+              },
+              {
+                "from": [
+                  0,
+                  0,
+                  14
+                ],
+                "to": [
+                  16,
+                  48,
+                  16
+                ]
+              },
+              {
+                "from": [
+                  0,
+                  40,
+                  2
+                ],
+                "to": [
+                  16,
+                  48,
+                  14
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  40,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  48,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  14,
+                  0,
+                  0
+                ],
+                "to": [
+                  16,
+                  48,
+                  16
+                ]
+              },
+              {
+                "from": [
+                  0,
+                  0,
+                  0
+                ],
+                "to": [
+                  2,
+                  48,
+                  16
+                ]
+              },
+              {
+                "from": [
+                  2,
+                  40,
+                  0
+                ],
+                "to": [
+                  14,
+                  48,
+                  16
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  40,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  48,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0,
+                  0,
+                  14
+                ],
+                "to": [
+                  16,
+                  48,
+                  16
+                ]
+              },
+              {
+                "from": [
+                  0,
+                  0,
+                  0
+                ],
+                "to": [
+                  16,
+                  48,
+                  2
+                ]
+              },
+              {
+                "from": [
+                  0,
+                  40,
+                  2
+                ],
+                "to": [
+                  16,
+                  48,
+                  14
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  40,
+                  -1.89949494
+                ],
+                "to": [
+                  17.89949494,
+                  48,
+                  17.89949494
+                ]
+              }
+            ]
           ]
         }
       },
@@ -95,6 +329,7 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
-  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
 }

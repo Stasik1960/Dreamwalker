@@ -33,97 +33,13 @@
             {
               "from": [
                 -10.0,
-                7.5,
-                -6.075
+                0.0,
+                -6.6
               ],
               "to": [
                 25.0,
-                10.5,
-                21.925
-              ]
-            },
-            {
-              "from": [
-                -9.0,
-                1.0,
-                -5.0
-              ],
-              "to": [
-                7.0,
-                17.0,
-                21.0
-              ]
-            },
-            {
-              "from": [
-                -2.5,
-                0.0,
-                -6.6
-              ],
-              "to": [
-                0.5,
-                18.0,
-                21.4
-              ]
-            },
-            {
-              "from": [
-                -1.75,
-                23.5,
-                -5.075
-              ],
-              "to": [
-                16.25,
-                26.5,
-                22.925
-              ]
-            },
-            {
-              "from": [
-                -0.75,
-                16.0,
-                -4.0
-              ],
-              "to": [
-                15.25,
-                32.0,
-                22.0
-              ]
-            },
-            {
-              "from": [
-                5.75,
-                15.0,
-                -5.4
-              ],
-              "to": [
-                8.75,
                 33.0,
-                22.6
-              ]
-            },
-            {
-              "from": [
-                8.0,
-                1.0,
-                -5.0
-              ],
-              "to": [
-                24.0,
-                17.0,
-                21.0
-              ]
-            },
-            {
-              "from": [
-                14.5,
-                0.0,
-                -6.6
-              ],
-              "to": [
-                17.5,
-                18.0,
-                21.4
+                22.925
               ]
             }
           ],
@@ -236,6 +152,120 @@
                 21.4
               ]
             }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -10.0,
+                  0.0,
+                  -6.6
+                ],
+                "to": [
+                  25.0,
+                  33.0,
+                  22.925
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -14.57438399,
+                  0.0,
+                  -14.68045001
+                ],
+                "to": [
+                  29.97334323,
+                  33.0,
+                  29.86727721
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -6.925,
+                  0.0,
+                  -10.0
+                ],
+                "to": [
+                  22.6,
+                  33.0,
+                  25.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.86727721,
+                  0.0,
+                  -14.57438399
+                ],
+                "to": [
+                  30.68045001,
+                  33.0,
+                  29.97334323
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.0,
+                  0.0,
+                  -6.925
+                ],
+                "to": [
+                  26.0,
+                  33.0,
+                  22.6
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.97334323,
+                  0.0,
+                  -13.86727721
+                ],
+                "to": [
+                  30.57438399,
+                  33.0,
+                  30.68045001
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -6.6,
+                  0.0,
+                  -9.0
+                ],
+                "to": [
+                  22.925,
+                  33.0,
+                  26.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -14.68045001,
+                  0.0,
+                  -13.97334323
+                ],
+                "to": [
+                  29.86727721,
+                  33.0,
+                  30.57438399
+                ]
+              }
+            ]
           ]
         }
       },
@@ -275,6 +305,7 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
-  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
 }

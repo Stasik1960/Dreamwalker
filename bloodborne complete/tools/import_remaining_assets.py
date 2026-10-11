@@ -17,6 +17,8 @@ import gzip
 import zipfile
 from pathlib import Path
 from PIL import Image
+from simplify_imported_collisions import apply_policy
+from gallery_platform_plan import ModelGeometry
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK = ROOT.parent / 'Bloodborne-Blocks/reference-inputs/bbmc-v15-v16/bbmc_v15_resource.zip'
@@ -533,10 +535,16 @@ def translate_applications(applications, shift):
 
 def import_objects(manifest, source):
     imported, blocked = [], []
+    retired_file = RES / 'bloodborne_dw/retired-source-objects.json'
+    retired = {row['path'] for row in json.loads(retired_file.read_text(encoding='utf-8'))['objects']} if retired_file.exists() else set()
     override_file = OUT / 'source-name-overrides.json'
     overrides = {row['path']: row['displayName'] for row in json.loads(override_file.read_text(encoding='utf-8'))['objects']} if override_file.exists() else {}
     for row in manifest['objects']:
         path = row['path']
+        if path in retired:
+            # A previous authoring manifest is historical evidence, not permission
+            # to restore explicitly removed objects or recycle their numbers.
+            continue
         if not path.startswith('source_') or any(character not in 'abcdefghijklmnopqrstuvwxyz0123456789_' for character in path):
             raise ValueError('Expected append-only source_ object path: ' + path)
         source_name = row.get('displayName', row.get('name', path))
@@ -577,6 +585,7 @@ def import_objects(manifest, source):
                           'anchorPolicy': row.get('anchor', 'floor'),
                           'collisionPolicy': 'New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.',
                           'geometryPolicy': 'Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.'}
+            descriptor, _ = apply_policy(descriptor, ModelGeometry())
             source.write(RES / 'bloodborne_dw/composite' / (path + '.json'), encode(descriptor), kind='descriptor')
             source.write(RES / 'assets/bloodborne_dw/blockstates' / (path + '.json'),
                          encode({'variants': {'': {'model': 'bloodborne_dw:block/' + path + '_empty'}}}), kind='blockstate')

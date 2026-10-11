@@ -143,7 +143,8 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                     t.assertTrue(CompositeData.state(row.rootData()).get(CompositeRootBlock.VARIANT)==selected,"all helper contributions refer to the chosen variant");
                 }
                 t.assertTrue(selection,"every finished object is a real selection target: "+block.spec.id+" variant="+selected);
-                t.assertTrue(collision==!block.spec.variants.get(selected).closed().collision().isEmpty(),"physical emptiness follows the descriptor, including decorative empty states");
+                boolean expectedCollision=block.spec.simplePhysicalCollision?block.spec.simplePhysicalFootprint(world.getBlockState(root),0,0,0,0).values().stream().anyMatch(parts->!parts.isEmpty()):!block.spec.variants.get(selected).closed().collision().isEmpty();
+                t.assertTrue(collision==expectedCollision,"physical emptiness follows the oriented, face-cropped pose: "+block.spec.id+" variant="+selected+" yaw="+yaw);
                 removed(t,player,owner);
             });
         }

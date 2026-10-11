@@ -68,7 +68,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
         return !incoming.at(cell).collides(existing.at(cell));
     }
     @Override public boolean intersectsEntities(Cell cell,Footprint proposed){
-        var pos=CompositeData.pos(cell);var boxes=CompositeRuntime.shape(proposed.collision()).getBoundingBoxes().stream().map(box->box.offset(pos)).toList();
+        var pos=CompositeData.pos(cell);var physical=incoming.size()==1&&ImportedPhysicalShapes.isImported(incoming.keySet().iterator().next())?ImportedPhysicalShapes.exact(proposed.collision()):CompositeRuntime.shape(proposed.collision());var boxes=physical.getBoundingBoxes().stream().map(box->box.offset(pos)).toList();
         boolean initial=incoming.keySet().stream().anyMatch(owner->dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(owner.instanceId()));
         return dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.entityConflict(world,boxes,null,initial)!=null;
     }
