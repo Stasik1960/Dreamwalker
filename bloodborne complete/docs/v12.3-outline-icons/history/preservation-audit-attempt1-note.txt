@@ -1,0 +1,7 @@
+preservation-audit-attempt1.json is the unchanged first audit output.
+Its 76 FAIL rows were caused by the audit accepting only the unnamespaced
+parent "builtin/entity". The production JSONs use the equivalent valid
+identifier "minecraft:builtin/entity". The audit was corrected to normalize
+the Minecraft namespace; production source/resources were not changed for
+these failures. A subsequent complete audit is saved separately at the
+revision root as preservation-and-resource-audit.json.

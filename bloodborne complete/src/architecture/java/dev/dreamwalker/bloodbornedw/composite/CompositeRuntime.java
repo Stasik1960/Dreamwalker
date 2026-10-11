@@ -158,11 +158,11 @@ public final class CompositeRuntime {
     }
     public static VoxelShape cellShape(BlockView world,BlockPos pos,boolean collision,BlockState fallback,ShapeContext context){
         if(collision){var imported=ImportedPhysicalShapes.collision(world,pos,fallback);if(imported.isPresent())return imported.get();}
-        if(!collision&&fallback.getBlock() instanceof CompositeRootBlock block&&block.spec.simplePhysicalCollision&&contributions(world,pos).isEmpty())return shape(ImportedLegacyOutline.fallback(block,fallback));
+        if(!collision){var imported=ImportedSelectionShapes.outline(world,pos,fallback,context);if(imported.isPresent())return imported.get();}
         List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> boxes=new ArrayList<>();List<CompositeData.Contribution> entries=contributions(world,pos);for(var entry:entries)if(validOrDeferred(world,entry.owner()))boxes.addAll(collision?physicalParts(entry,pos):contextSelection(world,entry,pos,context));if(entries.isEmpty()&&fallback.getBlock() instanceof CompositeRootBlock block){Footprint f=block.spec.footprint(fallback,0).get(Cell.ORIGIN);boxes.addAll(collision||!f.collision().isEmpty()?f.collision():f.selection());}return shape(boxes);
     }
-    private static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextSelection(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context) {
-        var imported=ImportedLegacyOutline.selection(entry,cell);if(imported.isPresent())return imported.get();
+    static List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box> contextSelection(BlockView world,CompositeData.Contribution entry,BlockPos cell,ShapeContext context) {
+        var imported=ImportedSelectionShapes.parts(entry,cell);if(imported.isPresent())return imported.get();
         var selected=selectionParts(world,entry,cell,context);
         if(!selected.isEmpty())return selected;
         BlockState rootState=CompositeData.state(entry.rootData());
@@ -215,7 +215,7 @@ public final class CompositeRuntime {
     private static List<Owner> targetsInternal(World world,BlockPos pos,PlayerEntity player,boolean cleanup){
         if(player==null||!world.isChunkLoaded(pos))return List.of();Vec3d eye=player.getEyePos(),end=eye.add(player.getRotationVec(1).multiply(player.isCreative()?5:4.5));
         record Hit(Owner owner,double distance){} List<Hit> hits=new ArrayList<>();
-        for(var contribution:contributions(world,pos)){if(!validOrDeferred(world,contribution.owner(),cleanup))continue;var hit=shape(contextSelection(world,contribution,pos,ShapeContext.of(player))).raycast(eye,end,pos);if(hit!=null)hits.add(new Hit(contribution.owner(),hit.getPos().squaredDistanceTo(eye)));}
+        for(var contribution:contributions(world,pos)){if(!validOrDeferred(world,contribution.owner(),cleanup))continue;var selected=contextSelection(world,contribution,pos,ShapeContext.of(player));var outline=ImportedPhysicalShapes.isImported(contribution.owner())?ImportedPhysicalShapes.exact(selected):shape(selected);var hit=outline.raycast(eye,end,pos);if(hit!=null)hits.add(new Hit(contribution.owner(),hit.getPos().squaredDistanceTo(eye)));}
         hits.sort(Comparator.comparingDouble(Hit::distance).thenComparing(Hit::owner));
         BlockState carrier=world.getBlockState(pos);if(!(carrier.getBlock() instanceof CompositeRootBlock)&&!carrier.isOf(CompositeArchitecture.CELL)&&!(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(carrier)&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.owner(world,pos)!=null)){
             BASE_SHAPE.set(true);try{var foreign=carrier.getOutlineShape(world,pos).raycast(eye,end,pos);if(foreign!=null){double distance=foreign.getPos().squaredDistanceTo(eye);hits.removeIf(hit->hit.distance>=distance-1e-8);}}finally{BASE_SHAPE.set(false);}

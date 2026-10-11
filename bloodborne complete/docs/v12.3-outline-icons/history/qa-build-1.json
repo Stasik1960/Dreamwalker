@@ -1,0 +1,24 @@
+{
+  "schema": "dreamwalker-v123-qa-build-v1",
+  "status": "PASS",
+  "productionJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.3-outline-icons.jar",
+  "productionJarSha256": "34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054",
+  "qaSourceSha256": {
+    "tools/v123-qa/OutlineIconClientAudit.java": "883ea9114864ae6a3e9156ab04d9202a468da81bb5074cc1d330b2ab4d0947cb",
+    "tools/v123-qa/OutlineNativeAudit.java": "dbdbe7771b9eb8a825dc8d7059116982273489d1e2a257c74017d31c522e6d0e",
+    "tools/v123-qa/OutlineQaEvidence.java": "560eb3db64fd14a97d2e0b33997e7b0c46c15e2d2ec4e37bf6f02df7e289d0bb"
+  },
+  "command": [
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\gradlew.bat",
+    "--offline",
+    "--no-daemon",
+    "-I",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v123-qa-build-1\\v123-qa.init.gradle",
+    "remapV123QaJar"
+  ],
+  "exitCode": 0,
+  "productionJarUnchanged": true,
+  "addon": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-v123-qa-1.0.0.jar",
+  "addonSha256": "b41ce3f9d3a32c2d0d84c0368d45d8e7d9972f30f6f3f318ce554518c328d289",
+  "bytes": 31602
+}

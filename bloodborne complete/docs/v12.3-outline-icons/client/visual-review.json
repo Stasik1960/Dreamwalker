@@ -1,0 +1,48 @@
+{
+  "schema": "dreamwalker-v123-rp-icon-visual-review-v1",
+  "reviewer": "v123_rp_icons subagent, independent native PNG inspection",
+  "status": "PASS",
+  "nativeClientRun": "runtime-client-v123-outline-icons-3",
+  "nativeClientCaptureStatus": "CAPTURE_COMPLETE",
+  "nativeClientCapturedFrames": 9,
+  "productionJarSha256": "34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054",
+  "canonicalIconsVisuallyReviewed": 69,
+  "compatibilityAliasIconsDirectlyDrawn": 0,
+  "compatibilityAliasCount": 7,
+  "compatibilityAliasGameStatus": "NOT_RUN",
+  "method": "Opened both unmodified Minecraft ScreenshotRecorder PNGs from final native client run 3 with view_image and inspected every populated cell, 36 on page 1 and 33 on page 2. Both PNG SHA-256 values exactly match the earlier valid icon captures from runs 1 and 2. Final native client run 3 completed all 9 screenshots.",
+  "checks": {
+    "allCanonicalIconsVisible": "PASS",
+    "armorStandPlaceholderAbsent": "PASS",
+    "threeDimensionalOriginalObjectGeometryVisible": "PASS",
+    "texturedModelsNoMissingTexturePattern": "PASS",
+    "modelsWithinIconCellsNoVisibleClipping": "PASS",
+    "recognizableSourceObjectFamilies": "PASS",
+    "proportionsPreserved": "PASS",
+    "pixelExactUvOrWorldPoseComparison": "NOT_RUN"
+  },
+  "notes": [
+    "Vehicles, cages, coffins, furniture, gates, architectural structures and trees show the corresponding textured source models from an oblique 3D view.",
+    "Very thin hanging chandeliers and the hook appear narrow because the complete long source model is uniformly fitted; they are visible and contained, without clipping or placeholders.",
+    "No icon-specific production correction was needed after this visual review.",
+    "The seven retained hidden V12 compatibility aliases use the same renderer and canonical asset mapping but were not drawn on these two canonical catalogue pages."
+  ],
+  "pages": [
+    {
+      "fileName": "v123-rp-icons-page-1.png",
+      "width": 1280,
+      "height": 720,
+      "iconCount": 36,
+      "sha256": "769901adfd34c225efec1136bbe7a9208c467fed9b55dc10c0ac0ca4a5ef9b4e",
+      "status": "PASS"
+    },
+    {
+      "fileName": "v123-rp-icons-page-2.png",
+      "width": 1280,
+      "height": 720,
+      "iconCount": 33,
+      "sha256": "abec7afe3bce048be8fa65a86f762447c3cd9921237290237182be885f879b3f",
+      "status": "PASS"
+    }
+  ]
+}

@@ -116,8 +116,8 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     }
     private static BlockHitResult aim(TestContext t,ServerPlayerEntity player,Owner owner) {
         var world=t.getWorld();
-        for(var cell:cells(world,owner))for(var row:CompositeRuntime.contributions(world,cell))if(row.owner().equals(owner)&&!row.shape().selection().isEmpty()) {
-            var bounds=row.shape().selection().get(0);double x=cell.getX()+(bounds.minX()+bounds.maxX())/2,y=cell.getY()+(bounds.minY()+bounds.maxY())/2,z=cell.getZ()+bounds.minZ();
+        for(var cell:cells(world,owner))for(var row:CompositeRuntime.contributions(world,cell))if(row.owner().equals(owner))for(var bounds:world.getBlockState(cell).getOutlineShape(world,cell,ShapeContext.of(player)).getBoundingBoxes()) {
+            double x=cell.getX()+(bounds.minX+bounds.maxX)/2,y=cell.getY()+(bounds.minY+bounds.maxY)/2,z=cell.getZ()+bounds.minZ;
             player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);player.refreshPositionAndAngles(x,y-player.getStandingEyeHeight(),z-2,0,0);
             if(owner.equals(CompositeRuntime.target(world,cell,player)))return new BlockHitResult(new Vec3d(x,y,z),Direction.NORTH,cell,false);
         }
