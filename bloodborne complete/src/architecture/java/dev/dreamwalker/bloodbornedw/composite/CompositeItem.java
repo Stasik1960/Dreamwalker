@@ -53,7 +53,8 @@ public final class CompositeItem extends BlockItem {
             if(root instanceof ImportedLadderBlock)state=ImportedLadderBlock.placementState(state,context);
             if(root instanceof ImportedStairBlock&&art!=null&&art.contains("imported_rotation_delta",8)){
                 try{state=state.with(CompositeRootBlock.ROTATION,Math.floorMod(Math.round(context.getPlayer().getYaw()/45)+Integer.parseInt(art.getString("imported_rotation_delta")),8));}catch(NumberFormatException ignored){}
-                for(var property:state.getBlock().getStateManager().getProperties())if(java.util.Set.of("half","shape","trim").contains(property.getName())&&art.contains(property.getName(),8))state=applyArt(state,property,art.getString(property.getName()));
+                state=ImportedStairShapes.fromVariant(state,variant);
+                for(var property:state.getBlock().getStateManager().getProperties())if(property.getName().equals("trim")&&art.contains(property.getName(),8))state=applyArt(state,property,art.getString(property.getName()));
                 state=ImportedStairBlock.connected(state.with(ImportedStairBlock.CONNECTIONS,ImportedStairBlock.Connections.AUTO),context.getWorld(),context.getBlockPos());
             }
             payload=ImportedTypeAliases.markPayload(payload);

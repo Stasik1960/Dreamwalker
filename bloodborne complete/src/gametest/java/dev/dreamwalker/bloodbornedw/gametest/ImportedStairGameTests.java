@@ -33,16 +33,16 @@ public final class ImportedStairGameTests implements FabricGameTest {
         player.changeGameMode(net.minecraft.world.GameMode.CREATIVE);player.getAbilities().allowModifyWorld=true;return player;
     }
     private static void load(ServerWorld world,BlockPos root){for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++){var pos=root.add(x,0,z);world.setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);world.getChunk(pos);}}
+    private static NbtCompound currentPayload(){var payload=new NbtCompound();payload.putInt(ImportedTypeAliases.VERSION_KEY,1);return payload;}
     private static Owner place(TestContext t,BlockPos root,BlockState state){
-        load(t.getWorld(),root);var payload=new NbtCompound();payload.putInt(ImportedTypeAliases.VERSION_KEY,1);
-        var result=CompositeRuntime.place(t.getWorld(),root,state,UUID.randomUUID(),null,payload);
+        load(t.getWorld(),root);var result=CompositeRuntime.place(t.getWorld(),root,state,UUID.randomUUID(),null,currentPayload());
         t.assertTrue(result.outcome()==TransactionCore.Outcome.COMMITTED,"native stair fixture placement commits: "+result);
         return ((CompositeBlockEntity)t.getWorld().getBlockEntity(root)).resident();
     }
     private static void remove(TestContext t,Owner owner){t.assertTrue(CompositeRuntime.remove(t.getWorld(),owner,null,false).outcome()==TransactionCore.Outcome.COMMITTED,"native stair/ladder cleanup commits");CompositeRuntime.drain(t.getWorld());}
     private static void contract(TestContext t,BlockPos root,Owner owner,StairShape expected){
         var world=t.getWorld();var state=world.getBlockState(root);
-        t.assertTrue(state.get(ImportedStairBlock.SHAPE)==expected,"neighbor shape is "+expected+" for "+owner.registryId()+"; actual="+state);
+        t.assertTrue(ImportedStairShapes.shape(state)==expected,"neighbor shape is "+expected+" for "+owner.registryId()+"; actual="+state);
         t.assertTrue(((CompositeBlockEntity)world.getBlockEntity(root)).resident().equals(owner),"corner update retains resident UUID");
         boolean found=false;
         for(var row:CompositeRuntime.contributions(world,root))if(row.owner().equals(owner)){
@@ -65,12 +65,12 @@ public final class ImportedStairGameTests implements FabricGameTest {
             world.setBlockState(root.down(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
             if(half==BlockHalf.TOP)world.setBlockState(root.up(),Blocks.STONE.getDefaultState(),Block.NOTIFY_ALL);
             player.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()-8,facing.asRotation(),0);
-            var stack=block.art(block.getDefaultState(),new NbtCompound());player.setStackInHand(Hand.MAIN_HAND,stack);
+            var stack=block.art(block.getDefaultState(),currentPayload());player.setStackInHand(Hand.MAIN_HAND,stack);
             var clicked=half==BlockHalf.TOP?root.up():root.down();var face=half==BlockHalf.TOP?Direction.DOWN:Direction.UP;
             var hit=new BlockHitResult(Vec3d.ofCenter(clicked).add(0,half==BlockHalf.TOP?-.5:.5,0),face,clicked,false);
             var result=stack.getItem().useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,hit));
             t.assertTrue(result.isAccepted(),"ordinary native stair item places "+block.spec.id+" "+half+" "+facing+"; "+CompositeRuntime.lastResult());
-            var state=world.getBlockState(root);t.assertTrue(state.isOf(block)&&state.get(ImportedStairBlock.HALF)==half&&ImportedStairShapes.facing(state)==facing,"placement chooses clicked half and player facing");
+            var state=world.getBlockState(root);t.assertTrue(state.isOf(block)&&ImportedStairShapes.half(state)==half&&ImportedStairShapes.facing(state)==facing,"placement chooses clicked half and player facing");
             var owner=((CompositeBlockEntity)world.getBlockEntity(root)).resident();contract(t,root,owner,StairShape.STRAIGHT);
             remove(t,owner);world.setBlockState(root.up(),Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(root.down(),Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);
         });
@@ -88,7 +88,7 @@ public final class ImportedStairGameTests implements FabricGameTest {
             var neighbor=root.offset(outer?facing:facing.getOpposite());var other=left?facing.rotateYCounterclockwise():facing.rotateYClockwise();
             var neighborState=Blocks.STONE_STAIRS.getDefaultState().with(StairsBlock.FACING,other).with(StairsBlock.HALF,half);
             t.runAtTick(start,()->{
-                var state=block.getDefaultState().with(CompositeRootBlock.ROTATION,ImportedStairShapes.rotation(facing)).with(ImportedStairBlock.HALF,half);
+                var state=ImportedStairShapes.withHalf(block.getDefaultState().with(CompositeRootBlock.ROTATION,ImportedStairShapes.rotation(facing)),half);
                 owner[0]=place(t,root,ImportedStairShapes.normalize(state));contract(t,root,owner[0],StairShape.STRAIGHT);
                 world.setBlockState(neighbor,neighborState,Block.NOTIFY_ALL);
             });
@@ -122,7 +122,7 @@ public final class ImportedStairGameTests implements FabricGameTest {
             var block=stairs().get(0);var state=ImportedStairShapes.fromPose(block.getDefaultState(),1).with(ImportedStairBlock.CONNECTIONS,ImportedStairBlock.Connections.MANUAL);
             var owner=place(t,root,state);
             t.assertTrue(ImportedStairBlock.connected(state,world,root).equals(state),"old isolated cardinal corner retains its exact installed appearance in compatibility mode");
-            t.assertTrue(ImportedStairBlock.activateAutomatic(state,world,root).get(ImportedStairBlock.SHAPE)==StairShape.STRAIGHT,"explicit activation resumes automatic vanilla-style neighbor shape");
+            t.assertTrue(ImportedStairShapes.shape(ImportedStairBlock.activateAutomatic(state,world,root))==StairShape.STRAIGHT,"explicit activation resumes automatic vanilla-style neighbor shape");
             contract(t,root,owner,StairShape.INNER_LEFT);remove(t,owner);
         });
         t.runAtTick(tick+2,t::complete);
@@ -149,7 +149,7 @@ public final class ImportedStairGameTests implements FabricGameTest {
                 var firstState=ImportedStairShapes.fromPose(block.getDefaultState(),a);var lower=place(t,root,firstState);
                 var upperRoot=root.up(a+1);load(world,upperRoot);
                 player.refreshPositionAndAngles(root.getX()+.5,root.getY(),root.getZ()-8,0,0);
-                var stack=block.art(ImportedStairShapes.fromPose(block.getDefaultState(),b),new NbtCompound());player.setStackInHand(Hand.MAIN_HAND,stack);
+                var stack=block.art(ImportedStairShapes.fromPose(block.getDefaultState(),b),currentPayload());player.setStackInHand(Hand.MAIN_HAND,stack);
                 var topCell=root.up(a);var hit=new BlockHitResult(new Vec3d(root.getX()+.0625,upperRoot.getY(),root.getZ()+.9375),Direction.UP,topCell,false);
                 var result=stack.getItem().useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,hit));
                 t.assertTrue(result.isAccepted()&&world.getBlockState(upperRoot).isOf(block),"one/two-cell ladder items stack on the existing upper rung cell: "+a+"→"+b+"; "+CompositeRuntime.lastResult());

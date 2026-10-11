@@ -36,6 +36,22 @@ public class CompositeRootBlock extends BlockWithEntity {
     @Override public BlockState rotate(BlockState state,BlockRotation rotation){return state.with(ROTATION,Math.floorMod(state.get(ROTATION)+switch(rotation){case CLOCKWISE_90->2;case CLOCKWISE_180->4;case COUNTERCLOCKWISE_90->6;default->0;},8));}
     @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){if(!state.isOf(next.getBlock())&&!CompositeRuntime.writing()&&world instanceof ServerWorld server)CompositeRuntime.scheduleCleanup(server,pos);super.onStateReplaced(state,world,pos,next,moved);}
     @Override public BlockState getStateForNeighborUpdate(BlockState state,net.minecraft.util.math.Direction side,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos){if(world instanceof ServerWorld server&&(spec.requiredSupport||this instanceof ThinWindowRootBlock))CompositeRuntime.scheduleSupport(server,pos);return state;}
-    public ItemStack art(BlockState state,NbtCompound payload){ItemStack stack=new ItemStack(asItem());NbtCompound tag=stack.getOrCreateSubNbt("BlockStateTag");tag.putString("variant",Integer.toString(state.get(VARIANT)));tag.putString("profile",state.get(PROFILE).asString());tag.putString("open",Boolean.toString(state.get(OPEN)));if(spec.simplePhysicalCollision){for(var entry:state.getEntries().entrySet())if(!java.util.Set.of("rotation","variant","profile","open").contains(entry.getKey().getName()))tag.putString(entry.getKey().getName(),artName(entry.getKey(),entry.getValue()));if(payload.getInt(ImportedTypeAliases.VERSION_KEY)>=ImportedTypeAliases.VERSION)stack.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY,ImportedTypeAliases.VERSION);return ImportedTypeAliases.canonicalStack(stack);}return stack;}
+    public ItemStack art(BlockState state,NbtCompound payload){
+        if(spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(state,payload)){
+            NbtCompound converted=ImportedTypeAliases.transformPayload(state,payload);BlockState next=ImportedTypeAliases.target(state);
+            return ((CompositeRootBlock)next.getBlock()).art(next,converted);
+        }
+        ItemStack stack=new ItemStack(asItem());NbtCompound tag=stack.getOrCreateSubNbt("BlockStateTag");tag.putString("variant",Integer.toString(state.get(VARIANT)));tag.putString("profile",state.get(PROFILE).asString());tag.putString("open",Boolean.toString(state.get(OPEN)));
+        if(spec.simplePhysicalCollision){
+            for(var entry:state.getEntries().entrySet())if(!java.util.Set.of("rotation","variant","profile","open").contains(entry.getKey().getName()))tag.putString(entry.getKey().getName(),artName(entry.getKey(),entry.getValue()));
+            if(payload.getInt(ImportedTypeAliases.VERSION_KEY)>=ImportedTypeAliases.VERSION){
+                stack.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY,ImportedTypeAliases.VERSION);
+                CompositeSourceShift.Shift shift=CompositeSourceShift.local(payload);
+                if(shift.x()!=0||shift.y()!=0||shift.z()!=0){net.minecraft.nbt.NbtList artShift=new net.minecraft.nbt.NbtList();artShift.add(net.minecraft.nbt.NbtDouble.of(shift.x()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.y()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.z()));stack.getOrCreateNbt().put(ImportedTypeAliases.SHIFT_ART_KEY,artShift);}
+            }
+            return ImportedTypeAliases.canonicalStack(stack);
+        }
+        return stack;
+    }
     @SuppressWarnings({"rawtypes","unchecked"})private static String artName(Property property,Comparable value){return property.name(value);}
 }

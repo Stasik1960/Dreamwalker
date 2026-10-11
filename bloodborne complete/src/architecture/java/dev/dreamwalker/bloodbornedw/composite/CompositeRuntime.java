@@ -100,8 +100,10 @@ public final class CompositeRuntime {
             return rejected("not_current_imported_stair_owner");
         if(ImportedTypeAliases.needsMigration(previous,own.payload()))
             return rejected("legacy_stair_type_migration_pending");
+        if(ImportedStairShapes.half(previous)!=ImportedStairShapes.half(next))
+            return rejected("neighbor_stair_update_changes_half");
         for(var entry:previous.getEntries().entrySet()){
-            String name=entry.getKey().getName();if(name.equals("variant")||name.equals("shape"))continue;
+            String name=entry.getKey().getName();if(name.equals("variant"))continue;
             if(!entry.getValue().equals(next.getEntries().get(entry.getKey())))return rejected("neighbor_stair_update_changes_other_state:"+name);
         }
         NbtCompound payload=own.payload();ObjectInstance before=instance(world,root,previous,owner.instanceId(),payload);

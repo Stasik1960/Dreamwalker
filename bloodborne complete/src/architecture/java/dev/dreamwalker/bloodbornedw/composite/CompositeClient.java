@@ -31,7 +31,13 @@ public final class CompositeClient {
             @Override public void render(CompositeBlockEntity entity,float tickDelta,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay){
                 if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(entity.getCachedState())){dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.render(entity,matrices,consumers,light,overlay);return;}
                 if(entity.resident()==null||!(entity.getCachedState().getBlock() instanceof CompositeRootBlock block))return;
-                var shift=CompositeSourceShift.world(entity.getCachedState(),entity.payload());matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,entity.getCachedState(),matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos());matrices.pop();
+                BlockState renderedState=entity.getCachedState();NbtCompound renderedPayload=entity.payload();
+                // A saved NEW root may be visible before its distant helper chunk.
+                // Resolve legacy art locally while the atomic server migration waits.
+                if(block.spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(renderedState,renderedPayload)){
+                    renderedPayload=ImportedTypeAliases.transformPayload(renderedState,renderedPayload);renderedState=ImportedTypeAliases.target(renderedState);block=(CompositeRootBlock)renderedState.getBlock();
+                }
+                var shift=CompositeSourceShift.world(renderedState,renderedPayload);matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,renderedState,matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos());matrices.pop();
             }
             @Override public boolean rendersOutsideBoundingBox(CompositeBlockEntity entity){return true;}
             @Override public int getRenderDistance(){return 1024;}

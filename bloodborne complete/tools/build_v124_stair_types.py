@@ -45,7 +45,7 @@ MATERIALS = {'90275':'Бамбуковая мозаичная лестница',
 def load(p): return json.loads(p.read_text(encoding='utf-8-sig'))
 def write(p,value):
     p.parent.mkdir(parents=True,exist_ok=True)
-    p.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    p.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 def occupancy(half,shape):
     broad=0 if half=='bottom' else 1; small=1-broad
     result={(x,broad,z) for x in range(2) for z in range(2)}
@@ -184,7 +184,7 @@ def main():
                 styles.append(decorated)
             newvariants+=styles
         spec['variants']=newvariants;spec['displayName']=MATERIALS[primary];spec['essentialMask']=[[0,0,0]]
-        spec['functionalStairStates']='rotation maps east/south/west/north and retained legacy45 poses; half+shape derive10 source-native poses; neighbours choose straight/inner/outer via atomic owner transitions'
+        spec['functionalStairStates']='rotation maps east/south/west/north and retained legacy45 poses; VARIANT0..4 encodes bottom straight/inner_left/inner_right/outer_left/outer_right, VARIANT5..9 top; neighbours choose native corners via atomic owner transitions'
         spec['simplePhysicalCollision']=True
         if args.apply:write(RES/'bloodborne_dw/composite'/f'{path}.json',spec)
         else:write(OUT/'generated-descriptors'/f'{path}.json',spec)
@@ -211,11 +211,11 @@ def main():
             _,_,_,(newindex,turns,half,shape)=min(ranked)
             fragment['mappings'].append({'oldId':number,'oldRegistryId':originals[number]['id'],'oldVariant':index,
                 'newId':primary,'newRegistryId':spec['id'],'newVariant':newindex,'rotationDelta':turns*2,
-                'sourceShift':[0,0,0],'properties':{'half':half,'shape':shape,'trim':'false','connections':'manual'}})
+                'sourceShift':[0,0,0],'properties':({'trim':'false','connections':'manual'} if primary=='93028' else {'connections':'manual'})})
         if primary=='93028':
             fragment['mappings'].append({'oldId':'90980','oldRegistryId':originals['90980']['id'],'oldVariant':0,
                 'newId':primary,'newRegistryId':spec['id'],'newVariant':0,'rotationDelta':0,'sourceShift':[0,0,0],
-                'properties':{'half':'bottom','shape':'straight','trim':'true','connections':'manual'}})
+                'properties':{'trim':'true','connections':'manual'}})
         evidence.append({'primaryId':primary,'members':group,'canonicalPoseDonors':donorrows,'nativeGeometryMatch':'PASS','physicalBoxesPerPose':[len(v['poses']['closed']['collision']) for v in newvariants]})
     ladder=copy.deepcopy(originals['90586']);ladder['displayName']='Приставная каменная лестница';ladder['variants']=[copy.deepcopy(originals[n]['variants'][0]) for n in ['90586','90587']]
     ladder['functionalLadderHeightStates']='one: original16unit model/climbing zone; two: original32unit model/climbing zone; all8yaw and previous VerticalMount/SourceShift remain available'
@@ -234,4 +234,4 @@ if __name__=='__main__':
     try:main()
     except BaseException:
         import traceback
-        OUT.mkdir(parents=True,exist_ok=True);(OUT/'generation-error.txt').write_text(traceback.format_exc(),encoding='utf-8');raise
+        OUT.mkdir(parents=True,exist_ok=True);(OUT/'generation-error.txt').write_text(traceback.format_exc(),encoding='utf-8',newline='\n');raise

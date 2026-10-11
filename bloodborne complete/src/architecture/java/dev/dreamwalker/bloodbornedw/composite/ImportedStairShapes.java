@@ -38,14 +38,32 @@ public final class ImportedStairShapes {
     public static int variant(BlockState state) {
         if (state.getBlock() instanceof ImportedLadderBlock) return ImportedLadderBlock.variant(state);
         if (!(state.getBlock() instanceof ImportedStairBlock)) return state.get(CompositeRootBlock.VARIANT);
-        int shape = switch (state.get(ImportedStairBlock.SHAPE)) {
+        int value = state.get(CompositeRootBlock.VARIANT);
+        return value < 10 ? value : 0;
+    }
+
+    /** One existing palette property encodes the five shapes in each half. */
+    public static BlockHalf half(BlockState state) {
+        return variant(state) >= 5 ? BlockHalf.TOP : BlockHalf.BOTTOM;
+    }
+    public static StairShape shape(BlockState state) {
+        return switch (variant(state) % 5) {
+            case 0 -> StairShape.STRAIGHT; case 1 -> StairShape.INNER_LEFT; case 2 -> StairShape.INNER_RIGHT;
+            case 3 -> StairShape.OUTER_LEFT; default -> StairShape.OUTER_RIGHT;
+        };
+    }
+    public static BlockState withHalf(BlockState state, BlockHalf half) {
+        return state.with(CompositeRootBlock.VARIANT, variant(state) % 5 + (half == BlockHalf.TOP ? 5 : 0));
+    }
+    public static BlockState withShape(BlockState state, StairShape shape) {
+        int index = switch (shape) {
             case STRAIGHT -> 0;
             case INNER_LEFT -> 1;
             case INNER_RIGHT -> 2;
             case OUTER_LEFT -> 3;
             case OUTER_RIGHT -> 4;
         };
-        return (state.get(ImportedStairBlock.HALF) == BlockHalf.TOP ? 5 : 0) + shape;
+        return state.with(CompositeRootBlock.VARIANT, index + (half(state) == BlockHalf.TOP ? 5 : 0));
     }
 
     public static BlockState normalize(BlockState state) {
@@ -55,7 +73,7 @@ public final class ImportedStairShapes {
 
     public static int poseVariant(BlockState state) {
         int result = variant(state);
-        return state.getBlock() instanceof ImportedStairBlock block && block.spec.id.getPath().equals("source_stairs_polished_deepslate_stairs_bottom") && state.get(ImportedStairBlock.TRIM) ? result + 10 : result;
+        return state.getBlock() instanceof ImportedStairBlock && state.contains(ImportedStairBlock.TRIM) && state.get(ImportedStairBlock.TRIM) ? result + 10 : result;
     }
 
     public static int rotation(Direction facing) {
@@ -70,18 +88,14 @@ public final class ImportedStairShapes {
 
     public static BlockState fromVariant(BlockState state, int variant) {
         if (!(state.getBlock() instanceof ImportedStairBlock)) return state;
-        int value = Math.floorMod(variant, 10);
-        StairShape shape = switch (value % 5) {
-            case 0 -> StairShape.STRAIGHT; case 1 -> StairShape.INNER_LEFT; case 2 -> StairShape.INNER_RIGHT;
-            case 3 -> StairShape.OUTER_LEFT; default -> StairShape.OUTER_RIGHT;
-        };
-        return normalize(state.with(ImportedStairBlock.HALF, value >= 5 ? BlockHalf.TOP : BlockHalf.BOTTOM).with(ImportedStairBlock.SHAPE, shape));
+        return state.with(CompositeRootBlock.VARIANT, Math.floorMod(variant, 10));
     }
 
     public static BlockState fromPose(BlockState state, int pose) {
         if (state.getBlock() instanceof ImportedLadderBlock)
             return ImportedLadderBlock.normalize(state.with(ImportedLadderBlock.HEIGHT, pose == 1 ? ImportedLadderBlock.Height.TWO : ImportedLadderBlock.Height.ONE));
         if (!(state.getBlock() instanceof ImportedStairBlock)) return state.with(CompositeRootBlock.VARIANT, pose);
-        return fromVariant(state, pose).with(ImportedStairBlock.TRIM, pose >= 10);
+        state = fromVariant(state, pose);
+        return state.contains(ImportedStairBlock.TRIM) ? state.with(ImportedStairBlock.TRIM, pose >= 10) : state;
     }
 }
