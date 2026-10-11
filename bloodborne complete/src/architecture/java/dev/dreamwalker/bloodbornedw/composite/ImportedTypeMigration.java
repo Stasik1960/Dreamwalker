@@ -21,7 +21,9 @@ public final class ImportedTypeMigration {
         State(ServerWorld world) {
             var ledger = CompositeLedger.get(world);
             for (Cell cell : ledger.cells()) for (var entry : ledger.at(cell))
-                if (ImportedTypeAliases.merged(entry.owner().registryId())) {
+                if (ImportedTypeAliases.merged(entry.owner().registryId())
+                        && (!ImportedTypeAliases.canonicalRegistry(entry.owner().registryId()).equals(entry.owner().registryId())
+                        || CompositeData.nbt(entry.rootData().blockEntityNbt()).getInt(ImportedTypeAliases.VERSION_KEY) < ImportedTypeAliases.VERSION)) {
                     before.computeIfAbsent(entry.owner(), unused -> new TreeMap<>()).put(cell.subtract(entry.owner().root()), entry.shape());
                     chunks.computeIfAbsent(chunk(cell), unused -> new LinkedHashSet<>()).add(entry.owner());
                     chunks.computeIfAbsent(chunk(entry.owner().root()), unused -> new LinkedHashSet<>()).add(entry.owner());

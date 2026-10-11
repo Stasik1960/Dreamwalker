@@ -34,7 +34,8 @@ public final class ImportedStairGameTests implements FabricGameTest {
     }
     private static void load(ServerWorld world,BlockPos root){for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++){var pos=root.add(x,0,z);world.setChunkForced(pos.getX()>>4,pos.getZ()>>4,true);world.getChunk(pos);}}
     private static Owner place(TestContext t,BlockPos root,BlockState state){
-        load(t.getWorld(),root);var result=CompositeRuntime.place(t.getWorld(),root,state,UUID.randomUUID(),null,new NbtCompound());
+        load(t.getWorld(),root);var payload=new NbtCompound();payload.putInt(ImportedTypeAliases.VERSION_KEY,1);
+        var result=CompositeRuntime.place(t.getWorld(),root,state,UUID.randomUUID(),null,payload);
         t.assertTrue(result.outcome()==TransactionCore.Outcome.COMMITTED,"native stair fixture placement commits: "+result);
         return ((CompositeBlockEntity)t.getWorld().getBlockEntity(root)).resident();
     }

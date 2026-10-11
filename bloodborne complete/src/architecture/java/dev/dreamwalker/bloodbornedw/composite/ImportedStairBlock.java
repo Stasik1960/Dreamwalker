@@ -106,7 +106,14 @@ public final class ImportedStairBlock extends CompositeRootBlock {
         for (BlockPos pos : tasks) {
             if (!world.isChunkLoaded(pos) || !(world.getBlockState(pos).getBlock() instanceof ImportedStairBlock)
                     || !(world.getBlockEntity(pos) instanceof CompositeBlockEntity entity) || entity.resident() == null) continue;
-            BlockState current = world.getBlockState(pos), next = connected(current, world, pos);
+            BlockState current = world.getBlockState(pos);
+            // A legacy migration can defer until its other owned cells load.
+            // Never reinterpret old VARIANT with newly defaulted HALF/SHAPE.
+            if (ImportedTypeAliases.needsMigration(current, entity.payload())) {
+                scheduleNearby(world, pos);
+                continue;
+            }
+            BlockState next = connected(current, world, pos);
             if (!next.equals(current)) {
                 var result = CompositeRuntime.transitionImportedStair(world, entity.resident(), next);
                 if (result.outcome() != dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED) scheduleNearby(world, pos);

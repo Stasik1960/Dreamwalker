@@ -98,6 +98,8 @@ public final class CompositeRuntime {
                 ||!net.minecraft.registry.Registries.BLOCK.getId(previous.getBlock()).toString().equals(owner.registryId())
                 ||!(world.getBlockEntity(root) instanceof CompositeBlockEntity own)||!owner.equals(own.resident()))
             return rejected("not_current_imported_stair_owner");
+        if(ImportedTypeAliases.needsMigration(previous,own.payload()))
+            return rejected("legacy_stair_type_migration_pending");
         for(var entry:previous.getEntries().entrySet()){
             String name=entry.getKey().getName();if(name.equals("variant")||name.equals("shape"))continue;
             if(!entry.getValue().equals(next.getEntries().get(entry.getKey())))return rejected("neighbor_stair_update_changes_other_state:"+name);

@@ -232,6 +232,223 @@
         "minecraft:acacia_trapdoor[variant:facing=south,half=bottom,open=true]",
         "minecraft:acacia_trapdoor[variant:facing=west,half=bottom,open=true]"
       ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_trapdoor_open_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                1.5,
+                0.0,
+                5.0
+              ],
+              "to": [
+                30.5,
+                19.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                5.0,
+                3.9375
+              ],
+              "to": [
+                32.0,
+                32.0,
+                4.0625
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                15.9375
+              ],
+              "to": [
+                32.0,
+                32.0,
+                16.0625
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                0.0,
+                5.0
+              ],
+              "to": [
+                30.5,
+                19.0,
+                15.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  1.5,
+                  0.0,
+                  5.0
+                ],
+                "to": [
+                  30.5,
+                  19.0,
+                  15.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.54594155,
+                  0.0,
+                  1.28248558
+                ],
+                "to": [
+                  26.03122292,
+                  19.0,
+                  28.85965005
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  1.0,
+                  0.0,
+                  1.5
+                ],
+                "to": [
+                  11.0,
+                  19.0,
+                  30.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.85965005,
+                  0.0,
+                  -1.54594155
+                ],
+                "to": [
+                  14.71751442,
+                  19.0,
+                  26.03122292
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -14.5,
+                  0.0,
+                  1.0
+                ],
+                "to": [
+                  14.5,
+                  19.0,
+                  11.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -10.03122292,
+                  0.0,
+                  -12.85965005
+                ],
+                "to": [
+                  17.54594155,
+                  19.0,
+                  14.71751442
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  5.0,
+                  0.0,
+                  -14.5
+                ],
+                "to": [
+                  15.0,
+                  19.0,
+                  14.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  1.28248558,
+                  0.0,
+                  -10.03122292
+                ],
+                "to": [
+                  28.85965005,
+                  19.0,
+                  17.54594155
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          3.9375
+        ],
+        "to": [
+          32.0,
+          32.0,
+          16.0625
+        ]
+      },
+      "sourceVariant": "Дверная секция · открытая, вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/crimson_trapdoor_open_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:crimson_trapdoor[variant:facing=east,half=top,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=north,half=top,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=south,half=top,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=west,half=top,open=true]"
+      ]
     }
   ],
   "source": {},
