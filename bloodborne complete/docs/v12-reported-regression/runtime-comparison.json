@@ -1,0 +1,104 @@
+{
+  "schema": "dreamwalker-v12-wall-regression-diagnosis-v1",
+  "baselineCommit": "4a271348f2ac42b1b3da20db32056c9b60c4875c",
+  "originalV12CodeCommit": "821de077917f696a13600e900a244ffc05230c2f",
+  "confirmedRegression": "Gallery generator changes 90002 and 90011 to connections=manual. Native pick copies that state; subsequent placement retains manual behavior.",
+  "checks": {
+    "originalProductionWallBehavior": "PASS",
+    "deliveredProductionWallBehavior": "PASS",
+    "nativeWallResultsExactlyEqual": "PASS",
+    "oldElevenCreativeBlockDefaultsAndNbtExactlyEqual": "PASS",
+    "oldCatalogueResourcesAndWallRpClasses": "PASS",
+    "gallery90002And90011AutomaticNeighborBehavior": "FAIL",
+    "duplicate90011IntroducedAfterV12": "DISPROVED",
+    "exhaustiveManualGameplayAllOldObjects": "NOT_RUN",
+    "newClientVisualTestThisDiagnostic": "NOT_RUN"
+  },
+  "casesPerProductionJar": 8,
+  "originalJarSha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+  "deliveredJarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "diagnosticAddonSha256": "06999eb4903c3a12298888e3aaf59b5328f03a6b1a80ca42867638c57e836c61",
+  "nativeDefaultsCompared": 11,
+  "galleryWalls": [
+    {
+      "key": "bloodborne_dw:prototype_wall",
+      "id": "90002",
+      "state": {},
+      "blockStateTag": {
+        "connections": "manual",
+        "up": "true",
+        "north": "tall",
+        "east": "none",
+        "south": "none",
+        "west": "none",
+        "rotation": "0"
+      },
+      "placedState": {
+        "connections": "manual",
+        "east": "none",
+        "material": "6",
+        "north": "tall",
+        "profile": "base",
+        "rotation": "0",
+        "south": "none",
+        "up": "true",
+        "waterlogged": "false",
+        "west": "none"
+      },
+      "root": [
+        1,
+        64,
+        6
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_wall_skin_0",
+      "id": "90011",
+      "state": {},
+      "blockStateTag": {
+        "connections": "manual",
+        "up": "true",
+        "north": "tall",
+        "east": "none",
+        "south": "none",
+        "west": "none",
+        "rotation": "0"
+      },
+      "placedState": {
+        "connections": "manual",
+        "east": "none",
+        "north": "tall",
+        "profile": "base",
+        "rotation": "0",
+        "south": "none",
+        "up": "true",
+        "waterlogged": "false",
+        "west": "none"
+      },
+      "root": [
+        6,
+        64,
+        6
+      ],
+      "verticalOffset": 0.0
+    }
+  ],
+  "productionReleaseFilesUnchanged": {
+    "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+    "Dreamwalker-BB-V12.2-Flat-Gallery.zip": "1110cae7cb4796121c7c9d3eec2f635b1b44936b05bb0faea963bf6599577cda",
+    "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions-full-source.zip": "56a627b4abc4e78b5bf203ce313b64b2cab5d77518db65d1946dbfc68d42265d"
+  },
+  "galleryManifestUnchangedSha256": "9c85912f02889bc48c4a3db18e326d5b7c5fe3126555671e63df03557196a866",
+  "evidenceSha256": {
+    "build-report.json": "34b9f6c0646581769bedb265f8684e1f55d00c911d0b6c60eb9db1b668e07e1d",
+    "original-native-wall.json": "3cb9b8a0b495f74197d902f7fa237fd399957fce90dbb36419b44475739caa31",
+    "original-server.json": "608e063b47e8fb0d9a465b8c6e9f06c378f0f49a9d5d549cfcda45d079375f83",
+    "original-console.log": "97544d402b62c955ae5492827c1b9c1d2eafb4b6446e00a0b6ff76f8bb3655fa",
+    "delivered-native-wall.json": "3cb9b8a0b495f74197d902f7fa237fd399957fce90dbb36419b44475739caa31",
+    "delivered-server.json": "db498cdd98edf57457bb9c4f89e7a1ed658ba81466be0bf1e96e23f48bcf5b3c",
+    "delivered-console.log": "562a6e76199543e3032997cbba1d27609a2bff6bf13327339e4c15283cf6fced"
+  },
+  "productionFixApplied": false,
+  "sourceScope": "Only diagnostic tools and this new evidence directory are added; production sources, release JARs and galleries are unchanged during diagnosis."
+}
