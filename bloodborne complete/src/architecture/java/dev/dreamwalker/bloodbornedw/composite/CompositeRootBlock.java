@@ -46,6 +46,7 @@ public class CompositeRootBlock extends BlockWithEntity {
             for(var entry:state.getEntries().entrySet())if(!java.util.Set.of("rotation","variant","profile","open").contains(entry.getKey().getName()))tag.putString(entry.getKey().getName(),artName(entry.getKey(),entry.getValue()));
             if(payload.getInt(ImportedTypeAliases.VERSION_KEY)>=ImportedTypeAliases.VERSION){
                 stack.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY,ImportedTypeAliases.VERSION);
+                if(this instanceof ImportedStairBlock)ImportedTypeAliases.readLegacyStairArt(payload).ifPresent(key->stack.getOrCreateNbt().putString(ImportedStairLegacyArt.KEY,key));
                 CompositeSourceShift.Shift shift=CompositeSourceShift.local(payload);
                 if(shift.x()!=0||shift.y()!=0||shift.z()!=0){net.minecraft.nbt.NbtList artShift=new net.minecraft.nbt.NbtList();artShift.add(net.minecraft.nbt.NbtDouble.of(shift.x()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.y()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.z()));stack.getOrCreateNbt().put(ImportedTypeAliases.SHIFT_ART_KEY,artShift);}
             }

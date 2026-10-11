@@ -35,17 +35,21 @@ MATERIALS = {'90275':'Бамбуковая мозаичная лестница',
  '90322':'Кирпичная лестница','90409':'Вишнёвая лестница',
  '90423':'Каменная лестница из глубинного сланца','90437':'Булыжная лестница',
  '90493':'Лестница из тёмного узорного кирпича','90523':'Лестница из светлого полосатого камня',
- '90550':'Лестница из серого мелкого кирпича','90686':'Мангровая лестница',
+ '90550':'Ступени с овальным каменным орнаментом','90686':'Мангровая лестница',
  '90692':'Лестница из коричневого камня','90701':'Лестница из коричневого кирпича',
  '90760':'Лестница из серого тесаного камня','90804':'Лестница из тёмного зеленоватого камня',
- '90862':'Лестница из полосатого коричневого камня',
+ '90862':'Ступени из коричневых деревянных досок',
  '93004':'Лестница из камня с зелёными швами','93028':'Лестница из светлого серого камня',
  '93081':'Лестница из широкого серого кирпича','93094':'Гладкая каменная лестница'}
 
 def load(p): return json.loads(p.read_text(encoding='utf-8-sig'))
 def write(p,value):
     p.parent.mkdir(parents=True,exist_ok=True)
-    p.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+    data=(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf-8')
+    if p.is_file() and p.read_bytes()==data:return
+    temporary=p.with_name(p.name+'.v124.tmp')
+    temporary.write_bytes(data)
+    temporary.replace(p)
 def occupancy(half,shape):
     broad=0 if half=='bottom' else 1; small=1-broad
     result={(x,broad,z) for x in range(2) for z in range(2)}
@@ -62,6 +66,20 @@ def pose_occupancy(pose,models):
     return value, set(tuple(c) for c in value['occupancy']) if value else set()
 def boxes_of_cells(cells):
     return exact_coalesce([{'from':[8*c for c in cell],'to':[8*(c+1) for c in cell]} for cell in cells])
+def render_components(shape):
+    """Render planes keep the authored broad/raised components separate.
+
+    Physical cuboids may merge across Y=8, but such a merge cannot preserve the
+    source face material/UV or the omitted internal faces of a raised tread.
+    """
+    base={'from':[0,0,0],'to':[16,8,16]}
+    raised={'from':[8,8,0],'to':[16,16,16]}
+    if shape=='straight':return [('base',base),('raised',raised)]
+    if shape.startswith('outer'):
+        z=0 if shape.endswith('left') else 8
+        return [('base',base),('raised',{'from':[8,8,z],'to':[16,16,z+8]})]
+    z=0 if shape.endswith('left') else 8
+    return [('base',base),('raised',raised),('filler',{'from':[0,8,z],'to':[8,16,z+8]})]
 def geometry_policy(pose,models):
     # The two/three useful tread boxes are enough for ascent and platform support.
     _,cells=pose_occupancy(pose,models)
@@ -87,17 +105,82 @@ def clip_element(template,box):
     e=copy.deepcopy(template);oldfrom=e['from'];oldto=e['to'];e['from']=box['from'];e['to']=box['to'];e.pop('rotation',None)
     for side,face in e['faces'].items():
         uv=face.get('uv',implicit_uv(template,side))
-        # Retain the actual authored face texture/UV frame and crop its projected
-        # extent when a native tread is subdivided; no new texture is painted.
-        axes={'up':(0,2),'down':(0,2),'north':(0,1),'south':(0,1),'west':(2,1),'east':(2,1)}[side]
-        out=[]
-        for d in (0,1):
-            axis=axes[d];length=oldto[axis]-oldfrom[axis]
-            begin=(box['from'][axis]-oldfrom[axis])/length if length else 0
-            end=(box['to'][axis]-oldfrom[axis])/length if length else 1
-            out.extend([uv[d]+(uv[d+2]-uv[d])*begin,uv[d]+(uv[d+2]-uv[d])*end])
-        face['uv']=[out[0],out[2],out[1],out[3]]
+        # Minecraft's north/east/down projection reverses an axis; a rotated
+        # face also swaps/reverses its UV crop axes. Use that projection rather
+        # than treating every side as an unrotated positive X/Y rectangle.
+        before=implicit_uv(template,side);after=implicit_uv(box,side)
+        fractions=[]
+        for axis in (0,1):
+            length=before[axis+2]-before[axis]
+            fractions.append(((after[axis]-before[axis])/length,
+                              (after[axis+2]-before[axis])/length))
+        (u,U),(v,V)=fractions
+        rotation=face.get('rotation',0)%360
+        if rotation==90:(u,U),(v,V)=(v,V),(1-U,1-u)
+        elif rotation==180:(u,U),(v,V)=(1-U,1-u),(1-V,1-v)
+        elif rotation==270:(u,U),(v,V)=(1-V,1-v),(u,U)
+        elif rotation!=0:raise ValueError('Non-cardinal source UV rotation')
+        if any(value < -1e-8 or value > 1+1e-8 for value in (u,U,v,V)):
+            raise ValueError('Generated stair UV crop escapes its authored component')
+        face['uv']=[uv[0]+(uv[2]-uv[0])*u,uv[1]+(uv[3]-uv[1])*v,
+                    uv[0]+(uv[2]-uv[0])*U,uv[1]+(uv[3]-uv[1])*V]
     return e
+def complete_generated_faces(template):
+    """New forms reuse an authored opposite face when a source hid that plane.
+
+    This affects only generated models. Original source models are untouched.
+    It gives generated top halves a visible broad top even where the original
+    floor-mounted source deliberately omitted its downward-facing plane.
+    """
+    result=copy.deepcopy(template);faces=result['faces']
+    opposite={'up':'down','down':'up','north':'south','south':'north','east':'west','west':'east'}
+    for side,other in opposite.items():
+        if side in faces:continue
+        if other not in faces:raise ValueError('No authored plane for new stair face '+side)
+        face=copy.deepcopy(faces[other]);face.pop('cullface',None)
+        face['uv']=list(face.get('uv',implicit_uv(template,other)))
+        faces[side]=face
+    return result
+def render_component(template,target):
+    """Translate a matching source patch, then crop strictly inside that patch."""
+    template=complete_generated_faces(template)
+    delta=[0,0,0];source=copy.deepcopy(target)
+    for axis in range(3):
+        if target['from'][axis]<template['from'][axis] or target['to'][axis]>template['to'][axis]:
+            delta[axis]=target['from'][axis]-template['from'][axis]
+            source['from'][axis]-=delta[axis];source['to'][axis]-=delta[axis]
+        if source['from'][axis]<template['from'][axis]-1e-8 or source['to'][axis]>template['to'][axis]+1e-8:
+            raise ValueError('Generated render component exceeds source template')
+    made=clip_element(template,source)
+    made['from']=list(target['from']);made['to']=list(target['to'])
+    return made
+def legacy_art_table(fragment,originals):
+    native={group['primaryRegistryId'] for group in fragment['groups'] if group['kind']=='stairs'}
+    entries=[]
+    for mapping in fragment['mappings']:
+        if mapping['newRegistryId'] not in native:continue
+        source=originals[mapping['oldId']]['variants'][mapping['oldVariant']]
+        angle=mapping['rotationDelta']*45
+        def parts(pose):
+            result=[]
+            for original in pose['parts']:
+                part=copy.deepcopy(original);pivot=part.get('pivot',[8,8,8]);offset=part.get('offset',[0,0,0])
+                rotated=rotate(offset,1,angle,[0,0,0]);relative=[pivot[i]-8 for i in range(3)];moved=rotate(relative,1,angle,[0,0,0])
+                part['offset']=[round(rotated[i]+moved[i]-relative[i],10) for i in range(3)]
+                part['yaw']=part.get('yaw',0)-angle
+                result.append(part)
+            return result
+        row={'key':mapping['oldRegistryId']+'|'+str(mapping['oldVariant']),
+             'oldRegistryId':mapping['oldRegistryId'],'oldVariant':mapping['oldVariant'],
+             'registryId':mapping['newRegistryId'],'variant':mapping['newVariant'],
+             'rotationDelta':mapping['rotationDelta'],'parts':parts(source['poses']['closed'])}
+        if 'trim' in mapping['properties']:row['trim']=mapping['properties']['trim']=='true'
+        if 'open' in source['poses']:row['openParts']=parts(source['poses']['open'])
+        entries.append(row)
+    return {'schemaVersion':1,'scope':'POST_V12_NATIVE_STAIRS_APPEARANCE_ONLY',
+            'baselineCommit':'27bf67e63da6f8ba0a9dee2d1587310782c874e2',
+            'policy':'Validated old registry/variant key chooses original normalized parts only for the same current canonical registry/shape/trim. No physical geometry or additional blockstate product.',
+            'states':entries}
 def generated_pose(primary,half,shape,donor,models,apply):
     # A source-native straight/inner shape supplies the broad tread and raised
     # tread face templates. New connections reuse those templates and textures.
@@ -109,13 +192,12 @@ def generated_pose(primary,half,shape,donor,models,apply):
     base=next((e for e in elements if e['from']==[0,0,0] and e['to']==[16,8,16]),None)
     raised=next((e for e in elements if e['from']==[8,8,0] and e['to']==[16,16,16]),None)
     if base is None or raised is None:raise ValueError('No native east-facing tread template for '+primary)
-    cells=occupancy('bottom',shape);boxes=boxes_of_cells(cells)
-    made=[]
-    for box in boxes:
-        if box['from'][1]==0 and box['to'][1]==8:made.append(clip_element(base,box))
-        else:made.append(clip_element(raised,box))
+    filler=next((e for e in elements if e is not base and e is not raised
+                 and e['from'][1]==8 and e['to'][1]==16 and e['to'][0]<=8),raised)
+    templates={'base':base,'raised':raised,'filler':filler}
+    made=[render_component(templates[kind],box) for kind,box in render_components(shape)]
     identifier=f'bloodborne_dw:block/imported_stairs/{primary}/{shape}'
-    model={'credit':'Source-native tread templates retained for functional connection states',
+    model={'credit':'Source-native render components, signed rotated UV crops, and authored opposite faces for new functional states',
         'textures':doc['textures'],'elements':made}
     if 'display' in doc:model['display']=doc['display']
     if apply:write(RES/f'assets/bloodborne_dw/models/block/imported_stairs/{primary}/{shape}.json',model)
@@ -227,6 +309,9 @@ def main():
     fragment['groups'].append({'primaryId':'90586','primaryRegistryId':ladder['id'],'kind':'ladder','oneItem':True,'members':[originals[n]['id'] for n in ['90586','90587']]})
     for index,number in enumerate(['90586','90587']):fragment['mappings'].append({'oldId':number,'oldRegistryId':originals[number]['id'],'oldVariant':0,'newId':'90586','newRegistryId':ladder['id'],'newVariant':index,'rotationDelta':0,'sourceShift':[0,0,0],'properties':{'height':'one' if index==0 else 'two'}})
     write(OUT/'functional-type-fragment.json',fragment);write(OUT/'functional-state-generation.json',{'status':'PASS','applied':args.apply,'groups':evidence,'ladderOriginalGeometryRetained':True,'workingNativeStairTypes':len(GROUPS),'workingVerticalLadderTypes':1,'mappingCount':len(fragment['mappings'])})
+    appearance=legacy_art_table(fragment,originals)
+    if args.apply:write(RES/'bloodborne_dw/imported-stair-legacy-art.json',appearance)
+    else:write(OUT/'imported-stair-legacy-art.json',appearance)
     if args.apply:write(RES/'bloodborne_dw/imported-stair-types.json',types)
     else:write(OUT/'imported-stair-types.json',types)
 

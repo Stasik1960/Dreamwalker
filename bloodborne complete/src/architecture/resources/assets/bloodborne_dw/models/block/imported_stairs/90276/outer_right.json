@@ -1,5 +1,5 @@
 {
-  "credit": "Source-native tread templates retained for functional connection states",
+  "credit": "Source-native render components, signed rotated UV crops, and authored opposite faces for new functional states",
   "textures": {
     "particle": "#side",
     "bottom": "minecraft:block/bamboo_planks",
@@ -133,13 +133,22 @@
         },
         "east": {
           "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "east"
+        },
+        "down": {
+          "uv": [
             8.0,
             0.0,
             16.0,
             8.0
           ],
-          "texture": "#side",
-          "cullface": "east"
+          "texture": "#side"
         }
       }
     }

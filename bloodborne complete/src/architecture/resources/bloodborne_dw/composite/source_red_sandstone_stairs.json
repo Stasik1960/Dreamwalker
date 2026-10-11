@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "units": 16,
   "id": "bloodborne_dw:source_red_sandstone_stairs",
-  "displayName": "Лестница из полосатого коричневого камня",
+  "displayName": "Ступени из коричневых деревянных досок",
   "openable": false,
   "layer": "cutout",
   "support": {
@@ -3437,5 +3437,5 @@
   "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
   "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
   "simplePhysicalCollision": true,
-  "functionalStairStates": "rotation maps east/south/west/north and retained legacy45 poses; half+shape derive10 source-native poses; neighbours choose straight/inner/outer via atomic owner transitions"
+  "functionalStairStates": "rotation maps east/south/west/north and retained legacy45 poses; VARIANT0..4 encodes bottom straight/inner_left/inner_right/outer_left/outer_right, VARIANT5..9 top; neighbours choose native corners via atomic owner transitions"
 }

@@ -1,5 +1,5 @@
 {
-  "credit": "Source-native tread templates retained for functional connection states",
+  "credit": "Source-native render components, signed rotated UV crops, and authored opposite faces for new functional states",
   "textures": {
     "0": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
     "1": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0065",
@@ -100,9 +100,9 @@
         },
         "east": {
           "uv": [
-            4.875,
             3.875,
-            5.875,
+            3.875,
+            4.875,
             4.875
           ],
           "texture": "#1"
@@ -134,6 +134,15 @@
           ],
           "texture": "#1",
           "cullface": "up"
+        },
+        "down": {
+          "uv": [
+            2.875,
+            8.625,
+            3.875,
+            9.625
+          ],
+          "texture": "#1"
         }
       }
     }

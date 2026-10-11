@@ -1,5 +1,5 @@
 {
-  "credit": "Source-native tread templates retained for functional connection states",
+  "credit": "Source-native render components, signed rotated UV crops, and authored opposite faces for new functional states",
   "textures": {
     "particle": "#side",
     "bottom": "minecraft:block/bamboo_mosaic",
@@ -15,69 +15,6 @@
       ],
       "to": [
         16,
-        16,
-        8
-      ],
-      "faces": {
-        "up": {
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            8.0
-          ],
-          "texture": "#side",
-          "cullface": "up"
-        },
-        "north": {
-          "uv": [
-            -8.0,
-            -8.0,
-            8.0,
-            8.0
-          ],
-          "texture": "#side",
-          "cullface": "north"
-        },
-        "south": {
-          "uv": [
-            0.0,
-            -8.0,
-            16.0,
-            8.0
-          ],
-          "texture": "#side",
-          "cullface": "south"
-        },
-        "west": {
-          "uv": [
-            0.0,
-            -8.0,
-            8.0,
-            8.0
-          ],
-          "texture": "#side"
-        },
-        "east": {
-          "uv": [
-            0.0,
-            -8.0,
-            8.0,
-            8.0
-          ],
-          "texture": "#side",
-          "cullface": "east"
-        }
-      }
-    },
-    {
-      "from": [
-        0,
-        0,
-        8
-      ],
-      "to": [
-        16,
         8,
         16
       ],
@@ -85,7 +22,7 @@
         "down": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             16.0,
             16.0
           ],
@@ -95,7 +32,7 @@
         "up": {
           "uv": [
             0.0,
-            8.0,
+            0.0,
             16.0,
             16.0
           ],
@@ -123,7 +60,7 @@
         },
         "west": {
           "uv": [
-            8.0,
+            0.0,
             8.0,
             16.0,
             16.0
@@ -133,7 +70,7 @@
         },
         "east": {
           "uv": [
-            8.0,
+            0.0,
             8.0,
             16.0,
             16.0
@@ -147,7 +84,7 @@
       "from": [
         8,
         8,
-        8
+        0
       ],
       "to": [
         16,
@@ -158,7 +95,7 @@
         "up": {
           "uv": [
             8.0,
-            8.0,
+            0.0,
             16.0,
             16.0
           ],
@@ -187,9 +124,81 @@
         },
         "west": {
           "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "east"
+        },
+        "down": {
+          "uv": [
             8.0,
             0.0,
             16.0,
+            16.0
+          ],
+          "texture": "#side"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        8,
+        0
+      ],
+      "to": [
+        8,
+        16,
+        8
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "up"
+        },
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "north"
+        },
+        "south": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
             8.0
           ],
           "texture": "#side"
@@ -203,6 +212,15 @@
           ],
           "texture": "#side",
           "cullface": "east"
+        },
+        "down": {
+          "uv": [
+            8.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side"
         }
       }
     }

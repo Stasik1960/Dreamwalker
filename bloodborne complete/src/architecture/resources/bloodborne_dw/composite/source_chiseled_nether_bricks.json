@@ -4,7 +4,7 @@
   "id": "bloodborne_dw:source_chiseled_nether_bricks",
   "displayName": "Кирпичная кладка",
   "openable": false,
-  "layer": "cutout",
+  "layer": "translucent",
   "support": {
     "required": false
   },
@@ -252,6 +252,902 @@
       "sourceOpenApplications": [],
       "sourceStateRefs": [
         "minecraft:chiseled_nether_bricks[variant:]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/cracked_deepslate_bricks",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.0625,
+                0.0,
+                0.0
+              ],
+              "to": [
+                -1.9375,
+                32.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                -3.0625
+              ],
+              "to": [
+                16.0,
+                32.0,
+                -2.9375
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                17.9375
+              ],
+              "to": [
+                16.0,
+                32.0,
+                18.0625
+              ]
+            },
+            {
+              "from": [
+                18.9375,
+                0.0,
+                0.0
+              ],
+              "to": [
+                19.0625,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -3.3137085,
+                  0.0,
+                  -3.3137085
+                ],
+                "to": [
+                  19.3137085,
+                  32.0,
+                  19.3137085
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -3.3137085,
+                  0.0,
+                  -3.3137085
+                ],
+                "to": [
+                  19.3137085,
+                  32.0,
+                  19.3137085
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -3.3137085,
+                  0.0,
+                  -3.3137085
+                ],
+                "to": [
+                  19.3137085,
+                  32.0,
+                  19.3137085
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -3.3137085,
+                  0.0,
+                  -3.3137085
+                ],
+                "to": [
+                  19.3137085,
+                  32.0,
+                  19.3137085
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.0625,
+          0.0,
+          -3.0625
+        ],
+        "to": [
+          19.0625,
+          32.0,
+          18.0625
+        ]
+      },
+      "sourceVariant": "Кирпичная кладка",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/cracked_deepslate_bricks"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:cracked_deepslate_bricks[variant:]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_trapdoor_open",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                32.0,
+                32.0,
+                13.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                32.0,
+                32.0,
+                13.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  3.0
+                ],
+                "to": [
+                  32.0,
+                  32.0,
+                  13.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  13.0,
+                  32.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  3.0
+                ],
+                "to": [
+                  32.0,
+                  32.0,
+                  13.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  13.0,
+                  32.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          32.0,
+          32.0,
+          13.0
+        ]
+      },
+      "sourceVariant": "Дверная секция · открытая",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/crimson_trapdoor_open"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:crimson_trapdoor[variant:facing=east,half=bottom,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=north,half=bottom,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=south,half=bottom,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=west,half=bottom,open=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/deepslate_diamond_ore",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                22.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                22.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -1.0,
+                  0.0,
+                  -6.0
+                ],
+                "to": [
+                  17.0,
+                  16.0,
+                  22.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.26345597,
+                  0.0,
+                  -8.26345597
+                ],
+                "to": [
+                  24.26345597,
+                  16.0,
+                  24.26345597
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -6.0,
+                  0.0,
+                  -1.0
+                ],
+                "to": [
+                  22.0,
+                  16.0,
+                  17.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.26345597,
+                  0.0,
+                  -8.26345597
+                ],
+                "to": [
+                  24.26345597,
+                  16.0,
+                  24.26345597
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.0,
+                  0.0,
+                  -6.0
+                ],
+                "to": [
+                  17.0,
+                  16.0,
+                  22.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.26345597,
+                  0.0,
+                  -8.26345597
+                ],
+                "to": [
+                  24.26345597,
+                  16.0,
+                  24.26345597
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -6.0,
+                  0.0,
+                  -1.0
+                ],
+                "to": [
+                  22.0,
+                  16.0,
+                  17.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.26345597,
+                  0.0,
+                  -8.26345597
+                ],
+                "to": [
+                  24.26345597,
+                  16.0,
+                  24.26345597
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -6.0
+        ],
+        "to": [
+          17.0,
+          16.0,
+          22.0
+        ]
+      },
+      "sourceVariant": "Угловая кирпичная кладка",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/deepslate_diamond_ore"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:deepslate_diamond_ore[variant:]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/dried_kelp_block",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -7.5,
+                0.0,
+                -7.5
+              ],
+              "to": [
+                23.5,
+                16.0,
+                23.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -7.5,
+                0.0,
+                -7.5
+              ],
+              "to": [
+                23.5,
+                16.0,
+                23.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -7.5,
+                  0.0,
+                  -7.5
+                ],
+                "to": [
+                  23.5,
+                  16.0,
+                  23.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.92031022,
+                  0.0,
+                  -13.92031022
+                ],
+                "to": [
+                  29.92031022,
+                  16.0,
+                  29.92031022
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.5,
+                  0.0,
+                  -7.5
+                ],
+                "to": [
+                  23.5,
+                  16.0,
+                  23.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.92031022,
+                  0.0,
+                  -13.92031022
+                ],
+                "to": [
+                  29.92031022,
+                  16.0,
+                  29.92031022
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.5,
+                  0.0,
+                  -7.5
+                ],
+                "to": [
+                  23.5,
+                  16.0,
+                  23.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.92031022,
+                  0.0,
+                  -13.92031022
+                ],
+                "to": [
+                  29.92031022,
+                  16.0,
+                  29.92031022
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.5,
+                  0.0,
+                  -7.5
+                ],
+                "to": [
+                  23.5,
+                  16.0,
+                  23.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.92031022,
+                  0.0,
+                  -13.92031022
+                ],
+                "to": [
+                  29.92031022,
+                  16.0,
+                  29.92031022
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -7.5,
+          0.0,
+          -7.5
+        ],
+        "to": [
+          23.5,
+          16.0,
+          23.5
+        ]
+      },
+      "sourceVariant": "Мелкая кирпичная кладка",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/dried_kelp_block"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dried_kelp_block[variant:]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/orange_terracotta",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -11.0,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                29.0,
+                48.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                -12.0
+              ],
+              "to": [
+                8.0625,
+                48.0,
+                28.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -11.0,
+          0.0,
+          -12.0
+        ],
+        "to": [
+          29.0,
+          48.0,
+          28.0
+        ]
+      },
+      "sourceVariant": "Угловая готическая пилястра",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/orange_terracotta"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:orange_terracotta[variant:]"
       ]
     }
   ],

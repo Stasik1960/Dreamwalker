@@ -1,5 +1,5 @@
 {
-  "credit": "Source-native tread templates retained for functional connection states",
+  "credit": "Source-native render components, signed rotated UV crops, and authored opposite faces for new functional states",
   "textures": {
     "0": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0095",
     "1": "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0065",
@@ -11,66 +11,6 @@
         0,
         0,
         0
-      ],
-      "to": [
-        16,
-        16,
-        8
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            1.25,
-            12.375,
-            3.25,
-            14.375
-          ],
-          "texture": "#1"
-        },
-        "east": {
-          "uv": [
-            3.875,
-            2.875,
-            4.875,
-            4.875
-          ],
-          "texture": "#1"
-        },
-        "south": {
-          "uv": [
-            2.875,
-            2.875,
-            4.875,
-            4.875
-          ],
-          "texture": "#1"
-        },
-        "west": {
-          "uv": [
-            1.25,
-            12.875,
-            2.25,
-            14.875
-          ],
-          "texture": "#1"
-        },
-        "up": {
-          "uv": [
-            1.875,
-            8.625,
-            3.875,
-            9.625
-          ],
-          "texture": "#1",
-          "cullface": "up"
-        }
-      }
-    },
-    {
-      "from": [
-        0,
-        0,
-        8
       ],
       "to": [
         16,
@@ -89,7 +29,7 @@
         },
         "east": {
           "uv": [
-            1.0,
+            0.0,
             0.0,
             2.0,
             1.0
@@ -109,7 +49,7 @@
         },
         "west": {
           "uv": [
-            1.0,
+            0.0,
             0.0,
             2.0,
             1.0
@@ -119,7 +59,7 @@
         "up": {
           "uv": [
             0.0,
-            1.0,
+            0.0,
             2.0,
             2.0
           ],
@@ -128,7 +68,7 @@
         "down": {
           "uv": [
             0.0,
-            1.0,
+            0.0,
             2.0,
             2.0
           ],
@@ -141,7 +81,7 @@
       "from": [
         8,
         8,
-        8
+        0
       ],
       "to": [
         16,
@@ -160,7 +100,7 @@
         },
         "east": {
           "uv": [
-            4.875,
+            3.875,
             3.875,
             5.875,
             4.875
@@ -178,7 +118,7 @@
         },
         "west": {
           "uv": [
-            2.25,
+            1.25,
             13.875,
             3.25,
             14.875
@@ -188,12 +128,90 @@
         "up": {
           "uv": [
             2.875,
-            9.625,
+            8.625,
             3.875,
             10.625
           ],
           "texture": "#1",
           "cullface": "up"
+        },
+        "down": {
+          "uv": [
+            2.875,
+            8.625,
+            3.875,
+            10.625
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        8,
+        0
+      ],
+      "to": [
+        8,
+        16,
+        8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "texture": "#0",
+          "cullface": "up"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "texture": "#0"
         }
       }
     }

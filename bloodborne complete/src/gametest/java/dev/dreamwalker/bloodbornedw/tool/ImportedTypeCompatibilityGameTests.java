@@ -38,6 +38,8 @@ public final class ImportedTypeCompatibilityGameTests implements FabricGameTest 
             c.assertTrue(old.getNbt().equals(oldNbt), "Item conversion never edits its caller's NBT: " + mapping.oldId());
             c.assertTrue(canonical.getCount() == 7 && Registries.ITEM.getId(canonical.getItem()).toString().equals(mapping.newRegistryId()), "Canonical actual item and count: " + mapping.oldId());
             c.assertTrue(canonical.getNbt().getCompound("UnrelatedTypedMetadata").equals(metadata), "Typed unrelated item fields retained: " + mapping.oldId());
+            boolean nativeStair = Registries.BLOCK.get(new Identifier(mapping.newRegistryId())) instanceof ImportedStairBlock;
+            if (nativeStair) c.assertTrue(canonical.getNbt().getString("ImportedStairLegacyArt").equals(mapping.oldRegistryId() + "|" + mapping.oldVariant()), "Legacy source pose/UV selector survives item canonicalization: " + mapping.oldId());
             NbtCompound nextArt = canonical.getSubNbt("BlockStateTag");
             c.assertTrue(nextArt.getString("variant").equals(Integer.toString(mapping.newVariant())) && nextArt.getString("profile").equals("alt") && nextArt.getString("open").equals("true"), "Mapped artistic state retains profile and pose: " + mapping.oldId());
             c.assertTrue(nextArt.getString("rotation").equals(Integer.toString((5 + mapping.rotationDelta()) & 7)), "Saved artistic rotation mapped: " + mapping.oldId());
@@ -65,6 +67,7 @@ public final class ImportedTypeCompatibilityGameTests implements FabricGameTest 
             NbtList shift = new NbtList(); shift.add(NbtDouble.of(.375)); shift.add(NbtDouble.of(1.125)); shift.add(NbtDouble.of(-.625)); payload.put("SourceShift", shift);
             NbtCompound original = payload.copy();
             BlockState canonical = ImportedTypeAliases.target(old); NbtCompound converted = ImportedTypeAliases.transformPayload(old, payload);
+            if (canonical.getBlock() instanceof ImportedStairBlock) c.assertTrue(converted.getString("ImportedStairLegacyArt").equals(mapping.oldRegistryId() + "|" + mapping.oldVariant()), "Every legacy yaw retains its original authored geometry/UV selector: " + mapping.oldId());
             c.assertTrue(Registries.BLOCK.getId(canonical.getBlock()).toString().equals(mapping.newRegistryId()) && canonical.get(CompositeRootBlock.ROTATION) == ((yaw + mapping.rotationDelta()) & 7), "Canonical block and yaw: " + mapping.oldId() + "/" + yaw);
             CompositeSourceShift.Shift expected = new CompositeSourceShift.Shift(.375, 1.125, -.625).rotate(-mapping.rotationDelta());
             CompositeSourceShift.Shift actual = CompositeSourceShift.local(converted), adjustment = mapping.sourceShift();

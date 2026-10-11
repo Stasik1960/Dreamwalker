@@ -230,6 +230,235 @@
         "minecraft:rail[variant:shape=east_west]",
         "minecraft:rail[variant:shape=north_south]"
       ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/rail_corner",
+              "offset": [
+                0,
+                2.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                3.0,
+                4.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                3.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                3.0
+              ]
+            },
+            {
+              "from": [
+                3.0,
+                2.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                3.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                13.0,
+                0.0,
+                13.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -1.0,
+                  0.0,
+                  -1.0
+                ],
+                "to": [
+                  16.0,
+                  4.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.02081528,
+                  0.0,
+                  -1.89949494
+                ],
+                "to": [
+                  20.02081528,
+                  4.0,
+                  19.3137085
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  -1.0
+                ],
+                "to": [
+                  17.0,
+                  4.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -3.3137085,
+                  0.0,
+                  -4.02081528
+                ],
+                "to": [
+                  17.89949494,
+                  4.0,
+                  20.02081528
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  17.0,
+                  4.0,
+                  17.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.02081528,
+                  0.0,
+                  -3.3137085
+                ],
+                "to": [
+                  20.02081528,
+                  4.0,
+                  17.89949494
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  4.0,
+                  17.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.89949494,
+                  0.0,
+                  -4.02081528
+                ],
+                "to": [
+                  19.3137085,
+                  4.0,
+                  20.02081528
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          16.0,
+          4.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Каменная панель с опорными выступами",
+      "sourcePlacementOffset": [
+        0,
+        2.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        2.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/rail_corner"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:rail[variant:shape=north_east]",
+        "minecraft:rail[variant:shape=north_west]",
+        "minecraft:rail[variant:shape=south_east]",
+        "minecraft:rail[variant:shape=south_west]"
+      ]
     }
   ],
   "source": {},

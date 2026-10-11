@@ -109,13 +109,55 @@
     },
     {
       "path": "source_acacia_fence_gate",
-      "displayName": "Секция ворот",
+      "displayName": "Деревянная рама и профиль",
       "variants": [
         {
           "variant": 0,
-          "name": "Секция ворот",
+          "name": "Деревянная рама и профиль · вид 1",
           "sourceModels": [
             "minecraft:block/acacia_fence_gate"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Деревянная рама и профиль · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/acacia_fence_gate_open_0"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Деревянная рама и профиль · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/jungle_fence_gate_open_0"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Деревянная рама и профиль · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/oak_fence_gate_open_0"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Деревянная рама и профиль · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/oak_fence_gate_open_1"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Деревянная рама и профиль · вид 6",
+          "sourceModels": [
+            "minecraft:block/addon/spruce_fence_gate_open_0"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Деревянная рама и профиль · вид 7",
+          "sourceModels": [
+            "minecraft:block/addon/spruce_fence_gate_open_1"
           ]
         }
       ]
@@ -233,18 +275,39 @@
     },
     {
       "path": "source_addon_bag_0",
-      "displayName": "Мешок · вариант 1",
+      "displayName": "Мешок",
       "variants": [
         {
           "variant": 0,
-          "name": "Мешок · вариант 1",
+          "name": "Мешок · вид 1",
           "sourceModels": [
             "minecraft:block/addon/bag_0"
           ]
         },
         {
           "variant": 1,
-          "name": "Объёмная декоративная деталь",
+          "name": "Мешок · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/bag_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Мешок · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/bag_4"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Мешок · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/bag_5"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Мешок · вид 5",
           "sourceModels": [
             "minecraft:block/dead_bubble_coral_fan"
           ]
@@ -300,13 +363,6 @@
           "sourceModels": [
             "minecraft:block/addon/bag_4"
           ]
-        },
-        {
-          "variant": 1,
-          "name": "Мешок · вариант 6",
-          "sourceModels": [
-            "minecraft:block/addon/bag_5"
-          ]
         }
       ]
     },
@@ -325,20 +381,55 @@
     },
     {
       "path": "source_addon_barrel_0",
-      "displayName": "Бочка · вариант 1",
+      "displayName": "Деревянная бочка",
       "variants": [
         {
           "variant": 0,
-          "name": "Бочка · вариант 1",
+          "name": "Деревянная бочка · вид 1",
           "sourceModels": [
             "minecraft:block/addon/barrel_0"
           ]
         },
         {
           "variant": 1,
-          "name": "Бочка · вариант 3",
+          "name": "Деревянная бочка · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/barrel_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Деревянная бочка · вид 3",
           "sourceModels": [
             "minecraft:block/addon/barrel_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Деревянная бочка · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/barrel_4"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Деревянная бочка · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/barrel_5"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Деревянная бочка · вид 6",
+          "sourceModels": [
+            "minecraft:block/addon/barrel_6"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Деревянная бочка · вид 7",
+          "sourceModels": [
+            "minecraft:block/addon/barrel_8"
           ]
         }
       ]
@@ -352,20 +443,6 @@
           "name": "Бочка · вариант 2",
           "sourceModels": [
             "minecraft:block/addon/barrel_1"
-          ]
-        },
-        {
-          "variant": 1,
-          "name": "Бочка · вариант 5",
-          "sourceModels": [
-            "minecraft:block/addon/barrel_4"
-          ]
-        },
-        {
-          "variant": 2,
-          "name": "Бочка · вариант 6",
-          "sourceModels": [
-            "minecraft:block/addon/barrel_5"
           ]
         }
       ]
@@ -511,6 +588,13 @@
           "sourceModels": [
             "minecraft:block/addon/bloodviles"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ящик с бутылками · вариант 1",
+          "sourceModels": [
+            "minecraft:block/addon/dead_tube_coral_0"
+          ]
         }
       ]
     },
@@ -529,13 +613,34 @@
     },
     {
       "path": "source_addon_books_0",
-      "displayName": "Книги · вариант 1",
+      "displayName": "Старые бумаги на полу",
       "variants": [
         {
           "variant": 0,
-          "name": "Книги · вариант 1",
+          "name": "Старые бумаги на полу · вид 1",
           "sourceModels": [
             "minecraft:block/addon/books_0"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Старые бумаги на полу · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/books_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Старые бумаги на полу · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/books_test"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Старые бумаги на полу · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_5"
           ]
         }
       ]
@@ -615,6 +720,13 @@
           "sourceModels": [
             "minecraft:block/addon/brown_terracotta"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменный мемориал со свечами",
+          "sourceModels": [
+            "minecraft:block/brown_terracotta"
+          ]
         }
       ]
     },
@@ -633,13 +745,41 @@
     },
     {
       "path": "source_addon_button_10",
-      "displayName": "Напольная декоративная пластина · вариант 11",
+      "displayName": "Серые обломки плит на полу",
       "variants": [
         {
           "variant": 0,
-          "name": "Напольная декоративная пластина · вариант 11",
+          "name": "Серые обломки плит на полу · вид 1",
           "sourceModels": [
             "minecraft:block/addon/button_10"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Серые обломки плит на полу · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/button_11"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Серые обломки плит на полу · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/button_12"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Серые обломки плит на полу · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/button_13"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Серые обломки плит на полу · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/button_9"
           ]
         }
       ]
@@ -711,13 +851,48 @@
     },
     {
       "path": "source_addon_button_3",
-      "displayName": "Рыжая деревянная планка · вариант 4",
+      "displayName": "Старые доски на полу",
       "variants": [
         {
           "variant": 0,
-          "name": "Рыжая деревянная планка · вариант 4",
+          "name": "Старые доски на полу · вид 1",
           "sourceModels": [
             "minecraft:block/addon/button_3"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Старые доски на полу · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/button_4"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Старые доски на полу · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/button_5"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Старые доски на полу · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/button_6"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Старые доски на полу · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/button_7"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Старые доски на полу · вид 6",
+          "sourceModels": [
+            "minecraft:block/addon/button_8"
           ]
         }
       ]
@@ -802,20 +977,41 @@
     },
     {
       "path": "source_addon_candles_0",
-      "displayName": "Свечи · вариант 1",
+      "displayName": "Свечная люстра",
       "variants": [
         {
           "variant": 0,
-          "name": "Свечи · вариант 1",
+          "name": "Свечная люстра · вид 1",
           "sourceModels": [
             "minecraft:block/addon/candles_0"
           ]
         },
         {
           "variant": 1,
-          "name": "Свечи · вариант 2",
+          "name": "Свечная люстра · вид 2",
           "sourceModels": [
             "minecraft:block/addon/candles_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Свечная люстра · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/candles_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Свечная люстра · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/candles_3"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Свечная люстра · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/candles_4"
           ]
         }
       ]
@@ -1112,6 +1308,34 @@
           "sourceModels": [
             "minecraft:block/addon/crimson_button_1"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ажурная секция ограды с завитками · вариант 3",
+          "sourceModels": [
+            "minecraft:block/addon/crimson_button_2"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Ажурная секция ограды с завитками · вариант 4",
+          "sourceModels": [
+            "minecraft:block/addon/crimson_button_3"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Ажурная секция ограды с завитками · вариант 5",
+          "sourceModels": [
+            "minecraft:block/addon/crimson_button_4"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Наклонная ажурная секция ограды",
+          "sourceModels": [
+            "minecraft:block/brown_glazed_terracotta"
+          ]
         }
       ]
     },
@@ -1249,6 +1473,97 @@
         },
         {
           "variant": 9,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs1"
+          ]
+        },
+        {
+          "variant": 10,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs2"
+          ]
+        },
+        {
+          "variant": 11,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs3"
+          ]
+        },
+        {
+          "variant": 12,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs4"
+          ]
+        },
+        {
+          "variant": 13,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs5"
+          ]
+        },
+        {
+          "variant": 14,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs6"
+          ]
+        },
+        {
+          "variant": 15,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs7"
+          ]
+        },
+        {
+          "variant": 16,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs8"
+          ]
+        },
+        {
+          "variant": 17,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs9"
+          ]
+        },
+        {
+          "variant": 18,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/polished_blackstone_stairs"
+          ]
+        },
+        {
+          "variant": 19,
+          "name": "Ступенчатый модуль · вариант 2",
+          "sourceModels": [
+            "minecraft:block/polished_blackstone_stairs_1"
+          ]
+        },
+        {
+          "variant": 20,
+          "name": "Ступенчатый модуль · вариант 2 · наклон 180°",
+          "sourceModels": [
+            "minecraft:block/polished_blackstone_stairs_1"
+          ]
+        },
+        {
+          "variant": 21,
+          "name": "Ступенчатый модуль · внутренний угол",
+          "sourceModels": [
+            "minecraft:block/polished_blackstone_stairs_inner"
+          ]
+        },
+        {
+          "variant": 22,
           "name": "Тёмная кладка из вытянутых камней",
           "sourceModels": [
             "minecraft:block/prismarine"
@@ -1369,83 +1684,6 @@
           "name": "Ступенчатый модуль",
           "sourceModels": [
             "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs1"
-          ]
-        },
-        {
-          "variant": 1,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs2"
-          ]
-        },
-        {
-          "variant": 2,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs3"
-          ]
-        },
-        {
-          "variant": 3,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs4"
-          ]
-        },
-        {
-          "variant": 4,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs5"
-          ]
-        },
-        {
-          "variant": 5,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs6"
-          ]
-        },
-        {
-          "variant": 6,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs7"
-          ]
-        },
-        {
-          "variant": 7,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs8"
-          ]
-        },
-        {
-          "variant": 8,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/addon/cyan_terracotta/polished_blackstone_stairs9"
-          ]
-        },
-        {
-          "variant": 9,
-          "name": "Ступенчатый модуль",
-          "sourceModels": [
-            "minecraft:block/polished_blackstone_stairs"
-          ]
-        },
-        {
-          "variant": 10,
-          "name": "Ступенчатый модуль · вариант 2",
-          "sourceModels": [
-            "minecraft:block/polished_blackstone_stairs_1"
-          ]
-        },
-        {
-          "variant": 11,
-          "name": "Ступенчатый модуль · вариант 2 · наклон 180°",
-          "sourceModels": [
-            "minecraft:block/polished_blackstone_stairs_1"
           ]
         }
       ]
@@ -1821,13 +2059,69 @@
     },
     {
       "path": "source_addon_floor_panels_2",
-      "displayName": "Напольная панель · вариант 3",
+      "displayName": "Серые пластины и обломки на полу",
       "variants": [
         {
           "variant": 0,
-          "name": "Напольная панель · вариант 3",
+          "name": "Серые пластины и обломки на полу · вид 1",
           "sourceModels": [
             "minecraft:block/addon/floor_panels_2"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Серые пластины и обломки на полу · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_3"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Серые пластины и обломки на полу · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_4"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Серые пластины и обломки на полу · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_5"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Серые пластины и обломки на полу · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_6"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Серые пластины и обломки на полу · вид 6",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_7"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Серые пластины и обломки на полу · вид 7",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_8"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Серые пластины и обломки на полу · вид 8",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_9"
+          ]
+        },
+        {
+          "variant": 8,
+          "name": "Серые пластины и обломки на полу · вид 9",
+          "sourceModels": [
+            "minecraft:block/addon/floor_panels_empty"
           ]
         }
       ]
@@ -2121,13 +2415,20 @@
     },
     {
       "path": "source_addon_hat",
-      "displayName": "Шляпа охотника",
+      "displayName": "Тёмное каменное основание",
       "variants": [
         {
           "variant": 0,
-          "name": "Шляпа охотника",
+          "name": "Тёмное каменное основание · вид 1",
           "sourceModels": [
             "minecraft:block/addon/hat"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Тёмное каменное основание · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_11"
           ]
         }
       ]
@@ -2239,13 +2540,27 @@
     },
     {
       "path": "source_addon_new_statue_1",
-      "displayName": "Статуя · вариант 2",
+      "displayName": "Каменная статуя",
       "variants": [
         {
           "variant": 0,
-          "name": "Статуя · вариант 2",
+          "name": "Каменная статуя · вид 1",
           "sourceModels": [
             "minecraft:block/addon/new_statue_1"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменная статуя · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/new_statue_2"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Каменная статуя · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/new_statue_3"
           ]
         }
       ]
@@ -2278,13 +2593,27 @@
     },
     {
       "path": "source_addon_note_0",
-      "displayName": "Резной каменный фриз с широкими поясами · вариант 1",
+      "displayName": "Каменный фриз",
       "variants": [
         {
           "variant": 0,
-          "name": "Резной каменный фриз с широкими поясами · вариант 1",
+          "name": "Каменный фриз · вид 1",
           "sourceModels": [
             "minecraft:block/addon/note_0"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменный фриз · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/note_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Каменный фриз · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/note_2"
           ]
         }
       ]
@@ -2651,13 +2980,62 @@
     },
     {
       "path": "source_addon_slabs_1_1",
-      "displayName": "Архитектурная плита · вариант 2",
+      "displayName": "Светлые каменные обломки на полу",
       "variants": [
         {
           "variant": 0,
-          "name": "Архитектурная плита · вариант 2",
+          "name": "Светлые каменные обломки на полу · вид 1",
           "sourceModels": [
             "minecraft:block/addon/slabs_1_1"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Светлые каменные обломки на полу · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_10"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Светлые каменные обломки на полу · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Светлые каменные обломки на полу · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_3"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Светлые каменные обломки на полу · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_8"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Светлые каменные обломки на полу · вид 6",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_1_9"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Светлые каменные обломки на полу · вид 7",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_8_top"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Светлые каменные обломки на полу · вид 8",
+          "sourceModels": [
+            "minecraft:block/addon/slabs_9"
           ]
         }
       ]
@@ -3103,6 +3481,20 @@
           "sourceModels": [
             "minecraft:block/addon/stripped_oka_log_0"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Поваленное бревно с редким мхом · вариант 4",
+          "sourceModels": [
+            "minecraft:block/addon/stripped_oka_log_3"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Длинное поваленное бревно · вариант 5",
+          "sourceModels": [
+            "minecraft:block/addon/stripped_oka_log_4"
+          ]
         }
       ]
     },
@@ -3201,13 +3593,69 @@
     },
     {
       "path": "source_addon_tombstone_gathered_0",
-      "displayName": "Надгробие · вариант 1",
+      "displayName": "Резная каменная ограда и стойка",
       "variants": [
         {
           "variant": 0,
-          "name": "Надгробие · вариант 1",
+          "name": "Резная каменная ограда и стойка · вид 1",
           "sourceModels": [
             "minecraft:block/addon/tombstone_gathered_0"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Резная каменная ограда и стойка · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Резная каменная ограда и стойка · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Резная каменная ограда и стойка · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_3"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Резная каменная ограда и стойка · вид 5",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_4"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Резная каменная ограда и стойка · вид 6",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_5"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Резная каменная ограда и стойка · вид 7",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_6"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Резная каменная ограда и стойка · вид 8",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_7"
+          ]
+        },
+        {
+          "variant": 8,
+          "name": "Резная каменная ограда и стойка · вид 9",
+          "sourceModels": [
+            "minecraft:block/addon/tombstone_gathered_8"
           ]
         }
       ]
@@ -3344,20 +3792,34 @@
     },
     {
       "path": "source_addon_wall_deco_3",
-      "displayName": "Настенный орнамент · вариант 4",
+      "displayName": "Металлические ворота",
       "variants": [
         {
           "variant": 0,
-          "name": "Настенный орнамент · вариант 4",
+          "name": "Металлические ворота · вид 1",
           "sourceModels": [
             "minecraft:block/addon/wall_deco_3"
           ]
         },
         {
           "variant": 1,
-          "name": "Настенный орнамент · вариант 4 · наклон 90°",
+          "name": "Металлические ворота · вид 2",
           "sourceModels": [
             "minecraft:block/addon/wall_deco_3"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Металлические ворота · вид 3",
+          "sourceModels": [
+            "minecraft:block/addon/wall_deco_4"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Металлические ворота · вид 4",
+          "sourceModels": [
+            "minecraft:block/addon/wall_deco_4"
           ]
         }
       ]
@@ -3391,6 +3853,20 @@
           "name": "Настенный орнамент · вариант 6",
           "sourceModels": [
             "minecraft:block/addon/wall_deco_5"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Настенный орнамент · вариант 7",
+          "sourceModels": [
+            "minecraft:block/addon/wall_deco_6"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Дверная секция · верхняя",
+          "sourceModels": [
+            "minecraft:block/crimson_trapdoor_top"
           ]
         }
       ]
@@ -3563,6 +4039,13 @@
           "sourceModels": [
             "minecraft:block/addon/waxed_oxidized_cut_copper"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичная кладка с выступающими гранями",
+          "sourceModels": [
+            "minecraft:block/addon/waxed_weathered_cut_copper"
+          ]
         }
       ]
     },
@@ -3581,13 +4064,34 @@
     },
     {
       "path": "source_addon_wood_obj_1",
-      "displayName": "Деревянное украшение · вариант 2",
+      "displayName": "Старая деревянная тележка",
       "variants": [
         {
           "variant": 0,
-          "name": "Деревянное украшение · вариант 2",
+          "name": "Старая деревянная тележка · вид 1",
           "sourceModels": [
             "minecraft:block/addon/wood_obj_1"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Старая деревянная тележка · вид 2",
+          "sourceModels": [
+            "minecraft:block/addon/wood_obj_2"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Старая деревянная тележка · вид 3",
+          "sourceModels": [
+            "minecraft:block/hold/bench_rotate"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Старая деревянная тележка · вид 4",
+          "sourceModels": [
+            "minecraft:block/hold/ladder_01"
           ]
         }
       ]
@@ -3627,13 +4131,27 @@
     },
     {
       "path": "source_addon_wooden_box",
-      "displayName": "Деревянный ящик",
+      "displayName": "Резной деревянный профиль",
       "variants": [
         {
           "variant": 0,
-          "name": "Деревянный ящик",
+          "name": "Резной деревянный профиль · вид 1",
           "sourceModels": [
             "minecraft:block/addon/wooden_box"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Резной деревянный профиль · вид 2",
+          "sourceModels": [
+            "minecraft:block/dark_oak_fence_gate"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Резной деревянный профиль · вид 3",
+          "sourceModels": [
+            "minecraft:block/hold/wooden_box_x1"
           ]
         }
       ]
@@ -3661,6 +4179,20 @@
           "sourceModels": [
             "minecraft:block/amethyst_block"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Глина · текстура BB",
+          "sourceModels": [
+            "minecraft:block/clay"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Широкая ступенчатая каменная плита",
+          "sourceModels": [
+            "minecraft:block/oak_planks"
+          ]
         }
       ]
     },
@@ -3673,6 +4205,13 @@
           "name": "Зубчатое каменное ребро",
           "sourceModels": [
             "minecraft:block/ancient_debris"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Узкое ребро с каменными зубцами",
+          "sourceModels": [
+            "minecraft:block/coal_block"
           ]
         }
       ]
@@ -3714,6 +4253,121 @@
           "sourceModels": [
             "minecraft:block/andesite_slab_top"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Плита из грубого серого камня",
+          "sourceModels": [
+            "minecraft:block/chiseled_red_sandstone"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Гладкий тёмно-серый камень",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Светлая каменная плита",
+          "sourceModels": [
+            "minecraft:block/diorite"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Столб",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Конец",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Прямая",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Угол",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side"
+          ]
+        },
+        {
+          "variant": 8,
+          "name": "Тройник",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side"
+          ]
+        },
+        {
+          "variant": 9,
+          "name": "Крест",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side"
+          ]
+        },
+        {
+          "variant": 10,
+          "name": "Конец · высокий",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 11,
+          "name": "Прямая · высокий",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 12,
+          "name": "Угол · высокий",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 13,
+          "name": "Тройник · высокий",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 14,
+          "name": "Крест · высокий",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_post",
+            "minecraft:block/cobbled_deepslate_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 15,
+          "name": "Прямая без столба",
+          "sourceModels": [
+            "minecraft:block/cobbled_deepslate_wall_side_tall"
+          ]
         }
       ]
     },
@@ -3740,6 +4394,13 @@
           "name": "Объёмная декоративная деталь · вариант 3",
           "sourceModels": [
             "minecraft:block/azure_bluet_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Объёмная декоративная деталь · вариант 4",
+          "sourceModels": [
+            "minecraft:block/azure_bluet_3"
           ]
         }
       ]
@@ -3785,7 +4446,7 @@
     },
     {
       "path": "source_bamboo_mosaic_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Бамбуковая мозаичная лестница",
       "variants": [
         {
           "variant": 0,
@@ -3861,7 +4522,7 @@
     },
     {
       "path": "source_bamboo_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Бамбуковая лестница",
       "variants": [
         {
           "variant": 0,
@@ -3970,6 +4631,13 @@
           "name": "Перекладина на каменных опорах",
           "sourceModels": [
             "minecraft:block/bell_floor"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Рыжая деревянная планка",
+          "sourceModels": [
+            "minecraft:block/buttons/dark_oak/dark_oak_button"
           ]
         }
       ]
@@ -4200,13 +4868,20 @@
     },
     {
       "path": "source_blackstone",
-      "displayName": "Высокий ажурный шпиль",
+      "displayName": "Каменный шпиль",
       "variants": [
         {
           "variant": 0,
-          "name": "Высокий ажурный шпиль",
+          "name": "Каменный шпиль · вид 1",
           "sourceModels": [
             "minecraft:block/blackstone"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменный шпиль · вид 2",
+          "sourceModels": [
+            "minecraft:block/jungle_planks"
           ]
         }
       ]
@@ -4351,13 +5026,20 @@
     },
     {
       "path": "source_blue_stained_glass",
-      "displayName": "Пустотелая секция каменной стены",
+      "displayName": "Голубое прямоугольное окно",
       "variants": [
         {
           "variant": 0,
-          "name": "Пустотелая секция каменной стены",
+          "name": "Голубое прямоугольное окно · вид 1",
           "sourceModels": [
             "minecraft:block/blue_stained_glass"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Голубое прямоугольное окно · вид 2",
+          "sourceModels": [
+            "minecraft:block/brown_stained_glass"
           ]
         }
       ]
@@ -4443,7 +5125,7 @@
     },
     {
       "path": "source_brick_stairs",
-      "displayName": "Кирпичная деталь",
+      "displayName": "Кирпичная лестница",
       "variants": [
         {
           "variant": 0,
@@ -4650,6 +5332,20 @@
           "name": "Кирпичная деталь · секция",
           "sourceModels": [
             "minecraft:block/brick_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичная кладка · вариант 2",
+          "sourceModels": [
+            "minecraft:block/bricks/bricks_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Кирпичная кладка · вариант 4",
+          "sourceModels": [
+            "minecraft:block/bricks/bricks_3"
           ]
         }
       ]
@@ -5288,6 +5984,13 @@
           "sourceModels": [
             "minecraft:block/bricks/stone_1"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичная кладка · вариант 5",
+          "sourceModels": [
+            "minecraft:block/bricks/stone_4"
+          ]
         }
       ]
     },
@@ -5749,12 +6452,19 @@
           "sourceModels": [
             "minecraft:block/calcite"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Широкий ступенчатый каменный карниз",
+          "sourceModels": [
+            "minecraft:block/chiseled_deepslate"
+          ]
         }
       ]
     },
     {
       "path": "source_cherry_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Вишнёвая лестница",
       "variants": [
         {
           "variant": 0,
@@ -5851,6 +6561,41 @@
           "sourceModels": [
             "minecraft:block/chiseled_nether_bricks"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичная кладка",
+          "sourceModels": [
+            "minecraft:block/cracked_deepslate_bricks"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Дверная секция · открытая",
+          "sourceModels": [
+            "minecraft:block/crimson_trapdoor_open"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Угловая кирпичная кладка",
+          "sourceModels": [
+            "minecraft:block/deepslate_diamond_ore"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Мелкая кирпичная кладка",
+          "sourceModels": [
+            "minecraft:block/dried_kelp_block"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Угловая готическая пилястра",
+          "sourceModels": [
+            "minecraft:block/orange_terracotta"
+          ]
         }
       ]
     },
@@ -5887,6 +6632,20 @@
         },
         {
           "variant": 1,
+          "name": "Мелкая кирпичная кладка · вариант 1",
+          "sourceModels": [
+            "minecraft:block/warped_planks_0"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Мелкая кирпичная кладка · вариант 2",
+          "sourceModels": [
+            "minecraft:block/warped_planks_1"
+          ]
+        },
+        {
+          "variant": 3,
           "name": "Мелкая кирпичная кладка · вариант 3",
           "sourceModels": [
             "minecraft:block/warped_planks_2"
@@ -6027,7 +6786,7 @@
     },
     {
       "path": "source_cobbled_deepslate_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Каменная лестница из глубинного сланца",
       "variants": [
         {
           "variant": 0,
@@ -6380,7 +7139,7 @@
     },
     {
       "path": "source_cobblestone_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Булыжная лестница",
       "variants": [
         {
           "variant": 0,
@@ -6751,6 +7510,13 @@
           "sourceModels": [
             "minecraft:block/crimson_pressure_plate"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Объёмная декоративная деталь",
+          "sourceModels": [
+            "minecraft:block/crimson_pressure_plate_on"
+          ]
         }
       ]
     },
@@ -6935,6 +7701,13 @@
           "name": "Каменная облицовка с вертикальными полосами",
           "sourceModels": [
             "minecraft:block/cut_sandstone"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичная кладка",
+          "sourceModels": [
+            "minecraft:block/end_stone_bricks"
           ]
         }
       ]
@@ -7323,7 +8096,7 @@
     },
     {
       "path": "source_deepslate_brick_stairs",
-      "displayName": "Кирпичная деталь",
+      "displayName": "Лестница из тёмного узорного кирпича",
       "variants": [
         {
           "variant": 0,
@@ -7800,13 +8573,20 @@
     },
     {
       "path": "source_dummy_hunter_0",
-      "displayName": "Фигура охотника · вариант 1",
+      "displayName": "Тёмная декоративная фигура",
       "variants": [
         {
           "variant": 0,
-          "name": "Фигура охотника · вариант 1",
+          "name": "Тёмная декоративная фигура · вид 1",
           "sourceModels": [
             "minecraft:block/dummy/hunter_0"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Тёмная декоративная фигура · вид 2",
+          "sourceModels": [
+            "minecraft:block/dummy/hunter_1"
           ]
         }
       ]
@@ -7885,7 +8665,7 @@
     },
     {
       "path": "source_end_stone_brick_stairs",
-      "displayName": "Кирпичная деталь",
+      "displayName": "Лестница из светлого полосатого камня",
       "variants": [
         {
           "variant": 0,
@@ -8163,13 +8943,34 @@
     },
     {
       "path": "source_glass_red_stained_glass_rsg_00",
-      "displayName": "Кузов старой кареты · вариант 1",
+      "displayName": "Старый пень и обломанный ствол",
       "variants": [
         {
           "variant": 0,
-          "name": "Кузов старой кареты · вариант 1",
+          "name": "Старый пень и обломанный ствол · вид 1",
           "sourceModels": [
             "minecraft:block/glass/red_stained_glass/rsg_00"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Старый пень и обломанный ствол · вид 2",
+          "sourceModels": [
+            "minecraft:block/glass/red_stained_glass/rsg_01"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Старый пень и обломанный ствол · вид 3",
+          "sourceModels": [
+            "minecraft:block/glass/red_stained_glass/rsg_02"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Старый пень и обломанный ствол · вид 4",
+          "sourceModels": [
+            "minecraft:block/glass/red_stained_glass/rsg_03"
           ]
         }
       ]
@@ -8287,74 +9088,74 @@
     },
     {
       "path": "source_granite_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Ступени с овальным каменным орнаментом",
       "variants": [
         {
           "variant": 0,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source/minecraft/block/granite_stairs"
           ]
         },
         {
           "variant": 1,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source/minecraft/block/granite_stairs_inner"
           ]
         },
         {
           "variant": 2,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source/minecraft/block/granite_stairs_inner"
           ]
         },
         {
           "variant": 3,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source/minecraft/block/granite_stairs_outer"
           ]
         },
         {
           "variant": 4,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source/minecraft/block/granite_stairs_outer"
           ]
         },
         {
           "variant": 5,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_stairs_x180_y0"
           ]
         },
         {
           "variant": 6,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_stairs_inner_x180_y0"
           ]
         },
         {
           "variant": 7,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_stairs_inner_x180_y0"
           ]
         },
         {
           "variant": 8,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_stairs_outer_x180_y0"
           ]
         },
         {
           "variant": 9,
-          "name": "Лестница из серого мелкого кирпича",
+          "name": "Ступени с овальным каменным орнаментом",
           "sourceModels": [
             "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_stairs_outer_x180_y0"
           ]
@@ -8533,6 +9334,13 @@
           "name": "Декоративная каменная поверхность · серый",
           "sourceModels": [
             "minecraft:block/gray_concrete_powder"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Декоративная каменная поверхность · красный",
+          "sourceModels": [
+            "minecraft:block/red_concrete_powder"
           ]
         }
       ]
@@ -8716,13 +9524,34 @@
     },
     {
       "path": "source_hold_bench_2",
-      "displayName": "Скамья · вариант 3",
+      "displayName": "Открытый сундук с обломками",
       "variants": [
         {
           "variant": 0,
-          "name": "Скамья · вариант 3",
+          "name": "Открытый сундук с обломками · вид 1",
           "sourceModels": [
             "minecraft:block/hold/bench_2"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Открытый сундук с обломками · вид 2",
+          "sourceModels": [
+            "minecraft:block/poppy_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Открытый сундук с обломками · вид 3",
+          "sourceModels": [
+            "minecraft:block/poppy_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Открытый сундук с обломками · вид 4",
+          "sourceModels": [
+            "minecraft:block/poppy_3"
           ]
         }
       ]
@@ -8781,7 +9610,7 @@
     },
     {
       "path": "source_hold_ladder_02",
-      "displayName": "Лестница · вариант 3",
+      "displayName": "Приставная каменная лестница",
       "variants": [
         {
           "variant": 0,
@@ -8827,13 +9656,41 @@
     },
     {
       "path": "source_hold_statue",
-      "displayName": "Статуя",
+      "displayName": "Каменная крылатая фигура",
       "variants": [
         {
           "variant": 0,
-          "name": "Статуя",
+          "name": "Каменная крылатая фигура · вид 1",
           "sourceModels": [
             "minecraft:block/hold/statue"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменная крылатая фигура · вид 2",
+          "sourceModels": [
+            "minecraft:block/hold/statue_3"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Каменная крылатая фигура · вид 3",
+          "sourceModels": [
+            "minecraft:block/hold/statue_4"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Каменная крылатая фигура · вид 4",
+          "sourceModels": [
+            "minecraft:block/hold/statue_5"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Каменная крылатая фигура · вид 5",
+          "sourceModels": [
+            "minecraft:block/hold/statue_6"
           ]
         }
       ]
@@ -8847,6 +9704,13 @@
           "name": "Статуя · вариант 3",
           "sourceModels": [
             "minecraft:block/hold/statue_2"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Объёмная декоративная деталь",
+          "sourceModels": [
+            "minecraft:block/pumpkin"
           ]
         }
       ]
@@ -8905,13 +9769,20 @@
     },
     {
       "path": "source_hold_wall_lantern",
-      "displayName": "Фонарь",
+      "displayName": "Подвесной металлический фонарь",
       "variants": [
         {
           "variant": 0,
-          "name": "Фонарь",
+          "name": "Подвесной металлический фонарь · вид 1",
           "sourceModels": [
             "minecraft:block/hold/wall_lantern"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Подвесной металлический фонарь · вид 2",
+          "sourceModels": [
+            "minecraft:block/hold/wall_lantern_1"
           ]
         }
       ]
@@ -8970,13 +9841,27 @@
     },
     {
       "path": "source_hold_wimperge_1",
-      "displayName": "Готический вимперг · вариант 2",
+      "displayName": "Тонкая архитектурная рама",
       "variants": [
         {
           "variant": 0,
-          "name": "Готический вимперг · вариант 2",
+          "name": "Тонкая архитектурная рама · вид 1",
           "sourceModels": [
             "minecraft:block/hold/wimperge_1"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Тонкая архитектурная рама · вид 2",
+          "sourceModels": [
+            "minecraft:block/hold/wimperge_2"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Тонкая архитектурная рама · вид 3",
+          "sourceModels": [
+            "minecraft:block/hold/wimperge_3"
           ]
         }
       ]
@@ -9069,6 +9954,13 @@
           "sourceModels": [
             "minecraft:block/ice"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Объёмная декоративная деталь",
+          "sourceModels": [
+            "minecraft:block/moss_block"
+          ]
         }
       ]
     },
@@ -9081,6 +9973,13 @@
           "name": "Каменный блок с круглыми розетками",
           "sourceModels": [
             "minecraft:block/iron_block"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичный столб с резным основанием",
+          "sourceModels": [
+            "minecraft:block/iron_ore"
           ]
         }
       ]
@@ -9460,6 +10359,20 @@
           "sourceModels": [
             "minecraft:block/orange_concrete"
           ]
+        },
+        {
+          "variant": 2,
+          "name": "Массивный столб с выступающими камнями",
+          "sourceModels": [
+            "minecraft:block/pink_terracotta"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Объёмная декоративная деталь",
+          "sourceModels": [
+            "minecraft:block/warped_nylium"
+          ]
         }
       ]
     },
@@ -9617,6 +10530,55 @@
           "name": "Декоративная каменная поверхность · цветная",
           "sourceModels": [
             "minecraft:block/lightblue_concrete_powder"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Кирпичная кладка",
+          "sourceModels": [
+            "minecraft:block/nether_bricks"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Объёмная декоративная деталь",
+          "sourceModels": [
+            "minecraft:block/note_block"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Объёмная декоративная деталь · секция",
+          "sourceModels": [
+            "minecraft:block/oak_fence_side"
+          ]
+        },
+        {
+          "variant": 4,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/oak_stairs_out"
+          ]
+        },
+        {
+          "variant": 5,
+          "name": "Ступенчатый модуль · наклон 180°",
+          "sourceModels": [
+            "minecraft:block/oak_stairs_out"
+          ]
+        },
+        {
+          "variant": 6,
+          "name": "Ступенчатый модуль · верхняя",
+          "sourceModels": [
+            "minecraft:block/oak_stairs_top"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Ступенчатый модуль · верхняя · наклон 180°",
+          "sourceModels": [
+            "minecraft:block/oak_stairs_top"
           ]
         }
       ]
@@ -9832,7 +10794,7 @@
     },
     {
       "path": "source_mangrove_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Мангровая лестница",
       "variants": [
         {
           "variant": 0,
@@ -9980,7 +10942,7 @@
     },
     {
       "path": "source_mossy_cobblestone_stairs",
-      "displayName": "Ступенчатый модуль · с мхом",
+      "displayName": "Лестница из коричневого камня",
       "variants": [
         {
           "variant": 0,
@@ -10226,7 +11188,7 @@
     },
     {
       "path": "source_mud_brick_stairs",
-      "displayName": "Кирпичная деталь",
+      "displayName": "Лестница из коричневого кирпича",
       "variants": [
         {
           "variant": 0,
@@ -10670,6 +11632,27 @@
           "sourceModels": [
             "minecraft:block/orange_tulip"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Составное декоративное украшение · вариант 4",
+          "sourceModels": [
+            "minecraft:block/orange_tulip_3"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Составное декоративное украшение · вариант 5",
+          "sourceModels": [
+            "minecraft:block/orange_tulip_4"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Составное декоративное украшение · вариант 6",
+          "sourceModels": [
+            "minecraft:block/orange_tulip_5"
+          ]
         }
       ]
     },
@@ -10923,7 +11906,7 @@
     },
     {
       "path": "source_polished_andesite_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Лестница из серого тесаного камня",
       "variants": [
         {
           "variant": 0,
@@ -11288,6 +12271,13 @@
           "sourceModels": [
             "minecraft:block/polished_diorite"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Плита из мелкой каменной кладки",
+          "sourceModels": [
+            "minecraft:block/polished_granite"
+          ]
         }
       ]
     },
@@ -11353,20 +12343,6 @@
           "sourceModels": [
             "minecraft:block/poppy_1"
           ]
-        },
-        {
-          "variant": 1,
-          "name": "Составное декоративное украшение · вариант 3",
-          "sourceModels": [
-            "minecraft:block/poppy_2"
-          ]
-        },
-        {
-          "variant": 2,
-          "name": "Составное декоративное украшение · вариант 4",
-          "sourceModels": [
-            "minecraft:block/poppy_3"
-          ]
         }
       ]
     },
@@ -11424,13 +12400,20 @@
     },
     {
       "path": "source_potted_azalea_bush",
-      "displayName": "Азалия в декоративной подставке",
+      "displayName": "Куст в горшке",
       "variants": [
         {
           "variant": 0,
-          "name": "Азалия в декоративной подставке",
+          "name": "Куст в горшке · вид 1",
           "sourceModels": [
             "minecraft:block/potted_azalea_bush"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Куст в горшке · вид 2",
+          "sourceModels": [
+            "minecraft:block/potted_flowering_azalea_bush"
           ]
         }
       ]
@@ -11621,13 +12604,20 @@
     },
     {
       "path": "source_pressure_plate_window_bottom_4",
-      "displayName": "Оконная секция · нижняя, вариант 5",
+      "displayName": "Голубое остеклённое ограждение",
       "variants": [
         {
           "variant": 0,
-          "name": "Оконная секция · нижняя, вариант 5",
+          "name": "Голубое остеклённое ограждение · вид 1",
           "sourceModels": [
             "minecraft:block/pressure_plate/window_bottom_4"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Голубое остеклённое ограждение · вид 2",
+          "sourceModels": [
+            "minecraft:block/pressure_plate/window_end_6"
           ]
         }
       ]
@@ -11719,7 +12709,7 @@
     },
     {
       "path": "source_prismarine_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Лестница из тёмного зеленоватого камня",
       "variants": [
         {
           "variant": 0,
@@ -12156,6 +13146,13 @@
           "sourceModels": [
             "minecraft:block/rail"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменная панель с опорными выступами",
+          "sourceModels": [
+            "minecraft:block/rail_corner"
+          ]
         }
       ]
     },
@@ -12181,6 +13178,27 @@
           "name": "Каменная напольная панель с прорезями · вариант 1",
           "sourceModels": [
             "minecraft:block/rails/activator_0"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменная напольная панель с прорезями · вариант 2",
+          "sourceModels": [
+            "minecraft:block/rails/activator_1"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Каменная напольная панель с прорезями · вариант 3",
+          "sourceModels": [
+            "minecraft:block/rails/activator_2"
+          ]
+        },
+        {
+          "variant": 3,
+          "name": "Каменная напольная панель с прорезями · вариант 4",
+          "sourceModels": [
+            "minecraft:block/rails/activator_3"
           ]
         }
       ]
@@ -12590,74 +13608,74 @@
     },
     {
       "path": "source_red_sandstone_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Ступени из коричневых деревянных досок",
       "variants": [
         {
           "variant": 0,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:remaining/source/minecraft/block/red_sandstone_stairs"
           ]
         },
         {
           "variant": 1,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/inner_left"
           ]
         },
         {
           "variant": 2,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/inner_right"
           ]
         },
         {
           "variant": 3,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/outer_left"
           ]
         },
         {
           "variant": 4,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/outer_right"
           ]
         },
         {
           "variant": 5,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/straight"
           ]
         },
         {
           "variant": 6,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/inner_left"
           ]
         },
         {
           "variant": 7,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/inner_right"
           ]
         },
         {
           "variant": 8,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/outer_left"
           ]
         },
         {
           "variant": 9,
-          "name": "Лестница из полосатого коричневого камня",
+          "name": "Ступени из коричневых деревянных досок",
           "sourceModels": [
             "bloodborne_dw:block/imported_stairs/90862/outer_right"
           ]
@@ -12784,6 +13802,20 @@
           "name": "Объёмная декоративная деталь",
           "sourceModels": [
             "minecraft:block/redstone_block"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Объёмная декоративная деталь · секция",
+          "sourceModels": [
+            "minecraft:block/sandstone_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Объёмная декоративная деталь · секция, вариант 2",
+          "sourceModels": [
+            "minecraft:block/sandstone_wall_side_tall_1"
           ]
         }
       ]
@@ -13462,6 +14494,13 @@
           "sourceModels": [
             "minecraft:block/smooth_red_bottom"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменное ограждение с вертикальными прутьями · верхняя",
+          "sourceModels": [
+            "minecraft:block/smooth_red_top"
+          ]
         }
       ]
     },
@@ -13547,6 +14586,13 @@
           "sourceModels": [
             "minecraft:block/smooth_sandstone_stairs_bottom"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль",
+          "sourceModels": [
+            "minecraft:block/smooth_sandstone_stairsl"
+          ]
         }
       ]
     },
@@ -13612,6 +14658,20 @@
           "sourceModels": [
             "minecraft:block/snow_height12"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Тонкий слой каменной плитки",
+          "sourceModels": [
+            "minecraft:block/snow_height14"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Каменная консоль с резным низом",
+          "sourceModels": [
+            "minecraft:block/stone"
+          ]
         }
       ]
     },
@@ -13637,6 +14697,20 @@
           "name": "Тонкий слой каменной плитки",
           "sourceModels": [
             "minecraft:block/snow_height2"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Тонкий слой каменной плитки",
+          "sourceModels": [
+            "minecraft:block/snow_height4"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Тонкий слой каменной плитки",
+          "sourceModels": [
+            "minecraft:block/snow_height6"
           ]
         }
       ]
@@ -13833,6 +14907,13 @@
           "name": "Дверная секция · нижняя",
           "sourceModels": [
             "minecraft:block/spruce_trapdoor_bottom"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Дверная секция · открытая",
+          "sourceModels": [
+            "minecraft:block/spruce_trapdoor_open"
           ]
         }
       ]
@@ -14069,6 +15150,20 @@
           "sourceModels": [
             "minecraft:block/stairs/cut_copper_stairs_inner_left"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внутренний угол, внешний угол",
+          "sourceModels": [
+            "minecraft:block/stairs/cut_copper_stairs_inner_outer"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Ступенчатый модуль · внутренний угол, правая",
+          "sourceModels": [
+            "minecraft:block/stairs/cut_copper_stairs_inner_right"
+          ]
         }
       ]
     },
@@ -14260,6 +15355,13 @@
           "sourceModels": [
             "minecraft:block/stairs/dark_prismarine_stairs_inner_left"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · верхняя",
+          "sourceModels": [
+            "minecraft:block/stairs/dark_prismarine_stairs_top"
+          ]
         }
       ]
     },
@@ -14305,6 +15407,20 @@
           "name": "Ступенчатый модуль · внутренний угол, нижняя, левая",
           "sourceModels": [
             "minecraft:block/stairs/dark_prismarine_stairs_inner_left_bottom1"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внешний угол",
+          "sourceModels": [
+            "minecraft:block/stairs/dark_prismarine_stairs_outer_corner"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Ступенчатый модуль · внешний угол, нижняя, левая",
+          "sourceModels": [
+            "minecraft:block/stairs/dark_prismarine_stairs_outer_left_bottom"
           ]
         }
       ]
@@ -14566,7 +15682,7 @@
     },
     {
       "path": "source_stairs_exposed_cut_copper_stairs_inner",
-      "displayName": "Ступенчатый модуль · внутренний угол",
+      "displayName": "Лестница из камня с зелёными швами",
       "variants": [
         {
           "variant": 0,
@@ -14853,6 +15969,20 @@
           "sourceModels": [
             "minecraft:block/stairs/jungle_stairs_inner_left_top"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внутренний угол, верхняя, правая",
+          "sourceModels": [
+            "minecraft:block/stairs/jungle_stairs_inner_right_top"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Кровельный модуль",
+          "sourceModels": [
+            "minecraft:block/stairs/jungle_stairs_roof_corner"
+          ]
         }
       ]
     },
@@ -14962,7 +16092,7 @@
     },
     {
       "path": "source_stairs_polished_deepslate_stairs_bottom",
-      "displayName": "Ступенчатый модуль · нижняя",
+      "displayName": "Лестница из светлого серого камня",
       "variants": [
         {
           "variant": 0,
@@ -15139,6 +16269,20 @@
           "sourceModels": [
             "minecraft:block/stairs/polished_diorite_stairs_inner"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внутренний угол, верхняя",
+          "sourceModels": [
+            "minecraft:block/stairs/polished_diorite_stairs_top_inner"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Ступенчатый модуль · внутренний угол, верхняя · наклон 180°",
+          "sourceModels": [
+            "minecraft:block/stairs/polished_diorite_stairs_top_inner"
+          ]
         }
       ]
     },
@@ -15264,6 +16408,20 @@
           "sourceModels": [
             "minecraft:block/stairs/red_sandstone_stairs_bottom_inner"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внешний угол, нижняя",
+          "sourceModels": [
+            "minecraft:block/stairs/red_sandstone_stairs_bottom_outer"
+          ]
+        },
+        {
+          "variant": 2,
+          "name": "Ступенчатый модуль · внешний угол, верхняя",
+          "sourceModels": [
+            "minecraft:block/stairs/red_sandstone_stairs_top_outer"
+          ]
         }
       ]
     },
@@ -15315,6 +16473,13 @@
           "name": "Ступенчатый модуль · нижняя",
           "sourceModels": [
             "minecraft:block/stairs/sandstone_stairs_bottom"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внешний угол",
+          "sourceModels": [
+            "minecraft:block/stairs/sandstone_stairs_outer"
           ]
         }
       ]
@@ -15605,6 +16770,13 @@
           "sourceModels": [
             "minecraft:block/stairs/waxed_exposed_cut_copper_stairs_inner_outer"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Ступенчатый модуль · внутренний угол, внешний угол, правая",
+          "sourceModels": [
+            "minecraft:block/stairs/waxed_exposed_cut_copper_stairs_inner_outer_right"
+          ]
         }
       ]
     },
@@ -15877,7 +17049,7 @@
     },
     {
       "path": "source_stone_brick_stairs",
-      "displayName": "Кирпичная деталь",
+      "displayName": "Лестница из широкого серого кирпича",
       "variants": [
         {
           "variant": 0,
@@ -16133,6 +17305,41 @@
           "sourceModels": [
             "minecraft:block/stone_button"
           ]
+        },
+        {
+          "variant": 6,
+          "name": "Маленькая каменная пластина",
+          "sourceModels": [
+            "minecraft:block/stone_button_pressed"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Маленькая каменная пластина · наклон 90°",
+          "sourceModels": [
+            "minecraft:block/stone_button_pressed"
+          ]
+        },
+        {
+          "variant": 8,
+          "name": "Маленькая каменная пластина · наклон 90°",
+          "sourceModels": [
+            "minecraft:block/stone_button_pressed"
+          ]
+        },
+        {
+          "variant": 9,
+          "name": "Маленькая каменная пластина · наклон 90°",
+          "sourceModels": [
+            "minecraft:block/stone_button_pressed"
+          ]
+        },
+        {
+          "variant": 10,
+          "name": "Маленькая каменная пластина · наклон 90°",
+          "sourceModels": [
+            "minecraft:block/stone_button_pressed"
+          ]
         }
       ]
     },
@@ -16194,6 +17401,13 @@
           "sourceModels": [
             "minecraft:block/stone_pressure_plate"
           ]
+        },
+        {
+          "variant": 1,
+          "name": "Тонкая серая напольная пластина",
+          "sourceModels": [
+            "minecraft:block/stone_pressure_plate_down"
+          ]
         }
       ]
     },
@@ -16238,7 +17452,7 @@
     },
     {
       "path": "source_stone_stairs",
-      "displayName": "Ступенчатый модуль",
+      "displayName": "Гладкая каменная лестница",
       "variants": [
         {
           "variant": 0,
@@ -16616,13 +17830,6 @@
           "name": "Мелкая кирпичная кладка · вариант 1",
           "sourceModels": [
             "minecraft:block/warped_planks_0"
-          ]
-        },
-        {
-          "variant": 1,
-          "name": "Мелкая кирпичная кладка · вариант 2",
-          "sourceModels": [
-            "minecraft:block/warped_planks_1"
           ]
         }
       ]
@@ -17033,6 +18240,13 @@
           "name": "Каменная скульптура · нижняя форма",
           "sourceModels": [
             "minecraft:block/addon/darkoak_door_bottom"
+          ]
+        },
+        {
+          "variant": 1,
+          "name": "Каменная скульптура · верхняя форма",
+          "sourceModels": [
+            "minecraft:block/addon/darkoak_door_top"
           ]
         }
       ]
@@ -19695,6 +20909,213 @@
             "minecraft:block/cyan_stained_glass_pane_post",
             "minecraft:block/cyan_stained_glass_pane_side_alt"
           ]
+        },
+        {
+          "variant": 7,
+          "name": "Столб",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_noside",
+            "minecraft:block/light_gray_stained_glass_pane_noside_alt",
+            "minecraft:block/light_gray_stained_glass_pane_post"
+          ]
+        },
+        {
+          "variant": 8,
+          "name": "Конец",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_noside",
+            "minecraft:block/light_gray_stained_glass_pane_noside_alt",
+            "minecraft:block/light_gray_stained_glass_pane_post",
+            "minecraft:block/light_gray_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 9,
+          "name": "Прямая",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_noside",
+            "minecraft:block/light_gray_stained_glass_pane_noside_alt",
+            "minecraft:block/light_gray_stained_glass_pane_post",
+            "minecraft:block/light_gray_stained_glass_pane_side",
+            "minecraft:block/light_gray_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 10,
+          "name": "Угол",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_noside",
+            "minecraft:block/light_gray_stained_glass_pane_noside_alt",
+            "minecraft:block/light_gray_stained_glass_pane_post",
+            "minecraft:block/light_gray_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 11,
+          "name": "Тройник",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_noside",
+            "minecraft:block/light_gray_stained_glass_pane_post",
+            "minecraft:block/light_gray_stained_glass_pane_side",
+            "minecraft:block/light_gray_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 12,
+          "name": "Крест",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_post",
+            "minecraft:block/light_gray_stained_glass_pane_side",
+            "minecraft:block/light_gray_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 13,
+          "name": "Южный конец",
+          "sourceModels": [
+            "minecraft:block/light_gray_stained_glass_pane_noside",
+            "minecraft:block/light_gray_stained_glass_pane_noside_alt",
+            "minecraft:block/light_gray_stained_glass_pane_post",
+            "minecraft:block/light_gray_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 14,
+          "name": "Столб",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_noside",
+            "minecraft:block/pink_stained_glass_pane_noside_alt",
+            "minecraft:block/pink_stained_glass_pane_post"
+          ]
+        },
+        {
+          "variant": 15,
+          "name": "Конец",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_noside",
+            "minecraft:block/pink_stained_glass_pane_noside_alt",
+            "minecraft:block/pink_stained_glass_pane_post",
+            "minecraft:block/pink_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 16,
+          "name": "Прямая",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_noside",
+            "minecraft:block/pink_stained_glass_pane_noside_alt",
+            "minecraft:block/pink_stained_glass_pane_post",
+            "minecraft:block/pink_stained_glass_pane_side",
+            "minecraft:block/pink_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 17,
+          "name": "Угол",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_noside",
+            "minecraft:block/pink_stained_glass_pane_noside_alt",
+            "minecraft:block/pink_stained_glass_pane_post",
+            "minecraft:block/pink_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 18,
+          "name": "Тройник",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_noside",
+            "minecraft:block/pink_stained_glass_pane_post",
+            "minecraft:block/pink_stained_glass_pane_side",
+            "minecraft:block/pink_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 19,
+          "name": "Крест",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_post",
+            "minecraft:block/pink_stained_glass_pane_side",
+            "minecraft:block/pink_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 20,
+          "name": "Южный конец",
+          "sourceModels": [
+            "minecraft:block/pink_stained_glass_pane_noside",
+            "minecraft:block/pink_stained_glass_pane_noside_alt",
+            "minecraft:block/pink_stained_glass_pane_post",
+            "minecraft:block/pink_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 21,
+          "name": "Столб",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_noside",
+            "minecraft:block/yellow_stained_glass_pane_noside_alt",
+            "minecraft:block/yellow_stained_glass_pane_post"
+          ]
+        },
+        {
+          "variant": 22,
+          "name": "Конец",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_noside",
+            "minecraft:block/yellow_stained_glass_pane_noside_alt",
+            "minecraft:block/yellow_stained_glass_pane_post",
+            "minecraft:block/yellow_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 23,
+          "name": "Прямая",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_noside",
+            "minecraft:block/yellow_stained_glass_pane_noside_alt",
+            "minecraft:block/yellow_stained_glass_pane_post",
+            "minecraft:block/yellow_stained_glass_pane_side",
+            "minecraft:block/yellow_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 24,
+          "name": "Угол",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_noside",
+            "minecraft:block/yellow_stained_glass_pane_noside_alt",
+            "minecraft:block/yellow_stained_glass_pane_post",
+            "minecraft:block/yellow_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 25,
+          "name": "Тройник",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_noside",
+            "minecraft:block/yellow_stained_glass_pane_post",
+            "minecraft:block/yellow_stained_glass_pane_side",
+            "minecraft:block/yellow_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 26,
+          "name": "Крест",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_post",
+            "minecraft:block/yellow_stained_glass_pane_side",
+            "minecraft:block/yellow_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 27,
+          "name": "Южный конец",
+          "sourceModels": [
+            "minecraft:block/yellow_stained_glass_pane_noside",
+            "minecraft:block/yellow_stained_glass_pane_noside_alt",
+            "minecraft:block/yellow_stained_glass_pane_post",
+            "minecraft:block/yellow_stained_glass_pane_side_alt"
+          ]
         }
       ]
     },
@@ -19842,6 +21263,100 @@
           "name": "Прямая без столба",
           "sourceModels": [
             "minecraft:block/deepslate_brick_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 12,
+          "name": "Столб",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post"
+          ]
+        },
+        {
+          "variant": 13,
+          "name": "Конец",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side"
+          ]
+        },
+        {
+          "variant": 14,
+          "name": "Прямая",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side"
+          ]
+        },
+        {
+          "variant": 15,
+          "name": "Угол",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side"
+          ]
+        },
+        {
+          "variant": 16,
+          "name": "Тройник",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side"
+          ]
+        },
+        {
+          "variant": 17,
+          "name": "Крест",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side"
+          ]
+        },
+        {
+          "variant": 18,
+          "name": "Конец · высокий",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 19,
+          "name": "Прямая · высокий",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 20,
+          "name": "Угол · высокий",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 21,
+          "name": "Тройник · высокий",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 22,
+          "name": "Крест · высокий",
+          "sourceModels": [
+            "minecraft:block/granite_wall_post",
+            "minecraft:block/granite_wall_side_tall"
+          ]
+        },
+        {
+          "variant": 23,
+          "name": "Прямая без столба",
+          "sourceModels": [
+            "minecraft:block/granite_wall_side_tall"
           ]
         }
       ]
@@ -20873,6 +22388,75 @@
             "minecraft:block/light_blue_stained_glass_pane_noside_alt",
             "minecraft:block/light_blue_stained_glass_pane_post",
             "minecraft:block/light_blue_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 7,
+          "name": "Столб",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_noside",
+            "minecraft:block/magenta_stained_glass_pane_noside_alt",
+            "minecraft:block/magenta_stained_glass_pane_post"
+          ]
+        },
+        {
+          "variant": 8,
+          "name": "Конец",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_noside",
+            "minecraft:block/magenta_stained_glass_pane_noside_alt",
+            "minecraft:block/magenta_stained_glass_pane_post",
+            "minecraft:block/magenta_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 9,
+          "name": "Прямая",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_noside",
+            "minecraft:block/magenta_stained_glass_pane_noside_alt",
+            "minecraft:block/magenta_stained_glass_pane_post",
+            "minecraft:block/magenta_stained_glass_pane_side",
+            "minecraft:block/magenta_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 10,
+          "name": "Угол",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_noside",
+            "minecraft:block/magenta_stained_glass_pane_noside_alt",
+            "minecraft:block/magenta_stained_glass_pane_post",
+            "minecraft:block/magenta_stained_glass_pane_side"
+          ]
+        },
+        {
+          "variant": 11,
+          "name": "Тройник",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_noside",
+            "minecraft:block/magenta_stained_glass_pane_post",
+            "minecraft:block/magenta_stained_glass_pane_side",
+            "minecraft:block/magenta_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 12,
+          "name": "Крест",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_post",
+            "minecraft:block/magenta_stained_glass_pane_side",
+            "minecraft:block/magenta_stained_glass_pane_side_alt"
+          ]
+        },
+        {
+          "variant": 13,
+          "name": "Южный конец",
+          "sourceModels": [
+            "minecraft:block/magenta_stained_glass_pane_noside",
+            "minecraft:block/magenta_stained_glass_pane_noside_alt",
+            "minecraft:block/magenta_stained_glass_pane_post",
+            "minecraft:block/magenta_stained_glass_pane_side_alt"
           ]
         }
       ]

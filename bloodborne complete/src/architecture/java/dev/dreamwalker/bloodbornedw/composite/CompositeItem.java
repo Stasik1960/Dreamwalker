@@ -58,6 +58,10 @@ public final class CompositeItem extends BlockItem {
                 state=ImportedStairBlock.connected(state.with(ImportedStairBlock.CONNECTIONS,ImportedStairBlock.Connections.AUTO),context.getWorld(),context.getBlockPos());
             }
             payload=ImportedTypeAliases.markPayload(payload);
+            if(root instanceof ImportedStairBlock){
+                String legacyArt=ImportedTypeAliases.readLegacyStairArt(stack.getNbt()).orElse(null);
+                if(legacyArt!=null)payload.putString(ImportedStairLegacyArt.KEY,legacyArt);
+            }
             if(stack.getNbt()!=null&&stack.getNbt().contains("ImportedArtShift",9)){
                 payload.put("SourceShift",stack.getNbt().get("ImportedArtShift").copy());CompositeSourceShift.local(payload);
             }
@@ -70,7 +74,12 @@ public final class CompositeItem extends BlockItem {
     }
     private static <T extends Comparable<T>> BlockState applyArt(BlockState state,net.minecraft.state.property.Property<T> property,String value){return property.parse(value).map(parsed->state.with(property,parsed)).orElse(state);}
     @Override public Text getName(ItemStack stack){if(root instanceof ThinWindowRootBlock){var selected=GlazingTypes.itemTarget(root,stack);return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(selected.spec.id,Text.literal(selected.spec.displayName));}NbtCompound art=stack.getSubNbt("BlockStateTag");String v=art==null?"0":art.getString("variant");
-        if(root.spec.id.getPath().startsWith("source_")){int variant=0;try{variant=Integer.parseInt(v);}catch(NumberFormatException ignored){}String name=dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.variantName(root.spec.id.getPath(),variant);if(name!=null){if(root.spec.id.getPath().startsWith("source_assembly_")&&!name.startsWith(root.spec.displayName))name=root.spec.displayName+" · "+name;return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(root.spec.id,Text.literal(name));}}
+        if(root.spec.id.getPath().startsWith("source_")){int variant=0;try{variant=Integer.parseInt(v);}catch(NumberFormatException ignored){}
+            if(root.spec.simplePhysicalCollision&&art!=null){
+                if(root instanceof ImportedArtworkBlock){try{int bank=Integer.parseInt(art.getString("art_bank"));if(bank>=0&&bank<=7)variant+=bank*16;}catch(NumberFormatException ignored){}}
+                else if(root instanceof ImportedStairBlock&&root.getDefaultState().contains(ImportedStairBlock.TRIM)&&"true".equals(art.getString("trim")))variant+=10;
+            }
+            String name=dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.variantName(root.spec.id.getPath(),variant);if(name!=null){if(root.spec.id.getPath().startsWith("source_assembly_")&&!name.startsWith(root.spec.displayName))name=root.spec.displayName+" · "+name;return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(root.spec.id,Text.literal(name));}}
         return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(root.spec.id,Text.literal(root.spec.displayName+(root.spec.variants.size()>1?" · вариант "+v:"")));}
     @Override public void appendTooltip(ItemStack stack,net.minecraft.world.World world,java.util.List<Text> tooltip,net.minecraft.client.item.TooltipContext context){
         dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.appendTooltip(root instanceof ThinWindowRootBlock?GlazingTypes.itemTarget(root,stack).spec.id:root.spec.id,tooltip);

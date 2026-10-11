@@ -17,16 +17,33 @@ def main():
     remaining=copy.deepcopy(base['remainingCatalogue']);catalogue=copy.deepcopy(base['debugCatalogue'])
     bypath={r['path']:r for r in remaining['objects']};byid={r['registryId']:r for r in catalogue['entries']}
     groups=[];mappings=[];retired=set()
+    previousfile=RES/'imported-type-aliases.json'
+    currentprimaries={group['mainRegistryId'] for group in plan['groups']}
+    if previousfile.exists():
+        previous=json.loads(previousfile.read_text(encoding='utf8'))
+        for group in previous.get('groups',[]):
+            primary=group['primaryRegistryId']
+            if group['kind']=='artwork' and primary not in currentprimaries:
+                path=primary.split(':')[1]
+                assert path.startswith('source_') and path in base['descriptors']
+                write(RES/'composite'/f'{path}.json',base['descriptors'][path])
     for group in plan['groups']:
         primary=group['mainRegistryId'];path=primary.split(':')[1];assert path.startswith('source_')
         descriptor=copy.deepcopy(base['descriptors'][path]);descriptor['variants']=[];names=[]
+        canonicalname=group.get('canonicalName')
+        if group.get('renderLayerOverride'):descriptor['layer']=group['renderLayerOverride']
+        if canonicalname:
+            descriptor['displayName']=canonicalname;bypath[path]['displayName']=canonicalname;byid[primary]['name']=canonicalname
         for rep in group['representatives']:
             sourcepath=rep['registryId'].split(':')[1];old=rep['oldVariant'];assert sourcepath.startswith('source_')
             descriptor['variants'].append(copy.deepcopy(base['descriptors'][sourcepath]['variants'][old]))
             name=copy.deepcopy(bypath[sourcepath]['variants'][old]);name['variant']=len(names);names.append(name)
+            if canonicalname:name['name']=canonicalname+(' · вид '+str(len(names)) if group['newVariantCount']>1 else '')
         assert len(descriptor['variants'])==group['newVariantCount']
         write(RES/'composite'/f'{path}.json',descriptor);bypath[path]['variants']=names
-        groups.append({'primaryId':group['mainId'],'primaryRegistryId':primary,'kind':'artwork','oneItem':True,'members':[r['registryId'] for r in group['members']],'poseCount':len(names)})
+        metadata={'primaryId':group['mainId'],'primaryRegistryId':primary,'kind':'artwork','oneItem':True,'members':[r['registryId'] for r in group['members']],'poseCount':len(names)}
+        if canonicalname:metadata['displayName']=canonicalname
+        groups.append(metadata)
         for member in group['members']:
             if member['registryId']!=primary:
                 retired.add(member['registryId']);byid[member['registryId']]['canonicalRegistryId']=primary
@@ -41,7 +58,8 @@ def main():
             primary=group['primaryRegistryId']
             for member in group['members']:
                 if member!=primary:retired.add(member);byid[member]['canonicalRegistryId']=primary
-        for row in stair['catalogueObjects']:bypath[row['path']]['variants']=row['variants']
+        for row in stair['catalogueObjects']:
+            bypath[row['path']]['variants']=row['variants'];bypath[row['path']]['displayName']=row['displayName'];byid['bloodborne_dw:'+row['path']]['name']=row['displayName']
     assert len({m['oldRegistryId']+':'+str(m['oldVariant']) for m in mappings})==len(mappings)
     assert len({member for g in groups for member in g['members']})==sum(len(g['members']) for g in groups)
     write(RES/'remaining-catalogue.json',remaining);write(RES/'debug_catalogue.json',catalogue)

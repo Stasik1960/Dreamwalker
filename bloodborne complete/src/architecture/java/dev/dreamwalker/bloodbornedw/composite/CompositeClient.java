@@ -26,7 +26,7 @@ public final class CompositeClient {
         if(initialized)return; initialized=true;
         RemainingSourceTint.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
-        ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}context.addModels(models);});
+        ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}models.addAll(ImportedStairLegacyArt.models());context.addModels(models);});
         BlockEntityRendererRegistry.register(CompositeArchitecture.CELL_ENTITY, context->new BlockEntityRenderer<CompositeBlockEntity>(){
             @Override public void render(CompositeBlockEntity entity,float tickDelta,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay){
                 if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(entity.getCachedState())){dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.render(entity,matrices,consumers,light,overlay);return;}
@@ -37,7 +37,7 @@ public final class CompositeClient {
                 if(block.spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(renderedState,renderedPayload)){
                     renderedPayload=ImportedTypeAliases.transformPayload(renderedState,renderedPayload);renderedState=ImportedTypeAliases.target(renderedState);block=(CompositeRootBlock)renderedState.getBlock();
                 }
-                var shift=CompositeSourceShift.world(renderedState,renderedPayload);matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,renderedState,matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos());matrices.pop();
+                var shift=CompositeSourceShift.world(renderedState,renderedPayload);matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,renderedState,matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos(),renderedPayload);matrices.pop();
             }
             @Override public boolean rendersOutsideBoundingBox(CompositeBlockEntity entity){return true;}
             @Override public int getRenderDistance(){return 1024;}
@@ -48,7 +48,7 @@ public final class CompositeClient {
             if(!(rendered instanceof ThinWindowRootBlock)&&art!=null){try{int v=Integer.parseInt(art.getString("variant"));if(v>=0&&v<rendered.spec.variants.size())state=state.with(CompositeRootBlock.VARIANT,v);}catch(NumberFormatException ignored){}state=state.with(CompositeRootBlock.PROFILE,"alt".equals(art.getString("profile"))?CompositeRootBlock.Profile.ALT:CompositeRootBlock.Profile.BASE).with(CompositeRootBlock.OPEN,"true".equals(art.getString("open")));}
             if(rendered.spec.simplePhysicalCollision&&art!=null)for(var property:state.getBlock().getStateManager().getProperties())if(!Set.of("rotation","variant","profile","open").contains(property.getName())&&art.contains(property.getName(),8))state=itemArt(state,property,art.getString(property.getName()));
             double[] bounds=visualBounds(rendered,state);double span=Math.max(bounds[3]-bounds[0],Math.max(bounds[4]-bounds[1],bounds[5]-bounds[2]));float scale=(float)(.85/Math.max(1,span));
-            matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null);matrices.pop();
+            matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null,stack.getNbt());matrices.pop();
         });
         ClientPickBlockGatherCallback.EVENT.register((player,hit)->{if(hit instanceof BlockHitResult blockHit){var owner=CompositeRuntime.target(player.getWorld(),blockHit.getBlockPos(),player);if(owner!=null)return CompositeRuntime.pick(player.getWorld(),owner);}return net.minecraft.item.ItemStack.EMPTY;});
         ClientPlayNetworking.registerGlobalReceiver(CompositeNetworking.OWNERS,(client,handler,buffer,response)->{
@@ -129,6 +129,9 @@ public final class CompositeClient {
     }
     }
     private static void renderParts(CompositeRootBlock block,BlockState state,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay,String instanceId,net.minecraft.util.math.BlockPos root){
+        renderParts(block,state,matrices,consumers,light,overlay,instanceId,root,null);
+    }
+    private static void renderParts(CompositeRootBlock block,BlockState state,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay,String instanceId,net.minecraft.util.math.BlockPos root,NbtCompound payload){
         MinecraftClient client=MinecraftClient.getInstance();VertexConsumer consumer=consumers.getBuffer(block.spec.translucent?RenderLayer.getTranslucent():RenderLayer.getCutout());
         int sourceTint=RemainingSourceTint.color(block,client,root);float red=((sourceTint>>16)&255)/255f,green=((sourceTint>>8)&255)/255f,blue=(sourceTint&255)/255f;
         matrices.push();rotate(matrices,.5,.5,.5,-state.get(CompositeRootBlock.ROTATION)*45,false);
@@ -136,7 +139,7 @@ public final class CompositeClient {
             rotate(matrices,.5,.5,.5,ThinWindowRootBlock.mount(state)==ThinWindowRootBlock.Mount.FLOOR?90:-90,true);
             rotate(matrices,.5,.5,.5,block.spec.variant(state).mountAlignmentYaw(),false);
         }
-        for(var part:block.spec.pose(state).parts()){
+        for(var part:ImportedStairLegacyArt.selectedParts(block,state,payload)){
             matrices.push();matrices.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.yaw(),false);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.pitch(),true);

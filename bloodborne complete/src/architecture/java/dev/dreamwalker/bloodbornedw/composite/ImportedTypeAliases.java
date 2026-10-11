@@ -144,6 +144,8 @@ public final class ImportedTypeAliases {
         CompositeSourceShift.Shift prior = CompositeSourceShift.local(copy).rotate(-mapping.rotationDelta);
         CompositeSourceShift.Shift shift = mapping.sourceShift;
         writeShift(copy, "SourceShift", new CompositeSourceShift.Shift(prior.x() + shift.x(), prior.y() + shift.y(), prior.z() + shift.z()));
+        String legacyArt = ImportedStairLegacyArt.keyFor(mapping.oldRegistryId, mapping.oldVariant);
+        if (legacyArt != null) copy.putString(ImportedStairLegacyArt.KEY, legacyArt);
         copy.putInt(VERSION_KEY, VERSION); return copy;
     }
     public static ItemStack canonicalStack(ItemStack old) {
@@ -151,7 +153,10 @@ public final class ImportedTypeAliases {
         String registry = Registries.BLOCK.getId(item.getBlock()).toString();
         if (!merged(registry)) return old;
         boolean alias = !canonicalRegistry(registry).equals(registry);
-        if (!alias && old.hasNbt() && old.getNbt().getInt(VERSION_KEY) >= VERSION) return old;
+        if (!alias && old.hasNbt() && old.getNbt().getInt(VERSION_KEY) >= VERSION) {
+            if (item.getBlock() instanceof ImportedStairBlock) readLegacyStairArt(old.getNbt());
+            return old;
+        }
         NbtCompound art = old.getSubNbt("BlockStateTag"); int variant = integer(art, "variant", 0);
         Mapping mapping = mapping(registry, variant).orElse(null);
         if (mapping == null) {
@@ -171,6 +176,8 @@ public final class ImportedTypeAliases {
         CompositeSourceShift.Shift previous = readArtShift(next.getNbt()).rotate(-mapping.rotationDelta);
         CompositeSourceShift.Shift shift = mapping.sourceShift;
         writeShift(next.getOrCreateNbt(), SHIFT_ART_KEY, new CompositeSourceShift.Shift(previous.x() + shift.x(), previous.y() + shift.y(), previous.z() + shift.z()));
+        String legacyArt = ImportedStairLegacyArt.keyFor(mapping.oldRegistryId, mapping.oldVariant);
+        if (legacyArt != null) next.getOrCreateNbt().putString(ImportedStairLegacyArt.KEY, legacyArt);
         next.getOrCreateNbt().putInt(VERSION_KEY, VERSION);
         return ItemStack.areEqual(old, next) ? old : next;
     }
@@ -183,6 +190,12 @@ public final class ImportedTypeAliases {
         NbtList values = tag.getList(SHIFT_ART_KEY, NbtElement.DOUBLE_TYPE);
         if (values.size() != 3) throw new IllegalArgumentException("Three imported item art-shift doubles required");
         return new CompositeSourceShift.Shift(values.getDouble(0), values.getDouble(1), values.getDouble(2));
+    }
+    /** A registered artistic selector only; no instance identity or linked settings. */
+    public static Optional<String> readLegacyStairArt(NbtCompound tag) {
+        if (tag == null || !tag.contains(ImportedStairLegacyArt.KEY)) return Optional.empty();
+        ImportedStairLegacyArt.validatePayload(tag);
+        return Optional.of(tag.getString(ImportedStairLegacyArt.KEY));
     }
     private static void writeShift(NbtCompound payload, String key, CompositeSourceShift.Shift shift) {
         if (shift.x() == 0 && shift.y() == 0 && shift.z() == 0) { payload.remove(key); return; }

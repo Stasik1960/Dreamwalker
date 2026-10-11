@@ -171,7 +171,10 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 removed(t,player,owner);
                 var copy=place(t,player,root,block,selected,6,picked);
                 var copied=(CompositeBlockEntity)world.getBlockEntity(root);
-                t.assertTrue(!copy.instanceId().equals(owner.instanceId())&&copied.payload().isEmpty(),"copied art has independent UUID and clean instance payload");
+                var copyPayload=copied.payload();
+                t.assertTrue(!copy.instanceId().equals(owner.instanceId())&&copyPayload.getInt("ImportedTypeVersion")==1
+                        &&copyPayload.getKeys().stream().allMatch(key->key.equals("ImportedTypeVersion")||key.equals("SourceShift")),
+                        "copied art has independent UUID, a current type marker and no private instance settings");
                 t.assertTrue(world.getBlockState(root).get(CompositeRootBlock.PROFILE)==profile,"copied item restores ALT only when selected");
                 removed(t,player,copy);
             });

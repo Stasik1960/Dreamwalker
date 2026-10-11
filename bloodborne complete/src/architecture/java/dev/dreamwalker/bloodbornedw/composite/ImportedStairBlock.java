@@ -160,10 +160,16 @@ public class ImportedStairBlock extends CompositeRootBlock {
         return state.getBlock() instanceof ImportedStairBlock ? connected(state.with(CONNECTIONS, Connections.AUTO), world, pos) : state;
     }
     @Override public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (state.get(CONNECTIONS) != Connections.MANUAL || !player.isSneaking() || !player.getStackInHand(hand).isEmpty()) return super.onUse(state, world, pos, player, hand, hit);
+        if (!player.isSneaking() || !player.getStackInHand(hand).isEmpty()) return super.onUse(state, world, pos, player, hand, hit);
+        boolean activate = state.get(CONNECTIONS) == Connections.MANUAL;
+        if (!activate && !state.contains(TRIM)) return super.onUse(state, world, pos, player, hand, hit);
         if (world.isClient) return ActionResult.SUCCESS;
         if (!(world.getBlockEntity(pos) instanceof CompositeBlockEntity entity) || entity.resident() == null) return ActionResult.FAIL;
-        var result = CompositeRuntime.transition((ServerWorld)world, entity.resident(), activateAutomatic(state, world, pos), player);
+        if (ImportedTypeAliases.needsMigration(state, entity.payload())) return ActionResult.FAIL;
+        // The legacy manual corner first resumes automatic connections. A later
+        // action on the sole trimmed NEW type cycles its small appearance plates.
+        BlockState next = activate ? activateAutomatic(state, world, pos) : state.with(TRIM, !state.get(TRIM));
+        var result = CompositeRuntime.transition((ServerWorld)world, entity.resident(), next, player);
         return result.outcome() == dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED ? ActionResult.CONSUME : ActionResult.FAIL;
     }
 }
