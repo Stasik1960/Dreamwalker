@@ -54,7 +54,7 @@ public final class CompositeSpec {
                     row.has("visibleBounds")?bound(row.getAsJsonObject("visibleBounds")):null,
                     row.has("mountedPlaneBounds")?bound(row.getAsJsonObject("mountedPlaneBounds")):null,number(row,"mountAlignmentYaw",0)));
         }
-        if (parsed.isEmpty() || parsed.size() > 16) throw new IllegalArgumentException("Composite variant budget: " + id);
+        if (parsed.isEmpty() || parsed.size() > (ImportedArtworkBlock.isBankedPath(id.getPath())?128:id.getPath().equals("source_stairs_polished_deepslate_stairs_bottom")?20:16)) throw new IllegalArgumentException("Composite variant budget: " + id);
         variants = List.copyOf(parsed);
     }
     public static CompositeSpec load(String path) {
@@ -69,12 +69,12 @@ public final class CompositeSpec {
         return new CompositeSpec(document);
     }
     public Pose pose(BlockState state) {
-        int variant = state.get(CompositeRootBlock.VARIANT);
+        int variant = poseVariant(state);
         if (variant >= variants.size()) variant = 0;
         return state.get(CompositeRootBlock.OPEN) ? variants.get(variant).open : variants.get(variant).closed;
     }
     public Map<Cell, Footprint> footprint(BlockState state, double mountY) {
-        String key = state.get(CompositeRootBlock.VARIANT) + ":" + state.get(CompositeRootBlock.OPEN) + ":" + state.get(CompositeRootBlock.ROTATION) + ":" + ThinWindowRootBlock.mount(state) + ":" + mountY;
+        String key = poseVariant(state) + ":" + state.get(CompositeRootBlock.OPEN) + ":" + state.get(CompositeRootBlock.ROTATION) + ":" + ThinWindowRootBlock.mount(state) + ":" + mountY;
         Map<Cell,Footprint> cached=shapes.get(key);if(cached!=null)return cached;
         Map<Cell,Footprint> computed=buildFootprint(state,mountY);
         // Exact user offsets must not grow the geometry cache without a bound.
@@ -101,7 +101,8 @@ public final class CompositeSpec {
             for (Cell cell : cells) result.put(cell, new Footprint(collision.getOrDefault(cell,List.of()), selection.getOrDefault(cell,List.of())));
             return Collections.unmodifiableMap(result);
     }
-    public Variant variant(BlockState state){int v=state.get(CompositeRootBlock.VARIANT);return variants.get(v<variants.size()?v:0);}
+    public static int poseVariant(BlockState state){if(state.getBlock() instanceof ImportedStairBlock)return ImportedStairShapes.poseVariant(state);if(state.getBlock() instanceof ImportedLadderBlock)return ImportedLadderBlock.normalize(state).get(CompositeRootBlock.VARIANT);if(state.getBlock() instanceof ImportedArtworkBlock)return ImportedArtworkBlock.variant(state);return state.get(CompositeRootBlock.VARIANT);}
+    public Variant variant(BlockState state){int v=poseVariant(state);return variants.get(v<variants.size()?v:0);}
     public Bounds mountedBounds(BlockState state){
         Variant v=variant(state);if(ThinWindowRootBlock.mount(state)==ThinWindowRootBlock.Mount.VERTICAL)return v.visible;
         Bounds b=v.mountedPlane; if(b==null)throw new IllegalArgumentException("Missing planar mounting bounds");

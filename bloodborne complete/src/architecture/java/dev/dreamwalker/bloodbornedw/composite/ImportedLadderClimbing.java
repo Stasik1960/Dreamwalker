@@ -31,7 +31,7 @@ public final class ImportedLadderClimbing {
                         || !owner.equals(entity.resident())) continue;
                 var state = world.getBlockState(root);
                 if (!(state.getBlock() instanceof CompositeRootBlock block) || block.spec.importedClimbingBounds == null) continue;
-                var b = block.spec.importedClimbingBounds;
+                var b = ImportedLadderBlock.bounds(state);
                 double mount = entity.payload().getDouble("MountY") + entity.payload().getDouble(VerticalMount.KEY);
                 var shift = CompositeSourceShift.world(state,entity.payload());
                 var local = new ImportedCollisionMath.Box(b.from().x()/16,b.from().y()/16,b.from().z()/16,b.to().x()/16,b.to().y()/16,b.to().z()/16);

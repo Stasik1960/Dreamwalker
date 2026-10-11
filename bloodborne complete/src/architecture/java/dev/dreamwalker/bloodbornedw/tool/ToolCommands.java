@@ -39,7 +39,10 @@ public final class ToolCommands extends PersistentState {
     public static boolean fire(ServerPlayerEntity player,ToolTarget target){
         if(target==null||EXECUTING.get())return false;var server=player.getServer();var state=get(server);var b=state.entries.get(target.key());
         if(b==null||!target.valid(server))return false;
-        if(!b.target.registry().equals(target.registry())||!b.target.valid(server)){state.entries.remove(target.key());state.markDirty();return false;}
+        boolean sameRegistry=b.target.kind()==ToolTarget.Kind.ARCHITECTURE&&target.kind()==ToolTarget.Kind.ARCHITECTURE
+                ?dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases.equivalent(b.target.registry(),target.registry())
+                :b.target.registry().equals(target.registry());
+        if(!sameRegistry||!b.target.valid(server)){state.entries.remove(target.key());state.markDirty();return false;}
         var last=LAST.computeIfAbsent(server,s->new HashMap<>());var previous=last.get(player.getUuid());
         if(previous!=null&&previous.tick==server.getTicks()&&previous.key.equals(target.key()))return false;
         last.put(player.getUuid(),new LastUse(target.key(),server.getTicks()));

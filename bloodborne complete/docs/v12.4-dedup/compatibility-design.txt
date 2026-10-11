@@ -1,0 +1,220 @@
+V12.4 deduplication: compatibility and V12 preservation design
+Read-only source audit, 2026-10-12 (Europe/Sofia)
+Baseline supplied by parent: V12.3 commit 27bf67e. This document is a design,
+not evidence that any migration or runtime check has already passed.
+
+Scope and storage
+-----------------
+C storage-mode.json and C-return-result.txt read; Guard -Mode Check passed.
+No E copy, source-map mutation, process launch, or production-code edit performed
+by this audit. No filesystem AGENTS.md found at cwd, its inspected two ancestors,
+or the mod root; the user's supplied AGENTS instructions remain authoritative.
+Only post-V12 source_* content can opt into deduplication. The original V12
+wall/ladder prototypes, RP entities, IDs, states, item art, and behavior are frozen.
+The requested new gallery is a new derived world, never a rewrite of the source
+map or previous delivered galleries.
+
+1. Existing stable identity and available transaction
+----------------------------------------------------
+CompositeData.Owner = UUID + registry string + root cell. The ledger persists
+owner contributions separately from foreign native block entities. A successful
+type replacement must change both the resident and every owned guest binding,
+the stored rootData.id/state, and the corresponding synchronized contribution.
+Changing only the block palette or only the displayed TEMP number is incomplete.
+
+TransactionCore.migrateAlias already permits a registry change while requiring
+the exact same UUID and root. Its common transaction validates all before/after
+cells and shared owners, writes complete data, verifies exact commit, rolls back
+on failure, then publishes native listeners, owner packets, and neighbor changes.
+CompositeRuntime.migrateCatalogue currently accepts only the existing
+CatalogueMigration.target(old) mapping. A new post-V12 mapping may extend this
+gate locally; do not alter the existing PrototypeWall/PrototypeLadder rules.
+Do not call removal/replacement-as-new-placement: removal deliberately retires
+the UUID's mechanism groups, policy, commands, and event bindings.
+
+2. Persistent world migration must use saved membership
+-------------------------------------------------------
+Before migration index the saved CompositeLedger by Owner once per world. Each
+owner's BEFORE footprint is the stored contribution shape at every relative cell,
+not a footprint reconstructed from today's canonical/new descriptor. The latter
+can invent cells or leave old helpers/foreign-carrier guest entries behind when
+new connection states, collision simplification, or source anchors change bounds.
+ImportedCollisionMigration is the existing reviewed model for that saved-footprint
+adapter, loaded-chunk index, assembly completeness check, and deferred retry.
+
+Run deduplication after a chunk's FULL future, through CompositeRuntime's mutation
+queue. Never call world.getBlockEntity during the immediate CHUNK_LOAD callback.
+Require all saved/new cells plus every foreign owner's root to be loaded before
+performing an atomic alias migration. Register an owner retry against all missing
+chunks, including helper-first loads. Mark pending owners so stale cleanup cannot
+prune their legitimate old-only bindings while migration waits.
+
+Order the queued deduplication migration ahead of imported physical rebaking and
+stale cleanup. Existing ImportedCollisionMigration caches old owner keys; after
+a committed alias replacement those keys are no longer current. Either finish
+deduplication before creating that physical index or explicitly mark the old owner
+finished and let the canonical owner's complete new contributions stand. Do not
+run two rewrites based on incompatible reconstructed BEFORE snapshots.
+
+Use a version key specific to NEW deduplication in a copied payload; write it only
+as part of the successful transaction. Preserve typed and opaque unrelated payload,
+MountY, VerticalOffset, SourceShift, MountEdited, open/profile, UUID, root, and any
+instance settings. V12's CanonicalCatalogueVersion=1 remains unchanged.
+For an already installed object, geometry rebaking may use the same tightly scoped
+initial-instance privilege and no-entity-rejection adapter as physical rebaking;
+ordinary item placement/rotation must retain its normal checks. No privilege may
+be serialized into picked stacks or other owners.
+
+3. Exact old state to canonical state and anchoring
+--------------------------------------------------
+Persist an explicit append-only mapping: old TEMP, old registry, every old variant
+and pose -> canonical existing TEMP/registry plus canonical variant/connection,
+rotation delta, half/mount, and anchor adjustment. Keep freed TEMP numbers reserved;
+keep old registry blocks, items, descriptors, and BE type support as hidden adapters
+so unconverted saves can be decoded safely. A registration must not disappear
+before its own save/ledger/item compatibility path exists.
+
+If normalized old model = R(delta) * canonical model + t around the same center,
+then yaw_new = (yaw_old + delta/45) mod 8. To retain an existing SourceShift in
+world axes, shift_new_local = R(-delta) * (shift_old_local + t). Preserve any
+independent world vertical offset; convert model anchor Y only once. If the
+normalization uses another pivot, its induced translation belongs in t. Verify
+asymmetric specimens and 45-degree instances in the actual renderer and physical
+footprint; equal geometry hashes alone cannot prove this mapping.
+
+Do not silently collapse authored open and closed poses, ALT art, top/bottom half,
+floor/ceiling/wall mount, or stair angles. A canonical descriptor currently has a
+16-variant budget, and CompositeRootBlock.VARIANT ranges 0..15. Groups exceeding
+that need deliberate independent properties/pose resolution rather than wrapping
+or truncating variants. Current rendering and shape caches use variant/open/yaw;
+any new half/connection/mount property must affect their pose/cache key correctly.
+
+4. Catalogue, Creative, pick, old items, and placement
+-----------------------------------------------------
+DebugCatalogue supports canonicalRegistryId already. Its ENTRIES retains reserved
+rows; its ALIASES resolves retired registry aliases to the canonical Entry.
+UnifiedCreativeCatalogue filters an entry when its registry resolves to another
+Entry. Thus post-V12 alias rows can stay in the allocation/history table without
+becoming offered Creative types. Keep all original V12 rows byte-identical.
+
+RemainingArchitecture.creativeVariants currently offers every variant as a
+separate stack, and RemainingArchitecture.stacks independently enumerates all
+ARTWORKS. Both need the new canonical offered policy so each functional merged
+group has ONE installation item, rather than one item per yaw/connection state.
+Keep paths()/ARTWORKS registration coverage for hidden old adapters. Gallery and
+working-type counts should consume the actual canonicalItems offered list, not
+count raw reserved JSON rows or all registered adapters. Historical correspondence
+and author-import tables must identify their old rows explicitly as adapters.
+
+CatalogueStackMigrationMixin converts BlockItem stacks from NBT and during player
+inventory ticks by CatalogueMigration.canonicalStack. Extend through a NEW-only
+helper for old source_* items: copy count and entire item NBT, change only registry
+and explicitly mapped BlockStateTag properties. Handle fromNbt, old /give alias
+stacks, chest/hopper reads, and direct use of an old alias item. Placement redirect
+must retain original stack consumption correctly. A canonical name alone is not
+enough: the placed block must actually use the canonical registry.
+
+CompositeRuntime.pick/defaultPick delegate VerticalMount.item -> block.art.
+CompositeRootBlock.art currently preserves only variant/profile/open; it does not
+put yaw in an ordinary installation item. CompositeItem always derives yaw from
+the placing player and does not restore owner/links/height/source privileges.
+Preserve that original V12 rule. For NEW canonical stairs or mounting families,
+carry the needed artistic half/mount/shape state explicitly, and apply the legacy
+adapter's orientation delta in placement without dropping the current player's
+orientation. Tests must distinguish ordinary item art from saved-instance NBT:
+copying a new item must not clone UUID, command limits, or mechanism links.
+
+5. Links, events, tool references: registry aliases are currently strict
+-----------------------------------------------------------------------
+MechanismLinks.TargetRef.key and ToolTarget.key use dimension + UUID (architecture),
+not registry: their persistent identity keys remain stable after a valid migration.
+However CompositeMechanismBridge.inspect checks BOTH block.spec.id and resident
+registry against the exact saved reference registry; an old saved reference would
+become STALE. ToolTarget.valid is also exact. ToolCommands.fire additionally compares
+the binding target registry to the current target registry and deletes the binding
+on mismatch. This is the most consequential compatibility trap.
+
+Recommended small integration: an alias-aware, NEW-only canonical registry equality
+helper at these validation points, with unchanged behavior for every V12 registry.
+After equality succeeds, bridge apply operates on the resident's CURRENT Owner;
+never construct an old-registry owner for a normal state transition. UUID/root must
+still match, so alias acceptance cannot bind to another installation at that cell.
+ToolCommands must preserve command text, per-player/global uses, limits, and event
+bindings when only registry canonicalization changes. Old ToolTarget.read values,
+pending GUI edit tokens, rules, groups, pending pulses, and policy keys should keep
+working through the same narrowly scoped compatibility equality.
+
+Alternative is explicit migration of every persisted/in-memory TargetRef and
+ToolTarget after COMMITTED (MechanismState targets, MechanismRules rule targets
+and pending queue, MechanismGroups targets, ToolCommands bindings, pending GUI
+edits). It is broader and easier to omit a reference. A mere catalogue alias does
+not fix any of these checks. Never call removedArchitecture/removed policy callbacks
+for canonicalization, and do not emit open/close/manual-use events for migration.
+
+6. Stair and ladder integration requirements
+-------------------------------------------
+NEW step-stair family needs facing, half, and straight/inner_left/inner_right/
+outer_left/outer_right as one functional state's properties; placement and neighbor
+updates must follow native Minecraft stair adjacency semantics. Source models
+select those state poses; ordinary neighbor changes must enqueue an atomic owner
+transition if occupied cells or physics change. A plain setBlockState leaves ledger
+geometry stale. Suppress recursive neighbor rewrites during transaction writing.
+Unrelated V12 wall neighbor handling must remain untouched. A 45-degree decoration
+pose can stay a state only if its own behavior is explicit; native corner logic
+must not randomly convert it when a neighbor changes.
+
+NEW upright ladder families may share mounting/direction states but cannot be
+merged with step stairs by material. Preserve imported climbing zones. Current
+CompositeSpec restricts importedClimbingBounds to source_hold_ladder_02/03, so a
+different chosen main registry needs a precise NEW-only allowance and geometric
+state mapping, not loss of climbing or changes to V12's PrototypeLadderBlock.
+Native old V12 wall/ladder support, 90006 angular empty physical shape, original
+source-ladder pair provenance, stacking, and mount behavior stay protected.
+
+7. Collision authoring contract
+--------------------------------
+docs/COLLISION_IMPORT_HANDOFF.md and CollisionPack/Replacements remain unchanged.
+No author export is supplied. Parser/provider are preparation only; actual physics
+does not currently consume their values. Do not claim authored replacements applied.
+Prepare a machine-readable current exact selector table and the old -> canonical
+mapping for a later author import. Selector field names and JSON types are exact;
+never invent wildcards, inherit ALT or opened states, or use an entire BlockState
+with additional fields instead of the editor selector. If two old author entries
+map to one canonical exact state with conflicting physical data, report a concrete
+conflict; do not pick one silently or restore retired content.
+New default physics remains simple, per-face <0.5-block crop preserved, passable
+decorations stay empty physical with one rectangular outline, and important door/
+arch/stair paths retain only functionally necessary boxes.
+
+8. Evidence and release order
+-----------------------------
+User explicitly requires intermediate commit -> build -> final tests. Prior V12.3
+report documents its baseline, JAR SHA, build, GameTests, native server/client,
+save/reopen, and preservation audit, but no stronger alternate ordering instruction
+was located by this audit. Record a V12.4 implementation intermediate commit before
+the final production build; bind all final native/gallery checks to that exact JAR
+SHA. After corrections, commit/rebuild and repeat the checks affected by corrections;
+never combine a newer source revision with an older tested JAR unnoticed.
+
+Focused compatibility checks required for each mapping family:
+* Full old yaw/variant/open/profile mapping and typed source/mount offsets; renderer
+  normalization for asymmetric and 45-degree specimens.
+* Old alias item NBT read and direct placement; canonical one-item Creative offer;
+  pick/copy/reinstall gives canonical registry and expected artistic state.
+* Old multi-cell save, root-first and helper-first load, foreign BE byte preservation,
+  partial assembly deferral, UUID/root exact retention, no orphan/duplicate owner,
+  save/reopen idempotence, and rollback failure without partial canonicalization.
+* Linked openable canonicalization with queued action; old ToolTarget validation,
+  existing command limits/counters, pending event/rule/group behavior, and absence
+  of spurious migration events.
+* Stairs placement bottom/top, all directions, all five forms, native and imported
+  neighbors, neighbor removal/readdition, rotation, atomic ledger/physical update,
+  climb and platform support. Upright ladders stacking and all agreed mount modes.
+* V12 original code/resources/catalogue rows/shape behavior preservation, old item
+  icons retained as V12.3, and previous removal reservations untouched.
+* New gallery actual client open, complete canonical offered catalogue, platform
+  model bounds +2 cells, 2-block gap, objects surface-seated, non-placeables framed,
+  immutable source map/old gallery and release artifact hashes.
+
+Only executed checks become PASS/FAIL. Static JSON inspection, launch success,
+or compilation alone cannot stand in for native placement/renderer/client evidence.

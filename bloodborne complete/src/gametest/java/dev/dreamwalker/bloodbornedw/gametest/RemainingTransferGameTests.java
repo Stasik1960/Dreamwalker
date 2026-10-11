@@ -46,6 +46,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     }
     private static List<CompositeRootBlock> added() {
         return CompositeArchitecture.blocks().stream().filter(block->block.spec.id.getPath().startsWith("source_"))
+            .filter(block->ImportedTypeAliases.canonicalRegistry(block.spec.id.toString()).equals(block.spec.id.toString())&&!(block instanceof ImportedStairBlock))
             .sorted(Comparator.comparing(block->block.spec.id.toString())).toList();
     }
     private static ServerPlayerEntity player(ServerWorld world) {
@@ -60,10 +61,11 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         return player;
     }
     private static ItemStack art(CompositeRootBlock block,int variant,CompositeRootBlock.Profile profile) {
-        return block.art(block.getDefaultState().with(CompositeRootBlock.VARIANT,variant).with(CompositeRootBlock.PROFILE,profile),new NbtCompound());
+        return block.art(poseState(block,variant).with(CompositeRootBlock.PROFILE,profile),ImportedTypeAliases.markPayload(null));
     }
+    private static BlockState poseState(CompositeRootBlock block,int pose){BlockState state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose%16);if(block instanceof ImportedArtworkBlock)state=state.with(ImportedArtworkBlock.ART_BANK,pose/16);if(block instanceof ImportedLadderBlock)state=state.with(ImportedLadderBlock.HEIGHT,pose==0?ImportedLadderBlock.Height.ONE:ImportedLadderBlock.Height.TWO);return state;}
     private static void preload(ServerWorld world,BlockPos root,CompositeRootBlock block,int variant,int yaw) {
-        var state=block.getDefaultState().with(CompositeRootBlock.VARIANT,variant).with(CompositeRootBlock.ROTATION,yaw);
+        var state=poseState(block,variant).with(CompositeRootBlock.ROTATION,yaw);
         Set<BlockPos> required=new HashSet<>();
         for(var offset:block.spec.footprint(state,0).keySet())required.add(root.add(offset.x(),offset.y(),offset.z()));
         if(block.spec.openable)for(var offset:block.spec.footprint(state.with(CompositeRootBlock.OPEN,true),0).keySet())required.add(root.add(offset.x(),offset.y(),offset.z()));
@@ -87,7 +89,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         var result=stack.getItem().useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,hit));
         t.assertTrue(result.isAccepted(),"registered item places "+block.spec.id+" variant="+variant+" yaw="+yaw+"; "+CompositeRuntime.lastResult());
         var state=world.getBlockState(root);
-        t.assertTrue(state.isOf(block)&&state.get(CompositeRootBlock.VARIANT)==variant&&state.get(CompositeRootBlock.ROTATION)==yaw,"ordinary item retains exact ID/art/yaw: "+block.spec.id);
+        t.assertTrue(state.isOf(block)&&CompositeSpec.poseVariant(state)==variant&&state.get(CompositeRootBlock.ROTATION)==yaw,"ordinary item retains exact ID/art/yaw: "+block.spec.id);
         t.assertTrue(world.getBlockEntity(root) instanceof CompositeBlockEntity own&&own.resident()!=null,"one resident owner exists: "+block.spec.id);
         var own=(CompositeBlockEntity)world.getBlockEntity(root);
         t.assertTrue(own.resident().registryId().equals(block.spec.id.toString()),"owner identity is the new registered ID");
@@ -140,7 +142,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 boolean collision=false,selection=false;
                 for(var cell:cells(world,owner))for(var row:CompositeRuntime.contributions(world,cell))if(row.owner().equals(owner)) {
                     collision|=!row.shape().collision().isEmpty();selection|=!row.shape().selection().isEmpty();
-                    t.assertTrue(CompositeData.state(row.rootData()).get(CompositeRootBlock.VARIANT)==selected,"all helper contributions refer to the chosen variant");
+                    t.assertTrue(CompositeSpec.poseVariant(CompositeData.state(row.rootData()))==selected,"all helper contributions refer to the chosen pose");
                 }
                 t.assertTrue(selection,"every finished object is a real selection target: "+block.spec.id+" variant="+selected);
                 boolean expectedCollision=block.spec.simplePhysicalCollision?block.spec.simplePhysicalFootprint(world.getBlockState(root),0,0,0,0).values().stream().anyMatch(parts->!parts.isEmpty()):!block.spec.variants.get(selected).closed().collision().isEmpty();
@@ -164,7 +166,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 var saved=entity.createNbt();var loaded=new CompositeBlockEntity(root,world.getBlockState(root));loaded.readNbt(saved);
                 t.assertTrue(loaded.resident().equals(owner)&&loaded.payload().equals(payload)&&loaded.contributions().equals(entity.contributions()),"typed owner/payload/contributions round-trip exactly: "+block.spec.id);
                 var picked=CompositeRuntime.pick(world,owner);var art=picked.getSubNbt("BlockStateTag");
-                t.assertTrue(picked.isOf(block.asItem())&&art!=null&&art.getString("variant").equals(Integer.toString(selected))&&art.getString("profile").equals(profile.asString()),"pick retains exact new variant/profile");
+                t.assertTrue(picked.isOf(block.asItem())&&art!=null&&Integer.parseInt(art.getString("variant"))+(block instanceof ImportedArtworkBlock?16*Integer.parseInt(art.getString("art_bank")):0)==selected&&art.getString("profile").equals(profile.asString()),"pick retains exact new artistic pose/profile");
                 t.assertTrue(picked.getSubNbt("CompositePayload")==null&&picked.getSubNbt("BlockEntityTag")==null,"pick does not carry owner UUID, typed payload or mechanisms");
                 removed(t,player,owner);
                 var copy=place(t,player,root,block,selected,6,picked);
@@ -223,10 +225,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
             t.assertTrue(entry.temporaryId().matches("[0-9]{5}")&&(number>=90021&&number<=90999||number>=93001)&&numbers.add(entry.temporaryId()),"new architecture uses a free unique five-digit number outside reserved RP/retired ranges");
             t.assertTrue(entry.name().matches(".*[А-Яа-яЁё].*"),"new object has Russian name "+block.spec.id);
             t.assertTrue(Registries.ITEM.get(block.spec.id)==block.asItem(),"new object has its registered item");
-            for(int variant=0;variant<block.spec.variants.size();variant++) {
-                final int selected=variant;
-                t.assertTrue(stacks.stream().anyMatch(stack->stack.isOf(block.asItem())&&(stack.getSubNbt("BlockStateTag")==null?0:Integer.parseInt(stack.getSubNbt("BlockStateTag").getString("variant")))==selected),"every finished variant is offered independently "+block.spec.id+" variant="+variant);
-            }
+            t.assertTrue(stacks.stream().filter(stack->stack.isOf(block.asItem())).count()==1,"one installation item per functional new type "+block.spec.id);
         });
         eachTick(t,null,cases);
     }

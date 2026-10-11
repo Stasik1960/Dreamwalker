@@ -528,6 +528,259 @@
       "sourceStateRefs": [
         "minecraft:birch_trapdoor[variant:facing=east,half=top,open=true]"
       ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/birch_trapdoor_bottom",
+              "offset": [
+                0,
+                -8.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                -4.0
+              ],
+              "to": [
+                -6.0,
+                18.0,
+                32.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                -6.0,
+                10.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                2.0,
+                -2.0
+              ],
+              "to": [
+                -6.0,
+                10.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                6.0,
+                -4.0
+              ],
+              "to": [
+                -6.0,
+                10.0,
+                -2.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                8.0,
+                16.0
+              ],
+              "to": [
+                -6.0,
+                18.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                10.0,
+                14.0
+              ],
+              "to": [
+                -6.0,
+                18.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                14.0,
+                12.0
+              ],
+              "to": [
+                -6.0,
+                18.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -4.0
+                ],
+                "to": [
+                  -6.0,
+                  18.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -25.9411255,
+                  0.0,
+                  -17.45584412
+                ],
+                "to": [
+                  6.58578644,
+                  18.0,
+                  15.07106781
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  20.0,
+                  18.0,
+                  -6.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.92893219,
+                  0.0,
+                  -25.9411255
+                ],
+                "to": [
+                  33.45584412,
+                  18.0,
+                  6.58578644
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  22.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  32.0,
+                  18.0,
+                  20.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  9.41421356,
+                  0.0,
+                  0.92893219
+                ],
+                "to": [
+                  41.9411255,
+                  18.0,
+                  33.45584412
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.0,
+                  0.0,
+                  22.0
+                ],
+                "to": [
+                  32.0,
+                  18.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -17.45584412,
+                  0.0,
+                  9.41421356
+                ],
+                "to": [
+                  15.07106781,
+                  18.0,
+                  41.9411255
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          -4.0
+        ],
+        "to": [
+          -6.0,
+          18.0,
+          32.0
+        ]
+      },
+      "sourceVariant": "Дверная секция · нижняя",
+      "sourcePlacementOffset": [
+        0,
+        -8.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -8.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/birch_trapdoor_bottom"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:birch_trapdoor[variant:facing=east,half=bottom,open=false]",
+        "minecraft:birch_trapdoor[variant:facing=north,half=bottom,open=false]",
+        "minecraft:birch_trapdoor[variant:facing=south,half=bottom,open=false]",
+        "minecraft:birch_trapdoor[variant:facing=west,half=bottom,open=false]"
+      ]
     }
   ],
   "source": {},

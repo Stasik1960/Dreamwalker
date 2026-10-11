@@ -24,7 +24,7 @@ public final class CompositeArchitecture {
         if(CELL!=null)return;
         CELL=Registry.register(Registries.BLOCK,id("composite_cell"),new CompositeCellBlock());
         List<String> kinds=new ArrayList<>(Arrays.asList(paths));if(kinds.contains(GlazingTypes.WINDOW01)){if(!kinds.contains(GlazingTypes.WINDOW02))kinds.add(GlazingTypes.WINDOW02);if(!kinds.contains(GlazingTypes.WINDOW03))kinds.add(GlazingTypes.WINDOW03);}
-        for(String path:kinds){CompositeSpec spec=CompositeSpec.load(path);CompositeRootBlock block=Registry.register(Registries.BLOCK,spec.id,GlazingTypes.isGlazingPath(path)?new ThinWindowRootBlock(spec):new CompositeRootBlock(spec));BLOCKS.put(spec.id.getPath(),block);ITEMS.put(spec.id.getPath(),Registry.register(Registries.ITEM,spec.id,new CompositeItem(block)));}
+        for(String path:kinds){CompositeSpec spec=CompositeSpec.load(path);CompositeRootBlock block=Registry.register(Registries.BLOCK,spec.id,GlazingTypes.isGlazingPath(path)?new ThinWindowRootBlock(spec):ImportedStairBlock.isStairPath(path)?new ImportedStairBlock(spec):ImportedLadderBlock.isLadderPath(path)?new ImportedLadderBlock(spec):ImportedArtworkBlock.isBankedPath(path)?new ImportedArtworkBlock(spec):new CompositeRootBlock(spec));BLOCKS.put(spec.id.getPath(),block);ITEMS.put(spec.id.getPath(),Registry.register(Registries.ITEM,spec.id,new CompositeItem(block)));}
         List<Block> carriers=new ArrayList<>(BLOCKS.values());carriers.add(CELL);carriers.addAll(dev.dreamwalker.bloodbornedw.architecture.PrototypeArchitecture.LADDERS);carriers.addAll(dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallArchitecture.blocks());
         CELL_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("composite_cell"),FabricBlockEntityTypeBuilder.create(CompositeBlockEntity::new,carriers.toArray(Block[]::new)).build());
         dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue.initialize();
@@ -36,6 +36,7 @@ public final class CompositeArchitecture {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.LOAD.register((server,world)->CompositeLedger.get(world));
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.UNLOAD.register((server,world)->CompositeShapeSnapshots.forget(world));
         CompositeNetworking.initialize();
+        ImportedStairBlock.initialize();
         dev.dreamwalker.bloodbornedw.link.MechanismLinks.initialize();
         dev.dreamwalker.bloodbornedw.link.CompositeMechanismBridge.initialize();
     }

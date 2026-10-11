@@ -40,6 +40,7 @@ public final class CompositeClient {
             CompositeRootBlock rendered=block instanceof ThinWindowRootBlock?GlazingTypes.itemTarget(block,stack):block;
             BlockState state=rendered instanceof ThinWindowRootBlock?GlazingTypes.itemState(block,stack):rendered.getDefaultState();NbtCompound art=stack.getSubNbt("BlockStateTag");
             if(!(rendered instanceof ThinWindowRootBlock)&&art!=null){try{int v=Integer.parseInt(art.getString("variant"));if(v>=0&&v<rendered.spec.variants.size())state=state.with(CompositeRootBlock.VARIANT,v);}catch(NumberFormatException ignored){}state=state.with(CompositeRootBlock.PROFILE,"alt".equals(art.getString("profile"))?CompositeRootBlock.Profile.ALT:CompositeRootBlock.Profile.BASE).with(CompositeRootBlock.OPEN,"true".equals(art.getString("open")));}
+            if(rendered.spec.simplePhysicalCollision&&art!=null)for(var property:state.getBlock().getStateManager().getProperties())if(!Set.of("rotation","variant","profile","open").contains(property.getName())&&art.contains(property.getName(),8))state=itemArt(state,property,art.getString(property.getName()));
             double[] bounds=visualBounds(rendered,state);double span=Math.max(bounds[3]-bounds[0],Math.max(bounds[4]-bounds[1],bounds[5]-bounds[2]));float scale=(float)(.85/Math.max(1,span));
             matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null);matrices.pop();
         });
@@ -141,6 +142,7 @@ public final class CompositeClient {
         }matrices.pop();
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
+    private static <T extends Comparable<T>> BlockState itemArt(BlockState state,net.minecraft.state.property.Property<T> property,String value){return property.parse(value).map(v->state.with(property,v)).orElse(state);}
     private static double[] visualBounds(CompositeRootBlock block,BlockState state){double[] result={0,0,0,1,1,1};for(var bounds:block.spec.pose(state).selection()){result[0]=Math.min(result[0],bounds.from().x()/16);result[1]=Math.min(result[1],bounds.from().y()/16);result[2]=Math.min(result[2],bounds.from().z()/16);result[3]=Math.max(result[3],bounds.to().x()/16);result[4]=Math.max(result[4],bounds.to().y()/16);result[5]=Math.max(result[5],bounds.to().z()/16);}return result;}
     private CompositeClient(){}
 }

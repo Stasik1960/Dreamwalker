@@ -27,7 +27,7 @@ public final class CompositeSourceShift {
     public static Map<Cell,Footprint> footprint(CompositeSpec spec,BlockState state,NbtCompound payload){
         Shift local=local(payload);double mount=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
         if(local.x==0&&local.y==0&&local.z==0)return spec.footprint(state,mount);
-        Key key=new Key(spec,state.get(CompositeRootBlock.VARIANT),state.get(CompositeRootBlock.OPEN),state.get(CompositeRootBlock.ROTATION),mount,ThinWindowRootBlock.mount(state).asString(),local);
+        Key key=new Key(spec,CompositeSpec.poseVariant(state),state.get(CompositeRootBlock.OPEN),state.get(CompositeRootBlock.ROTATION),mount,ThinWindowRootBlock.mount(state).asString(),local);
         Map<Cell,Footprint> known=CACHE.get(key);if(known!=null)return known;
         Shift shift=world(state,payload);TreeMap<Cell,List<Box>> collision=new TreeMap<>(),selection=new TreeMap<>();
         for(var entry:spec.footprint(state,mount).entrySet()){

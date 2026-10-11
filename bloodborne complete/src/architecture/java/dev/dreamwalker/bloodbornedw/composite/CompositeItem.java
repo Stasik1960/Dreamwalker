@@ -16,6 +16,15 @@ public final class CompositeItem extends BlockItem {
     }
     private ActionResult placeInternal(ItemPlacementContext context){
         if(context.getPlayer()==null||!context.getWorld().isChunkLoaded(context.getBlockPos()))return ActionResult.FAIL;
+        if(root.spec.simplePhysicalCollision){
+            ItemStack converted=ImportedTypeAliases.canonicalStack(context.getStack());
+            if(converted!=context.getStack()){
+                ItemPlacementContext redirected=new ItemPlacementContext(context){@Override public ItemStack getStack(){return converted;}};
+                ActionResult result=((CompositeItem)converted.getItem()).place(redirected);
+                if(result.isAccepted())context.getStack().decrement(Math.max(0,context.getStack().getCount()-converted.getCount()));
+                return result;
+            }
+        }
         CompositeRootBlock canonical=GlazingTypes.itemTarget(root,context.getStack());
         if(canonical!=root){
             ItemStack converted=new ItemStack(canonical.asItem(),context.getStack().getCount());
@@ -35,17 +44,36 @@ public final class CompositeItem extends BlockItem {
         // Ordinary items carry art only; never restore owner, links, height or source privileges.
         NbtCompound payload=null;
         if(root instanceof ThinWindowRootBlock){state=GlazingMount.placementState(state,context);payload=GlazingMount.placementPayload(context,payload);}
+        if(root.spec.simplePhysicalCollision){
+            if(art!=null){
+                try{state=state.with(CompositeRootBlock.ROTATION,Math.floorMod(state.get(CompositeRootBlock.ROTATION)+Integer.parseInt(art.getString("imported_rotation_delta")),8));}catch(NumberFormatException ignored){}
+                for(var property:state.getBlock().getStateManager().getProperties())if(!java.util.Set.of("rotation","variant","profile","open").contains(property.getName())&&art.contains(property.getName(),8))state=applyArt(state,property,art.getString(property.getName()));
+            }
+            if(root instanceof ImportedStairBlock)state=ImportedStairBlock.placementState(state,context);
+            if(root instanceof ImportedLadderBlock)state=ImportedLadderBlock.placementState(state,context);
+            if(root instanceof ImportedStairBlock&&art!=null&&art.contains("imported_rotation_delta",8)){
+                try{state=state.with(CompositeRootBlock.ROTATION,Math.floorMod(Math.round(context.getPlayer().getYaw()/45)+Integer.parseInt(art.getString("imported_rotation_delta")),8));}catch(NumberFormatException ignored){}
+                for(var property:state.getBlock().getStateManager().getProperties())if(java.util.Set.of("half","shape","trim","connections").contains(property.getName())&&art.contains(property.getName(),8))state=applyArt(state,property,art.getString(property.getName()));
+                state=ImportedStairShapes.normalize(state);
+            }
+            payload=ImportedTypeAliases.markPayload(payload);
+            if(stack.getNbt()!=null&&stack.getNbt().contains("ImportedArtShift",9)){
+                payload.put("SourceShift",stack.getNbt().get("ImportedArtShift").copy());CompositeSourceShift.local(payload);
+            }
+        }
         if(context.getWorld().isClient)return ActionResult.SUCCESS;
         var result=CompositeRuntime.place((ServerWorld)context.getWorld(),context.getBlockPos(),state,UUID.randomUUID(),context.getPlayer(),payload);
         if(result.outcome()!=dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED){context.getPlayer().sendMessage(Text.literal("Установка отклонена: "+result.reason()),true);return ActionResult.FAIL;}
         if(!context.getPlayer().getAbilities().creativeMode)stack.decrement(1);
         return ActionResult.CONSUME;
     }
+    private static <T extends Comparable<T>> BlockState applyArt(BlockState state,net.minecraft.state.property.Property<T> property,String value){return property.parse(value).map(parsed->state.with(property,parsed)).orElse(state);}
     @Override public Text getName(ItemStack stack){if(root instanceof ThinWindowRootBlock){var selected=GlazingTypes.itemTarget(root,stack);return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(selected.spec.id,Text.literal(selected.spec.displayName));}NbtCompound art=stack.getSubNbt("BlockStateTag");String v=art==null?"0":art.getString("variant");
         if(root.spec.id.getPath().startsWith("source_")){int variant=0;try{variant=Integer.parseInt(v);}catch(NumberFormatException ignored){}String name=dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.variantName(root.spec.id.getPath(),variant);if(name!=null){if(root.spec.id.getPath().startsWith("source_assembly_")&&!name.startsWith(root.spec.displayName))name=root.spec.displayName+" · "+name;return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(root.spec.id,Text.literal(name));}}
         return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(root.spec.id,Text.literal(root.spec.displayName+(root.spec.variants.size()>1?" · вариант "+v:"")));}
     @Override public void appendTooltip(ItemStack stack,net.minecraft.world.World world,java.util.List<Text> tooltip,net.minecraft.client.item.TooltipContext context){
         dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.appendTooltip(root instanceof ThinWindowRootBlock?GlazingTypes.itemTarget(root,stack).spec.id:root.spec.id,tooltip);
         if(root instanceof ThinWindowRootBlock)tooltip.add(Text.literal("Стена: ПКМ сбоку; пол/потолок: сверху/снизу; Shift+пол: вертикально"));
+        if(root.spec.simplePhysicalCollision&&root.spec.variants.size()>1&&!(root instanceof ImportedStairBlock))tooltip.add(Text.literal("Shift+ПКМ пустой рукой: следующий вид / монтаж"));
     }
 }

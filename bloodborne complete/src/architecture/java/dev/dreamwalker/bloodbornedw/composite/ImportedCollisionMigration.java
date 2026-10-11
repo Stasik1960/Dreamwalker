@@ -51,11 +51,16 @@ public final class ImportedCollisionMigration {
         // Already queued legacy cleanup closures may still hold a contribution
         // after retirement removed its ledger entry. Never decode these two
         // deleted registry states through AIR's unrelated property schema.
-        return RETIRED.contains(owner.registryId()) || imported(owner) && state(world).before.containsKey(owner);
+        return ImportedTypeMigration.pending(world, owner) || RETIRED.contains(owner.registryId()) || imported(owner) && state(world).before.containsKey(owner);
     }
     public static void forget(ServerWorld world) { WORLDS.remove(world); }
+    /** A committed type migration already rebuilt this owner's complete saved membership. */
+    public static void discardOwner(ServerWorld world, Owner owner) {
+        State state = WORLDS.get(world); if (state != null) state.done(owner);
+    }
 
     private static void rebuild(ServerWorld world, State state, Owner owner) {
+        if (ImportedTypeMigration.pending(world, owner)) return;
         Map<Cell, Footprint> before = state.before.get(owner);
         if (before != null && RETIRED.contains(owner.registryId())) {
             retireLoaded(world, state, owner, before); return;

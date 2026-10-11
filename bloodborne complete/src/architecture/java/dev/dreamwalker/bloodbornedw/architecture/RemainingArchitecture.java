@@ -33,7 +33,7 @@ public final class RemainingArchitecture {
                     if (name.isBlank()) throw new IllegalStateException("Empty artwork name " + path);
                     names.add(name);
                 }
-                if (names.isEmpty() || names.size() > 16 || result.putIfAbsent(path, new Artwork(path, List.copyOf(names))) != null)
+                if (names.isEmpty() || names.size() > (dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.isBankedPath(path)?128:path.equals("source_stairs_polished_deepslate_stairs_bottom")?20:16) || result.putIfAbsent(path, new Artwork(path, List.copyOf(names))) != null)
                     throw new IllegalStateException("Invalid/repeated artwork " + path);
             }
             return Collections.unmodifiableMap(result);
@@ -55,18 +55,16 @@ public final class RemainingArchitecture {
         return ARTWORKS.containsKey(block.spec.id.getPath()) && block.spec.openable;
     }
 
-    /** All complete imported variants are offered, including those absent from the map. */
+    /** One installation item per NEW functional type; art and mounting are states. */
     public static List<ItemStack> creativeVariants(ItemStack original) {
         Identifier id = Registries.ITEM.getId(original.getItem());
         Artwork artwork = id.getNamespace().equals("bloodborne_dw") ? ARTWORKS.get(id.getPath()) : null;
         if (artwork == null) return List.of(original.copy());
-        List<ItemStack> result = new ArrayList<>();
-        for (int variant = 0; variant < artwork.names.size(); variant++) {
-            ItemStack stack = original.copy();
-            stack.getOrCreateSubNbt("BlockStateTag").putString("variant", Integer.toString(variant));
-            result.add(stack);
-        }
-        return List.copyOf(result);
+        if (!dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases.canonicalRegistry(id.toString()).equals(id.toString())) return List.of();
+        ItemStack stack = original.copy();
+        stack.getOrCreateNbt().putInt("ImportedTypeVersion",1);
+        stack.getOrCreateSubNbt("BlockStateTag").putString("variant","0");
+        return List.of(stack);
     }
 
     public static List<ItemStack> stacks() {

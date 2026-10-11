@@ -38,6 +38,13 @@ public final class CompositeRuntime {
         if(!(state.getBlock() instanceof CompositeRootBlock block))return rejected("not_a_composite_root");
         if(block.spec.id.getPath().equals("prototype_tree"))state=state.with(CompositeRootBlock.VARIANT,0);
         NbtCompound payload=supplied==null?new NbtCompound():supplied.copy();
+        if(block.spec.id.getPath().startsWith("source_")){
+            if(ImportedTypeAliases.needsMigration(state,payload)){
+                payload=ImportedTypeAliases.transformPayload(state,payload);state=ImportedTypeAliases.target(state);
+                block=(CompositeRootBlock)state.getBlock();
+            }
+            state=ImportedStairShapes.normalize(state);payload=ImportedTypeAliases.markPayload(payload);
+        }
         if(block.spec.requiredSupport){Double height=topHeight(world,pos.add(block.spec.supportOffset.x(),block.spec.supportOffset.y(),block.spec.supportOffset.z()),null);if(height==null)return rejected("missing_adequate_support");payload.putDouble("MountY",height-1);}
         else if(!(block instanceof ThinWindowRootBlock))payload.remove("MountY");
         if(block instanceof ThinWindowRootBlock&&!GlazingMount.seat(world,pos,state,payload))return rejected("missing_glazing_support_on_clicked_face");
@@ -45,6 +52,7 @@ public final class CompositeRuntime {
         return execute(access,core().placement(access,object,checks(world,player,object,block)));
     }
     public static TransactionCore.Result transition(ServerWorld world,Owner owner,BlockState next,PlayerEntity player){
+        next=ImportedStairShapes.normalize(next);
         BlockPos pos=CompositeData.pos(owner.root());
         BlockState previous=world.isChunkLoaded(pos)?world.getBlockState(pos):next;
         var result=transitionInternal(world,owner,next,player);
@@ -63,6 +71,7 @@ public final class CompositeRuntime {
     }
     /** Typed instance payload edit; actual geometry uses the same atomic owner transaction. */
     public static TransactionCore.Result transitionPayload(ServerWorld world,Owner owner,BlockState next,NbtCompound payload,PlayerEntity player){
+        next=ImportedStairShapes.normalize(next);
         BlockPos root=CompositeData.pos(owner.root());if(!world.isChunkLoaded(root))return rejected("unloaded_root");
         FabricCompositeWorld before=new FabricCompositeWorld(world,Map.of());CellSnapshot snapshot=before.read(owner.root());
         if(!owner.equals(snapshot.resident())||!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(next)||!net.minecraft.registry.Registries.BLOCK.getId(next.getBlock()).toString().equals(owner.registryId()))return rejected("stale_owner_or_wrong_kind");
@@ -73,10 +82,43 @@ public final class CompositeRuntime {
         BlockPos pos=CompositeData.pos(owner.root());
         if(!world.isChunkLoaded(pos))return rejected("unloaded_migration_root");
         BlockState old=world.getBlockState(pos);
-        if(!dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.target(old).equals(next))return rejected("unreviewed_alias_migration");
+        if(!dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.target(old).equals(next)
+                &&!(ImportedTypeAliases.merged(net.minecraft.registry.Registries.BLOCK.getId(old.getBlock()).toString())
+                &&ImportedTypeAliases.target(old).equals(next)))return rejected("unreviewed_alias_migration");
         ObjectInstance object=instance(world,pos,next,owner.instanceId(),payload);
         FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of(object.owner(),object));
         return execute(access,core().migrateAlias(access,owner,object,List.of()));
+    }
+    /** Native stair corners update around players; only NEW derived shape may change here. */
+    public static TransactionCore.Result transitionImportedStair(ServerWorld world,Owner owner,BlockState next){
+        BlockPos root=CompositeData.pos(owner.root());
+        if(!world.isChunkLoaded(root))return rejected("unloaded_stair_root");
+        BlockState previous=world.getBlockState(root);next=ImportedStairShapes.normalize(next);
+        if(!(previous.getBlock() instanceof ImportedStairBlock)||!previous.isOf(next.getBlock())
+                ||!net.minecraft.registry.Registries.BLOCK.getId(previous.getBlock()).toString().equals(owner.registryId())
+                ||!(world.getBlockEntity(root) instanceof CompositeBlockEntity own)||!owner.equals(own.resident()))
+            return rejected("not_current_imported_stair_owner");
+        for(var entry:previous.getEntries().entrySet()){
+            String name=entry.getKey().getName();if(name.equals("variant")||name.equals("shape"))continue;
+            if(!entry.getValue().equals(next.getEntries().get(entry.getKey())))return rejected("neighbor_stair_update_changes_other_state:"+name);
+        }
+        NbtCompound payload=own.payload();ObjectInstance before=instance(world,root,previous,owner.instanceId(),payload);
+        ObjectInstance after=instance(world,root,next,owner.instanceId(),payload);
+        List<net.minecraft.util.math.Box> oldPhysical=dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.physicalBoxes(before);
+        for(var box:dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.physicalBoxes(after))
+            for(int x=(int)Math.floor(box.minX+1e-7)-1;x<(int)Math.ceil(box.maxX-1e-7)+1;x++)
+                for(int y=(int)Math.floor(box.minY+1e-7)-1;y<(int)Math.ceil(box.maxY-1e-7)+1;y++)
+                    for(int z=(int)Math.floor(box.minZ+1e-7)-1;z<(int)Math.ceil(box.maxZ-1e-7)+1;z++){
+                        BlockPos cell=new BlockPos(x,y,z);if(!world.isChunkLoaded(cell))return rejected("unloaded_stair_neighbor:"+cell.toShortString());
+                        BlockState carrier=world.getBlockState(cell);if(carrier.getBlock() instanceof CompositeRootBlock||carrier.isOf(CompositeArchitecture.CELL))continue;
+                        for(var obstacle:nativeCollision(world,cell,ShapeContext.absent()).getBoundingBoxes())
+                            if(!dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.retainedIntersection(box,obstacle.offset(cell),oldPhysical))
+                                return rejected("solid_native_stair_neighbor:"+cell.toShortString());
+                    }
+        var access=new FabricCompositeWorld(world,Map.of(owner,after)){
+            @Override public boolean intersectsEntities(Cell cell,Footprint proposed){return false;}
+        };
+        return execute(access,core().transitionPayload(access,owner,after,List.of()));
     }
     private static void notifyOpenTransition(ServerWorld world,Owner owner,BlockState previous,BlockState next,PlayerEntity player,TransactionCore.Result result){
         if(result.outcome()!=TransactionCore.Outcome.COMMITTED||!(next.getBlock() instanceof CompositeRootBlock block)||(!block.spec.id.getPath().equals("prototype_double_door")&&!dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.opens(block))||!block.spec.openable||previous.get(CompositeRootBlock.OPEN)==next.get(CompositeRootBlock.OPEN))return;
@@ -266,6 +308,7 @@ public final class CompositeRuntime {
         Map<String,Runnable> tasks=PENDING.remove(world);if(tasks!=null)for(Runnable task:tasks.values())task.run();
     }
     public static void chunkLoaded(ServerWorld world,ChunkPos chunk){
+        queue(world,"imported-type-migration-chunk:"+chunk.toLong(),()->ImportedTypeMigration.loadedChunk(world,chunk));
         queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
         queue(world,"imported-physical-migration-chunk:"+chunk.toLong(),()->ImportedCollisionMigration.loadedChunk(world,chunk));
         CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){

@@ -45,7 +45,7 @@ public record ToolTarget(Kind kind,String dimension,UUID uuid,long root,String r
             &&(kind==Kind.RP?entity instanceof RpObjectEntity rp&&rp.assetId().equals(registry):Registries.ENTITY_TYPE.getId(entity.getType()).toString().equals(registry));}
         var pos=BlockPos.fromLong(root);if(!world.isChunkLoaded(pos))return false;
         if(kind==Kind.BLOCK)return Registries.BLOCK.getId(world.getBlockState(pos).getBlock()).toString().equals(registry);
-        var owner=VerticalMount.owner(world,pos);return owner!=null&&owner.instanceId().equals(uuid)&&owner.registryId().equals(registry);
+        var owner=VerticalMount.owner(world,pos);return owner!=null&&owner.instanceId().equals(uuid)&&ImportedTypeAliases.equivalent(owner.registryId(),registry);
     }
     public Vec3d position(MinecraftServer server){var entity=entity(server);if(entity!=null)return entity.getPos();var world=world(server);var pos=BlockPos.fromLong(root);return Vec3d.ofBottomCenter(pos).add(0,kind==Kind.ARCHITECTURE&&world!=null?VerticalMount.offset(world,pos):0,0);}
     public MechanismLinks.TargetRef mechanism(){return kind==Kind.RP||kind==Kind.ARCHITECTURE?
