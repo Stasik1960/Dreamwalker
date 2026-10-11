@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_slabs_slabs_5",
+  "displayName": "Архитектурная плита · вариант 6",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/slabs_5",
+              "offset": [
+                0,
+                -16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                -0.0625,
+                -16.0
+              ],
+              "to": [
+                16.0,
+                0.0625,
+                32.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          -0.0625,
+          -16.0
+        ],
+        "to": [
+          16.0,
+          0.0625,
+          32.0
+        ]
+      },
+      "sourceVariant": "Архитектурная плита · вариант 6",
+      "sourcePlacementOffset": [
+        0,
+        -16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/slabs/slabs_5"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:polished_blackstone_slab[variant:type=top]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

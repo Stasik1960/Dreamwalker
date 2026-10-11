@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_potted_bamboo",
+  "displayName": "Бамбук в декоративной подставке",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/potted_bamboo",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_bamboo_x0_y0",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "emissive": true
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                6.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                6.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                4.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                10.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                9.0,
+                16.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                10.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                6.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                2.0,
+                7.9375
+              ],
+              "to": [
+                16.0,
+                18.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                6.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                6.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                4.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                10.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                9.0,
+                16.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                10.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                6.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "to": [
+          16.0,
+          18.0,
+          11.0
+        ]
+      },
+      "sourceVariant": "Бамбук в декоративной подставке",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/potted_bamboo"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:potted_bamboo[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

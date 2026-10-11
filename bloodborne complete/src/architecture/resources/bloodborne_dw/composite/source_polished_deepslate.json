@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_polished_deepslate",
+  "displayName": "Массивный ступенчатый каменный карниз",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/polished_deepslate",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                18.0,
+                5.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                7.0,
+                0.0
+              ],
+              "to": [
+                18.0,
+                14.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                16.0,
+                5.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                7.0,
+                -2.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                18.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                18.0,
+                5.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                7.0,
+                0.0
+              ],
+              "to": [
+                18.0,
+                14.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                16.0,
+                5.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                7.0,
+                -2.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                18.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.0,
+          0.0,
+          -2.0
+        ],
+        "to": [
+          18.0,
+          16.0,
+          18.0
+        ]
+      },
+      "sourceVariant": "Массивный ступенчатый каменный карниз",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/polished_deepslate"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:polished_deepslate[variant:]",
+        "minecraft:polished_deepslate_slab[variant:type=double]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

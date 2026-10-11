@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_warped_fence_gate",
+  "displayName": "Секция ворот",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/warped_fence_gate",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -12.9497,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                26.0503,
+                48.0,
+                8.0625
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -12.9497,
+          0.0,
+          7.9375
+        ],
+        "to": [
+          26.0503,
+          48.0,
+          8.0625
+        ]
+      },
+      "sourceVariant": "Секция ворот",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/warped_fence_gate"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:warped_fence_gate[variant:facing=east,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=east,in_wall=false,open=true]",
+        "minecraft:warped_fence_gate[variant:facing=north,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=north,in_wall=false,open=true]",
+        "minecraft:warped_fence_gate[variant:facing=south,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=south,in_wall=false,open=true]",
+        "minecraft:warped_fence_gate[variant:facing=west,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=west,in_wall=false,open=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

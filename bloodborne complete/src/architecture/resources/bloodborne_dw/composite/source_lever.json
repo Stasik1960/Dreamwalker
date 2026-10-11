@@ -1,0 +1,915 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_lever",
+  "displayName": "Рычаг на каменном основании",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/lever",
+              "offset": [
+                0,
+                0.02,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                11.0,
+                3.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                6
+              ],
+              "to": [
+                9,
+                5,
+                7
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                7
+              ],
+              "to": [
+                9,
+                4,
+                8
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                5
+              ],
+              "to": [
+                9,
+                6,
+                6
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                8
+              ],
+              "to": [
+                9,
+                3,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                2,
+                4
+              ],
+              "to": [
+                9,
+                7,
+                5
+              ]
+            },
+            {
+              "from": [
+                7,
+                3,
+                3
+              ],
+              "to": [
+                9,
+                8,
+                4
+              ]
+            },
+            {
+              "from": [
+                7,
+                4,
+                2
+              ],
+              "to": [
+                9,
+                9,
+                3
+              ]
+            },
+            {
+              "from": [
+                7,
+                5,
+                1
+              ],
+              "to": [
+                9,
+                9,
+                2
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                0
+              ],
+              "to": [
+                9,
+                9,
+                1
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                11.0,
+                3.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                6
+              ],
+              "to": [
+                9,
+                5,
+                7
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                7
+              ],
+              "to": [
+                9,
+                4,
+                8
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                5
+              ],
+              "to": [
+                9,
+                6,
+                6
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                8
+              ],
+              "to": [
+                9,
+                3,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                2,
+                4
+              ],
+              "to": [
+                9,
+                7,
+                5
+              ]
+            },
+            {
+              "from": [
+                7,
+                3,
+                3
+              ],
+              "to": [
+                9,
+                8,
+                4
+              ]
+            },
+            {
+              "from": [
+                7,
+                4,
+                2
+              ],
+              "to": [
+                9,
+                9,
+                3
+              ]
+            },
+            {
+              "from": [
+                7,
+                5,
+                1
+              ],
+              "to": [
+                9,
+                9,
+                2
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                0
+              ],
+              "to": [
+                9,
+                9,
+                1
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          0
+        ],
+        "to": [
+          11.0,
+          9,
+          12.0
+        ]
+      },
+      "sourceVariant": "Рычаг на каменном основании",
+      "sourcePlacementOffset": [
+        0,
+        0.02,
+        0
+      ],
+      "localOrigin": [
+        0,
+        0.02,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/lever"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:lever[variant:face=ceiling,facing=east,powered=true]",
+        "minecraft:lever[variant:face=ceiling,facing=north,powered=true]",
+        "minecraft:lever[variant:face=ceiling,facing=south,powered=true]",
+        "minecraft:lever[variant:face=ceiling,facing=west,powered=true]",
+        "minecraft:lever[variant:face=floor,facing=east,powered=true]",
+        "minecraft:lever[variant:face=floor,facing=north,powered=true]",
+        "minecraft:lever[variant:face=floor,facing=south,powered=true]",
+        "minecraft:lever[variant:face=floor,facing=west,powered=true]",
+        "minecraft:lever[variant:face=wall,facing=east,powered=true]",
+        "minecraft:lever[variant:face=wall,facing=north,powered=true]",
+        "minecraft:lever[variant:face=wall,facing=south,powered=true]",
+        "minecraft:lever[variant:face=wall,facing=west,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/lever",
+              "offset": [
+                0,
+                -7.22182541,
+                0
+              ],
+              "pitch": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                5.79817459,
+                4.0
+              ],
+              "to": [
+                11.0,
+                8.79817459,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                13
+              ],
+              "to": [
+                9,
+                5,
+                14
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                14
+              ],
+              "to": [
+                9,
+                4,
+                15
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                15
+              ],
+              "to": [
+                9,
+                3,
+                16
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                12
+              ],
+              "to": [
+                9,
+                6,
+                13
+              ]
+            },
+            {
+              "from": [
+                7,
+                2,
+                11
+              ],
+              "to": [
+                9,
+                7,
+                12
+              ]
+            },
+            {
+              "from": [
+                7,
+                3,
+                10
+              ],
+              "to": [
+                9,
+                8,
+                11
+              ]
+            },
+            {
+              "from": [
+                7,
+                4,
+                9
+              ],
+              "to": [
+                9,
+                9,
+                10
+              ]
+            },
+            {
+              "from": [
+                7,
+                5,
+                8
+              ],
+              "to": [
+                9,
+                9,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                7
+              ],
+              "to": [
+                9,
+                8,
+                8
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                5.79817459,
+                4.0
+              ],
+              "to": [
+                11.0,
+                8.79817459,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                13
+              ],
+              "to": [
+                9,
+                5,
+                14
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                14
+              ],
+              "to": [
+                9,
+                4,
+                15
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                15
+              ],
+              "to": [
+                9,
+                3,
+                16
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                12
+              ],
+              "to": [
+                9,
+                6,
+                13
+              ]
+            },
+            {
+              "from": [
+                7,
+                2,
+                11
+              ],
+              "to": [
+                9,
+                7,
+                12
+              ]
+            },
+            {
+              "from": [
+                7,
+                3,
+                10
+              ],
+              "to": [
+                9,
+                8,
+                11
+              ]
+            },
+            {
+              "from": [
+                7,
+                4,
+                9
+              ],
+              "to": [
+                9,
+                9,
+                10
+              ]
+            },
+            {
+              "from": [
+                7,
+                5,
+                8
+              ],
+              "to": [
+                9,
+                9,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                7
+              ],
+              "to": [
+                9,
+                8,
+                8
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0,
+          4.0
+        ],
+        "to": [
+          11.0,
+          9,
+          16
+        ]
+      },
+      "sourceVariant": "Рычаг на каменном основании · наклон 180°",
+      "sourcePlacementOffset": [
+        0,
+        -7.22182541,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -7.22182541,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/lever",
+          "x": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:lever[variant:face=ceiling,facing=east,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/lever",
+              "offset": [
+                0,
+                -0.22182541,
+                0
+              ],
+              "pitch": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                3.77817459,
+                13.02
+              ],
+              "to": [
+                11.0,
+                11.77817459,
+                16.02
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                7
+              ],
+              "to": [
+                9,
+                3,
+                8
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                8
+              ],
+              "to": [
+                9,
+                4,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                9
+              ],
+              "to": [
+                9,
+                5,
+                10
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                10
+              ],
+              "to": [
+                9,
+                6,
+                11
+              ]
+            },
+            {
+              "from": [
+                7,
+                2,
+                11
+              ],
+              "to": [
+                9,
+                7,
+                12
+              ]
+            },
+            {
+              "from": [
+                7,
+                3,
+                12
+              ],
+              "to": [
+                9,
+                8,
+                13
+              ]
+            },
+            {
+              "from": [
+                7,
+                4,
+                13
+              ],
+              "to": [
+                9,
+                9,
+                14
+              ]
+            },
+            {
+              "from": [
+                7,
+                5,
+                14
+              ],
+              "to": [
+                9,
+                9,
+                15
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                15
+              ],
+              "to": [
+                9,
+                8,
+                16
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                3.77817459,
+                13.02
+              ],
+              "to": [
+                11.0,
+                11.77817459,
+                16.02
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                7
+              ],
+              "to": [
+                9,
+                3,
+                8
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                8
+              ],
+              "to": [
+                9,
+                4,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                9
+              ],
+              "to": [
+                9,
+                5,
+                10
+              ]
+            },
+            {
+              "from": [
+                7,
+                1,
+                10
+              ],
+              "to": [
+                9,
+                6,
+                11
+              ]
+            },
+            {
+              "from": [
+                7,
+                2,
+                11
+              ],
+              "to": [
+                9,
+                7,
+                12
+              ]
+            },
+            {
+              "from": [
+                7,
+                3,
+                12
+              ],
+              "to": [
+                9,
+                8,
+                13
+              ]
+            },
+            {
+              "from": [
+                7,
+                4,
+                13
+              ],
+              "to": [
+                9,
+                9,
+                14
+              ]
+            },
+            {
+              "from": [
+                7,
+                5,
+                14
+              ],
+              "to": [
+                9,
+                9,
+                15
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                15
+              ],
+              "to": [
+                9,
+                8,
+                16
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0,
+          7
+        ],
+        "to": [
+          11.0,
+          11.77817459,
+          16.02
+        ]
+      },
+      "sourceVariant": "Рычаг на каменном основании · наклон 90°",
+      "sourcePlacementOffset": [
+        0,
+        -0.22182541,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.22182541,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/lever",
+          "x": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:lever[variant:face=wall,facing=east,powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

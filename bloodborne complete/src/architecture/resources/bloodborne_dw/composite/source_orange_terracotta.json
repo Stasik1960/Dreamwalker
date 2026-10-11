@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_orange_terracotta",
+  "displayName": "Угловая готическая пилястра",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/orange_terracotta",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -11.0,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                29.0,
+                48.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                -12.0
+              ],
+              "to": [
+                8.0625,
+                48.0,
+                28.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -11.0,
+          0.0,
+          -12.0
+        ],
+        "to": [
+          29.0,
+          48.0,
+          28.0
+        ]
+      },
+      "sourceVariant": "Угловая готическая пилястра",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/orange_terracotta"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:orange_terracotta[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

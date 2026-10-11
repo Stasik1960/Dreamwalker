@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_dark_prismarine_stairs_outer_corner",
+  "displayName": "Ступенчатый модуль · внешний угол",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_outer_corner",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                13.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.0,
+                6.0
+              ],
+              "to": [
+                4.0,
+                4.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.0,
+                7.5
+              ],
+              "to": [
+                9.0,
+                28.0,
+                8.5
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                2.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                4.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                7.5,
+                4.0,
+                7.0
+              ],
+              "to": [
+                8.5,
+                28.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                -0.0625,
+                0.0
+              ],
+              "to": [
+                16.0,
+                0.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                13.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.0,
+                6.0
+              ],
+              "to": [
+                4.0,
+                4.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.0,
+                7.5
+              ],
+              "to": [
+                9.0,
+                28.0,
+                8.5
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                2.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                4.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                7.5,
+                4.0,
+                7.0
+              ],
+              "to": [
+                8.5,
+                28.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          -0.0625,
+          0.0
+        ],
+        "to": [
+          16.0,
+          28.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/dark_prismarine_stairs_outer_corner"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dark_prismarine_stairs[variant:facing=north,half=bottom,shape=inner_left]",
+        "minecraft:dark_prismarine_stairs[variant:facing=east,half=bottom,shape=inner_left]",
+        "minecraft:dark_prismarine_stairs[variant:facing=south,half=bottom,shape=outer_right]",
+        "minecraft:dark_prismarine_stairs[variant:facing=west,half=bottom,shape=outer_right]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

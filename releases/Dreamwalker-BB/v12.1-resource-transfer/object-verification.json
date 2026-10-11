@@ -1,0 +1,280 @@
+{
+  "schema": "dreamwalker-source-object-evidence-v1",
+  "artifact": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.1-resource-transfer.jar",
+    "sha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117"
+  },
+  "scope": {
+    "dependency": "Exact source geometry/UV/texture dependency closure and combined-JAR bytes.",
+    "registration": "All actual new registry types, unique numbers, Russian names and offered variant items.",
+    "gametest": "Actual Minecraft GameTest server: registered item placement, art pick/copy, UUID, typed NBT, neighbours, break, openable callbacks.",
+    "client_baked": "Every new part is baked with non-missing visible sprites; builtin creative icons are registered.",
+    "client_network": "Only sampled actual client interactionManager packets and vanilla item pick, acknowledged by the dedicated server; physical mouse/keyboard input is separate.",
+    "saved_world": "Only sampled installed owners/typed payload/helpers verified after a real server save and reopen.",
+    "native_manual": "Only explicitly documented actual client input and inspected appearance, never inferred from a build or camera."
+  },
+  "dependency": {
+    "*": {
+      "*": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\artifact-validation.json"
+      }
+    }
+  },
+  "registration": {
+    "*": {
+      "*": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\remaining-final-7-TEST-remaining-final-7.xml"
+      }
+    }
+  },
+  "gametest": {
+    "*": {
+      "*": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\remaining-final-7-TEST-remaining-final-7.xml"
+      }
+    }
+  },
+  "server": {
+    "*": {
+      "*": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\remaining-final-7-TEST-remaining-final-7.xml"
+      }
+    }
+  },
+  "client_baked": {
+    "*": {
+      "*": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-baked.json"
+      }
+    }
+  },
+  "client": {
+    "*": {
+      "*": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-baked.json"
+      }
+    }
+  },
+  "client_network": {
+    "bloodborne_dw:source_hold_bench_2": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_addon_barrel_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_addon_books_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_addon_bag_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_1_spirelamp_001": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_hold_statue_5": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_addon_roof_spike_side": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_warped_gargoyle": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_stone_button": {
+      "1": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      },
+      "2": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_lantern_1": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_addon_crimson_button_5": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_grass_block": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_bricks_grass_block_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    },
+    "bloodborne_dw:source_potted_fern": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\client-network.json"
+      }
+    }
+  },
+  "saved_world": {
+    "bloodborne_dw:source_hold_bench_2": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_addon_barrel_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_addon_books_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_addon_bag_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_1_spirelamp_001": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_hold_statue_5": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_addon_roof_spike_side": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_warped_gargoyle": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_stone_button": {
+      "1": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      },
+      "2": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_lantern_1": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_addon_crimson_button_5": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_grass_block": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_bricks_grass_block_0": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    },
+    "bloodborne_dw:source_potted_fern": {
+      "0": {
+        "status": "PASS",
+        "artifactSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+        "evidence": "docs\\remaining-transfer\\evidence\\saved-world-reopen.json"
+      }
+    }
+  }
+}

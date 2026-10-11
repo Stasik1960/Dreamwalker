@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_oak_prison_door",
+  "displayName": "Решётчатая тюремная дверь",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/oak_door_1",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/oak_door_2",
+              "offset": [
+                0,
+                32.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                2.0,
+                48.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                16.0,
+                0.0
+              ],
+              "to": [
+                9.0,
+                64.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                2.0,
+                48.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                16.0,
+                0.0
+              ],
+              "to": [
+                9.0,
+                64.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          9.0,
+          64.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Решётчатая тюремная дверь",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/oak_door_1"
+        },
+        {
+          "model": "minecraft:block/addon/oak_door_2",
+          "offset": [
+            0,
+            16,
+            0
+          ]
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "SOURCE_MAP_MATCHED_LOWER_UPPER_PAIR",
+    "matches": [
+      {
+        "lowerState": "minecraft:oak_door[facing=east,half=lower,hinge=right,open=false,powered=false]",
+        "upperState": "minecraft:oak_door[facing=east,half=upper,hinge=right,open=false,powered=false]",
+        "offset": [
+          0,
+          16,
+          0
+        ],
+        "occurrences": 2,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            146,
+            76,
+            -831
+          ],
+          "upper": [
+            146,
+            77,
+            -831
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:oak_door[facing=east,half=lower,hinge=left,open=false,powered=false]",
+        "upperState": "minecraft:oak_door[facing=east,half=upper,hinge=left,open=false,powered=false]",
+        "offset": [
+          0,
+          16,
+          0
+        ],
+        "occurrences": 1,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            146,
+            76,
+            -832
+          ],
+          "upper": [
+            146,
+            77,
+            -832
+          ]
+        }
+      }
+    ]
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

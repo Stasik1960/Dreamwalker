@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_copper_block",
+  "displayName": "Каменное ребро с выступающими зубцами",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/copper_block",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                32.0,
+                48.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                -16.0
+              ],
+              "to": [
+                8.0625,
+                48.0,
+                32.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          48.0,
+          32.0
+        ]
+      },
+      "sourceVariant": "Каменное ребро с выступающими зубцами",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/copper_block"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:waxed_copper_block[variant:]",
+        "minecraft:copper_block[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

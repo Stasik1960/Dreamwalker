@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_smooth_red_bottom",
+  "displayName": "Каменное ограждение с вертикальными прутьями · нижняя",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/smooth_red_bottom",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                12.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                14.5
+              ],
+              "to": [
+                19.0,
+                16.0,
+                19.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                12.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                14.5
+              ],
+              "to": [
+                19.0,
+                16.0,
+                19.5
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.0,
+          0.0,
+          12.0
+        ],
+        "to": [
+          24.0,
+          16.0,
+          22.0
+        ]
+      },
+      "sourceVariant": "Каменное ограждение с вертикальными прутьями · нижняя",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/smooth_red_bottom"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:smooth_red_sandstone_stairs[variant:facing=east,half=bottom,shape=straight]",
+        "minecraft:smooth_red_sandstone_stairs[variant:facing=north,half=bottom,shape=straight]",
+        "minecraft:smooth_red_sandstone_stairs[variant:facing=south,half=bottom,shape=straight]",
+        "minecraft:smooth_red_sandstone_stairs[variant:facing=west,half=bottom,shape=straight]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

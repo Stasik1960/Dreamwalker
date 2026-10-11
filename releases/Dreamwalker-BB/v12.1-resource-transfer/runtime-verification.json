@@ -1,0 +1,86 @@
+{
+  "schema": "dreamwalker-remaining-transfer-runtime-verification-v1",
+  "productionJarSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+  "status": "PASS",
+  "bakedPartModels": 1482,
+  "bakedOfferedVariants": 1805,
+  "networkCases": 15,
+  "rejoinCases": 15,
+  "reviewedFramebufferImages": 30,
+  "physicalMouseKeyboard": "NOT_RUN",
+  "physicalInputObstacle": "Windows window capture failed twice: FrameArrived timeout and window capture timeout. No physical input was inferred from engine/network actions.",
+  "authorCollisionExport": "NOT_PROVIDED_NOT_APPLIED",
+  "reopenStrictLauncherStatus": "FAIL",
+  "externalAuthentication": {
+    "status": "FAIL",
+    "errors": [
+      "[16:16:09] [Yggdrasil Key Fetcher/ERROR]: Failed to request yggdrasil public key",
+      "com.mojang.authlib.exceptions.AuthenticationUnavailableException: Cannot contact authentication server",
+      "Caused by: java.net.SocketTimeoutException: Connect timed out"
+    ],
+    "scope": "Mojang public-key network fetch; no local mod/world exception"
+  },
+  "scope": "Actual new isolated localhost worlds only. Client engine packets, vanilla item pick, server acknowledgement, real save/reopen and client rejoin are separate from physical UI acceptance. This is a sampled visual/network check, not all1805 variants visually inspected.",
+  "evidence": {
+    "server-primary": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\server-primary.json",
+      "sha256": "a1cbb98d364bfb254864453b919b8c14ffef1699a1d6fe7c7b273c5146163415",
+      "status": "PASS"
+    },
+    "client-primary-profile": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\client-primary-profile.json",
+      "sha256": "3385dfefaacffaa5914869ad237bf404df26d92597d8b4f2ba9a362d79f8e760",
+      "status": "LAUNCHED_AWAITING_GAME_VERIFICATION"
+    },
+    "client-baked": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\client-baked.json",
+      "sha256": "ebbd4c42cd91df3184efcec27138c378297f3f34e229c54105999820d10b3643",
+      "status": "PASS"
+    },
+    "client-network": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\client-network.json",
+      "sha256": "0b70efb9e77fdb5f96253857bf984b3699559d3f67e947183c733754b47b6b63",
+      "status": "PASS"
+    },
+    "client-capture": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\client-capture.json",
+      "sha256": "c72906810ec10b329d164966ff992d3cab277d86e8a2dffe5be0c39554cc8caf",
+      "status": "CAPTURE_COMPLETE"
+    },
+    "server-reopen": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\server-reopen.json",
+      "sha256": "0a34ba7cc43067c1c03940832c721ad98434199bdaecbae3a32c2173923ef0b7",
+      "status": "PASS"
+    },
+    "client-rejoin-profile": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\client-rejoin-profile.json",
+      "sha256": "9391a9aa6e08e153089d628309ed968a9570f1a0e864a843e1c8124b38bbb96e",
+      "status": "LAUNCHED_AWAITING_GAME_VERIFICATION"
+    },
+    "client-rejoin": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\client-rejoin.json",
+      "sha256": "96da42f97335fa374221ef1165e2f14cc616dbf08fb436f4ad32fcb29dfd7da1",
+      "status": "PASS"
+    },
+    "saved-world-before": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\saved-world-before.json",
+      "sha256": "50083fbf5276b1d9ea7dc3f33bc2f782510832a78e76bfce5646458cf9db0d5e",
+      "status": "PASS"
+    },
+    "saved-world-after": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\saved-world-after.json",
+      "sha256": "1b6dd5c330260c86d5a2fd4c954102047514a2d7f50d95530265e9c3c72bf719",
+      "status": "PASS"
+    },
+    "visual-review": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\visual-review.json",
+      "sha256": "5788077c11df77f00df7bee16a7c3f317ed1233e7769c865a4e5f5ebeb347b5d",
+      "status": "PASS"
+    },
+    "native-plan": {
+      "path": "docs\\remaining-transfer\\evidence\\runtime\\native-plan.json",
+      "sha256": "e4197080f5ad807798b31d008c2172b788b447039894c34c4106a5ab669e992b",
+      "status": "PREPARED_NOT_GAMEPLAY_PASS"
+    }
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+  "displayName": "Ступенчатый модуль · внутренний угол, верхняя, левая",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/waxed_oxidized_cut_copper_stairs_inner_left_top2",
+              "offset": [
+                0,
+                4.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                4.0,
+                5.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                -11.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                27.0,
+                4.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -11.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                -7.0,
+                20.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -10.0,
+                4.0,
+                5.5
+              ],
+              "to": [
+                26.0,
+                20.0,
+                10.5
+              ]
+            },
+            {
+              "from": [
+                -9.5,
+                4.0,
+                4.0
+              ],
+              "to": [
+                25.5,
+                20.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                -7.5,
+                4.0,
+                1.5
+              ],
+              "to": [
+                23.5,
+                20.0,
+                14.5
+              ]
+            },
+            {
+              "from": [
+                23.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                27.0,
+                20.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                4.0,
+                5.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                -11.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                27.0,
+                4.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -11.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                -7.0,
+                20.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -10.0,
+                4.0,
+                5.5
+              ],
+              "to": [
+                26.0,
+                20.0,
+                10.5
+              ]
+            },
+            {
+              "from": [
+                -9.5,
+                4.0,
+                4.0
+              ],
+              "to": [
+                25.5,
+                20.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                -7.5,
+                4.0,
+                1.5
+              ],
+              "to": [
+                23.5,
+                20.0,
+                14.5
+              ]
+            },
+            {
+              "from": [
+                23.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                27.0,
+                20.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          1.0
+        ],
+        "to": [
+          32.0,
+          20.0,
+          15.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внутренний угол, верхняя, левая",
+      "sourcePlacementOffset": [
+        0,
+        4.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        4.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/waxed_oxidized_cut_copper_stairs_inner_left_top2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:waxed_oxidized_cut_copper_stairs[variant:facing=south,half=top,shape=inner_left]",
+        "minecraft:waxed_oxidized_cut_copper_stairs[variant:facing=west,half=top,shape=inner_left]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

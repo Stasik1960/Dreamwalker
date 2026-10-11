@@ -24,6 +24,7 @@ public final class CompositeClient {
     private static boolean initialized;
     public static void initialize() {
         if(initialized)return; initialized=true;
+        RemainingSourceTint.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
         ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}context.addModels(models);});
         BlockEntityRendererRegistry.register(CompositeArchitecture.CELL_ENTITY, context->new BlockEntityRenderer<CompositeBlockEntity>(){
@@ -122,6 +123,7 @@ public final class CompositeClient {
     }
     private static void renderParts(CompositeRootBlock block,BlockState state,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay,String instanceId,net.minecraft.util.math.BlockPos root){
         MinecraftClient client=MinecraftClient.getInstance();VertexConsumer consumer=consumers.getBuffer(block.spec.translucent?RenderLayer.getTranslucent():RenderLayer.getCutout());
+        int sourceTint=RemainingSourceTint.color(block,client,root);float red=((sourceTint>>16)&255)/255f,green=((sourceTint>>8)&255)/255f,blue=(sourceTint&255)/255f;
         matrices.push();rotate(matrices,.5,.5,.5,-state.get(CompositeRootBlock.ROTATION)*45,false);
         if(ThinWindowRootBlock.mount(state)!=ThinWindowRootBlock.Mount.VERTICAL){
             rotate(matrices,.5,.5,.5,ThinWindowRootBlock.mount(state)==ThinWindowRootBlock.Mount.FLOOR?90:-90,true);
@@ -134,7 +136,8 @@ public final class CompositeClient {
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
             var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
-            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,1,1,1,light,overlay);matrices.pop();
+            boolean sourceEmissive=block.spec.id.getPath().startsWith("source_")&&selectedModel.getPath().startsWith("remaining/source_emissive/");
+            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,red,green,blue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
         }matrices.pop();
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}

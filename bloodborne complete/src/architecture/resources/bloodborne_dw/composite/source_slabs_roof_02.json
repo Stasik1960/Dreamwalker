@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_slabs_roof_02",
+  "displayName": "Кровельный модуль · вариант 3",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/roof_02",
+              "offset": [
+                0,
+                8.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -0.5,
+                8.0,
+                7.9375
+              ],
+              "to": [
+                16.5,
+                32.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -0.5,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.5,
+          32.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Кровельный модуль · вариант 3",
+      "sourcePlacementOffset": [
+        0,
+        8.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        8.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/slabs/roof_02"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:mossy_stone_brick_stairs[variant:facing=east,half=top,shape=straight]",
+        "minecraft:mossy_stone_brick_stairs[variant:facing=north,half=top,shape=straight]",
+        "minecraft:mossy_stone_brick_stairs[variant:facing=south,half=top,shape=straight]",
+        "minecraft:mossy_stone_brick_stairs[variant:facing=west,half=top,shape=straight]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

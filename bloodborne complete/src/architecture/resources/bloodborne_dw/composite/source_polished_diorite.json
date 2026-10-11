@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_polished_diorite",
+  "displayName": "Разрозненные каменные фрагменты",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/polished_diorite",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.5,
+                0.0,
+                -2.5
+              ],
+              "to": [
+                18.5,
+                16.0,
+                18.5
+              ]
+            },
+            {
+              "from": [
+                -1.5,
+                0.0,
+                -1.5
+              ],
+              "to": [
+                17.5,
+                16.0,
+                17.5
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                0.0,
+                1.5
+              ],
+              "to": [
+                14.5,
+                16.0,
+                14.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.5,
+                0.0,
+                -2.5
+              ],
+              "to": [
+                18.5,
+                16.0,
+                18.5
+              ]
+            },
+            {
+              "from": [
+                -1.5,
+                0.0,
+                -1.5
+              ],
+              "to": [
+                17.5,
+                16.0,
+                17.5
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                0.0,
+                1.5
+              ],
+              "to": [
+                14.5,
+                16.0,
+                14.5
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.5,
+          0.0,
+          -2.5
+        ],
+        "to": [
+          18.5,
+          16.0,
+          18.5
+        ]
+      },
+      "sourceVariant": "Разрозненные каменные фрагменты",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/polished_diorite"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:polished_diorite[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

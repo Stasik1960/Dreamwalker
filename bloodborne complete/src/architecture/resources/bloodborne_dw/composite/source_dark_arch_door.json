@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_dark_arch_door",
+  "displayName": "Арочная дверь в кирпичной раме",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/dark_door_1",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/dark_door_2",
+              "offset": [
+                0,
+                48.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                32.0,
+                64.0,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                32.0,
+                64.0,
+                9.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          5.0
+        ],
+        "to": [
+          32.0,
+          64.0,
+          9.0
+        ]
+      },
+      "sourceVariant": "Арочная дверь в кирпичной раме",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/dark_door_1"
+        },
+        {
+          "model": "minecraft:block/dark_door_2",
+          "offset": [
+            0,
+            32,
+            0
+          ]
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "SOURCE_MAP_MATCHED_HALF_PAIR",
+    "matches": [
+      {
+        "lowerState": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:dark_oak_stairs[facing=west,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          32,
+          0
+        ],
+        "occurrences": 65,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -289,
+            69,
+            -213
+          ],
+          "upper": [
+            -289,
+            71,
+            -213
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:dark_oak_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          32,
+          0
+        ],
+        "occurrences": 56,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -121,
+            47,
+            -242
+          ],
+          "upper": [
+            -121,
+            49,
+            -242
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:dark_oak_stairs[facing=south,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          32,
+          0
+        ],
+        "occurrences": 55,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -79,
+            76,
+            -205
+          ],
+          "upper": [
+            -79,
+            78,
+            -205
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:dark_oak_stairs[facing=east,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          32,
+          0
+        ],
+        "occurrences": 39,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -80,
+            71,
+            -242
+          ],
+          "upper": [
+            -80,
+            73,
+            -242
+          ]
+        }
+      }
+    ]
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

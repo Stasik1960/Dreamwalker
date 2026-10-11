@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_warped_trapdoor_top",
+  "displayName": "Дверная секция · верхняя",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/warped_trapdoor_top",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                -4.0,
+                16.0,
+                5.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0.0,
+                15.0
+              ],
+              "to": [
+                -4.0,
+                16.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.0,
+                7.5
+              ],
+              "to": [
+                17.0,
+                16.0,
+                12.5
+              ]
+            },
+            {
+              "from": [
+                20.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                5.0
+              ]
+            },
+            {
+              "from": [
+                20.0,
+                0.0,
+                15.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                18.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                -4.0,
+                16.0,
+                5.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0.0,
+                15.0
+              ],
+              "to": [
+                -4.0,
+                16.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.0,
+                7.5
+              ],
+              "to": [
+                17.0,
+                16.0,
+                12.5
+              ]
+            },
+            {
+              "from": [
+                20.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                5.0
+              ]
+            },
+            {
+              "from": [
+                20.0,
+                0.0,
+                15.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                18.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.0,
+          0.0,
+          2.0
+        ],
+        "to": [
+          24.0,
+          16.0,
+          18.0
+        ]
+      },
+      "sourceVariant": "Дверная секция · верхняя",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/warped_trapdoor_top"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:warped_trapdoor[variant:facing=east,half=top,open=false]",
+        "minecraft:warped_trapdoor[variant:facing=north,half=top,open=false]",
+        "minecraft:warped_trapdoor[variant:facing=south,half=top,open=false]",
+        "minecraft:warped_trapdoor[variant:facing=west,half=top,open=false]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

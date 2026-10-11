@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_red_nether_brick_wall_side_tall_1",
+  "displayName": "Кирпичная деталь · секция, вариант 2",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/red_nether_brick_wall_side_tall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                3.0,
+                13.0,
+                3.0
+              ],
+              "to": [
+                13.0,
+                16.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                5.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                13.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                10.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                9.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                3.0,
+                13.0,
+                3.0
+              ],
+              "to": [
+                13.0,
+                16.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                5.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                13.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                10.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                9.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          13.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Кирпичная деталь · секция, вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/red_nether_brick_wall_side_tall_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

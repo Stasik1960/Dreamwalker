@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_acacia_wood",
+  "displayName": "Ажурное завершение ограды",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_wood",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                33.0,
+                6.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                9.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                33.0,
+                6.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                9.5
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          6.5
+        ],
+        "to": [
+          32.0,
+          48.0,
+          9.5
+        ]
+      },
+      "sourceVariant": "Ажурное завершение ограды",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/acacia_wood"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:acacia_wood[variant:axis=x]",
+        "minecraft:acacia_wood[variant:axis=y]",
+        "minecraft:acacia_wood[variant:axis=z]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

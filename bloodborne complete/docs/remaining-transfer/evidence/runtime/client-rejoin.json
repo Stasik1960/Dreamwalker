@@ -1,0 +1,450 @@
+{
+  "schema": "dreamwalker-remaining-transfer-client-rejoin-v1",
+  "productionJarSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+  "mode": "VERIFY_REJOIN",
+  "manualMouseKeyboardInput": "NOT_RUN",
+  "scope": "Read-only actual client synchronized owner UUID/id/variant/rotation/open after server restart; camera tp only; no place/use/pick/attack",
+  "firstNetworkReportSha256": "0b70efb9e77fdb5f96253857bf984b3699559d3f67e947183c733754b47b6b63",
+  "cases": [
+    {
+      "case": "bench",
+      "id": "bloodborne_dw:source_hold_bench_2",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14121,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "5e596c0e-7639-44dc-8270-b00c02912978"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        16,
+        128,
+        16
+      ],
+      "expectedOwnerUuid": "5e596c0e-7639-44dc-8270-b00c02912978",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "5e596c0e-7639-44dc-8270-b00c02912978",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "barrel",
+      "id": "bloodborne_dw:source_addon_barrel_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14135,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "6a6cbab9-8459-404f-90de-bc60990b9c02"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        64,
+        128,
+        16
+      ],
+      "expectedOwnerUuid": "6a6cbab9-8459-404f-90de-bc60990b9c02",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "6a6cbab9-8459-404f-90de-bc60990b9c02",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "books",
+      "id": "bloodborne_dw:source_addon_books_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14149,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "c256b5b6-b262-4d56-a8de-b44a73e22a76"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        112,
+        128,
+        16
+      ],
+      "expectedOwnerUuid": "c256b5b6-b262-4d56-a8de-b44a73e22a76",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "c256b5b6-b262-4d56-a8de-b44a73e22a76",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "bag",
+      "id": "bloodborne_dw:source_addon_bag_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14163,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "16617069-fec4-4b4b-b4a4-f3522474fc28"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        160,
+        128,
+        16
+      ],
+      "expectedOwnerUuid": "16617069-fec4-4b4b-b4a4-f3522474fc28",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "16617069-fec4-4b4b-b4a4-f3522474fc28",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "lamp",
+      "id": "bloodborne_dw:source_1_spirelamp_001",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14177,
+          "at": [
+            208,
+            128,
+            16
+          ],
+          "ownerUuid": "1b585757-84b1-4a9d-b73e-ccf84830d765"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        208,
+        128,
+        16
+      ],
+      "expectedOwnerUuid": "1b585757-84b1-4a9d-b73e-ccf84830d765",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "1b585757-84b1-4a9d-b73e-ccf84830d765",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "statue",
+      "id": "bloodborne_dw:source_hold_statue_5",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14191,
+          "at": [
+            16,
+            128,
+            64
+          ],
+          "ownerUuid": "c88a85fc-3187-4038-8c30-755913aaeb3c"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        16,
+        128,
+        64
+      ],
+      "expectedOwnerUuid": "c88a85fc-3187-4038-8c30-755913aaeb3c",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "c88a85fc-3187-4038-8c30-755913aaeb3c",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "roof",
+      "id": "bloodborne_dw:source_addon_roof_spike_side",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14205,
+          "at": [
+            64,
+            128,
+            64
+          ],
+          "ownerUuid": "049b37a1-cab4-4892-892f-b9f36019f3dd"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        64,
+        128,
+        64
+      ],
+      "expectedOwnerUuid": "049b37a1-cab4-4892-892f-b9f36019f3dd",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "049b37a1-cab4-4892-892f-b9f36019f3dd",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "whole_door",
+      "id": "bloodborne_dw:source_warped_gargoyle",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14219,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "24a75e7a-8fb0-4f7d-911a-5cd8b4e36211"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        112,
+        128,
+        64
+      ],
+      "expectedOwnerUuid": "24a75e7a-8fb0-4f7d-911a-5cd8b4e36211",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "24a75e7a-8fb0-4f7d-911a-5cd8b4e36211",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "pitched_asymmetric",
+      "id": "bloodborne_dw:source_stone_button",
+      "variant": 1,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14233,
+          "at": [
+            160,
+            128,
+            64
+          ],
+          "ownerUuid": "0f11aef0-26c1-434c-bda8-74a86bbe22d0"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        160,
+        128,
+        64
+      ],
+      "expectedOwnerUuid": "0f11aef0-26c1-434c-bda8-74a86bbe22d0",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "0f11aef0-26c1-434c-bda8-74a86bbe22d0",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "uvlocked_group",
+      "id": "bloodborne_dw:source_stone_button",
+      "variant": 2,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14247,
+          "at": [
+            208,
+            128,
+            64
+          ],
+          "ownerUuid": "6c6262f3-78b9-4d31-b954-de4b0e822e2a"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        208,
+        128,
+        64
+      ],
+      "expectedOwnerUuid": "6c6262f3-78b9-4d31-b954-de4b0e822e2a",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "6c6262f3-78b9-4d31-b954-de4b0e822e2a",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "emissive_overlay",
+      "id": "bloodborne_dw:source_lantern_1",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14261,
+          "at": [
+            16,
+            128,
+            112
+          ],
+          "ownerUuid": "1a3836a0-bb9b-4836-b7bf-8a58a81c6c41"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        16,
+        128,
+        112
+      ],
+      "expectedOwnerUuid": "1a3836a0-bb9b-4836-b7bf-8a58a81c6c41",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "1a3836a0-bb9b-4836-b7bf-8a58a81c6c41",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "helper_only_selection",
+      "id": "bloodborne_dw:source_addon_crimson_button_5",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14275,
+          "at": [
+            64,
+            128,
+            112
+          ],
+          "ownerUuid": "5e9f735b-2e22-476d-8d9f-e13a4ca171a8"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        64,
+        128,
+        112
+      ],
+      "expectedOwnerUuid": "5e9f735b-2e22-476d-8d9f-e13a4ca171a8",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "5e9f735b-2e22-476d-8d9f-e13a4ca171a8",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "biome_tint",
+      "id": "bloodborne_dw:source_grass_block",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14289,
+          "at": [
+            112,
+            128,
+            112
+          ],
+          "ownerUuid": "3fb7ef71-5ab9-4582-8101-0ac950a3e12e"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        112,
+        128,
+        112
+      ],
+      "expectedOwnerUuid": "3fb7ef71-5ab9-4582-8101-0ac950a3e12e",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "3fb7ef71-5ab9-4582-8101-0ac950a3e12e",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "authored_grass_variant",
+      "id": "bloodborne_dw:source_bricks_grass_block_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14303,
+          "at": [
+            160,
+            128,
+            112
+          ],
+          "ownerUuid": "7a6e818c-d814-4a04-b314-343eaf8576ad"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        160,
+        128,
+        112
+      ],
+      "expectedOwnerUuid": "7a6e818c-d814-4a04-b314-343eaf8576ad",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "7a6e818c-d814-4a04-b314-343eaf8576ad",
+      "actualRotation": 0,
+      "actualOpen": false
+    },
+    {
+      "case": "authored_fern_tint",
+      "id": "bloodborne_dw:source_potted_fern",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "synced_server_rejoin_owner_state",
+          "clientWorldTick": 14316,
+          "at": [
+            208,
+            128,
+            112
+          ],
+          "ownerUuid": "de7f65ba-381f-4199-aba5-525e01867c1b"
+        }
+      ],
+      "status": "PASS",
+      "root": [
+        208,
+        128,
+        112
+      ],
+      "expectedOwnerUuid": "de7f65ba-381f-4199-aba5-525e01867c1b",
+      "expectedRotation": 0,
+      "expectedOpen": false,
+      "actualOwnerUuid": "de7f65ba-381f-4199-aba5-525e01867c1b",
+      "actualRotation": 0,
+      "actualOpen": false
+    }
+  ],
+  "status": "PASS",
+  "stage": "VERIFY_REJOIN",
+  "caseIndex": 15,
+  "stageTicks": 1,
+  "updatedUtc": "2026-10-11T13:17:46.257698100Z"
+}

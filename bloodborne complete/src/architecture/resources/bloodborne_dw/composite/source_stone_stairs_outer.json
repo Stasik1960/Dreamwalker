@@ -1,0 +1,866 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stone_stairs_outer",
+  "displayName": "Ступенчатый модуль · внешний угол",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stone_stairs_outer",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                8.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                8.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=east,half=bottom,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=east,half=bottom,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=east,half=top,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=east,half=top,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=north,half=bottom,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=north,half=bottom,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=north,half=top,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=north,half=top,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=south,half=bottom,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=south,half=bottom,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=south,half=top,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=south,half=top,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=west,half=bottom,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=west,half=bottom,shape=outer_right]",
+        "minecraft:stone_stairs[variant:facing=west,half=top,shape=outer_left]",
+        "minecraft:stone_stairs[variant:facing=west,half=top,shape=outer_right]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x0_y270",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -0.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                8.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -0.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · закреплённые UV 270°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "uvlock": true,
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=east,half=bottom,shape=outer_left]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x180_y0",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "pitch": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                8.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · наклон 180°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "x": 180,
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=east,half=top,shape=outer_left]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x180_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90,
+              "pitch": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                8.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                8.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · наклон 180°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "x": 180,
+          "uvlock": true,
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=east,half=top,shape=outer_right]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -0.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -0.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                8.0,
+                16.0,
+                8.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -0.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -0.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                8.0,
+                16.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · закреплённые UV 180°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=north,half=bottom,shape=outer_left]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x180_y270",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270,
+              "pitch": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "from": [
+                -0.0,
+                8.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "from": [
+                -0.0,
+                8.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · наклон 180°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "x": 180,
+          "uvlock": true,
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=north,half=top,shape=outer_left]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                8.0,
+                8.0
+              ],
+              "to": [
+                8.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                8.0,
+                8.0
+              ],
+              "to": [
+                8.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · закреплённые UV 90°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "uvlock": true,
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=south,half=bottom,shape=outer_right]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_stairs_outer_x180_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180,
+              "pitch": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                8.0
+              ],
+              "to": [
+                8.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -0.0,
+                8.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                8.0
+              ],
+              "to": [
+                8.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -0.0,
+                8.0,
+                -0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол · наклон 180°",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_stairs_outer",
+          "x": 180,
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_stairs[variant:facing=south,half=top,shape=outer_right]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

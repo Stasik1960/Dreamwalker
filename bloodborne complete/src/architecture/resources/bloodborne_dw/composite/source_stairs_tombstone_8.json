@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_tombstone_8",
+  "displayName": "Надгробие · вариант 9",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/tombstone_8",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                14.25
+              ],
+              "to": [
+                1.0,
+                4.0,
+                17.25
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                -9.25
+              ],
+              "to": [
+                16.0,
+                3.0,
+                15.75
+              ]
+            },
+            {
+              "from": [
+                15.0,
+                0.0,
+                14.25
+              ],
+              "to": [
+                18.0,
+                4.0,
+                17.25
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -3.0,
+                4.0,
+                15.6875
+              ],
+              "to": [
+                2.0,
+                10.0,
+                15.8125
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                14.25
+              ],
+              "to": [
+                1.0,
+                4.0,
+                17.25
+              ]
+            },
+            {
+              "from": [
+                -1.5,
+                0.0,
+                -9.3125
+              ],
+              "to": [
+                17.5,
+                7.0,
+                -9.1875
+              ]
+            },
+            {
+              "from": [
+                -1.5,
+                0.0,
+                15.6875
+              ],
+              "to": [
+                17.5,
+                7.0,
+                15.8125
+              ]
+            },
+            {
+              "from": [
+                -0.5625,
+                4.0,
+                13.25
+              ],
+              "to": [
+                -0.4375,
+                10.0,
+                18.25
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                -9.25
+              ],
+              "to": [
+                16.0,
+                3.0,
+                15.75
+              ]
+            },
+            {
+              "from": [
+                14.0,
+                4.0,
+                15.6875
+              ],
+              "to": [
+                19.0,
+                10.0,
+                15.8125
+              ]
+            },
+            {
+              "from": [
+                15.0,
+                0.0,
+                14.25
+              ],
+              "to": [
+                18.0,
+                4.0,
+                17.25
+              ]
+            },
+            {
+              "from": [
+                16.4375,
+                4.0,
+                13.25
+              ],
+              "to": [
+                16.5625,
+                10.0,
+                18.25
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -3.0,
+          0.0,
+          -9.3125
+        ],
+        "to": [
+          19.0,
+          10.0,
+          18.25
+        ]
+      },
+      "sourceVariant": "Надгробие · вариант 9",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/tombstone_8"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=east,half=top,shape=inner_right]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=south,half=top,shape=inner_right]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=west,half=top,shape=inner_right]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=north,half=top,shape=inner_right]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=south,half=top,shape=inner_left]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=west,half=top,shape=inner_left]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=north,half=top,shape=inner_left]",
+        "minecraft:waxed_weathered_cut_copper_stairs[variant:facing=east,half=top,shape=inner_left]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

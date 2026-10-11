@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_potted_mangrove_propagule",
+  "displayName": "Мангровый росток в декоративной подставке",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/potted_mangrove_propagule",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_mangrove_propagule_x0_y0",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "emissive": true
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                6.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                6.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                4.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                10.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                10.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                6.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4,
+                9,
+                4
+              ],
+              "to": [
+                6,
+                15,
+                5
+              ]
+            },
+            {
+              "from": [
+                4,
+                9,
+                5
+              ],
+              "to": [
+                7,
+                15,
+                6
+              ]
+            },
+            {
+              "from": [
+                4,
+                9,
+                10
+              ],
+              "to": [
+                7,
+                15,
+                11
+              ]
+            },
+            {
+              "from": [
+                4,
+                9,
+                11
+              ],
+              "to": [
+                6,
+                15,
+                12
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                6.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                5,
+                9,
+                6
+              ],
+              "to": [
+                11,
+                15,
+                7
+              ]
+            },
+            {
+              "from": [
+                5,
+                9,
+                9
+              ],
+              "to": [
+                11,
+                15,
+                10
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                6.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                10.0,
+                4.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                0.0,
+                10.0
+              ],
+              "to": [
+                10.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                6,
+                9,
+                7
+              ],
+              "to": [
+                10,
+                15,
+                9
+              ]
+            },
+            {
+              "from": [
+                7,
+                0,
+                7
+              ],
+              "to": [
+                9,
+                9,
+                9
+              ]
+            },
+            {
+              "from": [
+                9,
+                9,
+                5
+              ],
+              "to": [
+                12,
+                15,
+                6
+              ]
+            },
+            {
+              "from": [
+                9,
+                9,
+                10
+              ],
+              "to": [
+                12,
+                15,
+                11
+              ]
+            },
+            {
+              "from": [
+                10.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                10,
+                9,
+                4
+              ],
+              "to": [
+                12,
+                15,
+                5
+              ]
+            },
+            {
+              "from": [
+                10,
+                9,
+                11
+              ],
+              "to": [
+                12,
+                15,
+                12
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4,
+          0,
+          4
+        ],
+        "to": [
+          12,
+          15,
+          12
+        ]
+      },
+      "sourceVariant": "Мангровый росток в декоративной подставке",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/potted_mangrove_propagule"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:potted_mangrove_propagule[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

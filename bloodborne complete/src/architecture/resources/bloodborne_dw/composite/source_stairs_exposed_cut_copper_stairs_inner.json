@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_inner",
+  "displayName": "Ступенчатый модуль · внутренний угол",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_inner",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                8.0,
+                8.0
+              ],
+              "to": [
+                8.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                8.0,
+                8.0
+              ],
+              "to": [
+                8.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внутренний угол",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/exposed_cut_copper_stairs_inner"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:exposed_cut_copper_stairs[variant:facing=east,half=bottom,shape=inner_left]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=north,half=bottom,shape=inner_left]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=south,half=bottom,shape=inner_left]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=west,half=bottom,shape=inner_left]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=east,half=bottom,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=north,half=bottom,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=south,half=bottom,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=west,half=bottom,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=east,half=top,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=north,half=top,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=south,half=top,shape=inner_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=west,half=top,shape=inner_right]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

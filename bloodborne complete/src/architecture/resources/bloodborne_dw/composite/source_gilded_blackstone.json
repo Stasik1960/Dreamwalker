@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_gilded_blackstone",
+  "displayName": "Короткий столб из крупного камня",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/gilded_blackstone",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                22.0,
+                9.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                32.0,
+                -4.0
+              ],
+              "to": [
+                20.0,
+                48.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                -3.0,
+                0.0,
+                -3.0
+              ],
+              "to": [
+                19.0,
+                32.0,
+                19.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                18.0,
+                48.0,
+                18.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                22.0,
+                9.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                32.0,
+                -4.0
+              ],
+              "to": [
+                20.0,
+                48.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                -3.0,
+                0.0,
+                -3.0
+              ],
+              "to": [
+                19.0,
+                32.0,
+                19.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                18.0,
+                48.0,
+                18.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -6.0,
+          0.0,
+          -6.0
+        ],
+        "to": [
+          22.0,
+          48.0,
+          22.0
+        ]
+      },
+      "sourceVariant": "Короткий столб из крупного камня",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/gilded_blackstone"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:gilded_blackstone[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

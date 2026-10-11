@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_diorite",
+  "displayName": "Светлая каменная плита",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/diorite",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                17.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                16.0,
+                17.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          16.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Светлая каменная плита",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/diorite"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:diorite_slab[variant:type=double]",
+        "minecraft:diorite[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

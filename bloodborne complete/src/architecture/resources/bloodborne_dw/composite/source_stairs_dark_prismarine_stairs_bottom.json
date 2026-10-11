@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_dark_prismarine_stairs_bottom",
+  "displayName": "Ступенчатый модуль · нижняя",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_bottom",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -3.0,
+                9.0,
+                16.0
+              ],
+              "to": [
+                6.0,
+                11.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                16.0
+              ],
+              "to": [
+                6.0,
+                9.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                17.0,
+                16.0
+              ],
+              "to": [
+                14.0,
+                19.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                8.0,
+                16.0
+              ],
+              "to": [
+                14.0,
+                17.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -3.0,
+                9.0,
+                16.0
+              ],
+              "to": [
+                6.0,
+                11.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                0.0,
+                16.0
+              ],
+              "to": [
+                6.0,
+                9.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                17.0,
+                16.0
+              ],
+              "to": [
+                14.0,
+                19.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                6.0,
+                8.0,
+                16.0
+              ],
+              "to": [
+                14.0,
+                17.0,
+                20.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                8.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -3.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          19.0,
+          20.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · нижняя",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/dark_prismarine_stairs_bottom"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dark_prismarine_stairs[variant:facing=east,half=bottom,shape=straight]",
+        "minecraft:dark_prismarine_stairs[variant:facing=north,half=bottom,shape=straight]",
+        "minecraft:dark_prismarine_stairs[variant:facing=south,half=bottom,shape=straight]",
+        "minecraft:dark_prismarine_stairs[variant:facing=west,half=bottom,shape=straight]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_button_1",
+  "displayName": "Ажурная секция ограды с завитками · вариант 2",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/button_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                1.5
+              ],
+              "to": [
+                32.0,
+                3.0,
+                14.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                1.5
+              ],
+              "to": [
+                32.0,
+                3.0,
+                14.5
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                3.0,
+                7.9375
+              ],
+              "to": [
+                16.0,
+                22.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                3.0,
+                0.0
+              ],
+              "to": [
+                8.0625,
+                22.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          32.0,
+          22.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Ажурная секция ограды с завитками · вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/button_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:acacia_button[variant:face=floor,facing=east,powered=false]",
+        "minecraft:acacia_button[variant:face=floor,facing=north,powered=false]",
+        "minecraft:acacia_button[variant:face=floor,facing=south,powered=false]",
+        "minecraft:acacia_button[variant:face=floor,facing=west,powered=false]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

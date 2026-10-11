@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_oak_button_side",
+  "displayName": "Рыжая деревянная планка · секция",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/oak_button_side",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                6,
+                4,
+                9
+              ],
+              "to": [
+                7,
+                5,
+                14
+              ]
+            },
+            {
+              "from": [
+                6,
+                5,
+                9
+              ],
+              "to": [
+                10,
+                6,
+                14
+              ]
+            },
+            {
+              "from": [
+                6,
+                9,
+                9
+              ],
+              "to": [
+                10,
+                10,
+                14
+              ]
+            },
+            {
+              "from": [
+                6,
+                10,
+                9
+              ],
+              "to": [
+                7,
+                11,
+                14
+              ]
+            },
+            {
+              "from": [
+                7,
+                6,
+                9
+              ],
+              "to": [
+                9,
+                9,
+                14
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                14.0
+              ],
+              "to": [
+                8.0625,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                9,
+                4,
+                9
+              ],
+              "to": [
+                10,
+                5,
+                14
+              ]
+            },
+            {
+              "from": [
+                9,
+                10,
+                9
+              ],
+              "to": [
+                10,
+                11,
+                14
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          6,
+          0.0,
+          9
+        ],
+        "to": [
+          10,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Рыжая деревянная планка · секция",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/oak_button_side"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:oak_button[variant:face=wall,facing=east,powered=false]",
+        "minecraft:oak_button[variant:face=wall,facing=north,powered=false]",
+        "minecraft:oak_button[variant:face=wall,facing=south,powered=false]",
+        "minecraft:oak_button[variant:face=wall,facing=west,powered=false]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

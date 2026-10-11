@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_spruce_pressure_plate_on",
+  "displayName": "Объёмная декоративная деталь",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/spruce_pressure_plate_on",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                6.0,
+                7.0
+              ],
+              "to": [
+                16.0,
+                18.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                18.0,
+                6.0
+              ],
+              "to": [
+                16.0,
+                20.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                20.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                23.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                6.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                6.0,
+                7.0
+              ],
+              "to": [
+                16.0,
+                18.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                18.0,
+                6.0
+              ],
+              "to": [
+                16.0,
+                20.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                20.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                23.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          2.0
+        ],
+        "to": [
+          16.0,
+          23.0,
+          14.0
+        ]
+      },
+      "sourceVariant": "Объёмная декоративная деталь",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/spruce_pressure_plate_on"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_pressure_plate[variant:powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

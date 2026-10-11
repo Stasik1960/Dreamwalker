@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_floor_dec_2",
+  "displayName": "Напольный орнамент · вариант 3",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_dec_2",
+              "offset": [
+                0,
+                -16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.037500000000000006,
+                -16.0
+              ],
+              "to": [
+                32.0,
+                0.1625,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                -0.0625,
+                0.0
+              ],
+              "to": [
+                16.0,
+                0.0625,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          -0.0625,
+          -16.0
+        ],
+        "to": [
+          32.0,
+          0.1625,
+          32.0
+        ]
+      },
+      "sourceVariant": "Напольный орнамент · вариант 3",
+      "sourcePlacementOffset": [
+        0,
+        -16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/floor_dec_2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stripped_crimson_stem[variant:axis=z]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

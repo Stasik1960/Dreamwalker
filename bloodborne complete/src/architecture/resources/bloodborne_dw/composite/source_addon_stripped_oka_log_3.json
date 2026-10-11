@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_stripped_oka_log_3",
+  "displayName": "Поваленное бревно с редким мхом · вариант 4",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/stripped_oka_log_3",
+              "offset": [
+                0,
+                15.699,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                16.799,
+                -16.0
+              ],
+              "to": [
+                12.0,
+                24.799,
+                32.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                3.4375,
+                0.0,
+                -16.0
+              ],
+              "to": [
+                3.5625,
+                25.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                3.5,
+                24.9365,
+                -16.0
+              ],
+              "to": [
+                12.5,
+                25.0615,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                16.799,
+                -16.0
+              ],
+              "to": [
+                12.0,
+                24.799,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                12.4365,
+                6.0,
+                -16.0
+              ],
+              "to": [
+                12.5615,
+                25.0,
+                32.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          3.4375,
+          0.0,
+          -16.0
+        ],
+        "to": [
+          12.5615,
+          25.0615,
+          32.0
+        ]
+      },
+      "sourceVariant": "Поваленное бревно с редким мхом · вариант 4",
+      "sourcePlacementOffset": [
+        0,
+        15.699,
+        0
+      ],
+      "localOrigin": [
+        0,
+        15.699,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/stripped_oka_log_3"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:orange_glazed_terracotta[variant:facing=east]",
+        "minecraft:orange_glazed_terracotta[variant:facing=north]",
+        "minecraft:orange_glazed_terracotta[variant:facing=south]",
+        "minecraft:orange_glazed_terracotta[variant:facing=west]",
+        "minecraft:white_glazed_terracotta[variant:facing=east]",
+        "minecraft:white_glazed_terracotta[variant:facing=north]",
+        "minecraft:white_glazed_terracotta[variant:facing=south]",
+        "minecraft:white_glazed_terracotta[variant:facing=west]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

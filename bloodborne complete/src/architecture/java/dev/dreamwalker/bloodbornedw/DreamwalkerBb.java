@@ -44,7 +44,7 @@ public final class DreamwalkerBb implements ModInitializer, PreLaunchEntrypoint 
         PrototypeArchitecture.initialize();
         PrototypeWallArchitecture.initialize();
         dev.dreamwalker.bloodbornedw.tool.BbToolService.initialize();
-        CompositeArchitecture.initialize("prototype_double_door", "prototype_wood_window", "prototype_thin_window", "prototype_tree", "prototype_roof");
+        CompositeArchitecture.initialize(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.paths("prototype_double_door", "prototype_wood_window", "prototype_thin_window", "prototype_tree", "prototype_roof"));
     }
 
     /** Loader may discard a real standalone candidate because this mod provides its ID. */

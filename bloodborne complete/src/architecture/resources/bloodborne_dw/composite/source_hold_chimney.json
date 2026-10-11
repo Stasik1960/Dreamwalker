@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_hold_chimney",
+  "displayName": "Дымовая труба",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/hold/chimney",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -7.0,
+                33.0,
+                -2.0
+              ],
+              "to": [
+                23.0,
+                37.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                22.0,
+                33.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                37.0,
+                4.5
+              ],
+              "to": [
+                3.0,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                37.0,
+                4.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                13.0,
+                37.0,
+                4.5
+              ],
+              "to": [
+                20.0,
+                48.0,
+                11.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -7.0,
+                33.0,
+                -2.0
+              ],
+              "to": [
+                23.0,
+                37.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                22.0,
+                33.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                37.0,
+                4.5
+              ],
+              "to": [
+                3.0,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                37.0,
+                4.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                11.5
+              ]
+            },
+            {
+              "from": [
+                13.0,
+                37.0,
+                4.5
+              ],
+              "to": [
+                20.0,
+                48.0,
+                11.5
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -7.0,
+          0.0,
+          -2.0
+        ],
+        "to": [
+          23.0,
+          48.0,
+          18.0
+        ]
+      },
+      "sourceVariant": "Дымовая труба",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/hold/chimney"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

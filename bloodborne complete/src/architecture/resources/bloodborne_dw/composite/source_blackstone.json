@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_blackstone",
+  "displayName": "Высокий ажурный шпиль",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                2,
+                0,
+                2
+              ],
+              "to": [
+                4,
+                48,
+                3
+              ]
+            },
+            {
+              "from": [
+                2,
+                0,
+                3
+              ],
+              "to": [
+                5,
+                48,
+                4
+              ]
+            },
+            {
+              "from": [
+                2,
+                0,
+                12
+              ],
+              "to": [
+                5,
+                48,
+                13
+              ]
+            },
+            {
+              "from": [
+                2,
+                0,
+                13
+              ],
+              "to": [
+                4,
+                48,
+                14
+              ]
+            },
+            {
+              "from": [
+                3,
+                0,
+                4
+              ],
+              "to": [
+                6,
+                48,
+                5
+              ]
+            },
+            {
+              "from": [
+                3,
+                0,
+                11
+              ],
+              "to": [
+                6,
+                48,
+                12
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                5
+              ],
+              "to": [
+                7,
+                48,
+                6
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                10
+              ],
+              "to": [
+                7,
+                48,
+                11
+              ]
+            },
+            {
+              "from": [
+                5,
+                0,
+                6
+              ],
+              "to": [
+                11,
+                48,
+                7
+              ]
+            },
+            {
+              "from": [
+                5,
+                0,
+                9
+              ],
+              "to": [
+                11,
+                48,
+                10
+              ]
+            },
+            {
+              "from": [
+                6,
+                0,
+                7
+              ],
+              "to": [
+                10,
+                48,
+                9
+              ]
+            },
+            {
+              "from": [
+                9,
+                0,
+                5
+              ],
+              "to": [
+                12,
+                48,
+                6
+              ]
+            },
+            {
+              "from": [
+                9,
+                0,
+                10
+              ],
+              "to": [
+                12,
+                48,
+                11
+              ]
+            },
+            {
+              "from": [
+                10,
+                0,
+                4
+              ],
+              "to": [
+                13,
+                48,
+                5
+              ]
+            },
+            {
+              "from": [
+                10,
+                0,
+                11
+              ],
+              "to": [
+                13,
+                48,
+                12
+              ]
+            },
+            {
+              "from": [
+                11,
+                0,
+                3
+              ],
+              "to": [
+                13,
+                48,
+                4
+              ]
+            },
+            {
+              "from": [
+                11,
+                0,
+                12
+              ],
+              "to": [
+                13,
+                48,
+                13
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          2,
+          0,
+          2
+        ],
+        "to": [
+          13,
+          48,
+          14
+        ]
+      },
+      "sourceVariant": "Высокий ажурный шпиль",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:blackstone[variant:]",
+        "minecraft:blackstone_slab[variant:type=double]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

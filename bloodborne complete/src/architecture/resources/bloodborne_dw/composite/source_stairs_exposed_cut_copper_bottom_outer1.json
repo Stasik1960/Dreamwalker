@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_exposed_cut_copper_bottom_outer1",
+  "displayName": "Ступенчатый модуль · внешний угол, нижняя",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_bottom_outer1",
+              "offset": [
+                0,
+                1.07140244,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4,
+                0,
+                14
+              ],
+              "to": [
+                12,
+                3,
+                15
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                15
+              ],
+              "to": [
+                12,
+                6,
+                16
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                16
+              ],
+              "to": [
+                12,
+                8,
+                17
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                17
+              ],
+              "to": [
+                12,
+                9,
+                18
+              ]
+            },
+            {
+              "from": [
+                4,
+                2,
+                18
+              ],
+              "to": [
+                12,
+                9,
+                19
+              ]
+            },
+            {
+              "from": [
+                4,
+                4,
+                19
+              ],
+              "to": [
+                12,
+                8,
+                20
+              ]
+            },
+            {
+              "from": [
+                4,
+                6,
+                20
+              ],
+              "to": [
+                12,
+                8,
+                21
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                0.07140244,
+                17.0
+              ],
+              "to": [
+                11.5,
+                17.07140244,
+                20.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4,
+                0,
+                14
+              ],
+              "to": [
+                12,
+                3,
+                15
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                15
+              ],
+              "to": [
+                12,
+                6,
+                16
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                16
+              ],
+              "to": [
+                12,
+                8,
+                17
+              ]
+            },
+            {
+              "from": [
+                4,
+                0,
+                17
+              ],
+              "to": [
+                12,
+                9,
+                18
+              ]
+            },
+            {
+              "from": [
+                4,
+                2,
+                18
+              ],
+              "to": [
+                12,
+                9,
+                19
+              ]
+            },
+            {
+              "from": [
+                4,
+                4,
+                19
+              ],
+              "to": [
+                12,
+                8,
+                20
+              ]
+            },
+            {
+              "from": [
+                4,
+                6,
+                20
+              ],
+              "to": [
+                12,
+                8,
+                21
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                0.07140244,
+                17.0
+              ],
+              "to": [
+                11.5,
+                17.07140244,
+                20.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4,
+          0,
+          14
+        ],
+        "to": [
+          12,
+          17.07140244,
+          21
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол, нижняя",
+      "sourcePlacementOffset": [
+        0,
+        1.07140244,
+        0
+      ],
+      "localOrigin": [
+        0,
+        1.07140244,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/exposed_cut_copper_bottom_outer1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:exposed_cut_copper_stairs[variant:facing=east,half=bottom,shape=outer_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=north,half=bottom,shape=outer_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=south,half=bottom,shape=outer_right]",
+        "minecraft:exposed_cut_copper_stairs[variant:facing=west,half=bottom,shape=outer_right]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

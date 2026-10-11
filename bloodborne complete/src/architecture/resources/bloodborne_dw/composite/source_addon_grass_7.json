@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_grass_7",
+  "displayName": "Пучок травы · вариант 8",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/grass_7",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -6,
+                0,
+                6
+              ],
+              "to": [
+                -4,
+                12,
+                7
+              ]
+            },
+            {
+              "from": [
+                -5,
+                0,
+                5
+              ],
+              "to": [
+                -2,
+                12,
+                6
+              ]
+            },
+            {
+              "from": [
+                -3,
+                0,
+                0
+              ],
+              "to": [
+                -2,
+                12,
+                2
+              ]
+            },
+            {
+              "from": [
+                -3,
+                0,
+                2
+              ],
+              "to": [
+                -1,
+                12,
+                3
+              ]
+            },
+            {
+              "from": [
+                -3,
+                0,
+                4
+              ],
+              "to": [
+                1,
+                12,
+                5
+              ]
+            },
+            {
+              "from": [
+                -2,
+                0,
+                3
+              ],
+              "to": [
+                -1,
+                12,
+                4
+              ]
+            },
+            {
+              "from": [
+                -1,
+                0,
+                5
+              ],
+              "to": [
+                0,
+                12,
+                7
+              ]
+            },
+            {
+              "from": [
+                -1,
+                0,
+                7
+              ],
+              "to": [
+                1,
+                12,
+                8
+              ]
+            },
+            {
+              "from": [
+                0,
+                0,
+                3
+              ],
+              "to": [
+                3,
+                12,
+                4
+              ]
+            },
+            {
+              "from": [
+                0,
+                0,
+                8
+              ],
+              "to": [
+                1,
+                12,
+                9
+              ]
+            },
+            {
+              "from": [
+                2,
+                0,
+                2
+              ],
+              "to": [
+                4,
+                12,
+                3
+              ]
+            },
+            {
+              "from": [
+                14,
+                0,
+                25
+              ],
+              "to": [
+                16,
+                10,
+                26
+              ]
+            },
+            {
+              "from": [
+                15,
+                0,
+                24
+              ],
+              "to": [
+                18,
+                10,
+                25
+              ]
+            },
+            {
+              "from": [
+                17,
+                0,
+                19
+              ],
+              "to": [
+                18,
+                10,
+                20
+              ]
+            },
+            {
+              "from": [
+                17,
+                0,
+                20
+              ],
+              "to": [
+                19,
+                10,
+                21
+              ]
+            },
+            {
+              "from": [
+                17,
+                0,
+                23
+              ],
+              "to": [
+                21,
+                10,
+                24
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                21
+              ],
+              "to": [
+                19,
+                10,
+                23
+              ]
+            },
+            {
+              "from": [
+                19,
+                0,
+                24
+              ],
+              "to": [
+                20,
+                10,
+                25
+              ]
+            },
+            {
+              "from": [
+                19,
+                0,
+                25
+              ],
+              "to": [
+                21,
+                10,
+                26
+              ]
+            },
+            {
+              "from": [
+                20,
+                0,
+                22
+              ],
+              "to": [
+                23,
+                10,
+                23
+              ]
+            },
+            {
+              "from": [
+                20,
+                0,
+                26
+              ],
+              "to": [
+                21,
+                10,
+                28
+              ]
+            },
+            {
+              "from": [
+                22,
+                0,
+                21
+              ],
+              "to": [
+                24,
+                10,
+                22
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -6,
+          0,
+          0
+        ],
+        "to": [
+          24,
+          12,
+          28
+        ]
+      },
+      "sourceVariant": "Пучок травы · вариант 8",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/grass_7"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dead_fire_coral_fan[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

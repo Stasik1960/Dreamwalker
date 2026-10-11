@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_crimson_trapdoor_open_1",
+  "displayName": "Дверная секция · открытая, вариант 2",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_trapdoor_open_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                1.5,
+                0.0,
+                5.0
+              ],
+              "to": [
+                30.5,
+                19.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                5.0,
+                3.9375
+              ],
+              "to": [
+                32.0,
+                32.0,
+                4.0625
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                15.9375
+              ],
+              "to": [
+                32.0,
+                32.0,
+                16.0625
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                0.0,
+                5.0
+              ],
+              "to": [
+                30.5,
+                19.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          3.9375
+        ],
+        "to": [
+          32.0,
+          32.0,
+          16.0625
+        ]
+      },
+      "sourceVariant": "Дверная секция · открытая, вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/crimson_trapdoor_open_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:crimson_trapdoor[variant:facing=east,half=top,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=north,half=top,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=south,half=top,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=west,half=top,open=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

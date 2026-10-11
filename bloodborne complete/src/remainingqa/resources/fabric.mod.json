@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "dreamwalker_remaining_transfer_qa",
+  "version": "1.0.0",
+  "name": "Dreamwalker remaining transfer client QA",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.dreamwalker.bloodbornedw.remainingqa.RemainingTransferClientQa"]
+  },
+  "depends": {
+    "minecraft": "1.20.1",
+    "java": ">=17",
+    "fabricloader": ">=0.16.10",
+    "fabric-api": "*",
+    "bloodborne_dw": "*"
+  },
+  "description": "Separate test-only audit of baked source parts and offered inventory icons. Optional native framebuffer capture; no placement, input, physics or gallery authoring."
+}

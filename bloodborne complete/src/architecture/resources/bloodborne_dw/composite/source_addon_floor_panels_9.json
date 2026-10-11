@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_floor_panels_9",
+  "displayName": "Напольная панель · вариант 10",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_9",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                16.0,
+                10.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.1875,
+                0.0
+              ],
+              "to": [
+                16.0,
+                0.3125,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                0.0
+              ],
+              "to": [
+                8.0625,
+                10.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          10.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Напольная панель · вариант 10",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/floor_panels_9"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dead_tube_coral_fan[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

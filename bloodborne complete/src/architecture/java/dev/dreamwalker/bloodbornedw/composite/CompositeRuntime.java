@@ -79,7 +79,7 @@ public final class CompositeRuntime {
         return execute(access,core().migrateAlias(access,owner,object,List.of()));
     }
     private static void notifyOpenTransition(ServerWorld world,Owner owner,BlockState previous,BlockState next,PlayerEntity player,TransactionCore.Result result){
-        if(result.outcome()!=TransactionCore.Outcome.COMMITTED||!(next.getBlock() instanceof CompositeRootBlock block)||!block.spec.id.getPath().equals("prototype_double_door")||!block.spec.openable||previous.get(CompositeRootBlock.OPEN)==next.get(CompositeRootBlock.OPEN))return;
+        if(result.outcome()!=TransactionCore.Outcome.COMMITTED||!(next.getBlock() instanceof CompositeRootBlock block)||(!block.spec.id.getPath().equals("prototype_double_door")&&!dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.opens(block))||!block.spec.openable||previous.get(CompositeRootBlock.OPEN)==next.get(CompositeRootBlock.OPEN))return;
         var ref=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.reference(world,CompositeData.pos(owner.root()));
         if(ref==null)return;if(player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer)dev.dreamwalker.bloodbornedw.link.ObjectPolicies.noteInitiator(world,ref,serverPlayer);
         dev.dreamwalker.bloodbornedw.link.ObjectPolicies.changed(world,ref,previous.get(CompositeRootBlock.OPEN),next.get(CompositeRootBlock.OPEN));
@@ -236,7 +236,7 @@ public final class CompositeRuntime {
         if(player==null)return ActionResult.PASS;
         Owner owner=target(world,pos,player);if(owner==null)return ActionResult.PASS;
         BlockState state=CompositeData.state(contributions(world,pos).stream().filter(entry->entry.owner().equals(owner)).findFirst().orElseThrow().rootData());
-        if(!(state.getBlock() instanceof CompositeRootBlock block)||!block.spec.id.getPath().equals("prototype_double_door"))return ActionResult.PASS;
+        if(!(state.getBlock() instanceof CompositeRootBlock block)||(!block.spec.id.getPath().equals("prototype_double_door")&&!dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.opens(block)))return ActionResult.PASS;
         if(world.isClient)return ActionResult.SUCCESS;
         var ref=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.reference((ServerWorld)world,CompositeData.pos(owner.root()));
         if(player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer&&ref!=null&&!dev.dreamwalker.bloodbornedw.link.ObjectPolicies.allowManual(serverPlayer,ref))return ActionResult.FAIL;

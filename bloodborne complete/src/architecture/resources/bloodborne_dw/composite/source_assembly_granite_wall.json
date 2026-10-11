@@ -1,0 +1,1632 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_assembly_granite_wall",
+  "displayName": "Столб с полосатым цоколем",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          4.0
+        ],
+        "to": [
+          12.0,
+          16.0,
+          12.0
+        ]
+      },
+      "sourceVariant": "Столб",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                8.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          12.0,
+          16.0,
+          12.0
+        ]
+      },
+      "sourceVariant": "Конец",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          12.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Прямая",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                8.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                8.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          12.0
+        ]
+      },
+      "sourceVariant": "Угол",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Тройник",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_x0_y270",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                14.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                14.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Крест",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/granite_wall_side",
+          "uvlock": true,
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side_tall",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                8.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          12.0,
+          16.0,
+          12.0
+        ]
+      },
+      "sourceVariant": "Конец · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side_tall",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          12.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Прямая · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side_tall",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                8.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                8.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          12.0
+        ]
+      },
+      "sourceVariant": "Угол · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side_tall",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Тройник · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side_tall",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y270",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                12.0,
+                16.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Крест · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_post"
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/granite_wall_side_tall",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/granite_wall_side_tall_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          11.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Прямая без столба",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/granite_wall_side_tall",
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "EXACT_MULTIPART_CONDITION_UNIONS",
+    "carrier": "minecraft:granite_wall",
+    "profileModel": null,
+    "weightedPolicy": "Every authored weighted option retained as a deterministic offered profile; random Cartesian products are compositions, not independent authored artworks"
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_iron_ore",
+  "displayName": "Кирпичный столб с резным основанием",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/iron_ore",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -10.0,
+                0.0,
+                -10.0
+              ],
+              "to": [
+                26.0,
+                3.0,
+                26.0
+              ]
+            },
+            {
+              "from": [
+                -10.0,
+                10.0,
+                -10.0
+              ],
+              "to": [
+                26.0,
+                13.0,
+                26.0
+              ]
+            },
+            {
+              "from": [
+                -7.0,
+                3.0,
+                -8.0
+              ],
+              "to": [
+                24.0,
+                10.0,
+                24.0
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                13.0,
+                -6.0
+              ],
+              "to": [
+                22.0,
+                48.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -5.0,
+                13.0,
+                -5.0
+              ],
+              "to": [
+                21.0,
+                48.0,
+                21.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -10.0,
+                0.0,
+                -10.0
+              ],
+              "to": [
+                26.0,
+                3.0,
+                26.0
+              ]
+            },
+            {
+              "from": [
+                -10.0,
+                10.0,
+                -10.0
+              ],
+              "to": [
+                26.0,
+                13.0,
+                26.0
+              ]
+            },
+            {
+              "from": [
+                -7.0,
+                3.0,
+                -8.0
+              ],
+              "to": [
+                24.0,
+                10.0,
+                24.0
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                13.0,
+                -6.0
+              ],
+              "to": [
+                22.0,
+                48.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -5.0,
+                13.0,
+                -5.0
+              ],
+              "to": [
+                21.0,
+                48.0,
+                21.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -10.0,
+          0.0,
+          -10.0
+        ],
+        "to": [
+          26.0,
+          48.0,
+          26.0
+        ]
+      },
+      "sourceVariant": "Кирпичный столб с резным основанием",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/iron_ore"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:iron_ore[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

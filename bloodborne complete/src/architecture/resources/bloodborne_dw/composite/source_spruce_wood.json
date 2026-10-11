@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_spruce_wood",
+  "displayName": "Арочный витраж в каменной раме",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/spruce_wood",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                22.0,
+                41.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -5.5,
+                29.0,
+                -5.5
+              ],
+              "to": [
+                21.5,
+                32.0,
+                21.5
+              ]
+            },
+            {
+              "from": [
+                -5.0,
+                0.0,
+                -5.0
+              ],
+              "to": [
+                21.0,
+                30.0,
+                21.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                0.0,
+                -4.0
+              ],
+              "to": [
+                20.0,
+                30.0,
+                20.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -6.0
+              ],
+              "to": [
+                22.0,
+                41.0,
+                22.0
+              ]
+            },
+            {
+              "from": [
+                -5.5,
+                29.0,
+                -5.5
+              ],
+              "to": [
+                21.5,
+                32.0,
+                21.5
+              ]
+            },
+            {
+              "from": [
+                -5.0,
+                0.0,
+                -5.0
+              ],
+              "to": [
+                21.0,
+                30.0,
+                21.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                0.0,
+                -4.0
+              ],
+              "to": [
+                20.0,
+                30.0,
+                20.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -6.0,
+          0.0,
+          -6.0
+        ],
+        "to": [
+          22.0,
+          41.0,
+          22.0
+        ]
+      },
+      "sourceVariant": "Арочный витраж в каменной раме",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/spruce_wood"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_wood[variant:axis=x]",
+        "minecraft:spruce_wood[variant:axis=y]",
+        "minecraft:spruce_wood[variant:axis=z]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/spruce_wood",
+              "offset": [
+                0,
+                6.0,
+                0
+              ],
+              "pitch": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -6.0,
+                -0.0,
+                -9.0
+              ],
+              "to": [
+                22.0,
+                28.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -5.5,
+                0.5,
+                0.0
+              ],
+              "to": [
+                21.5,
+                27.5,
+                3.0
+              ]
+            },
+            {
+              "from": [
+                -5.0,
+                1.0,
+                2.0
+              ],
+              "to": [
+                21.0,
+                27.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                2.0,
+                2.0
+              ],
+              "to": [
+                20.0,
+                26.0,
+                32.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -6.0,
+                -0.0,
+                -9.0
+              ],
+              "to": [
+                22.0,
+                28.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -5.5,
+                0.5,
+                0.0
+              ],
+              "to": [
+                21.5,
+                27.5,
+                3.0
+              ]
+            },
+            {
+              "from": [
+                -5.0,
+                1.0,
+                2.0
+              ],
+              "to": [
+                21.0,
+                27.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -4.0,
+                2.0,
+                2.0
+              ],
+              "to": [
+                20.0,
+                26.0,
+                32.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -6.0,
+          -0.0,
+          -9.0
+        ],
+        "to": [
+          22.0,
+          28.0,
+          32.0
+        ]
+      },
+      "sourceVariant": "Арочный витраж в каменной раме · наклон 90°",
+      "sourcePlacementOffset": [
+        0,
+        6.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        6.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/spruce_wood",
+          "x": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_wood[variant:axis=x]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

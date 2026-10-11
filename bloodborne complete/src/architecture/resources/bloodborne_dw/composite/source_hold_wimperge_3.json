@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_hold_wimperge_3",
+  "displayName": "Готический вимперг · вариант 4",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/hold/wimperge_3",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                -7.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                -3.0,
+                16.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                19.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                23.0,
+                16.0,
+                13.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                24.0,
+                16.0,
+                11.0
+              ]
+            },
+            {
+              "from": [
+                -7.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                -3.0,
+                16.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                19.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                23.0,
+                16.0,
+                13.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          24.0,
+          16.0,
+          13.0
+        ]
+      },
+      "sourceVariant": "Готический вимперг · вариант 4",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/hold/wimperge_3"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:beehive[variant:facing=east,honey_level=4]",
+        "minecraft:beehive[variant:facing=north,honey_level=4]",
+        "minecraft:beehive[variant:facing=south,honey_level=4]",
+        "minecraft:beehive[variant:facing=west,honey_level=4]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

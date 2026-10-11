@@ -44,6 +44,6 @@ public final class UnifiedCreativeCatalogue {
             if(id.getPath().endsWith("_placer")&&!ObjectRegistry.isCanonicalPlacementItem(id.getPath().substring(0,id.getPath().length()-7)))return;
             offered.putIfAbsent(id,new ItemStack(Registries.ITEM.get(id)));
         });
-        return offered.values().stream().map(ItemStack::copy).toList();
+        return offered.values().stream().flatMap(stack->dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.creativeVariants(stack).stream()).toList();
     }
 }

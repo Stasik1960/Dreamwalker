@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_assembly_oak_fence",
+  "displayName": "Каменная стойка с квадратным навершием",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/oak_fence_post",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                6.5,
+                5.0,
+                6.5
+              ],
+              "to": [
+                9.5,
+                8.0,
+                9.5
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                9.0,
+                5.0,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                6.5,
+                5.0,
+                6.5
+              ],
+              "to": [
+                9.5,
+                8.0,
+                9.5
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                9.0,
+                5.0,
+                9.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          6.5,
+          0.0,
+          6.5
+        ],
+        "to": [
+          9.5,
+          8.0,
+          9.5
+        ]
+      },
+      "sourceVariant": "Столб",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/oak_fence_post"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "EXACT_MULTIPART_CONDITION_UNIONS",
+    "carrier": "minecraft:oak_fence",
+    "profileModel": null,
+    "weightedPolicy": "Every authored weighted option retained as a deterministic offered profile; random Cartesian products are compositions, not independent authored artworks"
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

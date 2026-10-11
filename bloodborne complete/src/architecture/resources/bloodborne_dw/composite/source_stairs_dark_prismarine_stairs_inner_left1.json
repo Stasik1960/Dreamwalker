@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_dark_prismarine_stairs_inner_left1",
+  "displayName": "Ступенчатый модуль · внутренний угол, левая",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                18.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.025,
+                -5.25
+              ],
+              "to": [
+                16.0,
+                2.025,
+                6.75
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.025,
+                9.25
+              ],
+              "to": [
+                16.0,
+                2.025,
+                21.25
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                7.025,
+                -5.25
+              ],
+              "to": [
+                16.0,
+                10.025,
+                6.75
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                7.025,
+                9.25
+              ],
+              "to": [
+                16.0,
+                10.025,
+                21.25
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.025,
+                -4.25
+              ],
+              "to": [
+                15.0,
+                7.025,
+                6.75
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.025,
+                9.25
+              ],
+              "to": [
+                15.0,
+                7.025,
+                20.25
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                18.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                18.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.025,
+                -5.25
+              ],
+              "to": [
+                16.0,
+                2.025,
+                6.75
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                0.025,
+                9.25
+              ],
+              "to": [
+                16.0,
+                2.025,
+                21.25
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                7.025,
+                -5.25
+              ],
+              "to": [
+                16.0,
+                10.025,
+                6.75
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                7.025,
+                9.25
+              ],
+              "to": [
+                16.0,
+                10.025,
+                21.25
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.025,
+                -4.25
+              ],
+              "to": [
+                15.0,
+                7.025,
+                6.75
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.025,
+                9.25
+              ],
+              "to": [
+                15.0,
+                7.025,
+                20.25
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                18.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.0,
+          0.0,
+          -5.25
+        ],
+        "to": [
+          18.0,
+          16.0,
+          21.25
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внутренний угол, левая",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/dark_prismarine_stairs_inner_left1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dark_prismarine_stairs[variant:facing=north,half=top,shape=inner_left]",
+        "minecraft:dark_prismarine_stairs[variant:facing=east,half=top,shape=inner_left]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_birch_grille_door",
+  "displayName": "Решётчатая дверь с каменным завершением",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/bir_door_1",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/bir_door_2",
+              "offset": [
+                0,
+                64.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                -9.0,
+                71.0,
+                5.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                32.0,
+                71.0,
+                7.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                71.0,
+                1.0
+              ],
+              "to": [
+                32.0,
+                80.0,
+                7.0
+              ]
+            },
+            {
+              "from": [
+                25.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                32.0,
+                71.0,
+                5.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                -9.0,
+                71.0,
+                5.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                32.0,
+                71.0,
+                7.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                71.0,
+                1.0
+              ],
+              "to": [
+                32.0,
+                80.0,
+                7.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                71.0,
+                2.6875
+              ],
+              "to": [
+                32.0,
+                90.0,
+                2.8125
+              ]
+            },
+            {
+              "from": [
+                -9.5,
+                48.0,
+                6.1875
+              ],
+              "to": [
+                25.5,
+                71.0,
+                6.3125
+              ]
+            },
+            {
+              "from": [
+                -9.5,
+                48.0,
+                6.9375
+              ],
+              "to": [
+                25.5,
+                71.0,
+                7.0625
+              ]
+            },
+            {
+              "from": [
+                -9.0,
+                60.0,
+                1.6875
+              ],
+              "to": [
+                7.0,
+                71.0,
+                1.8125
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                69.0,
+                0.6875
+              ],
+              "to": [
+                24.0,
+                92.0,
+                0.8125
+              ]
+            },
+            {
+              "from": [
+                9.0,
+                60.0,
+                1.6875
+              ],
+              "to": [
+                25.0,
+                71.0,
+                1.8125
+              ]
+            },
+            {
+              "from": [
+                25.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                32.0,
+                71.0,
+                5.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          0.6875
+        ],
+        "to": [
+          32.0,
+          92.0,
+          7.0625
+        ]
+      },
+      "sourceVariant": "Решётчатая дверь с каменным завершением",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/bir_door_1"
+        },
+        {
+          "model": "minecraft:block/bir_door_2",
+          "offset": [
+            0,
+            48,
+            0
+          ]
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "SOURCE_MAP_MATCHED_HALF_PAIR",
+    "matches": [
+      {
+        "lowerState": "minecraft:birch_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:birch_stairs[facing=east,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          48,
+          0
+        ],
+        "occurrences": 27,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -157,
+            40,
+            -117
+          ],
+          "upper": [
+            -157,
+            43,
+            -117
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:birch_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:birch_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          48,
+          0
+        ],
+        "occurrences": 13,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -248,
+            53,
+            -230
+          ],
+          "upper": [
+            -248,
+            56,
+            -230
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:birch_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:birch_stairs[facing=west,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          48,
+          0
+        ],
+        "occurrences": 11,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -271,
+            53,
+            -189
+          ],
+          "upper": [
+            -271,
+            56,
+            -189
+          ]
+        }
+      },
+      {
+        "lowerState": "minecraft:birch_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
+        "upperState": "minecraft:birch_stairs[facing=south,half=top,shape=straight,waterlogged=false]",
+        "offset": [
+          0,
+          48,
+          0
+        ],
+        "occurrences": 7,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -77,
+            -3,
+            39
+          ],
+          "upper": [
+            -77,
+            0,
+            39
+          ]
+        }
+      }
+    ]
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_large_grille_gate",
+  "displayName": "Большие решётчатые ворота",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_bottom",
+              "offset": [
+                0,
+                13.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_top",
+              "offset": [
+                0,
+                61.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                93.0,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                93.0,
+                9.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          7.0
+        ],
+        "to": [
+          32.0,
+          93.0,
+          9.0
+        ]
+      },
+      "sourceVariant": "Большие решётчатые ворота",
+      "sourcePlacementOffset": [
+        0,
+        13.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        13.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/gate_bottom"
+        },
+        {
+          "model": "minecraft:block/addon/gate_top",
+          "offset": [
+            0,
+            48,
+            0
+          ]
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "SOURCE_MAP_MATCHED_GATE_PAIR",
+    "matches": [
+      {
+        "lowerState": "minecraft:stripped_jungle_log[axis=x]",
+        "upperState": "minecraft:stripped_acacia_log[axis=x]",
+        "offset": [
+          0,
+          48,
+          0
+        ],
+        "occurrences": 9,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -8,
+            82,
+            -172
+          ],
+          "upper": [
+            -8,
+            85,
+            -172
+          ]
+        }
+      }
+    ]
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

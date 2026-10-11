@@ -1,0 +1,511 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stone_button_pressed",
+  "displayName": "Маленькая каменная пластина",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stone_button_pressed",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                11.0,
+                1.02,
+                10.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                11.0,
+                1.02,
+                10.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          6.0
+        ],
+        "to": [
+          11.0,
+          1.02,
+          10.0
+        ]
+      },
+      "sourceVariant": "Маленькая каменная пластина",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_button_pressed"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_button[variant:face=ceiling,facing=east,powered=true]",
+        "minecraft:stone_button[variant:face=ceiling,facing=north,powered=true]",
+        "minecraft:stone_button[variant:face=ceiling,facing=south,powered=true]",
+        "minecraft:stone_button[variant:face=ceiling,facing=west,powered=true]",
+        "minecraft:stone_button[variant:face=floor,facing=east,powered=true]",
+        "minecraft:stone_button[variant:face=floor,facing=north,powered=true]",
+        "minecraft:stone_button[variant:face=floor,facing=south,powered=true]",
+        "minecraft:stone_button[variant:face=floor,facing=west,powered=true]",
+        "minecraft:stone_button[variant:face=wall,facing=east,powered=true]",
+        "minecraft:stone_button[variant:face=wall,facing=north,powered=true]",
+        "minecraft:stone_button[variant:face=wall,facing=south,powered=true]",
+        "minecraft:stone_button[variant:face=wall,facing=west,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stone_button_pressed",
+              "offset": [
+                0,
+                -14.98,
+                0
+              ],
+              "pitch": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                11.0,
+                1.02,
+                10.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                6.0
+              ],
+              "to": [
+                11.0,
+                1.02,
+                10.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          6.0
+        ],
+        "to": [
+          11.0,
+          1.02,
+          10.0
+        ]
+      },
+      "sourceVariant": "Маленькая каменная пластина · наклон 180°",
+      "sourcePlacementOffset": [
+        0,
+        -14.98,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -14.98,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_button_pressed",
+          "x": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_button[variant:face=ceiling,facing=east,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_button_pressed_x90_y90",
+              "offset": [
+                0,
+                -6.0,
+                0
+              ],
+              "yaw": 90,
+              "pitch": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                1.02,
+                4.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                5.0
+              ],
+              "to": [
+                1.02,
+                4.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          5.0
+        ],
+        "to": [
+          1.02,
+          4.0,
+          11.0
+        ]
+      },
+      "sourceVariant": "Маленькая каменная пластина · наклон 90°",
+      "sourcePlacementOffset": [
+        0,
+        -6.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -6.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_button_pressed",
+          "x": 90,
+          "uvlock": true,
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_button[variant:face=wall,facing=east,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_button_pressed_x90_y0",
+              "offset": [
+                0,
+                -6.0,
+                0
+              ],
+              "pitch": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                14.98
+              ],
+              "to": [
+                11.0,
+                4.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                14.98
+              ],
+              "to": [
+                11.0,
+                4.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          14.98
+        ],
+        "to": [
+          11.0,
+          4.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Маленькая каменная пластина · наклон 90°",
+      "sourcePlacementOffset": [
+        0,
+        -6.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -6.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_button_pressed",
+          "x": 90,
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_button[variant:face=wall,facing=north,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_button_pressed_x90_y180",
+              "offset": [
+                0,
+                -6.0,
+                0
+              ],
+              "yaw": 180,
+              "pitch": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                4.0,
+                1.02
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                11.0,
+                4.0,
+                1.02
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          5.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          11.0,
+          4.0,
+          1.02
+        ]
+      },
+      "sourceVariant": "Маленькая каменная пластина · наклон 90°",
+      "sourcePlacementOffset": [
+        0,
+        -6.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -6.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_button_pressed",
+          "x": 90,
+          "uvlock": true,
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_button[variant:face=wall,facing=south,powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/stone_button_pressed_x90_y270",
+              "offset": [
+                0,
+                -6.0,
+                0
+              ],
+              "yaw": 270,
+              "pitch": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                14.98,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                14.98,
+                0.0,
+                5.0
+              ],
+              "to": [
+                16.0,
+                4.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          14.98,
+          0.0,
+          5.0
+        ],
+        "to": [
+          16.0,
+          4.0,
+          11.0
+        ]
+      },
+      "sourceVariant": "Маленькая каменная пластина · наклон 90°",
+      "sourcePlacementOffset": [
+        0,
+        -6.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -6.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stone_button_pressed",
+          "x": 90,
+          "uvlock": true,
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stone_button[variant:face=wall,facing=west,powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

@@ -1,0 +1,215 @@
+{
+  "parent": "bloodborne_dw:remaining/source/minecraft/block/deepslate_brick_stairs_inner",
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            -0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#bottom",
+          "cullface": "down",
+          "rotation": 270
+        },
+        "up": {
+          "uv": [
+            0.0,
+            -0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#top",
+          "rotation": 90
+        },
+        "north": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "north",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "south",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "west",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "east",
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0.0,
+            -0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#top",
+          "cullface": "up",
+          "rotation": 90
+        },
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "north",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "south",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "east",
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        8,
+        8
+      ],
+      "to": [
+        8,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            8.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#top",
+          "cullface": "up",
+          "rotation": 90
+        },
+        "north": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "south",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "west",
+          "rotation": 0
+        }
+      }
+    }
+  ],
+  "sourceUvlockApplication": {
+    "x": 0,
+    "y": 270,
+    "uvlock": true
+  },
+  "sourceUvlockPolicy": "Private face UV/rotation wrapper; original source elements and PNG bytes remain preserved in parent."
+}

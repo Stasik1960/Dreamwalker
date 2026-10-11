@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_crimson_button_5",
+  "displayName": "Ажурная секция ограды с завитками · вариант 6",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/crimson_button_5",
+              "offset": [
+                0,
+                -1.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                1.5,
+                0.0,
+                22.9375
+              ],
+              "to": [
+                14.5,
+                19.0,
+                23.0625
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          1.5,
+          0.0,
+          22.9375
+        ],
+        "to": [
+          14.5,
+          19.0,
+          23.0625
+        ]
+      },
+      "sourceVariant": "Ажурная секция ограды с завитками · вариант 6",
+      "sourcePlacementOffset": [
+        0,
+        -1.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -1.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/crimson_button_5"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:acacia_button[variant:face=wall,facing=east,powered=true]",
+        "minecraft:acacia_button[variant:face=wall,facing=north,powered=true]",
+        "minecraft:acacia_button[variant:face=wall,facing=south,powered=true]",
+        "minecraft:acacia_button[variant:face=wall,facing=west,powered=true]",
+        "minecraft:crimson_button[variant:face=wall,facing=east,powered=true]",
+        "minecraft:crimson_button[variant:face=wall,facing=north,powered=true]",
+        "minecraft:crimson_button[variant:face=wall,facing=south,powered=true]",
+        "minecraft:crimson_button[variant:face=wall,facing=west,powered=true]",
+        "minecraft:jungle_button[variant:face=wall,facing=east,powered=true]",
+        "minecraft:jungle_button[variant:face=wall,facing=north,powered=true]",
+        "minecraft:jungle_button[variant:face=wall,facing=south,powered=true]",
+        "minecraft:jungle_button[variant:face=wall,facing=west,powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

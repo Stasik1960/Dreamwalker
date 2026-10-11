@@ -1,0 +1,2275 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_assembly_polished_blackstone_brick_wall",
+  "displayName": "Каменный постамент с широкой капителью",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Столб",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Конец",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                15.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                15.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Прямая",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 180,
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Угол",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90,
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Тройник",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90,
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 180,
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y90",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y180",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            },
+            {
+              "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/blackstone_wall_2_x0_y270",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Крест",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90,
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 180,
+          "uvlock": true
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270,
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                15.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                15.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Конец · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                15.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                15.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Прямая · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Угол · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 0
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Тройник · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 0
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_1",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 180
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.0,
+                0.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                4.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                13.0,
+                -1.0
+              ],
+              "to": [
+                17.0,
+                17.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                4.0,
+                1.0
+              ],
+              "to": [
+                15.0,
+                13.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.0,
+          0.0,
+          -1.0
+        ],
+        "to": [
+          17.0,
+          17.0,
+          17.0
+        ]
+      },
+      "sourceVariant": "Крест · высокий",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_1"
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 0
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0,
+                0.0,
+                0
+              ],
+              "yaw": 90
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                1.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                15.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                1.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                15.0,
+                16.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                16.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          15.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Прямая без столба",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "EXACT_MULTIPART_CONDITION_UNIONS",
+    "carrier": "minecraft:polished_blackstone_brick_wall",
+    "profileModel": null,
+    "weightedPolicy": "Every authored weighted option retained as a deterministic offered profile; random Cartesian products are compositions, not independent authored artworks"
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

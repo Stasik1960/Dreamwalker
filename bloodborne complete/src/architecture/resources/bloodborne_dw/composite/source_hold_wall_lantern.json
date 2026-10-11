@@ -1,0 +1,763 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_hold_wall_lantern",
+  "displayName": "Фонарь",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/hold/wall_lantern",
+              "offset": [
+                0,
+                9.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                2,
+                16,
+                0
+              ],
+              "to": [
+                14,
+                29,
+                2
+              ]
+            },
+            {
+              "from": [
+                3,
+                16,
+                -1
+              ],
+              "to": [
+                13,
+                29,
+                0
+              ]
+            },
+            {
+              "from": [
+                3,
+                16,
+                2
+              ],
+              "to": [
+                13,
+                29,
+                3
+              ]
+            },
+            {
+              "from": [
+                3,
+                17,
+                0
+              ],
+              "to": [
+                13,
+                28,
+                2
+              ]
+            },
+            {
+              "from": [
+                4,
+                16,
+                -2
+              ],
+              "to": [
+                12,
+                29,
+                -1
+              ]
+            },
+            {
+              "from": [
+                4,
+                16,
+                3
+              ],
+              "to": [
+                12,
+                29,
+                4
+              ]
+            },
+            {
+              "from": [
+                4,
+                17,
+                -1
+              ],
+              "to": [
+                12,
+                28,
+                0
+              ]
+            },
+            {
+              "from": [
+                4,
+                17,
+                2
+              ],
+              "to": [
+                12,
+                28,
+                3
+              ]
+            },
+            {
+              "from": [
+                5,
+                16,
+                -3
+              ],
+              "to": [
+                11,
+                29,
+                -2
+              ]
+            },
+            {
+              "from": [
+                5,
+                16,
+                4
+              ],
+              "to": [
+                11,
+                29,
+                5
+              ]
+            },
+            {
+              "from": [
+                5,
+                17,
+                -2
+              ],
+              "to": [
+                11,
+                28,
+                -1
+              ]
+            },
+            {
+              "from": [
+                5,
+                17,
+                3
+              ],
+              "to": [
+                11,
+                28,
+                4
+              ]
+            },
+            {
+              "from": [
+                6,
+                16,
+                -4
+              ],
+              "to": [
+                10,
+                29,
+                -3
+              ]
+            },
+            {
+              "from": [
+                6,
+                16,
+                5
+              ],
+              "to": [
+                10,
+                29,
+                6
+              ]
+            },
+            {
+              "from": [
+                6,
+                17,
+                -3
+              ],
+              "to": [
+                10,
+                28,
+                -2
+              ]
+            },
+            {
+              "from": [
+                6,
+                17,
+                4
+              ],
+              "to": [
+                10,
+                28,
+                5
+              ]
+            },
+            {
+              "from": [
+                7,
+                16,
+                -5
+              ],
+              "to": [
+                9,
+                29,
+                -4
+              ]
+            },
+            {
+              "from": [
+                7,
+                16,
+                6
+              ],
+              "to": [
+                9,
+                29,
+                7
+              ]
+            },
+            {
+              "from": [
+                7,
+                17,
+                -4
+              ],
+              "to": [
+                9,
+                28,
+                -3
+              ]
+            },
+            {
+              "from": [
+                7,
+                17,
+                5
+              ],
+              "to": [
+                9,
+                28,
+                6
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                2,
+                16,
+                0
+              ],
+              "to": [
+                14,
+                29,
+                2
+              ]
+            },
+            {
+              "from": [
+                3,
+                10,
+                -4
+              ],
+              "to": [
+                5,
+                41,
+                -3
+              ]
+            },
+            {
+              "from": [
+                3,
+                10,
+                -3
+              ],
+              "to": [
+                6,
+                41,
+                -2
+              ]
+            },
+            {
+              "from": [
+                3,
+                10,
+                4
+              ],
+              "to": [
+                6,
+                41,
+                5
+              ]
+            },
+            {
+              "from": [
+                3,
+                10,
+                5
+              ],
+              "to": [
+                5,
+                41,
+                6
+              ]
+            },
+            {
+              "from": [
+                3,
+                16,
+                -1
+              ],
+              "to": [
+                13,
+                29,
+                0
+              ]
+            },
+            {
+              "from": [
+                3,
+                16,
+                2
+              ],
+              "to": [
+                13,
+                29,
+                3
+              ]
+            },
+            {
+              "from": [
+                3,
+                17,
+                0
+              ],
+              "to": [
+                13,
+                28,
+                2
+              ]
+            },
+            {
+              "from": [
+                4,
+                10,
+                -2
+              ],
+              "to": [
+                7,
+                41,
+                -1
+              ]
+            },
+            {
+              "from": [
+                4,
+                10,
+                3
+              ],
+              "to": [
+                7,
+                41,
+                4
+              ]
+            },
+            {
+              "from": [
+                4,
+                16,
+                -2
+              ],
+              "to": [
+                12,
+                29,
+                -1
+              ]
+            },
+            {
+              "from": [
+                4,
+                16,
+                3
+              ],
+              "to": [
+                12,
+                29,
+                4
+              ]
+            },
+            {
+              "from": [
+                4,
+                17,
+                -1
+              ],
+              "to": [
+                12,
+                28,
+                0
+              ]
+            },
+            {
+              "from": [
+                4,
+                17,
+                2
+              ],
+              "to": [
+                12,
+                28,
+                3
+              ]
+            },
+            {
+              "from": [
+                5,
+                10,
+                -1
+              ],
+              "to": [
+                11,
+                41,
+                0
+              ]
+            },
+            {
+              "from": [
+                5,
+                10,
+                2
+              ],
+              "to": [
+                11,
+                41,
+                3
+              ]
+            },
+            {
+              "from": [
+                5,
+                16,
+                -3
+              ],
+              "to": [
+                11,
+                29,
+                -2
+              ]
+            },
+            {
+              "from": [
+                5,
+                16,
+                4
+              ],
+              "to": [
+                11,
+                29,
+                5
+              ]
+            },
+            {
+              "from": [
+                5,
+                17,
+                -2
+              ],
+              "to": [
+                11,
+                28,
+                -1
+              ]
+            },
+            {
+              "from": [
+                5,
+                17,
+                3
+              ],
+              "to": [
+                11,
+                28,
+                4
+              ]
+            },
+            {
+              "from": [
+                6,
+                10,
+                0
+              ],
+              "to": [
+                10,
+                41,
+                2
+              ]
+            },
+            {
+              "from": [
+                6,
+                16,
+                -4
+              ],
+              "to": [
+                10,
+                29,
+                -3
+              ]
+            },
+            {
+              "from": [
+                6,
+                16,
+                5
+              ],
+              "to": [
+                10,
+                29,
+                6
+              ]
+            },
+            {
+              "from": [
+                6,
+                17,
+                -3
+              ],
+              "to": [
+                10,
+                28,
+                -2
+              ]
+            },
+            {
+              "from": [
+                6,
+                17,
+                4
+              ],
+              "to": [
+                10,
+                28,
+                5
+              ]
+            },
+            {
+              "from": [
+                7,
+                16,
+                -5
+              ],
+              "to": [
+                9,
+                29,
+                -4
+              ]
+            },
+            {
+              "from": [
+                7,
+                16,
+                6
+              ],
+              "to": [
+                9,
+                29,
+                7
+              ]
+            },
+            {
+              "from": [
+                7,
+                17,
+                -4
+              ],
+              "to": [
+                9,
+                28,
+                -3
+              ]
+            },
+            {
+              "from": [
+                7,
+                17,
+                5
+              ],
+              "to": [
+                9,
+                28,
+                6
+              ]
+            },
+            {
+              "from": [
+                7.5,
+                9.0,
+                0.9375
+              ],
+              "to": [
+                8.5,
+                13.0,
+                1.0625
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                -8.0
+              ],
+              "to": [
+                8.0625,
+                27.0,
+                19.0
+              ]
+            },
+            {
+              "from": [
+                9,
+                10,
+                -2
+              ],
+              "to": [
+                12,
+                41,
+                -1
+              ]
+            },
+            {
+              "from": [
+                9,
+                10,
+                3
+              ],
+              "to": [
+                12,
+                41,
+                4
+              ]
+            },
+            {
+              "from": [
+                10,
+                10,
+                -3
+              ],
+              "to": [
+                13,
+                41,
+                -2
+              ]
+            },
+            {
+              "from": [
+                10,
+                10,
+                4
+              ],
+              "to": [
+                13,
+                41,
+                5
+              ]
+            },
+            {
+              "from": [
+                11,
+                10,
+                -4
+              ],
+              "to": [
+                13,
+                41,
+                -3
+              ]
+            },
+            {
+              "from": [
+                11,
+                10,
+                5
+              ],
+              "to": [
+                13,
+                41,
+                6
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          2,
+          0.0,
+          -8.0
+        ],
+        "to": [
+          14,
+          41,
+          19.0
+        ]
+      },
+      "sourceVariant": "Фонарь",
+      "sourcePlacementOffset": [
+        0,
+        9.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        9.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/hold/wall_lantern"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:nether_brick_stairs[variant:facing=east,half=top,shape=straight]",
+        "minecraft:nether_brick_stairs[variant:facing=north,half=top,shape=straight]",
+        "minecraft:nether_brick_stairs[variant:facing=south,half=top,shape=straight]",
+        "minecraft:nether_brick_stairs[variant:facing=west,half=top,shape=straight]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements), then exact rectangular-union coalescing. Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}
