@@ -70,7 +70,7 @@ public final class DwUtilityBlocks {
         @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){
             return !light&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity?VoxelShapes.fullCube():VoxelShapes.empty();
         }
-        @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return !light||context.isHolding(asItem())?VoxelShapes.fullCube():VoxelShapes.empty();}
+        @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return !light||context.isHolding(asItem())||dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM!=null&&context.isHolding(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM)?VoxelShapes.fullCube():VoxelShapes.empty();}
         @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
         @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return 0;}
         @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}

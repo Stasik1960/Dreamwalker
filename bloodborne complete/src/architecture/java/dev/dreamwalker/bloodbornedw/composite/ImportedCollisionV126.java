@@ -77,8 +77,19 @@ public final class ImportedCollisionV126 {
             }
             objects.put(entry.getKey(),List.copyOf(values));
         }
-        if (registered.size()!=1045 || objects.isEmpty() || !registered.containsAll(objects.keySet()))
-            throw new IllegalArgumentException("NEW collision resource differs from the exact registered cohort");
+        Set<String> frozen=ImportedCollisionV125.frozenRegisteredCohort();
+        Set<String> extra=new HashSet<>(registered);extra.removeAll(frozen);
+        Set<String> declared=new HashSet<>();
+        var full=document("/bloodborne_dw/imported-full-map-v127.json");
+        if(full.has("additionalRegistryIds"))for(var raw:full.getAsJsonArray("additionalRegistryIds")) {
+            String id=raw.getAsString();
+            if(!id.startsWith("bloodborne_dw:source_")||!declared.add(id))throw new IllegalArgumentException("Invalid/repeated exact NEW additional collision type");
+            boolean covered=false;for(var row:full.getAsJsonArray("objects"))covered|=row.getAsJsonObject().get("registryId").getAsString().equals(id);
+            if(!covered)throw new IllegalArgumentException("Missing exact NEW additional collision type shapes "+id);
+        }
+        if(frozen.size()!=1045||!registered.containsAll(frozen)||!extra.equals(declared)
+                ||objects.isEmpty()||!frozen.containsAll(objects.keySet()))
+            throw new IllegalArgumentException("NEW V12.6 collision subset differs from frozen1045 cohort plus explicitly declared exact extras");
         return new Tables(Map.copyOf(objects),List.copyOf(shapes));
     }
 

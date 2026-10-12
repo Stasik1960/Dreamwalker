@@ -45,9 +45,9 @@ public final class CompositeRuntime {
             }
             state=ImportedStairShapes.normalize(state);payload=ImportedTypeAliases.markPayload(payload);
         }
-        if(block.spec.requiredSupport){Double height=topHeight(world,pos.add(block.spec.supportOffset.x(),block.spec.supportOffset.y(),block.spec.supportOffset.z()),null);if(height==null)return rejected("missing_adequate_support");payload.putDouble("MountY",height-1);}
+        if(block.spec.requiredSupport&&!dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(uuid)){Double height=topHeight(world,pos.add(block.spec.supportOffset.x(),block.spec.supportOffset.y(),block.spec.supportOffset.z()),null);if(height==null)return rejected("missing_adequate_support");payload.putDouble("MountY",height-1);}
         else if(!(block instanceof ThinWindowRootBlock))payload.remove("MountY");
-        if(block instanceof ThinWindowRootBlock&&!GlazingMount.seat(world,pos,state,payload))return rejected("missing_glazing_support_on_clicked_face");
+        if(block instanceof ThinWindowRootBlock&&!dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(uuid)&&!GlazingMount.seat(world,pos,state,payload))return rejected("missing_glazing_support_on_clicked_face");
         ObjectInstance object=instance(world,pos,state,uuid,payload);FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of(object.owner(),object));
         var result=execute(access,core().placement(access,object,checks(world,player,object,block)));
         if(result.outcome()==TransactionCore.Outcome.COMMITTED&&state.getBlock() instanceof CompositeRootBlock imported&&imported.spec.id.getPath().startsWith("source_"))queue(world,"v126-assembly-installed:"+object.owner().instanceId(),()->ImportedAssemblyV126.installed(world,object.owner()));
@@ -220,8 +220,9 @@ public final class CompositeRuntime {
         // Decorations may intersect. New active physical intersections are checked independently.
         int rotation=Integer.parseInt(proposed.rootData().properties().getOrDefault("rotation","0"));
         boolean heightEdit=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.heightEdit();
-        if(block!=null&&!heightEdit)for(Cell offset:block.spec.essential){if(rotation%2!=0&&!offset.equals(Cell.ORIGIN))return "non_root_essential_reservation_requires_cardinal_rotation";Cell rotated=offset.rotate(rotation/2);CellSnapshot cell=reads.require(proposed.owner().root().add(rotated));if(!offset.equals(Cell.ORIGIN)&&cell.kind()==Kind.FOREIGN)return "occupied_essential_cell";}
-        if(block!=null&&block.spec.requiredSupport&&!heightEdit&&CompositeData.nbt(proposed.rootData().blockEntityNbt()).getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY)==0){Cell support=proposed.owner().root().add(block.spec.supportOffset);reads.require(support);Double height=topHeight(world,CompositeData.pos(support),object.owner());double mount=CompositeData.nbt(proposed.rootData().blockEntityNbt()).getDouble("MountY");if(height==null||Math.abs(height-1-mount)>1e-5)return "inadequate_support";}
+        boolean initialSource=dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(proposed.owner().instanceId());
+        if(block!=null&&!heightEdit&&!initialSource)for(Cell offset:block.spec.essential){if(rotation%2!=0&&!offset.equals(Cell.ORIGIN))return "non_root_essential_reservation_requires_cardinal_rotation";Cell rotated=offset.rotate(rotation/2);CellSnapshot cell=reads.require(proposed.owner().root().add(rotated));if(!offset.equals(Cell.ORIGIN)&&cell.kind()==Kind.FOREIGN)return "occupied_essential_cell";}
+        if(block!=null&&block.spec.requiredSupport&&!heightEdit&&!initialSource&&CompositeData.nbt(proposed.rootData().blockEntityNbt()).getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY)==0){Cell support=proposed.owner().root().add(block.spec.supportOffset);reads.require(support);Double height=topHeight(world,CompositeData.pos(support),object.owner());double mount=CompositeData.nbt(proposed.rootData().blockEntityNbt()).getDouble("MountY");if(height==null||Math.abs(height-1-mount)>1e-5)return "inadequate_support";}
         if(!heightEdit&&!dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(proposed.owner().instanceId())&&!unchangedPhysical(world,proposed)) {
             String conflict=dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.conflict(world,
                     dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.physicalBoxes(proposed),proposed.owner(),null);

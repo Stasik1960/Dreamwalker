@@ -37,7 +37,30 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
             Map<String,Map<Integer,Pose>> result=new LinkedHashMap<>();var doc=JsonParser.parseReader(reader).getAsJsonObject();
             if(doc.get("schemaVersion").getAsInt()!=1)throw new IllegalArgumentException("Compact metadata schema");
             Map<String,VoxelShape> shared=new HashMap<>();
-            for(var raw:doc.getAsJsonArray("types")) {var row=raw.getAsJsonObject();String id=row.get("registryId").getAsString();if(!id.startsWith("bloodborne_dw:source_"))throw new IllegalArgumentException("Original V12 cannot be compacted");Set<Integer> opaque=new HashSet<>();for(var n:row.getAsJsonArray("opaquePoses"))opaque.add(n.getAsInt());Map<Integer,Pose> poses=new LinkedHashMap<>();for(var n:row.getAsJsonArray("poses")){int pose=n.getAsInt();if(pose<0||pose>15)throw new IllegalArgumentException("Compact pose range");List<VoxelShape> collision=new ArrayList<>(),aim=new ArrayList<>();for(var r:row.getAsJsonObject("shapes").getAsJsonArray(Integer.toString(pose))){var v=r.getAsJsonObject();JsonArray c=v.getAsJsonArray("collision"),a=v.getAsJsonArray("aim");collision.add(shared.computeIfAbsent(c.toString(),ignored->shape(c)));aim.add(c.size()>0?collision.get(collision.size()-1):shared.computeIfAbsent(a.toString(),ignored->shape(a)));}if(collision.size()!=8)throw new IllegalArgumentException("Compact pose requires eight reviewed physics orientations");poses.put(pose,new Pose(opaque.contains(pose),List.copyOf(collision),List.copyOf(aim)));}result.put(id,Map.copyOf(poses));}
+            for(var raw:doc.getAsJsonArray("types")) {
+                var row=raw.getAsJsonObject();String id=row.get("registryId").getAsString();
+                if(!id.startsWith("bloodborne_dw:source_"))throw new IllegalArgumentException("Original V12 cannot be compacted");
+                Set<Integer> opaque=new HashSet<>();for(var n:row.getAsJsonArray("opaquePoses"))opaque.add(n.getAsInt());
+                Map<Integer,Pose> poses=new LinkedHashMap<>();
+                for(var n:row.getAsJsonArray("poses")) {
+                    int pose=n.getAsInt();if(pose<0||pose>15)throw new IllegalArgumentException("Compact pose range");
+                    var rotations=row.getAsJsonObject("shapes").getAsJsonArray(Integer.toString(pose));
+                    if(rotations.size()!=8)throw new IllegalArgumentException("Compact pose requires eight reviewed physics orientations");
+                    List<VoxelShape> collision=new ArrayList<>(),aim=new ArrayList<>();
+                    for(int yaw=0;yaw<8;yaw++) {
+                        var v=rotations.get(yaw).getAsJsonObject();JsonArray c=v.getAsJsonArray("collision"),a=v.getAsJsonArray("aim");
+                        if(c==null||a==null)throw new IllegalArgumentException("Compact orientation lacks collision/aim arrays");
+                        // compact(state) rejects odd yaw. Those states always
+                        // use the unchanged owned renderer/physics superclass.
+                        // Do not eagerly construct shapes that can never be used.
+                        if((yaw&1)!=0){collision.add(VoxelShapes.empty());aim.add(VoxelShapes.empty());continue;}
+                        var physical=shared.computeIfAbsent(c.toString(),ignored->shape(c));collision.add(physical);
+                        aim.add(c.size()>0?physical:shared.computeIfAbsent(a.toString(),ignored->shape(a)));
+                    }
+                    poses.put(pose,new Pose(opaque.contains(pose),List.copyOf(collision),List.copyOf(aim)));
+                }
+                result.put(id,Map.copyOf(poses));
+            }
             return Map.copyOf(result);
         }catch(IOException failure){throw new IllegalStateException("Cannot read exact compact cube states",failure);}
     }

@@ -18,6 +18,10 @@ public final class ImportedCollisionV125 {
     private record Tables(Map<String,List<Variant>> objects, List<List<Rotation>> shapes) {}
     private record Key(int table, int yaw, double mount, double x, double y, double z) {}
     private static final Tables TABLES = load();
+    /** Exact immutable historic cohort; reused by the V12.6 subset validator
+     * without reparsing the large frozen shape archive. Followup copies add
+     * states only, never new keys to this table. */
+    static Set<String> frozenRegisteredCohort(){return TABLES.objects.keySet();}
     private static final Map<Key,Map<Cell,Footprint>> CACHE = new ConcurrentHashMap<>();
     private static final int CACHE_LIMIT = 4096;
     private static final int CACHE_CELL_LIMIT = 65536, CACHE_BOX_REFERENCE_LIMIT = 262144;

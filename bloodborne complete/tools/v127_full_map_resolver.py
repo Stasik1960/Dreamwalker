@@ -90,6 +90,9 @@ class CurrentResolver(Resolver):
         if names<=self.transparent|self.empty:return {'action':'REMOVE','reason':'SOURCE_ALL_PIXEL_ALPHA_ZERO' if names&self.transparent else 'SOURCE_EMPTY_GEOMETRY','models':sorted(names)}
         if carrier=='minecraft:jungle_trapdoor':return {'action':'REMOVE','reason':'USER_REMOVED_DAMAGED_SOURCE_TYPE','models':sorted(names)}
         if carrier=='minecraft:potted_spruce_sapling':return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE','models':sorted(names)}
+        if names=={'minecraft:block/hold/wood_ladder_02'} and len(apps)==1 and not apps[0].get('x',0):
+            yaw=apps[0].get('y',0)%360
+            if yaw%90==0:return {'action':'OWNER','registryId':'bloodborne_dw:prototype_ladder','mainId':'90006','properties':{'facing':['north','east','south','west'][yaw//90],'variant':'0','profile':'base','waterlogged':'false','diagonal':'false','source_clone':'true','freestanding':'true'},'payload':{},'sourceShift':[0,0,0],'mountY':0.,'resolution':'EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL'}
         if token(sorted(apps,key=token)) in self.source_defects:return {'action':'REMOVE','reason':'MISSING_AUTHORED_TEXTURE_REFERENCE','sourceDefect':self.source_defects[token(sorted(apps,key=token))],'models':sorted(names)}
         if any(self.classifications.get(name,{}).get('kind')=='INTENTIONAL_EXCLUSION' for name in names):return {'action':'REMOVE','reason':'PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION','models':sorted(names)}
         if any(name=='minecraft:block/diorite_wall_side_tall' for name in names):return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL','models':sorted(names)}

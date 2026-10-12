@@ -45,7 +45,8 @@ import net.minecraft.util.math.*;
  * Native vanilla/other-mod reads and writes are delegated unchanged. */
 public final class WorldEditBridge {
     private static final String SNAPSHOT="DreamwalkerWorldEditSnapshot";
-    private static final Map<String,BlockType> RP_TYPES=new LinkedHashMap<>();
+    private static final String RP_REQUEST="DreamwalkerWorldEditRpType";
+    private static final Set<String> RP_TYPES=new LinkedHashSet<>();
     private record Match(ServerWorld world,BlockPos pos,Set<Owner> owners,Set<UUID> entities) {}
     private static final ThreadLocal<Match> MATCH=new ThreadLocal<>();
     private static boolean initialized;
@@ -95,8 +96,7 @@ public final class WorldEditBridge {
             }
             return parsed(stateToken(state),context);
         }
-        BlockType virtual=RP_TYPES.get(id.toString());
-        if(virtual!=null)return virtual.getDefaultState().toBaseBlock();
+        if(RP_TYPES.contains(id.toString()))return BlockTypes.BARRIER.getDefaultState().toBaseBlock(new CompoundTag(Map.of(RP_REQUEST,new StringTag(id.toString()))));
         throw new InputParseException("BB ID "+entry.temporaryId()+" is not a placeable block/object");
     }
     private static <T extends Comparable<T>> BlockState with(BlockState state,net.minecraft.state.property.Property<T> p,String value){return state.with(p,p.parse(value).orElseThrow(()->new IllegalArgumentException("Invalid BB state "+value)));}
@@ -125,14 +125,15 @@ public final class WorldEditBridge {
         CompoundTag nbt=block.getNbtData();if(nbt==null||!(nbt.getValue().get(SNAPSHOT) instanceof StringTag value))return null;
         return CompositeData.nbt(Base64.getDecoder().decode(value.getValue()));
     }
+    private static String requestedRp(BaseBlock block){CompoundTag tag=block.getNbtData();return tag!=null&&tag.getValue().get(RP_REQUEST) instanceof StringTag value?value.getValue():null;}
     private static CompoundTag tag(NbtCompound data){return new CompoundTag(Map.of(SNAPSHOT,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(data)))));}
     public static final class NumericBlocks extends InputParser<BaseBlock> {
         public NumericBlocks(WorldEdit we){super(we);}
         public BaseBlock parseFromInput(String input,ParserContext context)throws InputParseException {
-            String first=input.split("\\[",2)[0];if(!first.matches("[0-9]{5}")&&!RP_TYPES.containsKey(first))return null;
+            String first=input.split("\\[",2)[0];if(!first.matches("[0-9]{5}")&&!RP_TYPES.contains(first))return null;
             var entry=tokenEntry(input);if(entry==null)throw new InputParseException("Unknown/reserved BB ID "+first);
             BaseBlock value=defaultBlock(entry,context);
-            if(input.contains("["))value=parsed(value.getBlockType().getId()+input.substring(input.indexOf('[')),context);
+            if(input.contains("[")){if(requestedRp(value)!=null)throw new InputParseException("RP objects use entity state; copy the complete object to preserve its settings");value=parsed(value.getBlockType().getId()+input.substring(input.indexOf('[')),context);}
             return value;
         }
         public Stream<String> getSuggestions(String input){return DebugCatalogue.entries().stream().map(DebugCatalogue.Entry::temporaryId).filter(id->id.startsWith(input));}
@@ -159,13 +160,10 @@ public final class WorldEditBridge {
         @Subscribe public void ready(PlatformReadyEvent event) {
             for(var e:DebugCatalogue.entries()) {
                 Identifier id=e.registryId();if(!Registries.ENTITY_TYPE.containsId(id)||!ObjectRegistry.TYPES.containsValue(Registries.ENTITY_TYPE.get(id)))continue;
-                BlockType type=BlockType.REGISTRY.get(id.toString());
-                if(type==null)type=BlockType.REGISTRY.register(id.toString(),new BlockType(id.toString()) {
-                    public Map<String,? extends Property<?>> getPropertyMap(){return Map.of();}
-                    public BlockMaterial getMaterial(){return BlockTypes.BARRIER.getMaterial();}
-                    public String getName(){return e.name();}
-                });
-                RP_TYPES.put(id.toString(),type);
+                // Do not register fictitious BlockTypes: Fabric assigns native
+                // block state IDs, and every unknown RP entity ID maps to AIR0.
+                // A real barrier state plus private NBT is the parser carrier.
+                RP_TYPES.add(id.toString());
             }
         }
         @Subscribe public void editing(EditSessionEvent event) {
@@ -186,7 +184,7 @@ public final class WorldEditBridge {
             BaseBlock block;
             try {
                 if(!os.isEmpty()){BlockPos root=CompositeData.pos(os.get(0).root());world.getChunk(root.getX()>>4,root.getZ()>>4);block=parsed(stateToken(world.getBlockState(root)),new ParserContext());}
-                else block=RP_TYPES.get(Registries.ENTITY_TYPE.getId(es.get(0).getType()).toString()).getDefaultState().toBaseBlock();
+                else block=BlockTypes.BARRIER.getDefaultState().toBaseBlock();
                 return block.toBaseBlock(tag(snapshot(world,p,os,es)));
             }catch(InputParseException failure){throw new IllegalStateException("Cannot expose BB object to WorldEdit",failure);}
         }
@@ -196,18 +194,19 @@ public final class WorldEditBridge {
             if(outsideHistory)return super.setBlock(v,value);
             if(!world.getServer().isOnThread())throw new InputParseException("BB edits require the server thread");
             BlockPos p=pos(v);world.getChunk(p.getX()>>4,p.getZ()>>4);
-            String id=value.getBlockType().getId();BaseBlock block=value.toBaseBlock();NbtCompound old=snapshot(block);
+            String id=value.getBlockType().getId();BaseBlock block=value.toBaseBlock();NbtCompound old=snapshot(block);String requestedRp=requestedRp(block);
             List<Owner> remove=new ArrayList<>(owners(world,p));List<RpObjectEntity> rp=new ArrayList<>(entities(world,p));
             Match match=MATCH.get();MATCH.remove();if(match!=null&&match.world==world&&match.pos.equals(p)){remove.removeIf(o->!match.owners.contains(o));rp.removeIf(e->!match.entities.contains(e.getUuid()));}
-            if(old==null&&!own(id)&&remove.isEmpty()&&rp.isEmpty())return super.setBlock(v,value);
+            if(old==null&&requestedRp==null&&!own(id)&&remove.isEmpty()&&rp.isEmpty())return super.setBlock(v,value);
             List<ObjectInstance> add=new ArrayList<>();List<NbtCompound> rpAdd=new ArrayList<>();
             if(old!=null) {
                 int[] anchor=old.getIntArray("Anchor");if(anchor.length!=3)throw new InputParseException("Invalid BB clipboard anchor");
                 BlockPos delta=p.subtract(new BlockPos(anchor[0],anchor[1],anchor[2]));
                 for(NbtElement raw:old.getList("Roots",10)){NbtCompound row=(NbtCompound)raw;Owner owner=CompositeData.owner(row.getCompound("Owner"));var data=CompositeData.data(row.getCompound("Data"));BlockPos root=CompositeData.pos(owner.root()).add(delta);UUID uuid=delta.equals(BlockPos.ORIGIN)?owner.instanceId():UUID.randomUUID();add.add(CompositeRuntime.instance(world,root,CompositeData.state(data),uuid,CompositeData.nbt(data.blockEntityNbt())));}
                 for(NbtElement raw:old.getList("Rp",10)){NbtCompound copy=((NbtCompound)raw).copy();NbtList at=copy.getList("Pos",6);NbtList shifted=new NbtList();shifted.add(NbtDouble.of(at.getDouble(0)+delta.getX()));shifted.add(NbtDouble.of(at.getDouble(1)+delta.getY()));shifted.add(NbtDouble.of(at.getDouble(2)+delta.getZ()));copy.put("Pos",shifted);if(!delta.equals(BlockPos.ORIGIN))copy.putUuid("UUID",UUID.randomUUID());rpAdd.add(copy);}
-            } else if(RP_TYPES.containsKey(id)) {
-                NbtCompound data=new NbtCompound();data.putString("id",id);data.putUuid("UUID",UUID.randomUUID());NbtList location=new NbtList();location.add(NbtDouble.of(p.getX()));location.add(NbtDouble.of(p.getY()));location.add(NbtDouble.of(p.getZ()));data.put("Pos",location);rpAdd.add(data);
+            } else if(requestedRp!=null) {
+                if(!RP_TYPES.contains(requestedRp))throw new InputParseException("Unknown BB RP object carrier");
+                NbtCompound data=new NbtCompound();data.putString("id",requestedRp);data.putUuid("UUID",UUID.randomUUID());NbtList location=new NbtList();location.add(NbtDouble.of(p.getX()));location.add(NbtDouble.of(p.getY()));location.add(NbtDouble.of(p.getZ()));data.put("Pos",location);rpAdd.add(data);
             } else if(own(id)&&Registries.BLOCK.containsId(new Identifier(id))) {
                 BlockState state=Registries.BLOCK.get(new Identifier(id)).getDefaultState();for(var entry:value.getStates().entrySet())state=with(state,state.getBlock().getStateManager().getProperty(entry.getKey().getName()),entry.getValue().toString());
                 if(VerticalMount.isArchitecture(state)&&!ImportedCompactBlock.compact(state))add.add(CompositeRuntime.instance(world,p,state,UUID.randomUUID(),new NbtCompound()));

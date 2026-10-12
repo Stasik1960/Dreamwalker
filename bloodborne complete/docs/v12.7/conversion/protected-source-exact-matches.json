@@ -1264,7 +1264,7 @@
           "ImportedTypeVersion": 1
         },
         "sourceShift": [
-          0.0,
+          -0.0,
           0.0,
           0.0
         ],
@@ -1286,7 +1286,7 @@
             "ImportedTypeVersion": 1
           },
           "sourceShift": [
-            0.0,
+            -0.0,
             0.0,
             0.0
           ],
@@ -1397,6 +1397,101 @@
         }
       ],
       "faces": 18,
+      "status": "PASS_EXACT_VERTEX_UV_RGBA_TINTINDEX"
+    },
+    {
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/aca_door_1"
+        },
+        {
+          "model": "minecraft:block/aca_door_2",
+          "offset": [
+            0,
+            32,
+            0
+          ]
+        }
+      ],
+      "sourceApplicationToken": "[{\"model\":\"minecraft:block/aca_door_1\"},{\"model\":\"minecraft:block/aca_door_2\",\"offset\":[0,32,0]}]",
+      "decision": {
+        "action": "OWNER",
+        "registryId": "bloodborne_dw:prototype_double_door",
+        "properties": {
+          "variant": "0",
+          "rotation": "0",
+          "profile": "base",
+          "open": "false"
+        },
+        "payload": {
+          "ImportedTypeVersion": 1,
+          "SourceShift": [
+            0.0,
+            -1.0,
+            -0.25
+          ]
+        },
+        "sourceShift": [
+          0.0,
+          -1.0,
+          -0.25
+        ],
+        "resolution": "EXACT_EXISTING_PLANAR_FACE_UNION_AFFINE_UV_RGBA_STATE",
+        "mountY": 0.0
+      },
+      "allExactStates": [
+        {
+          "action": "OWNER",
+          "registryId": "bloodborne_dw:prototype_double_door",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              0.0,
+              -1.0,
+              -0.25
+            ]
+          },
+          "sourceShift": [
+            0.0,
+            -1.0,
+            -0.25
+          ],
+          "resolution": "EXACT_EXISTING_PLANAR_FACE_UNION_AFFINE_UV_RGBA_STATE",
+          "mountY": 0.0
+        },
+        {
+          "action": "OWNER",
+          "registryId": "bloodborne_dw:prototype_double_door",
+          "properties": {
+            "variant": "0",
+            "rotation": "4",
+            "profile": "base",
+            "open": "false"
+          },
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              0.0,
+              -1.0,
+              1.0
+            ]
+          },
+          "sourceShift": [
+            0.0,
+            -1.0,
+            1.0
+          ],
+          "resolution": "EXACT_EXISTING_PLANAR_FACE_UNION_AFFINE_UV_RGBA_STATE",
+          "mountY": 0.0
+        }
+      ],
+      "faces": 4,
       "status": "PASS_EXACT_VERTEX_UV_RGBA_TINTINDEX"
     }
   ],
@@ -1822,6 +1917,6 @@
       "count": 1
     }
   ],
-  "matchedApplicationCombinations": 17,
+  "matchedApplicationCombinations": 18,
   "unmatchedApplicationCombinations": 43
 }
