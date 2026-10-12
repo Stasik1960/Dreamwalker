@@ -1,0 +1,30 @@
+{
+  "schema": "dreamwalker-v124-postpackage-source-checkpoint-and-qa-delta-v1",
+  "status": "PASS",
+  "readOnlyValidation": true,
+  "sourceEvidenceCheckpoint": "c9a1bdb082a01087ed24b4610f6169de1af892e6",
+  "compiledProductionSourceCommit": "ba79ce07aaf44ba68287c1700749c5acfce8674f",
+  "currentSrcTreeMatchesEvidenceCheckpoint": true,
+  "sourceArchiveSrcFilesComparedToCheckpoint": 8000,
+  "archiveAndReleaseManifestBytesUnchanged": true,
+  "packageFileSha256": {
+    "acceptance.json": "88146f80737ed5a316643d937b314fc7bf2546d22a00814bb8642c5cd19b9c7a",
+    "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.4-dedup-full-source.zip": "afcb76b823a4c4ba7136d7f78dc9e6dad78883ee6a1be6701fabe9d3acc9540d",
+    "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.4-dedup.jar": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+    "Dreamwalker-BB-V12.4-Flat-Gallery.zip": "d9d02e164bb7f6891e1e20c0a56e6130b9324c098a5716b3b0882d62d7779873",
+    "INSTALL-RU.txt": "8b1f9256c07603c0ee57e7e33362fb755822099665790a3698f5f3e48fdfc872",
+    "MERGED-GROUPS-RU.csv": "6c8c730d22ff1c3a87cffe20c1c3af8784dafb0ae6927501dfac7910b9f31139",
+    "OLD-ID-STATES.csv": "7c494df12717445c573aea75083aecf46568506b28c5c39f869466daa5508cb6",
+    "release-manifest.json": "1b8e0ab0897e0c5260b37bc4d702846d1b712d0165e1f811b1a8c766b22feb66",
+    "REPORT-RU.txt": "8c53b17fae8241186177ea0bc43cad166e848a6b5be4634a3a5770196c242c2f",
+    "RETAINED-DIFFERENCES-RU.txt": "84dba747ce340fb8226cb5e5a754a2ff240bd1c4aeac636a644000e0e1d5def4",
+    "verification.zip": "2b3d0c1b0584835b00a0c8d6a5492fd9daa7e3d979293e7212ccaac8aa9ee449"
+  },
+  "qaOnlyPostpackageDifference": {
+    "path": "tools/audit_v124_release_package.py",
+    "archivedAndCheckpointSha256": "44857ccaed5abdc42465bc16754ea14334d0cdf483664a70077e3b68a61b3791",
+    "executedEnhancedAuditScriptSha256": "2ec86ff7bc0678765901c221570242bcb2b94a9b404e44b23332594130dd3ee6",
+    "productionOrSrcChanged": false,
+    "reason": "Independent audit now additionally verifies archived roundtrip evidence hashes and all6588 source asset files against final JAR. The archived QA script remains the original c9 checkpoint copy; no archive/acceptance/production was rewritten."
+  }
+}

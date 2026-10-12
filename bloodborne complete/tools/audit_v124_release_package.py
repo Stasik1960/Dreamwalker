@@ -115,6 +115,9 @@ def main():
             require(roundtrip["status"] == "PASS" and roundtrip["productionJarSha256"] == production_sha
                     and roundtrip["mappedStateRows"] == 1281 and roundtrip["yawStateSourceShiftMismatches"] == 0,
                     "Archived readable table roundtrip is incomplete")
+            for name,digest in roundtrip['bindings'].items():
+                require(hashlib.sha256(verification.read(name)).hexdigest()==digest,
+                        "Archived table/native bound evidence differs: "+name)
             frozen = zip_json(source, prefix + "docs/v12.4-dedup/baseline-content.json")
             source_catalogue = zip_json(source, prefix + "src/architecture/resources/bloodborne_dw/debug_catalogue.json")
             actual_rows = {row["registryId"]: row for row in source_catalogue["entries"]}
@@ -127,6 +130,16 @@ def main():
                 for name in ("debug_catalogue.json", "imported-type-aliases.json", "imported-stair-legacy-art.json"):
                     require(source.read(prefix + "src/architecture/resources/bloodborne_dw/" + name) == jar.read("bloodborne_dw/" + name),
                             "Delivered source registry/type/art resource differs from tested JAR: " + name)
+                source_set=set(source_names);asset_bytes_checked=0
+                for name in jar.namelist():
+                    if not name.startswith('assets/') or name.endswith('/'):continue
+                    candidates=[entry for entry in source_names if '/resources/'+name in entry
+                                and entry.endswith('/resources/'+name)]
+                    require(candidates,"Delivered sources lack JAR asset: "+name)
+                    actual=jar.read(name)
+                    require(any(source.read(entry)==actual for entry in candidates),
+                            "Delivered source asset differs from final JAR: "+name)
+                    asset_bytes_checked+=1
             counts = zip_json(verification, "type-counts.json")
             require(counts == record["counts"] == acceptance["counts"] and counts["newWorkingTypesAfter"] == 572
                     and counts["newWorkingTypesBefore"] == 1045 and counts["retiredWorkingIds"] == 473,
@@ -154,6 +167,7 @@ def main():
             "actualSuccessfulGameTests": 72, "originalV12CatalogueRowsUnchanged": 116, "reservedIdsUnchanged": 1322,
             "workingTypesBefore": 1045, "workingTypesAfter": 572, "mappingRows": 1281, "galleryStations": 675,
             "verifiedDependencies": dependencies, "archivesByteAndCrcVerification": "PASS",
+            "sourceAssetFilesComparedToActualJar":asset_bytes_checked,
             "releaseManifestSha256": sha(release / "release-manifest.json")})
     except Exception as error:
         output["failure"] = f"{type(error).__name__}: {error}"
