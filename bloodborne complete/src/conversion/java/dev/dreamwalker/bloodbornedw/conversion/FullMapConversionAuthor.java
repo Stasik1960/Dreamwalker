@@ -218,7 +218,8 @@ public final class FullMapConversionAuthor implements ModInitializer {
         boolean entity(JsonObject row) {
             ServerWorld world = world(row); BlockPos pos = position(row); load(world, pos);
             Identifier id = new Identifier(row.get("registryId").getAsString());
-            require(Set.of("bloodborne_dw", "bloodborne_rp", "minecraft").contains(id.getNamespace()) && Registries.ENTITY_TYPE.containsId(id), "Unknown converted entity " + id);
+            boolean inertVanilla = id.getNamespace().equals("minecraft") && Set.of("experience_orb", "item_frame", "glow_item_frame", "armor_stand", "painting").contains(id.getPath());
+            require((Set.of("bloodborne_dw", "bloodborne_rp").contains(id.getNamespace()) || inertVanilla) && Registries.ENTITY_TYPE.containsId(id), "Unknown/system converted entity " + id);
             UUID uuid = UUID.fromString(row.get("instanceUuid").getAsString());
             Entity existing = world.getEntity(uuid);
             if (existing != null) { require(Registries.ENTITY_TYPE.getId(existing.getType()).equals(id), "Existing entity UUID belongs to another type"); return true; }

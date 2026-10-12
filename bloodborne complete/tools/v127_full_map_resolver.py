@@ -96,6 +96,7 @@ class CurrentResolver(Resolver):
         if names<=self.transparent|self.empty:return {'action':'REMOVE','reason':'SOURCE_ALL_PIXEL_ALPHA_ZERO' if names&self.transparent else 'SOURCE_EMPTY_GEOMETRY','models':sorted(names)}
         if carrier=='minecraft:jungle_trapdoor':return {'action':'REMOVE','reason':'USER_REMOVED_DAMAGED_SOURCE_TYPE','models':sorted(names)}
         if carrier=='minecraft:potted_spruce_sapling':return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE','models':sorted(names)}
+        if names=={'minecraft:block/acacia_button'}:return {'action':'REMOVE','reason':'USER_REMOVED_VANILLA_MODEL_TEXTURE_FALLBACK','models':sorted(names),'evidence':'docs/v12.7/conversion/nonfinite-source-fallback-proof.json'}
         if names=={'minecraft:block/hold/wood_ladder_02'} and len(apps)==1 and not apps[0].get('x',0):
             yaw=apps[0].get('y',0)%360
             if yaw%90==0:return {'action':'OWNER','registryId':'bloodborne_dw:prototype_ladder','mainId':'90006','properties':{'facing':['north','east','south','west'][yaw//90],'variant':'0','profile':'base','waterlogged':'false','diagonal':'false','source_clone':'false','freestanding':'true'},'payload':{},'sourceShift':[0,0,0],'mountY':0.,'resolution':'EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL'}

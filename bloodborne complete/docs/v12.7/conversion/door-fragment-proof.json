@@ -1,0 +1,46 @@
+{
+  "status": "PASS_USER_APPROVED_EXACT_NEW_FRAGMENT_FAMILY",
+  "registryId": "bloodborne_dw:source_door_fragment",
+  "mainId": "93233",
+  "variants": [
+    {
+      "variant": 0,
+      "name": "Вершина портала",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/aca_door_2"
+        }
+      ],
+      "sourceShift": [
+        -0.0,
+        0.0,
+        -0.1875
+      ],
+      "status": "PASS_EXACT_SOURCE_VERTEX_UV_RGBA_TINTINDEX",
+      "physicalRule": "One ordinary rectangle/cuboid; inscribed minimum square at45degrees; exact rootface<0.5crop applied at runtime."
+    },
+    {
+      "variant": 1,
+      "name": "Низ портала",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/aca_door_1"
+        }
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.1875
+      ],
+      "status": "PASS_EXACT_SOURCE_VERTEX_UV_RGBA_TINTINDEX",
+      "physicalRule": "One ordinary rectangle/cuboid; inscribed minimum square at45degrees; exact rootface<0.5crop applied at runtime."
+    }
+  ],
+  "sourceCellCount": 393,
+  "headerCells": 381,
+  "lowerCells": 12,
+  "whole90001Changed": false,
+  "old90479Restored": false,
+  "sourceWorldConverted": false,
+  "nativeValidation": "NOT_RUN_BY_OFFLINE_PROOF"
+}
