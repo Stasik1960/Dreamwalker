@@ -243,6 +243,7 @@ def main():
                 row['visualGeometryEvidence'] = 'Exact final-production rendered element corners and active canonical state, not a collision/selection envelope'
         plan=json.loads((ROOT/'build/v126-assembly-plan/assembly-manifest.json').read_text(encoding='utf8'))
         doors=json.loads((ROOT/'build/v126-door-plan/door-manifest.json').read_text(encoding='utf8'))
+        doors['doors']+=json.loads((ROOT/'build/v126-city-mounteddoor/door-manifest.json').read_text(encoding='utf8'))['doors']
         previews=[]
         definitions=[(g['primaryRegistryId'],g['primaryId'],g['installationPose'],g['displayName'],'assemblies',False) for g in plan['assemblies'] if not g['doorRequiresLeafPartitionAndOpenPose']]
         for g in doors['doors']:
@@ -256,7 +257,7 @@ def main():
                 'mountY':0,'sourceShift':[0,0,0],'payload':{'ImportedTypeVersion':1},
                 'descriptor':'src/architecture/resources/'+specpath,'sourceApplications':[]}
             component['descriptorSha256']=hashlib.sha256(archive.read(specpath)).hexdigest()
-            row={'key':'V126-'+section+'-'+number+('-open' if opened else '-closed'),'section':section,
+            row={'key':'V126-'+section+'-'+number+'-pose'+str(pose)+('-open' if opened else '-closed'),'section':section,
                  'primaryId':number,'russianLabel':name,'open':opened,'components':[component],
                  'registrationsMerged':True,'doorPropertiesChanged':section=='doors',
                  'status':'WORKING_ONE_PIECE_TYPE_RMB_90_DEGREES' if section=='doors' else 'APPROVED_ONE_PIECE_TYPE'}

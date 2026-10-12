@@ -1,5 +1,5 @@
 """Apply exact-UV moving parts with a few useful frame/leaf physics cuboids."""
-import copy,json,hashlib,shutil
+import argparse,copy,json,hashlib,shutil
 from pathlib import Path
 import numpy as np
 from gallery_platform_plan import ModelGeometry
@@ -10,6 +10,9 @@ NAMES={'90031':'Двустворчатая дверь с каменной арк
 def read(p):return json.loads(p.read_text(encoding='utf8'))
 def write(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf8',newline='\n')
 def main():
+    global STAGE
+    parser=argparse.ArgumentParser();parser.add_argument('--stage',type=Path,default=STAGE);parser.add_argument('--mounted-state',action='store_true');args=parser.parse_args();STAGE=args.stage.resolve()
+    assert STAGE.is_relative_to(ROOT/'build')
     manifest=read(STAGE/'door-manifest.json');assert manifest['status'].startswith('PASS_STAGED') and not manifest['original90001Modified']
     cat=read(RES/'bloodborne_dw/remaining-catalogue.json');byregistry={'bloodborne_dw:'+r['path']:r for r in cat['objects']}
     evidence=[]
@@ -20,7 +23,13 @@ def main():
             assert not target.exists() or target.read_bytes()==source.read_bytes();shutil.copyfile(source,target)
     models=ModelGeometry();preserved={}
     for door in manifest['doors']:
-        file=RES/'bloodborne_dw/composite'/(door['registryId'].split(':')[1]+'.json');spec=read(file);variant=spec['variants'][door['variant']]
+        file=RES/'bloodborne_dw/composite'/(door['registryId'].split(':')[1]+'.json');spec=read(file)
+        if args.mounted_state:
+            assert door['mainId']=='90923' and door['variant']==2 and len(spec['variants'])==2
+            staged=read(STAGE/'source_smooth_quartz_top.json');assert staged['variants'][:2]==spec['variants']
+            spec['variants'].append(copy.deepcopy(staged['variants'][2]))
+            byregistry[door['registryId']]['variants'].append({'variant':2,'name':NAMES['90923']+' · верх отнесён назад','sourceModels':list(dict.fromkeys(p['model'] for p in staged['variants'][2]['poses']['closed']['parts']))})
+        variant=spec['variants'][door['variant']]
         assert variant['poses']['closed']['parts']==door['sourceClosedParts']
         preserved[door['registryId']]=copy.deepcopy(variant['poses']['closed']['parts'])
         roles={m['model']:m['role'] for m in door['models']};domain=[];perrole=[]
@@ -56,6 +65,9 @@ def main():
         row=byregistry[door['registryId']];row['displayName']=spec['displayName'];row['variants'][door['variant']]['name']=spec['displayName']
         evidence.append({'id':door['mainId'],'registryId':door['registryId'],'variant':door['variant'],'leafCount':door['leafCount'],'closedBoxes':closed,'openBoxes':opened,'perRole':perrole,'sourceClosedPartsPreserved':True,'nativeValidation':'NOT_RUN'})
     write(RES/'bloodborne_dw/remaining-catalogue.json',cat)
-    write(ROOT/'docs/v12.6/doors/applied-doors.json',{'status':'PASS_SOURCE_STAGING_APPLIED_NATIVE_NOT_RUN','doors':evidence,'sourceOriginal90001Changed':False,'authorCollisionExport':'NOT_SUPPLIED_NOT_APPLIED'})
+    output='applied-mounted-door.json' if args.mounted_state else 'applied-doors.json'
+    write(ROOT/'docs/v12.6/doors'/output,{'status':'PASS_SOURCE_STAGING_APPLIED_NATIVE_NOT_RUN','doors':evidence,'sourceOriginal90001Changed':False,'authorCollisionExport':'NOT_SUPPLIED_NOT_APPLIED'})
+    if args.mounted_state:
+        file=ROOT/'docs/v12.6/applied-content.json';content=read(file);g=next(g for g in content['groups'] if g['registryId']=='bloodborne_dw:source_smooth_quartz_top');g['after']=3;g['additionalMountingState']=2;g['afterSha']=hashlib.sha256((RES/'bloodborne_dw/composite/source_smooth_quartz_top.json').read_bytes()).hexdigest();write(file,content)
     print(json.dumps({'status':'PASS','doors':len(evidence),'leaves':sum(d['leafCount'] for d in evidence),'cardinalMaxBoxes':max(len(d['closedBoxes']) for d in evidence)}))
 if __name__=='__main__':main()

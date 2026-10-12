@@ -22,6 +22,14 @@ def main():
         for old_id in row['hideIndependentPartIds']:
             redirects[registries[old_id]] = row['primaryRegistryId']
     redirects[registries['90479']] = registries['90001']
+    mount_proposal = ROOT / 'docs/v12.6/city/mount-depth-state-proposal.json'
+    if mount_proposal.is_file():
+        mount = json.loads(mount_proposal.read_text(encoding='utf-8-sig'))
+        additional = mount['sourceRecipe']
+        assert additional['primaryRegistryId'] == registries['90923'] and additional['installationPose'] == 2
+        assert additional['components'][1]['relativePosition'] == [0, 2, -1]
+        assert mount['existingSourcePairCount'] == 12 and all(row['status'].startswith('PASS') for row in mount['actualSourceChecks'])
+        recipes.append(additional)
     value = {'schemaVersion': 1, 'version': 1, 'baselineCommit': source['baselineCommit'],
              'policy': 'Append complete poses; keep unmatched saved fragments exact and hidden. Merge only complete geometry-matched groups in one atomic world and reference transaction.',
              'recipes': recipes, 'hiddenPartRedirects': redirects,

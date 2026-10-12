@@ -233,6 +233,16 @@ def main():
     proof['assemblyRecipeSha256']=sha(RECIPES);proof['inputCitySha256']=sha(SRC)
     proof['descriptorBindings']={reg:{'file':str(path.relative_to(ROOT)),'sha256':digest} for reg,(_,path,digest) in sorted(descriptors.items())}
     dump(DEST/'source-current-descriptor-geometry-proof.json',proof)
+    if not proof['failures']:
+        data['productionPoseApplication']='PASS_CURRENT_DESCRIPTOR_CLOSED_SOURCE_GEOMETRY_FINAL_JAR_BINDING_PENDING'
+        for row in data['owners']:
+            if row['registryId'] in proof['descriptorBindings']:
+                row['currentDescriptorReference']=copy.deepcopy(proof['descriptorBindings'][row['registryId']])
+                row['productionPoseApplication']='PASS_CURRENT_DESCRIPTOR_CLOSED_SOURCE_GEOMETRY'
+            elif row['registryId'].startswith('bloodborne_dw:prototype_wall'):
+                row['currentDescriptorReference']={'file':'src/architecture/resources/bloodborne_dw/prototype-wall.json',
+                    'sha256':sha(RES/'bloodborne_dw/prototype-wall.json'),
+                    'scope':'Protected accepted V12 native wall implementation and private primitive models preserved; no descriptor is synthesized.'}
     output=DEST/'city-final-aggregated.json';output.write_text(json.dumps(data,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
     summary={'schemaVersion':1,'status':data['status'],'sourceBoundsInclusive':data['rawBlocks']['boundsInclusive'],
         'sizeXYZ':data['rawBlocks']['dimensions'],'previousOwnerCount':len(olddata['owners']),'aggregatedOwnerCount':len(owners),

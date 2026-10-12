@@ -5,7 +5,7 @@ import hashlib,json,subprocess
 import check_v124_preservation as original
 ROOT=Path(__file__).resolve().parents[1];REPO=ROOT.parent;DOC=ROOT/'docs/v12.6';BASELINE='c52a06c9fa20007a1c06c8fc654b3c1b86f72791'
 JAVA='src/architecture/java/dev/dreamwalker/bloodbornedw/'
-SHARED=['architecture/RemainingArchitecture','composite/CompositeArchitecture','composite/CompositeItem','composite/CompositeRootBlock','composite/CompositeRuntime','composite/CompositeSourceShift','composite/CompositeSpec','composite/ImportedArtworkBlock','composite/ImportedArtworkStates','composite/mixin/CatalogueStackMigrationMixin','link/MechanismGroups','link/MechanismLinks','link/MechanismRules','link/MechanismState','link/ObjectPolicies','tool/ToolCommands']
+SHARED=['architecture/RemainingArchitecture','composite/CompositeArchitecture','composite/CompositeItem','composite/CompositeRootBlock','composite/CompositeRuntime','composite/CompositeSourceShift','composite/CompositeSpec','composite/ImportedArtworkBlock','composite/ImportedArtworkStates','composite/mixin/CatalogueStackMigrationMixin','link/CompositeMechanismBridge','link/MechanismGroups','link/MechanismLinks','link/MechanismRules','link/MechanismState','link/ObjectPolicies','tool/ToolCommands']
 HOOK_LINES={JAVA+p+'.java':[] for p in SHARED}
 def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
 def sha(v):return hashlib.sha256(v).hexdigest()

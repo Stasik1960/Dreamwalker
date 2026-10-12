@@ -10,7 +10,16 @@ ROOT = Path(__file__).resolve().parents[1]
 source = ROOT / 'build/v126-door-plan/door-manifest.json'
 document = json.loads(source.read_text(encoding='utf-8-sig'))
 result = {'schemaVersion': 1, 'source': 'independent source-mesh partition manifest', 'doors': []}
-for row in document['doors']:
+rows = list(document['doors'])
+city_manifest = ROOT / 'build/v126-city-mounteddoor/door-manifest.json'
+if city_manifest.is_file():
+    rows.extend(json.loads(city_manifest.read_text(encoding='utf-8-sig'))['doors'])
+seen = set()
+for row in rows:
+    key = row['registryId'], row['variant']
+    if key in seen:
+        raise ValueError(f'Duplicate QA door pose {key}')
+    seen.add(key)
     models = [part for part in row['models'] if part['includeInOpen']]
     moving = [part for part in models if part['role'] != 'static']
     lo = [min(part['boundsUnits'][axis] for part in moving) for axis in range(3)]

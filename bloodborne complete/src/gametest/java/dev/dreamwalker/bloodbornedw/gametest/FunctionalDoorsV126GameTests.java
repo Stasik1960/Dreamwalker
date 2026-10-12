@@ -145,7 +145,8 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=240,batchId="v126_functional_doors")
     public void sevenApprovedDoorsOpenAndCloseOnRmbAtEveryYawAndActuallyReleasePlayerPassage(TestContext t) {
         var references=doors();var expected=Set.of("90031","93160","90266","93152","90458","93153","90923");
-        t.assertTrue(references.size()==7&&references.stream().map(Door::number).collect(java.util.stream.Collectors.toSet()).equals(expected),"exactly seven approved new functional door types are checked");
+        t.assertTrue(references.size()==8&&references.stream().map(Door::number).collect(java.util.stream.Collectors.toSet()).equals(expected),"exactly seven approved functional door types plus90923's alternate city mounting state are checked");
+        t.assertTrue(references.stream().filter(row->row.number.equals("90923")).map(Door::pose).collect(java.util.stream.Collectors.toSet()).equals(Set.of(1,2)),"90923 keeps two mounting states within the same type/item");
         var world=t.getWorld();var player=player(world);var root=t.getAbsolutePos(new BlockPos(16384,96,64));List<Runnable> cases=new ArrayList<>();
         for(var door:references)for(int yaw=0;yaw<8;yaw++){final int selected=yaw;cases.add(()->{
             t.assertTrue(block(door).spec.openable,"approved door declares actual opening mechanism "+door.number);

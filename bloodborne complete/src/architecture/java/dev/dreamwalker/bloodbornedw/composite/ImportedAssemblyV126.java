@@ -56,6 +56,7 @@ public final class ImportedAssemblyV126 {
     public static int installationPose(String path){Recipe recipe=CATALOGUE.primary.get(registry(path));return recipe==null?0:recipe.installationPose;}
     public static List<Integer> activePoses(String path){String id=registry(path);return CATALOGUE.recipes.stream().filter(recipe->recipe.primaryRegistryId.equals(id)).map(Recipe::installationPose).toList();}
     public static boolean complete(BlockState state){return state.getBlock() instanceof CompositeRootBlock block&&activePoses(block.spec.id.toString()).contains(CompositeSpec.poseVariant(state));}
+    public static boolean workingState(BlockState state){if(!(state.getBlock() instanceof CompositeRootBlock block))return true;List<Integer> active=activePoses(block.spec.id.toString());return active.isEmpty()||active.contains(CompositeSpec.poseVariant(state));}
     /** Ordinary new/legacy items select the completed type, without copying UUIDs. */
     public static ItemStack canonicalStack(ItemStack old){
         if(old.isEmpty()||!(old.getItem() instanceof BlockItem item))return old;

@@ -278,7 +278,7 @@ def open_configuration(number,bounds):
 
 
 def generate(source,visuals,woodrows,gate_rows):
-    number=source['mainId'];rec=records(source,visuals)
+    number=source['mainId'];resourceSuffix=source.get('resourceSuffix',number);rec=records(source,visuals)
     fronts={(r['partIndex'],r['elementIndex']):r for r in rec if r['side']=='north'}
     for record in rec:record['frontRecord']=fronts[(record['partIndex'],record['elementIndex'])]
     apertureproof=None
@@ -306,7 +306,7 @@ def generate(source,visuals,woodrows,gate_rows):
     generated={};closedparts=[];openparts=[];modelproof=[];modelvalues=[]
     for (group,offset),values in sorted(tiled.items()):
         suffix='_'.join(('m'+str(-int(v//48))) if v<0 else str(int(v//48)) for v in offset)
-        name=group+'_'+suffix;model='bloodborne_dw:v126/doors/'+number+'/'+name
+        name=group+'_'+suffix;model='bloodborne_dw:v126/doors/'+resourceSuffix+'/'+name
         elements=[]
         for piece in values:
             element=element_for(piece,keys[piece['record']['q'][2]])
@@ -315,7 +315,7 @@ def generate(source,visuals,woodrows,gate_rows):
             assert all(-16.000000001<=v<=32.000000001 for v in element['from']+element['to'])
             elements.append(element)
         doc={'textures':{keys[t]:t for t in textures},'elements':elements}
-        path=DEST/'resources/assets/bloodborne_dw/models/v126/doors'/number/(name+'.json')
+        path=DEST/'resources/assets/bloodborne_dw/models/v126/doors'/resourceSuffix/(name+'.json')
         dump(path,doc);generated[model]=doc;part={'model':model}
         if any(offset):part['offset']=list(offset)
         closedparts.append(part);modelvalues.append((part,values))
@@ -381,10 +381,11 @@ def generate(source,visuals,woodrows,gate_rows):
     canvas=Image.new('RGBA',(1800,750),'#dbe8ec');draw=ImageDraw.Draw(canvas);font=ImageFont.truetype('C:/Windows/Fonts/arial.ttf',20)
     for i,(title,quads) in enumerate([('Original CLOSED',sourceq),('Partitioned CLOSED',closedq),('OPEN ninety degrees',openq)]):
         canvas.alpha_composite(Image.fromarray(render(verifier,quads,0,580)),(i*600+10,70));draw.text((i*600+20,20),number+' '+title,font=font,fill='#111111')
-    preview=DOCS/'generated-previews'/f'{number}-closed-open.png';preview.parent.mkdir(parents=True,exist_ok=True);canvas.convert('RGB').save(preview)
+    preview=DOCS/'generated-previews'/f'{resourceSuffix}-closed-open.png';preview.parent.mkdir(parents=True,exist_ok=True);canvas.convert('RGB').save(preview)
     sourceimage=render(visuals,sourceq,0,512);closedimage=render(verifier,closedq,0,512)
     pixelmismatch=int(np.count_nonzero(np.any(sourceimage!=closedimage,axis=2)))
     return {'mainId':number,'registryId':source['registryId'],'sourceVariant':source['sourceVariant'],
+        'resourceSuffix':resourceSuffix,
         'variant':source['sourceVariant'],'variants':[source['sourceVariant']],
         'sourceDescriptorFile':source['sourceDescriptorFile'],'sourceDescriptorSha256':source['sourceDescriptorSha256'],
         'leafCount':len(opening),'sourceClosedParts':source['parts'],'partitionedClosedParts':closedparts,'openParts':openparts,

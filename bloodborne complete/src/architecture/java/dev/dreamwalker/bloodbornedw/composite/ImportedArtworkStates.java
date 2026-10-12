@@ -12,10 +12,11 @@ public final class ImportedArtworkStates {
     private ImportedArtworkStates(){}
     public static ActionResult use(CompositeRootBlock block,BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand){
         if(!block.spec.simplePhysicalCollision||block instanceof ImportedStairBlock||block.spec.variants.size()<2||!player.isSneaking()||!player.getStackInHand(hand).isEmpty())return ActionResult.PASS;
-        if(world.isClient)return ActionResult.SUCCESS;
-        var owner=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.owner(world,pos);if(owner==null)return ActionResult.FAIL;
         var active=ImportedAssemblyV126.activePoses(block.spec.id.getPath());
         int current=CompositeSpec.poseVariant(state);
+        if(!active.isEmpty()&&!active.contains(current))return ActionResult.PASS;
+        if(world.isClient)return ActionResult.SUCCESS;
+        var owner=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.owner(world,pos);if(owner==null)return ActionResult.FAIL;
         int next=active.isEmpty()?(current+1)%block.spec.variants.size():active.get((active.indexOf(current)+1)%active.size());
         if(next==current)return ActionResult.PASS;
         BlockState changed=state.with(CompositeRootBlock.VARIANT,next%16);

@@ -53,11 +53,16 @@ public final class AssemblyV126GameTests implements FabricGameTest {
     /** Apply only a common extra yaw. The middle90797 section deliberately
      * keeps the opposite source yaw recorded in the actual old preview. */
     private static List<ObjectInstance> before(TestContext t,BlockPos root,JsonObject assembly,int extraYaw) {
+        return before(t,root,assembly,extraYaw,false);
+    }
+    private static List<ObjectInstance> before(TestContext t,BlockPos root,JsonObject assembly,int extraYaw,boolean rotateHorizontalSourceRoots) {
         List<ObjectInstance> result=new ArrayList<>();int index=0;
         for(var raw:assembly.getAsJsonArray("components")) {
             var component=raw.getAsJsonObject();var xyz=component.getAsJsonArray("relativePosition");
-            t.assertTrue(xyz.get(0).getAsInt()==0&&xyz.get(2).getAsInt()==0,"reviewed source fixture has exact vertical relative roots");
-            var pos=root.up(xyz.get(1).getAsInt());var properties=component.getAsJsonObject("properties");
+            if(!rotateHorizontalSourceRoots)t.assertTrue(xyz.get(0).getAsInt()==0&&xyz.get(2).getAsInt()==0,"reviewed source fixture has exact vertical relative roots");
+            var delta=new CompositeSourceShift.Shift(xyz.get(0).getAsDouble(),xyz.get(1).getAsDouble(),xyz.get(2).getAsDouble()).rotate(rotateHorizontalSourceRoots?extraYaw:0);
+            t.assertTrue(Math.abs(delta.x()-Math.rint(delta.x()))<1e-7&&Math.abs(delta.z()-Math.rint(delta.z()))<1e-7,"actual old source roots retain exact integral relative placement");
+            var pos=root.add((int)Math.rint(delta.x()),xyz.get(1).getAsInt(),(int)Math.rint(delta.z()));var properties=component.getAsJsonObject("properties");
             int yaw=(properties.get("rotation").getAsInt()+extraYaw)&7;
             var state=pose(component.get("registryId").getAsString(),properties.get("variant").getAsInt(),yaw)
                 .with(CompositeRootBlock.PROFILE,properties.get("profile").getAsString().equals("alt")?CompositeRootBlock.Profile.ALT:CompositeRootBlock.Profile.BASE)
@@ -69,6 +74,12 @@ public final class AssemblyV126GameTests implements FabricGameTest {
         var afterState=pose(assembly.get("primaryRegistryId").getAsString(),assembly.get("installationPose").getAsInt(),CompositeData.state(result.get(0).rootData()).get(CompositeRootBlock.ROTATION));
         load(t.getWorld(),CompositeRuntime.instance(t.getWorld(),root,afterState,result.get(0).owner().instanceId(),CompositeData.nbt(result.get(0).rootData().blockEntityNbt())));
         return List.copyOf(result);
+    }
+    private static JsonObject cityMounting() {
+        var input=AssemblyV126GameTests.class.getResourceAsStream("/bloodborne_dw/v126-city-mounting-expectations.json");
+        if(input==null)throw new IllegalStateException("Missing independent source-city90923 mounting-state fixture");
+        try(var reader=new InputStreamReader(input,StandardCharsets.UTF_8)){return JsonParser.parseReader(reader).getAsJsonObject();}
+        catch(Exception failure){throw new IllegalStateException("Invalid90923 source-city mounting-state fixture",failure);}
     }
     private static void installSaved(TestContext t,List<ObjectInstance> values) {
         Set<UUID> initial=new HashSet<>();values.forEach(value->initial.add(value.owner().instanceId()));
@@ -144,6 +155,23 @@ public final class AssemblyV126GameTests implements FabricGameTest {
             Set<String> parts=new HashSet<>();recipe.components().forEach(value->parts.add(value.registryId()));
             for(List<String> rejected:List.of(List.of("90660","90023"),List.of("90023","93186"),List.of("90507","90023"),List.of("90480","90839")))t.assertTrue(!parts.containsAll(rejected.stream().map(AssemblyV126GameTests::registry).toList()),"rejected composition is absent from migration recipes: "+rejected);
             for(String window:List.of("93113","93117","93116","93115"))t.assertTrue(!parts.contains(registry(window)),"shared window part is never consumed "+window);
+        }
+        t.complete();
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v126_90923_city_mounting_state")
+    public void actualSourceCityDoorAndRearOffsetCapMergeAsStateTwoInOne90923TypeAtEveryCardinalFacing(TestContext t) {
+        var assembly=cityMounting();t.assertTrue(assembly.get("primaryId").getAsString().equals("90923")&&assembly.get("installationPose").getAsInt()==2,"actual rear-offset city cap is an alternate mounting state of the existing90923 family");
+        t.assertTrue(ImportedAssemblyV126.activePoses(assembly.get("primaryRegistryId").getAsString()).equals(List.of(1,2))&&ImportedAssemblyV126.installationPose(assembly.get("primaryRegistryId").getAsString())==1,"the approved preview remains default and the city mounting uses its own working state");
+        var root=t.getAbsolutePos(new BlockPos(20736,96,64));
+        for(int extra:new int[]{0,2,4,6}) {
+            var values=before(t,root,assembly,extra,true);installSaved(t,values);
+            var result=ImportedAssemblyV126.migrateLoadedRoot(t.getWorld(),values.get(0).owner());
+            t.assertTrue(result.outcome()==TransactionCore.Outcome.COMMITTED,"exact old source-city rear-cap pair merges at a cardinal facing: "+result.reason());
+            var current=current(t.getWorld(),root);var picked=CompositeRuntime.pick(t.getWorld(),current.owner());
+            t.assertTrue(picked.isOf(block(assembly.get("primaryRegistryId").getAsString()).asItem())&&picked.getSubNbt("BlockStateTag").getString("variant").equals("2"),"copy selects the same item and retains city mounting state2");
+            t.assertTrue(ImportedAssemblyV126.canonicalStack(picked).getSubNbt("BlockStateTag").getString("variant").equals("2"),"canonicalization keeps an already completed alternate mounting state");
+            verifyMerged(t,assembly,values,root);
         }
         t.complete();
     }

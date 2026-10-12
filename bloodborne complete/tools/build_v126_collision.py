@@ -14,10 +14,11 @@ def main():
     changed['bloodborne_dw:source_hold_ladder_02']={'kind':'functional-ladder','before':0}
     doorfile=ROOT/'build/v126-door-plan/door-manifest.json'
     doorrows={}
-    if doorfile.exists():
-        doors=read(doorfile)
+    for file in [doorfile,ROOT/'build/v126-city-mounteddoor/door-manifest.json']:
+        if not file.exists():continue
+        doors=read(file)
         for row in doors['doors']:
-            registry=row['registryId'];doorrows[registry]=row
+            registry=row['registryId'];entry=doorrows.setdefault(registry,{'variants':[]});entry['variants']+=row.get('variants',[row['variant']])
             changed.setdefault(registry,{'kind':'functional-door','before':0})
     models=ModelGeometry();tables=[];indices={};objects={};cache={};proof=[]
     def table(rows):

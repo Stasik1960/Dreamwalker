@@ -1306,6 +1306,141 @@
           1
         ]
       }
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "leafCount": 1,
+      "sourceClosedParts": [
+        {
+          "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_top",
+          "offset": [
+            0.0,
+            16.0,
+            0.0
+          ]
+        },
+        {
+          "model": "bloodborne_dw:remaining/source/minecraft/block/smooth_quartz_top",
+          "offset": [
+            0.0,
+            48.0,
+            -16.0
+          ]
+        }
+      ],
+      "leafHinges": {
+        "single": {
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "yaw": 90,
+          "hingeAxis": "Y at left wood leaf edge"
+        }
+      },
+      "models": [
+        {
+          "role": "single",
+          "model": "bloodborne_dw:v126/doors/90923_mount_back/single_0_0_0",
+          "partOffset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsUnits": [
+            0.0,
+            0.0,
+            -1.0,
+            16.0,
+            42.0,
+            1.0
+          ]
+        },
+        {
+          "role": "single",
+          "model": "bloodborne_dw:v126/doors/90923_mount_back/single_0_1_0",
+          "partOffset": [
+            0.0,
+            48.0,
+            0.0
+          ],
+          "boundsUnits": [
+            0.0,
+            0.0,
+            -1.0,
+            16.0,
+            42.0,
+            1.0
+          ]
+        },
+        {
+          "role": "static",
+          "model": "bloodborne_dw:v126/doors/90923_mount_back/static_0_0_0",
+          "partOffset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "boundsUnits": [
+            -8.0,
+            0.0,
+            -21.0,
+            24.0,
+            64.0,
+            -1.0
+          ]
+        },
+        {
+          "role": "static",
+          "model": "bloodborne_dw:v126/doors/90923_mount_back/static_0_1_m1",
+          "partOffset": [
+            0.0,
+            48.0,
+            -48.0
+          ],
+          "boundsUnits": [
+            -8.0,
+            0.0,
+            -21.0,
+            24.0,
+            64.0,
+            -1.0
+          ]
+        },
+        {
+          "role": "static",
+          "model": "bloodborne_dw:v126/doors/90923_mount_back/static_0_1_0",
+          "partOffset": [
+            0.0,
+            48.0,
+            0.0
+          ],
+          "boundsUnits": [
+            -8.0,
+            0.0,
+            -21.0,
+            24.0,
+            64.0,
+            -1.0
+          ]
+        }
+      ],
+      "passage": {
+        "footCentreUnits": [
+          8.0,
+          0.8,
+          0.0
+        ],
+        "crossingDistanceUnits": 64,
+        "normal": [
+          0,
+          0,
+          1
+        ]
+      }
     }
   ]
 }
