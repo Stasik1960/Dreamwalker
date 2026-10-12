@@ -1,4 +1,10 @@
-DREAMWALKER MODEL PACKS 0.2.0 — FABRIC 1.20.1, JAVA 17
+DREAMWALKER MODEL PACKS 0.3.0 — FABRIC 1.20.1, JAVA 17
+
+Каждый colliders[].mode: both — игроки и установка блоков;
+blocks — только установка блоков (игроки проходят);
+players — только движение игроков (блоки можно ставить внутри).
+В одной модели/сборке разрешены все три режима. Сидения не являются коллизиями.
+Игровые наборы v1 сохраняют players, v2 — both, v3 — режим каждой записи.
 
 Этот отдельный мод добавляет размещаемые энтити-декорации из ZIP.
 Работает рядом с Dreamwalker BB V10, не заменяет его встроенные блоки.
@@ -7,7 +13,7 @@ DREAMWALKER MODEL PACKS 0.2.0 — FABRIC 1.20.1, JAVA 17
 УСТАНОВКА
 1. Сделайте резервную копию мира. Начните с отдельного тестового мира.
 2. Установите Fabric Loader для Minecraft 1.20.1 и Fabric API 1.20.1.
-3. Положите dreamwalker-modelpacks-0.2.0.jar в mods/ клиента и сервера.
+3. Положите dreamwalker-modelpacks-0.3.0.jar в mods/ клиента и сервера.
 4. В редакторе создайте коллизии/сидения или отметьте вариант завершённым.
    Для соединения моделей используйте «＋ Сборка», сохраните одним объектом.
 5. Нажмите «Архив для игры», задайте постоянный ID набора латиницей.
@@ -40,12 +46,12 @@ Shift — встать; Shift+ПКМ по объекту — переключи�
 Ошибочный набор останавливает загрузку: смотрите latest.log.
 
 ФОРМАТ ZIP
-pack.json: schema=dreamwalker.model-pack, version=2,
-collisionScope=players_and_blocks, id, name, objects.
+pack.json: schema=dreamwalker.model-pack, version=3,
+collisionScope=per_collider, id, name, objects.
 Старый version=1 поддержан с прежними коллизиями только игроков.
 objects: id, name, states. states: key, name, quads, bounds, colliders, seats.
 quads: texture (путь PNG), vertices (4 XYZ), uv (4 UV), normal (XYZ).
-bounds: minXYZ,maxXYZ; colliders: center,size,rotation; seats: id,center,rotation.
+bounds: minXYZ,maxXYZ; colliders: center,size,rotation,mode; seats: id,center,rotation.
 Координаты уже в блоках Minecraft (редактор делит на 16 и один раз
 применяет scale оригинала). rotation — градусы Euler ZYX.
 center сидения — центр ВЕРХНЕЙ поверхности маркера; не центр его объёма.
@@ -77,13 +83,13 @@ source.zip: Gradle-проект, исходники и тесты. Для сбо
 и интернет. Распакуйте, запустите gradlew.bat build. runGametest требует
 положить DEMO-test_pack.zip в build/gametest/config/dreamwalker_modelpacks/packs/.
 
-КОЛЛИЗИИ БЛОКОВ (V3 / загрузчик 0.2.0)
-Разметка общая: запрещено положительное пересечение ячейки блока и OBB.
+КОЛЛИЗИИ БЛОКОВ (V4 / загрузчик 0.3.0)
+Для режимов «Игроки и блоки» / «Только блоки» запрещено пересечение блока и OBB.
 Касание границ допустимо. Проверяются обе ячейки дверей/кроватей/высоких
 цветков. Смена варианта отклоняется, если новые объёмы пересекут блоки.
 Сидения не резервируют место для блоков. Старые ZIP v1 переэкспортируйте
 кнопкой «Архив для игры», замените старый набор, сохранив тот же ID.
-Сначала замените JAR 0.1.0 на 0.2.0 (не устанавливайте оба одновременно).
+Сначала замените JAR 0.1.0 на 0.3.0 (не устанавливайте оба одновременно).
 Команды /setblock, поршни, генерация мира и моды, напрямую вызывающие
 setBlockState или обходящие BlockItem, этой проверкой не перехватываются.
 Для строительных инструментов встроенного V10 используется пакет Codex
