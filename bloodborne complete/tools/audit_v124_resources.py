@@ -15,8 +15,9 @@ EXPECTED_BASELINE_SHA='34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e
 VANILLA=Path('C:/Users/vakir/.gradle/caches/fabric-loom/1.20.1/minecraft-client.jar')
 RESOURCE_ROOTS=['src/architecture/resources/','src/rp/resources/']
 NEW_CLASSES={'ImportedTypeAliases','ImportedTypeMigration','ImportedArtworkBlock',
-             'ImportedArtworkStates','ImportedStairBlock','ImportedStairShapes','ImportedLadderBlock'}
-NEW_METADATA={'bloodborne_dw/imported-type-aliases.json','bloodborne_dw/imported-stair-types.json'}
+             'ImportedArtworkStates','ImportedStairBlock','ImportedStairShapes','ImportedLadderBlock','ImportedStairLegacyArt'}
+NEW_METADATA={'bloodborne_dw/imported-type-aliases.json','bloodborne_dw/imported-stair-types.json','bloodborne_dw/imported-stair-legacy-art.json'}
+EXPECTED_LEGACY_ART_SHA='dd9e3d321eab2115a165d07b28148218586c6174c38a67049585ae2b9668abcc'
 VARIANT_SHAPES={'straight','inner_left','inner_right','outer_left','outer_right','original_trim'}
 
 def sha(data):return hashlib.sha256(data).hexdigest()
@@ -43,7 +44,7 @@ def references(value,keys=('model','altModel')):
     return result
 
 def audit(args):
-    failures=[];notes=[];counts=Counter()
+    failures=[];notes=[];counts=Counter();protected_texture_inputs=[]
     fail=lambda code,detail:failures.append({'code':code,'detail':detail})
     final_path=args.jar.resolve();before_path=args.baseline_jar.resolve()
     assert final_path.is_file() and before_path.is_file()
@@ -75,6 +76,27 @@ def audit(args):
                 fail('PROTECTED_V12_MAPPING',m)
             if m['oldRegistryId'].split(':')[1] not in base['descriptors']:fail('UNKNOWN_OLD_MAPPING_ID',m)
         artwork_plan={g['mainRegistryId']:g for g in read_json(DOC/'general-functional-groups.json')['groups']}
+        legacy_path='bloodborne_dw/imported-stair-legacy-art.json'
+        legacy_art=jar_json(legacy_path)
+        if sha(final[legacy_path])!=EXPECTED_LEGACY_ART_SHA:fail('LEGACY_STAIR_ART_DIFFERS_REVIEWED_TABLE',sha(final[legacy_path]))
+        if legacy_art.get('scope')!='POST_V12_NATIVE_STAIRS_APPEARANCE_ONLY' or legacy_art.get('baselineCommit')!=base['baselineCommit']:fail('LEGACY_STAIR_ART_SCOPE',legacy_art.get('scope'))
+        art_rows=legacy_art['states'];art_keys={r['key'] for r in art_rows}
+        if len(art_rows)!=313 or len(art_keys)!=313:fail('LEGACY_STAIR_ART_KEY_COUNT',len(art_keys))
+        for r in art_rows:
+            m=mapped.get((r['oldRegistryId'],r['oldVariant']))
+            if r['key']!=r['oldRegistryId']+'|'+str(r['oldVariant']) or not m or r['registryId']!=m['newRegistryId'] or r['variant']!=m['newVariant'] or r['rotationDelta']!=m['rotationDelta']:
+                fail('LEGACY_STAIR_ART_MAPPING',r['key'])
+        counts['validatedLegacyStairArtworkKeys']=len(art_keys)
+        metadata=read_json(DOC/'group-metadata-audit.json')
+        if metadata['status']!='PASS':fail('UNRESOLVED_MERGED_BEHAVIOR_METADATA',metadata)
+        tint_paths={'source_grass_block','source_bricks_grass_block_0','source_potted_fern'}
+        tint_rows=metadata.get('runtimeTintChecks',[])
+        if {r['registryId'].split(':')[1] for r in tint_rows}!=tint_paths or any(r['status']!='PASS' for r in tint_rows):fail('BIOME_TINT_METADATA_COVERAGE',tint_rows)
+        for path in tint_paths:
+            registry='bloodborne_dw:'+path
+            group=next((g for g in groups.values() if registry in g['members']),None)
+            if group and any(r.split(':')[1] not in tint_paths for r in group['members']):fail('MIXED_HARDCODED_BIOME_TINT',registry)
+        counts['preservedHardcodedBiomeTintIdentities']=3
         allowed_descriptor_paths={f"bloodborne_dw/composite/{registry.split(':')[1]}.json" for registry in groups}
         changed_old=[]
         for p,data in old.items():
@@ -116,6 +138,10 @@ def audit(args):
                 stem=p[:-6].split('$',1)[0]
                 if stem.startswith('dev/dreamwalker/bloodbornedw/composite/') and stem.rsplit('/',1)[1] in NEW_CLASSES:
                     counts['newApprovedProductionClasses']+=1;continue
+                # Only nested compiler output beneath exact documented shared
+                # source classes is allowed; new outer classes still fail.
+                if '$' in p and stem in allowed_class_prefixes:
+                    counts['newDocumentedSharedHookInnerClasses']+=1;continue
                 fail('UNDOCUMENTED_NEW_CLASS',p);continue
             if p.startswith('assets/bloodborne_dw/models/block/imported_stairs/') and p.endswith('.json'):
                 components=p.split('/');i,shape=components[-2],components[-1][:-5]
@@ -137,6 +163,10 @@ def audit(args):
                 expected=copy.deepcopy(original);expected['variants']=[]
                 plan=artwork_plan.get(registry)
                 if not plan:fail('MISSING_APPROVED_ARTWORK_PLAN',registry);continue
+                if plan.get('canonicalName'):expected['displayName']=plan['canonicalName']
+                if plan.get('renderLayerOverride'):
+                    if group['primaryId']!='90411' or plan['renderLayerOverride']!='translucent':fail('UNAUTHORIZED_RENDER_LAYER_OVERRIDE',registry)
+                    expected['layer']=plan['renderLayerOverride']
                 for rep in plan['representatives']:
                     expected['variants'].append(copy.deepcopy(base['descriptors'][rep['registryId'].split(':')[1]]['variants'][rep['oldVariant']]))
                 if current!=expected:fail('PRIMARY_VARIANT_UNION_DIFFERS_APPROVED',registry)
@@ -204,9 +234,21 @@ def audit(args):
                 model=resolved(ref);bindings=model.get('textures',{})
                 for element in model.get('elements',[]):
                     for face in element.get('faces',{}).values():texture(face['texture'],bindings)
-                for key,value in bindings.items():texture(value,bindings)
+                for key,value in bindings.items():
+                    try:texture(value,bindings)
+                    except ValueError as exc:
+                        # Child geometry can override all parent faces while
+                        # retaining unused parent aliases. Visible faces above
+                        # must resolve. Existing unused/particle source defects
+                        # are preserved only with byte-identical baseline art.
+                        p=model_path(ref)
+                        if 'Unbound texture alias' not in str(exc) or p not in old or final.get(p)!=old[p]:raise
+                        protected_texture_inputs.append({'model':ref,'binding':key,'value':value,
+                          'reason':str(exc),'status':'SOURCE_DEFECT_UNCHANGED',
+                          'visibleFaceDependencies':'PASS','baselineModelSha256':sha(old[p])})
             except Exception as e:fail('MODEL_DEPENDENCY_CLOSURE',{'model':ref,'reason':str(e)})
         roots=[]
+        roots.extend(references(legacy_art))
         for p in final:
             if p.startswith('assets/') and '/models/item/' in p and p.endswith('.json'):
                 _,namespace,_,*parts=p.split('/');roots.append(namespace+':'+ '/'.join(parts)[:-5])
@@ -236,6 +278,7 @@ def audit(args):
             except Exception as e:fail('UNUSED_MODEL_PARENT_CLOSURE',{'model':ref,'reason':str(e)})
         counts['concreteModelRoots']=len(reachable);counts['resolvedModelDependencies']=len(visited)
         counts['resolvedTextureDependencies']=len(texture_dependencies);counts['unusedParameterizedTemplateFaces']=len(templates)
+        counts['unchangedSourceUnboundUnusedTextureInputs']=len(protected_texture_inputs)
         frozen_hashes=read_json(DOC/'baseline-protected-hashes.json')['files'];source_hooks=[]
         for p,digest in frozen_hashes.items():
             current=ROOT/p
@@ -255,13 +298,33 @@ def audit(args):
                 p=file.relative_to(ROOT/prefix).as_posix()
                 if p=='fabric.mod.json':continue
                 if p not in final:fail('CURRENT_SOURCE_RESOURCE_NOT_PACKAGED',prefix+p)
-                elif final[p]!=file.read_bytes():fail('JAR_DIFFERS_CURRENT_SOURCE_RESOURCE',prefix+p)
+                elif final[p]!=file.read_bytes():
+                    # Loom adds this one refmap property during packaging. All
+                    # other JSON, the exact baseline refmap and its mixin keys
+                    # must match the actual archive, without a general waiver.
+                    loom_ok=False
+                    if p=='bloodborne_dw.composite.mixins.json':
+                        packed=jar_json(p);source=json.loads(file.read_bytes());before=json.loads(old[p])
+                        refmap=packed.get('refmap');without_refmap=dict(packed);without_refmap.pop('refmap',None)
+                        if (without_refmap==source and refmap==before.get('refmap') and refmap in final
+                            and refmap in old and final[refmap]==old[refmap]):
+                            refmap_data=jar_json(refmap);package=source['package'].replace('.','/')
+                            declared={package+'/'+name for name in source.get('mixins',[])+source.get('client',[])+source.get('server',[])}
+                            actual=set(refmap_data.get('mappings',{}))
+                            loom_ok=bool(actual) and actual<=declared and all(name+'.class' in final for name in declared)
+                            if loom_ok:
+                                counts['verifiedLoomRefmapTransformations']+=1
+                                notes.append({'code':'LOOM_REFMAP_PACKAGING','resource':p,'refmap':refmap,
+                                  'refmapSha256':sha(final[refmap]),'unchangedBaselineRefmap':True,
+                                  'sourceConfigurationUnchanged':True})
+                    if not loom_ok:fail('JAR_DIFFERS_CURRENT_SOURCE_RESOURCE',prefix+p)
         result={'schema':'dreamwalker-v124-final-resource-audit-v1','status':'FAIL' if failures else 'PASS',
           'productionJar':str(final_path),'productionJarSha256':production_sha,
           'baselineJar':str(before_path),'baselineJarSha256':baseline_sha,'baselineCommit':base['baselineCommit'],
           'counts':dict(counts),'approvedChangedEntries':changed_old,'documentedNewOnlySharedHooks':source_hooks,
           'collisionContractSha256':sha(baseline_contract),'authorCollisionExport':'NOT_SUPPLIED_NOT_APPLIED',
           'qaClassesExcluded':not leaked,'failures':failures,'notes':notes,
+          'protectedBaselineTextureInputs':protected_texture_inputs,
           'nativeGameplay':'NOT_RUN_BY_RESOURCE_AUDIT'}
         if sha(final_path.read_bytes())!=production_sha or sha(before_path.read_bytes())!=baseline_sha:
             result['status']='FAIL';result['failures'].append({'code':'INPUT_MUTATED_DURING_READONLY_AUDIT','detail':'JAR hash changed while checking'})

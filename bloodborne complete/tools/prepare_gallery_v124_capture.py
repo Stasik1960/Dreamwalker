@@ -4,6 +4,8 @@ import argparse
 from collections import defaultdict
 import hashlib
 import json
+import itertools
+import math
 from pathlib import Path
 import re
 import zipfile
@@ -11,6 +13,75 @@ from prepare_flat_gallery_capture import camera, architecture, diagnostic
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE_KEYS = ('variant', 'profile', 'open', 'rotation', 'half', 'shape', 'trim', 'connections', 'height', 'art_bank', 'mount')
+
+
+def segment_intersects_box(eye, target, bounds):
+    """Conservative obstruction query; a saved visual AABB is never edited."""
+    low, high = 0.00001, .99999
+    for axis in range(3):
+        direction = target[axis] - eye[axis]
+        if abs(direction) < 1e-10:
+            if eye[axis] < bounds[axis] or eye[axis] > bounds[axis + 3]:
+                return False
+            continue
+        a = (bounds[axis] - eye[axis]) / direction
+        b = (bounds[axis + 3] - eye[axis]) / direction
+        low, high = max(low, min(a, b)), min(high, max(a, b))
+        if high < low:
+            return False
+    return True
+
+
+def unobstructed_camera(row, exhibits):
+    """Keep full-size framing, choose a clear deterministic gallery azimuth.
+
+    The earlier north-only camera could sit inside a different huge V12 tree.
+    Check the eye and rays across the target envelope against every other
+    saved station. This changes only the QA marker, never objects or worlds.
+    """
+    bounds = row['bounds']
+    standard = camera(bounds)
+    eye0 = [standard[0], standard[1] + 1.62, standard[2]]
+    center = [(bounds[i] + bounds[i + 3]) / 2 for i in range(3)]
+    relative = [eye0[i] - center[i] for i in range(3)]
+    targets = [[bounds[0] + (bounds[3] - bounds[0]) * x,
+                bounds[1] + (bounds[4] - bounds[1]) * y,
+                bounds[2] + (bounds[5] - bounds[2]) * z]
+               for x, y, z in itertools.product((.02, .5, .98), (.02, .98), (.02, .5, .98))]
+    targets.append(center)
+    obstacles = [other for other in exhibits if other['key'] != row['key']]
+    origin = row.get('renderOrigin', row['root'])
+    candidates = []
+    for offset in (0, 30, -30, 60, -60, 90, -90, 120, -120, 150, -150, 180,
+                   15, -15, 45, -45, 75, -75, 105, -105, 135, -135, 165, -165):
+        angle = math.radians(offset)
+        eye = [center[0] + relative[0] * math.cos(angle) - relative[2] * math.sin(angle),
+               eye0[1],
+               center[2] + relative[0] * math.sin(angle) + relative[2] * math.cos(angle)]
+        # The retry client uses renderDistance8; every RP entity root must be
+        # comfortably within its preserved128-block registration track range.
+        distance = math.hypot(eye[0] - origin[0], eye[2] - origin[2])
+        if row['kind'] == 'rp_object' and distance > 112:
+            continue
+        blockers = []
+        cone = [min(eye[i], bounds[i]) for i in range(3)] + [max(eye[i], bounds[i + 3]) for i in range(3)]
+        for other in obstacles:
+            box = other['bounds']
+            if any(box[i + 3] < cone[i] or box[i] > cone[i + 3] for i in range(3)):
+                continue
+            if all(box[i] <= eye[i] <= box[i + 3] for i in range(3)) or any(segment_intersects_box(eye, target, box) for target in targets):
+                blockers.append(other['key'])
+        delta = [center[i] - eye[i] for i in range(3)]
+        yaw = math.degrees(math.atan2(-delta[0], delta[2]))
+        pitch = -math.degrees(math.atan2(delta[1], math.hypot(delta[0], delta[2])))
+        view = [round(eye[0], 4), round(eye[1] - 1.62, 4), round(eye[2], 4), round(yaw, 4), round(pitch, 4)]
+        candidates.append({'view': view, 'offset': offset, 'blockers': blockers, 'distance': distance})
+        if not blockers:
+            return view, {'policy': 'Saved visual AABBs: eye and19 target-envelope rays clear',
+                          'azimuthDeltaDegrees': offset, 'blockingStations': [],
+                          'entityOriginHorizontalDistance': round(distance, 4),
+                          'requiredCaptureRenderDistanceChunks': 8}
+    raise AssertionError('No unobstructed full-target QA camera for ' + row['key'] + ': ' + repr(candidates))
 
 
 def main():
@@ -78,11 +149,12 @@ def main():
     assert len(chosen) <= 100
     frames = []
     for index, row in enumerate(chosen):
-        view = camera(row['bounds'])
+        view, camera_evidence = unobstructed_camera(row, rows)
         slug = re.sub(r'[^A-Za-z0-9_-]', '_', row['key'])[:72]
         frame = {'fileName': f'gallery-{index + 1:02d}-{slug}.png', 'key': row['key'], 'section': row['section'],
                  'name': row['name'], 'camera': view, 'command': 'tp @s ' + ' '.join(map(str, view)), 'waitTicks': 80,
                  'rootChecks': [], 'entityChecks': []}
+        frame['cameraPlanningEvidence'] = camera_evidence
         if architecture(row):
             check = {'root': row['root'], 'registry': row['registry'], 'uuid': row['uuid']}
             state = actual_states[row['key']]
@@ -101,6 +173,8 @@ def main():
     result = {'schema': 'dreamwalker-flat-gallery-v124-capture-input', 'gallerySchema': manifest['schema'],
               'productionJarSha256': digest, 'manifestSha256': hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
               'newWorkingTypes': count, 'nativeStairMaterials': len(stair_types), 'quitAfterCapture': True, 'frames': frames,
+              'captureSetup': {'renderDistanceChunks': 8, 'worldMutation': False,
+                               'policy': 'Alternate azimuths avoid other saved visual envelopes; all RP entity roots remain within112 blocks of camera'},
               'scope': 'Every current section, each native stair material with saved half/shape, canonical rung ladder height, V12 AUTO walls, original V12/RP objects and framed items. No block changes; native ScreenshotRecorder images remain unmodified.'}
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf8', newline='\n')

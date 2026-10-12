@@ -1,0 +1,479 @@
+{
+  "schema": "dreamwalker-v124-final-resource-audit-v1",
+  "status": "FAIL",
+  "productionJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.4-dedup.jar",
+  "productionJarSha256": "a6a98553d45deb7e5aabf14fe7a110d4aceda0d31cb21c3da5e8b3b2afb3d74d",
+  "baselineJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\releases\\Dreamwalker-BB\\v12.3-outline-icons\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.3-outline-icons.jar",
+  "baselineJarSha256": "34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054",
+  "baselineCommit": "27bf67e63da6f8ba0a9dee2d1587310782c874e2",
+  "counts": {
+    "validatedLegacyStairArtworkKeys": 313,
+    "preservedHardcodedBiomeTintIdentities": 3,
+    "unchangedBaselineModels": 4223,
+    "unchangedBaselineTextures": 559,
+    "unchangedVanillaNamespaceAssets": 1,
+    "documentedSharedHookClasses": 21,
+    "newApprovedStairModels": 36,
+    "newApprovedMetadata": 3,
+    "newApprovedProductionClasses": 18,
+    "unchangedNonprimaryDescriptors": 826,
+    "approvedArtworkUnions": 199,
+    "approvedNativeStairDescriptors": 19,
+    "approvedLadderDescriptors": 1,
+    "reservedFiveDigitNumbers": 1322,
+    "originalV12CatalogueRows": 116,
+    "concreteModelRoots": 4154,
+    "resolvedModelDependencies": 4263,
+    "resolvedTextureDependencies": 284,
+    "unusedParameterizedTemplateFaces": 244,
+    "unchangedProtectedSourceFiles": 3761
+  },
+  "approvedChangedEntries": [
+    "bloodborne_dw/composite/source__wall_dec_top_1.json",
+    "bloodborne_dw/composite/source_acacia_fence_gate.json",
+    "bloodborne_dw/composite/source_acacia_trapdoor_open.json",
+    "bloodborne_dw/composite/source_addon_bag_0.json",
+    "bloodborne_dw/composite/source_addon_barrel_0.json",
+    "bloodborne_dw/composite/source_addon_barrel_10.json",
+    "bloodborne_dw/composite/source_addon_barrel_7.json",
+    "bloodborne_dw/composite/source_addon_bloodviles.json",
+    "bloodborne_dw/composite/source_addon_books_0.json",
+    "bloodborne_dw/composite/source_addon_brown_terracotta.json",
+    "bloodborne_dw/composite/source_addon_button_10.json",
+    "bloodborne_dw/composite/source_addon_button_3.json",
+    "bloodborne_dw/composite/source_addon_candles_0.json",
+    "bloodborne_dw/composite/source_addon_chain_2.json",
+    "bloodborne_dw/composite/source_addon_chains_0.json",
+    "bloodborne_dw/composite/source_addon_chains_1.json",
+    "bloodborne_dw/composite/source_addon_crimson_button_1.json",
+    "bloodborne_dw/composite/source_addon_cyan_terracotta_cyan_terracotta_1.json",
+    "bloodborne_dw/composite/source_addon_cyan_terracotta_cyan_terracotta_2.json",
+    "bloodborne_dw/composite/source_addon_cyan_terracotta_polished_blackstone_stairs3.json",
+    "bloodborne_dw/composite/source_addon_darkoak_door_bottom.json",
+    "bloodborne_dw/composite/source_addon_floor_dec_0.json",
+    "bloodborne_dw/composite/source_addon_floor_panels_0.json",
+    "bloodborne_dw/composite/source_addon_floor_panels_2.json",
+    "bloodborne_dw/composite/source_addon_green_glazed_0.json",
+    "bloodborne_dw/composite/source_addon_hat.json",
+    "bloodborne_dw/composite/source_addon_light_gray_glazed_terracotta_0.json",
+    "bloodborne_dw/composite/source_addon_log_vertical_0.json",
+    "bloodborne_dw/composite/source_addon_new_statue_1.json",
+    "bloodborne_dw/composite/source_addon_note_0.json",
+    "bloodborne_dw/composite/source_addon_oak_fence_gate_0.json",
+    "bloodborne_dw/composite/source_addon_red_glazed_0.json",
+    "bloodborne_dw/composite/source_addon_shattered_glass_2.json",
+    "bloodborne_dw/composite/source_addon_slabs_0.json",
+    "bloodborne_dw/composite/source_addon_slabs_1.json",
+    "bloodborne_dw/composite/source_addon_slabs_1_1.json",
+    "bloodborne_dw/composite/source_addon_slabs_1_6.json",
+    "bloodborne_dw/composite/source_addon_statue_0.json",
+    "bloodborne_dw/composite/source_addon_statue_3.json",
+    "bloodborne_dw/composite/source_addon_stripped_oka_log_0.json",
+    "bloodborne_dw/composite/source_addon_stripped_oka_log_1.json",
+    "bloodborne_dw/composite/source_addon_stripped_oka_log_2.json",
+    "bloodborne_dw/composite/source_addon_test_upperward_0.json",
+    "bloodborne_dw/composite/source_addon_tombstone_gathered_0.json",
+    "bloodborne_dw/composite/source_addon_wall_deco_3.json",
+    "bloodborne_dw/composite/source_addon_wall_deco_5.json",
+    "bloodborne_dw/composite/source_addon_wall_pilaster_0.json",
+    "bloodborne_dw/composite/source_addon_wall_pilaster_2.json",
+    "bloodborne_dw/composite/source_addon_waxed_oxidized_cut_copper.json",
+    "bloodborne_dw/composite/source_addon_wood_obj_1.json",
+    "bloodborne_dw/composite/source_addon_wood_obj_3.json",
+    "bloodborne_dw/composite/source_addon_wooden_box.json",
+    "bloodborne_dw/composite/source_amethyst_block.json",
+    "bloodborne_dw/composite/source_ancient_debris.json",
+    "bloodborne_dw/composite/source_andesite.json",
+    "bloodborne_dw/composite/source_andesite_slab_top.json",
+    "bloodborne_dw/composite/source_assembly_blackstone_wall.json",
+    "bloodborne_dw/composite/source_assembly_brick_wall.json",
+    "bloodborne_dw/composite/source_assembly_cyan_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_deepslate_brick_wall.json",
+    "bloodborne_dw/composite/source_assembly_iron_bars.json",
+    "bloodborne_dw/composite/source_assembly_light_blue_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_nether_brick_wall.json",
+    "bloodborne_dw/composite/source_assembly_orange_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_azure_bluet.json",
+    "bloodborne_dw/composite/source_bamboo_mosaic_stairs.json",
+    "bloodborne_dw/composite/source_bamboo_stairs.json",
+    "bloodborne_dw/composite/source_bell_floor.json",
+    "bloodborne_dw/composite/source_birch_planks.json",
+    "bloodborne_dw/composite/source_birch_trapdoor.json",
+    "bloodborne_dw/composite/source_black_terracotta.json",
+    "bloodborne_dw/composite/source_blackstone.json",
+    "bloodborne_dw/composite/source_blue_orchid.json",
+    "bloodborne_dw/composite/source_blue_orchid_1.json",
+    "bloodborne_dw/composite/source_blue_stained_glass.json",
+    "bloodborne_dw/composite/source_bookshelf.json",
+    "bloodborne_dw/composite/source_brick_slab.json",
+    "bloodborne_dw/composite/source_brick_stairs.json",
+    "bloodborne_dw/composite/source_brick_wall_side_tall.json",
+    "bloodborne_dw/composite/source_bricks_bricks_0.json",
+    "bloodborne_dw/composite/source_bricks_bricks_r_0.json",
+    "bloodborne_dw/composite/source_bricks_bricks_r_1.json",
+    "bloodborne_dw/composite/source_bricks_bricks_rl_0.json",
+    "bloodborne_dw/composite/source_bricks_cracked_bricks_0.json",
+    "bloodborne_dw/composite/source_bricks_m_bricks_0.json",
+    "bloodborne_dw/composite/source_bricks_purpur_block_0.json",
+    "bloodborne_dw/composite/source_bricks_stone_1.json",
+    "bloodborne_dw/composite/source_bricks_stone_2.json",
+    "bloodborne_dw/composite/source_bricks_wallbrick_0.json",
+    "bloodborne_dw/composite/source_bricks_wallbrick_1.json",
+    "bloodborne_dw/composite/source_calcite.json",
+    "bloodborne_dw/composite/source_cherry_stairs.json",
+    "bloodborne_dw/composite/source_chiseled_nether_bricks.json",
+    "bloodborne_dw/composite/source_chiseled_polished_blackstone.json",
+    "bloodborne_dw/composite/source_chiseled_quartz_block.json",
+    "bloodborne_dw/composite/source_chiseled_sandstone.json",
+    "bloodborne_dw/composite/source_cobbled_deepslate_slab.json",
+    "bloodborne_dw/composite/source_cobbled_deepslate_stairs.json",
+    "bloodborne_dw/composite/source_cobblestone_slab.json",
+    "bloodborne_dw/composite/source_cobblestone_stairs.json",
+    "bloodborne_dw/composite/source_copper_block.json",
+    "bloodborne_dw/composite/source_crimson_pressure_plate.json",
+    "bloodborne_dw/composite/source_cut_copper.json",
+    "bloodborne_dw/composite/source_cut_sandstone.json",
+    "bloodborne_dw/composite/source_cyan_concrete.json",
+    "bloodborne_dw/composite/source_cyan_concrete_powder.json",
+    "bloodborne_dw/composite/source_cyan_stained_glass.json",
+    "bloodborne_dw/composite/source_dead_fire_coral_block.json",
+    "bloodborne_dw/composite/source_deepslate_brick_slab.json",
+    "bloodborne_dw/composite/source_deepslate_brick_stairs.json",
+    "bloodborne_dw/composite/source_deepslate_tile_wall_side.json",
+    "bloodborne_dw/composite/source_deepslate_tiles.json",
+    "bloodborne_dw/composite/source_diamond_ore.json",
+    "bloodborne_dw/composite/source_dummy_hunter_0.json",
+    "bloodborne_dw/composite/source_end_stone_brick_slab.json",
+    "bloodborne_dw/composite/source_end_stone_brick_stairs.json",
+    "bloodborne_dw/composite/source_glass_red_stained_glass_rsg_00.json",
+    "bloodborne_dw/composite/source_gothic_window_right.json",
+    "bloodborne_dw/composite/source_granite_slab.json",
+    "bloodborne_dw/composite/source_granite_stairs.json",
+    "bloodborne_dw/composite/source_gray_concrete_powder.json",
+    "bloodborne_dw/composite/source_hold_bench.json",
+    "bloodborne_dw/composite/source_hold_bench_2.json",
+    "bloodborne_dw/composite/source_hold_ladder_02.json",
+    "bloodborne_dw/composite/source_hold_statue.json",
+    "bloodborne_dw/composite/source_hold_statue_2.json",
+    "bloodborne_dw/composite/source_hold_wall_lantern.json",
+    "bloodborne_dw/composite/source_hold_wimperge_1.json",
+    "bloodborne_dw/composite/source_ice.json",
+    "bloodborne_dw/composite/source_iron_block.json",
+    "bloodborne_dw/composite/source_jungle_wood.json",
+    "bloodborne_dw/composite/source_lantern.json",
+    "bloodborne_dw/composite/source_lever.json",
+    "bloodborne_dw/composite/source_light_blue_concrete.json",
+    "bloodborne_dw/composite/source_light_blue_concrete_powder.json",
+    "bloodborne_dw/composite/source_light_blue_stained_glass.json",
+    "bloodborne_dw/composite/source_lightblue_concrete_powder.json",
+    "bloodborne_dw/composite/source_lime_concrete_powder.json",
+    "bloodborne_dw/composite/source_magenta_concrete_powder.json",
+    "bloodborne_dw/composite/source_mangrove_stairs.json",
+    "bloodborne_dw/composite/source_mossy_cobblestone_slab.json",
+    "bloodborne_dw/composite/source_mossy_cobblestone_stairs.json",
+    "bloodborne_dw/composite/source_mossy_stone_brick_slab.json",
+    "bloodborne_dw/composite/source_mud_brick_stairs.json",
+    "bloodborne_dw/composite/source_nether_brick_slab.json",
+    "bloodborne_dw/composite/source_oak_pressure_plate.json",
+    "bloodborne_dw/composite/source_orange_tulip.json",
+    "bloodborne_dw/composite/source_orange_tulip_1.json",
+    "bloodborne_dw/composite/source_polished_andesite_slab.json",
+    "bloodborne_dw/composite/source_polished_andesite_stairs.json",
+    "bloodborne_dw/composite/source_polished_diorite.json",
+    "bloodborne_dw/composite/source_potted_azalea_bush.json",
+    "bloodborne_dw/composite/source_pressure_plate_light_weighted_pressure_plate.json",
+    "bloodborne_dw/composite/source_pressure_plate_light_weighted_pressure_plate_2.json",
+    "bloodborne_dw/composite/source_pressure_plate_light_weighted_pressure_plate_6.json",
+    "bloodborne_dw/composite/source_pressure_plate_window_bottom_4.json",
+    "bloodborne_dw/composite/source_prismarine_slab.json",
+    "bloodborne_dw/composite/source_prismarine_stairs.json",
+    "bloodborne_dw/composite/source_purpur_slab.json",
+    "bloodborne_dw/composite/source_quartz_block.json",
+    "bloodborne_dw/composite/source_rail.json",
+    "bloodborne_dw/composite/source_rails_activator_0.json",
+    "bloodborne_dw/composite/source_red_concrete.json",
+    "bloodborne_dw/composite/source_red_concrete_0.json",
+    "bloodborne_dw/composite/source_red_nether_brick_slab.json",
+    "bloodborne_dw/composite/source_red_nether_brick_wall_side_tall.json",
+    "bloodborne_dw/composite/source_red_sandstone_stairs.json",
+    "bloodborne_dw/composite/source_red_tulip_2.json",
+    "bloodborne_dw/composite/source_redstone_block.json",
+    "bloodborne_dw/composite/source_sandstone_slab.json",
+    "bloodborne_dw/composite/source_sandstone_slab_0.json",
+    "bloodborne_dw/composite/source_slabs_prismarine_brick_slab_pbs_00.json",
+    "bloodborne_dw/composite/source_slabs_prismarine_brick_slab_pbs_04.json",
+    "bloodborne_dw/composite/source_smooth_red_bottom.json",
+    "bloodborne_dw/composite/source_smooth_sandstone.json",
+    "bloodborne_dw/composite/source_smooth_sandstone_stairs_bottom.json",
+    "bloodborne_dw/composite/source_snow_height12.json",
+    "bloodborne_dw/composite/source_snow_height2.json",
+    "bloodborne_dw/composite/source_snow_height8.json",
+    "bloodborne_dw/composite/source_spruce_pressure_plate.json",
+    "bloodborne_dw/composite/source_spruce_trapdoor_bottom.json",
+    "bloodborne_dw/composite/source_stairs_acacia_stairs_inner.json",
+    "bloodborne_dw/composite/source_stairs_cut_copper_stairs_inner_left.json",
+    "bloodborne_dw/composite/source_stairs_cut_copper_stairs_top_0.json",
+    "bloodborne_dw/composite/source_stairs_dark_prismarine_stairs_inner_left.json",
+    "bloodborne_dw/composite/source_stairs_dark_prismarine_stairs_inner_left_bottom.json",
+    "bloodborne_dw/composite/source_stairs_dark_prismarine_stairs_inner_left_bottom1.json",
+    "bloodborne_dw/composite/source_stairs_dark_prismarine_stairs_inner_right1.json",
+    "bloodborne_dw/composite/source_stairs_dark_prismarine_stairs_outer_right_bottom.json",
+    "bloodborne_dw/composite/source_stairs_exposed_cut_copper_stairs_inner.json",
+    "bloodborne_dw/composite/source_stairs_exposed_cut_copper_stairs_top_mossy2.json",
+    "bloodborne_dw/composite/source_stairs_exposed_cut_copper_stairs_wall_mossy.json",
+    "bloodborne_dw/composite/source_stairs_jungle_stairs_inner_left_top.json",
+    "bloodborne_dw/composite/source_stairs_polished_deepslate_stairs_bottom.json",
+    "bloodborne_dw/composite/source_stairs_polished_diorite_stairs_inner.json",
+    "bloodborne_dw/composite/source_stairs_prismarine_brick_stairs_top_mossy.json",
+    "bloodborne_dw/composite/source_stairs_prismarine_brick_stairs_top_mossy1.json",
+    "bloodborne_dw/composite/source_stairs_red_sandstone_stairs_bottom_inner.json",
+    "bloodborne_dw/composite/source_stairs_sandstone_stairs_bottom.json",
+    "bloodborne_dw/composite/source_stairs_tombstone_0.json",
+    "bloodborne_dw/composite/source_stairs_tombstone_1.json",
+    "bloodborne_dw/composite/source_stairs_tombstone_6.json",
+    "bloodborne_dw/composite/source_stairs_waxed_exposed_cut_copper_stairs_inner_outer.json",
+    "bloodborne_dw/composite/source_stone_brick_slab.json",
+    "bloodborne_dw/composite/source_stone_brick_stairs.json",
+    "bloodborne_dw/composite/source_stone_button.json",
+    "bloodborne_dw/composite/source_stone_pressure_plate.json",
+    "bloodborne_dw/composite/source_stone_stairs.json",
+    "bloodborne_dw/composite/source_stripped_jungle_wood.json",
+    "bloodborne_dw/debug_catalogue.json",
+    "bloodborne_dw/remaining-catalogue.json",
+    "dev/dreamwalker/bloodbornedw/architecture/RemainingArchitecture.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeArchitecture.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient$1.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient$OwnersPacket.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient$SyncContext.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeItem$1.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeItem.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRootBlock.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime$1Hit.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSpec.class",
+    "dev/dreamwalker/bloodbornedw/composite/ImportedCollisionMigration$1.class",
+    "dev/dreamwalker/bloodbornedw/composite/ImportedCollisionMigration$2.class",
+    "dev/dreamwalker/bloodbornedw/composite/ImportedCollisionMigration.class",
+    "dev/dreamwalker/bloodbornedw/composite/ImportedLadderClimbing.class",
+    "dev/dreamwalker/bloodbornedw/composite/mixin/CatalogueStackMigrationMixin.class",
+    "dev/dreamwalker/bloodbornedw/link/CompositeMechanismBridge.class",
+    "dev/dreamwalker/bloodbornedw/tool/ToolCommands.class",
+    "dev/dreamwalker/bloodbornedw/tool/ToolTarget.class",
+    "fabric.mod.json"
+  ],
+  "documentedNewOnlySharedHooks": [
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/RemainingArchitecture.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeArchitecture.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeClient.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeItem.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRootBlock.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSpec.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedCollisionMigration.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedLadderClimbing.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/mixin/CatalogueStackMigrationMixin.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/link/CompositeMechanismBridge.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/tool/ToolCommands.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/tool/ToolTarget.java",
+    "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/RemainingTransferGameTests.java",
+    "src/gametest/resources/fabric.mod.json"
+  ],
+  "collisionContractSha256": "f7cddd1734e90d0f81dd63f1a3a373d54e4b5e203bdcdd7ad8b5de1c5bfc9f98",
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED",
+  "qaClassesExcluded": true,
+  "failures": [
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_addon_chains_1.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_addon_cyan_terracotta_cyan_terracotta_2.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_addon_cyan_terracotta_polished_blackstone_stairs3.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_addon_wall_pilaster_2.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_blue_orchid_1.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_bricks_bricks_r_1.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_bricks_wallbrick_1.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_lime_concrete_powder.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_magenta_concrete_powder.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_pressure_plate_light_weighted_pressure_plate_2.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_red_concrete_0.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_sandstone_slab_0.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_stairs_prismarine_brick_stairs_top_mossy1.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_stairs_tombstone_1.json"
+    },
+    {
+      "code": "UNDOCUMENTED_CHANGED_BASELINE_RESOURCE",
+      "detail": "bloodborne_dw/composite/source_stripped_jungle_wood.json"
+    },
+    {
+      "code": "UNDOCUMENTED_NEW_CLASS",
+      "detail": "dev/dreamwalker/bloodbornedw/composite/CompositeItem$2.class"
+    },
+    {
+      "code": "UNDOCUMENTED_NEW_CLASS",
+      "detail": "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime$1.class"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_addon_chains_1"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_addon_cyan_terracotta_cyan_terracotta_2"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_addon_cyan_terracotta_polished_blackstone_stairs3"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_addon_wall_pilaster_2"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_blue_orchid_1"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_bricks_bricks_r_1"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_bricks_wallbrick_1"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_lime_concrete_powder"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_magenta_concrete_powder"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_pressure_plate_light_weighted_pressure_plate_2"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_red_concrete_0"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_sandstone_slab_0"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_stairs_prismarine_brick_stairs_top_mossy1"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_stairs_tombstone_1"
+    },
+    {
+      "code": "NONPRIMARY_DESCRIPTOR_CHANGED",
+      "detail": "source_stripped_jungle_wood"
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/diorite_wall_post",
+        "reason": "Unbound texture alias #wall"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+        "reason": "Unbound texture alias #all"
+      }
+    },
+    {
+      "code": "JAR_DIFFERS_CURRENT_SOURCE_RESOURCE",
+      "detail": "src/architecture/resources/bloodborne_dw.composite.mixins.json"
+    }
+  ],
+  "notes": [],
+  "nativeGameplay": "NOT_RUN_BY_RESOURCE_AUDIT"
+}

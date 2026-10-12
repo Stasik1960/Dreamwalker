@@ -6,6 +6,7 @@ import json
 import math
 from pathlib import Path
 import re
+import subprocess
 from world_io import read_nbt,write_nbt,compound,Tag
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -19,6 +20,24 @@ def main():
     world=a.world.resolve();assert world.is_relative_to((ROOT/'build').resolve()) and (world/'level.dat').is_file()
     manifest=json.loads(a.manifest.read_text(encoding='utf8'));assert manifest['schema']=='dreamwalker-flat-gallery-v124' and manifest['status']=='PASS_AUTHORED_REQUIRES_PRODUCTION_REOPEN'
     rows=manifest['exhibits'];assert not any(row['section']=='error' for row in rows)
+    counts=json.loads((ROOT/'docs/v12.4-dedup/type-counts.json').read_text(encoding='utf8'))
+    source_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT.parent,text=True).strip()
+    catalogue=manifest['catalogue'];removed=len(manifest['removedRedExhibits']);assert removed==60
+    catalogue['historicalSourceAuditProvenance']={
+        'baselineCommit':catalogue.get('baselineCommit'),
+        'analysisCommit':catalogue.get('analysisCommit'),
+        'diagnosticPolicy':catalogue.get('diagnosticPolicy'),
+        'scope':'Historical original-source/map analysis; these commits and prior diagnostic stations are not the current V12.4 production catalogue'}
+    current={'baselineCommit':counts['baselineCommit'],'sourceCommit':source_commit,
+        'productionJarSha256':manifest['productionJarSha256'],
+        'newWorkingTypes':counts['newWorkingTypesAfter'],
+        'retiredAliasTypesExcluded':counts['retiredWorkingIds'],
+        'removedPreviousRedStations':removed,'diagnosticStations':0}
+    catalogue['currentFunctionalCatalogueProvenance']=current
+    manifest['currentFunctionalCatalogueProvenance']=dict(current)
+    catalogue['diagnosticPolicy']='Current V12.4: all 60 previous red source-defect/diagnostic stations are removed; zero diagnostic platforms and no error exhibits. Missing or damaged authored content is not reconstructed.'
+    catalogue['summary']['removedRedStations']=removed
+    catalogue['summary']['diagnosticStations']=0
     manifest['floorY']=63;manifest['worldName']='Dreamwalker-BB-V12.4-Flat-Gallery'
     level=read_nbt(world/'level.dat');data=compound(compound(level.root)['Data'])
     data['allowCommands'],data['GameType']=Tag(1,1),Tag(3,1);data['LevelName']=Tag(8,'Dreamwalker BB V12.4 · Галерея')
@@ -66,6 +85,9 @@ def main():
           'Исключение: исходные плоскости нулевой толщины лежат на поверхности с техническим подъёмом 1/1024 блока от z-fighting. Подъём сохранён только в новом мире, исходная модель и физика не меняются; точный список — planarExhibits в manifest.\n'
           'Архитектура показана в BASE и закрытых состояниях. Старые RP-объекты сохраняют свои начальные состояния (лестница RP изначально выдвинута). При произвольном повороте, открытии или ALT объект может выйти за платформу текущей позы.\n'
           'Все красные повреждённые/диагностические станции предыдущей галереи исключены. Исходная v16 и прежняя галерея не изменялись.\n'
+          'Отдельно зафиксировано полностью прозрачное исходное состояние 90141 (source_addon_floor_panels_empty), сохранённое как 90133: вариант 8. Его исходная UV-область содержит ноль непрозрачных пикселей; видимый рисунок не реконструировался. Это скрытый прежний ID и состояние одного рабочего типа, а не дополнительная станция. Сохранность подтверждается исходными данными; видимость этого состояния не объявляется PASS.\n'
+          'Второй подтверждённый прозрачный источник: 93223, старый variant 5 → 93214, variant 12. Все 1144 образца alpha на 22 исходных гранях прозрачны; исходные части и зависимости побайтно сохранены. Видимость — NOT_APPLICABLE_FULLY_TRANSPARENT_SOURCE; доказательство — transparent-93223-v5-source-proof.json в verification.zip. Отдельная станция или придуманный видимый рисунок не добавлялись.\n'
+          'baselineCommit/analysisCommit внутри catalogue относятся к историческому анализу исходной карты. currentFunctionalCatalogueProvenance содержит базу V12.3 и commit кода текущей V12.4, её рабочие типы и актуальное исключение 60 красных станций/0 диагностик.\n'
           'GALLERY-INDEX.csv — полный список и команды перехода, gallery-manifest.json — визуальные габариты/состояния/UUID/размещение.\n\n'
           'SHA-256 combined JAR: '+manifest['productionJarSha256']+'\n')
     (world/'README-RU.txt').write_text(text,encoding='utf8',newline='\n')

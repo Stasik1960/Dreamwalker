@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\build_v124_stair_types.py", line 285, in <module>
+    try:main()
+        ^^^^^^
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\build_v124_stair_types.py", line 214, in main
+    if pose is None:pose=generated_pose(primary,half,shape,eastbottom,models,args.apply);selected={'generatedFromAuthoredNativeTreadTemplates':True}
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\build_v124_stair_types.py", line 172, in generated_pose
+    if apply:write(RES/f'assets/bloodborne_dw/models/block/imported_stairs/{primary}/{shape}.json',model)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\build_v124_stair_types.py", line 48, in write
+    p.write_bytes((json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
+  File "C:\Users\vakir\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1036, in write_bytes
+    with self.open(mode='wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\vakir\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 22] Invalid argument: 'C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\src\\architecture\\resources\\assets\\bloodborne_dw\\models\\block\\imported_stairs\\90275\\inner_left.json'

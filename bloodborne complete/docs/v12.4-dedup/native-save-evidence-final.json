@@ -1,0 +1,92 @@
+{
+  "schema": "dreamwalker-v124-native-save-bound-evidence-v1",
+  "status": "PASS",
+  "beforeProductionJarSha256": "34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054",
+  "readOnlyValidation": true,
+  "afterProductionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+  "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+  "qaAddonSha256": "8d3168241a03add3368ebab6ee576c7dc863cf25abb8cc1954640e61ae29776d",
+  "migration": {
+    "status": "PASS",
+    "profile": "docs\\v12.4-dedup\\audit-final-server3.json",
+    "profileSha256": "1d10aa2fa791f6a82d0f37080563655252da66e536fe4a631ea59563157fa39a",
+    "native": "docs\\v12.4-dedup\\native-save-final.json",
+    "nativeSha256": "99e5037b0722325274b5437f558285d39cf0c4ce9f0e2cd125bc4b7feabe55cd",
+    "runDirectory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-final-3",
+    "consoleSha256": "cccf07f00184df31eca5ff2b9222b338bc447e491dddd2a0053419425f0cb358",
+    "normalStopAndCompleteSave": "PASS",
+    "unexpectedRuntimeErrors": [],
+    "expectedWarnings": [
+      "[03:06:52] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+    ],
+    "qaAddonSha256": "8d3168241a03add3368ebab6ee576c7dc863cf25abb8cc1954640e61ae29776d",
+    "sourceWorldBytePreservation": {
+      "status": "PASS",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-legacy-final-2\\isolated-smoke-world",
+      "files": 29,
+      "bytes": 24314987,
+      "omittedFiles": [
+        "session.lock"
+      ],
+      "snapshotRecordsSha256": "4487e2184cfd7d5a83a087b9763a11841c53e1fa2baf0544edf039a9511c4076"
+    },
+    "nativeChecks": {
+      "savedFixturesChecked": 1281,
+      "ordinaryInteractionsChecked": 1281,
+      "uuidRootStateTypedPayloadAndLedger": "PASS",
+      "savedCommandBindings": 8,
+      "savedMechanismLinks": "NOT_APPLICABLE",
+      "sourceVertexBoundsCompared": 1267,
+      "maximumSourceVertexBoundsDeviation": 5.3427151591733946e-11,
+      "naturalPartialChunkProbe": "NOT_RUN_NO_UNLOADED_CROSS_CHUNK_SAVED_ASSEMBLY_AFTER_STARTUP",
+      "physicalMouseKeyboard": "NOT_RUN",
+      "clientVisualAcceptance": "SEPARATE_NATIVE_CLIENT_IMAGE_REVIEW_REQUIRED"
+    }
+  },
+  "reopen": {
+    "status": "PASS",
+    "profile": "docs\\v12.4-dedup\\audit-reopen-final-server2.json",
+    "profileSha256": "ca22a7247f389320e43586e3013c9eadeeb2abe48e5f467fcfe4429e462954ff",
+    "native": "docs\\v12.4-dedup\\native-reopen-final.json",
+    "nativeSha256": "f6cfd0dc22972ab8c25225caf469000a4733275f5cef7e83ca6f3bb2735392ed",
+    "runDirectory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2",
+    "consoleSha256": "1d5e4c74801718247eda5603e0222256bde5d276b06b02a55f1dcfd742dcbb9e",
+    "normalStopAndCompleteSave": "PASS",
+    "unexpectedRuntimeErrors": [],
+    "expectedWarnings": [
+      "[03:10:33] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+    ],
+    "qaAddonSha256": "8d3168241a03add3368ebab6ee576c7dc863cf25abb8cc1954640e61ae29776d",
+    "sourceWorldBytePreservation": {
+      "status": "PASS",
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-final-3\\isolated-smoke-world",
+      "files": 49,
+      "bytes": 28668533,
+      "omittedFiles": [
+        "session.lock"
+      ],
+      "snapshotRecordsSha256": "9108b1a64a90b4d6d826a6480384e5c13084a34ab1452ab5c990f85dfed4bdd7"
+    },
+    "nativeChecks": {
+      "savedFixturesChecked": 1281,
+      "ordinaryInteractionsChecked": 0,
+      "uuidRootStateTypedPayloadAndLedger": "PASS",
+      "savedCommandBindings": 8,
+      "savedMechanismLinks": "NOT_APPLICABLE",
+      "sourceVertexBoundsCompared": 1267,
+      "maximumSourceVertexBoundsDeviation": 5.3427151591733946e-11,
+      "naturalPartialChunkProbe": "NOT_RUN_REOPEN_ALREADY_CANONICAL",
+      "physicalMouseKeyboard": "NOT_RUN",
+      "clientVisualAcceptance": "SEPARATE_NATIVE_CLIENT_IMAGE_REVIEW_REQUIRED"
+    }
+  },
+  "savedFixtureCrossCheck": {
+    "status": "PASS",
+    "exactProductionMappings": 1281,
+    "uniqueSavedOwnerUuids": 1281,
+    "baselineMigrationReopenRootStateTypedPayload": "PASS",
+    "ordinaryOldItemStateCoverage": "PASS"
+  },
+  "naturalPartialChunkProbe": "NOT_RUN_NO_UNLOADED_CROSS_CHUNK_SAVED_ASSEMBLY_AFTER_STARTUP",
+  "scopeLimit": "Native dedicated save/items proof; appearance and physical input require separate client evidence."
+}

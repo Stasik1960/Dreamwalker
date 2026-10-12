@@ -1,0 +1,82 @@
+{
+  "status": "USED_UV_ALPHA_ANALYSIS_COMPLETE_NATIVE_LAYER_REVIEW_PENDING",
+  "method": "Inspect all referenced source-quad UV rectangles at texture pixel resolution; include boundary pixels conservatively. No model or texture changes.",
+  "ids": [
+    {
+      "id": "90631",
+      "registryId": "bloodborne_dw:source_lantern",
+      "baselineLayer": "translucent",
+      "textures": {
+        "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0034": {
+          "referencedFaceCount": 20,
+          "sampledAlphaValues": [
+            0,
+            255
+          ],
+          "partialAlphaSamples": 0
+        },
+        "bloodborne_dw:block/remaining/source/minecraft/block/flower_pot_e": {
+          "referencedFaceCount": 4,
+          "sampledAlphaValues": [
+            0,
+            199,
+            203,
+            255
+          ],
+          "partialAlphaSamples": 12
+        }
+      }
+    },
+    {
+      "id": "90632",
+      "registryId": "bloodborne_dw:source_lantern_0",
+      "baselineLayer": "cutout",
+      "textures": {
+        "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0034": {
+          "referencedFaceCount": 20,
+          "sampledAlphaValues": [
+            0,
+            255
+          ],
+          "partialAlphaSamples": 0
+        }
+      }
+    },
+    {
+      "id": "90633",
+      "registryId": "bloodborne_dw:source_lantern_1",
+      "baselineLayer": "translucent",
+      "textures": {
+        "bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0034": {
+          "referencedFaceCount": 20,
+          "sampledAlphaValues": [
+            0,
+            255
+          ],
+          "partialAlphaSamples": 0
+        },
+        "bloodborne_dw:block/remaining/source/minecraft/block/addon/flower_pot": {
+          "referencedFaceCount": 4,
+          "sampledAlphaValues": [
+            0,
+            199,
+            203,
+            255
+          ],
+          "partialAlphaSamples": 12
+        },
+        "bloodborne_dw:block/remaining/source/minecraft/block/addon/flower_pot_e": {
+          "referencedFaceCount": 4,
+          "sampledAlphaValues": [
+            0,
+            199,
+            203,
+            255
+          ],
+          "partialAlphaSamples": 12
+        }
+      }
+    }
+  ],
+  "partialAlphaSamples": 36
+}

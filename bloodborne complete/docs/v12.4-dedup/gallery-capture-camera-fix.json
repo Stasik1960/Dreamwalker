@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "status": "CAPTURE_SETUP_CORRECTED_PENDING_NATIVE_RETRY",
+  "productionJarSha256": "c30cb62063656b5230c2c2a6e9338ac208a687d9df712f6bc6ced51a1598a728",
+  "failedEvidence": "docs/v12.4-dedup/gallery-client-final-attempt1-fail.json",
+  "failedNativeFrames": 2,
+  "failedFrameIndexOneBased": 3,
+  "failedEntity": "bloodborne_rp:elevator",
+  "failedUuid": "9365d6ff-3ce2-4101-bbac-bcbca61ed849",
+  "savedEntityAndGalleryState": "PASS in gallery-after-server-final.json and the unchanged saved manifest",
+  "cause": "The original QA client used renderDistance3, while its full-height elevator camera was about60 horizontal blocks from the entity origin. The gallery entity remained in saved data; it was outside the small client tracking/loading footprint. Native camera pose and render events had already passed.",
+  "additionalFramingIssue": "A fixed north-facing gate camera was inside a different huge station's tree envelope, obscuring part of the gate.",
+  "setupChanges": {
+    "productionCodeChanged": false,
+    "worldObjectsChanged": false,
+    "cameraPlanner": "tools/prepare_gallery_v124_capture.py",
+    "freshMarker": "build/v124-gallery-capture-final-attempt2.json",
+    "renderDistanceChunks": 8,
+    "poseValidationToleranceChanged": false,
+    "method": "Choose a deterministic alternate azimuth with the eye and19 rays across the target envelope clear of other saved visual AABBs. Keep the original complete-object distance/scale and1280x720 native framebuffer. Every RP entity origin is within112 horizontal blocks, inside its preserved128-block registration range.",
+    "gateAzimuthDeltaDegrees": -30,
+    "elevatorAzimuthDeltaDegrees": 60,
+    "elevatorNewCamera": [62.9437, 93.025, 143.2106, 74.0362, 8.9839],
+    "elevatorHorizontalOriginDistance": 59.4254,
+    "plannedFrames": 48,
+    "plannedClearEnvelopeChecks": "PASS"
+  },
+  "nativeRetry": "NOT_RUN",
+  "imagesModified": false
+}

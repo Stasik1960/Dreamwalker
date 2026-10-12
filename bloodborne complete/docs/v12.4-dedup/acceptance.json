@@ -1,0 +1,103 @@
+{
+  "schema": "dreamwalker-v124-final-acceptance-v1",
+  "status": "PASS",
+  "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+  "baselineCommit": "27bf67e63da6f8ba0a9dee2d1587310782c874e2",
+  "originalV12Commit": "821de077917f696a13600e900a244ffc05230c2f",
+  "sourceCommit": "ba79ce07aaf44ba68287c1700749c5acfce8674f",
+  "build": "PASS",
+  "gameTests": "PASS",
+  "gameTestCount": 72,
+  "gameTestXml": "docs/v12.4-dedup/game-tests-final.xml",
+  "nativeOldSaveMigration": "PASS",
+  "nativeSaveReopen": "PASS",
+  "nativeVisualReview": "PASS",
+  "galleryServerReopen": "PASS",
+  "galleryClientOpenAndSave": "PASS",
+  "gallerySavedObjects": "PASS",
+  "preservation": "PASS",
+  "resources": "PASS",
+  "galleryWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v124-flatgallery-client-final-2\\saves\\prototype-fixture",
+  "counts": {
+    "baselineCommit": "27bf67e63da6f8ba0a9dee2d1587310782c874e2",
+    "newRegisteredTypesBefore": 1045,
+    "newRegisteredAdaptersAfter": 1045,
+    "newWorkingTypesBefore": 1045,
+    "newWorkingTypesAfter": 572,
+    "newCreativeStacksBefore": 1802,
+    "newCreativeStacksAfter": 572,
+    "mergedGroups": 219,
+    "retiredWorkingIds": 473,
+    "reservedIdsBefore": 1322,
+    "reservedIdsAfter": 1322,
+    "originalCatalogueRowsUnchanged": true,
+    "stairFragmentApplied": true
+  },
+  "evidence": {
+    "migration": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\native-save-final.json",
+      "sha256": "99e5037b0722325274b5437f558285d39cf0c4ce9f0e2cd125bc4b7feabe55cd"
+    },
+    "reopen": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\native-reopen-final.json",
+      "sha256": "f6cfd0dc22972ab8c25225caf469000a4733275f5cef7e83ca6f3bb2735392ed"
+    },
+    "visual": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\native-visual-final.json",
+      "sha256": "a937322a82cd4b6f0fdf5076c069889ab10a98aa5dacd6fd07288ac2f8bd52b7"
+    },
+    "gallery_server": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\gallery-reopen-final-server2.json",
+      "sha256": "16856b2c307bcd04a6e860eefc0a58e0e0eb70a2fd4d8c9a8e43b3ad718f2205"
+    },
+    "gallery_client": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\gallery-client-final.json",
+      "sha256": "07b77bdecaf801fab7cd1901b082b0d1bfd62ba6737862d13bbbcab961957c6b"
+    },
+    "gallery_disk": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\gallery-after-client-final2.json",
+      "sha256": "69aa7ebdcb97cd173bbf63b113a8a657b32ab5e5b0f5d52ac026bed6f8c8f8e9"
+    },
+    "gallery_review": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\gallery-pixel-final.json",
+      "sha256": "2bea9e575fc769bdeb4b69dbd8f70d0c8d7958886329716868c98cf0ee7f3829"
+    },
+    "resources": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\resource-audit.json",
+      "sha256": "6ee255a063a3be04f09bf8bab372b9b034300e3a603f34116449a728c6b6a66e"
+    },
+    "preservation": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\preservation-audit.json",
+      "sha256": "ea447b980b3de72b71e71ee783b2a716425a3d15dabe91d14a908386b689bc8f"
+    },
+    "referenceInputs": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\reference-input-preservation.json",
+      "sha256": "dff227b4bed98586f0da8eeb260a93b24a9da8498d392ec6f98f1d795c13d782"
+    },
+    "nativeSaveProfiles": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.4-dedup\\native-save-evidence-final.json",
+      "sha256": "32f076a070f278e3b795c69bb980acb17b9da1c736d443238098e8ba7a206150"
+    }
+  },
+  "minecraft": "1.20.1",
+  "fabricLoader": "0.16.10",
+  "java": "17",
+  "verifiedDependencies": [
+    {
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd"
+    },
+    {
+      "id": "geckolib-fabric-1.20.1",
+      "version": "4.4.9",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218"
+    }
+  ],
+  "nativePendingChunkOrdering": "NOT_RUN_NO_UNLOADED_CROSS_CHUNK_SAVED_ASSEMBLY_AFTER_STARTUP",
+  "physicalMouseKeyboard": "NOT_RUN",
+  "frameRateBenchmark": "NOT_RUN",
+  "onlineAccountAuthentication": "NOT_RUN",
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED",
+  "originalMapChanged": false
+}

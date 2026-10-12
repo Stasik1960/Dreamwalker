@@ -291,13 +291,39 @@ public final class TypeNativeAudit implements ModInitializer {
     }
     private BlockHitResult aim(ServerWorld world,BlockPos root,Owner owner,ServerPlayerEntity player){
         BlockState state=world.getBlockState(root);CompositeBlockEntity own=(CompositeBlockEntity)world.getBlockEntity(root);var selection=ImportedSelectionShapes.footprint((CompositeRootBlock)state.getBlock(),state,own.payload());
-        var probe=selection.entrySet().stream().filter(e->!e.getValue().isEmpty()&&CompositeRuntime.contributions(world,root.add(e.getKey().x(),e.getKey().y(),e.getKey().z())).stream().anyMatch(c->c.owner().equals(owner))).max(Comparator.comparingDouble(e->e.getValue().get(0).maxY()-e.getValue().get(0).minY())).orElseThrow();
-        var box=probe.getValue().get(0);BlockPos cell=root.add(probe.getKey().x(),probe.getKey().y(),probe.getKey().z());double x=cell.getX()+(box.minX()+box.maxX())/2,y=cell.getY()+(box.minY()+box.maxY())/2,z=cell.getZ()+(box.minZ()+box.maxZ())/2;
-        pose(player,x,y-player.getStandingEyeHeight(),z-2.5,0);Vec3d direction=player.getRotationVec(1);V124QaEvidence.require(direction.squaredDistanceTo(new Vec3d(0,0,1))<1e-10,"Native ray helper actor pose differs");
-        BlockHitResult hit=world.raycast(new RaycastContext(player.getEyePos(),player.getEyePos().add(direction.multiply(5)),RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,player));
-        if(hit.getType()!=HitResult.Type.BLOCK||!owner.equals(CompositeRuntime.target(world,hit.getBlockPos(),player))){JsonObject diagnostic=new JsonObject();diagnostic.addProperty("owner",owner.toString());diagnostic.addProperty("hit",hit.toString());diagnostic.addProperty("expectedCell",cell.toShortString());diagnostic.addProperty("eye",player.getEyePos().toString());diagnostic.addProperty("state",state.toString());diagnostic.addProperty("payload",own.payload().toString());result.add("rayDiagnostic",diagnostic);}
-        V124QaEvidence.require(hit.getType()==HitResult.Type.BLOCK&&owner.equals(CompositeRuntime.target(world,hit.getBlockPos(),player)),"Native outline ray did not select canonical UUID "+owner);return hit;
+        record Probe(BlockPos cell,dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box box,boolean managed){}
+        List<Probe> probes=new ArrayList<>();
+        for(var entry:selection.entrySet()){
+            BlockPos cell=root.add(entry.getKey().x(),entry.getKey().y(),entry.getKey().z());
+            if(CompositeRuntime.contributions(world,cell).stream().noneMatch(c->c.owner().equals(owner)))continue;
+            BlockState carrier=world.getBlockState(cell);boolean managed=carrier.getBlock() instanceof CompositeRootBlock||carrier.isOf(CompositeArchitecture.CELL);
+            for(var box:entry.getValue())probes.add(new Probe(cell,box,managed));
+        }
+        probes.sort(Comparator.<Probe>comparingInt(p->p.managed()?1:0).reversed().thenComparing(Comparator.comparingDouble((Probe p)->largestFace(p.box())).reversed()));
+        JsonArray attempts=new JsonArray();
+        for(Probe probe:probes.subList(0,Math.min(12,probes.size()))){
+            var box=probe.box();BlockPos cell=probe.cell();Vec3d centre=new Vec3d(cell.getX()+(box.minX()+box.maxX())/2,cell.getY()+(box.minY()+box.maxY())/2,cell.getZ()+(box.minZ()+box.maxZ())/2);
+            List<Direction> faces=new ArrayList<>(List.of(Direction.UP,Direction.NORTH,Direction.EAST,Direction.SOUTH,Direction.WEST,Direction.DOWN));
+            faces.sort(Comparator.comparingDouble((Direction face)->faceArea(box,face)).reversed());
+            for(Direction face:faces){
+                // A thin floor box may have its lower clipped half inside the
+                // native support. Aim from an exposed face instead of insisting
+                // on a horizontal ray through the stone at that box's midpoint.
+                Vec3d outward=new Vec3d(face.getOffsetX(),face.getOffsetY(),face.getOffsetZ());Vec3d eye=centre.add(outward.multiply(2.5));
+                float yaw=face.getAxis()==Direction.Axis.Y?0:face.getOpposite().asRotation(),pitch=face==Direction.UP?90:face==Direction.DOWN?-90:0;
+                player.refreshPositionAndAngles(eye.x,eye.y-player.getStandingEyeHeight(),eye.z,yaw,pitch);player.setHeadYaw(yaw);player.setBodyYaw(yaw);player.prevHeadYaw=yaw;player.prevBodyYaw=yaw;player.prevYaw=yaw;player.prevPitch=pitch;
+                Vec3d direction=player.getRotationVec(1);V124QaEvidence.require(direction.squaredDistanceTo(outward.multiply(-1))<1e-10,"Native ray helper actor pose differs");
+                BlockHitResult hit=world.raycast(new RaycastContext(player.getEyePos(),player.getEyePos().add(direction.multiply(5)),RaycastContext.ShapeType.OUTLINE,RaycastContext.FluidHandling.NONE,player));
+                Owner selected=hit.getType()==HitResult.Type.BLOCK?CompositeRuntime.target(world,hit.getBlockPos(),player):null;
+                if(owner.equals(selected))return hit;
+                JsonObject attempt=new JsonObject();attempt.addProperty("probeCell",cell.toShortString());attempt.addProperty("face",face.asString());attempt.addProperty("managedCarrier",probe.managed());attempt.addProperty("eye",player.getEyePos().toString());attempt.addProperty("hitType",hit.getType().toString());attempt.addProperty("hitCell",hit.getBlockPos().toShortString());attempt.addProperty("hitPosition",hit.getPos().toString());attempt.addProperty("selected",selected==null?"NONE":selected.toString());attempts.add(attempt);
+            }
+        }
+        JsonObject diagnostic=new JsonObject();diagnostic.addProperty("owner",owner.toString());diagnostic.addProperty("state",state.toString());diagnostic.addProperty("payload",own.payload().toString());diagnostic.add("realNativeRayAttempts",attempts);result.add("rayDiagnostic",diagnostic);
+        throw new AssertionError("Native outline rays from exposed candidate faces did not select canonical UUID "+owner);
     }
+    private static double largestFace(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box box){double x=box.maxX()-box.minX(),y=box.maxY()-box.minY(),z=box.maxZ()-box.minZ();return Math.max(x*y,Math.max(x*z,y*z));}
+    private static double faceArea(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box box,Direction face){double x=box.maxX()-box.minX(),y=box.maxY()-box.minY(),z=box.maxZ()-box.minZ();return switch(face.getAxis()){case X->y*z;case Y->x*z;case Z->x*y;};}
     private void assertNative(ServerWorld world,BlockPos root){
         BlockState state=world.getBlockState(root);CompositeBlockEntity own=(CompositeBlockEntity)world.getBlockEntity(root);ObjectInstance object=CompositeRuntime.instance(world,root,state,own.resident().instanceId(),own.payload());boolean passable=object.cells().values().stream().allMatch(f->f.collision().isEmpty());
         for(Cell cell:object.cells().keySet()){BlockPos p=root.add(cell.x(),cell.y(),cell.z());BlockState carrier=world.getBlockState(p);if(!(carrier.getBlock() instanceof CompositeRootBlock)&&!carrier.isOf(CompositeArchitecture.CELL))continue;

@@ -16,7 +16,7 @@ def main():
     write(DOC/'final-native-comparison-fixtures.json',{'schemaVersion':1,'status':'PENDING_NATIVE_GAME_COMPARISON','fixtures':fixtures})
     write(resources/'v124-type-state-mapping.json',manifest)
     visualfixtures=copy.deepcopy(fixtures)
-    retained_count=0;functional_count=0;unchanged_count=0;alternate_count=0
+    retained_count=0;functional_count=0;unchanged_count=0;alternate_count=0;alternate_source_count=0
     baseline=json.loads((DOC/'baseline-content.json').read_text(encoding='utf8'))
     if not a.legacy_author:
         mapped={(row['oldRegistryId'],row['oldVariant']) for row in fixtures}
@@ -42,9 +42,9 @@ def main():
     alternate=DOC/'additional-migration-review-fixtures.json'
     if alternate.exists() and not a.legacy_author:
         views=json.loads(alternate.read_text(encoding='utf8'))['fixtures']
-        assert all(r.get('kind')=='MIGRATION_ALT_VIEW' for r in views)
-        visualfixtures.extend(views);alternate_count=len(views)
-    write(resources/'v124-visual-comparison.json',{'schemaVersion':1,'migrationPairCount':len(fixtures),'unchangedSourceStateReviewPairCount':unchanged_count,'retainedReviewPairCount':retained_count,'functionalStairReviewPairCount':functional_count,'alternateMigrationReviewPairCount':alternate_count,'fixtures':visualfixtures})
+        assert all(r.get('kind') in {'MIGRATION_ALT_VIEW','SOURCE_CATALOGUE_ALT_VIEW'} for r in views)
+        visualfixtures.extend(views);alternate_count=sum(r.get('kind')=='MIGRATION_ALT_VIEW' for r in views);alternate_source_count=sum(r.get('kind')=='SOURCE_CATALOGUE_ALT_VIEW' for r in views)
+    write(resources/'v124-visual-comparison.json',{'schemaVersion':1,'migrationPairCount':len(fixtures),'unchangedSourceStateReviewPairCount':unchanged_count,'retainedReviewPairCount':retained_count,'functionalStairReviewPairCount':functional_count,'alternateMigrationReviewPairCount':alternate_count,'alternateSourceReviewPairCount':alternate_source_count,'fixtures':visualfixtures})
     (resources/'v124-baseline-content.json').write_bytes((DOC/'baseline-content.json').read_bytes())
     write(resources/'v124-qa-input.json',{'productionJarSha256':digest,'baselineJarSha256':'34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054','mode':'legacy-author' if a.legacy_author else 'audit'})
     metadata={'schemaVersion':1,'id':'dreamwalker_v124_qa','version':'1.0.0','environment':'*','entrypoints':{'main':['dev.dreamwalker.bloodbornedw.v124qa.LegacyTypeSaveAuthor' if a.legacy_author else 'dev.dreamwalker.bloodbornedw.v124qa.TypeNativeAudit']},'depends':{'minecraft':'1.20.1','java':'>=17','fabricloader':'>=0.16.10','fabric-api':'*','bloodborne_dw':'*'}}

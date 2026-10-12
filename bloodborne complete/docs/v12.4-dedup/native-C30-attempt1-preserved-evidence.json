@@ -1,0 +1,43 @@
+{
+  "schema": "dreamwalker-v124-C30-attempt1-native-evidence-preservation-v1",
+  "status": "PASS_BYTE_IDENTICAL_PRESERVATION",
+  "productionJarSha256": "c30cb62063656b5230c2c2a6e9338ac208a687d9df712f6bc6ced51a1598a728",
+  "scope": "Historical C30 dedicated-native PASS only; global native visual C30 review has separate failures93145/93021 and needs build5.",
+  "files": [
+    {
+      "source": "native-save-final.json",
+      "preserved": "native-C30-attempt1-save.json",
+      "bytes": 515058,
+      "sha256": "a176f5d8fc7a22fbed6d77d2db110ae5acc3ef6aecc545194880004128724352",
+      "status": "PASS"
+    },
+    {
+      "source": "native-reopen-final.json",
+      "preserved": "native-C30-attempt1-reopen.json",
+      "bytes": 1323,
+      "sha256": "74b0d98e31a748568d1d90e393e643696b02c1e29aeaa8449de3ca6422933e9a",
+      "status": "PASS_REOPEN"
+    },
+    {
+      "source": "audit-final-server-2.json",
+      "preserved": "native-C30-attempt1-migration-profile.json",
+      "bytes": 15143,
+      "sha256": "26db4549e2f6a8ddd8fe6eb6fbae69a60ca3e80ffca3c38ade0c23bbc82fbc94",
+      "status": "PASS"
+    },
+    {
+      "source": "audit-reopen-final-server.json",
+      "preserved": "native-C30-attempt1-reopen-profile.json",
+      "bytes": 18527,
+      "sha256": "42f85d4bba5a9fa8b9a9ef443f29e9c26724fc176554a1e5c72838ae2da18726",
+      "status": "PASS"
+    },
+    {
+      "source": "native-save-evidence-final.json",
+      "preserved": "native-C30-attempt1-save-evidence.json",
+      "bytes": 4845,
+      "sha256": "85a370eaa48454954b47daf14db00083a28e21fd680ab9e2c254f98f9d3cdf68",
+      "status": "PASS"
+    }
+  ]
+}

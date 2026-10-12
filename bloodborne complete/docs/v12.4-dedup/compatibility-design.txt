@@ -218,3 +218,186 @@ Focused compatibility checks required for each mapping family:
 
 Only executed checks become PASS/FAIL. Static JSON inspection, launch success,
 or compilation alone cannot stand in for native placement/renderer/client evidence.
+
+Implementation review after final family consolidation
+----------------------------------------------------
+Historical preview-cohort review; the later final cohort has additional groups.
+The manifest currently has 158 reviewed groups, 978 exact old-state mappings and
+315 retired registrations. Every mapped registry is bloodborne_dw:source_*;
+original V12 prototype/RP registrations are outside the manifest and guard.
+
+The type version marker is payload/ordinary-item ImportedTypeVersion=1. A primary
+self mapping must apply only to an unmarked old payload/item; marked canonical
+instances/items retain current variants. The migration index skips already marked
+canonical contributions, so new roots in loaded chunks cannot remain indefinitely
+pending without another chunk-load notification.
+
+Before migration, saved ledger cells describe the BEFORE footprint, including
+states whose current canonical spec has changed. Migration waits for every old
+and new cell/root, preserves UUID/root/typed payload, and commits one alias
+transaction. It does not invoke removal, open/close or command-use callbacks.
+The source vector is canonical-local: rotate the prior SourceShift by the inverse
+mapping yaw, then add sourceShift. World orientation is old yaw + rotationDelta.
+
+An incomplete distant helper may defer the transaction while the root is visible.
+The NEW-only CompositeClient BE branch resolves the target state and transformed
+payload for that draw without changing world data. At this preview checkpoint
+renderParts had no payload selector; the later exact-appearance correction below
+adds a NEW native-stair-only selectedParts helper. Pending legacy stair
+art maps before subtype normalization, preserving the original variant for pick
+and drop. Marked canonical picks copy validated SourceShift as ImportedArtShift
+DOUBLE[3], plus artistic state and marker; no private owner/link/BE NBT enters the
+ordinary copied item.
+
+The first native launch exposed excessive Cartesian stair states. Preserve the
+old palette VARIANT property, encode bottom/top and five forms in VARIANT0..9,
+and derive half/shape through ImportedStairShapes helpers. Do not multiply every
+pose by independent half and shape properties. Manual connections on migrated
+legacy instances preserve isolated old corners; ordinary new placement uses auto
+connections. The neighbor transaction changes only derived VARIANT within the
+same half, retains typed payload/UUID and does not reject a corner update merely
+because a player occupies its prior physical extent.
+
+Native QA is a separate addon. LegacyTypeSaveAuthor uses only V12.3 production
+APIs and requires SHA 34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054.
+It installs each old exact mapped state, saves real UUID/root/state/typed payload
+and ledger data, original debug command limits/spent counts, lever bindings,
+levers-only policies and open/close event commands. TypeNativeAudit loads that
+actual save with the SHA-bound candidate, verifies exact old/new ownership and
+NBT, confirms zero migration events, exercises retained commands/events, and
+tests raw alias item placement, native inventory NBT read, outline ray, pick,
+whole-object deletion and copied-item reinstallation in separate temporary cells.
+Reopening the candidate save verifies idempotence, event count and usage limits.
+Server JSON vertex bounds are reported, including differences; actual visual
+equivalence is the separate native client baked-model comparison.
+
+Explicit launch mode is v124-native-mode.json {mode:legacy-author|audit}.
+Output is v124-native-output.json; actual saved fixture is world/v124-fixture.json
+with a fixtures array. Completion requests ordinary server stop through
+qa-normal-stop.request. The helpers never read/write the source map.
+
+Executed independent baseline save fixture
+-----------------------------------------
+The isolated native V12.3 run runtime-server-v124-legacy-preview-1 completed
+PASS_LEGACY_SAVE: 978 exact source states were installed by the old production
+JAR and saved with UUID/root/typed payload, at server tick 274. Eight debug
+command bindings include previously spent personal/global counts. All 978
+fixtures have source-face vertex bounds. This reviewed mapping cohort contains
+no openable objects, so saved lever/policy/open-close-event migration is
+NOT_APPLICABLE for this cohort, rather than a tested PASS.
+
+The new audit additionally compares every saved mapping object with the exact
+candidate manifest entry. Equal fixture counts cannot conceal a changed mapping
+after visual review. Reauthor the baseline fixture if a mapping changes.
+
+The first corrected preview client registered reconstructed baseline roots in
+the QA-only dreamwalker_v124_qa:before_* namespace during CLIENT initialization.
+Current QA uses one registered before_carrier and binds only its frozen source
+specification for each old draw, avoiding hundreds of duplicate state spaces.
+No production block specification is rebound, and that carrier has no item or
+world placement. Dedicated server does not execute the client preparation branch.
+Candidate migration, ordinary interactions, reopen, and native visual checks
+become PASS only through the corresponding completed artifact-bound reports.
+
+Independent current preservation review
+---------------------------------------
+Read-only review on 2026-10-12: all 116 frozen original catalogue rows are exact;
+none has the source_ registry prefix and none appears on either side of the 978
+mapping entries. Of 3,777 frozen files, 3,761 are byte-identical and all remaining
+16 changes are the documented shared NEW-only hooks plus the existing transfer
+GameTest and test metadata. There are no missing files, changed RP files, changed
+baseline artwork/assets, or changed Prototype/wall/source-ladder classes.
+The simplePhysicalCollision constructor rejects non-source specifications; new
+subtype pose helpers return the original VARIANT for legacy block classes.
+
+The dedicated addon now has a bounded natural chunk-order preloader before its
+complete saved-state audit: two unloaded cross-chunk saved owners/types, root
+first and helper first, without forced tickets in the partial phase. It checks
+that an actually missing required chunk leaves the old ledger and typed payload
+unchanged, then loads complete old/new membership and checks canonical UUID/root
+completion. Startup/automatic tickets can make a phase unavailable; that phase
+is explicitly NOT_RUN, never assumed PASS. This fixture was authored with spacing,
+so overlapping foreign-carrier coverage is not fabricated by changing its old
+membership. Foreign roots are included when naturally present on a touched cell.
+
+Exact authored stair appearance selector
+---------------------------------------
+The native preview exposed directional tread/UV differences in legacy stairs:
+geometric rotation alone cannot reproduce independently authored source UVs.
+The correction keeps compact native block states and their collision/outline.
+ImportedStairLegacyArt is an art-only STRING selector oldRegistry|oldVariant;
+only 313 reviewed post-V12 stair mappings can supply it (the other two of the
+315 functional mappings are ladders). A mandatory immutable JAR table supplies
+the original source model parts, normalized into the mapped canonical axes.
+No item supplies a model path and no extra Cartesian blockstate property exists.
+
+transformPayload and canonicalStack stamp the exact reviewed source key once.
+Marked primary items keep their selector without applying old-state mapping
+again. Validated keys survive pick, ordinary fresh placement and save/reopen;
+ordinary copied items retain no owner UUID, links, private BE NBT or settings.
+Default Creative items have no selector. The renderer uses selected source parts
+only while canonical registry/derived variant/trim matches that source pose;
+changed AUTO corner geometry uses its canonical generated form. The source key
+is retained so the authored appearance can be used again if that form returns.
+
+All 313 stair sourceShift mapping vectors are zero. Previous user SourceShift is
+still rotated by the inverse mapping delta, exactly as in other imported groups;
+the additional art key does not affect collision, membership or mount offsets.
+Normalized part yaw is old yaw minus mapping delta; offset also accounts for the
+part pivot relative to the root centre, with pitch/extra-yaw transforms retained.
+
+The independent baseline QA addon now writes artExpectationVersion=1 and derives
+expected source keys from mapping group kind, without using the new production
+conversion helper. An older preview fixture lacking that expectation version is
+explicitly rejected; its genuine saved data must be freshly authored/rebound.
+Candidate source-vertex bounds resolve selected parts through a lazy reflected
+API only when selector NBT exists, so the author addon remains V12.3 compatible.
+Native item tests check source-key conversion, placement, pick and fresh copy;
+full typed saved payload comparison covers key retention and idempotent reopen.
+
+Current renderer/QA handoff clarification
+---------------------------------------
+The frozen final cohort expands the 978-state preview to 1281 exact mappings.
+Counts and PASS evidence for that preview are historical; final counts come
+from the frozen final manifest and its fresh native reports, never from the
+preview summary.
+The old renderParts signature remains a compatible wrapper. Its payload-aware
+overload uses ImportedStairLegacyArt.selectedParts only for NEW native stair
+blocks with validated selector data and matching registry/variant/trim; every
+original V12 or ordinary fresh canonical block follows its usual spec pose.
+Independent old-source QA draws use one QA-only registered before_carrier with
+frozen specs and original source model parts. Only that carrier may be rebound;
+the renderer's actual production block specs remain immutable.
+
+Final dedicated native migration run, 2026-10-12
+----------------------------------------------
+native-save-final.json binds the genuine 1281-state V12.3 save to final combined
+production SHA c30cb62063656b5230c2c2a6e9338ac208a687d9df712f6bc6ced51a1598a728.
+Every fixture passed exact UUID/root/canonical state/typed payload/SourceShift
+and ledger checks. All 1281 ordinary old item states passed actual inventory NBT
+conversion, native placement, OUTLINE ray target, pick, break and fresh copy
+placement; eight saved command bindings retained their counters and worked.
+The native image comparison is separate evidence and is still required.
+The same C30 artifact also passed dedicated reopen of all 1281 fixtures:
+PASS_REOPEN retained exact state, typed payload, membership and command counts
+without a second conversion. native-save-evidence-final.json independently
+checks both native outputs and consoles, the shared QA addon SHA, complete
+normal world saves, the final manifest, and all pre-copy source file hashes.
+This C30 run remains artifact-specific historical evidence: subsequent native
+image review found separate general mappings 93145 and 93021 requiring a new
+build and fresh migration/reopen/item evidence. It is not final acceptance of
+that later artifact.
+
+The preserved native-save-final-attempt1-fail.json stopped at ordinary item107:
+its horizontal QA ray aimed through the thin floor panel's lower clipped half
+inside the stone support. This was a harness targeting defect. QA now tries
+actual native rays from exposed axis faces, with managed carriers first; it
+still requires normal OUTLINE raycast and matching owner UUID and respects
+foreign carrier occlusion. No production code changed for that correction.
+
+The natural native partial-chunk probe is explicitly
+NOT_RUN_NO_UNLOADED_CROSS_CHUNK_SAVED_ASSEMBLY_AFTER_STARTUP: startup tickets
+had already loaded every suitable saved assembly. Overall native PASS does
+not imply that this root-only/helper-first probe ran. Focused GameTests cover
+partial assembly transactions separately; no saved source data was fabricated
+to turn this native probe into PASS.

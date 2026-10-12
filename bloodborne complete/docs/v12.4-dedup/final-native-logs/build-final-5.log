@@ -1,0 +1,1153 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.6.12
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :sourcesJar
+> Task :remapJar
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test
+
+> Task :transactionCheck
+PASS whole object placement/removal
+PASS foreign state and BE preservation
+PASS shared helper targeting and independent removal
+PASS shared root insertion retains other object NBT
+PASS partial write failure restores every snapshot
+PASS stale plan rejects without a write
+PASS unloaded owner is deferred; same ID reuse is stale
+PASS support reads become commit preconditions
+PASS visual-only transition ignores unchanged collision
+PASS entity movement between preflight and commit
+PASS chunk boundary rejects unloaded cells without loading
+PASS rotation hook keeps BE payload and four-turn geometry
+PASS notifications see complete commit and can roll back
+PASS rollback failure is an explicit failure
+PASS bounded multi-owner capacity
+PASS dimension-scoped plan
+PASS obsolete membership prunes links without destroying roots
+PASS snapshots copy opaque bytes and state maps
+PASS unchanged helpers refresh cached data and roll back separately
+PASS trusted functional payload transition preserves explicit adapter update
+PASS alias migration retains UUID/payload and atomically rewrites helpers
+PASS 21 transaction core checks; Java 17.0.15
+
+> Task :validateAccessWidener NO-SOURCE
+> Task :check
+> Task :compileGametestJava UP-TO-DATE
+> Task :generateDLIConfig
+> Task :generateLog4jConfig
+> Task :generateRemapClasspath UP-TO-DATE
+> Task :configureLaunch
+> Task :processGametestResources UP-TO-DATE
+> Task :gametestClasses UP-TO-DATE
+
+> Task :runGametest
+[03:01:33] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.16.10
+[03:01:34] [main/INFO] (FabricLoader) Loading 48 mods:
+	- bloodborne_dw 0.1.0-v12.4-dedup
+	- bloodborne_dw_gametest 1.0.0
+	- fabric-api 0.92.9+1.20.1
+	- fabric-api-base 0.4.32+1802ada577
+	- fabric-api-lookup-api-v1 1.6.37+1802ada577
+	- fabric-biome-api-v1 13.0.15+93aa238b77
+	- fabric-block-api-v1 1.0.12+1802ada577
+	- fabric-block-view-api-v2 1.0.3+924f046a77
+	- fabric-command-api-v1 1.2.35+f71b366f77
+	- fabric-command-api-v2 2.2.14+1802ada577
+	- fabric-commands-v0 0.2.52+df3654b377
+	- fabric-containers-v0 0.1.68+df3654b377
+	- fabric-content-registries-v0 4.0.13+1802ada577
+	- fabric-convention-tags-v1 1.5.6+1802ada577
+	- fabric-crash-report-info-v1 0.2.20+1802ada577
+	- fabric-data-attachment-api-v1 1.0.2+de0fd6d177
+	- fabric-data-generation-api-v1 12.3.9+1802ada577
+	- fabric-dimensions-v1 2.1.55+1802ada577
+	- fabric-entity-events-v1 1.6.1+1c78457f77
+	- fabric-events-interaction-v0 0.6.6+13a40c6677
+	- fabric-events-lifecycle-v0 0.2.64+df3654b377
+	- fabric-game-rule-api-v1 1.0.41+1802ada577
+	- fabric-gametest-api-v1 1.2.15+1802ada577
+	- fabric-item-api-v1 2.1.29+1802ada577
+	- fabric-item-group-api-v1 4.0.14+1802ada577
+	- fabric-lifecycle-events-v1 2.2.23+1802ada577
+	- fabric-loot-api-v2 1.2.3+1802ada577
+	- fabric-loot-tables-v1 1.1.47+9e7660c677
+	- fabric-message-api-v1 5.1.10+1802ada577
+	- fabric-mining-level-api-v1 2.1.52+1802ada577
+	- fabric-networking-api-v1 1.3.15+0caff8d077
+	- fabric-networking-v0 0.3.55+df3654b377
+	- fabric-object-builder-api-v1 11.1.5+e35120df77
+	- fabric-particles-v1 1.1.3+1802ada577
+	- fabric-recipe-api-v1 1.0.25+1802ada577
+	- fabric-registry-sync-v0 2.4.1+4c0a70e677
+	- fabric-rendering-data-attachment-v1 0.3.39+92a0d36777
+	- fabric-rendering-fluids-v1 3.0.29+1802ada577
+	- fabric-resource-conditions-api-v1 2.3.9+1802ada577
+	- fabric-resource-loader-v0 0.11.12+fb82e9d777
+	- fabric-screen-handler-api-v1 1.3.34+1802ada577
+	- fabric-transfer-api-v1 3.3.6+8dd72ea377
+	- fabric-transitive-access-wideners-v1 4.3.2+1802ada577
+	- fabricloader 0.16.10
+	- geckolib 4.4.9
+	- java 17
+	- minecraft 1.20.1
+	- mixinextras 0.4.1
+[03:01:34] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/vakir/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[03:01:35] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[03:01:35] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[03:01:36] [main/WARN] (FabricLoader/Mixin) Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)
+[03:01:36] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[03:01:46] [main/INFO] (bloodborne_dw) Dreamwalker BB V12: simple BB tool, preserved architecture and RP
+
+> Task :remapSourcesJar
+
+> Task :runGametest
+[03:02:03] [main/INFO] (bloodborne_rp) Bloodborne RP initialized: standard Minecraft health; independent namespace
+[03:02:03] [main/ERROR] (Minecraft) Failed to load properties from file: server.properties
+java.nio.file.NoSuchFileException: server.properties
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:236) ~[?:?]
+	at java.nio.file.Files.newByteChannel(Files.java:380) ~[?:?]
+	at java.nio.file.Files.newByteChannel(Files.java:432) ~[?:?]
+	at java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:422) ~[?:?]
+	at java.nio.file.Files.newInputStream(Files.java:160) ~[?:?]
+	at net.minecraft.server.dedicated.AbstractPropertiesHandler.loadProperties(AbstractPropertiesHandler.java:62) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.dedicated.ServerPropertiesHandler.load(ServerPropertiesHandler.java:137) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.dedicated.ServerPropertiesLoader.<init>(ServerPropertiesLoader.java:12) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.minecraft.server.Main.main(Main.java:115) ~[minecraft-merged-cdeb4ce359-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar:?]
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.10.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.10.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotServer.main(KnotServer.java:23) ~[fabric-loader-0.16.10.jar:?]
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) ~[dev-launch-injector-0.2.1+build.8.jar:?]
+[03:02:03] [main/WARN] (Minecraft) Failed to load eula.txt
+[03:02:03] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[03:02:03] [main/INFO] (FabricGameTestHelper) Starting test server
+[03:02:05] [main/INFO] (Minecraft) Loaded 7 recipes
+[03:02:05] [main/INFO] (Minecraft) Loaded 1272 advancements
+[03:02:06] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.235 ms
+[03:02:07] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[03:02:08] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%
+[03:02:08] [Worker-Main-11/INFO] (Minecraft) Preparing spawn area: 0%
+[03:02:08] [Worker-Main-14/INFO] (Minecraft) Preparing spawn area: 1%
+[03:02:08] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 36%
+[03:02:09] [Server thread/INFO] (Minecraft) Time elapsed: 1979 ms
+[03:02:09] [Server thread/INFO] (Minecraft) Started game test server
+[03:02:09] [Server thread/INFO] (Minecraft) Running test batch 'v124_stair_legacy_pose:1' (1 tests)...
+[03:02:09] [Server thread/INFO] (Minecraft) 72 tests are now running!
+[03:02:10] [Server thread/INFO] (Minecraft) [_                                                                       ]
+[03:02:10] [Server thread/INFO] (Minecraft) [_                                                                       ]
+[03:02:10] [Server thread/INFO] (Minecraft) [_                                                                       ]
+[03:02:10] [Server thread/INFO] (Minecraft) [_                                                                       ]
+[03:02:10] [Server thread/INFO] (Minecraft) Running test batch 'v12_tool_commands:1' (6 tests)...
+[03:02:11] [Server thread/INFO] (Minecraft) Running test batch 'v12_lamp_pending:1' (1 tests)...
+[03:02:11] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 15 at (-1.5, -60.0, 0.5)
+[03:02:11] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) test-mock-player has made the advancement [Bring Home the Beacon]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:11] [Server thread/INFO] (Minecraft) [+++++++_                                                                ]
+[03:02:12] [Server thread/INFO] (Minecraft) Running test batch 'v12_architecture_group:1' (1 tests)...
+[03:02:12] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 18 at (7.5, -60.0, 9.5)
+[03:02:12] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:12] [Server thread/INFO] (Minecraft) Running test batch 'remaining_transfer_placement:1' (1 tests)...
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:12] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:13] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:14] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:15] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:16] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:17] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:18] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:19] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:20] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:21] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:22] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:23] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) [+++++++++_                                                              ]
+[03:02:24] [Server thread/INFO] (Minecraft) Running test batch 'v124_saved_alias:1' (1 tests)...
+[03:02:24] [Server thread/INFO] (Minecraft) Running test batch 'v9_mechanisms:1' (7 tests)...
+[03:02:25] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 39 at (-4.5, -60.0, 1.5)
+[03:02:25] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:25] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 44 at (-6.5, -60.0, -0.5)
+[03:02:25] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:25] [Server thread/INFO] (Minecraft) Running test batch 'v124_stair_neighbors:1' (1 tests)...
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:25] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:26] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++_                                                     ]
+[03:02:27] [Server thread/INFO] (Minecraft) Running test batch 'v10_policies:1' (3 tests)...
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 47 at (4.5, -60.0, -2.5)
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 50 at (-4.5, -60.0, 8.5)
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 54 at (-8.5, -60.0, 1.5)
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:27] [Server thread/INFO] (Minecraft) Running test batch 'catalogue_repair:1' (12 tests)...
+[03:02:27] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++                                                  ]
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 93 at (-9.5, -60.0, -5.5)
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 97 at (-0.5, -60.0, -3.5)
+[03:02:27] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:27] [Server thread/INFO] (Minecraft) Running test batch 'remaining_transfer_doors:1' (1 tests)...
+[03:02:27] [Server thread/INFO] (Minecraft) Running test batch 'v124_stair_item:1' (1 tests)...
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++_                                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) Running test batch 'v124_stair_legacy_art:1' (1 tests)...
+[03:02:28] [Server thread/INFO] (Minecraft) Running test batch 'rp_v9:1' (11 tests)...
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 104 at (1.5, -60.0, 3.5)
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 119 at (-9.5, -60.0, 9.5)
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 123 at (-8.5, -60.0, 6.5)
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 133 at (0.5, -60.0, 8.5)
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:28] [Server thread/INFO] (Minecraft) Running test batch 'v12_tool:1' (3 tests)...
+[03:02:28] [Server thread/INFO] (Minecraft) Running test batch 'v12_lamp_travel:1' (1 tests)...
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 153 at (-6.5, -60.0, 2.5)
+[03:02:28] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++_                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++_                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++_                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++_                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++_                    ]
+[03:02:28] [Server thread/INFO] (Minecraft) Running test batch 'remaining_transfer_catalogue:1' (1 tests)...
+[03:02:28] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++                    ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++_                   ]
+[03:02:29] [Server thread/INFO] (Minecraft) Running test batch 'v10_rules:1' (6 tests)...
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 157 at (-7.5, -60.0, 5.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 161 at (4.5, -60.0, -9.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 164 at (3.5, -60.0, -1.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 168 at (-9.5, -60.0, 4.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 172 at (-2.5, -60.0, -0.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 176 at (7.5, -60.0, 3.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) Running test batch 'v12_groups:1' (4 tests)...
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 180 at (5.5, -60.0, -9.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 184 at (9.5, -60.0, 7.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 193 at (-1.5, -60.0, -5.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 198 at (-2.5, -60.0, -8.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) Running test batch 'v12_lamp_codec:1' (2 tests)...
+[03:02:29] [Server thread/INFO] (Minecraft) Running test batch 'v124_ladder:1' (1 tests)...
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_      ]
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_      ]
+[03:02:29] [Server thread/INFO] (Minecraft) Running test batch 'v12_lamp_replace:1' (1 tests)...
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player[local] logged in with entity id 203 at (6.5, -60.0, -9.5)
+[03:02:29] [Server thread/INFO] (Minecraft) test-mock-player joined the game
+[03:02:29] [Server thread/INFO] (Minecraft) Running test batch 'remaining_transfer_copy:1' (1 tests)...
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:29] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:30] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:31] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) [+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_    ]
+[03:02:32] [Server thread/INFO] (Minecraft) Running test batch 'remaining_transfer_neighbors:1' (1 tests)...
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:32] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++_   ]
+[03:02:33] [Server thread/INFO] (Minecraft) Running test batch 'v124_stair_trim_item:1' (1 tests)...
+[03:02:33] [Server thread/INFO] (Minecraft) Running test batch 'v124_type_compatibility:1' (2 tests)...
+[03:02:33] [Server thread/INFO] (Minecraft) [++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++]
+[03:02:33] [Server thread/INFO] (Minecraft) ========= 72 GAME TESTS COMPLETE ======================
+[03:02:33] [Server thread/INFO] (Minecraft) All 72 required tests passed :)
+[03:02:33] [Server thread/INFO] (Minecraft) ====================================================
+[03:02:33] [Server thread/INFO] (Minecraft) Stopping server
+[03:02:33] [Server thread/INFO] (Minecraft) Saving players
+[03:02:33] [Server thread/INFO] (Minecraft) Saving worlds
+[03:02:36] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[03:02:37] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[03:02:37] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[03:02:37] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
+[03:02:37] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[03:02:37] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[03:02:37] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[03:02:37] [Server thread/INFO] (Minecraft) Game test server shutting down
+
+> Task :assemble
+> Task :build
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 9s
+15 actionable tasks: 10 executed, 5 up-to-date

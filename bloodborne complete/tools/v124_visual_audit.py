@@ -74,7 +74,11 @@ class Visuals(ModelGeometry):
                 if r:
                     axis='xyz'.index(r['axis']);o=np.asarray(r['origin']);angle=r['angle']
                     if r.get('rescale'):
-                        scale=np.full(3,1/math.cos(math.radians(angle)));scale[axis]=1
+                        # Native FaceBakery chooses the22.5 factor only for
+                        # abs(angle)==22.5; all other true-rescale elements use
+                        # the45 factor, including authored angle0 elements.
+                        scale_angle=22.5 if abs(angle)==22.5 else 45
+                        scale=np.full(3,1/math.cos(math.radians(scale_angle)));scale[axis]=1
                         v=(v-o)*scale+o
                     v=rot(v,axis,angle,o)
                 v=rot(v,1,part.get('extraYaw',0),part.get('extraPivot',[8,8,8]))
@@ -110,11 +114,13 @@ def signature(visuals,quads,yaw):
     low=vertices.reshape(-1,3).min(axis=0);vertices-=low
     rows=[]
     for v,(_,uv,texture,tint) in zip(vertices,quads):
-        material=visuals.sampled(texture,tuple(uv.reshape(-1)))
-        # Cyclic vertex reordering is immaterial; material follows cyclic UV.
         coords=[tuple(round(float(n),3) for n in point) for point in v]
         alternatives=[tuple(coords[i:]+coords[:i]) for i in range(4)]
-        rows.append((min(alternatives),material,tint))
+        # Geometry alone can be symmetric while transparent texture artwork
+        # is not. Rotate UV association with the canonical vertex cycle.
+        cycle=min(range(4),key=lambda i:alternatives[i])
+        material=visuals.sampled(texture,tuple(np.roll(uv,-cycle,axis=0).reshape(-1)))
+        rows.append((alternatives[cycle],material,tint))
     return sha(repr(sorted(rows)).encode()), low.tolist(), (vertices.reshape(-1,3).max(axis=0)).tolist()
 
 def render(visuals,quads,yaw,size=64):
