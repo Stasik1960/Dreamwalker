@@ -1,0 +1,195 @@
+{
+  "status": "PASS_VANILLA_LEVEL_AND_USED_BIOME_REGISTRIES",
+  "sourceHashes": {
+    "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+  },
+  "levelDataVersion": 2975,
+  "worldGenSettings": {
+    "bonus_chest": 0,
+    "seed": 8406278132292033194,
+    "generate_features": 0,
+    "dimensions": {
+      "minecraft:overworld": {
+        "generator": {
+          "settings": {
+            "features": 0,
+            "biome": "minecraft:plains",
+            "layers": [
+              {
+                "block": "minecraft:bedrock",
+                "height": 1
+              },
+              {
+                "block": "minecraft:dirt",
+                "height": 2
+              },
+              {
+                "block": "minecraft:grass_block",
+                "height": 1
+              }
+            ],
+            "structure_overrides": [
+              "minecraft:strongholds",
+              "minecraft:villages"
+            ],
+            "lakes": 0
+          },
+          "type": "minecraft:flat"
+        },
+        "type": "minecraft:overworld"
+      },
+      "minecraft:the_nether": {
+        "generator": {
+          "settings": "minecraft:nether",
+          "seed": 8406278132292033194,
+          "biome_source": {
+            "preset": "minecraft:nether",
+            "type": "minecraft:multi_noise"
+          },
+          "type": "minecraft:noise"
+        },
+        "type": "minecraft:the_nether"
+      },
+      "minecraft:the_end": {
+        "generator": {
+          "settings": "minecraft:end",
+          "seed": 8406278132292033194,
+          "biome_source": {
+            "seed": 8406278132292033194,
+            "type": "minecraft:the_end"
+          },
+          "type": "minecraft:noise"
+        },
+        "type": "minecraft:the_end"
+      }
+    }
+  },
+  "worldGenRegistryReferences": [
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.settings.biome",
+      "registryReference": "minecraft:plains"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.settings.layers[0].block",
+      "registryReference": "minecraft:bedrock"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.settings.layers[1].block",
+      "registryReference": "minecraft:dirt"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.settings.layers[2].block",
+      "registryReference": "minecraft:grass_block"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.settings.structure_overrides[0]",
+      "registryReference": "minecraft:strongholds"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.settings.structure_overrides[1]",
+      "registryReference": "minecraft:villages"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.generator.type",
+      "registryReference": "minecraft:flat"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:overworld.type",
+      "registryReference": "minecraft:overworld"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_nether.generator.settings",
+      "registryReference": "minecraft:nether"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_nether.generator.biome_source.preset",
+      "registryReference": "minecraft:nether"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_nether.generator.biome_source.type",
+      "registryReference": "minecraft:multi_noise"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_nether.generator.type",
+      "registryReference": "minecraft:noise"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_nether.type",
+      "registryReference": "minecraft:the_nether"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_end.generator.settings",
+      "registryReference": "minecraft:end"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_end.generator.biome_source.type",
+      "registryReference": "minecraft:the_end"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_end.generator.type",
+      "registryReference": "minecraft:noise"
+    },
+    {
+      "path": "WorldGenSettings.dimensions.minecraft:the_end.type",
+      "registryReference": "minecraft:the_end"
+    }
+  ],
+  "unknownWorldGenReferences": [],
+  "dimensions": {
+    "minecraft:overworld": 35890
+  },
+  "chunks": 35890,
+  "biomeSections": 861360,
+  "usedBiomeCounts": {
+    "minecraft:plains": 55127040
+  },
+  "biomeSamples": {
+    "minecraft:plains": {
+      "dimension": "minecraft:overworld",
+      "chunk": [
+        -32,
+        -32
+      ],
+      "sectionY": -4
+    }
+  },
+  "unknownOrMissingVanillaBiomeReferences": [],
+  "vanillaBiomeRegistryDefinitionCount": 64,
+  "datapackMembersToOmit": [
+    {
+      "member": "datapacks/Bloodborne/data/commands/functions/enemy_spawn.mcfunction",
+      "bytes": 6766,
+      "decision": "OMIT_SOURCE_DATAPACK_FROM_DERIVED_WORLD"
+    },
+    {
+      "member": "datapacks/Bloodborne/data/commands/functions/kill.mcfunction",
+      "bytes": 968,
+      "decision": "OMIT_SOURCE_DATAPACK_FROM_DERIVED_WORLD"
+    },
+    {
+      "member": "datapacks/Bloodborne/data/commands/functions/load.mcfunction",
+      "bytes": 8,
+      "decision": "OMIT_SOURCE_DATAPACK_FROM_DERIVED_WORLD"
+    },
+    {
+      "member": "datapacks/Bloodborne/data/commands/functions/tick.mcfunction",
+      "bytes": 0,
+      "decision": "OMIT_SOURCE_DATAPACK_FROM_DERIVED_WORLD"
+    },
+    {
+      "member": "datapacks/Bloodborne/data/minecraft/tags/functions/load.json",
+      "bytes": 55,
+      "decision": "OMIT_SOURCE_DATAPACK_FROM_DERIVED_WORLD"
+    },
+    {
+      "member": "datapacks/Bloodborne/data/minecraft/tags/functions/tick.json",
+      "bytes": 118,
+      "decision": "OMIT_SOURCE_DATAPACK_FROM_DERIVED_WORLD"
+    }
+  ],
+  "originalMapShaAfter": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+  "sourceWorldOpened": false,
+  "sourceWorldWritten": false,
+  "nativeLevelCodecCheck": "NOT_RUN_FULL_SOURCE_BY_USER_REQUEST; separately prove codecs if any nonvanilla reference is found"
+}

@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornedw.composite.mixin;
 
 import com.google.common.collect.ImmutableMap;
+import dev.dreamwalker.bloodbornedw.composite.StateEntriesAccess;
 import net.minecraft.state.State;
 import net.minecraft.state.property.Property;
 import org.spongepowered.asm.mixin.Final;

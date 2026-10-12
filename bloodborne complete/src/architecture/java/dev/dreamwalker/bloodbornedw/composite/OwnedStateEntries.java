@@ -1,7 +1,6 @@
 package dev.dreamwalker.bloodbornedw.composite;
 
 import com.google.common.collect.ImmutableMap;
-import dev.dreamwalker.bloodbornedw.composite.mixin.StateEntriesAccess;
 import java.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
