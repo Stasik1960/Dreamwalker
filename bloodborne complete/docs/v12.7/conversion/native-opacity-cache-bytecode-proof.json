@@ -1,0 +1,142 @@
+{
+  "status": "PASS_PINNED_NATIVE_DYNAMIC_OPACITY_DISPATCH",
+  "jar": "C:\\Users\\vakir\\.gradle\\caches\\fabric-loom\\minecraftMaven\\net\\minecraft\\minecraft-merged\\1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2\\minecraft-merged-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar",
+  "classSha256": "00b6fb43aca348d76a1532c8debc21fa03c4aca69ea75d959b1195ace606ce6e",
+  "methods": [
+    {
+      "method": "initShapeCache",
+      "descriptor": "()V",
+      "codeSha256": "82f3420f7a8ade50cdada25f2eef05e2e307194d654ce782d8ae9975f863f2ff",
+      "references": [
+        {
+          "offset": 2,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.ownerLjava/lang/Object;"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xc0",
+          "reference": "net/minecraft/block/Block"
+        },
+        {
+          "offset": 9,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.asBlockState()Lnet/minecraft/block/BlockState;"
+        },
+        {
+          "offset": 12,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/Block.getFluidState(Lnet/minecraft/block/BlockState;)Lnet/minecraft/fluid/FluidState;"
+        },
+        {
+          "offset": 15,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.fluidStateLnet/minecraft/fluid/FluidState;"
+        },
+        {
+          "offset": 20,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.ownerLjava/lang/Object;"
+        },
+        {
+          "offset": 23,
+          "opcode": "0xc0",
+          "reference": "net/minecraft/block/Block"
+        },
+        {
+          "offset": 27,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.asBlockState()Lnet/minecraft/block/BlockState;"
+        },
+        {
+          "offset": 30,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/Block.hasRandomTicks(Lnet/minecraft/block/BlockState;)Z"
+        },
+        {
+          "offset": 33,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.ticksRandomlyZ"
+        },
+        {
+          "offset": 37,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.getBlock()Lnet/minecraft/block/Block;"
+        },
+        {
+          "offset": 40,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/Block.hasDynamicBounds()Z"
+        },
+        {
+          "offset": 47,
+          "opcode": "0xbb",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState$ShapeCache"
+        },
+        {
+          "offset": 52,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.asBlockState()Lnet/minecraft/block/BlockState;"
+        },
+        {
+          "offset": 55,
+          "opcode": "0xb7",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState$ShapeCache.<init>(Lnet/minecraft/block/BlockState;)V"
+        },
+        {
+          "offset": 58,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.shapeCacheLnet/minecraft/block/AbstractBlock$AbstractBlockState$ShapeCache;"
+        },
+        {
+          "offset": 63,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.shouldBeSolid()Z"
+        },
+        {
+          "offset": 66,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.solidZ"
+        }
+      ]
+    },
+    {
+      "method": "getOpacity",
+      "descriptor": "(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)I",
+      "codeSha256": "b1c16908cb9e531a382a42012e4463aff56048cabde568874f75c3f898b62b25",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.shapeCacheLnet/minecraft/block/AbstractBlock$AbstractBlockState$ShapeCache;"
+        },
+        {
+          "offset": 8,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.shapeCacheLnet/minecraft/block/AbstractBlock$AbstractBlockState$ShapeCache;"
+        },
+        {
+          "offset": 11,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState$ShapeCache.lightSubtractedI"
+        },
+        {
+          "offset": 16,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.getBlock()Lnet/minecraft/block/Block;"
+        },
+        {
+          "offset": 20,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/AbstractBlock$AbstractBlockState.asBlockState()Lnet/minecraft/block/BlockState;"
+        },
+        {
+          "offset": 25,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/block/Block.getOpacity(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)I"
+        }
+      ]
+    }
+  ],
+  "meaning": "Native state reads ShapeCache.lightSubtracted when cached, otherwise delegates Block.getOpacity; native cache initializer checks block.hasDynamicBounds. NEW composite/compact Settings are dynamicBounds, so constructor guard can return old opacity until spec assignment without freezing that fallback into a static shape cache. No Java launched."
+}
