@@ -1,0 +1,8 @@
+Historical scan-error.txt records the first completed index validation attempt.
+The first model Counter retained zero-count weighted alternatives while the
+independent model-usage report omits them. Actual occupied-cell counts were equal.
+The validator was corrected to compare positive occurrence entries, and the
+complete existing cache was revalidated from every persisted chunk metric.
+original-map-index.json / scan-progress.json are the final PASS evidence.
+No original archive, actual state/model choice or occupied cache row was changed
+to make that comparison pass. The original failure trace remains preserved.

@@ -228,9 +228,44 @@ public final class RemainingTransferGameTests implements FabricGameTest {
             t.assertTrue(entry.temporaryId().matches("[0-9]{5}")&&(number>=90021&&number<=90999||number>=93001)&&numbers.add(entry.temporaryId()),"new architecture uses a free unique five-digit number outside reserved RP/retired ranges");
             t.assertTrue(entry.name().matches(".*[А-Яа-яЁё].*"),"new object has Russian name "+block.spec.id);
             t.assertTrue(Registries.ITEM.get(block.spec.id)==block.asItem(),"new object has its registered item");
-            t.assertTrue(stacks.stream().filter(stack->stack.isOf(block.asItem())).count()==1,"one installation item per functional new type "+block.spec.id);
+            long expected=ImportedStyleRetirements.retired(block.spec.id)?0:1;
+            t.assertTrue(stacks.stream().filter(stack->stack.isOf(block.asItem())).count()==expected,"reviewed NEW style catalogue has "+expected+" installation items for "+block.spec.id);
         });
         eachTick(t,null,cases);
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="remaining_transfer_catalogue")
+    public void styleRetirementsHideOnlyReviewedNewTypesAndPreserveCompatibilityRegistrations(TestContext t) {
+        var stacks=UnifiedCreativeCatalogue.canonicalItems();
+        t.assertTrue(ImportedStyleRetirements.primaryRegistries().size()==21,"the reviewed style retirement cohort has exactly 21 NEW main types");
+        Set<String> active=new HashSet<>();int registered=0,retiredRegistrations=0;
+        for(var block:CompositeArchitecture.blocks()) {
+            String registry=block.spec.id.toString();
+            if(!block.spec.id.getPath().startsWith("source_")) {
+                t.assertTrue(!ImportedStyleRetirements.retired(registry),"original V12 type is protected "+registry);
+                continue;
+            }
+            registered++;
+            t.assertTrue(Registries.BLOCK.get(block.spec.id)==block&&Registries.ITEM.get(block.spec.id)==block.asItem(),"saved NEW registration and item remain available "+registry);
+            t.assertTrue(DebugCatalogue.entry(block.spec.id)!=null,"retired/alias number remains in the compatibility catalogue "+registry);
+            boolean retired=ImportedStyleRetirements.retired(registry);
+            if(retired) {
+                retiredRegistrations++;
+                t.assertTrue(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.creativeVariants(new ItemStack(block.asItem())).isEmpty(),"retired main or alias produces no placing stack "+registry);
+                t.assertTrue(stacks.stream().noneMatch(stack->stack.isOf(block.asItem())),"retired main or alias is hidden in unified Creative "+registry);
+            } else if(ImportedTypeAliases.canonicalRegistry(registry).equals(registry)) active.add(registry);
+        }
+        Set<String> offered=new HashSet<>();
+        for(var stack:stacks) {
+            String registry=Registries.ITEM.getId(stack.getItem()).toString();
+            if(registry.startsWith("bloodborne_dw:source_")) {
+                t.assertTrue(!ImportedStyleRetirements.retired(registry),"Creative never offers a retired NEW type");
+                t.assertTrue(offered.add(registry),"one Creative installing item per active NEW type");
+            }
+        }
+        t.assertTrue(registered==1045&&retiredRegistrations==30,"all 1045 saved NEW registrations remain, including 30 hidden main/alias registrations");
+        t.assertTrue(active.size()==551&&offered.equals(active),"Creative offers exactly the 551 retained NEW working types");
+        t.complete();
     }
 
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=60000,batchId="remaining_transfer_doors")

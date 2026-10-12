@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_SOURCE_PROJECTION_SELECTION_ONLY",
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "reviewedFiles": [
+    {
+      "section": "assemblies",
+      "fileName": "docs\\v12.5-city-review\\assemblies\\gallery-review-platforms-final.json",
+      "sha256": "f453d7d4fbac507917a94df237fe79ef26aaf597ad474ea3100a78ebca7ab36e",
+      "platformCount": 27,
+      "sourceSheetSha256": "68035d4823c1f6971ea5622fb01caed3489fc658b31b8a882df8eca4a415fd84"
+    },
+    {
+      "section": "doors",
+      "fileName": "docs\\v12.5-city-review\\doors\\gallery-door-platforms-final.json",
+      "sha256": "92a738ecc2a73d1d913d195ca891c10a56253b61f275ced2070a0d9e739044db",
+      "platformCount": 18,
+      "sourceSheetSha256": "c158a2f589e07ac54c92c09d7439a8b6687be30fb17f240d51aeafea70c4cfb1"
+    }
+  ],
+  "sourceDoorNominationSheetsActuallyViewed": 5,
+  "sourceDoorNominationsViewed": 150,
+  "joinedConstructionAndDoorSheetsActuallyViewed": 2,
+  "allSelectedSourceLayoutsActuallyViewed": true,
+  "removedAfterPixels": [
+    {
+      "originalCompactMainIds": [
+        "90253",
+        "90253"
+      ],
+      "reason": "OrdinaryL-shapedmasonrycorner, notfinitepilasterwhole."
+    },
+    {
+      "originalCompactMainIds": [
+        "90304",
+        "90390"
+      ],
+      "reason": "Twoindependentroundwindowswithgap, notcomplementaryparts."
+    }
+  ],
+  "notNativeAcceptance": "NoMinecraftgameprocesswaslaunchedbythisagent. Actualnativegalleryrendering/placement/seating/interactionremainsrootQA."
+}

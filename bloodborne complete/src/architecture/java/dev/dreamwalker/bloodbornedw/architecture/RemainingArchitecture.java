@@ -60,6 +60,7 @@ public final class RemainingArchitecture {
         Identifier id = Registries.ITEM.getId(original.getItem());
         Artwork artwork = id.getNamespace().equals("bloodborne_dw") ? ARTWORKS.get(id.getPath()) : null;
         if (artwork == null) return List.of(original.copy());
+        if (dev.dreamwalker.bloodbornedw.composite.ImportedStyleRetirements.retired(id)) return List.of();
         if (!dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases.canonicalRegistry(id.toString()).equals(id.toString())) return List.of();
         ItemStack stack = original.copy();
         stack.getOrCreateNbt().putInt("ImportedTypeVersion",1);

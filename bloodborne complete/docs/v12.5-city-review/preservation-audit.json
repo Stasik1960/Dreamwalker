@@ -1,0 +1,72 @@
+{
+  "schema": "dreamwalker-v125-independent-preservation-v1",
+  "status": "PASS",
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "counts": {
+    "exactGuardedSharedSourceFiles": 3,
+    "exactGuardedInsertionSites": 4,
+    "validatedNewSourceSingleCellPoses": 94,
+    "appendOnlyDescriptors": 16,
+    "protectedExistingPosesOnAppendedDescriptors": 266,
+    "preservedStateMappings": 1281,
+    "protectedReservedNumbers": 1322,
+    "registeredNewTypes": 1045,
+    "workingNewBefore": 572,
+    "retiredWorkingTypes": 21,
+    "workingNewAfter": 551,
+    "hiddenMainAndAliasRegistrations": 30,
+    "protectedOriginalCatalogueRows": 116,
+    "unchangedFrozenV12Files": 3761
+  },
+  "changedTrackedSources": [
+    "gradle.properties",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/RemainingArchitecture.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSpec.java",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_acacia_fence.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_brick_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_cobblestone_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_cyan_stained_glass_pane.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_deepslate_brick_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_gray_stained_glass_pane.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_light_blue_stained_glass_pane.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_lime_stained_glass_pane.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_mossy_cobblestone_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_nether_brick_fence.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_orange_stained_glass_pane.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_prismarine_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_sandstone_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_assembly_stone_brick_wall.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_cut_copper.json",
+    "src/architecture/resources/bloodborne_dw/composite/source_red_nether_brick_wall_side_tall.json",
+    "src/architecture/resources/bloodborne_dw/imported-type-aliases.json",
+    "src/architecture/resources/bloodborne_dw/remaining-catalogue.json",
+    "src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/RemainingTransferGameTests.java",
+    "src/gametest/resources/fabric.mod.json"
+  ],
+  "newProductionSources": [
+    "bloodborne complete/src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedCollisionV125.java",
+    "bloodborne complete/src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedStyleRetirements.java",
+    "bloodborne complete/src/architecture/resources/bloodborne_dw/imported-collision-v125.json",
+    "bloodborne complete/src/architecture/resources/bloodborne_dw/imported-style-retirements.json",
+    "bloodborne complete/src/gametest/java/dev/dreamwalker/bloodbornedw/gametest/ImportedCollisionV125GameTests.java"
+  ],
+  "exactGuards": {
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/RemainingArchitecture.java": [
+      "        if (dev.dreamwalker.bloodbornedw.composite.ImportedStyleRetirements.retired(id)) return List.of();"
+    ],
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.java": [
+      "        if(ImportedCollisionV125.supports(spec)){Shift shift=world(state,payload);double offset=payload.getDouble(\"MountY\")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedCollisionV125.footprint(spec,state,offset,shift.x,shift.y,shift.z);}"
+    ],
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSpec.java": [
+      "        if(ImportedCollisionV125.supports(this))return ImportedCollisionV125.footprint(this,state,mountY,0,0,0);",
+      "        if(ImportedCollisionV125.supports(this))return ImportedCollisionV125.physicalFootprint(this,state,mountY,shiftX,shiftY,shiftZ);"
+    ]
+  },
+  "styleMetadataSha256": "f5d453f54411c3ddb724f913706f38041c733cc7756c89e2ffbd2f3f721f48be",
+  "collisionMetadataSha256": "d326175ab836e4555f04475c348afdbb065d8b8a87c8dc3185adb2d2ee8d7cf9",
+  "collisionContractSha256": "f7cddd1734e90d0f81dd63f1a3a373d54e4b5e203bdcdd7ad8b5de1c5bfc9f98",
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED",
+  "failures": [],
+  "runtimeCompilationAndGameplay": "NOT_RUN_BY_READONLY_SOURCE_AUDIT"
+}
