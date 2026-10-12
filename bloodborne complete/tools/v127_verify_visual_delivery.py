@@ -1,6 +1,6 @@
 """Independent final art handoff, protected IDs and exact alias-copy audit."""
 import hashlib,json,subprocess,zipfile
-from v127_visual_export import ROOT,RES,OUT,inventory,spec_of,write_json,digest
+from v127_visual_export import ROOT,RES,OUT,inventory,spec_of,write_json,digest,mapped_hidden_indices
 
 BASE='0c985dc28e4a38900cce3055ddb5658a71ed95e5'
 def baseline(relative):
@@ -24,8 +24,11 @@ def main():
         hidden={r['registryId']:r['id'] for r in index['compatibilityObjects']}
         all_sources={'bloodborne_dw:'+r['path'] for r in remaining['objects']}
         assert set(hidden)==all_sources-set(actual) and not protected.intersection(hidden)
+        used,coordinate_sha=mapped_hidden_indices();assert index['fullSourcePlanCoordinateRunSha256']==coordinate_sha
         for row in index['compatibilityObjects']:
             assert json.loads(z.read(row['descriptor']))==spec_of({'registry':row['registryId']})
+            assert {r['pose'] for r in row['editableProjects']}==used.get(row['registryId'],set())
+            for project in row['editableProjects']:assert digest(z.read(project['project']))==project['sha256']
         assert len(z.infolist())==len({r.filename for r in z.infolist()}),'Duplicate archive paths'
         assert 'runtimeALTVertexMultiplierPreview' in z.read('README-RU.txt').decode()
     old=json.loads(baseline('src/architecture/resources/bloodborne_dw/imported-type-aliases.json'))
@@ -45,7 +48,8 @@ def main():
         assert source==target
         assert digest(json.dumps(target,sort_keys=True,separators=(',',':')).encode())==row['exactCurrentVariantSha256']
     result={'status':'PASS_FINAL_VISUAL_DELIVERY_AUDIT','baselineCommit':BASE,'archiveSha256':report['archiveSha256'],'archiveBytes':archive.stat().st_size,
-        'workingNewTypes':len(objects)+2,'compositeWorkingNewTypes':len(objects),'utilityWorkingNewTypes':2,'hiddenCompatibilitySourceTypes':len(hidden),'allNewSourceRegistrationsExtracted':len(all_sources),
+        'workingNewTypes':len(objects)+2,'compositeWorkingNewTypes':len(objects),'utilityWorkingNewTypes':2,'hiddenCompatibilitySourceTypes':len(hidden),'hiddenMapEditableProjects':index['summary']['hiddenMapEditableProjects'],'allNewSourceRegistrationsExtracted':len(all_sources),
+        'finalPlanCoordinateRunSha256':index['fullSourcePlanCoordinateRunSha256'],
         'originalV12TypeExports':0,'historic1281MappingsExact':True,'globalOldGroupMemberUniqueness':True,'previousReservedNumbersUnchanged':len(old_numbers),
         'followupCurrentExactPoseCopies':len(proofs),'archivedRuntimeDescriptorsMatchFinalLiveResources':True,'blockbenchGUIOpen':'NOT_RUN','nativeClientAndServer':'SEE_ROOT_REPORT'}
     write_json(OUT/'final-delivery-audit.json',result);print(json.dumps(result))

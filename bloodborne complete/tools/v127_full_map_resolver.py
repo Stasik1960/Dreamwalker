@@ -68,6 +68,8 @@ class CurrentResolver(Resolver):
                         self.current_whole.append({'registryId':reg,'variant':vi,'open':opened,'applications':apps,'sourcePlacementOffset':v.get('sourcePlacementOffset',[0,0,0]),'currentAppend':True})
         special=ROOT/'docs/v12.7/conversion/protected-source-exact-matches.json'
         self.protected={r['sourceApplicationToken']:r['decision'] for r in json.loads(special.read_text(encoding='utf-8-sig'))['rows']} if special.exists() else {}
+        offsetPolicy=ROOT/'docs/v12.7/conversion/source-native-model-offset-policy.json'
+        self.nativeModelOffsetStates=set(json.loads(offsetPolicy.read_text(encoding='utf-8-sig'))['sourceStates']) if offsetPolicy.exists() else set()
         if special.exists():
             for row in json.loads(special.read_text(encoding='utf-8-sig'))['rows']:
                 if len(row['sourceApplications'])>1 and any(any(a.get('offset',[0,0,0])) for a in row['sourceApplications']):
@@ -77,7 +79,9 @@ class CurrentResolver(Resolver):
 
     def target(self,candidate,yaw):
         if candidate.get('protectedTarget'):
-            result=copy.deepcopy(candidate['protectedTarget']);result['properties']['rotation']=str((int(result['properties']['rotation'])+yaw)%8);result['mainId']=self.ids[result['registryId']];return result
+            result=copy.deepcopy(candidate['protectedTarget']);result['properties']['rotation']=str((int(result['properties']['rotation'])+yaw)%8);result['mainId']=self.ids[result['registryId']]
+            if result['registryId']=='bloodborne_dw:prototype_wood_window':result['properties'].pop('mount',None)
+            return result
         if not candidate.get('currentAppend'):
             result=super().target(candidate,yaw)
             mapping=self.follow.get((result['registryId'],int(result['properties']['variant'])))
@@ -114,7 +118,10 @@ class CurrentResolver(Resolver):
         if any(name=='minecraft:block/diorite_wall_side_tall' for name in names):return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL','models':sorted(names)}
         if self.carriers.get(carrier) in self.retired and not self.preserveRetired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_CARRIER','retiredRegistryId':self.carriers[carrier],'models':sorted(names)}
         exact=self.protected.get(token(sorted(apps,key=token)))
-        if exact:return {**copy.deepcopy(exact),'mainId':self.ids.get(exact['registryId'],'')}
+        if exact:
+            result={**copy.deepcopy(exact),'mainId':self.ids.get(exact['registryId'],'')}
+            if result['registryId']=='bloodborne_dw:prototype_wood_window':result['properties'].pop('mount',None)
+            return result
         result=self.resolve(apps)
         if result['resolution'].startswith('EXACT'):
             if result['registryId']=='bloodborne_dw:prototype_wood_window':result['properties'].pop('mount',None)
@@ -129,6 +136,9 @@ class CurrentResolver(Resolver):
                 result['properties'].update(alias.get('stateProperties',{}));result['sourceOldVariant']=alias['newVariant'];result['resolution']='EXACT_SOURCE_VISUAL_NATIVE_OPACITY_FLUID_ALIAS'
             if result['registryId'] in self.retired and not self.preserveRetired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_TYPE','retiredRegistryId':result['registryId'],'models':sorted(names)}
             if result['registryId'] not in self.current and not result['registryId'].startswith(('bloodborne_dw:prototype_wall','bloodborne_dw:prototype_ladder')):return {'action':'REMOVE','reason':'EXCLUDED_UNREGISTERED_SOURCE_TYPE','excludedRegistryId':result['registryId'],'models':sorted(names)}
+            if sourceState in self.nativeModelOffsetStates:
+                assert result['registryId'].startswith('bloodborne_dw:source_'),'Protected V12 cannot receive source model offsets'
+                result['sourceNativeModelOffsetState']=sourceState
             return {'action':'OWNER',**result}
         if carrier=='minecraft:polished_deepslate_wall':
             mats={int(a['model'].rsplit('_',1)[1]) for a in apps if '_side_tall_' in a['model']};material=next(iter(mats),6)

@@ -57,6 +57,8 @@ def main():
     digest = sha(production)
     checkpoint = subprocess.check_output(['git', 'rev-parse', args.source_checkpoint + '^{commit}'], cwd=REPO, text=True).strip()
     assert subprocess.run(['git', 'diff', '--quiet', checkpoint, '--', *SCOPE], cwd=REPO).returncode == 0, 'Source changed since the pre-build checkpoint'
+    source_status = subprocess.check_output(['git', 'status', '--porcelain', '-z', '--untracked-files=all', '--', *SCOPE], cwd=REPO)
+    assert not source_status, 'Protected implementation has tracked or untracked changes; freeze and commit before acceptance'
     bindings_path = evidence_path(str(args.proof_bindings)); attestations = read(bindings_path)
     assert attestations['status'] == 'PASS_FINAL_FROZEN_PROOF_BINDINGS'
     assert attestations['productionJarSha256'] == digest and attestations['sourceCheckpoint'] == checkpoint

@@ -33,7 +33,7 @@ def main(path,orphan):
         carrier,properties=props(state);d=r.classify(apps,carrier,properties)
         if d['action']=='OWNER':
             p=d['properties'];reg=d['registryId'];pose=int(p.get('variant',0))+16*int(p.get('art_bank',0))
-            if reg in compact and pose in compact[reg] and not any(d.get('sourceShift',[0,0,0])) and int(p.get('rotation',0))%2==0 and not d.get('payload',{}).get('ImportedStairLegacyArt'):
+            if reg in compact and pose in compact[reg] and not d.get('sourceNativeModelOffsetState') and not any(d.get('sourceShift',[0,0,0])) and int(p.get('rotation',0))%2==0 and not d.get('payload',{}).get('ImportedStairLegacyArt'):
                 d['action']='COMPACT';p['compact']='true';d['payload']={}
             elif reg in compact:p['compact']='false'
         if d['action'] in {'UNRESOLVED_VISIBLE','WHOLE_CANDIDATE'}:

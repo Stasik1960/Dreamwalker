@@ -1,0 +1,1370 @@
+{
+  "schema": "dreamwalker-v127-final-resource-audit-v1",
+  "status": "PASS",
+  "productionJarSha256": "4cedc92da12b44e0c9d731b3c1caee04767464f1a9f418fcd9debc6b96d87534",
+  "baselineJarSha256": "f5a4238d1ea241067e163c2e89f66f3133def211ab53b05d21db1375c96030d6",
+  "counts": {
+    "unchangedVanillaNamespaceEntries": 3,
+    "sourceResourcesPackaged": 7938,
+    "verifiedLoomRefmapTransforms": 2,
+    "renderedModelRoots": 4239,
+    "resolvedModelDependencies": 4361,
+    "resolvedTextureDependencies": 288,
+    "unchangedUnusedAliases": 46,
+    "unusedTemplateFaces": 256
+  },
+  "failures": [],
+  "unchangedUnusedAliases": [
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/diorite_wall_post",
+      "binding": "particle",
+      "value": "#wall",
+      "reason": "Unbound texture: #wall",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "particle",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "particle",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "particle",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture: #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT"
+    }
+  ],
+  "unusedTemplateFaces": [
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:block/wall/source/minecraft/block/wall_inventory",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button_pressed",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button_pressed",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button_pressed",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button_pressed",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button_pressed",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/button_pressed",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cross",
+      "parameter": "#cross"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cross",
+      "parameter": "#cross"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cross",
+      "parameter": "#cross"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cross",
+      "parameter": "#cross"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube",
+      "parameter": "#down"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube",
+      "parameter": "#up"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube",
+      "parameter": "#north"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube",
+      "parameter": "#south"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube",
+      "parameter": "#west"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube",
+      "parameter": "#east"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_all",
+      "parameter": "#down"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_all",
+      "parameter": "#up"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_all",
+      "parameter": "#north"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_all",
+      "parameter": "#south"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_all",
+      "parameter": "#west"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_all",
+      "parameter": "#east"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_bottom_top",
+      "parameter": "#down"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_bottom_top",
+      "parameter": "#up"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_bottom_top",
+      "parameter": "#north"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_bottom_top",
+      "parameter": "#south"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_bottom_top",
+      "parameter": "#west"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_bottom_top",
+      "parameter": "#east"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column",
+      "parameter": "#down"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column",
+      "parameter": "#up"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column",
+      "parameter": "#north"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column",
+      "parameter": "#south"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column",
+      "parameter": "#west"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column",
+      "parameter": "#east"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column_mirrored",
+      "parameter": "#down"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column_mirrored",
+      "parameter": "#up"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column_mirrored",
+      "parameter": "#north"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column_mirrored",
+      "parameter": "#south"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column_mirrored",
+      "parameter": "#west"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_column_mirrored",
+      "parameter": "#east"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_mirrored",
+      "parameter": "#down"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_mirrored",
+      "parameter": "#up"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_mirrored",
+      "parameter": "#north"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_mirrored",
+      "parameter": "#south"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_mirrored",
+      "parameter": "#west"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/cube_mirrored",
+      "parameter": "#east"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_post",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_post",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_post",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_post",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_post",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_post",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/fence_side",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#bottom"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/inner_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#bottom"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/outer_stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_down",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_down",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_down",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_down",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_down",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_down",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_up",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_up",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_up",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_up",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_up",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate_up",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab",
+      "parameter": "#bottom"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab_top",
+      "parameter": "#bottom"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab_top",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab_top",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab_top",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab_top",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/slab_top",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_farmland",
+      "parameter": "#dirt"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_farmland",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_farmland",
+      "parameter": "#dirt"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_farmland",
+      "parameter": "#dirt"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_farmland",
+      "parameter": "#dirt"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_farmland",
+      "parameter": "#dirt"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_noside",
+      "parameter": "#pane"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_noside_alt",
+      "parameter": "#pane"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_post",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_post",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side",
+      "parameter": "#pane"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side",
+      "parameter": "#pane"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side_alt",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side_alt",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side_alt",
+      "parameter": "#edge"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side_alt",
+      "parameter": "#pane"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glass_pane_side_alt",
+      "parameter": "#pane"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glazed_terracotta",
+      "parameter": "#pattern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glazed_terracotta",
+      "parameter": "#pattern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glazed_terracotta",
+      "parameter": "#pattern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glazed_terracotta",
+      "parameter": "#pattern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glazed_terracotta",
+      "parameter": "#pattern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_glazed_terracotta",
+      "parameter": "#pattern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_lantern",
+      "parameter": "#lantern"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_bottom",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_bottom",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_bottom",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_bottom",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_bottom",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_bottom",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_orientable_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#top"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_potted_azalea_bush",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_open",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_open",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_open",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_open",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_open",
+      "parameter": "#side"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_top",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_top",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_top",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_top",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_top",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_trapdoor_top",
+      "parameter": "#texture"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_post",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/template_wall_side_tall",
+      "parameter": "#wall"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/tinted_flower_pot_cross",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/tinted_flower_pot_cross",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/tinted_flower_pot_cross",
+      "parameter": "#plant"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/tinted_flower_pot_cross",
+      "parameter": "#plant"
+    }
+  ],
+  "qaClassesExcluded": true,
+  "sourceResourcePackRequired": false,
+  "nativeGameplay": "NOT_PROVEN_BY_RESOURCE_AUDIT"
+}

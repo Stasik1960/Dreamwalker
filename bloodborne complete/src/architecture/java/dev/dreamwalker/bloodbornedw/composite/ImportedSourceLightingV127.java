@@ -30,7 +30,7 @@ public final class ImportedSourceLightingV127 {
         var value=property.parse(name);if(value.isEmpty())throw new IllegalArgumentException("Invalid source light property "+property.getName()+"="+name);
         return state.with((Property)property,(Comparable)value.get());
     }
-    private static BlockState source(String text){
+    static BlockState source(String text){
         int start=text.indexOf('[');var id=new Identifier(start<0?text:text.substring(0,start));
         if(!id.getNamespace().equals("minecraft")||!Registries.BLOCK.containsId(id))throw new IllegalArgumentException("Unavailable vanilla optics source: "+text);
         var block=Registries.BLOCK.get(id);var state=block.getDefaultState();

@@ -39,7 +39,7 @@ public class CompositeRootBlock extends BlockWithEntity {
     @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){if(!state.isOf(next.getBlock())&&!CompositeRuntime.writing()&&world instanceof ServerWorld server)CompositeRuntime.scheduleCleanup(server,pos);super.onStateReplaced(state,world,pos,next,moved);}
     @Override public BlockState getStateForNeighborUpdate(BlockState state,net.minecraft.util.math.Direction side,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos){if(world instanceof ServerWorld server&&(spec.requiredSupport||this instanceof ThinWindowRootBlock))CompositeRuntime.scheduleSupport(server,pos);return state;}
     public ItemStack art(BlockState state,NbtCompound payload){
-        if(ImportedSourcePartsV127.part(state))return art(ImportedSourcePartsV127.installation(state),new NbtCompound());
+        if(ImportedSourcePartsV127.part(state))return art(ImportedSourcePartsV127.installation(state),ImportedTypeAliases.markPayload(null));
         if(spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(state,payload)){
             NbtCompound converted=ImportedTypeAliases.transformPayload(state,payload);BlockState next=ImportedTypeAliases.target(state);
             return ((CompositeRootBlock)next.getBlock()).art(next,converted);

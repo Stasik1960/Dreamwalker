@@ -74,14 +74,18 @@ def source_changed(con,decisions,dim,x,y,z):
     return action!='KEEP'
 def stage(plan,runtime,target,execute):
     ordinary_ancestors(plan);ordinary_ancestors(runtime);target=fresh_target(target);plan=plan.resolve();runtime=runtime.resolve();con=sqlite3.connect(f'file:{plan}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN',summary['status'];assert summary['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)},'Original source hashes differ'
-    if not execute:print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if summary.get('sourceStylePolicy') in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'} else 'PASS_READONLY_READY_TO_STAGE','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction and final source-style decision'}));return
-    assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Full conversion is blocked while the known visible source-style preservation policy awaits a user decision'
-    policy=O/'source-style-policy.json';assert summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(policy),'Final source-style policy/status/hash differs from the complete source plan'
+    policy=O/'source-style-policy.json';readyPolicy=summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(policy)
+    bundle=None
     if runtime.exists():
         bundle=json.loads((runtime/'manifest.json').read_text(encoding='utf-8-sig'));assert bundle['status']=='PASS_COMPLETE_SOURCE_PLAN' and bundle['sourcePlanSha256']==sha(plan),'Stale runtime bundle'
-        assert bundle.get('sourceStylePolicy')==summary['sourceStylePolicy'] and bundle.get('sourceStylePolicySha256')==summary['sourceStylePolicySha256']==sha(policy),'Runtime bundle source-style policy/status/hash differs'
+        assert bundle.get('sourceStylePolicy')==summary.get('sourceStylePolicy') and bundle.get('sourceStylePolicySha256')==summary.get('sourceStylePolicySha256')==sha(policy),'Runtime bundle source-style policy/status/hash differs'
+        assert set(bundle['runtimeFiles'])=={'sections.jsonl.gz','owners.jsonl.gz','whole-objects.jsonl.gz','entities.jsonl.gz'},'Incomplete runtime bundle'
         for name,digest in bundle['runtimeFiles'].items():assert PurePosixPath(name).name==name and sha(runtime/name)==digest,'Runtime stream hash mismatch'
-    else:bundle=runtime_bundle(plan,runtime)
+    if not execute:
+        print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if not readyPolicy else 'PASS_READONLY_READY_TO_STAGE' if bundle else 'PASS_READONLY_PLAN_REQUIRES_RUNTIME_EXPORT','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'sourceStylePolicySha256':summary.get('sourceStylePolicySha256'),'runtimeStreamsVerified':bool(bundle),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction'}));con.close();return
+    assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Full conversion is blocked while the known visible source-style preservation policy awaits a user decision'
+    assert readyPolicy,'Final source-style policy/status/hash differs from the complete source plan'
+    if bundle is None:bundle=runtime_bundle(plan,runtime)
     target.parent.mkdir(parents=True,exist_ok=True);target.mkdir();operation=str(uuid.uuid4())
     decisions={i:json.loads(s) for i,s in con.execute('SELECT id,data FROM decisions')};changed=chunks=0;start=time.monotonic();be_removed=[];all_members=[];ticks_removed=[]
     with zipfile.ZipFile(MAP,'r') as archive:

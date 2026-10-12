@@ -51,7 +51,7 @@ python tools/run_v127_full_conversion.py --derived-world build/v127-original-lev
 QA и исходный ресурспак отсутствуют. Исходная тестовая папка не меняется:
 
 ```powershell
-python tools/run_v127_conversion_reopen.py --world-copy build/v127-original-level-fixture-final/world --runtime-directory build/v127-original-level-reopen-final --production-jar $taskJar --fabric-api $taskApi --geckolib $taskGecko --server-bootstrap build/v127-server-bootstrap --server-launcher build/v127-server-bootstrap/fabric-server-launch.jar --accepted-eula-file $taskEula --report build/v127-original-level-reopen-final.json --heap-gb 4 --startup-timeout 900 --shutdown-timeout 120 --hold-seconds 5
+python tools/run_v127_conversion_reopen.py --world-copy build/v127-original-level-fixture-final/world --conversion-launch build/v127-original-level-author-final/launch-report.json --runtime-directory build/v127-original-level-reopen-final --production-jar $taskJar --fabric-api $taskApi --geckolib $taskGecko --server-bootstrap build/v127-server-bootstrap --server-launcher build/v127-server-bootstrap/fabric-server-launch.jar --accepted-eula-file $taskEula --report build/v127-original-level-reopen-final.json --heap-gb 4 --startup-timeout 900 --shutdown-timeout 120 --hold-seconds 5
 ```
 
 `--prepare-only` у этой команды проверяет/копирует входы без Java, но всё равно

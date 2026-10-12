@@ -42,7 +42,10 @@ def whole_pass(r,source,out):
                     if row is None or p in consumed or r.match(expected,apps[row[0]])!=yaw:okay=False;break
                     cells.append(p)
                 if not okay:continue
-                target=r.target(candidate,yaw);target['action']='OWNER';uuid=source_uuid(dim,[x,y,z],'whole:'+target['registryId']);index=len(whole)
+                target=r.target(candidate,yaw);target['action']='OWNER'
+                if target['registryId'] in {'bloodborne_dw:source_original_tree','bloodborne_dw:source_large_grille_gate'}:
+                    target.setdefault('payload',{})['SourceCarrierContextVersion']=1
+                uuid=source_uuid(dim,[x,y,z],'whole:'+target['registryId']);index=len(whole)
                 row={'dimension':dim,'position':[x,y,z],'decision':target,'instanceUuid':uuid,'consumedSourceCells':[list(p[1:]) for p in cells],'sourceApplications':candidate['applications']}
                 whole.append(row)
                 for p in cells:consumed[p]=index
@@ -114,7 +117,7 @@ def prepare(path):
                                 d=r.classify(apps,carrier,props)
                                 if d['action']=='OWNER':
                                     reg=d['registryId'];p=d['properties'];pose=int(p.get('variant',0))+16*int(p.get('art_bank',0))
-                                    if reg in compact and pose in compact[reg] and not any(d.get('sourceShift',[0,0,0])) and int(p.get('rotation',0))%2==0 and not d.get('payload',{}).get('ImportedStairLegacyArt'):
+                                    if reg in compact and pose in compact[reg] and not d.get('sourceNativeModelOffsetState') and not any(d.get('sourceShift',[0,0,0])) and int(p.get('rotation',0))%2==0 and not d.get('payload',{}).get('ImportedStairLegacyArt'):
                                         d['action']='COMPACT';p['compact']='true';d['payload']={}
                                     elif not reg.startswith('bloodborne_dw:prototype_wall'):p['compact']='false' if reg in compact else p.get('compact','')
                                     if p.get('compact')=='':p.pop('compact',None)
@@ -159,7 +162,9 @@ def export_runtime(path,dest):
                     tok=token(native);pids.setdefault(tok,len(pids));values[at]=pids[tok]
                     if action=='OWNER':
                         for i in at:
-                            p=[cx*16+(int(i)&15),sy*16+(int(i)>>8),cz*16+((int(i)>>4)&15)];row={'dimension':dim,'position':p,'instanceUuid':source_uuid(dim,p),'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']};owners.append(row);ownerout.write(token(row)+'\n')
+                            p=[cx*16+(int(i)&15),sy*16+(int(i)>>8),cz*16+((int(i)>>4)&15)];row={'dimension':dim,'position':p,'instanceUuid':source_uuid(dim,p),'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']}
+                            if d.get('sourceNativeModelOffsetState'):row.update(sourceNativeModelOffsetState=d['sourceNativeModelOffsetState'],sourceNativeModelOffsetPosition=p)
+                            owners.append(row);ownerout.write(token(row)+'\n')
             palette=[None]*len(pids)
             for key,i in pids.items():palette[i]=json.loads(key)
             out.write(token({'dimension':dim,'chunk':[cx,cz],'sectionY':sy,'palette':palette,'indices':values.tolist()})+'\n')

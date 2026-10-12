@@ -216,6 +216,15 @@ public final class FullMapConversionAuthor implements ModInitializer {
             UUID uuid = UUID.fromString(row.get("instanceUuid").getAsString());
             NbtCompound payload = row.has("payloadSnbt") ? parseNbt(row.get("payloadSnbt").getAsString())
                     : row.has("payload") ? parseNbt(row.get("payload").toString()) : new NbtCompound();
+            require(row.has("sourceNativeModelOffsetState") == row.has("sourceNativeModelOffsetPosition"), "Incomplete native model offset annotation");
+            if (row.has("sourceNativeModelOffsetState")) {
+                JsonArray original = row.getAsJsonArray("sourceNativeModelOffsetPosition");
+                require(original.size() == 3, "Bad original native model offset position");
+                BlockPos originalPosition = new BlockPos(original.get(0).getAsBigDecimal().intValueExact(),
+                        original.get(1).getAsBigDecimal().intValueExact(), original.get(2).getAsBigDecimal().intValueExact());
+                require(originalPosition.equals(pos), "Native model offset original source root differs from imported root");
+                payload = SourceNativeModelOffsetV127.apply(state, payload, row.get("sourceNativeModelOffsetState").getAsString(), originalPosition);
+            }
             if (world.getBlockEntity(pos) instanceof CompositeBlockEntity saved && saved.resident() != null) {
                 require(saved.resident().instanceId().equals(uuid) && saved.resident().registryId().equals(id.toString()), "Source root already occupied by another owner");
                 require(world.getBlockState(pos).equals(state), "Previously imported source state changed before resume");

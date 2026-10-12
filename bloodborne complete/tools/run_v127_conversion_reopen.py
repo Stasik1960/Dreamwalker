@@ -17,10 +17,24 @@ from run_v127_full_conversion import metadata
 from run_v11_server import classify_log
 
 
+def fingerprint(source):
+    """Complete regular-file set; reject reparses instead of silently skipping."""
+    rows = []
+    for current, directories, names in os.walk(source, followlinks=False):
+        base = Path(current)
+        assert ordinary(base)
+        assert all(ordinary(base / name) for name in directories + names), 'Reparse in source fixture'
+        for name in sorted(names):
+            path = base / name
+            assert path.is_file()
+            rows.append({'path': path.relative_to(source).as_posix(), 'bytes': path.stat().st_size, 'sha256': sha(path)})
+    return sorted(rows, key=lambda row: row['path'])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('world-copy', 'runtime-directory', 'production-jar', 'fabric-api', 'geckolib',
-                 'server-bootstrap', 'server-launcher', 'accepted-eula-file', 'report'):
+                 'server-bootstrap', 'server-launcher', 'accepted-eula-file', 'conversion-launch', 'report'):
         parser.add_argument('--' + name, type=Path, required=True)
     java_home = os.environ.get('JAVA_HOME17') or os.environ.get('JAVA_HOME')
     parser.add_argument('--java-home', type=Path, default=Path(java_home) if java_home else None)
@@ -32,16 +46,27 @@ def main():
     args = parser.parse_args()
     assert 2 <= args.heap_gb <= 12 and 10 <= args.startup_timeout <= 1200
     assert 10 <= args.shutdown_timeout <= 180 and 0 <= args.hold_seconds <= 30
-    assert all(ordinary(path) for path in (args.world_copy, args.runtime_directory, args.report, args.accepted_eula_file))
+    assert all(ordinary(path) for path in (args.world_copy, args.runtime_directory, args.report, args.accepted_eula_file, args.conversion_launch))
     source, run, report = args.world_copy.resolve(), args.runtime_directory.resolve(), args.report.resolve()
     assert source.is_relative_to(ROOT / 'build') and run.is_relative_to(ROOT / 'build') and report.is_relative_to(ROOT / 'build')
     assert source != run and not run.exists() and not report.exists()
+    assert not source.is_relative_to(run) and not run.is_relative_to(source), 'Source and runtime must be separate, never nested'
     assert (source / 'level.dat').is_file()
     derived, converted = read(source / 'dw-derived-copy.json'), read(source / 'dw-conversion-result.json')
     assert derived.get('fixtureOnly') is True, 'This bounded helper cannot open the original city'
     assert converted['status'] == 'PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED'
     production = args.production_jar.resolve(); digest = sha(production)
     assert converted['productionJarSha256'] == digest and converted['initialOverlapPrivilegeSerialized'] is False
+    launch_report_path = args.conversion_launch.resolve()
+    assert launch_report_path.is_relative_to(ROOT / 'build') and launch_report_path.is_file()
+    launch_report_sha = sha(launch_report_path)
+    author = read(launch_report_path)
+    assert author['status'] == 'PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED' and author['mode'] == 'FIXTURE_NATIVE_TEST'
+    assert author['exitCode'] == 0 and author['productionJarSha256'] == digest
+    assert Path(author['derivedWorld']).resolve() == source and author['runtimeResult'] == converted
+    assert author['runtimeManifestSha256'] == converted['runtimeManifestSha256']
+    assert derived['operationId'] == converted['operationId']
+    source_before = fingerprint(source)
     eula = args.accepted_eula_file.resolve()
     assert re.search(r'(?m)^\s*eula\s*=\s*true\s*$', eula.read_text(encoding='utf-8-sig'))
     inputs = [production, args.fabric_api.resolve(), args.geckolib.resolve()]
@@ -63,6 +88,8 @@ def main():
         before = sha(path); shutil.copyfile(path, destination)
         assert sha(path) == sha(destination) == before
         copied.append({'path': relative.as_posix(), 'bytes': path.stat().st_size, 'sha256': before})
+    assert fingerprint(source) == source_before, 'Source file set/content changed during copy'
+    assert sha(launch_report_path) == launch_report_sha, 'Stopped author report changed during copy'
     shutil.copyfile(eula, run / 'eula.txt')
     (run / 'server.properties').write_text('server-ip=127.0.0.1\nserver-port=25596\nonline-mode=false\nmax-players=0\n'
         'enable-command-block=false\nspawn-protection=0\nview-distance=2\nsimulation-distance=2\n'
@@ -71,6 +98,7 @@ def main():
         'artifact': str(production), 'run_directory': str(run), 'extraMods': [], 'world_startup': 'NOT_RUN',
         'sourceWorld': str(source), 'sourceWorldUnchanged': True, 'copiedFiles': copied,
         'bootstrapRuntimeFiles': bootstrap, 'modFiles': modset, 'acceptedEulaSha256': sha(eula),
+        'acceptedAuthorLaunchReportSha256': launch_report_sha, 'sourceCompleteFingerprint': source_before,
         'originalCityOpened': False, 'galleryCreated': False, 'nativeJavaRun': 'NOT_RUN'}
     if not args.prepare_only:
         assert args.java_home, 'Java 17 must be explicitly configured'
@@ -101,7 +129,8 @@ def main():
                         process.terminate(); process.wait(timeout=30)
         text = log_path.read_text(encoding='utf8', errors='replace')
         errors, optional = classify_log(text)
-        assert all(sha(source / row['path']) == row['sha256'] for row in copied), 'Author world changed during production reopen'
+        assert fingerprint(source) == source_before, 'Source file set/content changed during production reopen'
+        assert sha(production) == digest and sha(launch_report_path) == record['acceptedAuthorLaunchReportSha256'], 'Accepted author/JAR binding changed'
         record.update(status='PASS' if started and process.returncode == 0 and not errors else 'FAIL',
             world_startup='PASS' if started else 'FAIL', exit_code=process.returncode, javaVersion=version.strip(),
             consoleLogSha256=sha(log_path), errors=errors, optionalReachWarnings=optional, nativeJavaRun='RUN',

@@ -67,6 +67,24 @@ def active_indices(spec):
     if full.exists():ids.extend(r['variant'] for r in json.loads(full.read_text(encoding='utf-8'))['objects'] if r['registryId']==spec['id'])
     return sorted(set(ids))
 
+def mapped_hidden_indices():
+    """Finite pose inventory of hidden NEW types actually used by the final plan.
+
+    This reads the exhaustive reachable-decision fixture; it never promotes a
+    hidden compatibility registration to an offered item or working type.
+    """
+    fixture=json.loads((ROOT/'src/gametest/resources/bloodborne_dw/v127-source-lighting-decisions.json').read_text(encoding='utf-8'))
+    indices=defaultdict(set)
+    for row in fixture['cases']+fixture['wholeOwnerHeightCases']:
+        if row.get('action','OWNER') not in ('OWNER','COMPACT'):continue
+        text=row['targetState'];registry=text.split('[',1)[0]
+        if not registry.startswith('bloodborne_dw:source_'):continue
+        state={}
+        if '[' in text:
+            state=dict(item.split('=',1) for item in text.split('[',1)[1].rstrip(']').split(',') if item)
+        indices[registry].add(int(state.get('variant','0'))+16*int(state.get('art_bank','0')))
+    return indices,fixture['coordinateRunSha256']
+
 class Art(Visuals):
     def optional(self,relative):
         for root in self.roots:
@@ -239,6 +257,7 @@ def export_pass(args,rows,art):
     dest=ROOT/'build/v127-blockbench-export';dest.mkdir(parents=True,exist_ok=True)
     archive=ROOT/'build/Dreamwalker-BB-V12.7-New-Blockbench-Assets.zip'
     index=[];compatibility=[];closure_models,closure_textures={},{};checked=0;allnames=set()
+    hidden_used,plan_coordinate_sha=mapped_hidden_indices()
     with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         for n,row in enumerate(rows):
             spec=spec_of(row);indices=active_indices(spec);models=set();entries=[]
@@ -276,7 +295,17 @@ def export_pass(args,rows,art):
             spec=spec_of({'registry':registry});models={p.get('altModel',p['model']) for v in spec['variants'] for pose in v['poses'].values() for p in pose['parts']}|{p['model'] for v in spec['variants'] for pose in v['poses'].values() for p in pose['parts']}
             docs,tex=dependency_closure(art,models);closure_models.update(docs);closure_textures.update(tex)
             relative='compatibility-descriptors/'+numbers[registry]+'.json';z.writestr(relative,json.dumps(spec,ensure_ascii=False,indent=2).encode('utf-8'))
-            compatibility.append({'id':numbers[registry],'registryId':registry,'name':spec['displayName'],'descriptor':relative,'sourceModels':sorted(models),'textureDependencies':sorted(tex),'cataloguePolicy':'HIDDEN_COMPATIBILITY_REGISTRATION_NOT_A_WORKING_TYPE','originalV12Excluded':True})
+            entries=[]
+            for i in sorted(hidden_used.get(registry,())):
+                assert 0<=i<len(spec['variants']),(registry,i,len(spec['variants']))
+                for pose in spec['variants'][i]['poses']:
+                    for profile in ('base','alt'):
+                        key=f"{numbers[registry]}/pose-{i:03d}/{pose}-{profile}"
+                        quads=quads_for(art,spec,i,pose,profile);tint=runtime_tint(spec,i,pose,profile)
+                        project=make_bbmodel(art,quads,key,spec['displayName'],tint);checked+=verify_bbmodel(art,quads,project)
+                        path='editable-hidden-map/'+key+'.bbmodel';blob=json.dumps(project,ensure_ascii=False,separators=(',',':')).encode('utf-8');z.writestr(path,blob)
+                        entries.append({'pose':i,'state':pose,'profile':profile,'project':path,'sha256':digest(blob),'quads':len(quads),'runtimeALTVertexMultiplierPreview':tint})
+            compatibility.append({'id':numbers[registry],'registryId':registry,'name':spec['displayName'],'descriptor':relative,'editableProjects':entries,'sourceModels':sorted(models),'textureDependencies':sorted(tex),'cataloguePolicy':'HIDDEN_COMPATIBILITY_REGISTRATION_NOT_A_WORKING_TYPE','originalV12Excluded':True})
         utility=[]
         for number,path,label in [('93230','dw_barrier','dw-барьер'),('93231','dw_light','Невидимый свет')]:
             models=[f'bloodborne_dw:block/{path}',f'bloodborne_dw:block/{path}_alt',f'bloodborne_dw:item/{path}']
@@ -288,7 +317,8 @@ def export_pass(args,rows,art):
                 utility.append({'id':number,'registryId':'bloodborne_dw:'+path,'name':label,'profile':profile,'project':relative,'sourceModels':models,'textures':sorted(tex),'worldRenderPolicy':'Hidden in world; held-item marker appearance retained, project shows editable textured cube.'})
         for path,blob in {**closure_models,**closure_textures}.items():z.writestr('source-java/'+path,blob)
         document={'schemaVersion':1,'status':'PASS_EXACT_MODEL_UV_TEXTURE_ROUNDTRIP','objects':index,
-            'summary':{'workingNewTypes':len(index)+2,'compositeWorkingNewTypes':len(index),'newUtilityTypes':2,'hiddenCompatibilitySourceTypes':len(compatibility),'projects':sum(len(r['editableProjects']) for r in index)+len(utility),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':sum(p.endswith('.png') for p in closure_textures),'animationMetadataDependencies':sum(p.endswith('.mcmeta') for p in closure_textures)},
+            'summary':{'workingNewTypes':len(index)+2,'compositeWorkingNewTypes':len(index),'newUtilityTypes':2,'hiddenCompatibilitySourceTypes':len(compatibility),'hiddenMapUsedSourceTypes':sum(bool(r['editableProjects']) for r in compatibility),'hiddenMapEditableProjects':sum(len(r['editableProjects']) for r in compatibility),'projects':sum(len(r['editableProjects']) for r in index)+sum(len(r['editableProjects']) for r in compatibility)+len(utility),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':sum(p.endswith('.png') for p in closure_textures),'animationMetadataDependencies':sum(p.endswith('.mcmeta') for p in closure_textures)},
+            'fullSourcePlanCoordinateRunSha256':plan_coordinate_sha,
             'utilityObjects':utility,'compatibilityObjects':compatibility,
             'formatSources':['https://blockbench.net/wiki/docs/bbmodel/','https://github.com/JannisX11/blockbench/blob/master/js/formats/bbmodel.js']}
         z.writestr('INDEX.json',json.dumps(document,ensure_ascii=False,indent=2).encode('utf-8'))
@@ -297,6 +327,8 @@ def export_pass(args,rows,art):
         for number in ('93230','93231'):
             variants=[r for r in utility if r['id']==number];first=variants[0]
             writer.writerow([number,first['registryId'],first['name'],'invisible-utility',len(variants),first['project']])
+        for r in compatibility:
+            writer.writerow([r['id'],r['registryId'],r['name'],'hidden-map-compatibility',len(r['editableProjects']),r['editableProjects'][0]['project'] if r['editableProjects'] else r['descriptor']])
         z.writestr('INDEX-RU.tsv',table.getvalue().encode('utf-8-sig'))
         z.writestr('README-RU.txt',('''Новые объекты Dreamwalker BB V12.7 для Blockbench
 
@@ -305,6 +337,8 @@ def export_pass(args,rows,art):
 Сложные составные объекты сохранены как Generic Model mesh: произвольные повороты частей/наклоны нельзя без потерь записать одним Minecraft Java cube JSON. Меш можно редактировать в Blockbench; для возврата изменений в мод используйте source-java/assets/... JSON и runtime-descriptors/ID.json с точным ID/pose. Геометрия экспортирована, авторская коллизия не реконструируется.
 
 Для простых кубов и плоских спрайтов PNG перечислены в INDEX.json -> textureDependencies и находятся в source-java/assets/.../textures. INDEX-RU.tsv связывает ID, название, вид и проект. source-java содержит полное замыкание parent/textures. Актуальные скрытые состояния исходных неполных конструкций имеют собственные editable-проекты. Все исторические снятые NEW-типы и служебные части перечислены в INDEX.json -> compatibilityObjects: исходные Java-модели и PNG также сохранены, а точные состояния — в compatibility-descriptors. Снятые с каталога дубликаты не предлагаются отдельными рабочими типами.
+
+editable-hidden-map содержит отдельные .bbmodel для всех скрытых NEW-поз, реально используемых подготовленным планом исходной карты. Они отмечены hidden-map-compatibility в INDEX-RU.tsv и не входят в количество рабочих типов Creative. Для остальных исторических скрытых состояний сохранены исходные Java JSON, полное замыкание PNG и точный compatibility-descriptor. SHA256 списка координат плана, по которому выбраны эти позы, записан в INDEX.json.
 
 ALT с авторской альтернативной моделью сохраняется с её исходными PNG. Если у всей позы нет авторского ALT, игра умножает RGB вершин на (0.60, 0.67, 0.72). Только в editable/*-alt.bbmodel этот множитель запечён в копию PNG для удобного просмотра; alpha, UV и геометрия сохранены. Исходный PNG в source-java не меняется. INDEX и проект явно указывают runtimeALTVertexMultiplierPreview и SHA256 исходного PNG.
 

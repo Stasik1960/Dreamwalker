@@ -115,6 +115,11 @@ public final class WorldEditBridge {
     private static boolean matches(DebugCatalogue.Entry wanted,String registry) {
         var entry=DebugCatalogue.entry(new Identifier(registry));return entry!=null&&entry.temporaryId().equals(wanted.temporaryId());
     }
+    private static boolean nativeSettings(ServerWorld world,BlockPos p){
+        var state=world.getBlockState(p);if(!(ImportedCompactBlock.compact(state)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)))return false;
+        var target=new ToolTarget(ToolTarget.Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,p.asLong(),Registries.BLOCK.getId(state.getBlock()).toString());
+        return !dev.dreamwalker.bloodbornedw.tool.ToolCommands.view(world.getServer(),target).text().isBlank();
+    }
     private static NbtCompound snapshot(ServerWorld world,BlockPos p,List<Owner> owners,List<RpObjectEntity> entities) {
         NbtCompound result=new NbtCompound();result.putIntArray("Anchor",new int[]{p.getX(),p.getY(),p.getZ()});
         NbtList roots=new NbtList();
@@ -134,6 +139,24 @@ public final class WorldEditBridge {
     private static NbtCompound snapshot(BaseBlock block) {
         CompoundTag nbt=block.getNbtData();if(nbt==null||!(nbt.getValue().get(SNAPSHOT) instanceof StringTag value))return null;
         return CompositeData.nbt(Base64.getDecoder().decode(value.getValue()));
+    }
+    /** EditSession's public reads bypass its event extents and address World
+     * directly. Clipboard and ForwardExtentCopy therefore need this narrow
+     * read hook as well as the existing transactional write adapters. */
+    public static BaseBlock logicalRead(com.sk89q.worldedit.world.World adapter,BlockVector3 position,BaseBlock nativeBlock){
+        ServerWorld world=nativeWorld(adapter);if(world==null)return nativeBlock;
+        BlockPos p=pos(position);List<Owner> roots=owners(world,p);List<RpObjectEntity> rp=entities(world,p);
+        boolean nativeObject=nativeSettings(world,p);
+        if(roots.isEmpty()&&rp.isEmpty()&&!nativeObject)return nativeBlock;
+        BaseBlock shown=!roots.isEmpty()?adapter.getFullBlock(vector(CompositeData.pos(roots.get(0).root()))):nativeObject?nativeBlock:BlockTypes.BARRIER.getDefaultState().toBaseBlock();
+        return shown.toBaseBlock(tag(snapshot(world,p,roots,rp)));
+    }
+    /** Material-only reads retain logical object identity without serializing
+     * settings, counters or clipboard payloads. */
+    public static com.sk89q.worldedit.world.block.BlockState logicalState(com.sk89q.worldedit.world.World adapter,BlockVector3 position,com.sk89q.worldedit.world.block.BlockState nativeState){
+        ServerWorld world=nativeWorld(adapter);if(world==null)return nativeState;BlockPos p=pos(position);List<Owner> roots=owners(world,p);
+        if(!roots.isEmpty())return adapter.getBlock(vector(CompositeData.pos(roots.get(0).root())));
+        if(!entities(world,p).isEmpty())return BlockTypes.BARRIER.getDefaultState();return nativeState;
     }
     private static String requestedRp(BaseBlock block){CompoundTag tag=block.getNbtData();return tag!=null&&tag.getValue().get(RP_REQUEST) instanceof StringTag value?value.getValue():null;}
     private static CompoundTag tag(NbtCompound data){return new CompoundTag(Map.of(SNAPSHOT,new StringTag(Base64.getEncoder().encodeToString(CompositeData.bytes(data)))));}
@@ -198,7 +221,7 @@ public final class WorldEditBridge {
         public com.sk89q.worldedit.world.block.BlockState getBlock(BlockVector3 v){return getFullBlock(v).toImmutableState();}
         public BaseBlock getFullBlock(BlockVector3 v) {
             BlockPos p=pos(v);List<Owner> os=new ArrayList<>(owners(world,p));List<RpObjectEntity> es=new ArrayList<>(entities(world,p));Match selected=HISTORY_SELECTION.get();if(selected!=null&&selected.world==world&&selected.pos.equals(p)){os.removeIf(o->!selected.owners.contains(o));es.removeIf(e->!selected.entities.contains(e.getUuid()));}
-            boolean nativeObject=ImportedCompactBlock.compact(world.getBlockState(p))||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(world.getBlockState(p));if(os.isEmpty()&&es.isEmpty()&&!nativeObject&&!Boolean.TRUE.equals(HISTORY_RP_REQUEST.get()))return super.getFullBlock(v);
+            boolean nativeObject=nativeSettings(world,p);if(os.isEmpty()&&es.isEmpty()&&!nativeObject&&!Boolean.TRUE.equals(HISTORY_RP_REQUEST.get()))return super.getFullBlock(v);
             BaseBlock block;
             try {
                 if(!os.isEmpty()){BlockPos root=CompositeData.pos(os.get(0).root());world.getChunk(root.getX()>>4,root.getZ()>>4);block=super.getFullBlock(vector(root));}

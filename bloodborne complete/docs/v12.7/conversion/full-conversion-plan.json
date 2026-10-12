@@ -11,8 +11,8 @@
     "REMOVE": 346699,
     "VANILLA": 1
   },
-  "decisionDictionaryCount": 7959,
-  "elapsedSeconds": 178.28,
+  "decisionDictionaryCount": 7983,
+  "elapsedSeconds": 174.73,
   "enclosedVanillaFillerCells": 8433855,
   "fullWorldConverted": false,
   "gapSamples": [],
@@ -22,7 +22,7 @@
   "orphanAcaciaCells": 0,
   "orphanAction": "defer",
   "orphanSamples": [],
-  "planBytes": 407203840,
+  "planBytes": 407236608,
   "planFile": "build\\v127-full-conversion-first.sqlite",
   "reasonCounts": {
     "EXACT_APPROPRIATE_VANILLA_SOURCE_FALLBACK": 1,
@@ -51,7 +51,7 @@
   },
   "removalCoordinateFile": "source-removal-coordinates.jsonl.gz",
   "removalCoordinateFormat": "section linearRuns; index=(y&15)*256+(z&15)*16+(x&15), each[start,length] expands exact coordinates",
-  "removalCoordinateSha256": "8adb29dabfa565e714cd0188162be190288f7796ab757847f6c6d62bdad43e95",
+  "removalCoordinateSha256": "b4b60db755967677116c2255bf5c0243bb8dc33991af4ba93efcd81d30453db1",
   "runtimeExecution": "Deferred until explicit user full-conversion command; source geometry/style plan approved",
   "schemaVersion": 1,
   "sections": 861360,
@@ -62,6 +62,7 @@
   },
   "sourceObservedStates": 3852,
   "sourceStylePolicy": "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA",
+  "sourceStylePolicySha256": "0a8c174ecfe0bbd10787815bd7ae39b0629b9162965bd93529669606ba3a8e05",
   "status": "PASS_COMPLETE_SOURCE_PLAN",
   "targetTypeCounts": {
     "bloodborne_dw:prototype_glass_window_03": 344,
@@ -581,6 +582,5 @@
     "bloodborne_dw:source_white_terracotta": 112,
     "bloodborne_dw:source_yellow_terracotta": 502
   },
-  "wholeObjects": 1132,
-  "sourceStylePolicySha256": "0a8c174ecfe0bbd10787815bd7ae39b0629b9162965bd93529669606ba3a8e05"
+  "wholeObjects": 1132
 }
