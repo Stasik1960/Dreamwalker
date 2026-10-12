@@ -43,7 +43,7 @@ public final class BbToolService {
     private static Selection selection(ServerPlayerEntity player){return SELECTED.computeIfAbsent(player.getServer(),s->new HashMap<>()).computeIfAbsent(player.getUuid(),s->new Selection());}
     public static void clearSelection(ServerPlayerEntity player){var s=selection(player);s.levers.clear();s.lamp=null;}
     public static void initialize(){
-        if(ITEM!=null)return;ITEM=Registry.register(Registries.ITEM,ID,new BbToolItem());
+        if(ITEM!=null)return;ITEM=Registry.register(Registries.ITEM,ID,new BbToolItem());BbAlternateService.initialize();
         // Register before composite callbacks: tool RMB always changes mode rather than using a target.
         UseBlockCallback.EVENT.register((player,world,hand,hit)->{
             if(hand!=Hand.MAIN_HAND)return holding(player)?ActionResult.FAIL:ActionResult.PASS;
@@ -80,7 +80,16 @@ public final class BbToolService {
             }catch(RuntimeException invalid){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Invalid BB tool command packet rejected");}
         });
         CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(literal("bb").requires(source->source.getEntity() instanceof ServerPlayerEntity player&&canEdit(player))
-            .then(literal("select").then(argument("radius",IntegerArgumentType.integer(1)).executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=IntegerArgumentType.getInteger(context,"radius");player.sendMessage(Text.literal("BB: замена вида в радиусе "+selection(player).radius+" блоков."),false);return 1;})))
+            .then(literal("select")
+                .then(literal("all").executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=-1;clearSelection(player);player.sendMessage(Text.literal("BB: особое действие заменит вид всех объектов мода на сохранённой карте. /bb none — один объект."),false);return 1;}))
+                .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=IntegerArgumentType.getInteger(context,"radius");player.sendMessage(Text.literal("BB: замена вида в радиусе "+selection(player).radius+" блоков."),false);return 1;})))
+            .then(literal("alt")
+                .then(literal("all").executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"alt",-1)?1:0))
+                .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"alt",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
+            .then(literal("base")
+                .then(literal("all").executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",-1)?1:0))
+                .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
+            .then(literal("cancel").executes(context->{var player=context.getSource().getPlayerOrThrow();boolean cancelled=BbAlternateService.cancel(player.getServer());player.sendMessage(Text.literal(cancelled?"BB: замена вида остановлена; уже выполненные изменения сохранены.":"BB: активной замены вида нет."),false);return cancelled?1:0;}))
             .then(literal("none").executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=0;clearSelection(player);player.sendMessage(Text.literal("BB: выбор одного объекта."),false);return 1;}))));
     }
     public static void apply(ServerPlayerEntity player,ToolTarget target){
@@ -100,6 +109,7 @@ public final class BbToolService {
     }
     public static boolean special(ServerPlayerEntity player,ToolTarget target){
         var select=selection(player);
+        if(select.radius<0){clearSelection(player);return alternate(player,target,-1);}
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp){
             if(rp.isMechanism()){
                 select.lamp=null;
@@ -122,25 +132,11 @@ public final class BbToolService {
         clearSelection(player);return alternate(player,target,select.radius);
     }
     private static String catalogueId(BlockState state){var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(state);return entry==null?Registries.BLOCK.getId(state.getBlock()).toString():entry.temporaryId();}
-    @SuppressWarnings({"rawtypes","unchecked"})
-    private static BlockState profile(BlockState state,String value){for(Property property:state.getProperties())if(property.getName().equals("profile")){var parsed=property.parse(value);if(parsed.isPresent())return state.with(property,(Comparable)parsed.get());}return null;}
-    private static String profile(BlockState state){for(var entry:state.getEntries().entrySet())if(entry.getKey().getName().equals("profile"))return entry.getValue() instanceof StringIdentifiable named?named.asString():entry.getValue().toString();return null;}
     public static boolean alternate(ServerPlayerEntity player,ToolTarget target,int radius){
-        if(target.kind()!=ToolTarget.Kind.ARCHITECTURE&&target.kind()!=ToolTarget.Kind.BLOCK){player.sendMessage(Text.literal("Альтернативного вида нет."),true);return false;}
-        var world=target.world(player.getServer());var root=BlockPos.fromLong(target.root());var state=world.getBlockState(root);String current=profile(state);if(current==null){player.sendMessage(Text.literal("Альтернативного вида нет."),true);return false;}
-        String next=current.equals("alt")?"base":"alt",id=catalogueId(state);var targets=new LinkedHashMap<String,ToolTarget>();
-        if(radius==0)targets.put(target.key(),target);else{
-            // Iterate saved BB owners, not a radius-cubed scan or forced chunk loading.
-            var ledger=CompositeLedger.get(world);var eye=player.getPos();double squared=(double)radius*radius;
-            var owners=new HashSet<>(CompositeShapeSnapshots.attachedOwners(world));for(var cell:ledger.cells())for(var contribution:ledger.at(cell))owners.add(contribution.owner());
-            for(var owner:owners){var pos=CompositeData.pos(owner.root());if(!world.isChunkLoaded(pos)||Vec3d.ofCenter(pos).add(0,VerticalMount.offset(world,pos),0).squaredDistanceTo(eye)>squared)continue;
-                var candidate=world.getBlockState(pos);if(!catalogueId(candidate).equals(id))continue;var own=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,target.dimension(),owner.instanceId(),pos.asLong(),owner.registryId());targets.putIfAbsent(own.key(),own);}
-        }
-        int changed=0;for(var candidate:targets.values()){
-            var pos=BlockPos.fromLong(candidate.root());if(!BuildPermissions.canEdit(world,player,pos))continue;var before=world.getBlockState(pos);var after=profile(before,next);if(after==null||after.equals(before))continue;
-            if(candidate.kind()==ToolTarget.Kind.ARCHITECTURE){var owner=VerticalMount.owner(world,pos);if(owner!=null&&owner.instanceId().equals(candidate.uuid())&&CompositeRuntime.transition(world,owner,after,player).outcome()==TransactionCore.Outcome.COMMITTED)changed++;}
-            else if(world.setBlockState(pos,after,net.minecraft.block.Block.NOTIFY_ALL))changed++;
-        }
+        String current=BbAlternateService.profile(target,player.getServer());if(current==null){player.sendMessage(Text.literal("Альтернативного вида нет."),true);return false;}
+        String next=current.equals("alt")?"base":"alt";if(radius<0)return BbAlternateService.start(player,next,-1);
+        var targets=radius==0?List.of(target):BbAlternateService.sameTypeNear(player,target,radius);
+        int changed=0;for(var candidate:targets)if(BbAlternateService.change(player,candidate,next))changed++;
         player.sendMessage(Text.literal("Вид "+next+": изменено объектов — "+changed+(radius>0?" (загруженные объекты в радиусе "+radius+")":"")+"."),false);return changed>0;
     }
     public static boolean clear(ServerPlayerEntity player,ToolTarget target){

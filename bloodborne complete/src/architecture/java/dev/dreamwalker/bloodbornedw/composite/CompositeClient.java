@@ -146,8 +146,10 @@ public final class CompositeClient {
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
             var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
+            boolean generatedAlt=dev.dreamwalker.bloodbornedw.tool.BbAlternateService.generatedAlternate(block,state,part);
+            float partRed=generatedAlt?red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED:red,partGreen=generatedAlt?green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN:green,partBlue=generatedAlt?blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE:blue;
             boolean sourceEmissive=block.spec.id.getPath().startsWith("source_")&&selectedModel.getPath().startsWith("remaining/source_emissive/");
-            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,red,green,blue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
+            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,partRed,partGreen,partBlue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
         }matrices.pop();
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}

@@ -12,7 +12,7 @@ public final class CompositeItem extends BlockItem {
     private final CompositeRootBlock root;
     public CompositeItem(CompositeRootBlock block){super(block,new Settings());root=block;}
     @Override public ActionResult place(ItemPlacementContext context){
-        return placeInternal(context);
+        return dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.place(context,()->placeInternal(context));
     }
     private ActionResult placeInternal(ItemPlacementContext context){
         if(context.getPlayer()==null||!context.getWorld().isChunkLoaded(context.getBlockPos()))return ActionResult.FAIL;
@@ -67,7 +67,8 @@ public final class CompositeItem extends BlockItem {
             }
         }
         if(context.getWorld().isClient)return ActionResult.SUCCESS;
-        var result=CompositeRuntime.place((ServerWorld)context.getWorld(),context.getBlockPos(),state,UUID.randomUUID(),context.getPlayer(),payload);
+        UUID placementId=UUID.randomUUID();final BlockState placedState=state;final NbtCompound placedPayload=payload;
+        var result=dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.forOwner(placementId,()->CompositeRuntime.place((ServerWorld)context.getWorld(),context.getBlockPos(),placedState,placementId,context.getPlayer(),placedPayload));
         if(result.outcome()!=dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED){context.getPlayer().sendMessage(Text.literal("Установка отклонена: "+result.reason()),true);return ActionResult.FAIL;}
         if(!context.getPlayer().getAbilities().creativeMode)stack.decrement(1);
         return ActionResult.CONSUME;

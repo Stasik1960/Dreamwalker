@@ -22,8 +22,13 @@ public record ToolTarget(Kind kind,String dimension,UUID uuid,long root,String r
             ||kind!=Kind.BLOCK&&uuid==null)throw new IllegalArgumentException("Invalid tool target");
     }
     public String key(){return kind+"|"+dimension+"|"+(kind==Kind.BLOCK?root:uuid);}
+    public static boolean modRegistry(Identifier id){return id!=null&&(id.getNamespace().equals("bloodborne_dw")||id.getNamespace().equals("bloodborne_rp"));}
+    public boolean modTarget(MinecraftServer server){
+        if(kind==Kind.RP||kind==Kind.ENTITY){var entity=entity(server);return entity!=null&&modRegistry(Registries.ENTITY_TYPE.getId(entity.getType()));}
+        return modRegistry(Identifier.tryParse(registry));
+    }
     public static ToolTarget entity(Entity entity){
-        if(entity instanceof PlayerEntity)return null;
+        if(entity instanceof PlayerEntity||!modRegistry(Registries.ENTITY_TYPE.getId(entity.getType())))return null;
         return new ToolTarget(entity instanceof RpObjectEntity?Kind.RP:Kind.ENTITY,
             entity.getWorld().getRegistryKey().getValue().toString(),entity.getUuid(),entity.getBlockPos().asLong(),
             entity instanceof RpObjectEntity rp?rp.assetId():Registries.ENTITY_TYPE.getId(entity.getType()).toString());
@@ -32,7 +37,7 @@ public record ToolTarget(Kind kind,String dimension,UUID uuid,long root,String r
         var owner=CompositeRuntime.target(world,clicked,player);
         if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,clicked);
         if(owner!=null)return new ToolTarget(Kind.ARCHITECTURE,world.getRegistryKey().getValue().toString(),owner.instanceId(),CompositeData.pos(owner.root()).asLong(),owner.registryId());
-        var state=world.getBlockState(clicked);if(state.isAir())return null;
+        var state=world.getBlockState(clicked);if(state.isAir()||!modRegistry(Registries.BLOCK.getId(state.getBlock())))return null;
         var own=VerticalMount.owner(world,clicked);
         if(own!=null)return new ToolTarget(Kind.ARCHITECTURE,world.getRegistryKey().getValue().toString(),own.instanceId(),clicked.asLong(),own.registryId());
         return new ToolTarget(Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,clicked.asLong(),Registries.BLOCK.getId(state.getBlock()).toString());
@@ -40,7 +45,7 @@ public record ToolTarget(Kind kind,String dimension,UUID uuid,long root,String r
     public ServerWorld world(MinecraftServer server){return server.getWorld(RegistryKey.of(RegistryKeys.WORLD,new Identifier(dimension)));}
     public Entity entity(MinecraftServer server){var world=world(server);return world==null||uuid==null?null:world.getEntity(uuid);}
     public boolean valid(MinecraftServer server){
-        var world=world(server);if(world==null)return false;
+        var world=world(server);if(world==null||!modTarget(server))return false;
         if(kind==Kind.RP||kind==Kind.ENTITY){var entity=entity(server);return entity!=null&&!entity.isRemoved()
             &&(kind==Kind.RP?entity instanceof RpObjectEntity rp&&rp.assetId().equals(registry):Registries.ENTITY_TYPE.getId(entity.getType()).toString().equals(registry));}
         var pos=BlockPos.fromLong(root);if(!world.isChunkLoaded(pos))return false;

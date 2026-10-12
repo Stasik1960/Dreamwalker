@@ -44,9 +44,9 @@ public final class PlacementPhysics {
                         BlockState state=world.getBlockState(pos);
                         if (!(excludeOwner!=null&&pos.equals(CompositeData.pos(excludeOwner.root()))&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(state)) && !pos.equals(replacingNative) && !(state.getBlock() instanceof CompositeRootBlock) && !state.isOf(CompositeArchitecture.CELL))
                             for (Box nativeBox : CompositeRuntime.nativeCollision(world,pos,ShapeContext.absent()).getBoundingBoxes())
-                                if (overlaps(box,nativeBox.offset(pos))&&!retainedIntersection(box,nativeBox.offset(pos),previous)) return "solid_native_overlap:"+pos.toShortString();
+                                if (!NoCollidePlacement.ignoringBlocks()&&overlaps(box,nativeBox.offset(pos))&&!retainedIntersection(box,nativeBox.offset(pos),previous)) return "solid_native_overlap:"+pos.toShortString();
                         for (var contribution : CompositeRuntime.contributions(world,pos)) {
-                            if (contribution.owner().equals(excludeOwner)) continue;
+                            if (contribution.owner().equals(excludeOwner)||NoCollidePlacement.ignoringBlocks()) continue;
                             // Only block placement passes through the roof's protruding volume.
                             // Its real root remains occupied and movement/entity checks remain solid.
                             if(contribution.owner().registryId().equals("bloodborne_dw:prototype_roof")&&!pos.equals(CompositeData.pos(contribution.owner().root())))continue;

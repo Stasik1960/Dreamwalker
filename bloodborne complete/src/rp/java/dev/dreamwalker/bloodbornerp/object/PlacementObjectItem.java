@@ -16,6 +16,9 @@ final class PlacementObjectItem extends Item {
  @Override public net.minecraft.text.Text getName(ItemStack stack){return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.itemName(stack,super.getName(stack));}
  @Override public void appendTooltip(ItemStack stack,World world,java.util.List<net.minecraft.text.Text> tooltip,net.minecraft.client.item.TooltipContext context){super.appendTooltip(stack,world,tooltip,context);dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.itemTooltip(stack,tooltip);}
  @Override public ActionResult useOnBlock(net.minecraft.item.ItemUsageContext context) {
+  return dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.place(new net.minecraft.item.ItemPlacementContext(context),()->useOriginal(context));
+ }
+ private ActionResult useOriginal(net.minecraft.item.ItemUsageContext context) {
   PlayerEntity player=context.getPlayer(); if(player==null || (!player.isCreative() && !player.hasPermissionLevel(2))) return ObjectRegistry.refuseItem(context,objectId,"creative_or_operator_required");
   if(context.getWorld().isClient) return ActionResult.SUCCESS;
   if(RpObjectGeometry.surfaceMounted(ObjectRegistry.canonicalId(objectId))){

@@ -32,7 +32,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
         List<Owner> guests=new ArrayList<>();for(var entry:contributions)if(!entry.owner().equals(resident))guests.add(entry.owner());
         // Custom technical AirBlocks may carry source lighting or another mod's data.
         // Only the three vanilla empty states are free cells for helper replacement.
-        boolean free=state.isOf(Blocks.AIR)||state.isOf(Blocks.CAVE_AIR)||state.isOf(Blocks.VOID_AIR);
+        boolean free=state.isOf(Blocks.AIR)||state.isOf(Blocks.CAVE_AIR)||state.isOf(Blocks.VOID_AIR)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.light(state);
         Kind kind=resident!=null?Kind.ROOT:state.isOf(CompositeArchitecture.CELL)||free&&!guests.isEmpty()?Kind.HELPER:free?Kind.AIR:Kind.FOREIGN;
         NbtCompound payload=entity instanceof CompositeBlockEntity cached&&(resident!=null||state.isOf(CompositeArchitecture.CELL))?cached.payload():full;
         CellSnapshot snapshot=new CellSnapshot(kind,CompositeData.data(state,payload),resident,guests);
@@ -50,6 +50,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     }
     @Override public boolean supportsGuestBindings(CellSnapshot carrier){return carrier.kind()!=Kind.AIR;}
     @Override public boolean allowsReviewedOverlap(ObjectInstance incoming,ObjectInstance existing,Cell cell){
+        if(dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.owner(incoming.owner().instanceId()))return true;
         if(existing.owner().registryId().equals("bloodborne_dw:prototype_roof")&&!cell.equals(existing.owner().root()))return true;
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.heightEdit())return true;
         if(dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope.initialInstance(incoming.owner().instanceId()))return true;

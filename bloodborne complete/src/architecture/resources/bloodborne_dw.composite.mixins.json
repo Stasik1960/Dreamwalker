@@ -17,12 +17,15 @@
     "RpServerInteractionMixin",
     "RpPartRaycastMixin",
     "RpReachAttributesCompatibilityMixin",
-    "RpBlockPlacementCollisionMixin"
+    "RpBlockPlacementCollisionMixin",
+    "NoCollideBlockItemMixin",
+    "NoCollideInventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "RpBlockItemUseMixin"
+    "RpBlockItemUseMixin",
+    "DwMarkerParticleMixin"
   ]
 }
