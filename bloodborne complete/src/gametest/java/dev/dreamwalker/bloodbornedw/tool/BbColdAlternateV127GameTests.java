@@ -12,6 +12,7 @@ import java.util.UUID;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.text.Text;
@@ -25,6 +26,7 @@ import net.minecraft.world.storage.ChunkDataList;
 /** Real separate entity-region write followed by an asynchronous cold load.
  * No synthetic loaded RP index, block placement bypass or full original map. */
 public final class BbColdAlternateV127GameTests implements FabricGameTest {
+    private static final ChunkTicketType<ChunkPos> PROOF_TICKET=ChunkTicketType.create("dw_v127_cold_rp_proof",java.util.Comparator.comparingLong(ChunkPos::toLong),600);
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=600,batchId="v127_tool_cold_region")
     public void savedEntityOnlyColdChunkReceivesWholeMapAlternateWithoutLosingInstanceData(TestContext context)throws Exception {
         new Proof(context).prepare();
@@ -37,7 +39,7 @@ public final class BbColdAlternateV127GameTests implements FabricGameTest {
         final ChunkPos chunk;
         final UUID uuid=UUID.randomUUID();
         NbtCompound original;
-        boolean started;
+        boolean started,heldAfterNativeLoad;
         Proof(TestContext context){
             this.context=context;world=context.getWorld();player=BbToolGameTests.player(context);
             pos=context.getAbsolutePos(new BlockPos(8192,80,-8192));chunk=new ChunkPos(pos);
@@ -59,16 +61,22 @@ public final class BbColdAlternateV127GameTests implements FabricGameTest {
         void step(){
             try {
                 if(!started){if(BbAlternateService.status(world.getServer()).running()){again();return;}started=BbAlternateService.startVisits(player,"alt",List.of(new BbAlternateService.Visit(world,chunk)));context.assertTrue(started,"Start the actual ALL async chunk/edit path");again();return;}
+                // Do not preload the cold source. Hold only after the real ALL
+                // native load has exposed its entity, so ticket release cannot
+                // unload the proven object before the final live-NBT assertion.
+                if(!heldAfterNativeLoad&&world.getEntity(uuid) instanceof RpObjectEntity&&((BbServerEntityManagerAccess)world).bloodborne_dw$profileEntityManager().isLoaded(chunk.toLong())){world.getChunkManager().addTicket(PROOF_TICKET,chunk,2,chunk);heldAfterNativeLoad=true;}
                 var status=BbAlternateService.status(world.getServer());if(status.running()){again();return;}
                 context.assertTrue(status.changed()==1&&status.failed()==0&&status.chunksDone()==1,"Cold persisted RP is edited exactly once after native entity storage acknowledges its load: "+status);
+                context.assertTrue(heldAfterNativeLoad,"Test-only verification ticket was acquired after actual cold entity load");
                 var entity=world.getEntity(uuid);context.assertTrue(entity instanceof RpObjectEntity,"The saved entity loads through the actual native manager");var restored=(RpObjectEntity)entity;
                 context.assertTrue(restored.alternateVisual()&&original.equals(stable(restored)),"ALT preserves the cold saved UUID, Pos, Rotation, Scale, custom name and typed RP/source state");
                 var proof=new JsonObject();proof.addProperty("status","PASS_ACTUAL_COLD_ENTITY_REGION_ALT");proof.addProperty("entityUuid",uuid.toString());proof.addProperty("chunkX",chunk.x);proof.addProperty("chunkZ",chunk.z);proof.addProperty("nativeColdEntityLoad",true);proof.addProperty("stableInstanceNbtPreserved",true);proof.addProperty("changed",status.changed());proof.addProperty("failed",status.failed());
                 try{Files.writeString(world.getServer().getSavePath(WorldSavePath.ROOT).resolve("v127-cold-rp-alt-proof.json"),new GsonBuilder().setPrettyPrinting().create().toJson(proof));}catch(Exception failure){throw new IllegalStateException(failure);}
-                restored.removeObject();player.discard();context.complete();
-            }catch(RuntimeException|Error failure){BbAlternateService.cancel(world.getServer());var object=world.getEntity(uuid);if(object instanceof RpObjectEntity rp)rp.removeObject();player.discard();throw failure;}
+                restored.removeObject();release();player.discard();context.complete();
+            }catch(RuntimeException|Error failure){BbAlternateService.cancel(world.getServer());var object=world.getEntity(uuid);if(object instanceof RpObjectEntity rp)rp.removeObject();release();player.discard();throw failure;}
         }
         void again(){context.runAtTick(context.getTick()+1,this::step);}
+        void release(){if(heldAfterNativeLoad)world.getChunkManager().removeTicket(PROOF_TICKET,chunk,2,chunk);heldAfterNativeLoad=false;}
         static NbtCompound stable(RpObjectEntity object){var nbt=new NbtCompound();object.writeNbt(nbt);for(String key:List.of("BbAltVisual","Motion","FallDistance","Fire","Air","OnGround","PortalCooldown"))nbt.remove(key);return nbt;}
     }
 }

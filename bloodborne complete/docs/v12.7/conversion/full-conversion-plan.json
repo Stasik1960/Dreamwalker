@@ -9,14 +9,14 @@
   "sections": 861360,
   "allPaletteCells": 3528130560,
   "counts": {
-    "KEEP": 3469860025,
+    "KEEP": 3469860023,
     "COMPACT": 45704513,
     "OWNER": 2735505,
-    "REMOVE": 9827998,
+    "REMOVE": 9828000,
     "CONSUMED": 2519
   },
   "reasonCounts": {
-    "SOURCE_UNAFFECTED_VANILLA_STATE": 3469860025,
+    "SOURCE_UNAFFECTED_VANILLA_STATE": 3469860023,
     "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES": 23350367,
     "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 25086223,
     "USER_RETIRED_VANILLA_STYLE_TYPE": 9331105,
@@ -35,6 +35,7 @@
     "PROTECTED_V12_REMOVED_OR_GEOMETRY_INCOMPATIBLE_WALL_STATE": 98,
     "USER_REMOVED_VANILLA_MODEL_TEXTURE_FALLBACK": 1,
     "EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL": 13,
+    "UNKNOWN_SOURCE_REGISTRY_OR_SYSTEM_SERVICE": 2,
     "MISSING_AUTHORED_TEXTURE_REFERENCE": 6,
     "SOURCE_BROKEN_WHOLE_MISSING_AUTHORED_IRON_DOOR_COMPONENTS": 3
   },
@@ -558,8 +559,8 @@
   "orphanAction": "defer",
   "removalCoordinateFile": "source-removal-coordinates.jsonl.gz",
   "removalCoordinateFormat": "section linearRuns; index=(y&15)*256+(z&15)*16+(x&15), each[start,length] expands exact coordinates",
-  "removalCoordinateSha256": "2337052fc6efa3710016a7c57d6236801b70c047e494ca0eaa03e9de1ca14d4f",
-  "decisionDictionaryCount": 7600,
+  "removalCoordinateSha256": "def690c574a0a75d692873992eb855b30dc8c1784591c8bef77f9df813ad4f41",
+  "decisionDictionaryCount": 7601,
   "sourceObservedStates": 3852,
   "planFile": "build\\v127-full-conversion-first.sqlite",
   "planBytes": 405315584,
@@ -569,5 +570,5 @@
   "initialOverlapPrivilege": "Only incoming deterministicsourceUUID in nonserializedSourceConversionScope; no saved/item permission",
   "RAMPolicy": "Exact native compact palettes; compressed per-section uint16; lazy chunk-sharded remaining owners; no global fullmapowner list",
   "runtimeExecution": "Deferred until explicit user command",
-  "elapsedSeconds": 133.76
+  "elapsedSeconds": 131.8
 }

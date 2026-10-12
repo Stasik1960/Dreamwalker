@@ -48,6 +48,7 @@ public final class DreamwalkerBb implements ModInitializer, PreLaunchEntrypoint 
         CompositeArchitecture.initialize(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.paths("prototype_double_door", "prototype_wood_window", "prototype_thin_window", "prototype_tree", "prototype_roof"));
         dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditSupport.initialize();
         dev.dreamwalker.bloodbornedw.composite.CompactStateTransitions.optimizeRegistered();
+        dev.dreamwalker.bloodbornedw.composite.OwnedStateEntries.optimizeRegistered();
     }
 
     /** Loader may discard a real standalone candidate because this mod provides its ID. */

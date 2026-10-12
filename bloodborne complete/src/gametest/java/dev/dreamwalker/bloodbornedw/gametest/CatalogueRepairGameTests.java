@@ -114,7 +114,7 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         try {dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.read(new java.io.StringReader(project.toString()));return false;}
         catch(java.io.IOException expected){return true;}
     }
-    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=240,batchId="catalogue_repair")
     public void cageAndLargeChandelierOrdinaryItemsMountSourceBottomAndResetExactBase(TestContext t) {
         var w=t.getWorld();var location=t.getAbsolutePos(new BlockPos(3,3,3));
         for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)w.getChunk(location.add(x*16,0,z*16));
@@ -127,6 +127,9 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         };
         p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);
         p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;
+        var chunk=new ChunkPos(floor);boolean wasForced=w.getForcedChunks().contains(chunk.toLong());w.setChunkForced(chunk.x,chunk.z,true);
+        Runnable cleanup=()->{w.removeBlock(floor,false);p.discard();if(!wasForced)w.setChunkForced(chunk.x,chunk.z,false);};
+        awaitTrackedRpFixture(t,chunk,t.getTick()+100,()->{try{
         for(String id:List.of("dog_cage","chandelier_large"))for(int angle=0;angle<8;angle++) {
             Set<UUID> before=new HashSet<>();for(var existing:w.iterateEntities())before.add(existing.getUuid());
             p.setPosition(surface.x,surface.y,surface.z-6);p.setYaw(angle*45);
@@ -145,7 +148,11 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         }
         // Unrelated hanging/ordinary assets keep the old placement policy.
         t.assertTrue(!RpObjectGeometry.surfaceMounted("chest")&&!RpObjectGeometry.surfaceMounted("cage_obj_1"),"source-bottom exception is not applied to other RP objects");
-        w.removeBlock(floor,false);p.discard();t.complete();
+        t.complete();
+        }finally{cleanup.run();}},cleanup);
+    }
+    private static void awaitTrackedRpFixture(TestContext t,ChunkPos chunk,long deadline,Runnable ready,Runnable cleanup){
+        t.runAtTick(t.getTick()+1,()->{try{if(!((dev.dreamwalker.bloodbornedw.composite.mixin.BbServerEntityManagerAccess)t.getWorld()).bloodborne_dw$profileEntityManager().isLoaded(chunk.toLong())){t.assertTrue(t.getTick()<deadline,"Test-only forced RP chunk finishes native entity loading before normal placement checks");awaitTrackedRpFixture(t,chunk,deadline,ready,cleanup);return;}ready.run();}catch(RuntimeException|Error failure){cleanup.run();throw failure;}});
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void realServerPacketRejectsWrongAimAndAcceptsPhysicalDoorPart(TestContext t) {

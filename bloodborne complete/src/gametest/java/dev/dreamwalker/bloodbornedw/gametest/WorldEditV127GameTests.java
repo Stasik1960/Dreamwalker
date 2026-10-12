@@ -23,8 +23,8 @@ public final class WorldEditV127GameTests implements FabricGameTest {
             transitionContract(c);
             var world=c.getWorld();var root=c.getAbsolutePos(new BlockPos(3,10,3));UtilityV127GameTests.load(world,root,64);
             com.sk89q.worldedit.world.World adapter=null;
-            for(var constructor:Class.forName("com.sk89q.worldedit.fabric.FabricWorld").getConstructors())if(constructor.getParameterCount()==1&&constructor.getParameterTypes()[0].isInstance(world))adapter=(com.sk89q.worldedit.world.World)constructor.newInstance(world);
-            c.assertTrue(adapter!=null,"Real Fabric WorldEdit world adapter available");
+            for(var method:Class.forName("com.sk89q.worldedit.fabric.FabricAdapter").getMethods())if(method.getName().equals("adapt")&&method.getParameterCount()==1&&method.getParameterTypes()[0].isInstance(world)&&com.sk89q.worldedit.world.World.class.isAssignableFrom(method.getReturnType()))adapter=(com.sk89q.worldedit.world.World)method.invoke(null,world);
+            c.assertTrue(adapter!=null&&adapter.getClass().getMethod("getWorld").invoke(adapter)==world,"Real public Fabric adapter preserves the exact native server world");
             var we=com.sk89q.worldedit.WorldEdit.getInstance();var context=new com.sk89q.worldedit.extension.input.ParserContext();context.setWorld(adapter);
             var block=CompositeArchitecture.kindBlock("source_dark_arch_door");var number=DebugCatalogue.entry(block.spec.id).temporaryId();
             var pattern=we.getBlockFactory().parseFromInput(number,context);

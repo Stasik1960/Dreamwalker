@@ -161,7 +161,7 @@ def export_runtime(path,dest):
                             p=[cx*16+(int(i)&15),sy*16+(int(i)>>8),cz*16+((int(i)>>4)&15)];row={'dimension':dim,'position':p,'instanceUuid':source_uuid(dim,p),'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']};owners.append(row);ownerout.write(token(row)+'\n')
             palette=[None]*len(pids)
             for key,i in pids.items():palette[i]=json.loads(key)
-            out.write(token({'dimension':dim,'chunk':[cx,cz],'sectionY':sy,'palette':palette,'indices':values.tolist(),'owners':owners})+'\n')
+            out.write(token({'dimension':dim,'chunk':[cx,cz],'sectionY':sy,'palette':palette,'indices':values.tolist()})+'\n')
     with gzip.open(dest/'whole-objects.jsonl.gz','wt',encoding='utf8') as out:
         for (raw,) in con.execute('SELECT data FROM whole_objects ORDER BY dimension,x,y,z'):
             row=json.loads(raw);d=row.pop('decision');out.write(token({**row,'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']})+'\n')

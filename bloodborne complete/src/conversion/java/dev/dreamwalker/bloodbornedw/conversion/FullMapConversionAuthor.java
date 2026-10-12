@@ -24,7 +24,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavePath;
+import net.minecraft.util.WorldSavePath;
 
 /** Explicit, separately built importer. No conversion entrypoint ships in the production mod. */
 public final class FullMapConversionAuthor implements ModInitializer {

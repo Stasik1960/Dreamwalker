@@ -5,8 +5,8 @@ uses the historical runner-allowed id `dreamwalker_gallery_author` solely for
 runner compatibility. It creates no catalogue/gallery. Its opt-in marker must
 bind the current production JAR SHA, set `freshTestWorldOnly` and
 `v127NativeFunctions`; the world must be a fresh ordinary project-build test world.
-The fixture is a small stone floor with six function stations and one compact
-conversion palette example. It never touches the original map, user profile or
+The fixture is a small stone floor with six function stations, one banked compact
+conversion palette example and one authored grass compact example. It never touches the original map, user profile or
 release gallery.
 
 Root must serialize all Java/Gradle/client/server processes through Guard. Build:
@@ -36,14 +36,18 @@ DW-barrier and DW-light. It verifies actual synchronized blocks/entities, execut
 the real `/bb alt all` command, polls the integrated server job on the server thread
 until completion, and preserves server owner UUID acknowledgements.
 
-15 expected actual framebuffer PNGs: wall/ladder/new barrel/RP/compact BASE and
+17 expected actual framebuffer PNGs: wall/ladder/new barrel/RP/banked compact/authored grass BASE and
 ALT pairs, yellow DW-barrier held, red vanilla barrier held, empty-hand hidden
 DW-barrier, DW-light held marker, and empty-hand invisible light14 at night.
-The fixture and client fail if the compact palette example is missing; a reduced
+The fixture and client fail if either compact palette example is missing; a reduced
 frame count cannot satisfy this proof.
 `v127-native-client-qa.json` binds operations and camera coordinates to production
 SHA and original PNG hashes. Native wall/ladder baked ABGR colours are recorded.
 Light14 is read from the actual synchronized client light storage.
+The grass frames additionally compare the actual registered block and item color
+callbacks of all three authored grass artworks with the owner renderer's v15
+palette on the real biome position and inventory sample. Native model tint-index0
+quads and the untouched vanilla grass color provider are checked in the client.
 
 The fresh run additionally saves explicit tool-command fixtures on the barrel,
 DW-barrier and DW-light, including typed personal/global use counters. After all

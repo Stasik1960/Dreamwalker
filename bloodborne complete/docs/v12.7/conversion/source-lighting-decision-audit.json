@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_READ_ONLY_COMPLETE_SOURCE_LIGHTING_DECISIONS",
+  "sourcePlan": "build\\v127-full-conversion-first.sqlite",
+  "sourceHashes": {
+    "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+  },
+  "sections": 861360,
+  "allPaletteCells": 3528130560,
+  "actionOccurrences": {
+    "KEEP": 3469860023,
+    "COMPACT": 45704513,
+    "OWNER": 2735505,
+    "REMOVE": 9828000,
+    "CONSUMED": 2519
+  },
+  "reachableDecisionIds": 5924,
+  "unusedHistoricalDecisionIds": 1677,
+  "coordinateRunFile": "docs\\v12.7\\conversion\\source-lighting-coordinate-runs.jsonl.gz",
+  "coordinateRunSha256": "9486a53386321f1f2f429d4625bcaa009960ba3839edbc3d129406321073c07f",
+  "coordinateEncoding": "X fastest, then Z, then Y; index=(y&15)*256+(z&15)*16+(x&15). Each[start,length] is an exact original source coordinate run. Join by caseId.",
+  "sourceArchivesModified": false,
+  "runtimeWorldModified": false,
+  "boundedIndexPatternCache": 128,
+  "elapsedSeconds": 155.91,
+  "uniqueNativeDecisionCases": 4808,
+  "fixtureFile": "build\\v127-source-lighting-decisions.json",
+  "nativeStatus": "NOT_RUN"
+}

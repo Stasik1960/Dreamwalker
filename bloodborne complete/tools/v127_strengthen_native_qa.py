@@ -38,6 +38,13 @@ helper = '''    private List<net.minecraft.client.render.model.BakedQuad> allQua
 if helper not in text:
     assert text.count(anchor) == 1
     text = text.replace(anchor, helper + anchor)
+old_fail = 'private void fail(Throwable failure){done=true;report.addProperty("failure",failure.toString());try{write("FAIL");}catch(Exception ignored){}failure.printStackTrace();}'
+new_fail = 'private void fail(Throwable failure){done=true;report.addProperty("failure",failure.toString());try{write("FAIL");}catch(Exception ignored){}failure.printStackTrace();MinecraftClient.getInstance().execute(()->MinecraftClient.getInstance().scheduleStop());}'
+if old_fail in text:
+    assert text.count(old_fail) == 1
+    text = text.replace(old_fail, new_fail)
+else:
+    assert new_fail in text
 assert 'if(frame.x==0||frame.x==6||frame.x==44){int[] colors=allQuads(client,state).stream()' in text
 write_source(client, text)
 print('PASS_QA_SOURCE_STRENGTHENED_NATIVE_NOT_RUN')
