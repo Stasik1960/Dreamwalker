@@ -1,0 +1,6953 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_OFFLINE_INDEPENDENT",
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED",
+  "productionCollisionSha256": "0fce02960a3c153705a6cf24b6ccf728d635f790b8632cbb66d11a51a98ed790",
+  "descriptorSha256": {
+    "bloodborne_dw:source_assembly_acacia_fence": "ead49f2339c21a1961088e093c05cb6657ba03a196e02335e405d4e53051b5c5",
+    "bloodborne_dw:source_assembly_brick_wall": "d48ae5d00120f20a9df87df75a347b19249906088cdb73359d94f4d71cb2d08f",
+    "bloodborne_dw:source_assembly_cobblestone_wall": "6ab7fbee9d34eeb79139de10bdc457039bf80e0986ccb5f83e32d30801b8582e",
+    "bloodborne_dw:source_assembly_cyan_stained_glass_pane": "cdcb1f00e61393ded59615c4fa942306783445ee1ff6f4be868d962aaefa9a9f",
+    "bloodborne_dw:source_assembly_light_blue_stained_glass_pane": "70839be754ee08e5761bd2c9c23e631bf13fd8d0d5ee7b8975b6dc195707fa29",
+    "bloodborne_dw:source_assembly_lime_stained_glass_pane": "d8a35edd82d9c9b113758c0af2953305d94eb73a87176559c02e2e36aca9c8b3",
+    "bloodborne_dw:source_assembly_nether_brick_fence": "72279d740a1c9eff4260e2802662f1ab10131b00e923d3d99e68efe8d292ad6c",
+    "bloodborne_dw:source_cut_copper": "5b78e4691d6ad960f4c0237404a1d407204e65fe4aca808b8360d90471b032e7",
+    "bloodborne_dw:source_red_nether_brick_wall_side_tall": "e9d28b0547027122ab48082915c76851fbb02936b858c19a754722185ad5c9b1",
+    "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2": "c9d27a1b34fad52badb6d70579baf405f00cd1d4da810b04e4ea637fc6e976c4",
+    "bloodborne_dw:source_addon_pilaster_1": "a0896818d138a9f346f58e7e482c28442a0eac4e1d9e2bc78ea5a5f924790624",
+    "bloodborne_dw:source_smooth_quartz_top": "1bfd367554676524a2d6b862c8ceaa1f2c9c5160743c014818fe7dd1a88f1883",
+    "bloodborne_dw:source_blackstone_stairs_top": "51c00d8fafbab71a7a9f5d424ad7be2a80d4b97ce59e19ef5e1a14def446ad9a",
+    "bloodborne_dw:source_addon_gate2_1": "4019f2941050919d6a431c35c1c6977afb850cb40761c8f26aa019a548a7475c",
+    "bloodborne_dw:source_addon_log_vertical_0": "249e168025c462402b60be9cab940f8fe8d16c3f0c91dde68d70d2eb84512d8a",
+    "bloodborne_dw:source_acacia_pressure_plate": "b5fdb41b1db470ab1d97429f2b602796f4499f1ef73682ce217ac16fffe91047",
+    "bloodborne_dw:source_pressure_plate_window_bottom_4": "9926a0c2ca31943e0342f18b97fc012890015ab0bcbcd522158e35cb48c616cf",
+    "bloodborne_dw:source_hold_ladder_02": "aa84069933df1db2137836fb154d57b5c6326240db90f8597ed1d6747f152210",
+    "bloodborne_dw:source_oak_prison_door": "64ac8fed4faf3d69c590a13ec5f122892848d0c9dbf20c60c16f7ffefc78c423",
+    "bloodborne_dw:source_allium": "754a56fc7059a2f7b981ca423c2afbd2c337ea2c7164e24f4c5be1b065b55b2c",
+    "bloodborne_dw:source_birch_grille_door": "6e0b80fc890afa2300ed8cd00ac2c40ebd2d691f934df5f96089a3eddee4be7d",
+    "bloodborne_dw:source_crimson_top": "d6ab47d4b35164203624ffb35ed3d1f626a1aec7381bcaa933b942fe53bcc103",
+    "bloodborne_dw:source_dark_arch_door": "3dca03022a948bbffc2907a12d305ddb0e968348047b1c1043da8dbf8c86e01e"
+  },
+  "types": 23,
+  "variants": 292,
+  "shapes": 148,
+  "tableRows": 1184,
+  "generatedPoseProfileYawCases": 1760,
+  "maximumCuboids": 12,
+  "sourceUnionChecks": 976,
+  "samplePattern": "7x7x7 points per unique audited cuboid; native transformed source union",
+  "thinDoorPanelToleranceUnits": 0.5,
+  "runtimeFinalCropPort": "ImportedCollisionMath.transform, six global faces, each strict extension<0.5 block",
+  "generatedDoorResourcesExactSourceSHA": {
+    "models": 66,
+    "textures": 8,
+    "failures": 0
+  },
+  "outlineMatchesPhysicalSourcePredicate": true,
+  "policyCounts": {
+    "ONE_MODEL_BOUNDED_CUBOID": 528,
+    "FEW_INSCRIBED_ORDINARY_CUBOIDS": 920,
+    "PURPOSEFUL_FEW_CARDINAL_CUBOIDS": 256,
+    "FUNCTIONAL_OPEN_HINGE_UNDERCOVERAGE_FOR_PLAYER_PASSAGE": 24,
+    "FUNCTIONAL_CLOSED_JOINT_SEEDS_INSIDE_SOURCE_PLANES": 32
+  },
+  "failureCounts": {
+    "structural": 0,
+    "empty": 0,
+    "bounds": 0,
+    "sourceUnion": 0,
+    "doorPassage": 0,
+    "cityEmpty": 0,
+    "sourceResources": 0
+  },
+  "failures": [],
+  "doorPassages": [
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -40.0
+        ],
+        [
+          8.0,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -40.0
+        ],
+        [
+          8.0,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.0
+        ],
+        [
+          -40.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.0
+        ],
+        [
+          -40.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          56.0
+        ],
+        [
+          8.0,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          56.0
+        ],
+        [
+          8.0,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          8.0
+        ],
+        [
+          56.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          8.0
+        ],
+        [
+          56.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -40.0
+        ],
+        [
+          8.0,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -40.0
+        ],
+        [
+          8.0,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.0
+        ],
+        [
+          -40.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.0
+        ],
+        [
+          -40.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          56.0
+        ],
+        [
+          8.0,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          56.0
+        ],
+        [
+          8.0,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          41.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          -25.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          8.0
+        ],
+        [
+          56.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          8.0
+        ],
+        [
+          56.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "90031",
+      "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.9411254969543,
+          14.416,
+          -25.9411254969543
+        ],
+        [
+          41.9411254969543,
+          14.416,
+          41.9411254969543
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -43.5,
+          14.416,
+          8.0
+        ],
+        [
+          52.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -43.5,
+          14.416,
+          8.0
+        ],
+        [
+          52.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107214,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          39.466251762801384,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107214,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          39.466251762801384,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -43.5
+        ],
+        [
+          8.0,
+          14.416,
+          52.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -43.5
+        ],
+        [
+          8.0,
+          14.416,
+          52.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.41599923110713,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          -23.4662517628013,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.41599923110713,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          -23.4662517628013,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          59.5,
+          14.416,
+          8.0
+        ],
+        [
+          -36.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          59.5,
+          14.416,
+          8.0
+        ],
+        [
+          -36.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.415999231107214,
+          14.416,
+          44.41599923110713
+        ],
+        [
+          -23.466251762801384,
+          14.416,
+          -23.4662517628013
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.415999231107214,
+          14.416,
+          44.41599923110713
+        ],
+        [
+          -23.466251762801384,
+          14.416,
+          -23.4662517628013
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          59.5
+        ],
+        [
+          8.0,
+          14.416,
+          -36.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          59.5
+        ],
+        [
+          8.0,
+          14.416,
+          -36.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107172,
+          14.416,
+          44.415999231107214
+        ],
+        [
+          39.46625176280134,
+          14.416,
+          -23.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107172,
+          14.416,
+          44.415999231107214
+        ],
+        [
+          39.46625176280134,
+          14.416,
+          -23.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -43.5,
+          14.416,
+          8.0
+        ],
+        [
+          52.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -43.5,
+          14.416,
+          8.0
+        ],
+        [
+          52.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107214,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          39.466251762801384,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107214,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          39.466251762801384,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -43.5
+        ],
+        [
+          8.0,
+          14.416,
+          52.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -43.5
+        ],
+        [
+          8.0,
+          14.416,
+          52.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.41599923110713,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          -23.4662517628013,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.41599923110713,
+          14.416,
+          -28.415999231107214
+        ],
+        [
+          -23.4662517628013,
+          14.416,
+          39.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          59.5,
+          14.416,
+          8.0
+        ],
+        [
+          -36.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          59.5,
+          14.416,
+          8.0
+        ],
+        [
+          -36.5,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.415999231107214,
+          14.416,
+          44.41599923110713
+        ],
+        [
+          -23.466251762801384,
+          14.416,
+          -23.4662517628013
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          44.415999231107214,
+          14.416,
+          44.41599923110713
+        ],
+        [
+          -23.466251762801384,
+          14.416,
+          -23.4662517628013
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          59.5
+        ],
+        [
+          8.0,
+          14.416,
+          -36.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          59.5
+        ],
+        [
+          8.0,
+          14.416,
+          -36.5
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107172,
+          14.416,
+          44.415999231107214
+        ],
+        [
+          39.46625176280134,
+          14.416,
+          -23.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "X",
+      "playerCentreLine": [
+        [
+          -28.415999231107172,
+          14.416,
+          44.415999231107214
+        ],
+        [
+          39.46625176280134,
+          14.416,
+          -23.466251762801384
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.04,
+          14.416,
+          -40.0
+        ],
+        [
+          8.04,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.04,
+          14.416,
+          -40.0
+        ],
+        [
+          8.04,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.96940976820176,
+          14.416,
+          -25.91284122570684
+        ],
+        [
+          -25.91284122570684,
+          14.416,
+          41.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.96940976820176,
+          14.416,
+          -25.91284122570684
+        ],
+        [
+          -25.91284122570684,
+          14.416,
+          41.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.04
+        ],
+        [
+          -40.0,
+          14.416,
+          8.04
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.04
+        ],
+        [
+          -40.0,
+          14.416,
+          8.04
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.91284122570684,
+          14.416,
+          41.96940976820176
+        ],
+        [
+          -25.96940976820176,
+          14.416,
+          -25.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.91284122570684,
+          14.416,
+          41.96940976820176
+        ],
+        [
+          -25.96940976820176,
+          14.416,
+          -25.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          7.960000000000001,
+          14.416,
+          56.0
+        ],
+        [
+          7.960000000000001,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          7.960000000000001,
+          14.416,
+          56.0
+        ],
+        [
+          7.960000000000001,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.96940976820176,
+          14.416,
+          41.91284122570684
+        ],
+        [
+          41.91284122570684,
+          14.416,
+          -25.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.96940976820176,
+          14.416,
+          41.91284122570684
+        ],
+        [
+          41.91284122570684,
+          14.416,
+          -25.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          7.960000000000001
+        ],
+        [
+          56.0,
+          14.416,
+          7.960000000000001
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          7.960000000000001
+        ],
+        [
+          56.0,
+          14.416,
+          7.960000000000001
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.91284122570684,
+          14.416,
+          -25.96940976820176
+        ],
+        [
+          41.96940976820176,
+          14.416,
+          41.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.91284122570684,
+          14.416,
+          -25.96940976820176
+        ],
+        [
+          41.96940976820176,
+          14.416,
+          41.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.04,
+          14.416,
+          -40.0
+        ],
+        [
+          8.04,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.04,
+          14.416,
+          -40.0
+        ],
+        [
+          8.04,
+          14.416,
+          56.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.96940976820176,
+          14.416,
+          -25.91284122570684
+        ],
+        [
+          -25.91284122570684,
+          14.416,
+          41.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.96940976820176,
+          14.416,
+          -25.91284122570684
+        ],
+        [
+          -25.91284122570684,
+          14.416,
+          41.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.04
+        ],
+        [
+          -40.0,
+          14.416,
+          8.04
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          56.0,
+          14.416,
+          8.04
+        ],
+        [
+          -40.0,
+          14.416,
+          8.04
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.91284122570684,
+          14.416,
+          41.96940976820176
+        ],
+        [
+          -25.96940976820176,
+          14.416,
+          -25.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          41.91284122570684,
+          14.416,
+          41.96940976820176
+        ],
+        [
+          -25.96940976820176,
+          14.416,
+          -25.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          7.960000000000001,
+          14.416,
+          56.0
+        ],
+        [
+          7.960000000000001,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          7.960000000000001,
+          14.416,
+          56.0
+        ],
+        [
+          7.960000000000001,
+          14.416,
+          -40.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.96940976820176,
+          14.416,
+          41.91284122570684
+        ],
+        [
+          41.91284122570684,
+          14.416,
+          -25.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.96940976820176,
+          14.416,
+          41.91284122570684
+        ],
+        [
+          41.91284122570684,
+          14.416,
+          -25.96940976820176
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          7.960000000000001
+        ],
+        [
+          56.0,
+          14.416,
+          7.960000000000001
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -40.0,
+          14.416,
+          7.960000000000001
+        ],
+        [
+          56.0,
+          14.416,
+          7.960000000000001
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.91284122570684,
+          14.416,
+          -25.96940976820176
+        ],
+        [
+          41.96940976820176,
+          14.416,
+          41.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "90266",
+      "registryId": "bloodborne_dw:source_allium",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -25.91284122570684,
+          14.416,
+          -25.96940976820176
+        ],
+        [
+          41.96940976820176,
+          14.416,
+          41.91284122570684
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -42.0
+        ],
+        [
+          8.0,
+          14.416,
+          54.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -42.0
+        ],
+        [
+          8.0,
+          14.416,
+          54.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          -27.355339059327353
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          40.526911934581165
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          -27.355339059327353
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          40.526911934581165
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          58.0,
+          14.416,
+          8.0
+        ],
+        [
+          -38.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          58.0,
+          14.416,
+          8.0
+        ],
+        [
+          -38.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          58.0
+        ],
+        [
+          8.0,
+          14.416,
+          -38.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          58.0
+        ],
+        [
+          8.0,
+          14.416,
+          -38.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327353,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          40.526911934581165,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327353,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          40.526911934581165,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -42.0,
+          14.416,
+          8.0
+        ],
+        [
+          54.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -42.0,
+          14.416,
+          8.0
+        ],
+        [
+          54.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327395,
+          14.416,
+          -27.355339059327395
+        ],
+        [
+          40.52691193458121,
+          14.416,
+          40.52691193458121
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327395,
+          14.416,
+          -27.355339059327395
+        ],
+        [
+          40.52691193458121,
+          14.416,
+          40.52691193458121
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -42.0
+        ],
+        [
+          8.0,
+          14.416,
+          54.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -42.0
+        ],
+        [
+          8.0,
+          14.416,
+          54.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          -27.355339059327353
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          40.526911934581165
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          -27.355339059327353
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          40.526911934581165
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          58.0,
+          14.416,
+          8.0
+        ],
+        [
+          -38.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          58.0,
+          14.416,
+          8.0
+        ],
+        [
+          -38.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          43.35533905932739,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          -24.526911934581204,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          58.0
+        ],
+        [
+          8.0,
+          14.416,
+          -38.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          58.0
+        ],
+        [
+          8.0,
+          14.416,
+          -38.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327353,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          40.526911934581165,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327353,
+          14.416,
+          43.35533905932739
+        ],
+        [
+          40.526911934581165,
+          14.416,
+          -24.526911934581204
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -42.0,
+          14.416,
+          8.0
+        ],
+        [
+          54.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -42.0,
+          14.416,
+          8.0
+        ],
+        [
+          54.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 12,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327395,
+          14.416,
+          -27.355339059327395
+        ],
+        [
+          40.52691193458121,
+          14.416,
+          40.52691193458121
+        ]
+      ]
+    },
+    {
+      "mainId": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -27.355339059327395,
+          14.416,
+          -27.355339059327395
+        ],
+        [
+          40.52691193458121,
+          14.416,
+          40.52691193458121
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 1,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90458",
+      "registryId": "bloodborne_dw:source_crimson_top",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -41.0
+        ],
+        [
+          8.0,
+          14.416,
+          55.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -41.0
+        ],
+        [
+          8.0,
+          14.416,
+          55.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          -26.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          41.23401871576775
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          -26.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          41.23401871576775
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          57.0,
+          14.416,
+          8.0
+        ],
+        [
+          -39.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          57.0,
+          14.416,
+          8.0
+        ],
+        [
+          -39.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          57.0
+        ],
+        [
+          8.0,
+          14.416,
+          -39.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          57.0
+        ],
+        [
+          8.0,
+          14.416,
+          -39.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -41.0,
+          14.416,
+          8.0
+        ],
+        [
+          55.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -41.0,
+          14.416,
+          8.0
+        ],
+        [
+          55.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          -26.648232278140803
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          41.23401871576771
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          -26.648232278140803
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          41.23401871576771
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -41.0
+        ],
+        [
+          8.0,
+          14.416,
+          55.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -41.0
+        ],
+        [
+          8.0,
+          14.416,
+          55.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          -26.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          41.23401871576775
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          -26.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          41.23401871576775
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          57.0,
+          14.416,
+          8.0
+        ],
+        [
+          -39.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          57.0,
+          14.416,
+          8.0
+        ],
+        [
+          -39.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          42.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          -25.234018715767753,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          57.0
+        ],
+        [
+          8.0,
+          14.416,
+          -39.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          57.0
+        ],
+        [
+          8.0,
+          14.416,
+          -39.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          42.648232278140846
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          -25.234018715767753
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -41.0,
+          14.416,
+          8.0
+        ],
+        [
+          55.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -41.0,
+          14.416,
+          8.0
+        ],
+        [
+          55.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          -26.648232278140803
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          41.23401871576771
+        ]
+      ]
+    },
+    {
+      "mainId": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "variant": 0,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 10,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -26.648232278140846,
+          14.416,
+          -26.648232278140803
+        ],
+        [
+          41.23401871576775,
+          14.416,
+          41.23401871576771
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 2,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 3,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 1,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 0,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 0,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 1,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 1,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 2,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 2,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 3,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 3,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 4,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 4,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 5,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 5,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 6,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 6,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 7,
+      "profile": "base",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 7,
+      "profile": "base",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 0,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          -48.0
+        ],
+        [
+          8.0,
+          14.416,
+          48.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 1,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          -31.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          36.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 2,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          64.0,
+          14.416,
+          8.0
+        ],
+        [
+          -32.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 3,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          47.5979797464466,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          -20.284271247461835,
+          14.416,
+          -20.28427124746192
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 4,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          8.0,
+          14.416,
+          64.0
+        ],
+        [
+          8.0,
+          14.416,
+          -32.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 5,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.59797974644668,
+          14.416,
+          47.59797974644668
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          -20.284271247461916
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 6,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 6,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -48.0,
+          14.416,
+          8.0
+        ],
+        [
+          48.0,
+          14.416,
+          8.0
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "closed",
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS",
+      "runtimeBoxes": 7,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    },
+    {
+      "mainId": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "variant": 2,
+      "yaw": 7,
+      "profile": "alt",
+      "state": "open",
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS",
+      "runtimeBoxes": 5,
+      "normalAxisAtYawZero": "Z",
+      "playerCentreLine": [
+        [
+          -31.597979746446683,
+          14.416,
+          -31.597979746446637
+        ],
+        [
+          36.284271247461916,
+          14.416,
+          36.28427124746188
+        ]
+      ]
+    }
+  ],
+  "diagnostics": [],
+  "sourceCityInstanceStateChecks": 934,
+  "sourceCityDoorPassages": [
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 6,
+      "state": "closed",
+      "sourcePosition": [
+        174,
+        75,
+        -1067
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 6,
+      "state": "open",
+      "sourcePosition": [
+        174,
+        75,
+        -1067
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 6,
+      "state": "closed",
+      "sourcePosition": [
+        174,
+        75,
+        -1065
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 6,
+      "state": "open",
+      "sourcePosition": [
+        174,
+        75,
+        -1065
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 6,
+      "state": "closed",
+      "sourcePosition": [
+        174,
+        75,
+        -1063
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 6,
+      "state": "open",
+      "sourcePosition": [
+        174,
+        75,
+        -1063
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 0,
+      "state": "closed",
+      "sourcePosition": [
+        176,
+        75,
+        -1069
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 0,
+      "state": "open",
+      "sourcePosition": [
+        176,
+        75,
+        -1069
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 4,
+      "state": "closed",
+      "sourcePosition": [
+        176,
+        75,
+        -1061
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 4,
+      "state": "open",
+      "sourcePosition": [
+        176,
+        75,
+        -1061
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 0,
+      "state": "closed",
+      "sourcePosition": [
+        178,
+        75,
+        -1069
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 0,
+      "state": "open",
+      "sourcePosition": [
+        178,
+        75,
+        -1069
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 4,
+      "state": "closed",
+      "sourcePosition": [
+        178,
+        75,
+        -1061
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 4,
+      "state": "open",
+      "sourcePosition": [
+        178,
+        75,
+        -1061
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 0,
+      "state": "closed",
+      "sourcePosition": [
+        180,
+        75,
+        -1069
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 0,
+      "state": "open",
+      "sourcePosition": [
+        180,
+        75,
+        -1069
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 4,
+      "state": "closed",
+      "sourcePosition": [
+        180,
+        75,
+        -1061
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 4,
+      "state": "open",
+      "sourcePosition": [
+        180,
+        75,
+        -1061
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 2,
+      "state": "closed",
+      "sourcePosition": [
+        182,
+        75,
+        -1067
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 2,
+      "state": "open",
+      "sourcePosition": [
+        182,
+        75,
+        -1067
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 2,
+      "state": "closed",
+      "sourcePosition": [
+        182,
+        75,
+        -1065
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 2,
+      "state": "open",
+      "sourcePosition": [
+        182,
+        75,
+        -1065
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 2,
+      "state": "closed",
+      "sourcePosition": [
+        182,
+        75,
+        -1063
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "BLOCKED",
+      "observed": "BLOCKED",
+      "status": "PASS"
+    },
+    {
+      "mainId": "90923",
+      "variant": 2,
+      "yaw": 2,
+      "state": "open",
+      "sourcePosition": [
+        182,
+        75,
+        -1063
+      ],
+      "sourceShift": [
+        -0.0,
+        -1.0,
+        -0.0
+      ],
+      "mountY": 0.0,
+      "expected": "CLEAR",
+      "observed": "CLEAR",
+      "status": "PASS"
+    }
+  ],
+  "sourceCityDescriptorReferencesStaleUntilFinalReaggregation": 0,
+  "nativeGameTests": "NOT_RUN_BY_THIS_AUDIT",
+  "clientChecks": "NOT_RUN_BY_THIS_AUDIT"
+}

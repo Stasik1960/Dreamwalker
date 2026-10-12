@@ -1,11 +1,14 @@
 package dev.dreamwalker.bloodbornedw.tool;
 
+import com.google.gson.*;
 import com.mojang.authlib.GameProfile;
 import dev.dreamwalker.bloodbornedw.composite.*;
 import dev.dreamwalker.bloodbornedw.link.MechanismLinks;
 import dev.dreamwalker.bloodbornedw.runtime.*;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.*;
 import java.util.*;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
@@ -47,13 +50,46 @@ public final class ImportedTypeCompatibilityGameTests implements FabricGameTest 
             c.assertTrue(ImportedTypeAliases.canonicalStack(canonical) == canonical, "Canonical item conversion is an identity operation: " + mapping.oldId());
             NbtCompound encoded = old.writeNbt(new NbtCompound());
             ItemStack loaded = ItemStack.fromNbt(encoded);
-            c.assertTrue(ItemStack.areEqual(loaded, canonical), "Native ItemStack.fromNbt invokes the real canonical reader: " + mapping.oldId());
+            // The unchanged V12.4 artistic-alias stage still produces the
+            // precise former fragment above. Native reads then apply the
+            // separately approved V12.6 whole-object installation policy.
+            ItemStack expectedRead = expectedFunctionalRead(canonical);
+            c.assertTrue(ItemStack.areEqual(loaded, expectedRead), "Native ItemStack.fromNbt applies exact source aliases followed by the independently approved functional installer: " + mapping.oldId());
+            c.assertTrue(ItemStack.areEqual(loaded,ItemStack.fromNbt(loaded.writeNbt(new NbtCompound()))),"Native whole-object item read remains idempotent: "+mapping.oldId());
         }
         for (var id : Registries.BLOCK.getIds()) if (!id.getPath().startsWith("source_")) {
             BlockState old = Registries.BLOCK.get(id).getDefaultState();
             c.assertTrue(ImportedTypeAliases.target(old) == old && ImportedTypeAliases.canonicalRegistry(id.toString()).equals(id.toString()), "Original V12/vanilla registry untouched: " + id);
         }
         c.complete();
+    }
+
+    private record Installer(String registry,int pose) {}
+    /** QA-only independent V12.5-approved composition manifest, rather than
+     * asking the production canonicalStack implementation to predict itself. */
+    private static Map<String,Installer> approvedInstallers() {
+        var input=ImportedTypeCompatibilityGameTests.class.getResourceAsStream("/bloodborne_dw/v126-assembly-expectations.json");
+        if(input==null)throw new IllegalStateException("Missing approved V12.6 installer reference");
+        Map<String,Installer> result=new HashMap<>();Map<String,Installer> numbers=new HashMap<>();
+        try(var reader=new InputStreamReader(input,StandardCharsets.UTF_8)) {
+            for(var raw:JsonParser.parseReader(reader).getAsJsonObject().getAsJsonArray("assemblies")) {
+                var row=raw.getAsJsonObject();var installer=new Installer(row.get("primaryRegistryId").getAsString(),row.get("installationPose").getAsInt());
+                result.put(installer.registry,installer);numbers.put(row.get("primaryId").getAsString(),installer);
+            }
+        }catch(Exception failure){throw new IllegalStateException("Invalid approved V12.6 installer reference",failure);}
+        for(var entry:Map.of("93069","93066","90178","90179","90251","90301","90142","90143","90799","90797","90623","90031","90479","90001").entrySet()) {
+            String old=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entries().stream().filter(row->row.temporaryId().equals(entry.getKey())).findFirst().orElseThrow().registryId().toString();
+            Installer target=entry.getValue().equals("90001")?new Installer("bloodborne_dw:prototype_double_door",0):numbers.get(entry.getValue());
+            if(target==null)throw new IllegalStateException("Missing primary installer "+entry.getValue());result.put(old,target);
+        }
+        return Map.copyOf(result);
+    }
+    private static final Map<String,Installer> INSTALLERS=approvedInstallers();
+    private static ItemStack expectedFunctionalRead(ItemStack artAlias) {
+        var installer=INSTALLERS.get(Registries.ITEM.getId(artAlias.getItem()).toString());if(installer==null)return artAlias;
+        var expected=new ItemStack(Registries.ITEM.get(new Identifier(installer.registry)),artAlias.getCount());expected.setNbt(artAlias.getNbt().copy());
+        var tag=expected.getOrCreateSubNbt("BlockStateTag");tag.putString("variant",Integer.toString(installer.pose%16));if(installer.pose>=16)tag.putString("art_bank",Integer.toString(installer.pose/16));else tag.remove("art_bank");
+        expected.getOrCreateNbt().putInt("ImportedAssemblyItemVersion",1);return expected;
     }
 
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=200,batchId="v124_type_compatibility")

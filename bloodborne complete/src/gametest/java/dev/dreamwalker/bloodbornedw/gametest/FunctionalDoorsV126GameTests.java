@@ -123,9 +123,16 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         var end=global(centre.add(normal.multiply(length/2)),yaw,root);
         var delta=end.subtract(start);
         player.refreshPositionAndAngles(start.x,start.y,start.z,0,0);player.setVelocity(Vec3d.ZERO);
-        player.move(MovementType.SELF,delta);
-        if(open)t.assertTrue(player.getPos().squaredDistanceTo(end)<1e-8,"real 0.6×1.8 player crosses the OPEN door without an enclosing AABB: "+door.number+" yaw="+yaw+" actual="+player.getPos()+" expected="+end);
-        else t.assertTrue(player.getPos().squaredDistanceTo(end)>.01,"the CLOSED door blocks real player movement: "+door.number+" yaw="+yaw);
+        // Entity.move resolves X/Z separately. One four-block diagonal move
+        // can jump around a short wall's end, unlike ordinary player walking.
+        // Probe thirty-two actual0.125-block moves and stop CLOSED at first contact.
+        var step=delta.multiply(1./32);boolean blocked=false;
+        for(int i=0;i<32;i++) {
+            var requested=player.getPos().add(step);player.move(MovementType.SELF,step);
+            if(player.getPos().squaredDistanceTo(requested)>1e-8){blocked=true;if(!open)break;}
+        }
+        if(open)t.assertTrue(!blocked&&player.getPos().squaredDistanceTo(end)<1e-8,"real 0.6×1.8 player crosses the OPEN door in ordinary walking steps without any physical obstruction: "+door.number+" yaw="+yaw+" actual="+player.getPos()+" expected="+end);
+        else t.assertTrue(blocked,"the CLOSED door physically blocks the real player's direct walking approach: "+door.number+" yaw="+yaw);
         player.refreshPositionAndAngles(root.getX()+20,root.getY()+20,root.getZ()+20,0,0);
     }
     private static void eachTick(TestContext t,ServerPlayerEntity player,List<Runnable> cases) {

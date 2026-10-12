@@ -70,6 +70,22 @@ def transform_point(point, yaw):
     return np.asarray([8.+c*(x-8.)-s*(z-8.), y, 8.+s*(x-8.)+c*(z-8.)])
 
 
+def rotate_vector(point, yaw):
+    return transform_point(np.asarray(point)+[8., 8., 8.], yaw)-[8., 8., 8.]
+
+
+def outside_distance(points, solids):
+    """All native cuboids use orthogonal basis vectors; closest-point clamp."""
+    distance = np.full(len(points), np.inf)
+    for solid in solids:
+        origin = solid[0]
+        basis = np.column_stack((solid[4]-origin, solid[2]-origin, solid[1]-origin))
+        coords = (points-origin) @ np.linalg.inv(basis).T
+        closest = origin+np.clip(coords, 0., 1.) @ basis.T
+        distance = np.minimum(distance, np.linalg.norm(points-closest, axis=1))
+    return float(np.max(distance))
+
+
 def sweep_intersections(boxes, start, finish):
     # Player feet = 0.001 block, height 1.8, width/depth 0.6. Expand boxes
     # by player half extents, then intersect the player-centre line exactly.
@@ -109,6 +125,21 @@ def main():
     for stage in ['build/v126-door-plan', 'build/v126-city-mounteddoor']:
         doors += read(ROOT / stage / 'door-manifest.json')['doors']
     door_lookup = {(d['registryId'], d['variant']): d for d in doors}
+    model_resource_failures = []
+    checked_models = set()
+    checked_textures = set()
+    for door in doors:
+        for entry in door['models']:
+            namespace, path = entry['model'].split(':', 1)
+            current = ROOT/'src/architecture/resources/assets'/namespace/'models'/(path+'.json')
+            checked_models.add(entry['model'])
+            if not current.is_file() or sha(current) != entry['sha256']:
+                model_resource_failures.append({'kind': 'STAGED_MODEL_NOT_APPLIED_EXACTLY', 'model': entry['model']})
+            for texture in entry['sourceTextureDependencies']:
+                namespace, path = texture.split(':', 1)
+                checked_textures.add(texture)
+                if not (ROOT/'src/architecture/resources/assets'/namespace/'textures'/(path+'.png')).is_file():
+                    model_resource_failures.append({'kind': 'MISSING_SOURCE_TEXTURE_DEPENDENCY', 'texture': texture})
     source_sha = {}
     specs = {}
     for registry in table['objects']:
@@ -117,6 +148,12 @@ def main():
         source_sha[registry] = sha(path)
         assert specs[registry]['id'] == registry and specs[registry]['simplePhysicalCollision']
         assert len(specs[registry]['variants']) == len(table['objects'][registry])
+    for door in doors:
+        variant = specs[door['registryId']]['variants'][door['variant']]
+        if variant['poses']['closed']['parts'] != door['sourceClosedParts']:
+            model_resource_failures.append({'kind': 'CLOSED_ORIGINAL_SOURCE_GEOMETRY_CHANGED', 'registryId': door['registryId'], 'variant': door['variant']})
+        if variant['poses']['open']['parts'] != door['openParts']:
+            model_resource_failures.append({'kind': 'OPEN_PARTS_DIFFER_FROM_APPROVED_SOURCE_PARTITION', 'registryId': door['registryId'], 'variant': door['variant']})
     models = ModelGeometry()
     structural = []
     empty = []
@@ -194,13 +231,13 @@ def main():
                 if not np.all(valid):
                     outside.append({'kind': 'CUBOID_SAMPLE_OUTSIDE_SOURCE_UNION', 'case': case,
                                     'boxIndex': index, 'box': b, 'outsideCount': int(np.count_nonzero(~valid)),
-                                    'totalSamples': len(pts), 'firstOutsidePoints': pts[~valid][:4].tolist()})
+                                    'totalSamples': len(pts), 'firstOutsidePoints': pts[~valid][:4].tolist(),
+                                    'maxSampleDistanceOutsideSourceUnits': outside_distance(pts[~valid], source)})
     passages = []
     passage_failures = []
     city = read(ROOT / 'docs/v12.6/city/city-final-aggregated.json')
     # Descriptor entries are audited before instance transform, then ordinary
     # root placement and each actual source-shifted mounted city instance.
-    placements = [('item-origin', (0., 0., 0.), 0.)]
     for d in doors:
         registry, variant = d['registryId'], d['variant']
         normal_x = d['mainId'] == '93160'
@@ -227,6 +264,49 @@ def main():
                         record['intersectedBoxes'] = hit
                         passage_failures.append(record)
                     passages.append(record)
+    city_checked = 0
+    city_empty = []
+    city_door_passages = []
+    city_reference_stale = []
+    for owner in city['owners']:
+        registry = owner['registryId']
+        if registry not in table['objects']:
+            continue
+        variant = int(owner['properties'].get('variant', '0'))
+        yaw = int(owner['properties'].get('rotation', '0')) & 7
+        profile = owner['properties'].get('profile', 'base')
+        shift = owner.get('payload', {}).get('SourceShift', owner.get('sourceShift', [0., 0., 0.]))
+        shifted = rotate_vector(np.asarray(shift)*16., yaw)
+        mount = (float(owner.get('mountY', owner.get('payload', {}).get('MountY', 0.)))
+                 +float(owner.get('payload', {}).get('VerticalOffset', 0.)))*16.
+        stored_reference = owner.get('currentDescriptorReference', {})
+        if stored_reference.get('sha256') and stored_reference['sha256'] != source_sha[registry]:
+            city_reference_stale.append({'registryId': registry, 'sourcePosition': owner['sourcePosition']})
+        for state in ['closed', 'open']:
+            selector = state+profile.title()
+            row = table['shapes'][table['objects'][registry][variant][selector]][yaw]
+            runtime = crop_runtime(row['collision'], shifted, mount)
+            city_checked += 1
+            if row['collision'] and not runtime:
+                city_empty.append({'registryId': registry, 'variant': variant, 'yaw': yaw, 'state': state,
+                                   'sourcePosition': owner['sourcePosition'], 'sourceShift': shift, 'mount': mount/16.})
+            if (registry, variant) not in door_lookup:
+                continue
+            door = door_lookup[registry, variant]
+            origin_case = next(p for p in passages if p['registryId'] == registry and p['variant'] == variant
+                               and p['yaw'] == yaw and p['profile'] == profile and p['state'] == state)
+            shift_world = shifted+[0., mount, 0.]
+            start, finish = [np.asarray(p)+shift_world for p in origin_case['playerCentreLine']]
+            hit = sweep_intersections(runtime, start, finish)
+            expected = state == 'closed'
+            record = {'mainId': door['mainId'], 'variant': variant, 'yaw': yaw, 'state': state,
+                      'sourcePosition': owner['sourcePosition'], 'sourceShift': shift, 'mountY': mount/16.,
+                      'expected': 'BLOCKED' if expected else 'CLEAR', 'observed': 'BLOCKED' if hit else 'CLEAR',
+                      'status': 'PASS' if bool(hit) == expected else 'FAIL'}
+            if record['status'] == 'FAIL':
+                record['intersectedBoxes'] = hit
+                passage_failures.append(record)
+            city_door_passages.append(record)
     helper = ROOT/'src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedCollisionV126.java'
     text = helper.read_text(encoding='utf8')
     outline = 'if(!physical.isEmpty())aim.putAll(physical);' in text
@@ -234,7 +314,7 @@ def main():
     # differs, never infer outline equality just from the table's aim field.
     if not outline:
         outline = 'physical.isEmpty()?ImportedCollisionMath.transform(pose.aim' in text
-    failures = structural+empty+bounds_failures+outside+passage_failures
+    failures = model_resource_failures+structural+empty+bounds_failures+outside+passage_failures+city_empty
     report = {'schemaVersion': 1, 'status': 'PASS_OFFLINE_INDEPENDENT' if not failures else 'FAIL_OFFLINE_INDEPENDENT',
               'authorCollisionExport': 'NOT_SUPPLIED_NOT_APPLIED', 'productionCollisionSha256': sha(file),
               'descriptorSha256': source_sha, 'types': len(table['objects']), 'variants': sum(map(len, table['objects'].values())),
@@ -242,12 +322,16 @@ def main():
               'maximumCuboids': max(len(r['collision']) for s in table['shapes'] for r in s),
               'sourceUnionChecks': source_union_checks, 'samplePattern': '7x7x7 points per unique audited cuboid; native transformed source union',
               'thinDoorPanelToleranceUnits': .5, 'runtimeFinalCropPort': 'ImportedCollisionMath.transform, six global faces, each strict extension<0.5 block',
+              'generatedDoorResourcesExactSourceSHA': {'models': len(checked_models), 'textures': len(checked_textures), 'failures': len(model_resource_failures)},
               'outlineMatchesPhysicalSourcePredicate': outline, 'policyCounts': case_counts,
               'failureCounts': {'structural': len(structural), 'empty': len(empty), 'bounds': len(bounds_failures),
-                                'sourceUnion': len(outside), 'doorPassage': len(passage_failures)},
+                                'sourceUnion': len(outside), 'doorPassage': len(passage_failures), 'cityEmpty': len(city_empty), 'sourceResources': len(model_resource_failures)},
               'failures': failures, 'doorPassages': passages, 'diagnostics': diagnostics,
+              'sourceCityInstanceStateChecks': city_checked, 'sourceCityDoorPassages': city_door_passages,
+              'sourceCityDescriptorReferencesStaleUntilFinalReaggregation': len(city_reference_stale),
               'nativeGameTests': 'NOT_RUN_BY_THIS_AUDIT', 'clientChecks': 'NOT_RUN_BY_THIS_AUDIT'}
     write(OUT / 'independent-geometry-and-door-passage-proof.json', report)
+    write(OUT / ('independent-geometry-and-door-passage-'+sha(file)[:12]+'.json'), report)
     print(json.dumps({k: report[k] for k in ['status', 'types', 'variants', 'shapes', 'tableRows', 'generatedPoseProfileYawCases',
                                           'maximumCuboids', 'sourceUnionChecks', 'failureCounts', 'outlineMatchesPhysicalSourcePredicate']}, ensure_ascii=False))
     print(json.dumps({'firstFailures': failures[:12]}, ensure_ascii=False))

@@ -23,6 +23,7 @@ import net.minecraft.world.GameMode;
 /** Actual native travel of the NEW90586 ladder, rather than merely checking
  * intersection with an abstract climbing box. No original V12 ladder is edited. */
 public final class LadderV126GameTests implements FabricGameTest {
+    private static String lastTravelTrace="";
     private static ImportedLadderBlock ladder() {
         return (ImportedLadderBlock)CompositeArchitecture.kindBlock("source_hold_ladder_02");
     }
@@ -81,10 +82,16 @@ public final class LadderV126GameTests implements FabricGameTest {
     }
     private static double forward(TestContext t,ServerPlayerEntity p,int iterations,String scenario) {
         double initial=p.getY(),highest=initial;boolean pressedAgainst=false;
+        var trace=new StringBuilder();
         t.assertTrue(p.isClimbing(),"actual native LivingEntity.isClimbing recognizes90586: "+scenario);
         for(int i=0;i<iterations;i++){
             p.travel(new Vec3d(0,0,1));highest=Math.max(highest,p.getY());pressedAgainst|=p.horizontalCollision;
+            trace.append("\nstep=").append(i).append(" pos=").append(p.getPos()).append(" velocity=").append(p.getVelocity())
+                    .append(" climbing=").append(p.isClimbing()).append(" horizontalCollision=").append(p.horizontalCollision)
+                    .append(" onGround=").append(p.isOnGround()).append(" body=").append(p.getBoundingBox())
+                    .append(" climbRoot=").append(ImportedLadderClimbing.climbing(t.getWorld(),p.getBoundingBox()));
         }
+        lastTravelTrace=trace.toString();
         t.assertTrue(pressedAgainst,"ordinary forward movement meets functional ladder face rather than walking between rails: "+scenario);
         t.assertTrue(highest-initial>.35,"actual forward travel ascends90586 without jumping/flying: "+scenario+"; gain="+(highest-initial));
         return highest-initial;
@@ -144,7 +151,9 @@ public final class LadderV126GameTests implements FabricGameTest {
                 t.assertTrue(picked.isOf(ladder().asItem())&&picked.getOrCreateSubNbt("BlockStateTag").getString("height").equals(upperHeight==2?"two":"one"),"one installer copies the stacked height");
                 reset(p,front(root,lowerState,n,.075),yaw);
                 double gain=forward(t,p,50,"stack="+lowerHeight+"+"+upperHeight+",yaw="+yaw);
-                t.assertTrue(gain>lowerHeight+.25,"real native player crosses the seam and reaches the upper ladder: "+lowerHeight+"+"+upperHeight+",yaw="+yaw+"; gain="+gain);
+                t.assertTrue(gain>lowerHeight+.25,"real native player crosses the seam and reaches the upper ladder: "+lowerHeight+"+"+upperHeight+",yaw="+yaw+"; gain="+gain
+                        +"; lowerRoot="+root+"; upperRoot="+upperRoot+"; upperState="+upperState+"; upperPayload="+upper.payload()
+                        +"; upperContributions="+upper.contributions()+"; travel="+lastTravelTrace);
                 remove(t,upper.resident());remove(t,lower);
             }
         } finally {builder.discard();p.discard();floor(world,root,false);}t.complete();
