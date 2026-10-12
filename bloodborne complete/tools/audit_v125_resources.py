@@ -124,12 +124,19 @@ def audit(args):
   def resolved_model(ref):
    ref=canonical(ref)
    if ref in resolved:return resolved[ref]
+   if ref.startswith('minecraft:builtin/'):
+    # ModelLoader provides generated/entity markers in memory, without a
+    # corresponding assets/minecraft/models/builtin/*.json file.
+    resolved[ref]={'textures':{},'elements':[],'virtualBuiltin':ref}
+    return resolved[ref]
    if ref in resolving:raise ValueError('Cyclic model parent '+ref)
-   resolving.add(ref);model=json.loads(bytes_for(model_path(ref)));base={}
-   parent=model.get('parent')
-   if parent and not parent.startswith('builtin/'):base=resolved_model(parent)
-   result=dict(base);result.update(model);result['textures']={**base.get('textures',{}),**model.get('textures',{})}
-   resolving.remove(ref);resolved[ref]=result;return result
+   resolving.add(ref)
+   try:
+    model=json.loads(bytes_for(model_path(ref)));base={};parent=model.get('parent')
+    if parent and not canonical(parent).startswith('minecraft:builtin/'):base=resolved_model(parent)
+    result=dict(base);result.update(model);result['textures']={**base.get('textures',{}),**model.get('textures',{})}
+    resolved[ref]=result;return result
+   finally:resolving.discard(ref)
   def texture(ref,bindings):
    seen=set()
    while ref.startswith('#'):

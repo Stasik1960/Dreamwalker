@@ -29,6 +29,9 @@ def main():
         for X in range(x,x+w):
             for Z in range(z,z+d):floors[X,63,Z]=floor
         positions.add(tuple(r['labelPos']))
+        if r.get('surfaceTileReplacesPlatformCell'):
+            assert r['root'][1]==63 and r['kind']=='architecture' and r['origin']!='V12'
+            floors[tuple(r['root'])]=r['registry']
     x,z,w,h=city['platform']
     for X in range(x,x+w):
         for Z in range(z,z+h):floors[X,63,Z]='minecraft:gray_concrete'

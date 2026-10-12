@@ -10,6 +10,24 @@ from pathlib import Path
 DEST=ROOT/'docs/v12.5-city-review/citycandidate'
 RES=ROOT/'src/architecture/resources'
 
+def canonical_wall_target(row):
+    """Respect the existing V12 catalogue migration, never revive deleted skins."""
+    row=copy.deepcopy(row);material=row['sourceTallMaterial']
+    if material==0:
+        row['mainId']='90011';row['registryId']='bloodborne_dw:prototype_wall_skin_0'
+        row['properties'].pop('material',None)
+        row['proposal']='PROTECTED_V12_FIXED_MATERIAL_EXISTING_STATE_ONLY'
+        if row['status'].startswith('PASS'):row['status']='PASS_EXISTING_V12_FIXED_MATERIAL_0_PRIMITIVE_GEOMETRY'
+        row['catalogueMigrationDisposition']='CatalogueMigration.target returns the unchanged material0 state. FixedMaterialWallBlock stores material0 on the block, not a material state property.'
+        row['resolution']='EXACT_PROTECTED_V12_EXISTING_FIXED_MATERIAL_WALL_STATE_ONLY'
+    elif material in {2,3,4,5,7}:
+        row['rejectedTarget']={'mainId':row['mainId'],'registryId':row['registryId'],'properties':copy.deepcopy(row['properties'])}
+        row['status']='EXPLICIT_DELETED_V12_WALL_VARIANT_NOT_RESTORED'
+        row['reason']='DELETED_V12_WALL_VARIANT_NOT_RESTORED+CANNOT_PRESERVE_AFTER_REOPEN'
+        row['sourceException']='This source tall-wall material was intentionally removed from V12. CatalogueMigration.target would replace it with material6 on load; geometric equality before migration cannot preserve the saved appearance. No deleted skin registration/item/state is restored.'
+        row['nativeConversion']='minecraft:air';row.pop('intentionalRetirementNote',None)
+    return row
+
 def sig(quads):return collections.Counter(tuple(sorted(tuple(round(float(x),6) for x in p) for p in q[0])) for q in quads)
 def normalized(apps):
     # Rotating a UV-locked application outside its native bake would rotate its
@@ -60,6 +78,8 @@ def main():
                 equal=sig(src)==sig(dst);result['status']='PASS_EXISTING_V12_NATIVE_PRIMITIVE_GEOMETRY' if equal else 'FAIL_EXISTING_V12_PRIMITIVE_GEOMETRY';result['sourceQuads']=len(src);result['nativeQuads']=len(dst);result['selectedExistingPrimitiveModels']=targetparts
                 result['nativeBakeUvProof']='NOT_RUN_NATIVE; source/native wall LOWboth use UVlock=true; TALL/POSTfalse perPrototypeWallModels. Same frozen private source model/texture dependencies, runtime class/models not edited.'
                 if material in {2,3,4,5,7}:result['intentionalRetirementNote']='Use an already supported material state of90002only; do not restore hidden/deletedskinregistry/item/cataloguenumber. Root must review source-state authoring against retirement policy.'
+            result=canonical_wall_target(result)
+            if result['status']=='EXPLICIT_DELETED_V12_WALL_VARIANT_NOT_RESTORED':exceptions.append(copy.deepcopy(result))
             walls.append(result);continue
         if carrier=='minecraft:jungle_trapdoor':exceptions.append({**row,'status':'EXPLICIT_INTENTIONALLY_DELETED_SOURCE_OBJECT_NOT_RESTORED','sourceException':'Registered damaged jungletrapdoor types were removed by user. Original source occurrence remains recorded; no fabricated visible replacement.'});continue
         if carrier=='minecraft:potted_spruce_sapling':exceptions.append({**row,'status':'EXPLICIT_MISSING_AUTHORED_SOURCE_MODEL_NOT_GUESSED'});continue
@@ -79,9 +99,9 @@ def main():
         for n,(signature,p) in enumerate(sorted(g['poses'].items())):
             index=g['existingPoseCount']+n;p['proposedLogicalPoseIndex']=index;p['proposedState']={'variant':str(index%16),'art_bank':str(index//16),'profile':'base','open':'false'};p['sourcePropertyStates']=sorted(p['sourcePropertyStates']);p['sourceOccurrenceCount']=len(p['sourceOccurrences']);poses.append(p)
         g['poses']=poses;g['sourceCarriers']=sorted(g['sourceCarriers']);g['newPoseCount']=len(poses);g['proposedTotalPoseCount']=g['existingPoseCount']+len(poses);g['within128PoseCap']=g['proposedTotalPoseCount']<=128;g['requiresArtworkBankProperty']=g['proposedTotalPoseCount']>16;resultgroups.append(g)
-    proof={'schemaVersion':1,'status':'APPEND_ONLY_POSE_PROPOSAL_ROOT_REVIEW_REQUIRED','baselineCommit':BASELINE,'mapSha256':sha(MAP),'packSha256':sha(PACK),'cityDataSha256':sha(DEST/'city-source-data.json.gz'),'sourceBoundingBox':city['rawBlocks']['boundsInclusive'],'groups':resultgroups,'newOneBlockPoseCount':sum(g['newPoseCount'] for g in resultgroups),'representedSourceCellCount':sum(p['sourceOccurrenceCount'] for g in resultgroups for p in g['poses']),'capExceededGroups':[g['primaryRegistryId'] for g in resultgroups if not g['within128PoseCap']],'missingResourcePaths':sorted({f for g in resultgroups for p in g['poses'] for f in p['existingResourceDependenciesMissing']}),'protectedV12NativeWalls':walls,'protectedV12WallExactGeometryCount':sum(w['status'].startswith('PASS') for w in walls),'protectedV12WallUnresolvedCount':sum(not w['status'].startswith('PASS') for w in walls),'explicitSourceExceptions':exceptions,'noProductionModification':True,'noClaimOfNativeGameplay':'Proposed appended poses and existing native wall states require root review then actual source/client geometry+texture verification. Source code/models/IDs unchanged by this tool.'}
+    proof={'schemaVersion':1,'status':'APPEND_ONLY_POSE_PROPOSAL_ROOT_REVIEW_REQUIRED','baselineCommit':BASELINE,'mapSha256':sha(MAP),'packSha256':sha(PACK),'cityDataSha256':sha(DEST/'city-source-data.json.gz'),'sourceBoundingBox':city['rawBlocks']['boundsInclusive'],'groups':resultgroups,'newOneBlockPoseCount':sum(g['newPoseCount'] for g in resultgroups),'representedSourceCellCount':sum(p['sourceOccurrenceCount'] for g in resultgroups for p in g['poses']),'capExceededGroups':[g['primaryRegistryId'] for g in resultgroups if not g['within128PoseCap']],'missingResourcePaths':sorted({f for g in resultgroups for p in g['poses'] for f in p['existingResourceDependenciesMissing']}),'protectedV12NativeWalls':walls,'protectedV12WallExactGeometryCount':sum(w['status'].startswith('PASS') for w in walls),'protectedV12WallUnresolvedCount':sum(w['status'].startswith(('FAIL','UNRESOLVED')) for w in walls),'protectedV12WallExplicitOmissionCount':sum(w['status']=='EXPLICIT_DELETED_V12_WALL_VARIANT_NOT_RESTORED' for w in walls),'explicitSourceExceptions':exceptions,'noProductionModification':True,'noClaimOfNativeGameplay':'Proposed appended poses and existing native wall states require root review then actual source/client geometry+texture verification. Source code/models/IDs unchanged by this tool.'}
     dump(DEST/'extra-canonical-city-poses.json',proof)
-    dump(DEST/'protected-v12-wall-equivalence.json',{'status':'PASS_GEOMETRY_WITH_EXPLICIT_UNRESOLVED' if all(w['status'].startswith('PASS') or 'MATERIAL1' in w['status'] for w in walls) else 'FAIL','rows':walls,'originalV12ModelsOrBehaviorChanged':False,'sourceWallCells':len(walls),'exactExistingGeometryCells':proof['protectedV12WallExactGeometryCount'],'unresolvedCells':proof['protectedV12WallUnresolvedCount']})
+    dump(DEST/'protected-v12-wall-equivalence.json',{'status':'PASS_GEOMETRY_WITH_EXPLICIT_OMISSIONS' if all(w['status'].startswith('PASS') or 'MATERIAL1' in w['status'] or w['status']=='EXPLICIT_DELETED_V12_WALL_VARIANT_NOT_RESTORED' for w in walls) else 'FAIL','rows':walls,'originalV12ModelsOrBehaviorChanged':False,'sourceWallCells':len(walls),'exactExistingGeometryCells':proof['protectedV12WallExactGeometryCount'],'unresolvedCells':proof['protectedV12WallUnresolvedCount'],'explicitDeletedVariantOmissions':sum(w['status']=='EXPLICIT_DELETED_V12_WALL_VARIANT_NOT_RESTORED' for w in walls)})
 
 if __name__=='__main__':
     try:main()

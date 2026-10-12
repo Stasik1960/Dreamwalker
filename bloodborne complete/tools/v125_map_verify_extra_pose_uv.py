@@ -12,6 +12,8 @@ from v124_visual_audit import Visuals,rot
 from import_remaining_assets import uvlocked_face
 from v125_map_resolve import rotation
 DEST=ROOT/'docs/v12.5-city-review/citycandidate'
+
+def dump(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 RES=ROOT/'src/architecture/resources'
 
 def signature(quads,visuals):

@@ -1,0 +1,1017 @@
+{
+  "schema": "dreamwalker-v125-independent-final-resource-audit-v1",
+  "status": "FAIL",
+  "productionJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.5-city-review.jar",
+  "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845",
+  "baselineJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\releases\\Dreamwalker-BB\\v12.4-dedup\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.4-dedup.jar",
+  "baselineJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "counts": {
+    "unchangedBaselineModels": 4259,
+    "unchangedBaselineTextures": 559,
+    "unchangedVanillaNamespaceAssets": 1,
+    "unchangedBaselineDescriptors": 1197,
+    "approvedChangedResourceEntries": 18,
+    "unchangedBaselineClasses": 270,
+    "guardedSharedHookClassEntries": 3,
+    "approvedNewMetadata": 2,
+    "newApprovedProductionClassEntries": 6,
+    "verifiedUnchangedLoomRefmapTransforms": 1,
+    "reviewedSourceResourcesPackaged": 7827,
+    "registeredNewIds": 1045,
+    "workingNewTypesBefore": 572,
+    "retiredNewWorkingTypes": 21,
+    "workingNewTypesAfter": 551,
+    "preservedSavedStateMappings": 1281,
+    "renderedModelRoots": 4154,
+    "resolvedModelDependencies": 4187,
+    "resolvedTextureDependencies": 284,
+    "unchangedBaselineUnusedTextureInputDefects": 46,
+    "unusedParameterizedTemplateFaces": 244
+  },
+  "approvedChangedEntries": [
+    "bloodborne_dw/composite/source_assembly_acacia_fence.json",
+    "bloodborne_dw/composite/source_assembly_brick_wall.json",
+    "bloodborne_dw/composite/source_assembly_cobblestone_wall.json",
+    "bloodborne_dw/composite/source_assembly_cyan_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_deepslate_brick_wall.json",
+    "bloodborne_dw/composite/source_assembly_gray_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_light_blue_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_lime_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_mossy_cobblestone_wall.json",
+    "bloodborne_dw/composite/source_assembly_nether_brick_fence.json",
+    "bloodborne_dw/composite/source_assembly_orange_stained_glass_pane.json",
+    "bloodborne_dw/composite/source_assembly_prismarine_wall.json",
+    "bloodborne_dw/composite/source_assembly_sandstone_wall.json",
+    "bloodborne_dw/composite/source_assembly_stone_brick_wall.json",
+    "bloodborne_dw/composite/source_cut_copper.json",
+    "bloodborne_dw/composite/source_red_nether_brick_wall_side_tall.json",
+    "bloodborne_dw/imported-type-aliases.json",
+    "bloodborne_dw/remaining-catalogue.json",
+    "dev/dreamwalker/bloodbornedw/architecture/RemainingArchitecture.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSpec.class",
+    "fabric.mod.json"
+  ],
+  "failures": [
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/babycart_placer",
+        "reason": "Missing dependency assets/minecraft/models/builtin/entity.json"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/boat_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/cabriolet_closed_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/cabriolet_open_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/cage_obj_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/cage_obj_2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/cage_obj_3_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/carriage_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/chair_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/chandelier_large_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/chandelier_small_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/chest_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffin_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffin_2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffin_3_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffin_stand_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffins_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffins_2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffins_3_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffins_4_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/coffins_5_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/cross_beast_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/curtain_half_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/curtains_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/curtainsmall_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/dog_cage1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/dog_cage2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/dog_cage3_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/dog_cage_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/door_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/door_2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/door_empty_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/elevator_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_10_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_11_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_12_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_13_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_14_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_15_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_16_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_3_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_4_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_5_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_6_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_7_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_8_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_9_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_books_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_cabinet_pantry_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/furniture_pantry_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/gate_empty_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/hearse_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/hook_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/horse_carcass_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/hunterlamp_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/ladder_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/lamp_npc_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/lever_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/lever_2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/long_table_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/main_gate_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/npc_window_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/odeon_tomb_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/ropes_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/small_gate_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/smallcross_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/stairs_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/statue_1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/trapdoor_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/tree1_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/tree2_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/tree3_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/wheelchair_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    },
+    {
+      "code": "VISIBLE_MODEL_DEPENDENCY_CLOSURE",
+      "detail": {
+        "model": "bloodborne_rp:item/wood_gate_placer",
+        "reason": "Cyclic model parent minecraft:builtin/entity"
+      }
+    }
+  ],
+  "notes": [
+    {
+      "code": "MOD_VERSION_ONLY",
+      "version": "0.1.0-v12.5-city-review"
+    }
+  ],
+  "preservedUnusedTextureInputs": [
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "c04e588639db9c0b9185eb2727a17a1f84913ef3283ea69a9e6f75d90520db44"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "c04e588639db9c0b9185eb2727a17a1f84913ef3283ea69a9e6f75d90520db44"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "c04e588639db9c0b9185eb2727a17a1f84913ef3283ea69a9e6f75d90520db44"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "c04e588639db9c0b9185eb2727a17a1f84913ef3283ea69a9e6f75d90520db44"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "c04e588639db9c0b9185eb2727a17a1f84913ef3283ea69a9e6f75d90520db44"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/addon/nether_wall_1",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "c04e588639db9c0b9185eb2727a17a1f84913ef3283ea69a9e6f75d90520db44"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/diorite_wall_post",
+      "binding": "particle",
+      "value": "#wall",
+      "reason": "Unbound texture alias #wall",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "ad36260b6ebd216cf33a24edc64d936dc43ae11beefa15634e08a5771657ae80"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "02d0fabbfa02772cc7c1fc9899358e5e7d156233ae153c2ebd436da789883760"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "02d0fabbfa02772cc7c1fc9899358e5e7d156233ae153c2ebd436da789883760"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "02d0fabbfa02772cc7c1fc9899358e5e7d156233ae153c2ebd436da789883760"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "02d0fabbfa02772cc7c1fc9899358e5e7d156233ae153c2ebd436da789883760"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "02d0fabbfa02772cc7c1fc9899358e5e7d156233ae153c2ebd436da789883760"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_left",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "02d0fabbfa02772cc7c1fc9899358e5e7d156233ae153c2ebd436da789883760"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "53847346a1e531a5e6645d4e152cc7cafbd81189171f0c6452134183b2336724"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "53847346a1e531a5e6645d4e152cc7cafbd81189171f0c6452134183b2336724"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "53847346a1e531a5e6645d4e152cc7cafbd81189171f0c6452134183b2336724"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "53847346a1e531a5e6645d4e152cc7cafbd81189171f0c6452134183b2336724"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "53847346a1e531a5e6645d4e152cc7cafbd81189171f0c6452134183b2336724"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_top",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "53847346a1e531a5e6645d4e152cc7cafbd81189171f0c6452134183b2336724"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "202918f8f59dddcf73129b7e2e978956323b25cd65e64ec4ef1af7cfce4f002b"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "202918f8f59dddcf73129b7e2e978956323b25cd65e64ec4ef1af7cfce4f002b"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "202918f8f59dddcf73129b7e2e978956323b25cd65e64ec4ef1af7cfce4f002b"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "202918f8f59dddcf73129b7e2e978956323b25cd65e64ec4ef1af7cfce4f002b"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "202918f8f59dddcf73129b7e2e978956323b25cd65e64ec4ef1af7cfce4f002b"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_line_2",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "202918f8f59dddcf73129b7e2e978956323b25cd65e64ec4ef1af7cfce4f002b"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "particle",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_mossy_full",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "8b2a6e20fa9dc82c253a7fecb667693c0a583def8e5381dbc57d2a7ff5060397"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "particle",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "e164cd44c6e82a8c224102e6e4dda48f38324302185ceb77dde21bc4ad65325f"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "particle",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "down",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "up",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "north",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "east",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "south",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    },
+    {
+      "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/exposed_cut_copper_stairs_wall_mossy2",
+      "binding": "west",
+      "value": "#all",
+      "reason": "Unbound texture alias #all",
+      "status": "UNCHANGED_BASELINE_UNUSED_INPUT_DEFECT",
+      "visibleFaces": "PASS",
+      "baselineModelSha256": "cadecefdf3c3282203789b7663a08eeb0dad25fe3081f5ea6ddee20ffae32799"
+    }
+  ],
+  "sourcePreservationStatus": "PASS",
+  "collisionContractSha256": "f7cddd1734e90d0f81dd63f1a3a373d54e4b5e203bdcdd7ad8b5de1c5bfc9f98",
+  "qaClassesExcluded": true,
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED",
+  "nativeGameplay": "NOT_RUN_BY_READONLY_JAR_AUDIT"
+}

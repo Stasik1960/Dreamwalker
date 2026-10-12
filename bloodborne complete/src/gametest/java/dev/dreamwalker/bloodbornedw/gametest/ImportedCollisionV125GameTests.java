@@ -144,4 +144,24 @@ public final class ImportedCollisionV125GameTests implements FabricGameTest {
         t.assertTrue(PlacementPhysics.ordinaryPlacementConflict(world,List.of(PlacementPhysics.physicalBoxes(current).get(0)),null)!=null,"purposeful diagonal platform boxes remain solid to normal placement");
         CompositeRuntime.remove(world,current.owner(),null,false);world.setBlockState(target,Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);world.setBlockState(target.down(),Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);t.complete();
     }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=200,batchId="v125_stone_platform_support")
+    public void actualScreenshotStonePlatformSupportsStandingPlayerInAllEightOrientations(TestContext t){
+        // Native V12.4 comparison page120 identifies90635 as the user's filled
+        // diamond masonry slab. Its intrinsic source rotation is45degrees;
+        // even global yaw uses8 rectangles, odd yaw one ordinary square box.
+        var world=t.getWorld();var root=t.getAbsolutePos(new BlockPos(208,96,208));var base=state("source_lapis_ore");var p=player(world);
+        try{
+            p.noClip=false;p.getAbilities().flying=false;
+            for(int yaw=0;yaw<8;yaw++){
+                var selected=base.with(CompositeRootBlock.ROTATION,yaw);UUID uuid=UUID.randomUUID();var current=CompositeRuntime.instance(world,root,selected,uuid,payload());load(world,root,current.cells());
+                t.assertTrue(CompositeRuntime.place(world,root,selected,uuid,null,payload()).outcome()==TransactionCore.Outcome.COMMITTED,"90635 stone platform installs at yaw"+yaw);
+                p.refreshPositionAndAngles(root.getX()+.5,root.getY()+8,root.getZ()+.5,0,0);p.move(MovementType.SELF,new Vec3d(0,-10,0));
+                t.assertTrue(Math.abs(p.getY()-(root.getY()+1))<1e-6&&p.isOnGround(),"real standing player lands on90635's solid visual top at every yaw"+yaw);
+                t.assertTrue(world.isSpaceEmpty(p,p.getBoundingBox().offset(0,.001,0)),"standing player's body does not penetrate invisible support volume");
+                p.move(MovementType.SELF,new Vec3d(.1,0,.1));t.assertTrue(Math.abs(p.getY()-(root.getY()+1))<1e-6,"small walk across the platform keeps its support");
+                outline(t,current);CompositeRuntime.remove(world,current.owner(),null,false);
+            }
+        }finally{p.discard();}t.complete();
+    }
 }

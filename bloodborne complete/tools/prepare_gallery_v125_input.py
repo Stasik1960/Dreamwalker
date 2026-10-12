@@ -207,6 +207,7 @@ def main():
         assert archive.testzip() is None
         catalogue, removed, retired = canonical_catalogue(original, archive)
         models = ArchiveGeometry(archive, args.vanilla_jar)
+        defaults=json.loads(archive.read('bloodborne_dw/imported-collision-v125.json'))
         for entry in archive.namelist():
             if entry.endswith('/lang/ru_ru.json'):
                 ru_names.update(json.loads(archive.read(entry)))
@@ -228,6 +229,11 @@ def main():
                 geometries[row['key']] = geometry
                 row['localVisualBounds'] = geometry
                 row['surfaceClearance'] = 1 / 1024 if abs(geometry[4] - geometry[1]) < 1e-8 else 0
+                if row['origin']!='V12' and row['registry'] in defaults['objects'] and all(abs(a-b)<1e-8 for a,b in zip(geometry,[0,1,0,1,1,1])):
+                    collision=defaults['shapes'][defaults['objects'][row['registry']][0]['closedBase']][0]['collision']
+                    if collision==[{'from':[0,0,0],'to':[16,16,16]}]:
+                        row['surfaceTileReplacesPlatformCell']=True;row['surfaceClearance']=0
+                        row['gallerySurfaceTilePolicy']='Source renders only the upper face of a full solid terrain cube. Display its existing cube as the center platform cell, with the authored top atY64. No source faces/physics added, no buried render, no floating surface, ordinary re-placement supported.'
                 if row['surfaceClearance']:
                     row['galleryPlanarLiftNote'] = 'Gallery-only 1/1024-block lift prevents coplanar floor z-fighting; original zero-thickness model unchanged'
                 row['visualGeometryEvidence'] = 'Exact final-production rendered element corners and active canonical state, not a collision/selection envelope'

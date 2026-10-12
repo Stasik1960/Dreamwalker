@@ -1,12 +1,9 @@
 """Offline physics figures and coordinates for native QA; never game screenshots."""
 import hashlib
 import json
+import html
 from pathlib import Path
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon,Rectangle
 from gallery_platform_plan import ModelGeometry
 from simplify_imported_collisions import rotate_clip_boxes
 from v125_collision_geometry import oriented,solid_parts
@@ -38,17 +35,24 @@ proof=[]
 for key,path,yaw,axes in fixtures:
  registry='bloodborne_dw:'+path;spec=json.loads((RES/'bloodborne_dw/composite'/(path+'.json')).read_text());pose=spec['variants'][0]['poses']['closed'];source=oriented(solid_parts(pose,models,'base',1.),yaw)
  row=table['shapes'][table['objects'][registry][0]['closedBase']][yaw];boxes=rotate_clip_boxes(row['collision'],0,crop=True)
- fig,ax=plt.subplots(figsize=(9,8),layout='constrained')
+ allpoints=np.concatenate(source)[:,axes]/16;lo,hi=np.min(allpoints,axis=0),np.max(allpoints,axis=0);padding=(hi-lo)*.08+.2;lo-=padding;hi+=padding
+ scale=min(1000/(hi[0]-lo[0]),950/(hi[1]-lo[1]));origin=(90+(1000-(hi[0]-lo[0])*scale)/2,145+(950-(hi[1]-lo[1])*scale)/2)
+ def point(p):return (origin[0]+(p[0]-lo[0])*scale,origin[1]+(hi[1]-p[1])*scale)
+ svg=['<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200"><rect width="1200" height="1200" fill="white"/>',f'<text x="40" y="40" font-family="sans-serif" font-size="26">Offline default collision diagram: {html.escape(key)}</text>',f'<text x="40" y="78" font-family="sans-serif" font-size="21">ID {names.get(registry)} / yaw {yaw*45} degrees / {len(boxes)} large cuboids</text>','<text x="40" y="113" font-family="sans-serif" font-size="18">Grey = source volumes; green = physics; blue = origin cell. Native checks NOT_RUN.</text>']
+ for axis in (0,1):
+  for tick in range(int(np.floor(lo[axis])),int(np.ceil(hi[axis]))+1):
+   a,b=lo.copy(),hi.copy();a[axis]=b[axis]=tick;pa,pb=point(a),point(b);svg.append(f'<line x1="{pa[0]}" y1="{pa[1]}" x2="{pb[0]}" y2="{pb[1]}" stroke="#dddddd"/>')
+ def polygon(points,fill,stroke,opacity):
+  coordinates=' '.join(f'{x:.4f},{y:.4f}' for x,y in map(point,points));svg.append(f'<polygon points="{coordinates}" fill="{fill}" fill-opacity="{opacity}" stroke="{stroke}" stroke-width="1.5"/>')
  for primitive in source:
-  polygon=hull(primitive[:,axes]/16)
-  if len(polygon)>=3:ax.add_patch(Polygon(polygon,facecolor='#aaaaaa',edgecolor='#555555',alpha=.28,lw=.5))
+  projected=hull(primitive[:,axes]/16)
+  if len(projected)>=3:polygon(projected,'#aaaaaa','#666666',.28)
  for index,box in enumerate(boxes):
   low=np.asarray(box['from'])[list(axes)]/16;high=np.asarray(box['to'])[list(axes)]/16
-  ax.add_patch(Rectangle(low,*(high-low),facecolor='#15945c',edgecolor='#086439',alpha=.4,lw=1.4));ax.text(*(low+(high-low)/2),str(index+1),ha='center',va='center',fontsize=9)
- ax.add_patch(Rectangle((0,0),1,1,fill=False,edgecolor='#206ac7',lw=1.5,linestyle='--'))
- allpoints=np.concatenate(source)[:,axes]/16;lo,hi=np.min(allpoints,axis=0),np.max(allpoints,axis=0);padding=(hi-lo)*.08+.2;ax.set_xlim(lo[0]-padding[0],hi[0]+padding[0]);ax.set_ylim(lo[1]-padding[1],hi[1]+padding[1]);ax.set_aspect('equal');ax.grid(alpha=.2)
- ax.set_xlabel('XYZ'[axes[0]]+' / blocks');ax.set_ylabel('XYZ'[axes[1]]+' / blocks');ax.set_title(f'Offline collision plan: {key}\nID {names.get(registry)}; yaw={yaw*45}°; {len(boxes)} large cuboids\nGrey: source geometry; green: default physics; blue: origin cell')
- file=OUT/(key+'-collision-plan.png');fig.savefig(file,dpi=150);plt.close(fig)
+  polygon([low,[high[0],low[1]],high,[low[0],high[1]]],'#15945c','#086439',.4);x,y=point((low+high)/2);svg.append(f'<text x="{x}" y="{y}" font-family="sans-serif" font-size="16">{index+1}</text>')
+ polygon([(0,0),(1,0),(1,1),(0,1)],'none','#206ac7',0)
+ svg.append(f'<text x="40" y="1170" font-family="sans-serif" font-size="20">Coordinates: {"XYZ"[axes[0]]} / {"XYZ"[axes[1]]} in blocks. Models, UV and IDs are unchanged.</text></svg>')
+ file=OUT/(key+'-collision-plan.svg');file.write_bytes(('\n'.join(svg)+'\n').encode('utf8'))
  proof.append({'key':key,'registryId':registry,'temporaryId':names.get(registry),'variant':0,'profile':'base','open':False,'rotation':yaw,'majorPhysicalCuboids':boxes,'file':str(file.relative_to(ROOT)).replace('\\','/'),'sha256':hashlib.sha256(file.read_bytes()).hexdigest(),'status':'PASS_OFFLINE_GEOMETRY_ONLY','nativePlayerAndCubeChecks':'NOT_RUN'})
 (OUT/'priority-cases.json').write_bytes((json.dumps({'schemaVersion':1,'metadataSha256':hashlib.sha256((RES/'bloodborne_dw/imported-collision-v125.json').read_bytes()).hexdigest(),'cases':proof},ensure_ascii=False,indent=2)+'\n').encode('utf8'))
 print(json.dumps({'status':'OFFLINE_QA_FIGURES_CREATED','figures':len(proof),'priorityRegistries':[row['registryId'] for row in proof]}))

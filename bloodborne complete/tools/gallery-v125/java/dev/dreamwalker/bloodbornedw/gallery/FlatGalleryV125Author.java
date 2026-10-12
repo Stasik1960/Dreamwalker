@@ -147,6 +147,7 @@ public final class FlatGalleryV125Author implements ModInitializer {
                     double surface=64+clearance(e.source);
                     Vec3d origin=new Vec3d(x+1+((w-2)-(b.maxX-b.minX))/2-b.minX,surface-b.minY,z+1+((d-2)-(b.maxZ-b.minZ))/2-b.minZ);
                     BlockPos root=new BlockPos(MathHelper.clamp(floor(origin.x),x,x+w-1),64,MathHelper.clamp(floor(origin.z),z,z+d-1));
+                    if(e.source.has("surfaceTileReplacesPlatformCell")&&e.source.get("surfaceTileReplacesPlatformCell").getAsBoolean())root=root.withY(63);
                     if(e.state!=null&&!(e.state.getBlock() instanceof CompositeRootBlock)){
                         // Native V12 geometry supports only its existing vertical offset.
                         root=new BlockPos(floor(origin.x+.5),64,floor(origin.z+.5));origin=new Vec3d(root.getX(),origin.y,root.getZ());
@@ -210,6 +211,7 @@ public final class FlatGalleryV125Author implements ModInitializer {
             load(new Box(station.x,63,station.z,station.x+station.width,station.visual.maxY+2,station.z+station.depth).expand(3));
             Block flooring=switch(source.get("section").getAsString()){case "v12"->Blocks.LIGHT_BLUE_CONCRETE;case "new"->Blocks.LIME_CONCRETE;case "absent"->Blocks.YELLOW_CONCRETE;case "items"->Blocks.BLUE_CONCRETE;default->throw new IllegalStateException("Invalid section");};
             for(int x=station.x;x<station.x+station.width;x++)for(int z=station.z;z<station.z+station.depth;z++)world.setBlockState(new BlockPos(x,FLOOR,z),flooring.getDefaultState(),Block.NOTIFY_LISTENERS);
+            if(source.has("surfaceTileReplacesPlatformCell")&&source.get("surfaceTileReplacesPlatformCell").getAsBoolean())world.setBlockState(root,Blocks.AIR.getDefaultState(),Block.FORCE_STATE|Block.SKIP_DROPS);
             actor.setPosition(root.getX()+.5,64,root.getZ()-3);actor.setSneaking(true);
             String representation;UUID uuid;BlockState placed=null;Box actualVisual=station.visual;NbtCompound payload=new NbtCompound();
             if(kind.equals("item_frame")){
