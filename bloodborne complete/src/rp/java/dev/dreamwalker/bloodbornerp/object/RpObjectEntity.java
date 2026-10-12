@@ -209,7 +209,7 @@ private record GeometrySnapshot(GeometryKey key,net.minecraft.util.math.Box visu
   }
   refreshCollider();
  }
- @Override public void setPosition(double x,double y,double z){super.setPosition(x,y,z);if(assetId!=null)refreshCollider();}
+ @Override public void setPosition(double x,double y,double z){super.setPosition(x,y,z);if(assetId!=null){refreshCollider();dev.dreamwalker.bloodbornedw.tool.BbAlternateService.rpMoved(this);}}
  @Override public void setYaw(float yaw){super.setYaw(yaw);if(assetId!=null)refreshCollider();}
  @Override public void setPitch(float pitch){super.setPitch(pitch);if(assetId!=null)refreshCollider();}
  public void refreshCollider(){if(assetId==null)return;setBoundingBox(queryBounds());}

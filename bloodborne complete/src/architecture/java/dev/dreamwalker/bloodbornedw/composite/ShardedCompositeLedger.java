@@ -3,6 +3,7 @@ package dev.dreamwalker.bloodbornedw.composite;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Footprint;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
+import dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.BlockData;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
@@ -43,23 +44,36 @@ public final class ShardedCompositeLedger {
             NbtCompound n=NbtIo.readCompressed(source.toFile());reads++;
             if(n==null||n.getInt("Schema")!=SCHEMA||n.getInt("ChunkX")!=ChunkPos.getPackedX(key)||n.getInt("ChunkZ")!=ChunkPos.getPackedZ(key))
                 throw new IllegalArgumentException("Owner shard header mismatch");
+            Map<Owner,Owner> ownerPool=new HashMap<>();Map<BlockData,BlockData> dataPool=new HashMap<>();Map<Footprint,Footprint> shapePool=new HashMap<>();
+            List<Owner> ownerTable=new ArrayList<>();List<BlockData> dataTable=new ArrayList<>();List<Footprint> shapeTable=new ArrayList<>();
+            boolean dictionary=n.getBoolean("Dictionary");
+            if(dictionary) {
+                var owners=n.getList("ownerTable",NbtElement.COMPOUND_TYPE);for(int i=0;i<owners.size();i++)ownerTable.add(CompositeData.owner(owners.getCompound(i)));
+                var datas=n.getList("dataTable",NbtElement.COMPOUND_TYPE);for(int i=0;i<datas.size();i++)dataTable.add(CompositeData.data(datas.getCompound(i)));
+                var shapes=n.getList("shapeTable",NbtElement.COMPOUND_TYPE);for(int i=0;i<shapes.size();i++){var s=shapes.getCompound(i);shapeTable.add(new Footprint(CompositeData.boxes(s.getList("collision",NbtElement.LIST_TYPE)),CompositeData.boxes(s.getList("selection",NbtElement.LIST_TYPE))));}
+            }
             var entries=n.getList("cells",NbtElement.COMPOUND_TYPE);
             for(int i=0;i<entries.size();i++) {
                 var row=entries.getCompound(i);int[] p=row.getIntArray("pos");
                 if(p.length!=3)throw new IllegalArgumentException("Invalid owner shard cell coordinate");
-                var cell=new Cell(p[0],p[1],p[2]);var values=CompositeData.contributions(row.getList("owners",NbtElement.COMPOUND_TYPE));
+                var cell=new Cell(p[0],p[1],p[2]);var values=new ArrayList<CompositeData.Contribution>();
+                if(dictionary) {
+                    var refs=row.getList("refs",NbtElement.INT_ARRAY_TYPE);
+                    for(int j=0;j<refs.size();j++){int[] r=((NbtIntArray)refs.get(j)).getIntArray();if(r.length!=3)throw new IllegalArgumentException("Shard dictionary reference");values.add(new CompositeData.Contribution(ownerTable.get(r[0]),dataTable.get(r[1]),shapeTable.get(r[2])));}
+                }else values.addAll(CompositeData.contributions(row.getList("owners",NbtElement.COMPOUND_TYPE)));
+                for(int j=0;j<values.size();j++){var c=values.get(j);values.set(j,new CompositeData.Contribution(ownerPool.computeIfAbsent(c.owner(),ignored->c.owner()),dataPool.computeIfAbsent(c.rootData(),ignored->c.rootData()),shapePool.computeIfAbsent(c.shape(),ignored->c.shape())));}
                 if(chunk(cell)!=key||values.isEmpty()||shard.cells.putIfAbsent(cell,List.copyOf(values))!=null)
                     throw new IllegalArgumentException("Cross-chunk/empty/repeated owner shard cell");
             }
             var owners=n.getList("ownerMembership",NbtElement.COMPOUND_TYPE);
             for(int i=0;i<owners.size();i++) {
-                var row=owners.getCompound(i);var owner=CompositeData.owner(row.getCompound("owner"));
+                var row=owners.getCompound(i);var owner=dictionary?ownerTable.get(row.getInt("ownerRef")):CompositeData.owner(row.getCompound("owner"));
                 if(chunk(owner.root())!=key||shard.membership.containsKey(owner))throw new IllegalArgumentException("Wrong root/repeated saved membership owner");
                 var cells=new TreeMap<Cell,Footprint>();var members=row.getList("members",NbtElement.COMPOUND_TYPE);
                 if(members.isEmpty()||members.size()>4096)throw new IllegalArgumentException("Saved owner membership budget");
                 for(int j=0;j<members.size();j++) {
                     var entry=members.getCompound(j);int[] p=entry.getIntArray("offset");if(p.length!=3)throw new IllegalArgumentException("Saved owner membership offset");
-                    var cell=new Cell(p[0],p[1],p[2]);var shape=new Footprint(CompositeData.boxes(entry.getList("collision",NbtElement.LIST_TYPE)),CompositeData.boxes(entry.getList("selection",NbtElement.LIST_TYPE)));
+                    var cell=new Cell(p[0],p[1],p[2]);var shape=dictionary?shapeTable.get(entry.getInt("shapeRef")):new Footprint(CompositeData.boxes(entry.getList("collision",NbtElement.LIST_TYPE)),CompositeData.boxes(entry.getList("selection",NbtElement.LIST_TYPE)));
                     if(cells.putIfAbsent(cell,shape)!=null)throw new IllegalArgumentException("Repeated saved owner membership cell");
                 }
                 shard.membership.put(owner,cells);
@@ -116,21 +130,26 @@ public final class ShardedCompositeLedger {
     }
     private void flush(long key,Shard shard) {
         if(!shard.dirty)return;mainThread();var n=new NbtCompound();n.putInt("Schema",SCHEMA);
-        n.putInt("ChunkX",ChunkPos.getPackedX(key));n.putInt("ChunkZ",ChunkPos.getPackedZ(key));var entries=new NbtList();
+        n.putInt("ChunkX",ChunkPos.getPackedX(key));n.putInt("ChunkZ",ChunkPos.getPackedZ(key));n.putBoolean("Dictionary",true);var entries=new NbtList();
+        Map<Owner,Integer> ownerIds=new LinkedHashMap<>();Map<BlockData,Integer> dataIds=new LinkedHashMap<>();Map<Footprint,Integer> shapeIds=new LinkedHashMap<>();
         for(var entry:shard.cells.entrySet()) {
             var row=new NbtCompound();var p=entry.getKey();row.putIntArray("pos",new int[]{p.x(),p.y(),p.z()});
-            row.put("owners",CompositeData.contributions(entry.getValue()));entries.add(row);
+            var refs=new NbtList();for(var c:entry.getValue())refs.add(new NbtIntArray(new int[]{ownerIds.computeIfAbsent(c.owner(),ignored->ownerIds.size()),dataIds.computeIfAbsent(c.rootData(),ignored->dataIds.size()),shapeIds.computeIfAbsent(c.shape(),ignored->shapeIds.size())}));
+            row.put("refs",refs);entries.add(row);
         }
         n.put("cells",entries);var owners=new NbtList();
         for(var entry:shard.membership.entrySet()) {
-            var row=new NbtCompound();row.put("owner",CompositeData.owner(entry.getKey()));var members=new NbtList();
+            var row=new NbtCompound();row.putInt("ownerRef",ownerIds.computeIfAbsent(entry.getKey(),ignored->ownerIds.size()));var members=new NbtList();
             for(var member:entry.getValue().entrySet()) {
                 var item=new NbtCompound();var p=member.getKey();item.putIntArray("offset",new int[]{p.x(),p.y(),p.z()});
-                item.put("collision",CompositeData.boxes(member.getValue().collision()));item.put("selection",CompositeData.boxes(member.getValue().selection()));members.add(item);
+                item.putInt("shapeRef",shapeIds.computeIfAbsent(member.getValue(),ignored->shapeIds.size()));members.add(item);
             }
             row.put("members",members);owners.add(row);
         }
-        n.put("ownerMembership",owners);Path target=file(key),staged=target.resolveSibling(target.getFileName()+".pending");
+        n.put("ownerMembership",owners);var ownerTable=new NbtList();for(var owner:ownerIds.keySet())ownerTable.add(CompositeData.owner(owner));n.put("ownerTable",ownerTable);
+        var dataTable=new NbtList();for(var data:dataIds.keySet())dataTable.add(CompositeData.data(data));n.put("dataTable",dataTable);
+        var shapeTable=new NbtList();for(var shape:shapeIds.keySet()){var s=new NbtCompound();s.put("collision",CompositeData.boxes(shape.collision()));s.put("selection",CompositeData.boxes(shape.selection()));shapeTable.add(s);}n.put("shapeTable",shapeTable);
+        Path target=file(key),staged=target.resolveSibling(target.getFileName()+".pending");
         try {
             Files.createDirectories(directory);NbtIo.writeCompressed(n,staged.toFile());
             try{Files.move(staged,target,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}
@@ -149,6 +168,14 @@ public final class ShardedCompositeLedger {
         mainThread();if(CompositeRuntime.writing())return;
         for(var key:List.copyOf(cached.keySet()))if(!loaded(key))unload(new ChunkPos(key));
     }
-    public Map<String,Object> metrics(){mainThread();return Map.of("shardedOwnerMode",true,"knownOwnerShards",known.size(),"cachedOwnerShards",cached.size(),
-        "cachedOwnerCells",cached.values().stream().mapToInt(s->s.cells.size()).sum(),"ownerShardReads",reads,"ownerShardWrites",writes,"maxCachedOwnerShards",MAX_CACHED_SHARDS);}
+    public Map<String,Object> metrics(){
+        mainThread();Set<BlockData> uniqueData=Collections.newSetFromMap(new IdentityHashMap<>());Set<Owner> uniqueOwners=Collections.newSetFromMap(new IdentityHashMap<>());Set<Footprint> uniqueShapes=Collections.newSetFromMap(new IdentityHashMap<>());
+        long duplicatedPayloadBytes=0;int refs=0,members=0;
+        for(var shard:cached.values()){members+=shard.membership.values().stream().mapToInt(Map::size).sum();for(var values:shard.cells.values())for(var c:values){uniqueData.add(c.rootData());uniqueOwners.add(c.owner());uniqueShapes.add(c.shape());duplicatedPayloadBytes+=c.rootData().blockEntityNbt().length;refs++;}}
+        long sharedPayloadBytes=uniqueData.stream().mapToLong(d->d.blockEntityNbt().length).sum();Map<String,Object> result=new LinkedHashMap<>();
+        result.put("shardedOwnerMode",true);result.put("knownOwnerShards",known.size());result.put("cachedOwnerShards",cached.size());result.put("cachedOwnerCells",cached.values().stream().mapToInt(s->s.cells.size()).sum());
+        result.put("ownerShardReads",reads);result.put("ownerShardWrites",writes);result.put("maxCachedOwnerShards",MAX_CACHED_SHARDS);result.put("contributionReferences",refs);result.put("savedMembershipCellReferences",members);
+        result.put("uniqueSharedRootData",uniqueData.size());result.put("uniqueSharedOwners",uniqueOwners.size());result.put("uniqueSharedShapes",uniqueShapes.size());result.put("typedPayloadBytesWithoutSharing",duplicatedPayloadBytes);result.put("typedPayloadBytesWithSharing",sharedPayloadBytes);
+        result.put("byteMetricScope","Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately");return Map.copyOf(result);
+    }
 }

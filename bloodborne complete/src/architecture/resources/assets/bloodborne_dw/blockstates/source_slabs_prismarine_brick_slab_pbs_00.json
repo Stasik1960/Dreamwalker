@@ -1,7 +1,496 @@
 {
-  "variants": {
-    "": {
-      "model": "bloodborne_dw:block/source_slabs_prismarine_brick_slab_pbs_00_empty"
+  "multipart": [
+    {
+      "when": {
+        "compact": "false"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/source_slabs_prismarine_brick_slab_pbs_00_empty"
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_00",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_00",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_00",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_00",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_01",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_01",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_01",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_01",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_02",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_02",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_02",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_02",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_03",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_03",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_03",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_03",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_06",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_06",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_06",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_06",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_07",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_07",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_07",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_07",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_10",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_10",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_10",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_10",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_04",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_04",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_04",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_04",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_05",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_05",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_05",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_05",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_08",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_08",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_08",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_08",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_09",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_09",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_09",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/slabs/prismarine_brick_slab/pbs_09",
+        "y": 270
+      }
     }
-  }
+  ]
 }

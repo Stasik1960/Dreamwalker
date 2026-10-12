@@ -30,6 +30,8 @@ import net.minecraft.world.dimension.DimensionType;
  * visit existing chunks one at a time; no radius-cubed cell walk or permanent force-load. */
 public final class BbAlternateService {
     private static final Map<ServerWorld,Set<Long>> LOADED=new WeakHashMap<>();
+    private static final Map<ServerWorld,Map<Long,Set<UUID>>> RP_CHUNKS=new WeakHashMap<>();
+    private static final Map<ServerWorld,Map<UUID,Long>> RP_POSITIONS=new WeakHashMap<>();
     private static final Map<MinecraftServer,Job> JOBS=new WeakHashMap<>();
     private static final ChunkTicketType<ChunkPos> TICKET=ChunkTicketType.create("dw_bb_alt",Comparator.comparingLong(ChunkPos::toLong),1200);
     private static final Pattern REGION=Pattern.compile("r\\.(-?\\d+)\\.(-?\\d+)\\.mca");
@@ -49,10 +51,15 @@ public final class BbAlternateService {
     private BbAlternateService(){}
     public static void initialize(){if(initialized)return;initialized=true;
         ServerChunkEvents.CHUNK_LOAD.register((world,chunk)->LOADED.computeIfAbsent(world,unused->new HashSet<>()).add(chunk.getPos().toLong()));
-        ServerChunkEvents.CHUNK_UNLOAD.register((world,chunk)->{var chunks=LOADED.get(world);if(chunks!=null)chunks.remove(chunk.getPos().toLong());});
+        ServerChunkEvents.CHUNK_UNLOAD.register((world,chunk)->{var chunks=LOADED.get(world);if(chunks!=null){chunks.remove(chunk.getPos().toLong());if(chunks.isEmpty())LOADED.remove(world);}});
+        ServerEntityEvents.ENTITY_LOAD.register((entity,world)->{if(entity instanceof RpObjectEntity){RP_POSITIONS.computeIfAbsent(world,unused->new HashMap<>()).put(entity.getUuid(),entity.getChunkPos().toLong());RP_CHUNKS.computeIfAbsent(world,unused->new HashMap<>()).computeIfAbsent(entity.getChunkPos().toLong(),unused->new HashSet<>()).add(entity.getUuid());}});
+        ServerEntityEvents.ENTITY_UNLOAD.register((entity,world)->{if(entity instanceof RpObjectEntity){var positions=RP_POSITIONS.get(world);var old=positions==null?null:positions.remove(entity.getUuid());if(old!=null)removeRp(world,old,entity.getUuid());if(positions!=null&&positions.isEmpty())RP_POSITIONS.remove(world);}});
         ServerTickEvents.END_SERVER_TICK.register(BbAlternateService::tick);
-        ServerLifecycleEvents.SERVER_STOPPED.register(server->{cancel(server);LAST.remove(server);LOADED.keySet().removeIf(world->world.getServer()==server);});
+        ServerLifecycleEvents.SERVER_STOPPED.register(server->{cancel(server);LAST.remove(server);LOADED.keySet().removeIf(world->world.getServer()==server);RP_CHUNKS.keySet().removeIf(world->world.getServer()==server);RP_POSITIONS.keySet().removeIf(world->world.getServer()==server);});
     }
+    private static void removeRp(ServerWorld world,long chunk,UUID uuid){var chunks=RP_CHUNKS.get(world);if(chunks==null)return;var entities=chunks.get(chunk);if(entities!=null){entities.remove(uuid);if(entities.isEmpty())chunks.remove(chunk);}if(chunks.isEmpty())RP_CHUNKS.remove(world);}
+    /** Position callbacks maintain the index; no periodic world/entity scan. */
+    public static void rpMoved(RpObjectEntity entity){if(!(entity.getWorld() instanceof ServerWorld world))return;var positions=RP_POSITIONS.get(world);var old=positions==null?null:positions.get(entity.getUuid());long next=entity.getChunkPos().toLong();if(old==null||old==next)return;removeRp(world,old,entity.getUuid());positions.put(entity.getUuid(),next);RP_CHUNKS.computeIfAbsent(world,unused->new HashMap<>()).computeIfAbsent(next,unused->new HashSet<>()).add(entity.getUuid());}
     public static boolean supports(BlockState state){return ToolTarget.modRegistry(Registries.BLOCK.getId(state.getBlock()))&&profile(state)!=null;}
     public static String profile(BlockState state){for(var entry:state.getEntries().entrySet())if(entry.getKey().getName().equals("profile"))return entry.getValue() instanceof StringIdentifiable value?value.asString():entry.getValue().toString();return null;}
     @SuppressWarnings({"rawtypes","unchecked"})
@@ -117,7 +124,7 @@ public final class BbAlternateService {
     private static List<ToolTarget> targets(ServerWorld world,WorldChunk chunk){var result=new LinkedHashMap<String,ToolTarget>();String dimension=world.getRegistryKey().getValue().toString();
         for(var pos:chunk.getBlockEntityPositions()){var owner=VerticalMount.owner(world,pos);if(owner!=null&&supports(world.getBlockState(pos))){var target=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,dimension,owner.instanceId(),pos.asLong(),owner.registryId());result.put(target.key(),target);}}
         var sections=chunk.getSectionArray();for(int s=0;s<sections.length;s++){var section=sections[s];if(section==null||!section.hasAny(BbAlternateService::supports))continue;int baseY=(world.getBottomSectionCoord()+s)*16;for(int y=0;y<16;y++)for(int z=0;z<16;z++)for(int x=0;x<16;x++){var state=section.getBlockState(x,y,z);if(!supports(state))continue;var pos=new BlockPos(chunk.getPos().getStartX()+x,baseY+y,chunk.getPos().getStartZ()+z);var owner=VerticalMount.owner(world,pos);var target=owner==null?new ToolTarget(ToolTarget.Kind.BLOCK,dimension,null,pos.asLong(),Registries.BLOCK.getId(state.getBlock()).toString()):new ToolTarget(ToolTarget.Kind.ARCHITECTURE,dimension,owner.instanceId(),pos.asLong(),owner.registryId());result.put(target.key(),target);}}
-        for(var entity:world.iterateEntities())if(entity instanceof RpObjectEntity&&entity.getChunkPos().equals(chunk.getPos())){var target=ToolTarget.entity(entity);if(target!=null)result.put(target.key(),target);}return List.copyOf(result.values());
+        for(var uuid:List.copyOf(RP_CHUNKS.getOrDefault(world,Map.of()).getOrDefault(chunk.getPos().toLong(),Set.of()))){var entity=world.getEntity(uuid);if(!(entity instanceof RpObjectEntity))continue;var target=ToolTarget.entity(entity);if(target!=null)result.put(target.key(),target);}return List.copyOf(result.values());
     }
     /** Missing NEW authored alternates receive this documented, geometry-neutral darker tone. */
     public static boolean generatedAlternate(CompositeRootBlock block,BlockState state,List<CompositeSpec.Part> parts){return block.spec.id.getPath().startsWith("source_")&&state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT&&!parts.isEmpty()&&parts.stream().allMatch(part->part.model().equals(part.altModel()));}

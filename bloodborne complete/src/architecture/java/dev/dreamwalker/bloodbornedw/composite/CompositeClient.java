@@ -28,6 +28,7 @@ public final class CompositeClient {
         ImportedCompactClient.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
         dev.dreamwalker.bloodbornedw.tool.NativeAlternateVisualClient.initialize();
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents.CHUNK_UNLOAD.register((world,chunk)->CompositeLedger.forgetClientChunk(world,chunk.getPos()));
         ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}models.addAll(ImportedStairLegacyArt.models());context.addModels(models);});
         BlockEntityRendererRegistry.register(CompositeArchitecture.CELL_ENTITY, context->new BlockEntityRenderer<CompositeBlockEntity>(){
             @Override public void render(CompositeBlockEntity entity,float tickDelta,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay){
@@ -58,37 +59,38 @@ public final class CompositeClient {
             SyncContext context=new SyncContext(CompositeNetworking.OWNERS);
             try{
                 OwnersPacket packet=decodeOwners(buffer,context);
-                client.execute(()->{if(client.world!=null&&client.world.getRegistryKey().getValue().equals(packet.dimension()))for(var value:packet.values().entrySet()){
+                client.execute(()->{if(client.world!=null&&client.world.getRegistryKey().getValue().equals(packet.dimension())){if(packet.sharded())CompositeLedger.markClientSharded(client.world);for(var value:packet.values().entrySet()){
                     CompositeLedger.get(client.world).put(value.getKey(),value.getValue());
                     for(var entry:value.getValue())if(entry.owner().root().equals(value.getKey())&&client.world.getBlockEntity(CompositeData.pos(value.getKey())) instanceof CompositeBlockEntity own&&(!(own instanceof dev.dreamwalker.bloodbornedw.architecture.ladder_source.SourceLadderBlockEntity)||entry.owner().equals(own.resident())))own.set(entry.owner(),value.getValue(),CompositeData.nbt(entry.rootData().blockEntityNbt()));
                     var pos=CompositeData.pos(value.getKey());var state=client.world.getBlockState(pos);client.world.updateListeners(pos,state,state,net.minecraft.block.Block.NOTIFY_LISTENERS);
                     // Offset is BE data, not a Cartesian blockstate property;
                     // invalidate the old chunk mesh even when state == state.
                     client.worldRenderer.scheduleBlockRenders(pos.getX()-1,pos.getY()-1,pos.getZ()-1,pos.getX()+1,pos.getY()+1,pos.getZ()+1);
-                }});
+                }}});
             }catch(RuntimeException failure){context.error(failure);}
         });
 
     }
-    private record OwnersPacket(Identifier dimension,Map<Cell,List<CompositeData.Contribution>> values){}
+    private record OwnersPacket(Identifier dimension,Map<Cell,List<CompositeData.Contribution>> values,boolean sharded){}
     /** Decode the complete packet before scheduling any mutation. Limits match the server's
      * 64-cell batch and vanilla's 1 MiB custom S2C payload ceiling; NBT retains its reader limit. */
     private static OwnersPacket decodeOwners(PacketByteBuf buffer,SyncContext context){
         context.stage="packet-length";checkPacketLength(buffer);
         context.stage="dimension-id";Identifier dimension=buffer.readIdentifier();
         context.stage="cell-count";int count=buffer.readVarInt();if(count<0||count>64)throw new IllegalArgumentException("Invalid owner cell count");
-        Map<Cell,List<CompositeData.Contribution>> values=new LinkedHashMap<>();
+        Map<Cell,List<CompositeData.Contribution>> values=new LinkedHashMap<>();boolean sharded=false;
         for(int i=0;i<count;i++){
             context.stage="cell-position";context.root=buffer.readBlockPos();Cell cell=CompositeData.cell(context.root);
             context.instanceId="";context.registry=null;
             if(values.containsKey(cell))throw new IllegalArgumentException("Duplicate owner cell");
             context.stage="owners-nbt";NbtCompound tag=buffer.readNbt();
+            if(tag!=null&&tag.getBoolean("OwnerShardClient"))sharded=true;
             // A null tag formerly cleared this cell, and remains a valid empty update.
             List<CompositeData.Contribution> entries=tag==null?List.of():decodeContributions(tag,context);
             values.put(cell,entries);
         }
         context.stage="trailing-bytes";if(buffer.isReadable())throw new IllegalArgumentException("Trailing owner packet bytes");
-        return new OwnersPacket(dimension,Collections.unmodifiableMap(values));
+        return new OwnersPacket(dimension,Collections.unmodifiableMap(values),sharded);
     }
 
     private static void checkPacketLength(PacketByteBuf buffer){if(buffer.readableBytes()<=0||buffer.readableBytes()>1_048_576)throw new IllegalArgumentException("Invalid custom S2C payload length");}

@@ -20,6 +20,6 @@ public final class CompositeNetworking {
     }
     /** Server selects from its current ray hits. There is no client-provided owner request. */
 
-    private static void send(ServerPlayerEntity player,ServerWorld world,List<Cell> cells){if(!ServerPlayNetworking.canSend(player,OWNERS))return;for(int start=0;start<cells.size();start+=64){var buffer=PacketByteBufs.create();buffer.writeIdentifier(world.getRegistryKey().getValue());int count=Math.min(64,cells.size()-start);buffer.writeVarInt(count);for(int i=0;i<count;i++){Cell cell=cells.get(start+i);buffer.writeBlockPos(CompositeData.pos(cell));NbtCompound tag=new NbtCompound();tag.put("owners",CompositeData.contributions(CompositeLedger.get(world).at(cell)));buffer.writeNbt(tag);};ServerPlayNetworking.send(player,OWNERS,buffer);}}
+    private static void send(ServerPlayerEntity player,ServerWorld world,List<Cell> cells){if(!ServerPlayNetworking.canSend(player,OWNERS))return;for(int start=0;start<cells.size();start+=64){var buffer=PacketByteBufs.create();buffer.writeIdentifier(world.getRegistryKey().getValue());int count=Math.min(64,cells.size()-start);buffer.writeVarInt(count);for(int i=0;i<count;i++){Cell cell=cells.get(start+i);buffer.writeBlockPos(CompositeData.pos(cell));NbtCompound tag=new NbtCompound();tag.put("owners",CompositeData.contributions(CompositeLedger.get(world).at(cell)));if(CompositeLedger.get(world).sharded())tag.putBoolean("OwnerShardClient",true);buffer.writeNbt(tag);};ServerPlayNetworking.send(player,OWNERS,buffer);}}
     private CompositeNetworking(){}
 }

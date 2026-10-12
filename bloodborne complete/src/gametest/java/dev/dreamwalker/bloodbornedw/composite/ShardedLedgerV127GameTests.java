@@ -37,6 +37,7 @@ public final class ShardedLedgerV127GameTests implements FabricGameTest {
         var store=new ShardedCompositeLedger(world,directory,keys,indexChanges::incrementAndGet);
         try {
             store.put(root,List.of(rootContribution));store.put(other,List.of(sideContribution,foreign));
+            store.put(unrelated.root(),List.of(foreign));
             t.assertTrue(keys.size()==2&&indexChanges.get()>=2,"Compact index contains two chunkkeys, not every cell/UUID");
             var expected=new TreeMap<Cell,Footprint>();expected.put(Cell.ORIGIN,full);expected.put(new Cell(1,0,0),thin);
             t.assertTrue(store.savedMemberships(Set.of(owner)).get(owner).equals(expected),"Root shard records the entire cross-chunk authoritative BEFORE");
@@ -75,5 +76,55 @@ public final class ShardedLedgerV127GameTests implements FabricGameTest {
         var duplicate=metadata.copy();duplicate.putLongArray("OwnerShardChunks",new long[]{1,1});boolean rejected=false;
         try{CompositeLedger.read(duplicate);}catch(IllegalArgumentException expected){rejected=true;}
         t.assertTrue(rejected,"Corrupt repeated shard-key metadata is diagnosed, never silently discarded");t.complete();
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=400,batchId="v127_sharded_owner_storage")
+    public void thousandNativeTransientShardReadsHaveNoResidentOrSnapshotGrowth(TestContext t) throws Exception {
+        var world=t.getWorld();Path directory=world.getServer().getSavePath(WorldSavePath.ROOT).resolve("v127-shard-native-stress").resolve(UUID.randomUUID().toString());
+        java.nio.file.Files.createDirectories(directory);Set<Long> known=new TreeSet<>();
+        var data=CompositeData.data(Registries.BLOCK.get(new Identifier("bloodborne_dw:source_bricks")).getDefaultState(),new NbtCompound());
+        var full=new Footprint(List.of(new Box(0,0,0,1,1,1)),List.of(new Box(0,0,0,1,1,1)));
+        long snapshotCells=((Number)CompositeShapeSnapshots.metrics(world).get("shapeSnapshotCells")).longValue();
+        List<Cell> cells=new ArrayList<>();List<CompositeData.Contribution> expected=new ArrayList<>();
+        // These distant coordinates are inspected without generating/requesting
+        // Minecraft chunks. Only fresh QA native compressed NBT files are made.
+        for(int i=0;i<1000;i++) {
+            int x=1500000+i,z=-1500000;long key=ChunkPos.toLong(x,z);known.add(key);var cell=new Cell(x*16+8,64,z*16+8);
+            var owner=new Owner(UUID.randomUUID(),"bloodborne_dw:source_bricks",cell);var c=new CompositeData.Contribution(owner,data,full);
+            var n=new NbtCompound();n.putInt("Schema",1);n.putInt("ChunkX",x);n.putInt("ChunkZ",z);var rows=new NbtList();var row=new NbtCompound();
+            row.putIntArray("pos",new int[]{cell.x(),cell.y(),cell.z()});row.put("owners",CompositeData.contributions(List.of(c)));rows.add(row);n.put("cells",rows);
+            var membership=new NbtList();var object=new NbtCompound();object.put("owner",CompositeData.owner(owner));var members=new NbtList();var member=new NbtCompound();member.putIntArray("offset",new int[]{0,0,0});member.put("collision",CompositeData.boxes(full.collision()));member.put("selection",CompositeData.boxes(full.selection()));members.add(member);object.put("members",members);membership.add(object);n.put("ownerMembership",membership);
+            NbtIo.writeCompressed(n,directory.resolve("owners-"+x+"."+z+".nbt").toFile());cells.add(cell);expected.add(c);
+        }
+        var store=new ShardedCompositeLedger(world,directory,known,()->{});int maxResident=0,maxCells=0;
+        for(int i=0;i<1000;i++) {
+            t.assertTrue(store.at(cells.get(i)).equals(List.of(expected.get(i))),"Native transient shard preserves exact owner/typed rootData/shape "+i);
+            var metrics=store.metrics();maxResident=Math.max(maxResident,(int)metrics.get("cachedOwnerShards"));maxCells=Math.max(maxCells,(int)metrics.get("cachedOwnerCells"));
+        }
+        t.assertTrue((long)store.metrics().get("ownerShardReads")==1000&&known.size()==1000,"All1000 indexed chunks read from actual native files");
+        t.assertTrue(maxResident==0&&maxCells==0&&store.loadedCells().isEmpty(),"Visited count1000 has zero monotonic resident shard/cell growth; unloaded reads remain transient");
+        t.assertTrue(((Number)CompositeShapeSnapshots.metrics(world).get("shapeSnapshotCells")).longValue()==snapshotCells,"No unloaded shape snapshots published or retained during stress traversal");
+        var proof=new NbtCompound();proof.putInt("knownShards",known.size());proof.putInt("maxResidentShards",maxResident);proof.putInt("maxResidentCells",maxCells);proof.putLong("actualNativeFileReads",(long)store.metrics().get("ownerShardReads"));
+        NbtIo.writeCompressed(proof,directory.resolve("stress-result.nbt").toFile());t.complete();
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=300,batchId="v127_sharded_owner_storage")
+    public void repeatedTypedPayloadsDecodeAsSharedObjectsAndDictionaryBytes(TestContext t) throws Exception {
+        var world=t.getWorld();var pos=t.getAbsolutePos(new BlockPos(192,140,0));int x=pos.getX()>>4,z=pos.getZ()>>4;world.getChunk(x,z);
+        var root=new Cell(x*16+2,pos.getY(),z*16+2);var owner=new Owner(UUID.randomUUID(),"bloodborne_dw:source_bricks",root);
+        var payload=new NbtCompound();payload.putString("LargeTypedSetting","repeated opaque author event setting ".repeat(256));payload.putUuid("Link",UUID.randomUUID());
+        var data=CompositeData.data(Registries.BLOCK.get(new Identifier(owner.registryId())).getDefaultState(),payload);
+        var full=new Footprint(List.of(new Box(0,0,0,1,1,1)),List.of(new Box(0,0,0,1,1,1)));var c=new CompositeData.Contribution(owner,data,full);
+        Path directory=world.getServer().getSavePath(WorldSavePath.ROOT).resolve("v127-shard-native-sharing").resolve(UUID.randomUUID().toString());Set<Long> known=new TreeSet<>();var store=new ShardedCompositeLedger(world,directory,known,()->{});
+        for(int dx=0;dx<8;dx++)for(int dz=0;dz<8;dz++)store.put(root.add(new Cell(dx,0,dz)),List.of(c));
+        store.flush();store.unload(new ChunkPos(x,z));var reopened=new ShardedCompositeLedger(world,directory,new TreeSet<>(known),()->{});reopened.prepare(new ChunkPos(x,z));
+        try {
+            var first=reopened.at(root).get(0);for(int dx=0;dx<8;dx++)for(int dz=0;dz<8;dz++){var entry=reopened.at(root.add(new Cell(dx,0,dz))).get(0);t.assertTrue(entry.rootData()==first.rootData()&&entry.owner()==first.owner()&&entry.shape()==first.shape(),"Shared owner/rootData/shape references after actual native dictionary decoding");}
+            var metrics=reopened.metrics();long without=(long)metrics.get("typedPayloadBytesWithoutSharing"),with=(long)metrics.get("typedPayloadBytesWithSharing");
+            t.assertTrue(without==with*64&&(int)metrics.get("uniqueSharedRootData")==1,"Measured exact typed payload arrays64copies→1, without claiming total JVM heap");
+            var saved=NbtIo.readCompressed(directory.resolve("owners-"+x+"."+z+".nbt").toFile());
+            t.assertTrue(saved.getBoolean("Dictionary")&&saved.getList("dataTable",NbtElement.COMPOUND_TYPE).size()==1,"Native disk format stores full typed rootData once per shard, not per occupied cell");
+            t.assertTrue(saved.getList("ownerTable",NbtElement.COMPOUND_TYPE).size()==1&&saved.getList("shapeTable",NbtElement.COMPOUND_TYPE).size()==1,"Owner and fitted shape dictionaries are compact and exact");t.complete();
+        } finally {reopened.unload(new ChunkPos(x,z));CompositeShapeSnapshots.forgetChunk(world,ChunkPos.toLong(x,z));}
     }
 }

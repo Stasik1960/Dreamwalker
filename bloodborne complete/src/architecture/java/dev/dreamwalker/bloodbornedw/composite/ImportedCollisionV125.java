@@ -77,8 +77,18 @@ public final class ImportedCollisionV125 {
             }
             objects.put(entry.getKey(),List.copyOf(values));
         }
-        if (registered.size()!=1045 || !objects.keySet().equals(registered))
-            throw new IllegalArgumentException("NEW collision resource differs from the exact registered cohort");
+        Set<String> extra=new HashSet<>(registered);extra.removeAll(objects.keySet());Set<String> declaredExtra=new HashSet<>();
+        var extraInput=ImportedCollisionV125.class.getResourceAsStream("/bloodborne_dw/imported-full-map-v127.json");
+        if(extraInput!=null)try(var reader=new InputStreamReader(extraInput,StandardCharsets.UTF_8)) {
+            var full=JsonParser.parseReader(reader).getAsJsonObject();
+            if(full.has("additionalRegistryIds"))for(var raw:full.getAsJsonArray("additionalRegistryIds")) {
+                String id=raw.getAsString();if(!id.startsWith("bloodborne_dw:source_")||!declaredExtra.add(id))throw new IllegalArgumentException("Invalid/repeated exact NEW additional collision type");
+                boolean covered=false;for(var row:full.getAsJsonArray("objects"))covered|=row.getAsJsonObject().get("registryId").getAsString().equals(id);
+                if(!covered)throw new IllegalArgumentException("Missing independently declared NEW additional collision type shapes "+id);
+            }
+        }catch(Exception failure){throw new IllegalStateException("Invalid exact NEW extra collision metadata",failure);}
+        if(objects.size()!=1045||!registered.containsAll(objects.keySet())||!extra.equals(declaredExtra))
+            throw new IllegalArgumentException("NEW collision resource differs from frozen1045 cohort plus explicitly declared exact extras");
         // V12.7 keeps the old fitted-shape archive immutable. Exact current
         // alias poses copied to an appended primary art state retain the same
         // collision/aim tables at every yaw, rather than falling back to pose0.

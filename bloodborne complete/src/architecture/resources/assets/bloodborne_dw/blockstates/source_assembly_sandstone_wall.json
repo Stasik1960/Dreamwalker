@@ -1,7 +1,1420 @@
 {
-  "variants": {
-    "": {
-      "model": "bloodborne_dw:block/source_assembly_sandstone_wall_empty"
+  "multipart": [
+    {
+      "when": {
+        "compact": "false"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/source_assembly_sandstone_wall_empty"
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "2",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "3",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "8",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "9",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "10",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "11",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "11",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "11",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "11",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_north",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "12",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "13",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "13",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "13",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "13",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_east",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_south",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "14",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/sandstone_wall_side_tall_west",
+        "y": 90
+      }
     }
-  }
+  ]
 }

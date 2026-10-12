@@ -158,6 +158,11 @@ public final class ImportedTypeAliases {
     public static List<Mapping> mappings() { return List.copyOf(CATALOGUE.mappings.values()); }
     public static Optional<Mapping> mapping(BlockState state) {
         if (!(state.getBlock() instanceof CompositeRootBlock block) || !imported(block.spec.id.toString())) return Optional.empty();
+        // Historic pre-V12.4 source selectors had only bank0. Nonzero banks
+        // are already current canonical art; looking up their low four bits
+        // would accidentally reinterpret an exact city pose as old pose0..15.
+        if(canonicalRegistry(block.spec.id.toString()).equals(block.spec.id.toString()))for(var entry:state.getEntries().entrySet())
+            if(entry.getKey().getName().equals("art_bank")&&entry.getValue() instanceof Integer bank&&bank>0)return Optional.empty();
         return mapping(block.spec.id.toString(), state.get(CompositeRootBlock.VARIANT));
     }
     public static boolean needsMigration(BlockState state, NbtCompound payload) {
@@ -216,6 +221,7 @@ public final class ImportedTypeAliases {
             return old;
         }
         NbtCompound art = old.getSubNbt("BlockStateTag"); int variant = integer(art, "variant", 0);
+        if(!alias&&integer(art,"art_bank",0)>0)return old;
         Mapping mapping = mapping(registry, variant).orElse(null);
         if (mapping == null) {
             if (!alias) return old; // Newly introduced canonical banks have no historical source state.

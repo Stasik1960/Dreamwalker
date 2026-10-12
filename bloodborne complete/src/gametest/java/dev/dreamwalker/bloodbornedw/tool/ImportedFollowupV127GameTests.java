@@ -86,4 +86,14 @@ public final class ImportedFollowupV127GameTests implements FabricGameTest {
         }
         t.assertTrue(migratedCount==15,"Every15 actual current saved pose migrated and copied");t.complete();
     }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v127_exact_followup_aliases")
+    public void currentBankedArtCannotBeReinterpretedAsHistoricLowVariantBits(TestContext t) {
+        var block=(ImportedArtworkBlock)Registries.BLOCK.get(new Identifier("bloodborne_dw:source_assembly_brick_wall"));
+        var state=block.getDefaultState().with(ImportedArtworkBlock.bankProperty(block.getDefaultState()),1).with(CompositeRootBlock.VARIANT,0).with(CompositeRootBlock.ROTATION,3).with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.ALT);
+        t.assertTrue(ImportedTypeAliases.target(state)==state&&ImportedTypeAliases.mapping(state).isEmpty(),"Exact current banked art16 does not become historical raw variant0 during explicit WorldEdit/tool canonicalization");
+        var item=new ItemStack(block.asItem());var art=item.getOrCreateSubNbt("BlockStateTag");art.putString("art_bank","1");art.putString("variant","0");art.putString("rotation","3");art.putString("profile","alt");
+        t.assertTrue(ImportedTypeAliases.canonicalStack(item)==item,"Even an unmarked command-created canonical banked item retains the complete current selector");
+        t.complete();
+    }
 }

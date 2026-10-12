@@ -1,7 +1,188 @@
 {
-  "variants": {
-    "": {
-      "model": "bloodborne_dw:block/source_addon_floor_panels_2_empty"
+  "multipart": [
+    {
+      "when": {
+        "compact": "false"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/source_addon_floor_panels_2_empty"
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_6",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "4",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_7",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "5",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_7",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "6",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_8",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_9",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_9",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_9",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "7",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/addon/floor_panels_9",
+        "y": 270
+      }
     }
-  }
+  ]
 }

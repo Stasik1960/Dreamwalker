@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.*;
 import net.minecraft.server.MinecraftServer;
@@ -108,6 +109,7 @@ public final class BbToolService {
         if(target.kind()==ToolTarget.Kind.BLOCK){
             var world=target.world(player.getServer());var root=BlockPos.fromLong(target.root());var state=world.getBlockState(root);
             if(ImportedCompactBlock.compact(state)){
+                if(!world.isInBuildLimit(root.up(delta)))return false;
                 NbtCompound commands=ToolCommands.get(player.getServer()).writeNbt(new NbtCompound());
                 var owner=ImportedCompactBlock.materialize(world,root,player);if(owner==null)return false;
                 var own=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,target.dimension(),owner.instanceId(),root.asLong(),owner.registryId());

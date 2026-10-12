@@ -8,7 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 
-public final class CompositeItem extends BlockItem {
+public class CompositeItem extends BlockItem {
     private final CompositeRootBlock root;
     public CompositeItem(CompositeRootBlock block){super(block,new Settings());root=block;}
     @Override public ActionResult place(ItemPlacementContext context){
@@ -77,7 +77,7 @@ public final class CompositeItem extends BlockItem {
     @Override public Text getName(ItemStack stack){if(root instanceof ThinWindowRootBlock){var selected=GlazingTypes.itemTarget(root,stack);return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(selected.spec.id,Text.literal(selected.spec.displayName));}NbtCompound art=stack.getSubNbt("BlockStateTag");String v=art==null?"0":art.getString("variant");
         if(root.spec.id.getPath().startsWith("source_")){int variant=0;try{variant=Integer.parseInt(v);}catch(NumberFormatException ignored){}
             if(root.spec.simplePhysicalCollision&&art!=null){
-                if(root instanceof ImportedArtworkBlock){try{int bank=Integer.parseInt(art.getString("art_bank"));if(bank>=0&&bank<=7)variant+=bank*16;}catch(NumberFormatException ignored){}}
+                if(root instanceof ImportedArtworkBlock){try{int bank=Integer.parseInt(art.getString("art_bank"));if(bank>=0&&bank*16<root.spec.variants.size())variant+=bank*16;}catch(NumberFormatException ignored){}}
                 else if(root instanceof ImportedStairBlock&&root.getDefaultState().contains(ImportedStairBlock.TRIM)&&"true".equals(art.getString("trim")))variant+=10;
             }
             String name=dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.variantName(root.spec.id.getPath(),variant);if(name!=null){if(root.spec.id.getPath().startsWith("source_assembly_")&&!name.startsWith(root.spec.displayName))name=root.spec.displayName+" · "+name;return dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.name(root.spec.id,Text.literal(name));}}

@@ -40,6 +40,17 @@ def inventory():
     if overlay.exists():
         retired={member for group in json.loads(overlay.read_text(encoding='utf-8'))['groups'] for member in group['members'] if member!=group['primaryRegistryId']}
         rows=[r for r in rows if r['registry'] not in retired]
+    current=json.loads((RES/'bloodborne_dw/remaining-catalogue.json').read_text(encoding='utf-8'))
+    original={r['path'] for r in json.loads((ROOT/'docs/v12.4-dedup/baseline-content.json').read_text(encoding='utf-8'))['catalogue']['objects']} if False else {r['path'] for r in json.loads((ROOT/'docs/v12.4-dedup/baseline-content.json').read_text(encoding='utf-8')).get('catalogue',{}).get('objects',[])}
+    # Every original1045 path has a historic debug ID <=93227. Newly declared
+    # extra sources have fresh reserved IDs and their own descriptor.
+    debug=json.loads((RES/'bloodborne_dw/debug_catalogue.json').read_text(encoding='utf-8'))
+    numbers={r['registryId']:r['temporaryId'] for r in debug['entries']}
+    existing={r['registry'] for r in rows}
+    for item in current['objects']:
+        registry='bloodborne_dw:'+item['path']
+        if registry not in existing and int(numbers[registry])>93227:
+            rows.append({'registry':registry,'id':numbers[registry],'origin':'NEW','kind':'architecture'})
     return sorted(rows,key=lambda r:int(r['id']))
 
 def spec_of(row):return json.loads((RES/'bloodborne_dw/composite'/f"{row['registry'].split(':')[1]}.json").read_text(encoding='utf-8'))
@@ -50,6 +61,12 @@ def active_indices(spec):
     return ids or list(range(len(spec['variants'])))
 
 class Art(Visuals):
+    def optional(self,relative):
+        for root in self.roots:
+            source=root/relative
+            if source.is_file():return source.read_bytes()
+        if self.vanilla and relative in self.vanilla.namelist():return self.vanilla.read(relative)
+        return None
     @lru_cache(maxsize=None)
     def blob(self,identifier,kind):
         namespace,path=identifier.split(':',1) if ':' in identifier else ('minecraft',identifier)
@@ -80,6 +97,8 @@ def dependency_closure(art,models):
         for tex in art.textures(identifier).values():
             if not tex.startswith('#'):
                 relative,blob=art.blob(tex,'textures');textures[relative]=blob
+                metadata=art.optional(relative+'.mcmeta')
+                if metadata is not None:textures[relative+'.mcmeta']=metadata
     for identifier in models:model(identifier)
     return documents,textures
 
@@ -98,10 +117,13 @@ def make_bbmodel(art,quads,key,name,tint=None):
     identifiers=list(dict.fromkeys(q[2] for q in quads));textures=[]
     for i,identifier in enumerate(identifiers):
         relative,original=art.blob(identifier,'textures');blob=embedded_texture(art,identifier,tint);image=art.image(identifier);height,width=image.shape[:2]
+        metadata=art.optional(relative+'.mcmeta');animation=json.loads(metadata).get('animation') if metadata else None
+        frame_width=animation.get('width',width) if animation else width;frame_height=animation.get('height',frame_width) if animation else height
         textures.append({'name':identifier,'uuid':uid(key+'/texture/'+identifier),'id':str(i),'width':width,'height':height,
-            'uv_width':16,'uv_height':16,'source':'data:image/png;base64,'+base64.b64encode(blob).decode(),
+            'uv_width':16*width/frame_width,'uv_height':16*height/frame_height,'source':'data:image/png;base64,'+base64.b64encode(blob).decode(),
             'internal':True,'mode':'bitmap','visible':True,'render_mode':'default','render_sides':'auto',
-            'dreamwalker_originalPNG_SHA256':digest(original),'dreamwalker_runtimeALTPreviewTint':tint})
+            'dreamwalker_originalPNG_SHA256':digest(original),'dreamwalker_runtimeALTPreviewTint':tint,
+            'dreamwalker_animationMetadata':animation,'dreamwalker_genericPreviewAnimationFrame':0 if animation else None})
     elements=[]
     # Preserve each face's native cyclic vertices, including coincident UV seams.
     # Quad-local vertex identities prevent Blockbench welding authored seams.
@@ -235,9 +257,19 @@ def export_pass(args,rows,art):
             index.append({'id':row['id'],'registryId':row['registry'],'name':spec['displayName'],'kind':'sprite/plane' if flat else 'ordinary-block' if plain else 'complex-model',
                 'descriptor':relative,'editableProjects':entries,'sourceModels':sorted(models),'textureDependencies':sorted(tex),'originalV12Excluded':True})
             if n%80==0:print('Blockbench export',n,'/',len(rows),flush=True)
+        utility=[]
+        for number,path,label in [('93230','dw_barrier','dw-барьер'),('93231','dw_light','Невидимый свет')]:
+            models=[f'bloodborne_dw:block/{path}',f'bloodborne_dw:block/{path}_alt',f'bloodborne_dw:item/{path}']
+            docs,tex=dependency_closure(art,models);closure_models.update(docs);closure_textures.update(tex)
+            for profile in ('base','alt'):
+                identifier=f'bloodborne_dw:block/{path}'+('_alt' if profile=='alt' else '')
+                quads=art.quads({'model':identifier});key=f'{number}/pose-000/closed-{profile}';project=make_bbmodel(art,quads,key,label);checked+=verify_bbmodel(art,quads,project)
+                relative='editable/'+key+'.bbmodel';blob=json.dumps(project,ensure_ascii=False,separators=(',',':')).encode('utf-8');z.writestr(relative,blob)
+                utility.append({'id':number,'registryId':'bloodborne_dw:'+path,'name':label,'profile':profile,'project':relative,'sourceModels':models,'textures':sorted(tex),'worldRenderPolicy':'Hidden in world; held-item marker appearance retained, project shows editable textured cube.'})
         for path,blob in {**closure_models,**closure_textures}.items():z.writestr('source-java/'+path,blob)
         document={'schemaVersion':1,'status':'PASS_EXACT_MODEL_UV_TEXTURE_ROUNDTRIP','objects':index,
-            'summary':{'workingNewTypes':len(index),'projects':sum(len(r['editableProjects']) for r in index),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':len(closure_textures)},
+            'summary':{'workingNewTypes':len(index)+2,'compositeWorkingNewTypes':len(index),'newUtilityTypes':2,'projects':sum(len(r['editableProjects']) for r in index)+len(utility),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':sum(p.endswith('.png') for p in closure_textures),'animationMetadataDependencies':sum(p.endswith('.mcmeta') for p in closure_textures)},
+            'utilityObjects':utility,
             'formatSources':['https://blockbench.net/wiki/docs/bbmodel/','https://github.com/JannisX11/blockbench/blob/master/js/formats/bbmodel.js']}
         z.writestr('INDEX.json',json.dumps(document,ensure_ascii=False,indent=2).encode('utf-8'))
         table=io.StringIO();writer=csv.writer(table,delimiter='\t');writer.writerow(['id','registryId','russianName','kind','projectCount','firstProject'])
