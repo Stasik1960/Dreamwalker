@@ -20,6 +20,12 @@ def main():
         for row in objects:
             live=spec_of({'registry':row['registryId']});saved=json.loads(z.read(row['descriptor']));assert saved==live
             assert row['name']==live['displayName']
+        remaining=json.loads((RES/'bloodborne_dw/remaining-catalogue.json').read_text(encoding='utf-8'))
+        hidden={r['registryId']:r['id'] for r in index['compatibilityObjects']}
+        all_sources={'bloodborne_dw:'+r['path'] for r in remaining['objects']}
+        assert set(hidden)==all_sources-set(actual) and not protected.intersection(hidden)
+        for row in index['compatibilityObjects']:
+            assert json.loads(z.read(row['descriptor']))==spec_of({'registry':row['registryId']})
         assert len(z.infolist())==len({r.filename for r in z.infolist()}),'Duplicate archive paths'
         assert 'runtimeALTVertexMultiplierPreview' in z.read('README-RU.txt').decode()
     old=json.loads(baseline('src/architecture/resources/bloodborne_dw/imported-type-aliases.json'))
@@ -39,7 +45,7 @@ def main():
         assert source==target
         assert digest(json.dumps(target,sort_keys=True,separators=(',',':')).encode())==row['exactCurrentVariantSha256']
     result={'status':'PASS_FINAL_VISUAL_DELIVERY_AUDIT','baselineCommit':BASE,'archiveSha256':report['archiveSha256'],'archiveBytes':archive.stat().st_size,
-        'workingNewTypes':len(objects)+2,'compositeWorkingNewTypes':len(objects),'utilityWorkingNewTypes':2,
+        'workingNewTypes':len(objects)+2,'compositeWorkingNewTypes':len(objects),'utilityWorkingNewTypes':2,'hiddenCompatibilitySourceTypes':len(hidden),'allNewSourceRegistrationsExtracted':len(all_sources),
         'originalV12TypeExports':0,'historic1281MappingsExact':True,'globalOldGroupMemberUniqueness':True,'previousReservedNumbersUnchanged':len(old_numbers),
         'followupCurrentExactPoseCopies':len(proofs),'archivedRuntimeDescriptorsMatchFinalLiveResources':True,'blockbenchGUIOpen':'NOT_RUN','nativeClientAndServer':'SEE_ROOT_REPORT'}
     write_json(OUT/'final-delivery-audit.json',result);print(json.dumps(result))

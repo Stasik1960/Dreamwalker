@@ -22,7 +22,8 @@ public final class ManualCatalogueV127GameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="z_v127_catalogue",tickLimit=4000)
     public void everyOfferedPlacementItemCanBePlacedNormally(TestContext c){
         var cases=UnifiedCreativeCatalogue.canonicalItems().stream().filter(NoCollidePlacement::isModPlacement).toList();
-        var p=UtilityV127GameTests.player(c.getWorld());var root=c.getAbsolutePos(new BlockPos(3,12,3));var report=new JsonArray();
+        // Keep the unchanged tall and hanging V12 RP models away from world bottom.
+        var p=UtilityV127GameTests.player(c.getWorld());var root=c.getAbsolutePos(new BlockPos(3,96,3));var report=new JsonArray();
         UtilityV127GameTests.load(c.getWorld(),root,24);
         checkNext(c,p,root,cases,0,report);
     }
@@ -34,7 +35,9 @@ public final class ManualCatalogueV127GameTests implements FabricGameTest {
             c.assertTrue(failed==0,"Every offered manual placement item works; failures="+failed+", detailed v127-manual-placement.json");c.complete();return;
         }
         var world=c.getWorld();ItemStack stack=cases.get(index).copy();NoCollidePlacement.invalidate(player);
-        player.setStackInHand(Hand.MAIN_HAND,stack);player.refreshPositionAndAngles(root.getX()+.5,root.getY()+10,root.getZ()-18,0,0);
+        // The unchanged V12 RP placer correctly enforces an eight-block reach.
+        // Use a plausible nearby hand-placement position for every item.
+        player.setStackInHand(Hand.MAIN_HAND,stack);player.refreshPositionAndAngles(root.getX()+.5,root.getY()+1,root.getZ()-4,0,0);
         if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof CompositeRootBlock block){
             var state=block.getDefaultState();var tag=stack.getSubNbt("BlockStateTag");
             if(tag!=null)for(var property:block.getStateManager().getProperties())if(tag.contains(property.getName(),8))state=apply(state,property,tag.getString(property.getName()));

@@ -20,6 +20,7 @@ public final class WorldEditV127GameTests implements FabricGameTest {
     private static final class WithWorldEdit {
         static com.sk89q.worldedit.math.BlockVector3 v(BlockPos p){return com.sk89q.worldedit.math.BlockVector3.at(p.getX(),p.getY(),p.getZ());}
         static void run(TestContext c)throws Exception {
+            transitionContract(c);
             var world=c.getWorld();var root=c.getAbsolutePos(new BlockPos(3,10,3));UtilityV127GameTests.load(world,root,64);
             com.sk89q.worldedit.world.World adapter=null;
             for(var constructor:Class.forName("com.sk89q.worldedit.fabric.FabricWorld").getConstructors())if(constructor.getParameterCount()==1&&constructor.getParameterTypes()[0].isInstance(world))adapter=(com.sk89q.worldedit.world.World)constructor.newInstance(world);
@@ -52,5 +53,25 @@ public final class WorldEditV127GameTests implements FabricGameTest {
             for(var at:List.of(root,root.add(32,0,0)))if(world.getBlockEntity(at) instanceof CompositeBlockEntity own) c.assertTrue(CompositeRuntime.remove(world,own.resident(),null,false).outcome()==TransactionCore.Outcome.COMMITTED,"Whole fixture cleanup");
             System.out.println("V127 WorldEdit native parser/whole-delete/undo/clipboard/compact: PASS");c.complete();
         }
+        /** Compare every cell against WE's unchanged vanilla ImmutableTables,
+         * rather than testing the arithmetic implementation against itself. */
+        static void transitionContract(TestContext c)throws Exception{
+            var type=com.sk89q.worldedit.world.block.BlockTypes.OAK_STAIRS;
+            var all=type.getAllStates();Map<Map<com.sk89q.worldedit.registry.state.Property<?>,Object>,com.sk89q.worldedit.world.block.BlockState> map=new LinkedHashMap<>();
+            for(var state:all)map.put(state.getStates(),state);
+            var field=com.sk89q.worldedit.world.block.BlockState.class.getDeclaredField("states");field.setAccessible(true);
+            for(var state:all){var compact=dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditStateTransitions.create(type,state.getStates(),map);int count=0;
+                var original=(com.google.common.collect.Table<?,?,?>)field.get(state);
+                c.assertTrue(new ArrayList<>(original.columnKeySet()).equals(new ArrayList<>(compact.columnKeySet()))&&new ArrayList<>(original.rowKeySet()).equals(new ArrayList<>(compact.rowKeySet()))&&new ArrayList<>(original.cellSet()).equals(new ArrayList<>(compact.cellSet())),"WorldEdit Table ordered cell/column/row views equal unchanged vanilla ImmutableTable");
+                for(var property:type.getProperties())for(Object value:property.getValues()){var actual=compact.get(property,value);var expected=transition(state,property,value);c.assertTrue((actual==null?state:actual)==expected,"WorldEdit immutable neighbor lookup keeps exact state identity");if(actual!=null)count++;}
+                c.assertTrue(compact.size()==count&&compact.cellSet().size()==count,"WorldEdit neighbor Table cardinality and views");
+                c.assertTrue(compact.get(null,null)==null&&compact.get(type.getProperties().get(0),null)==null,"WorldEdit Table null get returns null");
+                for(var cell:compact.cellSet())c.assertTrue(compact.row(cell.getRowKey()).get(cell.getColumnKey())==cell.getValue()&&compact.column(cell.getColumnKey()).get(cell.getRowKey())==cell.getValue(),"WorldEdit neighbor row/column views");
+                boolean immutable=false;try{compact.clear();}catch(UnsupportedOperationException expected){immutable=true;}c.assertTrue(immutable,"WorldEdit neighbor graph remains immutable");
+            }
+            c.assertTrue(!dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditStateTransitions.own(type),"Vanilla WorldEdit state generation is not intercepted");
+            System.out.println("V127 WorldEdit shared state transitions: PASS "+dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditStateTransitions.statistics());
+        }
+        @SuppressWarnings({"rawtypes","unchecked"}) static com.sk89q.worldedit.world.block.BlockState transition(com.sk89q.worldedit.world.block.BlockState state,com.sk89q.worldedit.registry.state.Property property,Object value){return state.with(property,value);}
     }
 }

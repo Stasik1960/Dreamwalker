@@ -10,7 +10,7 @@ from v125_map_index import ROOT,PACK,MAP,BASELINE,dump,sha
 DEST=ROOT/'docs/v12.5-city-review/doors'
 class SourceVisuals(Visuals):
     def __init__(self):
-        super().__init__(vanilla_jar=Path('C:/Users/vakir/.gradle/caches/fabric-loom/1.20.1/minecraft-client.jar'))
+        super().__init__(vanilla_jar=Path.home()/'.gradle/caches/fabric-loom/1.20.1/minecraft-client.jar')
         self.pack=zipfile.ZipFile(PACK);self.prefix=next(n[:-len('pack.mcmeta')] for n in self.pack.namelist() if n.endswith('pack.mcmeta'))
         self.models={r['model']:r['resolved'] for r in json.loads((ROOT/'docs/remaining-transfer/source-inventory.json').read_text(encoding='utf-8-sig'))['models']}
     @functools.lru_cache(maxsize=None)

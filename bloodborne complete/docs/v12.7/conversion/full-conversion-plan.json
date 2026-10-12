@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "FAIL_KNOWN_SOURCE_GAPS",
+  "status": "PASS_COMPLETE_SOURCE_PLAN",
   "sourceHashes": {
     "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
     "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
@@ -10,19 +10,17 @@
   "allPaletteCells": 3528130560,
   "counts": {
     "KEEP": 3469860025,
-    "COMPACT": 45704848,
-    "OWNER": 2736423,
-    "REMOVE": 9825934,
-    "CONSUMED": 2519,
-    "UNRESOLVED_VISIBLE": 418,
-    "ORPHAN_ACACIA_REVIEW": 393
+    "COMPACT": 45704513,
+    "OWNER": 2735505,
+    "REMOVE": 9827998,
+    "CONSUMED": 2519
   },
   "reasonCounts": {
     "SOURCE_UNAFFECTED_VANILLA_STATE": 3469860025,
     "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES": 23350367,
-    "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 25087476,
+    "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 25086223,
     "USER_RETIRED_VANILLA_STYLE_TYPE": 9331105,
-    "SOURCE_ALL_PIXEL_ALPHA_ZERO": 273592,
+    "SOURCE_ALL_PIXEL_ALPHA_ZERO": 275655,
     "SOURCE_BLOCKSTATE_NO_APPLICABLE_BRANCH": 11318,
     "SOURCE_EMPTY_GEOMETRY": 39618,
     "USER_REMOVED_DAMAGED_SOURCE_TYPE": 862,
@@ -30,13 +28,12 @@
     "USER_RETIRED_VANILLA_STYLE_CARRIER": 150195,
     "EXACT_COMPLETE_SOURCE_CONSTRUCTION": 2519,
     "EXACT_EXISTING_RENDER_VERTEX_UV_RGBA_STATE": 1318,
-    "NO_EXACT_CURRENT_SOURCE_STATE": 418,
     "MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE": 220,
-    "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR": 393,
     "MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL": 1,
     "EXACT_EXISTING_V12_NATIVE_WALL_STATE": 2097,
     "PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION": 894,
     "PROTECTED_V12_REMOVED_OR_GEOMETRY_INCOMPATIBLE_WALL_STATE": 98,
+    "USER_REMOVED_VANILLA_MODEL_TEXTURE_FALLBACK": 1,
     "EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL": 13,
     "MISSING_AUTHORED_TEXTURE_REFERENCE": 6,
     "SOURCE_BROKEN_WHOLE_MISSING_AUTHORED_IRON_DOOR_COMPONENTS": 3
@@ -55,13 +52,10 @@
     "bloodborne_dw:source_mossy_cobblestone": 34029,
     "bloodborne_dw:source_spruce_trapdoor_top": 6692,
     "bloodborne_dw:source_gold_block": 6917,
-    "bloodborne_dw:source_cobbled_deepslate_stairs": 132588,
     "bloodborne_dw:source_polished_blackstone": 35651,
     "bloodborne_dw:source_chiseled_polished_blackstone": 7360,
     "bloodborne_dw:source_granite": 34362,
     "bloodborne_dw:source_tinted_glass": 18175,
-    "bloodborne_dw:source_granite_stairs": 70418,
-    "bloodborne_dw:source_mossy_cobblestone_stairs": 9391,
     "bloodborne_dw:source_assembly_iron_bars": 6617,
     "bloodborne_dw:source_assembly_blackstone_wall": 16478,
     "bloodborne_dw:source_door_1": 588,
@@ -69,6 +63,9 @@
     "bloodborne_dw:source_assembly_brick_wall": 291189,
     "bloodborne_dw:source_assembly_deepslate_brick_wall": 54426,
     "bloodborne_dw:source_assembly_stone_brick_wall": 198909,
+    "bloodborne_dw:source_cobbled_deepslate_stairs": 132588,
+    "bloodborne_dw:source_granite_stairs": 70418,
+    "bloodborne_dw:source_mossy_cobblestone_stairs": 9391,
     "bloodborne_dw:source_acacia_trapdoor_bottom": 8704,
     "bloodborne_dw:source_dark_oak_planks": 1361,
     "bloodborne_dw:source_assembly_acacia_fence": 16863,
@@ -99,8 +96,8 @@
     "bloodborne_dw:source_polished_blackstone_brick_stairs": 4828,
     "bloodborne_dw:source_assembly_black_stained_glass_pane": 3247,
     "bloodborne_dw:source_assembly_warped_fence": 36721,
+    "bloodborne_dw:source_assembly_orange_stained_glass_pane": 28147,
     "bloodborne_dw:source_stone_stairs": 19108,
-    "bloodborne_dw:source_assembly_orange_stained_glass_pane": 28900,
     "bloodborne_dw:source_cobblestone_slab": 52150,
     "bloodborne_dw:source_deepslate_bricks": 7725,
     "bloodborne_dw:source_raw_iron_block": 3085,
@@ -134,8 +131,8 @@
     "bloodborne_dw:source_assembly_mossy_stone_brick_wall": 4204,
     "bloodborne_dw:source_birch_planks": 396,
     "bloodborne_dw:source_spruce_planks": 180,
-    "bloodborne_dw:source_prismarine_stairs": 44542,
     "bloodborne_dw:source_oak_trapdoor_open": 124,
+    "bloodborne_dw:source_prismarine_stairs": 44542,
     "bloodborne_dw:source_blue_ice": 194,
     "bloodborne_dw:source_dark_oak_trapdoor_bottom": 646,
     "bloodborne_dw:source_assembly_prismarine_wall": 19553,
@@ -161,9 +158,9 @@
     "bloodborne_dw:source_granite_slab": 437,
     "bloodborne_dw:source_crimson_planks": 470,
     "bloodborne_dw:source_cracked_deepslate_tiles": 7230,
-    "bloodborne_dw:source_cobblestone_stairs": 6572,
     "bloodborne_dw:source_polished_blackstone_brick_stairs_1": 3904,
     "bloodborne_dw:source_spruce_trapdoor_bottom": 1630,
+    "bloodborne_dw:source_cobblestone_stairs": 6572,
     "bloodborne_dw:source_dark_oak_trapdoor_open": 449,
     "bloodborne_dw:source_red_brick_top": 104,
     "bloodborne_dw:source_red_brick_bottom": 105,
@@ -232,7 +229,7 @@
     "bloodborne_dw:source_spruce_fence_gate_open": 2738,
     "bloodborne_dw:source_spruce_fence_gate": 1889,
     "bloodborne_dw:source_addon_floor_dec_0": 4737,
-    "bloodborne_dw:source_deepslate": 383,
+    "bloodborne_dw:source_deepslate": 800,
     "bloodborne_dw:source_sandstone_slab": 1053,
     "bloodborne_dw:source_stairs_tombstone_0": 68,
     "bloodborne_dw:source_hold_ladder_02": 499,
@@ -255,8 +252,8 @@
     "bloodborne_dw:source_black_terracotta": 1908,
     "bloodborne_dw:source_assembly_andesite_wall": 4970,
     "bloodborne_dw:source_assembly_polished_blackstone_wall": 2592,
-    "bloodborne_dw:source_deepslate_brick_stairs": 1477,
     "bloodborne_dw:source_crimson_bottom": 1167,
+    "bloodborne_dw:source_deepslate_brick_stairs": 1477,
     "bloodborne_dw:source_birch_trapdoor": 251,
     "bloodborne_dw:source_polished_granite_stairs": 138,
     "bloodborne_dw:source_polished_granite_stairs_1": 120,
@@ -277,6 +274,7 @@
     "bloodborne_dw:source_purple_terracotta": 229,
     "bloodborne_dw:source_cyan_glazed_terracotta": 1624,
     "bloodborne_dw:source_red_wool": 38,
+    "bloodborne_dw:source_door_fragment": 393,
     "bloodborne_dw:source_bricks_wallbrick_0": 18110,
     "bloodborne_dw:source_addon_wall_pilaster_0": 1943,
     "bloodborne_dw:source_light_gray_glazed_terracotta": 714,
@@ -296,11 +294,11 @@
     "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_line_2": 150,
     "bloodborne_dw:source_addon_wooden_box": 108,
     "bloodborne_dw:source_addon_button_10": 3876,
-    "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_inner": 221,
     "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00": 5034,
     "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_top_mossy": 487,
     "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_top_mossy2": 673,
     "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_line_1": 198,
+    "bloodborne_dw:source_stairs_exposed_cut_copper_stairs_inner": 221,
     "bloodborne_dw:source_addon_crimson_fence_gate_open": 123,
     "bloodborne_dw:prototype_wood_window": 213,
     "bloodborne_dw:source_assembly_red_sandstone_wall": 294,
@@ -354,7 +352,7 @@
     "bloodborne_dw:source_exposed_copper": 536,
     "bloodborne_dw:source_addon_bloodviles": 61,
     "bloodborne_dw:source_addon_floor_panels_0": 696,
-    "bloodborne_dw:source_addon_floor_panels_2": 2570,
+    "bloodborne_dw:source_addon_floor_panels_2": 1267,
     "bloodborne_dw:source_addon_chain_0": 229,
     "bloodborne_dw:source_addon_blue_glazed_terracotta_0": 36,
     "bloodborne_dw:source_addon_gray_glazed_terracotta_0": 25,
@@ -489,7 +487,6 @@
     "bloodborne_dw:source_gothic_window_right": 15,
     "bloodborne_dw:source_bricks_m_bricks_0": 3134,
     "bloodborne_dw:source_addon_note_0": 9,
-    "bloodborne_dw:source_oak_prison_door": 10,
     "bloodborne_dw:source_hold_wall_lantern_3": 4,
     "bloodborne_dw:source_addon_crimson_button_0": 143,
     "bloodborne_dw:source_buttons_spruce_spruce_button_powered_3": 3,
@@ -513,6 +510,7 @@
     "bloodborne_dw:source_slabs_stone_slab_manwhole": 11,
     "bloodborne_dw:source_slime_block": 8,
     "bloodborne_dw:source_assembly_mushroom_stem": 8,
+    "bloodborne_dw:source_oak_prison_door": 3,
     "bloodborne_dw:source_potomy_1": 2,
     "bloodborne_dw:source_potomy_0": 2,
     "bloodborne_dw:source_addon_barrel_7": 16,
@@ -553,992 +551,23 @@
   },
   "wholeObjects": 1132,
   "consumedSourceCells": 2519,
-  "knownVisibleGaps": 418,
-  "orphanAcaciaCells": 393,
-  "gapSamples": [
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -189
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -187
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -185
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -184
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -182
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -180
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -179
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -205,
-        77,
-        -189
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -204,
-        79,
-        -189
-      ],
-      "sourceState": "minecraft:deepslate[axis=z]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -204,
-        79,
-        -181
-      ],
-      "sourceState": "minecraft:deepslate[axis=z]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 180
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -197,
-        85,
-        -189
-      ],
-      "sourceState": "minecraft:deepslate[axis=y]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored"
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        73,
-        -173
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -176
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -175
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -173
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -172
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -171
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -169
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -164
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -163
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -162
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -161
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        75,
-        -173
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -205,
-        77,
-        -173
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -204,
-        79,
-        -165
-      ],
-      "sourceState": "minecraft:deepslate[axis=z]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 180
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -198,
-        85,
-        -173
-      ],
-      "sourceState": "minecraft:deepslate[axis=y]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored"
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -197,
-        86,
-        -173
-      ],
-      "sourceState": "minecraft:deepslate[axis=y]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored"
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -160
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -158
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -156
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -154
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -152
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -151
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -150
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -149
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -146
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -145
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -205,
-        77,
-        -149
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -204,
-        79,
-        -157
-      ],
-      "sourceState": "minecraft:deepslate[axis=z]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 180
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -204,
-        79,
-        -149
-      ],
-      "sourceState": "minecraft:deepslate[axis=z]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 180
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -197,
-        86,
-        -157
-      ],
-      "sourceState": "minecraft:deepslate[axis=y]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored"
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -198,
-        85,
-        -149
-      ],
-      "sourceState": "minecraft:deepslate[axis=y]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "y": 180
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -197,
-        85,
-        -149
-      ],
-      "sourceState": "minecraft:deepslate[axis=y]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "y": 180
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        73,
-        -141
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        73,
-        -133
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -143
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -141
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -139
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -138
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -206,
-        74,
-        -137
-      ],
-      "sourceState": "minecraft:deepslate[axis=x]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/deepslate_mirrored",
-          "x": 90,
-          "y": 90
-        }
-      ],
-      "reason": "NO_EXACT_CURRENT_SOURCE_STATE"
-    }
-  ],
-  "orphanSamples": [
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -130,
-        104,
-        -676
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_1",
-          "y": 90
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -136,
-        52,
-        -117
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_1",
-          "y": 180
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -136,
-        53,
-        -117
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_2",
-          "y": 180
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -133,
-        75,
-        132
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_1",
-          "y": 270
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -116,
-        57,
-        83
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_1",
-          "y": 270
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -121,
-        75,
-        132
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_1",
-          "y": 90
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -1,
-        162,
-        -574
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=west,half=top,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_2",
-          "y": 90
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    },
-    {
-      "dimension": "minecraft:overworld",
-      "position": [
-        -2,
-        162,
-        -573
-      ],
-      "sourceState": "minecraft:acacia_stairs[facing=east,half=top,shape=straight,waterlogged=false]",
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/aca_door_2",
-          "y": 270
-        }
-      ],
-      "reason": "ORPHAN_PROTECTED_90001_SOURCE_FRAGMENT_NO_COMPLETE_PAIR"
-    }
-  ],
+  "knownVisibleGaps": 0,
+  "orphanAcaciaCells": 0,
+  "gapSamples": [],
+  "orphanSamples": [],
   "orphanAction": "defer",
   "removalCoordinateFile": "source-removal-coordinates.jsonl.gz",
   "removalCoordinateFormat": "section linearRuns; index=(y&15)*256+(z&15)*16+(x&15), each[start,length] expands exact coordinates",
-  "removalCoordinateSha256": "30124522341da430f56d65cadfb93bd9858ac1fffb6314f71d8a32398e3ecb05",
-  "decisionDictionaryCount": 7171,
+  "removalCoordinateSha256": "2337052fc6efa3710016a7c57d6236801b70c047e494ca0eaa03e9de1ca14d4f",
+  "decisionDictionaryCount": 7600,
   "sourceObservedStates": 3852,
   "planFile": "build\\v127-full-conversion-first.sqlite",
-  "planBytes": 404336640,
+  "planBytes": 405315584,
   "sourceArchivesModified": false,
   "fullWorldConverted": false,
   "nativeValidation": "NOT_RUN_FULL_ORIGINAL_BY_USER_REQUEST",
   "initialOverlapPrivilege": "Only incoming deterministicsourceUUID in nonserializedSourceConversionScope; no saved/item permission",
   "RAMPolicy": "Exact native compact palettes; compressed per-section uint16; lazy chunk-sharded remaining owners; no global fullmapowner list",
   "runtimeExecution": "Deferred until explicit user command",
-  "elapsedSeconds": 123.97
+  "elapsedSeconds": 133.76
 }

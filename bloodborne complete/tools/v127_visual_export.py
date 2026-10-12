@@ -45,10 +45,11 @@ def inventory():
     # extra sources have fresh reserved IDs and their own descriptor.
     debug=json.loads((RES/'bloodborne_dw/debug_catalogue.json').read_text(encoding='utf-8'))
     numbers={r['registryId']:r['temporaryId'] for r in debug['entries']}
+    hidden={r['registryId'] for r in debug['entries'] if r.get('canonicalRegistryId',r['registryId'])!=r['registryId']}
     existing={r['registry'] for r in rows}
     for item in current['objects']:
         registry='bloodborne_dw:'+item['path']
-        if registry not in existing and int(numbers[registry])>93227:
+        if registry not in existing and registry not in hidden and int(numbers[registry])>93227:
             rows.append({'registry':registry,'id':numbers[registry],'origin':'NEW','kind':'architecture'})
     return sorted(rows,key=lambda r:int(r['id']))
 
@@ -57,7 +58,14 @@ def spec_of(row):return json.loads((RES/'bloodborne_dw/composite'/f"{row['regist
 def active_indices(spec):
     metadata=json.loads((RES/'bloodborne_dw/imported-assembly-v126.json').read_text(encoding='utf-8'))
     ids=[r['installationPose'] for r in metadata['recipes'] if r['primaryRegistryId']==spec['id']]
-    return ids or list(range(len(spec['variants'])))
+    if not ids:return list(range(len(spec['variants'])))
+    # Current converted-map source fragments need editable projects too. They
+    # remain states of the same installer, never separate catalogue items.
+    partial=RES/'bloodborne_dw/imported-source-parts-v127.json'
+    if partial.exists():ids.extend(r['variant'] for r in json.loads(partial.read_text(encoding='utf-8'))['parts'] if r['registryId']==spec['id'])
+    full=RES/'bloodborne_dw/imported-full-map-v127.json'
+    if full.exists():ids.extend(r['variant'] for r in json.loads(full.read_text(encoding='utf-8'))['objects'] if r['registryId']==spec['id'])
+    return sorted(set(ids))
 
 class Art(Visuals):
     def optional(self,relative):
@@ -230,7 +238,7 @@ def visuals_pass(args,rows,art):
 def export_pass(args,rows,art):
     dest=ROOT/'build/v127-blockbench-export';dest.mkdir(parents=True,exist_ok=True)
     archive=ROOT/'build/Dreamwalker-BB-V12.7-New-Blockbench-Assets.zip'
-    index=[];closure_models,closure_textures={},{};checked=0;allnames=set()
+    index=[];compatibility=[];closure_models,closure_textures={},{};checked=0;allnames=set()
     with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         for n,row in enumerate(rows):
             spec=spec_of(row);indices=active_indices(spec);models=set();entries=[]
@@ -256,6 +264,19 @@ def export_pass(args,rows,art):
             index.append({'id':row['id'],'registryId':row['registry'],'name':spec['displayName'],'kind':'sprite/plane' if flat else 'ordinary-block' if plain else 'complex-model',
                 'descriptor':relative,'editableProjects':entries,'sourceModels':sorted(models),'textureDependencies':sorted(tex),'originalV12Excluded':True})
             if n%80==0:print('Blockbench export',n,'/',len(rows),flush=True)
+        # All NEW raw models remain in the handoff; hidden aliases never count
+        # as separate working catalogue types.
+        remaining=json.loads((RES/'bloodborne_dw/remaining-catalogue.json').read_text(encoding='utf-8'))
+        debug=json.loads((RES/'bloodborne_dw/debug_catalogue.json').read_text(encoding='utf-8'))
+        numbers={r['registryId']:r['temporaryId'] for r in debug['entries']};active={r['registryId'] for r in index}
+        for row in remaining['objects']:
+            registry='bloodborne_dw:'+row['path']
+            if registry in active:continue
+            assert registry.startswith('bloodborne_dw:source_')
+            spec=spec_of({'registry':registry});models={p.get('altModel',p['model']) for v in spec['variants'] for pose in v['poses'].values() for p in pose['parts']}|{p['model'] for v in spec['variants'] for pose in v['poses'].values() for p in pose['parts']}
+            docs,tex=dependency_closure(art,models);closure_models.update(docs);closure_textures.update(tex)
+            relative='compatibility-descriptors/'+numbers[registry]+'.json';z.writestr(relative,json.dumps(spec,ensure_ascii=False,indent=2).encode('utf-8'))
+            compatibility.append({'id':numbers[registry],'registryId':registry,'name':spec['displayName'],'descriptor':relative,'sourceModels':sorted(models),'textureDependencies':sorted(tex),'cataloguePolicy':'HIDDEN_COMPATIBILITY_REGISTRATION_NOT_A_WORKING_TYPE','originalV12Excluded':True})
         utility=[]
         for number,path,label in [('93230','dw_barrier','dw-барьер'),('93231','dw_light','Невидимый свет')]:
             models=[f'bloodborne_dw:block/{path}',f'bloodborne_dw:block/{path}_alt',f'bloodborne_dw:item/{path}']
@@ -267,8 +288,8 @@ def export_pass(args,rows,art):
                 utility.append({'id':number,'registryId':'bloodborne_dw:'+path,'name':label,'profile':profile,'project':relative,'sourceModels':models,'textures':sorted(tex),'worldRenderPolicy':'Hidden in world; held-item marker appearance retained, project shows editable textured cube.'})
         for path,blob in {**closure_models,**closure_textures}.items():z.writestr('source-java/'+path,blob)
         document={'schemaVersion':1,'status':'PASS_EXACT_MODEL_UV_TEXTURE_ROUNDTRIP','objects':index,
-            'summary':{'workingNewTypes':len(index)+2,'compositeWorkingNewTypes':len(index),'newUtilityTypes':2,'projects':sum(len(r['editableProjects']) for r in index)+len(utility),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':sum(p.endswith('.png') for p in closure_textures),'animationMetadataDependencies':sum(p.endswith('.mcmeta') for p in closure_textures)},
-            'utilityObjects':utility,
+            'summary':{'workingNewTypes':len(index)+2,'compositeWorkingNewTypes':len(index),'newUtilityTypes':2,'hiddenCompatibilitySourceTypes':len(compatibility),'projects':sum(len(r['editableProjects']) for r in index)+len(utility),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':sum(p.endswith('.png') for p in closure_textures),'animationMetadataDependencies':sum(p.endswith('.mcmeta') for p in closure_textures)},
+            'utilityObjects':utility,'compatibilityObjects':compatibility,
             'formatSources':['https://blockbench.net/wiki/docs/bbmodel/','https://github.com/JannisX11/blockbench/blob/master/js/formats/bbmodel.js']}
         z.writestr('INDEX.json',json.dumps(document,ensure_ascii=False,indent=2).encode('utf-8'))
         table=io.StringIO();writer=csv.writer(table,delimiter='\t');writer.writerow(['id','registryId','russianName','kind','projectCount','firstProject'])
@@ -283,7 +304,7 @@ def export_pass(args,rows,art):
 
 Сложные составные объекты сохранены как Generic Model mesh: произвольные повороты частей/наклоны нельзя без потерь записать одним Minecraft Java cube JSON. Меш можно редактировать в Blockbench; для возврата изменений в мод используйте source-java/assets/... JSON и runtime-descriptors/ID.json с точным ID/pose. Геометрия экспортирована, авторская коллизия не реконструируется.
 
-Для простых кубов и плоских спрайтов PNG перечислены в INDEX.json -> textureDependencies и находятся в source-java/assets/.../textures. INDEX-RU.tsv связывает ID, название, вид и проект. source-java содержит полное замыкание parent/textures. Исторические служебные части входят только как зависимости; снятые с каталога дубликаты не предлагаются отдельными рабочими типами.
+Для простых кубов и плоских спрайтов PNG перечислены в INDEX.json -> textureDependencies и находятся в source-java/assets/.../textures. INDEX-RU.tsv связывает ID, название, вид и проект. source-java содержит полное замыкание parent/textures. Актуальные скрытые состояния исходных неполных конструкций имеют собственные editable-проекты. Все исторические снятые NEW-типы и служебные части перечислены в INDEX.json -> compatibilityObjects: исходные Java-модели и PNG также сохранены, а точные состояния — в compatibility-descriptors. Снятые с каталога дубликаты не предлагаются отдельными рабочими типами.
 
 ALT с авторской альтернативной моделью сохраняется с её исходными PNG. Если у всей позы нет авторского ALT, игра умножает RGB вершин на (0.60, 0.67, 0.72). Только в editable/*-alt.bbmodel этот множитель запечён в копию PNG для удобного просмотра; alpha, UV и геометрия сохранены. Исходный PNG в source-java не меняется. INDEX и проект явно указывают runtimeALTVertexMultiplierPreview и SHA256 исходного PNG.
 

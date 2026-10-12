@@ -52,7 +52,12 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     }
     private static List<Integer> workingPoses(CompositeRootBlock block) {
         var active=ImportedAssemblyV126.activePoses(block.spec.id.getPath());
-        return active.isEmpty()?java.util.stream.IntStream.range(0,block.spec.variants.size()).boxed().toList():active;
+        // New source-only saved fragments are deliberately hidden, like the
+        // previously reviewed assembly components. Every old builder pose
+        // remains in this ordinary-item test; source fragments have their own
+        // exact-state/pick contract below.
+        if(block instanceof SourceOriginalTreeBlock)return List.of(0);
+        return (active.isEmpty()?java.util.stream.IntStream.range(0,block.spec.variants.size()).boxed().toList():active).stream().filter(pose->!ImportedSourcePartsV127.part(block,pose)).toList();
     }
     private static ServerPlayerEntity player(ServerWorld world) {
         var player=new ServerPlayerEntity(world.getServer(),world,new GameProfile(UUID.randomUUID(),"TransferProbe"));
@@ -238,14 +243,14 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     public void styleRetirementsHideOnlyReviewedNewTypesAndPreserveCompatibilityRegistrations(TestContext t) {
         var stacks=UnifiedCreativeCatalogue.canonicalItems();
         t.assertTrue(ImportedStyleRetirements.primaryRegistries().size()==21,"the reviewed style retirement cohort has exactly 21 NEW main types");
-        Set<String> active=new HashSet<>();int registered=0,retiredRegistrations=0;
+        Set<String> active=new HashSet<>(),registeredIds=new HashSet<>();int registered=0,retiredRegistrations=0;
         for(var block:CompositeArchitecture.blocks()) {
             String registry=block.spec.id.toString();
             if(!block.spec.id.getPath().startsWith("source_")) {
                 t.assertTrue(!ImportedStyleRetirements.retired(registry),"original V12 type is protected "+registry);
                 continue;
             }
-            registered++;
+            registered++;t.assertTrue(registeredIds.add(registry),"each saved source registration is unique "+registry);
             t.assertTrue(Registries.BLOCK.get(block.spec.id)==block&&Registries.ITEM.get(block.spec.id)==block.asItem(),"saved NEW registration and item remain available "+registry);
             t.assertTrue(DebugCatalogue.entry(block.spec.id)!=null,"retired/alias number remains in the compatibility catalogue "+registry);
             boolean retired=ImportedStyleRetirements.retired(registry);
@@ -264,8 +269,12 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 t.assertTrue(offered.add(registry),"one Creative installing item per active NEW type");
             }
         }
-        t.assertTrue(registered==1045&&retiredRegistrations==30,"all 1045 saved NEW registrations remain, including 30 hidden main/alias registrations");
-        t.assertTrue(active.size()==544&&offered.equals(active),"Creative offers exactly 544 NEW working types after seven approved independent parts leave the old 551-type catalogue");
+        var frozen=CatalogueCohortV127.registered();var additions=CatalogueCohortV127.newSources();
+        t.assertTrue(frozen.size()==1045&&additions.equals(Set.of("bloodborne_dw:source_original_tree","bloodborne_dw:source_door_fragment")),"independent frozen1045 source cohort has exactly the two approved new source families");
+        Set<String> expectedRegistered=new HashSet<>(frozen);expectedRegistered.addAll(additions);
+        t.assertTrue(registered==1047&&registeredIds.equals(expectedRegistered)&&retiredRegistrations==30,"all1045 exact saved NEW registrations and30 style-retired registrations remain; only tree and door-fragment registrations are appended");
+        t.assertTrue(CatalogueCohortV127.working().size()==544&&CatalogueCohortV127.hiddenClones().equals(Set.of("bloodborne_dw:source_bricks_bricks_0","bloodborne_dw:source_polished_granite_slab","bloodborne_dw:source_snow_height8","bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04","bloodborne_dw:source_nether_brick_slab","bloodborne_dw:source_polished_andesite_slab","bloodborne_dw:source_red_tulip_2")),"frozen544 working V12.6 types lose only the seven explicitly reviewed practical clones");
+        t.assertTrue(active.size()==539&&active.equals(CatalogueCohortV127.expectedWorking())&&offered.equals(active),"Creative has exactly the frozen544 types minus7 reviewed clones plus2 approved source families, with one installer each");
         t.complete();
     }
 

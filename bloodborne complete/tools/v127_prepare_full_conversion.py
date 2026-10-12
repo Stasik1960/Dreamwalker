@@ -51,6 +51,7 @@ def whole_pass(r,source,out):
     return consumed,whole,attempts
 
 def prepare(path):
+    path=path.resolve()
     resume=path.exists()
     O.mkdir(parents=True,exist_ok=True);r=CurrentResolver();source=sqlite3.connect(f'file:{CACHE}?mode=ro',uri=True);out=sqlite3.connect(path)
     if not resume:out.executescript('PRAGMA journal_mode=OFF;PRAGMA synchronous=OFF;CREATE TABLE decisions(id INTEGER PRIMARY KEY,data TEXT UNIQUE);CREATE TABLE sections(dimension TEXT,cx INT,cz INT,sy INT,source_palette TEXT,source_indices BLOB,decision_indices BLOB,PRIMARY KEY(dimension,cx,cz,sy));CREATE TABLE chunks(dimension TEXT,cx INT,cz INT,member TEXT,source_nbt_sha256 TEXT,PRIMARY KEY(dimension,cx,cz));CREATE TABLE whole_objects(id INT PRIMARY KEY,dimension TEXT,x INT,y INT,z INT,data TEXT);CREATE TABLE consumed(dimension TEXT,x INT,y INT,z INT,whole_id INT,PRIMARY KEY(dimension,x,y,z));CREATE TABLE metadata(key TEXT PRIMARY KEY,data TEXT);')
@@ -89,6 +90,10 @@ def prepare(path):
                         at=np.flatnonzero(ind==pi)
                         if not len(at):continue
                         sourcecounts[state]+=len(at)
+                        if not carrier.startswith('minecraft:'):
+                            d={'action':'REMOVE','reason':'UNKNOWN_SOURCE_REGISTRY_OR_SYSTEM_SERVICE','sourceState':state,'sourceRegistryId':carrier,'sourceApplications':[]};di=decision_id(d);dest[at]=di;actions['REMOVE']+=len(at);reasons[d['reason']]+=len(at)
+                            for i in at:removals.write(token({'dimension':dim,'position':[cx*16+(int(i)&15),sy*16+(int(i)>>8),cz*16+((int(i)>>4)&15)],'sourceState':state,'reason':d['reason']})+'\n')
+                            continue
                         if carrier not in raw:
                             if carrier in {'minecraft:barrier','minecraft:structure_void','minecraft:light','minecraft:command_block','minecraft:chain_command_block','minecraft:repeating_command_block','minecraft:structure_block','minecraft:jigsaw'}:
                                 d={'action':'REMOVE','reason':'USER_REQUEST_SYSTEM_OR_INVISIBLE_CARRIER','sourceState':state};di=decision_id(d);dest[at]=di;actions['REMOVE']+=len(at);reasons[d['reason']]+=len(at)

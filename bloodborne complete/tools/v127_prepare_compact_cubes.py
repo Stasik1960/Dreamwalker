@@ -36,6 +36,8 @@ def main():
     sparse=json.loads((RES/'bloodborne_dw/imported-full-map-v127.json').read_text(encoding='utf-8-sig'));newtables={(r['registryId'],r['variant']):r['rotations'] for r in sparse['objects']}
     aliases=json.loads((RES/'bloodborne_dw/imported-type-aliases.json').read_text(encoding='utf-8-sig'))
     stairs={r['primaryRegistryId'] for r in aliases['groups'] if r['kind']=='stair'}
+    functional=json.loads((RES/'bloodborne_dw/imported-stair-types.json').read_text(encoding='utf-8-sig'))
+    stairs.update('bloodborne_dw:'+r['path'] for key in ['stairTypes','ladderTypes'] for r in functional[key])
     copied=json.loads((RES/'bloodborne_dw/imported-type-aliases-v127.json').read_text(encoding='utf-8-sig'))['mappings']
     def fitted(reg,index):
         if (reg,index) in newtables:return copy.deepcopy(newtables[reg,index])
@@ -48,6 +50,13 @@ def main():
             return [{'collision':b(r['collision']),'aim':b(r['aim'])} for r in rows]
         return None
     for reg,spec in resolver.current.items():
+        if reg in stairs:
+            # Functional stair/ladder classes always retain owned placement and
+            # neighbor/mount behavior. Undo any earlier speculative native
+            # rendering JSON while preserving its original empty model.
+            file=RES/'assets/bloodborne_dw/blockstates'/f'{reg.split(":")[1]}.json';old=json.loads(file.read_text(encoding='utf-8-sig'))
+            if 'multipart' in old and any('compact' in r.get('when',{}) for r in old['multipart']):write(file,{'variants':{'':old['multipart'][0]['apply']}})
+            continue
         if not reg.startswith('bloodborne_dw:source_') or reg in resolver.retired or reg in stairs or spec.get('openable') or spec.get('support',{}).get('required') or spec.get('importedClimbingBounds'):continue
         path=reg.split(':')[1];poses=[];models={};checks=[];shapes={};opaque=[]
         for index,v in enumerate(spec['variants']):
@@ -56,7 +65,12 @@ def main():
             quads=[q for part in parts for q in native.quads(part)]
             if not quads:continue
             points=np.asarray([q[0] for q in quads]).reshape(-1,3)
-            if np.min(points)<-1e-7 or np.max(points)>16+1e-7:continue
+            # Vanilla baked meshes may extend slightly outside the palette
+            # cell. Retain the exact vertices/UV; only contained physical/aim
+            # shapes below qualify. Overshoot is tested independently on all
+            # six faces, strictly below the user's 0.5-block threshold.
+            lo=points.min(axis=0);hi=points.max(axis=0)
+            if any(lo[i]<=-8+1e-7 or hi[i]>=24-1e-7 for i in range(3)):continue
             # Source shift must be zero, preserving source unit-cell and vanilla
             # culling/lighting coordinates. No compact state can carry mount NBT.
             if any(v.get('sourcePlacementOffset',[0,0,0])):continue
@@ -68,7 +82,7 @@ def main():
             poses.append(index);models[index]=parts;shapes[str(index)]=shape
             isopaque=cube(quads,native)
             if isopaque:opaque.append(index)
-            checks.append({'logicalPose':index,'sixFacesUnitCube':isopaque,'opaqueBackingOnAllSixFaces':isopaque,'sourceModels':[part['model'] for part in parts],'sourceQuads':len(quads),'geometryAndUvModelsUnmodified':True,'sourceAlphaOverlaysRetained':isopaque and len(quads)>6,'allVerticesAndPhysicsWithinOneCell':True,'exactFittedDefaultCollisionRetained':True})
+            checks.append({'logicalPose':index,'sixFacesUnitCube':isopaque,'opaqueBackingOnAllSixFaces':isopaque,'sourceModels':[part['model'] for part in parts],'sourceQuads':len(quads),'geometryAndUvModelsUnmodified':True,'sourceAlphaOverlaysRetained':isopaque and len(quads)>6,'visualBounds':[lo.tolist(),hi.tolist()],'allPhysicsAndAimWithinOneCell':True,'visualOnlyOvershootEachFaceBelowHalfBlock':True,'exactFittedDefaultCollisionRetained':True})
         if not poses:continue
         file=RES/'assets/bloodborne_dw/blockstates'/f'{path}.json';before=sha(file);old=json.loads(file.read_text(encoding='utf-8-sig'));empty=old['variants']['']['model'] if 'variants' in old else old['multipart'][0]['apply']['model']
         multipart=[{'when':{'compact':'false'},'apply':{'model':empty}}]
@@ -84,6 +98,6 @@ def main():
         row={'registryId':reg,'mainId':resolver.ids.get(reg,''),'poses':poses,'opaquePoses':opaque,'shapes':shapes,'layer':spec.get('layer','cutout'),'stateProperty':'compact','default':False,'sourceConditions':'Exact stationary one-cell source model/physics; even cardinal rotation, zero SourceShift/mount; original owners stay false','nativeModelsUseSamePrivateSourceParents':True}
         types.append(row);proof.append({**row,'blockstateBeforeSha256':before,'blockstateAfterSha256':sha(file),'poseChecks':checks,'oldModeRetainsEmptyModelAndOwnerRenderer':True})
     write(RES/'bloodborne_dw/imported-compact-v127.json',{'schemaVersion':1,'unitsPerBlock':16,'types':types,'policy':'Opt-in full-map source palette only. Exact stationary contained meshes inclsprite/cutout retainphysical/aim tables; opaqueunitcubes use nativeculling. Preserved old/default owners retain compact=false and their UUID/payload/collision consumers. No originalV12registry accepted.'})
-    dump(OUT/'compact-cube-proof.json',{'status':'PASS_EXACT_CONTAINED_SOURCE_NATIVE_MODELS','types':proof,'typeCount':len(types),'poseCount':sum(len(t['poses']) for t in types),'sourceMapConverted':False,'sourceHashes':{'map':sha(MAP),'pack':sha(PACK)},'nativeValidation':'NOT_RUN_BY_OFFLINE_SOURCE_PROOF'})
+    write(OUT/'compact-cube-proof.json',{'status':'PASS_EXACT_CONTAINED_SOURCE_NATIVE_MODELS','types':proof,'typeCount':len(types),'poseCount':sum(len(t['poses']) for t in types),'sourceMapConverted':False,'sourceHashes':{'map':sha(MAP),'pack':sha(PACK)},'nativeValidation':'NOT_RUN_BY_OFFLINE_SOURCE_PROOF'})
     print(json.dumps({'types':len(types),'poses':sum(len(t['poses']) for t in types),'ids':[t['mainId'] for t in types]}))
 if __name__=='__main__':main()

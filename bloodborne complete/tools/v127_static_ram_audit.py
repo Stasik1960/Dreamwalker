@@ -17,9 +17,13 @@ def main():
     objects=[];parts=[];bounds=[];rotations=[];same=0;poses=0
     for row in catalogue['objects']:
         p=row['path'];spec=json.loads((RES/'bloodborne_dw/composite'/f'{p}.json').read_text(encoding='utf-8'))
-        factor=1;kind='CompositeRootBlock'
+        factor=1;kind='ImportedRootBlock' if p.startswith('source_') else 'CompositeRootBlock'
         if p=='source_original_tree':kind='SourceOriginalTreeBlock'
-        elif p in compacted:kind='ImportedCompactBlock';factor=2
+        elif p in compacted:
+            kind='ImportedCompactBlock';factor=2
+            # Banked compact subtypes retain the original complete public pose
+            # range, with COMPACT as an extra bool. Unbanked retain no art_bank.
+            if len(spec['variants'])>16:factor*=30 if p=='source_assembly_brick_wall' else 10 if p=='source_assembly_deepslate_brick_wall' else 8
         elif p in stairs:kind='ImportedStairBlock';factor=4 if p=='source_stairs_polished_deepslate_stairs_bottom' else 2
         elif p in ladders:kind='ImportedLadderBlock';factor=2
         elif p in banked:kind='ImportedArtworkBlock';factor=30 if p=='source_assembly_brick_wall' else 10 if p=='source_assembly_deepslate_brick_wall' else 8

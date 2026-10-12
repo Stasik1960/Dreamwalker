@@ -124,7 +124,7 @@ def evidence_path(value: str) -> Path:
     return path
 
 
-def validate(acceptance: Path, runtime_plan: Path) -> tuple[dict, dict]:
+def validate(acceptance: Path, runtime_plan: Path, source_plan: Path | None = None) -> tuple[dict, dict]:
     assert acceptance.is_file(), "Final acceptance.json has not been produced yet"
     value = read(acceptance)
     assert value["status"] == "PASS", "A partial or failed revision cannot be packaged"
@@ -154,7 +154,9 @@ def validate(acceptance: Path, runtime_plan: Path) -> tuple[dict, dict]:
     for name, digest in plan["runtimeFiles"].items():
         path = runtime_plan / name
         assert path.parent.resolve() == runtime_plan.resolve() and sha(path) == digest, name
-    assert {"sections.jsonl.gz", "whole-objects.jsonl.gz"}.issubset(plan["runtimeFiles"])
+    assert {"sections.jsonl.gz", "owners.jsonl.gz", "whole-objects.jsonl.gz", "entities.jsonl.gz"}.issubset(plan["runtimeFiles"])
+    if source_plan is not None:
+        assert ordinary(source_plan) and sha(source_plan) == plan["sourcePlanSha256"], "Source SQLite plan changed"
     for kind, name in INPUT_NAMES.items():
         path = REPO / "Bloodborne-Blocks/reference-inputs/bbmc-v15-v16" / name
         assert sha(path) == SOURCE_HASHES[kind], f"Original {kind} archive changed"
@@ -203,10 +205,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--acceptance", type=Path, default=DOC / "acceptance.json")
     parser.add_argument("--runtime-plan", type=Path, default=RUNTIME_PLAN)
+    parser.add_argument("--source-plan", type=Path, default=ROOT / "build/v127-full-conversion-first.sqlite")
     parser.add_argument("--destination", type=Path, default=DEST)
     parser.add_argument("--validate-only", action="store_true")
     args = parser.parse_args()
-    accepted, plan = validate(args.acceptance, args.runtime_plan)
+    accepted, plan = validate(args.acceptance, args.runtime_plan, args.source_plan)
     content_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip()
     if args.validate_only:
         print(json.dumps({"status": "PASS_PACKAGE_PREFLIGHT", "productionJarSha256": accepted["productionJarSha256"],
@@ -233,7 +236,8 @@ def main():
         evidence.add(evidence_path(item["path"]))
     audits["verification"] = archive(stage / "verification.zip", [(path, path.relative_to(ROOT).as_posix()) for path in evidence])
     audits["conversionPlan"] = archive(stage / "Dreamwalker-BB-V12.7-Original-Conversion-Plan.zip",
-                                      [(path, "v127-runtime-conversion/" + path.relative_to(args.runtime_plan).as_posix()) for path in files(args.runtime_plan)])
+                                      [(path, "v127-runtime-conversion/" + path.relative_to(args.runtime_plan).as_posix()) for path in files(args.runtime_plan)]
+                                      + [(args.source_plan, args.source_plan.name)])
     for name in ("HANDOFF-RU.md", "INSTALL-RU.txt"):
         shutil.copyfile(DOC / name, stage / name)
     (stage / "REPORT-RU.txt").write_text(report(accepted), encoding="utf-8-sig")

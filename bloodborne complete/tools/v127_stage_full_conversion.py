@@ -7,7 +7,7 @@ The immutable original ZIP is never opened for writing. Nothing is executed
 from source NBT, commands, signs, item text or archive files.
 """
 from __future__ import annotations
-import argparse,base64,collections,copy,gzip,json,os,sqlite3,time,uuid,zipfile,zlib
+import argparse,base64,collections,copy,gzip,json,os,sqlite3,time,uuid,zipfile,zlib,stat,math
 from pathlib import Path,PurePosixPath
 import numpy as np
 from v125_map_index import ROOT,MAP,PACK,token,sha
@@ -39,7 +39,7 @@ def entities_export(dest):
                 # Existing port readers interpret source state/animation fields.
                 raw=encode_nbt(NbtFile('',typed));uuidtag=data.get('UUID');uid=None
                 if uuidtag and uuidtag.type==11:uid=str(uuid.UUID(bytes=b''.join((int(v)&0xffffffff).to_bytes(4,'big') for v in uuidtag.value)))
-                rows.append({'dimension':row['dimension'],'position':row['sourcePosition'],'instanceUuid':uid,'registryId':target,'sourceId':id,'nbtBase64':base64.b64encode(raw).decode(),'sourceTypedNbtSha256':__import__('hashlib').sha256(encode_nbt(NbtFile('',original))).hexdigest()});decisions.append({k:v for k,v in row.items() if k!='typedNbt'}|{'decision':'DEFER_EXACT_KNOWN_RP_ENTITY_AFTER_OWNER_INSTALL','targetRegistryId':target,'sourceUuidRetained':True})
+                rows.append({'dimension':row['dimension'],'position':[math.floor(v) for v in row['sourcePosition']],'exactSourcePosition':row['sourcePosition'],'instanceUuid':uid,'registryId':target,'sourceId':id,'nbtBase64':base64.b64encode(raw).decode(),'sourceTypedNbtSha256':__import__('hashlib').sha256(encode_nbt(NbtFile('',original))).hexdigest()});decisions.append({k:v for k,v in row.items() if k!='typedNbt'}|{'decision':'DEFER_EXACT_KNOWN_RP_ENTITY_AFTER_OWNER_INSTALL','targetRegistryId':target,'sourceUuidRetained':True})
             else:decisions.append({k:v for k,v in row.items() if k!='typedNbt'}|{'decision':'REMOVE_UNKNOWN_OR_SYSTEM_ENTITY'})
     rows.sort(key=lambda r:(r['dimension'],int(r['position'][0])//16,int(r['position'][2])//16,r['instanceUuid'] or ''))
     dest.mkdir(parents=True,exist_ok=True)
@@ -48,21 +48,48 @@ def entities_export(dest):
     dump(O/'source-entity-conversion-decisions.json',{'status':'PASS_EXACT_TYPED_SOURCE_ENTITY_TRANSLATION_PLAN','counts':dict(collections.Counter(r['decision'] for r in decisions)),'rows':decisions,'originalWorldConverted':False,'sourceProgramsExecuted':False,'nativeValidation':'NOT_RUN_FULL_SOURCE_BY_USER_REQUEST'})
     return rows
 def runtime_bundle(plan,runtime):
-    export_runtime(plan,runtime);rows=entities_export(runtime);p=runtime/'manifest.json';m=json.loads(p.read_text(encoding='utf-8-sig'));m['runtimeFiles']={f.name:sha(f) for f in runtime.glob('*.jsonl.gz')};m['deferredEntityCount']=len(rows);m['offlinePhaseRequiredBeforeServer']=True;dump(p,m);return m
+    # Never leave partially rewritten streams looking like an accepted plan.
+    ordinary_ancestors(runtime);runtime=runtime.absolute();assert not runtime.exists(),'Runtime export must use a fresh absent directory'
+    temp=runtime.with_name(runtime.name+'.export-'+uuid.uuid4().hex);export_runtime(plan,temp);rows=entities_export(temp);p=temp/'manifest.json';m=json.loads(p.read_text(encoding='utf-8-sig'));m['runtimeFiles']={f.name:sha(f) for f in temp.glob('*.jsonl.gz')};m['deferredEntityCount']=len(rows);m['offlinePhaseRequiredBeforeServer']=True;dump(p,m);os.replace(temp,runtime);return m
+def ordinary_ancestors(path):
+    """Reject links/reparse points before resolve can hide the caller's path."""
+    path=path.absolute()
+    for part in [path,*path.parents]:
+        try:info=part.lstat()
+        except FileNotFoundError:continue
+        if stat.S_ISLNK(info.st_mode) or getattr(info,'st_file_attributes',0)&getattr(stat,'FILE_ATTRIBUTE_REPARSE_POINT',0x400):raise ValueError('Refusing reparse/symlink path: '+str(part))
+def fresh_target(path):
+    ordinary_ancestors(path);path=path.absolute()
+    assert path.drive.upper()!='E:','Paused E migration/copies cannot be used'
+    assert not path.exists(),'Derived output must be fresh and absent; never overwrite any source/save'
+    assert path!=ROOT and not ROOT.is_relative_to(path),'Cannot replace workspace or an ancestor'
+    assert not path.is_relative_to(MAP.parent) and not MAP.parent.is_relative_to(path),'Cannot use immutable source directory or its ancestor'
+    return path.resolve()
+def source_changed(con,decisions,dim,x,y,z):
+    row=con.execute('SELECT decision_indices FROM sections WHERE dimension=? AND cx=? AND cz=? AND sy=?',(dim,x>>4,z>>4,y>>4)).fetchone()
+    if row is None:return False
+    values=np.frombuffer(zlib.decompress(row[0]),dtype='<u2');action=decisions[int(values[((y&15)<<8)|((z&15)<<4)|(x&15)])]['action']
+    return action!='KEEP'
 def stage(plan,runtime,target,execute):
-    plan=plan.resolve();runtime=runtime.resolve();target=target.resolve();con=sqlite3.connect(f'file:{plan}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN',summary['status'];assert summary['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)},'Original source hashes differ'
+    ordinary_ancestors(plan);ordinary_ancestors(runtime);target=fresh_target(target);plan=plan.resolve();runtime=runtime.resolve();con=sqlite3.connect(f'file:{plan}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN',summary['status'];assert summary['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)},'Original source hashes differ'
     if not execute:print(token({'status':'PASS_READONLY_READY_TO_STAGE','sourceHashes':summary['sourceHashes'],'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction'}));return
-    assert not target.exists(),'Derived output must be fresh and absent; never overwrite any source/save'
-    assert target!=ROOT and ROOT not in target.parents[:0] # named explicit fresh target only
-    assert target!=MAP.parent and not MAP.is_relative_to(target),'Cannot write into or over source archive directory'
-    target.parent.mkdir(parents=True,exist_ok=True);target.mkdir();operation=str(uuid.uuid4());bundle=runtime_bundle(plan,runtime)
-    decisions={i:json.loads(s) for i,s in con.execute('SELECT id,data FROM decisions')};changed=chunks=0;start=time.monotonic();be_removed=[];all_members=[]
+    if runtime.exists():
+        bundle=json.loads((runtime/'manifest.json').read_text(encoding='utf-8-sig'));assert bundle['status']=='PASS_COMPLETE_SOURCE_PLAN' and bundle['sourcePlanSha256']==sha(plan),'Stale runtime bundle'
+        for name,digest in bundle['runtimeFiles'].items():assert PurePosixPath(name).name==name and sha(runtime/name)==digest,'Runtime stream hash mismatch'
+    else:bundle=runtime_bundle(plan,runtime)
+    target.parent.mkdir(parents=True,exist_ok=True);target.mkdir();operation=str(uuid.uuid4())
+    decisions={i:json.loads(s) for i,s in con.execute('SELECT id,data FROM decisions')};changed=chunks=0;start=time.monotonic();be_removed=[];all_members=[];ticks_removed=[]
     with zipfile.ZipFile(MAP,'r') as archive:
+        levels=[PurePosixPath(n) for n in archive.namelist() if PurePosixPath(n).name=='level.dat'];assert len(levels)==1,'Ambiguous original world root';prefix=levels[0].parent
         for member in archive.namelist():
             pp=PurePosixPath(member)
             if pp.is_absolute() or '..' in pp.parts or any(':' in p for p in pp.parts):raise ValueError('Unsafe archive member '+member)
             if member.endswith('/'):continue
-            destination=target.joinpath(*pp.parts);assert destination.is_relative_to(target);destination.parent.mkdir(parents=True,exist_ok=True);raw=archive.read(member);dim=dimension_for(member,'')
+            try:relative=pp.relative_to(prefix)
+            except ValueError:all_members.append({'member':member,'decision':'OMIT_ARCHIVE_WRAPPER_OUTSIDE_WORLD_ROOT'});continue
+            if any(p.lower() in {'datapacks','resourcepacks'} for p in relative.parts) or pp.name.lower() in {'resources.zip','resource.zip'}:
+                all_members.append({'member':member,'decision':'REMOVE_SOURCE_EXECUTABLE_DATAPACK_OR_AUTO_RESOURCE_PACK','sha256':__import__('hashlib').sha256(archive.read(member)).hexdigest()});continue
+            destination=target.joinpath(*relative.parts);assert destination.is_relative_to(target);destination.parent.mkdir(parents=True,exist_ok=True);raw=archive.read(member);dim=dimension_for(member,'')
             if pp.parent.name=='entities' and pp.suffix=='.mca':
                 # All recognized entities are restored from typed deferred rows.
                 if len(raw)>=8192:
@@ -108,13 +135,23 @@ def stage(plan,runtime,target,execute):
                             root[key]=Tag(TAG_LIST,[],TAG_COMPOUND);chunk_changed=True
                     for key in ('Entities','entities'):
                         if key in root:root[key]=Tag(TAG_LIST,[],TAG_COMPOUND);chunk_changed=True
+                    for key in ('block_ticks','fluid_ticks','TileTicks','LiquidTicks'):
+                        if key not in root:continue
+                        kept=[]
+                        for tick in root[key].value:
+                            fields=compound(tick);position=[int(fields[a].value) for a in ('x','y','z')]
+                            if source_changed(con,decisions,dim,*position):ticks_removed.append({'dimension':dim,'position':position,'kind':key,'reason':'OBSOLETE_SOURCE_CARRIER_TICK_REMOVED','typedSource':fields.get('i',fields.get('id',Tag(TAG_STRING,''))).value});chunk_changed=True
+                            else:kept.append(tick)
+                        root[key]=Tag(TAG_LIST,kept,TAG_COMPOUND)
                     if chunk_changed:
                         invalidate_chunk_lighting(root);region.set_chunk(stored.x,stored.z,nbt,timestamp=stored.timestamp)
                     chunks+=1
                 destination.write_bytes(region.to_bytes());print(token({'member':member,'chunks':chunks,'changedSections':changed}),flush=True)
+            elif pp.name in {'level.dat','level.dat_old'}:
+                nbt=decode_nbt(gzip.decompress(raw));fields=compound(nbt.root);data=compound(fields['Data']);previous=copy.deepcopy(data.get('DataPacks'));data['DataPacks']=Tag(TAG_COMPOUND,{'Enabled':Tag(TAG_LIST,[Tag(TAG_STRING,'vanilla'),Tag(TAG_STRING,'fabric')],TAG_STRING),'Disabled':Tag(TAG_LIST,[],TAG_STRING)});destination.write_bytes(gzip.compress(encode_nbt(nbt),mtime=0));all_members.append({'member':member,'decision':'DISABLE_SOURCE_DATAPACKS_BEFORE_DERIVED_LOAD','sourcePackNames':[] if previous is None else [t.value for t in compound(previous).get('Enabled',Tag(TAG_LIST,[],TAG_STRING)).value]})
             elif pp.name in {'session.lock','uid.dat'}:all_members.append({'member':member,'decision':'REMOVE_SOURCE_SESSION_ID'})
             else:destination.write_bytes(raw)
-    marker={'schemaVersion':1,'status':'PASS_DERIVED_COPY_PREPARED','operationId':operation,'sourceHashes':summary['sourceHashes'],'targetRealPath':str(target),'sourcePlanSha256':sha(plan),'runtimeManifestSha256':sha(runtime/'manifest.json'),'runtimeDirectory':str(runtime),'changedSections':changed,'sourceChunks':chunks,'sourceBlockEntitiesRemoved':be_removed,'sourceMemberActions':all_members,'fullOwnerAuthoringComplete':False,'nextPhase':'Disabled FullMapConversionAuthor runs only against this explicitly staged copy','originalArchivesModified':False,'elapsedSeconds':round(time.monotonic()-start,2)};dump(target/'dw-derived-copy.json',marker);print(token(marker));con.close()
+    marker={'schemaVersion':1,'status':'PASS_DERIVED_COPY_PREPARED','operationId':operation,'sourceHashes':summary['sourceHashes'],'targetRealPath':str(target),'sourcePlanSha256':sha(plan),'runtimeManifestSha256':sha(runtime/'manifest.json'),'runtimeDirectory':str(runtime),'changedSections':changed,'sourceChunks':chunks,'sourceBlockEntitiesRemoved':be_removed,'sourceMemberActions':all_members,'obsoleteCarrierTicksRemoved':ticks_removed,'fullOwnerAuthoringComplete':False,'nextPhase':'Disabled FullMapConversionAuthor runs only against this explicitly staged copy','originalArchivesModified':False,'elapsedSeconds':round(time.monotonic()-start,2)};dump(target/'dw-derived-copy.json',marker);print(token(marker));con.close()
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--plan',type=Path,default=ROOT/'build/v127-full-conversion-first.sqlite');p.add_argument('--runtime',type=Path,default=ROOT/'build/v127-runtime-conversion');p.add_argument('--output',type=Path,default=ROOT/'build/v127-derived-original');p.add_argument('--execute',action='store_true');p.add_argument('--export-runtime-only',action='store_true');a=p.parse_args()
     if a.export_runtime_only:runtime_bundle(a.plan.resolve(),a.runtime.resolve())

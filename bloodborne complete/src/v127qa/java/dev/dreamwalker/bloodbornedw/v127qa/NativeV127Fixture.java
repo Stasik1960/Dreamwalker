@@ -26,7 +26,13 @@ public final class NativeV127Fixture implements ModInitializer {
                 for(int x=-4;x<=50;x++)for(int z=-8;z<=8;z++)world.setBlockState(new BlockPos(x,63,z),Blocks.SMOOTH_STONE.getDefaultState());
                 world.setBlockState(new BlockPos(32,64,0),Blocks.BARRIER.getDefaultState());world.setTimeOfDay(6000);world.getGameRules().get(net.minecraft.world.GameRules.DO_DAYLIGHT_CYCLE).set(false,server);
                 String compactId="";int compactVariant=-1;
-                outer:for(var block:CompositeArchitecture.blocks())if(block instanceof ImportedCompactBlock)for(int pose=0;pose<block.spec.variants.size()&&pose<16;pose++){var state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose).with(ImportedCompactBlock.COMPACT,true);if(ImportedCompactBlock.compact(state)){world.setBlockState(new BlockPos(44,64,0),state);compactId=block.spec.id.toString();compactVariant=pose;break outer;}}
+                // Prefer a banked source pose so the native client proof also
+                // covers art_bank selectors and their generated ALT wrapper.
+                outer:for(int first:new int[]{16,0})for(var block:CompositeArchitecture.blocks())if(block instanceof ImportedCompactBlock)for(int pose=first;pose<block.spec.variants.size();pose++){
+                    var state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose%16).with(ImportedCompactBlock.COMPACT,true);var bank=ImportedArtworkBlock.bankProperty(state);if(pose>=16&&bank==null)continue;if(bank!=null)state=state.with(bank,pose/16);
+                    if(ImportedCompactBlock.compact(state)){world.setBlockState(new BlockPos(44,64,0),state);compactId=block.spec.id.toString();compactVariant=pose;break outer;}
+                }
+                if(compactId.isEmpty()||world.getBlockEntity(new BlockPos(44,64,0))!=null)throw new IllegalStateException("Native compact palette proof requires one actual registered compact state without a block entity");
                 var report=new JsonObject();report.addProperty("status","PASS");report.addProperty("purpose","ISOLATED_V127_FUNCTION_TEST_NOT_GALLERY");report.addProperty("productionJarSha256",input.get("productionJarSha256").getAsString());report.addProperty("compactRegistryId",compactId);report.addProperty("compactVariant",compactVariant);Files.writeString(root.resolve("v127-qa-fixture.json"),new GsonBuilder().setPrettyPrinting().create().toJson(report));
             }catch(Exception failure){throw new IllegalStateException("V127 isolated fixture preparation failed",failure);}
         });

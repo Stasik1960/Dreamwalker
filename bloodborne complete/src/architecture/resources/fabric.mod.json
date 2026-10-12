@@ -8,7 +8,7 @@
  "license": "All-Rights-Reserved",
  "environment": "*",
  "provides": ["bloodborne_rp"],
- "mixins": ["bloodborne_dw.composite.mixins.json"],
+ "mixins": ["bloodborne_dw.composite.mixins.json", "bloodborne_dw.worldedit.mixins.json"],
  "entrypoints": {
   "preLaunch": ["dev.dreamwalker.bloodbornedw.DreamwalkerBb"],
   "main": ["dev.dreamwalker.bloodbornedw.DreamwalkerBb", "dev.dreamwalker.bloodbornerp.BloodborneRp"],

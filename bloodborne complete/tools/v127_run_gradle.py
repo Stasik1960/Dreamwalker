@@ -30,8 +30,11 @@ if a.stage=='gametest':
  report=ROOT/'build/test-results/gametest'/('TEST-'+a.name+'.xml');data['nativeXmlExists']=report.is_file();data['heapGiB']=a.heap_gb;data['activeProcessors']=a.processors;data['worldEditOptionalRuntime']=a.worldedit
  fatal=any(token in (out/'gradle.log').read_text(errors='replace') for token in ('OutOfMemoryError','BUILD FAILED','GameTestException'));data['fatalNativeLog']=fatal
  if report.is_file():
-  tree=ET.parse(report).getroot();suites=[tree] if tree.tag=='testsuite' else list(tree.iter('testsuite'))
-  data['tests']=sum(int(s.get('tests','0')) for s in suites);data['failures']=sum(int(s.get('failures','0'))+int(s.get('errors','0')) for s in suites)
+  tree=ET.parse(report).getroot();cases=list(tree.iter('testcase'))
+  # Fabric nests suites and omits their count attributes. Inspect actual cases
+  # instead of interpreting an absent attribute as a successful empty suite.
+  data['tests']=len(cases);data['failures']=sum(bool(list(c.iter('failure')) or list(c.iter('error'))) for c in cases)
+  data['skipped']=sum(bool(list(c.iter('skipped'))) for c in cases)
   data['status']='PASS' if r.returncode==0 and data['tests']>=100 and data['failures']==0 and not fatal else 'FAIL'
  else:data['status']='FAIL';data['reason']='No native GameTest completion XML; Gradle success is insufficient'
 (out/'result.json').write_text(json.dumps(data,indent=2)+'\n');print(json.dumps(data));raise SystemExit(0 if data['status']=='PASS' else 1)

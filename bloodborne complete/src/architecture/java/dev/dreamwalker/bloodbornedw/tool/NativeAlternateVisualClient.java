@@ -41,7 +41,7 @@ public final class NativeAlternateVisualClient {
         Map<String,String> properties=new HashMap<>();for(String pair:id.getVariant().split(",")){String[] parts=pair.split("=",2);if(parts.length==2)properties.put(parts[0],parts[1]);}
         if(!"true".equals(properties.get("compact")))return false;
         var registered=Registries.BLOCK.get(new net.minecraft.util.Identifier(id.getNamespace(),id.getPath()));if(!(registered instanceof dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock block))return false;
-        int variant=Integer.parseInt(properties.getOrDefault("variant","0"));if(variant<0||variant>=block.spec.variants.size())return false;
+        int variant=Integer.parseInt(properties.getOrDefault("variant","0"))+16*Integer.parseInt(properties.getOrDefault("art_bank","0"));if(variant<0||variant>=block.spec.variants.size())return false;
         var pose="true".equals(properties.get("open"))?block.spec.variants.get(variant).open():block.spec.variants.get(variant).closed();
         return !pose.parts().isEmpty()&&pose.parts().stream().allMatch(part->part.model().equals(part.altModel()));
     }

@@ -1,6 +1,122 @@
 {
-  "method": "Current native source RGBA/UV transformed geometry; four yaw views of every active pose of newly reserved composite types. Software projection, native client QA tracked separately.",
+  "method": "Current native source RGBA/UV transformed geometry; four yaw views of every active pose of newly reserved composite types and later source-part compatibility states. Source_deepslate includes its mirrored source suffixes. Software projection, native client QA tracked separately.",
   "objects": [
+    {
+      "id": "90490",
+      "registryId": "bloodborne_dw:source_deepslate",
+      "name": "Тёмный деревянный куб",
+      "poses": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "image": "projections\\final-extra-90490.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Состояния зеркальной ориентации тёмной деревянной обшивки сохраняют порядок текстур и внешний вид карты; это состояния одного материала, не отдельные рабочие типы."
+    },
+    {
+      "id": "90923",
+      "registryId": "bloodborne_dw:source_smooth_quartz_top",
+      "name": "Высокая арочная дверь",
+      "poses": [
+        0,
+        3
+      ],
+      "image": "projections\\final-extra-90923.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Это отдельные исходные части существующего функционального типа, сохранённые как его состояния для конвертации неполных конструкций; новый устанавливаемый тип не создаётся."
+    },
+    {
+      "id": "93152",
+      "registryId": "bloodborne_dw:source_birch_grille_door",
+      "name": "Двойная дверь с витражом",
+      "poses": [
+        0,
+        1,
+        2
+      ],
+      "image": "projections\\final-extra-93152.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Это отдельные исходные части существующего функционального типа, сохранённые как его состояния для конвертации неполных конструкций; новый устанавливаемый тип не создаётся."
+    },
+    {
+      "id": "93153",
+      "registryId": "bloodborne_dw:source_dark_arch_door",
+      "name": "Двойная деревянная дверь",
+      "poses": [
+        0,
+        1,
+        2
+      ],
+      "image": "projections\\final-extra-93153.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Это отдельные исходные части существующего функционального типа, сохранённые как его состояния для конвертации неполных конструкций; новый устанавливаемый тип не создаётся."
+    },
+    {
+      "id": "93154",
+      "registryId": "bloodborne_dw:source_gothic_window_right",
+      "name": "Малое готическое окно",
+      "poses": [
+        0,
+        2,
+        3,
+        4,
+        5
+      ],
+      "image": "projections\\final-extra-93154.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Это отдельные исходные части существующего функционального типа, сохранённые как его состояния для конвертации неполных конструкций; новый устанавливаемый тип не создаётся."
+    },
+    {
+      "id": "93156",
+      "registryId": "bloodborne_dw:source_large_grille_gate",
+      "name": "Высокая железная ограда",
+      "poses": [
+        0,
+        1,
+        2
+      ],
+      "image": "projections\\final-extra-93156.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Это отдельные исходные части существующего функционального типа, сохранённые как его состояния для конвертации неполных конструкций; новый устанавливаемый тип не создаётся."
+    },
+    {
+      "id": "93159",
+      "registryId": "bloodborne_dw:source_warped_gargoyle",
+      "name": "Узорная арочная рама",
+      "poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "image": "projections\\final-extra-93159.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Каменная рама с арочным узором и исходными верхними/нижними частями; не является открываемой дверью."
+    },
+    {
+      "id": "93160",
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "name": "Узкая деревянная дверь",
+      "poses": [
+        0,
+        1,
+        2
+      ],
+      "image": "projections\\final-extra-93160.png",
+      "scope": "LATER_SOURCE_COMPATIBILITY_STATE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Это отдельные исходные части существующего функционального типа, сохранённые как его состояния для конвертации неполных конструкций; новый устанавливаемый тип не создаётся."
+    },
     {
       "id": "93228",
       "registryId": "bloodborne_dw:source_assembly_white_stained_glass_pane",
@@ -15,8 +131,10 @@
         6
       ],
       "image": "projections\\final-extra-93228.png",
+      "scope": "HIDDEN_COMPATIBILITY_REGISTRATION",
       "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
-      "reasonForSeparateType": "Горизонтальные поперечины короткой решётки; выглядит как серый металл, а не белое стекло."
+      "reasonForSeparateType": "Горизонтальные поперечины короткой решётки; выглядит как серый металл, а не белое стекло.",
+      "canonicalRegistryId": "bloodborne_dw:source_assembly_orange_stained_glass_pane"
     },
     {
       "id": "93229",
@@ -32,8 +150,10 @@
         6
       ],
       "image": "projections\\final-extra-93229.png",
+      "scope": "HIDDEN_COMPATIBILITY_REGISTRATION",
       "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
-      "reasonForSeparateType": "Длинные вертикальные прутья и узор сверху/снизу; отличается от коротких горизонтальных поперечин93228."
+      "reasonForSeparateType": "Длинные вертикальные прутья и узор сверху/снизу; отличается от коротких горизонтальных поперечин93228.",
+      "canonicalRegistryId": "bloodborne_dw:source_assembly_cyan_stained_glass_pane"
     },
     {
       "id": "93232",
@@ -55,15 +175,29 @@
         12
       ],
       "image": "projections\\final-extra-93232.png",
+      "scope": "NEW_RESERVED_TYPE",
       "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
-      "reasonForSeparateType": "Точная исходная конструкция сухого дерева; состояния сохраняют исходные части ствола и ветвей для исходной карты. Оригинальные деревья V12 защищены от изменений."
+      "reasonForSeparateType": "Точная конструкция сухого дерева со сложными ветвями и исходными слоями ствола; оригинальные деревья V12 сохраняются."
+    },
+    {
+      "id": "93233",
+      "registryId": "bloodborne_dw:source_door_fragment",
+      "name": "Часть портала",
+      "poses": [
+        0,
+        1
+      ],
+      "image": "projections\\final-extra-93233.png",
+      "scope": "NEW_RESERVED_TYPE",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Отдельные исходные фрагменты деревянного портала: верхняя перекладина и нижний сегмент. Они нужны для одиночных частей исходной карты; существующая цельная дверь90001 и удалённый номер90479 сохраняются без изменений."
     }
   ],
   "nameChanges": [
     {
       "id": "93228",
       "registryId": "bloodborne_dw:source_assembly_white_stained_glass_pane",
-      "beforeName": "Стеклянная панель · белая",
+      "beforeName": "Решётка с поперечинами",
       "afterName": "Решётка с поперечинами",
       "reason": "Горизонтальные поперечины короткой решётки; выглядит как серый металл, а не белое стекло.",
       "descriptorApartFromLabel": "EXACT"
@@ -71,11 +205,29 @@
     {
       "id": "93229",
       "registryId": "bloodborne_dw:source_assembly_yellow_stained_glass_pane",
-      "beforeName": "Стеклянная панель · жёлтая",
+      "beforeName": "Высокая узорная решётка",
       "afterName": "Высокая узорная решётка",
       "reason": "Длинные вертикальные прутья и узор сверху/снизу; отличается от коротких горизонтальных поперечин93228.",
       "descriptorApartFromLabel": "EXACT"
+    },
+    {
+      "id": "93159",
+      "registryId": "bloodborne_dw:source_warped_gargoyle",
+      "beforeName": "Узорная арочная рама",
+      "afterName": "Узорная арочная рама",
+      "reason": "Каменная рама с арочным узором и исходными верхними/нижними частями; не является открываемой дверью.",
+      "descriptorApartFromLabel": "EXACT"
     }
   ],
-  "nativeClientReview": "SEE_ROOT_REPORT"
+  "nativeClientReview": "SEE_ROOT_REPORT",
+  "sourceVisualDefects": [
+    {
+      "registryId": "bloodborne_dw:source_oak_prison_door",
+      "id": "93160",
+      "variant": 1,
+      "model": "minecraft:block/addon/oak_door_2",
+      "observation": "Исходная верхняя часть не имеет видимых пикселей во всех четырёх textured-проекциях. Независимый аудит подтвердил alpha0 по всем6 исходным UV-граням. Исходник сохранён в архиве; отдельные пустые клетки удаляются при конвертации с точным журналом координат.",
+      "conversionEvidence": "docs/v12.7/conversion/source-zero-uv-models.json"
+    }
+  ]
 }

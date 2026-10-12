@@ -45,7 +45,9 @@
   GUI Blockbench не считается проверенным без соответствующего результата.
 - `Dreamwalker-BB-V12.7-Original-Conversion-Plan.zip` — сжатые потоки нативных
   палитр, отдельных владельцев, целых конструкций и типизированных сущностей.
-  Распаковать `v127-runtime-conversion/` в `bloodborne complete/build/`.
+  Также содержит исходную SQLite плана с SHA манифеста, необходимую офлайн-записи.
+  Распаковать `v127-runtime-conversion/` и `v127-full-conversion-first.sqlite`
+  в `bloodborne complete/build/`; повторный полный анализ не требуется.
 - `verification.zip` — финальные отчёты, XML GameTests и принятые доказательства.
   `SHA256SUMS.txt` и `ARCHIVE-CONTENTS.json` проверяют файлы и содержимое архивов.
 - `ORIGINAL-INPUTS.json` — неизменяемые ссылки и SHA-256 исходных ZIP. Эти ZIP

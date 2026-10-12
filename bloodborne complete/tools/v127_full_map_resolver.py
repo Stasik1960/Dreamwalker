@@ -24,6 +24,8 @@ class CurrentResolver(Resolver):
         # source poses. Prefix variants remain exact frozen source candidates.
         self.retired={r['registryId'] for r in json.loads((RES/'bloodborne_dw/imported-style-retirements.json').read_text(encoding='utf-8-sig'))['retirements']}
         self.transparent={r['model'] for r in json.loads((ROOT/'docs/remaining-transfer/transparent-helper-validation.json').read_text(encoding='utf-8-sig'))['models'] if r['status']=='ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO'}
+        uvzero=ROOT/'docs/v12.7/conversion/source-zero-uv-models.json'
+        if uvzero.exists():self.transparent.update(r['model'] for r in json.loads(uvzero.read_text(encoding='utf-8-sig'))['rows'])
         inventory=json.loads((ROOT/'docs/remaining-transfer/source-inventory.json').read_text(encoding='utf-8-sig'))
         self.empty={r['model'] for r in inventory['models'] if not any(e.get('faces') for e in r['resolved'].get('elements',[]))}
         self.current={}

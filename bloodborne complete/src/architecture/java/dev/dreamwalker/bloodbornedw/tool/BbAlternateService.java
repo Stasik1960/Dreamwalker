@@ -132,6 +132,10 @@ public final class BbAlternateService {
             if(server.getTicks()-job.startedTick>1200){job.failed++;dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("BB ALT job timed out at {} {}",job.current.world.getRegistryKey().getValue(),job.current.chunk);next(job);return;}
             if(job.requested.values().stream().anyMatch(future->!future.isDone()))return;
             if(job.requested.values().stream().anyMatch(future->future.join().left().isEmpty())){job.failed++;next(job);return;}
+            // FULL only acknowledges block storage. RP entities can still be
+            // pending in the separate entity-region IO queue, so do not freeze
+            // this chunk's RP UUID cursor until its native entity load finishes.
+            if(!((dev.dreamwalker.bloodbornedw.composite.mixin.BbServerEntityManagerAccess)job.current.world).bloodborne_dw$profileEntityManager().isLoaded(job.current.chunk.toLong()))return;
             if(job.waitTicks++<2)return;
             if(job.cursor==null){var chunk=job.current.world.getChunkManager().getWorldChunk(job.current.chunk.x,job.current.chunk.z);if(chunk==null){job.failed++;next(job);return;}job.cursor=new TargetCursor(job.current.world,chunk);}
             // Native compact palettes need no owner UUID, ledger or BE. Do not

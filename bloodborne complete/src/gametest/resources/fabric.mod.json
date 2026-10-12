@@ -23,13 +23,16 @@
       "dev.dreamwalker.bloodbornedw.link.AssemblyV126GameTests",
       "dev.dreamwalker.bloodbornedw.gametest.UtilityV127GameTests",
       "dev.dreamwalker.bloodbornedw.tool.BbAlternateV127GameTests",
+      "dev.dreamwalker.bloodbornedw.tool.BbColdAlternateV127GameTests",
       "dev.dreamwalker.bloodbornedw.gametest.ManualCatalogueV127GameTests",
       "dev.dreamwalker.bloodbornedw.tool.ImportedFollowupV127GameTests",
       "dev.dreamwalker.bloodbornedw.composite.ShardedLedgerV127GameTests",
       "dev.dreamwalker.bloodbornedw.gametest.WorldEditV127GameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.SourcePartsV127GameTests",
       "dev.dreamwalker.bloodbornedw.composite.CompactStateTransitionsV127GameTests"
     ]
   },
+  "mixins": ["bloodborne_dw.v127-test.mixins.json"],
   "depends": {
     "fabricloader": ">=0.16.10",
     "fabric-gametest-api-v1": "*",

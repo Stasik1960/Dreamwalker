@@ -39,6 +39,8 @@ until completion, and preserves server owner UUID acknowledgements.
 15 expected actual framebuffer PNGs: wall/ladder/new barrel/RP/compact BASE and
 ALT pairs, yellow DW-barrier held, red vanilla barrier held, empty-hand hidden
 DW-barrier, DW-light held marker, and empty-hand invisible light14 at night.
+The fixture and client fail if the compact palette example is missing; a reduced
+frame count cannot satisfy this proof.
 `v127-native-client-qa.json` binds operations and camera coordinates to production
 SHA and original PNG hashes. Native wall/ladder baked ABGR colours are recorded.
 Light14 is read from the actual synchronized client light storage.
@@ -66,3 +68,11 @@ limits/counters. Only that result is `PASS_ENGINE_REOPEN`. A production-only nat
 server/client reopen remains a separate compatibility check. Physical keyboard
 and mouse input remains NOT_RUN; client interaction manager and normal packets
 are the evidence for hand placement.
+
+The separate cold-map GameTest writes an actual RP object through Minecraft's
+entity-region storage into an unloaded, entity-only chunk, then exercises the
+same asynchronous chunk/edit path as `all`. The profile job waits for both the
+block FULL future and native entity-manager readiness before capturing the RP
+UUID cursor. It must change the saved object exactly once and preserve its UUID,
+position, rotation, scale, name and typed RP/source NBT. This check has its own
+native `v127-cold-rp-alt-proof.json`; compilation is not a PASS for that check.

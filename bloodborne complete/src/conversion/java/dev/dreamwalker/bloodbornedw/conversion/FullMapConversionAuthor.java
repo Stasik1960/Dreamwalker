@@ -204,6 +204,13 @@ public final class FullMapConversionAuthor implements ModInitializer {
             if (VerticalMount.isNative(state)) payload = VerticalMount.nativePayload(world, pos, state, payload);
             var object = CompositeRuntime.instance(world, pos, state, uuid, payload);
             for (var offset : object.cells().keySet()) load(world, CompositeData.pos(object.owner().root().add(offset)));
+            // A late whole object may meet a helper whose normal owner was
+            // installed hours earlier and is cold. The transaction validates
+            // that owner's exact root; loading only the incoming boxes would
+            // otherwise reject a legitimate original overlap.
+            Set<dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner> neighbours = new HashSet<>();
+            for (var offset : object.cells().keySet()) for (var contribution : CompositeRuntime.contributions(world, CompositeData.pos(object.owner().root().add(offset)))) neighbours.add(contribution.owner());
+            for (var neighbour : neighbours) load(world, CompositeData.pos(neighbour.root()));
             final BlockState selected = state; final NbtCompound supplied = payload;
             TransactionCore.Result result = SourceConversionScope.initialInstances(Set.of(uuid), () -> {
                 if (selected.getBlock() instanceof CompositeRootBlock) return CompositeRuntime.place(world, pos, selected, uuid, null, supplied);

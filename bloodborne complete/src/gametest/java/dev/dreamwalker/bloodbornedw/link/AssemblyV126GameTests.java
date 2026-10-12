@@ -5,6 +5,7 @@ import com.mojang.authlib.GameProfile;
 import dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope;
 import dev.dreamwalker.bloodbornedw.composite.*;
 import dev.dreamwalker.bloodbornedw.debug.*;
+import dev.dreamwalker.bloodbornedw.gametest.CatalogueCohortV127;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance;
 import dev.dreamwalker.bloodbornedw.runtime.TransactionCore;
 import dev.dreamwalker.bloodbornedw.tool.*;
@@ -256,8 +257,11 @@ public final class AssemblyV126GameTests implements FabricGameTest {
 
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="v126_unique_catalogue")
     public void workingNewTypesHaveUniqueNumbersAndHiddenPartItemsCanonicalizeWithoutRenumberingOrNbtLoss(TestContext t) {
-        Set<String> allNumbers=new HashSet<>();for(var row:DebugCatalogue.entries())t.assertTrue(row.temporaryId().matches("[0-9]{5}")&&allNumbers.add(row.temporaryId()),"entire frozen reserved-number table has no duplicate ID");
-        t.assertTrue(allNumbers.size()==1322,"V12.6 reuses existing primary numbers and keeps all old numbers reserved");
+        Set<String> allNumbers=new HashSet<>();Map<String,String> reserved=new HashMap<>();for(var row:DebugCatalogue.entries()){t.assertTrue(row.temporaryId().matches("[0-9]{5}")&&allNumbers.add(row.temporaryId()),"entire frozen reserved-number table has no duplicate ID");reserved.put(row.temporaryId(),row.registryId().toString());}
+        var oldNumbers=CatalogueCohortV127.oldNumbers();var additions=CatalogueCohortV127.newNumbers();
+        t.assertTrue(oldNumbers.size()==1322&&additions.equals(Map.of("93230","bloodborne_dw:dw_barrier","93231","bloodborne_dw:dw_light","93232","bloodborne_dw:source_original_tree","93233","bloodborne_dw:source_door_fragment")),"independent original1322 reserved numbers gain exactly the four approved utility/tree/fragment IDs");
+        Map<String,String> expectedReserved=new HashMap<>(oldNumbers);expectedReserved.putAll(additions);
+        t.assertTrue(allNumbers.size()==1326&&reserved.equals(expectedReserved),"every original1322 numeric-to-registry reservation remains exact and only93230..93233 are appended");
         Set<String> workingNumbers=new HashSet<>(),workingRegistries=new HashSet<>();int newTypes=0;
         for(var stack:UnifiedCreativeCatalogue.canonicalItems()) {
             var id=Registries.ITEM.getId(stack.getItem());if(!id.toString().startsWith("bloodborne_dw:source_"))continue;
@@ -266,7 +270,7 @@ public final class AssemblyV126GameTests implements FabricGameTest {
             if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof CompositeRootBlock block&&ImportedAssemblyV126.installationPose(id.getPath())>0)t.assertTrue(stack.getSubNbt("BlockStateTag")!=null&&stack.getSubNbt("BlockStateTag").getString("variant").equals(Integer.toString(ImportedAssemblyV126.installationPose(id.getPath())%16)),"one Creative item chooses the completed whole state "+row.temporaryId());
             newTypes++;
         }
-        t.assertTrue(newTypes==544,"seven independent approved fragment types leave the previous551 working NEW types");
+        t.assertTrue(newTypes==539&&workingRegistries.equals(CatalogueCohortV127.expectedWorking()),"frozen544 working NEW types lose exactly7 reviewed practical clones and gain only tree/door-fragment families");
         HIDDEN.forEach((oldNumber,mainNumber)->{
             var old=new ItemStack(Registries.ITEM.get(new Identifier(registry(oldNumber))),7);old.setCustomName(Text.literal("старый предмет"));old.getOrCreateNbt().putLong("OpaqueLong",Long.MIN_VALUE);var art=old.getOrCreateSubNbt("BlockStateTag");art.putString("rotation","3");art.putString("profile","alt");
             var next=ImportedAssemblyV126.canonicalStack(old);

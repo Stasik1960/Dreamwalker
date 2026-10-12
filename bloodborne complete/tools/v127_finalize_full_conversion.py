@@ -60,6 +60,9 @@ def main(path,orphan):
     with gzip.open(temp,'wt',encoding='utf8') as removal:
         for dim,cx,cz,sy,sp,si,di in out.execute('SELECT * FROM sections ORDER BY dimension,cx,cz,sy'):
             sourceindex=np.frombuffer(zlib.decompress(si),dtype='<u2');sourcepalette=json.loads(sp);old=np.frombuffer(zlib.decompress(di),dtype='<u2');index=lut[old].copy();section=(dim,cx,cz,sy)
+            for pi,(state,registry,properties) in enumerate(sourcepalette):
+                if not registry.startswith('minecraft:'):
+                    index[sourceindex==pi]=did({'action':'REMOVE','reason':'UNKNOWN_SOURCE_REGISTRY_OR_SYSTEM_SERVICE','sourceState':state,'sourceRegistryId':registry,'sourceApplications':[],'policy':'User requested unknown/system cleanup; original ZIP remains immutable'})
             for i,d in changes.get(section,{}).items():index[i]=d
             if not np.array_equal(old,index):out.execute('UPDATE sections SET decision_indices=? WHERE dimension=? AND cx=? AND cz=? AND sy=?',(zlib.compress(index.astype('<u2').tobytes(),1),*section))
             for pi,n in enumerate(np.bincount(sourceindex,minlength=len(sourcepalette))):
