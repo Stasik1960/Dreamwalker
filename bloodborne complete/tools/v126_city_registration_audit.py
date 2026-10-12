@@ -20,7 +20,7 @@ DEST = ROOT/'docs/v12.6/city'
 
 
 def read(path):
-    return json.loads(path.read_text(encoding='utf8-sig'))
+    return json.loads(path.read_text(encoding='utf-8-sig'))
 
 
 def sha(path):
@@ -99,7 +99,12 @@ def main():
                   'missingOwnerCount': sum(len(v) for v in groups.values()), 'missingDistinctRegistryCount': len(groups),
                   'missing': missing, 'originalMapWritten': False, 'productionResourcesWritten': False,
                   'nativeAuthorFailureRootCause': 'Historical resolver indexes all frozen descriptors, including explicit transparent exclusions. V12.6 finalizer filtered style retirements but omitted the earlier transparent-exclusion gate; geometric descriptor proof cannot establish registration.'}
+        report['explicitTransparentSourceServiceCount']=sum(r.get('status')=='EXPLICIT_PREEXISTING_SOURCE_TRANSPARENT_HELPER_AIR' for r in data['sourceInvisibleServices'])
+        report['transparentServiceCountsByReservedId']=dict(collections.Counter(r.get('reservedNumber') for r in data['sourceInvisibleServices']
+            if r.get('status')=='EXPLICIT_PREEXISTING_SOURCE_TRANSPARENT_HELPER_AIR'))
         target = DEST/'exact-jar-city-registration-audit.json'
+        if missing:
+            (DEST/'exact-jar-city-registration-initial-missing.json').write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf8', newline='\n')
         target.write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n', encoding='utf8', newline='\n')
         print(json.dumps({k: report[k] for k in ['status','productionJarSha256','ownerCount','distinctOwnerRegistryIds',
                                               'registeredOwnerCount','missingOwnerCount','missingDistinctRegistryCount']}, ensure_ascii=False))

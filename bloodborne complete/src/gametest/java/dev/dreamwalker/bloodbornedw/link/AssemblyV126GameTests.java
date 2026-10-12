@@ -179,7 +179,7 @@ public final class AssemblyV126GameTests implements FabricGameTest {
             for(var member:historical)for(var offset:member.cells().keySet())oldOnly.add(member.owner().root().add(offset));
             for(var offset:next.cells().keySet())oldOnly.remove(next.owner().root().add(offset));
             t.assertTrue(!oldOnly.isEmpty(),"real historical assembly contains old-only cached cells absent from the completed object");
-            var shared=oldOnly.first();var foreignPos=CompositeData.pos(shared);var foreignData=new NbtCompound();foreignData.putInt(ImportedTypeAliases.VERSION_KEY,1);foreignData.putLong("ForeignOpaqueLong",Long.MIN_VALUE+91);foreignData.putUuid("ForeignPrivateLink",UUID.randomUUID());
+            var shared=oldOnly.stream().filter(cell->lower.cells().containsKey(cell.subtract(lower.owner().root()))).findFirst().orElseThrow();var foreignPos=CompositeData.pos(shared);var foreignData=new NbtCompound();foreignData.putInt(ImportedTypeAliases.VERSION_KEY,1);foreignData.putLong("ForeignOpaqueLong",Long.MIN_VALUE+91);foreignData.putUuid("ForeignPrivateLink",UUID.randomUUID());
             var foreign=CompositeRuntime.instance(world,foreignPos,pose(registry("90151"),0,0),UUID.randomUUID(),foreignData);
             t.assertTrue(foreign.cells().values().stream().allMatch(cell->cell.collision().isEmpty()),"the neighbouring real grass object preserves its intended passability");
             List<ObjectInstance> saved=new ArrayList<>(historical);saved.add(foreign);ImportedCollisionMigration.forget(world);installExactCachedSaved(t,saved);

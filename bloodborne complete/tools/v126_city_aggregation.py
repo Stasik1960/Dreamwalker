@@ -212,6 +212,13 @@ def main():
                     'nearbySameRegistryAndPose':nearby})
             unmatched_evidence.append(row)
     expected={tuple(r['sourcePosition']) for r in data['sourceApplications']};covered=set()
+    catalogue=json.loads((RES/'bloodborne_dw/remaining-catalogue.json').read_text(encoding='utf-8-sig'))
+    registered={'bloodborne_dw:'+r['path'] for r in catalogue['objects']}
+    registered.update('bloodborne_dw:'+p for p in ['prototype_double_door','prototype_wood_window','prototype_thin_window',
+        'prototype_tree','prototype_roof','prototype_ladder','prototype_ladder_art_1','prototype_ladder_art_2','prototype_wall'])
+    registered.update('bloodborne_dw:prototype_wall_skin_'+str(i) for i in [0,1,2,3,4,5,7])
+    assert all(r['registryId'] in registered for r in owners),('Unregistered source-city owner',
+        dict(collections.Counter(r['registryId'] for r in owners if r['registryId'] not in registered)))
     for r in owners+data['sourceInvisibleServices']+data['sourceExceptions']:
         for xyz in r.get('sourceComponentPositions',[r['sourcePosition']]):
             assert tuple(xyz) not in covered,('Duplicate source coverage',xyz)
@@ -228,6 +235,7 @@ def main():
     data['unmatchedActiveStandaloneParts']=unmatched_active
     data['unmatchedApprovedRecipeEvidence']=unmatched_evidence
     data['sourceAssemblyRecipeFile']=str(RECIPES.relative_to(ROOT));data['sourceAssemblyRecipeSha256']=sha(RECIPES)
+    data['sourceRegistrationPreflight']='PASS_SOURCE_REMAINING_CATALOGUE_AND_EXPLICIT_PROTECTED_V12_INITIALIZERS_FINAL_JAR_AUDIT_REQUIRED'
     source=SourceVisuals();native=Visuals(vanilla_jar=VANILLA);descriptors={}
     proof=verify_geometry(data,olddata,source,native,descriptors)
     proof['assemblyRecipeSha256']=sha(RECIPES);proof['inputCitySha256']=sha(SRC)
@@ -252,6 +260,9 @@ def main():
         'unmatchedActiveStandaloneObjects':len(unmatched_active),
         'unmatchedHiddenCountsById':dict(collections.Counter(r['mainId'] for r in unmatched)),
         'allSourceCellsClassified':True,'affectedSourceCoverageCells':len(covered),'previousApprovedSourceCellsUnchanged':True,
+        'sourceInvisibleServices':len(data['sourceInvisibleServices']),
+        'sourceExceptions':len(data['sourceExceptions']),
+        'preexistingTransparentHelperServiceCount':data.get('preexistingTransparentHelperServiceCount',0),
         'previousApprovedSourceCoverageCells':len(prior['sourceApplications']),'geometryProofStatus':proof['status'],
         'geometryProofFailureCount':len(proof['failures']),'dataFile':str(output),'dataSha256':sha(output),'dataBytes':output.stat().st_size,
         'mapSha256After':sha(MAP),'packSha256After':sha(PACK),'nativeValidation':'NOT_RUN'}

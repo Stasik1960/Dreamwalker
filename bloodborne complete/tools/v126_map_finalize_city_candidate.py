@@ -18,6 +18,9 @@ def main():
     proposalfile=DEST/f'extra-canonical-city-poses-{args.candidate:02d}.json'
     data=json.loads(gzip.decompress(sourcefile.read_bytes()));proposal=json.loads(proposalfile.read_text())
     retired=json.loads((ROOT/'src/architecture/resources/bloodborne_dw/imported-style-retirements.json').read_text(encoding='utf-8-sig'))
+    transparentfile=ROOT/'docs/remaining-transfer/source-transparent-exclusions.json'
+    transparent=json.loads(transparentfile.read_text(encoding='utf-8-sig'))
+    transparentstates={(r['registryId'],r['variant']):r for r in transparent['entries']}
     retiredregs={r['registryId'] for r in retired.get('retirements',retired.get('entries',[]))}
     if not retiredregs:
         # The confirmed audit is the authoritative style retirement list, with
@@ -64,8 +67,22 @@ def main():
         else:special.append(row)
     assert not special, f'Expanded city has {len(special)} remaining unclassified source rows'
     style=[];active=[]
+    transparentservices=[]
     for row in owners+extra+native:
-        if row['registryId'] in retiredregs:
+        poseindex=int(row['properties'].get('variant',0))+16*int(row['properties'].get('art_bank',0))
+        if (row['registryId'],poseindex) in transparentstates:
+            evidence=transparentstates[row['registryId'],poseindex]
+            assert set(a['model'] for a in row['sourceApplications'])<=set(evidence['sourceModels'])
+            assert all(t['wholeImageAlphaExtrema']==[0,0] for t in evidence['textures'])
+            service={**row,'status':'EXPLICIT_PREEXISTING_SOURCE_TRANSPARENT_HELPER_AIR',
+                'nativeConversion':'minecraft:air','resolution':'SOURCE_TRANSPARENT_EXCLUSION_RELEASE_ALPHA_CONFIRMED',
+                'sourceServiceReason':transparent['reason'],
+                'sourceTransparentExclusionEvidence':str(transparentfile.relative_to(ROOT)),
+                'sourceTransparentExclusionEvidenceSha256':sha(transparentfile),
+                'excludedRegistryId':row['registryId'],'reservedNumber':evidence['reservedNumber'],
+                'physicalPolicy':'No source carrier physics guessed or restored for excluded invisible source helper.'}
+            transparentservices.append(service);services.append(service)
+        elif row['registryId'] in retiredregs:
             style.append({**row,'status':'EXPLICIT_V125_STYLE_RETIREMENT_SOURCE_CELL_OMITTED_NOT_RESTORED','nativeConversion':'minecraft:air'})
         else:active.append(row)
     exceptions.extend(style)
@@ -84,6 +101,7 @@ def main():
         'owners':active,'sourceInvisibleServices':services,'sourceExceptions':exceptions,'unresolvedSourceCells':[],
         'existingExactOwnerCount':len(owners),'appendedExactOwnerCount':len(extra),
         'protectedOriginalV12NativeWallOwnerCount':len(native),'styleRetiredOwnerCount':len(style),
+        'preexistingTransparentHelperServiceCount':len(transparentservices),
         'allSourceCellsClassified':True,'sourceCoverageCount':len(covered),'nativeValidation':'NOT_RUN',
         'productionPoseApplication':'PENDING_ROOT_APPENDING_AND_FINAL_JAR_VERIFICATION',
         'approvedAssemblyMigration':'PENDING_FINAL_V126_RECIPES_AND_ID_ASSIGNMENT',
@@ -95,6 +113,8 @@ def main():
         'sizeXYZ':data['rawBlocks']['dimensions'],'horizontalAreaRatioToV125':4.,'denseVolumeRatioToV125':4.,
         'owners':len(active),'exactExistingOwners':len(owners),'appendedSourcePoseOwners':len(extra),
         'existingNativeV12WallOwners':len(native),'invisibleServicesAir':len(services),
+        'preexistingTransparentHelperServices':len(transparentservices),
+        'transparentHelperCountsByReservedId':dict(collections.Counter(r['reservedNumber'] for r in transparentservices)),
         'explicitOriginalSourceExceptions':len(exceptions)-len(style),'styleRetirementOmissions':len(style),
         'sourceExceptions':len(exceptions),'passThroughBlocks':len(data['passThroughBlocks']),
         'rawDenseCells':len(data['rawBlocks']['denseIndices']),'affectedSourceCoverageCells':len(covered),
