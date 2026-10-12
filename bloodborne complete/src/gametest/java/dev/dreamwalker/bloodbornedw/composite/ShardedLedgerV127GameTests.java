@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornedw.composite;
 
 import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.*;
+import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
 import java.nio.file.Path;
 import java.util.*;
