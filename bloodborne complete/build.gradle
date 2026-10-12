@@ -24,12 +24,7 @@ sourceSets {
   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
  }
- review {
-  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
-  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
- }
- repairtest {
-  java.srcDirs = ['src/gametest/java']
+ gallery {
   compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
   runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
  }
@@ -37,10 +32,8 @@ sourceSets {
 configurations {
  gametestImplementation.extendsFrom implementation
  gametestRuntimeOnly.extendsFrom runtimeOnly
- reviewImplementation.extendsFrom implementation
- reviewRuntimeOnly.extendsFrom runtimeOnly
- repairtestImplementation.extendsFrom implementation
- repairtestRuntimeOnly.extendsFrom runtimeOnly
+ galleryImplementation.extendsFrom implementation
+ galleryRuntimeOnly.extendsFrom runtimeOnly
 }
 tasks.withType(JavaCompile).configureEach { options.release = 17; options.encoding = 'UTF-8' }
 java { withSourcesJar() }
@@ -50,13 +43,6 @@ processResources {
  from('src/rp/resources') { exclude 'fabric.mod.json' }
 }
 tasks.withType(AbstractArchiveTask).configureEach { preserveFileTimestamps = false; reproducibleFileOrder = true }
-tasks.named('sourcesJar') {
- from('tools') { into 'tools' }; from('docs') { into 'docs' }; from('TASK.md','PROGRESS.md','INPUTS.json')
- from('src/gametest') { into 'src/gametest' }
- from('src/rp/tests') { into 'src/rp/tests' }
- from('src/rp/resources') { into 'src/rp/resources' }
- from('src/review') { into 'src/review' }
-}
 tasks.register('transactionCheck', JavaExec) {
  dependsOn testClasses
  classpath = sourceSets.test.runtimeClasspath
@@ -77,29 +63,21 @@ loom {
    vmArg '-Dfabric-api.gametest'
    vmArg "-Dfabric-api.gametest.report-file=${file('build/test-results/gametest/TEST-' + (findProperty('gametest_run_name') ?: 'first-set') + '.xml').absolutePath}"
   }
-  repairtest {
-   inherit server
-   name '90009 catalogue repair focused server checks'
-   source sourceSets.repairtest
-   runDir 'build/repairtest-catalogue'
-   vmArg '-Dfabric-api.gametest'
-   vmArg "-Dfabric-api.gametest.report-file=${file('build/test-results/repairtest/TEST-catalogue.xml').absolutePath}"
-  }
  }
 }
 tasks.register('ladderGameTest') { group = 'verification'; dependsOn 'runGametest' }
 tasks.register('firstSetGameTest') { group = 'verification'; dependsOn 'runGametest' }
-tasks.register('reviewJar', Jar) {
- dependsOn reviewClasses
- from sourceSets.review.output
- archiveBaseName = 'dreamwalker-first-set-review-qa'
+tasks.register('galleryJar', Jar) {
+ dependsOn galleryClasses
+ from sourceSets.gallery.output
+ archiveBaseName = 'dreamwalker-gallery-author'
  archiveClassifier = 'dev'
 }
-tasks.register('remapReviewJar', net.fabricmc.loom.task.RemapJarTask) {
- dependsOn reviewJar
- inputFile.set(tasks.named('reviewJar', Jar).flatMap { it.archiveFile })
+tasks.register('remapGalleryJar', net.fabricmc.loom.task.RemapJarTask) {
+ dependsOn galleryJar
+ inputFile.set(tasks.named('galleryJar', Jar).flatMap { it.archiveFile })
  classpath.from(sourceSets.main.output, sourceSets.main.compileClasspath)
- archiveBaseName = 'dreamwalker-first-set-review-qa'
+ archiveBaseName = 'dreamwalker-gallery-author'
  archiveClassifier = ''
  addNestedDependencies = false
 }

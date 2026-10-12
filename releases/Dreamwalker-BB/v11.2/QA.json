@@ -1,0 +1,67 @@
+{
+  "revision": "V11.2",
+  "deliveryStatus": "CANDIDATE_MANUAL_DETAIL_AND_LONG_LOAD_PENDING",
+  "productionJarSha256": "c285792d3f471b43f9104787fb2879da1a1492273b25191ae85787722c694285",
+  "worldZipSha256": "b4813743507dc42d6220550d4b394e0cf233d4e5fa252a1ca93de88f0157a452",
+  "build": "PASS_JAVA17",
+  "gameTests": {
+    "passed": 42,
+    "failed": 0,
+    "errors": 0
+  },
+  "transactionChecks": {
+    "passed": 21
+  },
+  "productionJar": {
+    "qaEditorAndRecorderClassesAbsent": true,
+    "fabricMetadataVersion": "0.1.0-v11.2"
+  },
+  "gallery": {
+    "exhibits": 120,
+    "offeredItems": 102,
+    "realNpcs": 18,
+    "exactTwoBlockGaps": true,
+    "boundsPlusTwo": true,
+    "productionOnlyReopen": true,
+    "identitiesPosesAndTypedStatesUnchanged": true,
+    "authoringAddonRequired": false,
+    "source": "Immutable published V11.1 original gallery; full120, no manual/dense visual fixture",
+    "sourcePublishedWorldZipSha256": "352d55d10eb5369bb43c17e02711783569e92d39efe1e56484af838bcbc926a1",
+    "worldFiles": 153
+  },
+  "actualClient": {
+    "restoredOpenEarly10_20_80": "CLIENT_STATE_OPEN_TRUE_BUSY_FALSE; VISIBLE_STABLE_OPEN20_80; PNG10_SKY_ONLY",
+    "twoRealClientsDoorPropagation": "PASS_NATIVE63_FRAMES_PLUS_SERVER_REAL_PLAYER_JOINS",
+    "held90006Manual": "PENDING_USER_GAMEPLAY_CONFIRMATION",
+    "full480FrameVisualReview": "STATIC_PAIRED_REVIEW_COMPLETE_WITH_RECORDED_DETAIL_LIMITATIONS",
+    "combined18CloseReview": "STATIC_REVIEW_COMPLETE; DOG91007_DETAIL_UNCONFIRMED_OCCLUDED",
+    "finalDoorCycle240": "REVIEW_COMPLETE_DISCRETE_CLOSE_OPEN_CLOSE_PHASES; REAL_BUSY_REPEATS_DID_NOT_REVERSE_SAMPLED_STATE",
+    "closedRejoin120": "INITIAL_FALSE_FALSE; FIRST_REAL_OPEN_TRUE_TRUE; SETTLED_TRUE_FALSE",
+    "firstClosedRejoinActionApproxSecondsAfterAdvancements": 28.435,
+    "immediateFirstTwoSecondsActionTested": false,
+    "real90006ItemPlacement": "PASS_F8_140_64_20_DIAGONAL_TRUE_SOURCE_CLONE_FALSE",
+    "longActiveTwoClientLoad": "PENDING"
+  },
+  "load": {
+    "status": "ACTUAL_VANILLA_TICK_RATE_LOG_ONLY",
+    "seconds": 95.0,
+    "ticks": 1901,
+    "ticksPerSecond": 20.01,
+    "scope": "119 remaining catalogue exhibits plus native ladder fixtures; two real connected clients;63-frame export already complete",
+    "initial30sAttempt": "ACK_CHECK_FAILED; preserved separately; corrected helper not rerun",
+    "limitations": "TPS does not measure renderer FPS, MSPT or mod-only CPU"
+  },
+  "compactEvidence": {
+    "archive": "QA-EVIDENCE.zip",
+    "archiveSha256": "35d11bea5a13c74fd24cae1e3a19493767c91e960b770c4846d314fb5f05657d",
+    "archiveBytes": 5925046,
+    "archiveCrcVerified": true,
+    "nativeFrameMetadataAndIntegrityCount": 921,
+    "rawFullResolutionImagesIncluded": false,
+    "fullProfilesAccountsAndLogsIncluded": false,
+    "scope": "480 BASE/ALT static +18 close +240 door cycle +120 closed rejoin +63 restored-open/dual-sync"
+  },
+  "embeddedWorldAcceptanceText": "Preserved preparation-stage snapshot; release QA.json and _ACCEPTANCE.md record current results",
+  "pendingDetails": "_ACCEPTANCE.md",
+  "V11_1Unchanged": true
+}

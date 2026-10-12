@@ -1,6 +1,6 @@
 package dev.dreamwalker.bloodbornerp.lamp;
 
-import dev.dreamwalker.bloodbornerp.object.RpDiagnostics;
+import dev.dreamwalker.bloodbornedw.DreamwalkerBb;
 import java.util.*;
 import net.minecraft.nbt.*;
 import net.minecraft.server.world.ServerWorld;
@@ -59,7 +59,7 @@ final class LampState extends PersistentState {
   nbt.putInt("Schema",SCHEMA);NbtList out=new NbtList();for(Node n:nodes.values()){if(out.size()>=MAX_NODES)break;NbtCompound t=new NbtCompound();t.putUuid("Id",n.id);t.putUuid("Lamp",n.lamp);t.putString("Name",n.name);t.putString("Dimension",n.dimension);t.putLong("Pos",n.pos.asLong());t.putDouble("X",n.origin.x);t.putDouble("Y",n.origin.y);t.putDouble("Z",n.origin.z);NbtList routes=new NbtList();for(UUID to:n.routes){if(routes.size()>=MAX_NODES)break;routes.add(NbtHelper.fromUuid(to));}t.put("Routes",routes);out.add(t);}nbt.put("Nodes",out);
   NbtList linesOut=new NbtList();int count=0;for(Line l:lines.values()){if(linesOut.size()>=MAX_LINES)break;NbtCompound t=new NbtCompound();t.putUuid("Id",l.id);t.putString("Name",l.name);NbtList entries=new NbtList();for(Connection c:l.connections.values()){if(count++>=MAX_CONNECTIONS)break;NbtCompound e=new NbtCompound();e.putUuid("Id",c.id);e.putUuid("A",c.a);e.putUuid("B",c.b);e.putBoolean("AtoB",c.aToB);e.putBoolean("BtoA",c.bToA);entries.add(e);}t.put("Connections",entries);linesOut.add(t);}nbt.put("Lines",linesOut);return nbt;
  }
- private static void fault(String reason){RpDiagnostics.error(null,RpDiagnostics.typeIdForAsset("hunterlamp"),null,null,"lamp_saved_data",reason,null);}
+ private static void fault(String reason){DreamwalkerBb.LOG.warn("Malformed saved lamp data: {}", reason);}
  static final class Node {final UUID id,lamp;String name,dimension;BlockPos pos;Vec3d origin;final List<UUID> routes=new ArrayList<>();Node(UUID id,UUID lamp,String name,String dim,BlockPos pos){this.id=id;this.lamp=lamp;this.name=name;this.dimension=dim;this.pos=pos;this.origin=new Vec3d(pos.getX()+.5,pos.getY(),pos.getZ()+.5);}}
  static final class Line {final UUID id;String name;final Map<UUID,Connection> connections=new LinkedHashMap<>();Line(UUID id,String name){this.id=id;this.name=name;}}
  static final class Connection {final UUID id,a,b;boolean aToB,bToA;Connection(UUID id,UUID a,UUID b,boolean forward,boolean reverse){this.id=id;this.a=a;this.b=b;this.aToB=forward;this.bToA=reverse;}boolean matches(UUID x,UUID y){return a.equals(x)&&b.equals(y)||a.equals(y)&&b.equals(x);}}

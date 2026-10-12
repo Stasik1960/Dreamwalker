@@ -17,7 +17,6 @@ import net.minecraft.client.util.ModelIdentifier;
 public final class PrototypeArchitectureClient implements ClientModInitializer {
     @Override public void onInitializeClient() { initialize(); }
     public static void initialize() {
-        dev.dreamwalker.bloodbornedw.tool.BuilderClient.initialize();
         ModelLoadingPlugin.register(plugin -> plugin.modifyModelAfterBake().register(ModelModifier.WRAP_PHASE, (model, context) -> {
             if (model != null && context.id() instanceof ModelIdentifier id && id.getNamespace().equals("bloodborne_dw") && (id.getPath().equals("prototype_ladder")||id.getPath().startsWith("prototype_ladder_art_"))) {
                 model=dev.dreamwalker.bloodbornedw.architecture.ladder_source.SourceLadderClient.wrap(model,id);

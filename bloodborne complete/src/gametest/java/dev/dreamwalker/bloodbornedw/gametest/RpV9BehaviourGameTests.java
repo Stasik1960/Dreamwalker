@@ -21,25 +21,6 @@ import net.minecraft.util.math.*;
 /** Requested RP behaviours through real entities/items/player movement, separate from visual acceptance. */
 public final class RpV9BehaviourGameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="rp_v9")
-    public void diagnosticsPreserveTypedRpStateRefusalsAndDeduplicateCorruptEnvelope(TestContext c){
-        ServerWorld world=c.getWorld();RpObjectEntity cage=create(c,"cage_obj_1"),gate=create(c,"wood_gate");
-        dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.stop(world.getServer(),"RP_TEST_BASELINE");
-        cage.setDogsVisible(false);cage.setLocked(true);cage.setObjectScale(1.25f);NbtCompound off=cage.writeNbt(new NbtCompound());
-        cage.setDogsVisible(true);cage.setLocked(false);cage.setObjectScale(1);
-        dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.start(world,60,new dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.Filter("object",RpDiagnostics.typeId(cage),cage.getUuidAsString(),world.getRegistryKey().getValue().toString(),cage.getBlockPos(),0));
-        try{
-            cage.setDogsVisible(false);cage.setLocked(true);cage.setObjectScale(1.25f);NbtCompound on=cage.writeNbt(new NbtCompound());
-            c.assertTrue(off.equals(on),"diagnostics off/on preserves every typed saved RP field");
-            long gateErrors=dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.errors().stream().filter(row->gate.getUuidAsString().equals(row.get("instanceId"))).count();
-            c.assertTrue(!gate.setOpen(true),"wood gate retains pulse-only ordinary refusal");
-            c.assertTrue(dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.errors().stream().filter(row->gate.getUuidAsString().equals(row.get("instanceId"))).count()==gateErrors,"ordinary refusal is an event, never an ERROR");
-            NbtCompound malformed=on.copy(),envelope=new NbtCompound();envelope.putString("Schema","wrong type");malformed.put(SourceLegacyPayload.KEY,envelope);cage.readNbt(malformed.copy());cage.readNbt(malformed.copy());
-            var errors=dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.errors().stream().filter(row->cage.getUuidAsString().equals(row.get("instanceId"))&&"source_payload_corruption".equals(row.get("category"))).toList();
-            c.assertTrue(errors.size()==1&&((Number)errors.get(0).get("repeats")).longValue()==2,"two real corruption reads retain one exact identity/error with repeat count2");
-            c.assertTrue(cage.writeNbt(new NbtCompound()).equals(on),"invalid envelope retains the existing nonrecursive fallback and all valid role/identity fields");
-        }finally{dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.stop(world.getServer(),"RP_TEST_COMPLETE");}c.complete();
-    }
-    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="rp_v9")
     public void dogsAreIndependentAndTypedStateSurvivesPickAndSave(TestContext c){
         for(String id:List.of("cage_obj_1","cage_obj_2","cage_obj_3")){
             RpObjectEntity a=create(c,id),b=create(c,id);UUID uuid=a.getUuid();a.setCustomName(Text.literal("source dog cage"));
@@ -70,11 +51,11 @@ public final class RpV9BehaviourGameTests implements FabricGameTest {
     public void realSmallChandelierItemMountsVisibleBaseAndCeilingHook(TestContext c){
         ServerPlayerEntity p=c.createMockCreativeServerPlayerInWorld();Vec3d at=base(c);ServerWorld w=c.getWorld();BlockPos floor=BlockPos.ofFloored(at).down();w.setBlockState(floor,Blocks.STONE.getDefaultState());
         RpObjectEntity ground=use(c,p,"chandelier_small",floor,Direction.UP,at,180);c.assertTrue(Math.abs(ground.visualBounds().minY-at.y)<1e-6,"floor placement aligns actual model bottom, not old y-5.5");
-        c.assertTrue(ground.activePhysicalBoxes().isEmpty()&&!ground.isCollidable(),"hanging decoration does not acquire a model AABB collider");ground.removeByBuilder();
+        c.assertTrue(ground.activePhysicalBoxes().isEmpty()&&!ground.isCollidable(),"hanging decoration does not acquire a model AABB collider");ground.removeObject();
         Vec3d ceiling=at.add(4,10,0);BlockPos ceilingBlock=BlockPos.ofFloored(ceiling);w.setBlockState(ceilingBlock,Blocks.STONE.getDefaultState());
         RpObjectEntity hanging=use(c,p,"chandelier_small",ceilingBlock,Direction.DOWN,ceiling,180);
         c.assertTrue(Math.abs(hanging.visualBounds().maxY-ceiling.y)<1e-6&&hanging.visualBounds().minY<ceiling.y-5,"ceiling click aligns source chain hook and retains visible body beneath it");
-        hanging.removeByBuilder();w.setBlockState(floor,Blocks.AIR.getDefaultState());w.setBlockState(ceilingBlock,Blocks.AIR.getDefaultState());p.discard();c.complete();
+        hanging.removeObject();w.setBlockState(floor,Blocks.AIR.getDefaultState());w.setBlockState(ceilingBlock,Blocks.AIR.getDefaultState());p.discard();c.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="rp_v9")
     public void realStairsLadderAndWindowItemsUseBasesWhileSavedSourcePosIsExact(TestContext c){
@@ -91,7 +72,7 @@ public final class RpV9BehaviourGameTests implements FabricGameTest {
                 p.setPosition(at.x,at.y,at.z-1);aim(p,at.add(0,1.5,0));c.assertTrue(p.squaredDistanceTo(entity)>64,"actual base is farther than the old source-origin reach");
                 c.assertTrue(entity.damage(p.getDamageSources().playerAttack(p),1)&&entity.isRemoved(),"ordinary authorized creative attack reaches the real visible base:"+id);
                 c.assertTrue(!RpObjectIndex.in(w,new Box(at.add(-2,-1,-2),at.add(2,3,2))).contains(entity),"removed owner immediately leaves the loaded-object index");
-            }else entity.removeByBuilder();
+            }else entity.removeObject();
             RpObjectEntity loaded=create(c,id);NbtCompound source=loaded.writeNbt(new NbtCompound());NbtList pos=new NbtList();pos.add(NbtDouble.of(200.25));pos.add(NbtDouble.of(160.5));pos.add(NbtDouble.of(-100.75));source.put("Pos",pos);source.putInt("AnimationId",0);loaded.readNbt(source);
             c.assertTrue(loaded.writeNbt(new NbtCompound()).get("Pos").equals(pos),"reading old source entity does not run the new placement compensation: "+id);
         }
@@ -130,7 +111,7 @@ public final class RpV9BehaviourGameTests implements FabricGameTest {
             double y=at.y+(id.equals("wood_gate")?2:0),plane=at.z+(id.equals("npc_window")?.84375:0);
             for(int sign:List.of(-1,1)){p.refreshPositionAndAngles(at.x,y,plane+sign*3,0,0);double z=p.getZ();p.move(MovementType.SELF,new Vec3d(0,0,-sign*6));c.assertTrue(Math.abs(p.getZ()-z)<3,"actual central passage blocks from either side: "+id+" sign="+sign);}
             p.refreshPositionAndAngles(at.x+(id.equals("wood_gate")?9:3),y,plane-3,0,0);double z=p.getZ();p.move(MovementType.SELF,new Vec3d(0,0,6));c.assertTrue(p.getZ()-z>5.99,"outside the working surface is passable: "+id);
-            object.removeByBuilder();
+            object.removeObject();
         }p.discard();c.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="rp_v9")
@@ -142,7 +123,7 @@ public final class RpV9BehaviourGameTests implements FabricGameTest {
         for(int i=0;i<52;i++)p.move(MovementType.SELF,new Vec3d(0,-.08,.25));
         c.assertTrue(p.getZ()-startZ>11&&p.getY()-startY>10,"actual native stepping climbs the visible half-block treads; position="+p.getPos());double upperY=p.getY();
         for(int i=0;i<56;i++)p.move(MovementType.SELF,new Vec3d(0,-.6,-.25));c.assertTrue(upperY-p.getY()>9&&p.getY()>=at.y-1e-6,"actual descent reaches ground without passing through the staircase");
-        stairs.removeByBuilder();for(int x=-2;x<=2;x++)for(int z=-3;z<=16;z++)w.setBlockState(BlockPos.ofFloored(at).add(x,-1,z),Blocks.AIR.getDefaultState());builder.discard();p.discard();c.complete();
+        stairs.removeObject();for(int x=-2;x<=2;x++)for(int z=-3;z<=16;z++)w.setBlockState(BlockPos.ofFloored(at).add(x,-1,z),Blocks.AIR.getDefaultState());builder.discard();p.discard();c.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="rp_v9")
     public void actualLadderWorkingZoneClimbsDescendsAndMovesWithBottomBone(TestContext c){
@@ -153,17 +134,17 @@ public final class RpV9BehaviourGameTests implements FabricGameTest {
         p.setPosition(at.x+3,at.y-28,at.z-1.4);c.assertTrue(!p.isClimbing(),"large visual origin box does not create a distant climbing zone");
         ladder.setOpen(false);p.setPosition(at.x,at.y-28,at.z-1.3);c.assertTrue(!p.isClimbing(),"collapsed source bottom no longer climbs at old lower position");
         p.setPosition(at.x,at.y-14,at.z-1.3);c.assertTrue(p.isClimbing(),"collapsed animated bottom carries its real working zone upward");
-        ladder.removeByBuilder();p.discard();c.complete();
+        ladder.removeObject();p.discard();c.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="rp_v9")
     public void normalRpItemAllowsRpAndNativeOverlapWithoutReplacingNativeCells(TestContext c){
         ServerPlayerEntity p=c.createMockCreativeServerPlayerInWorld();Vec3d at=base(c);ServerWorld w=c.getWorld();BlockPos floor=BlockPos.ofFloored(at).down();w.setBlockState(floor,Blocks.STONE.getDefaultState());RpObjectEntity window=use(c,p,"npc_window",floor,Direction.UP,at,270);
         ItemStack stack=Registries.ITEM.get(new Identifier("bloodborne_rp","npc_window_placer")).getDefaultStack();stack.setCount(2);p.setStackInHand(Hand.MAIN_HAND,stack);p.setPosition(at.x,at.y,at.z-3);
         ActionResult accepted=stack.getItem().useOnBlock(new ItemUsageContext(p,Hand.MAIN_HAND,new BlockHitResult(at,Direction.UP,floor,false)));c.assertTrue(accepted.isAccepted()&&stack.getCount()==2,"V10 allows permanent RP overlap; Creative stack remains unchanged");
-        for(Entity e:w.iterateEntities())if(e instanceof RpObjectEntity rp&&rp!=window&&rp.assetId().equals("npc_window")&&rp.getPos().squaredDistanceTo(window.getPos())<1e-8)rp.removeByBuilder();
+        for(Entity e:w.iterateEntities())if(e instanceof RpObjectEntity rp&&rp!=window&&rp.assetId().equals("npc_window")&&rp.getPos().squaredDistanceTo(window.getPos())<1e-8)rp.removeObject();
         float yaw=window.getYaw();Box next=RpObjectGeometry.localVisualBounds("npc_window");BlockPos obstruct=BlockPos.ofFloored(window.getPos().add(.8,0,-.1));w.setBlockState(obstruct,Blocks.STONE.getDefaultState());
-        c.assertTrue(window.rotateByBuilder(p,yaw+90)&&window.getYaw()!=yaw,"V10 allows rotation through native blocks without replacing them");c.assertTrue(w.getBlockState(obstruct).isOf(Blocks.STONE),"RP rotation retains the obstructing native state");w.setBlockState(obstruct,Blocks.AIR.getDefaultState());
-        c.assertTrue(window.rotateByBuilder(p,yaw+90),"rotation commits when the real new shape is clear");window.removeByBuilder();w.setBlockState(floor,Blocks.AIR.getDefaultState());p.discard();c.complete();
+        c.assertTrue(window.rotateObject(p,yaw+90)&&window.getYaw()!=yaw,"V10 allows rotation through native blocks without replacing them");c.assertTrue(w.getBlockState(obstruct).isOf(Blocks.STONE),"RP rotation retains the obstructing native state");w.setBlockState(obstruct,Blocks.AIR.getDefaultState());
+        c.assertTrue(window.rotateObject(p,yaw+90),"rotation commits when the real new shape is clear");window.removeObject();w.setBlockState(floor,Blocks.AIR.getDefaultState());p.discard();c.complete();
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="rp_v9")
     public void deferredMovementShapesKeepNativeVolumesDeduplicateAndIncludeStepSweep(TestContext c){
@@ -184,7 +165,7 @@ public final class RpV9BehaviourGameTests implements FabricGameTest {
         p.refreshPositionAndAngles(at.x,at.y,at.z-3,0,0);window.setPosition(at.x,at.y+3.875,at.z);
         c.assertTrue(dev.dreamwalker.bloodbornedw.architecture.RpCollisionShapes.append(world,p,p.getBoundingBox().stretch(movement),empty).isEmpty(),"raised working surface lies above ordinary body sweep");
         c.assertTrue(dev.dreamwalker.bloodbornedw.architecture.RpCollisionShapes.forMovement(p,movement,empty).size()==1,"step-height body sweep includes its overhead working surface");
-        window.removeByBuilder();p.discard();c.complete();
+        window.removeObject();p.discard();c.complete();
     }
     private static void aim(PlayerEntity player,Vec3d target){Vec3d d=target.subtract(player.getEyePos());player.setYaw((float)Math.toDegrees(Math.atan2(-d.x,d.z)));player.setPitch((float)-Math.toDegrees(Math.atan2(d.y,Math.sqrt(d.x*d.x+d.z*d.z))));}
     private static RpObjectEntity create(TestContext c,String id){EntityType<?> type=Registries.ENTITY_TYPE.getOrEmpty(new Identifier("bloodborne_rp",id)).orElseThrow(()->new AssertionError("Missing actual RP registry:"+id));Entity value=type.create(c.getWorld());if(!(value instanceof RpObjectEntity object))throw new AssertionError("Wrong RP factory:"+id);return object;}

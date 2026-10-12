@@ -1,6 +1,0 @@
-C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\src\review\java\dev\dreamwalker\bloodbornedw\review\SourceReviewBootstrap.java:139: error: cannot find symbol
-            JsonArray commands=new JsonArray();for(JsonElement value:doc.getAsJsonArray("commands")){String command=value.getAsString();if(!(command.startsWith("gamerule ")||command.equals("defaultgamemode creative")||command.startsWith("setworldspawn ")||command.equals("time set noon")||command.equals("weather clear")))throw new IllegalArgumentException("Unexpected source QA command");server.getCommandManager().getDispatcher().execute(command,server.getCommandSource());ReviewSceneBootstrap.verifyGamerule(world,command);commands.add(command);}report.add("commands",commands);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^
-  symbol:   variable ReviewSceneBootstrap
-  location: class SourceReviewBootstrap
-1 error

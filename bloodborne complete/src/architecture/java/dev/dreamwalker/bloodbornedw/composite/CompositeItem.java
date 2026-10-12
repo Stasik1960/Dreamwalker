@@ -12,7 +12,7 @@ public final class CompositeItem extends BlockItem {
     private final CompositeRootBlock root;
     public CompositeItem(CompositeRootBlock block){super(block,new Settings());root=block;}
     @Override public ActionResult place(ItemPlacementContext context){
-        return dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.withItem(context,()->placeInternal(context));
+        return placeInternal(context);
     }
     private ActionResult placeInternal(ItemPlacementContext context){
         if(context.getPlayer()==null||!context.getWorld().isChunkLoaded(context.getBlockPos()))return ActionResult.FAIL;

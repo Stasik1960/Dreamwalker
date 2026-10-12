@@ -1,0 +1,21 @@
+PASS whole object placement/removal
+PASS foreign state and BE preservation
+PASS shared helper targeting and independent removal
+PASS shared root insertion retains other object NBT
+PASS partial write failure restores every snapshot
+PASS stale plan rejects without a write
+PASS unloaded owner is deferred; same ID reuse is stale
+PASS support reads become commit preconditions
+PASS visual-only transition ignores unchanged collision
+PASS entity movement between preflight and commit
+PASS chunk boundary rejects unloaded cells without loading
+PASS rotation hook keeps BE payload and four-turn geometry
+PASS notifications see complete commit and can roll back
+PASS rollback failure is an explicit failure
+PASS bounded multi-owner capacity
+PASS dimension-scoped plan
+PASS obsolete membership prunes links without destroying roots
+PASS snapshots copy opaque bytes and state maps
+PASS unchanged helpers refresh cached data and roll back separately
+PASS trusted functional payload transition preserves explicit adapter update
+PASS alias migration retains UUID/payload and atomically rewrites helpers

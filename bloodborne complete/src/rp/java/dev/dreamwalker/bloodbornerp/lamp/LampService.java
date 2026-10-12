@@ -3,7 +3,7 @@ package dev.dreamwalker.bloodbornerp.lamp;
 import dev.dreamwalker.bloodbornerp.BloodborneRp;
 import dev.dreamwalker.bloodbornerp.RpConfig;
 import dev.dreamwalker.bloodbornerp.object.RpObjectEntity;
-import dev.dreamwalker.bloodbornerp.object.RpDiagnostics;
+import dev.dreamwalker.bloodbornedw.DreamwalkerBb;
 import io.netty.buffer.Unpooled;
 import java.util.*;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -35,16 +35,15 @@ public final class LampService {
  private static final int MAX_WAITING=64,WAIT_TICKS=200,CONTEXT_TICKS=1200;
  private static boolean initialized;
  private LampService(){}
- public static Map<String,Object> diagnosticMetrics(){int tickets=0;for(Pending p:WAITING.values())tickets+=p.chunks.size();return Map.of("travelContexts",CONTEXTS.size(),"travelCooldowns",COOLDOWNS.size(),"pendingTravelRequests",WAITING.size(),"temporaryChunkTickets",tickets,"scope","server-wide bounded lamp state; no tokens; no permanent line chunk retention");}
  public static void initialize(){
   if(initialized)return;initialized=true;
   ServerPlayNetworking.registerGlobalReceiver(TRAVEL_PACKET,(server,player,handler,buf,response)->{
-   int bytes=buf.readableBytes();RpDiagnostics.network("server","receive",TRAVEL_PACKET.toString(),bytes);
+   int bytes=buf.readableBytes();
    if(bytes!=24){protocolError(player,"lamp_travel_expected_24_bytes");return;}UUID destination=buf.readUuid();long token=buf.readLong();
    if(!NETWORK_PENDING.add(player.getUuid()))return;server.execute(()->{try{if(server.getPlayerManager().getPlayer(player.getUuid())==player)travel(player,destination,token);}finally{NETWORK_PENDING.remove(player.getUuid());}});
   });
   ServerPlayNetworking.registerGlobalReceiver(CANCEL_PACKET,(server,player,handler,buf,response)->{
-   RpDiagnostics.network("server","receive",CANCEL_PACKET.toString(),buf.readableBytes());if(buf.readableBytes()!=8){protocolError(player,"lamp_cancel_expected_8_bytes");return;}long token=buf.readLong();boolean enqueue;
+   if(buf.readableBytes()!=8){protocolError(player,"lamp_cancel_expected_8_bytes");return;}long token=buf.readLong();boolean enqueue;
    synchronized(CANCEL_PENDING){if(CANCEL_PENDING.size()>=256&&!CANCEL_PENDING.containsKey(player.getUuid()))return;enqueue=!CANCEL_PENDING.containsKey(player.getUuid());CANCEL_PENDING.put(player.getUuid(),token);}
    if(enqueue)server.execute(()->{Long latest;synchronized(CANCEL_PENDING){latest=CANCEL_PENDING.remove(player.getUuid());}if(latest==null||server.getPlayerManager().getPlayer(player.getUuid())!=player)return;Context c=CONTEXTS.get(player.getUuid());if(c!=null&&c.token==latest){cancelWaiting(player.getUuid());CONTEXTS.remove(player.getUuid());}});
   });
@@ -89,7 +88,7 @@ public final class LampService {
   List<LampState.Node> list=destinations(player.getServer(),source);int cooldown=cooldownTicks(player);
   String status=!message.isBlank()?message:cooldown>0?"Повторный переход будет доступен после задержки.":list.isEmpty()?"Нет настроенных исходящих назначений.":"Выберите фонарь назначения.";
   sendMenu(player,token,list,source.name,status,cooldown,false);
-  event(player,source,"lamp_menu",Map.of(),Map.of("destinations",list.size(),"cooldownTicks",cooldown),"OPENED","exact_source_instance");
+
  }
  static List<LampState.Node> destinations(MinecraftServer server,LampState.Node source){List<LampState.Node> out=new ArrayList<>();Set<UUID> entities=new HashSet<>();for(UUID id:source.routes){LampState.Node n=state(server).nodes.get(id);if(n!=null&&!n.id.equals(source.id)&&entities.add(n.lamp)&&out.size()<RpConfig.INSTANCE.maxLampDestinations)out.add(n);}return List.copyOf(out);}
  private static boolean travel(ServerPlayerEntity player,UUID destination,long token){
@@ -104,17 +103,17 @@ public final class LampService {
   if(WAITING.size()>=MAX_WAITING){refuse(player,source,"Слишком много ожидающих переходов. Повторите позже.","pending_limit");return false;}
   UUID lease=UUID.randomUUID();ChunkPos center=new ChunkPos(target.pos);List<ChunkPos> chunks=new ArrayList<>();
   try{for(int x=center.x-1;x<=center.x+1;x++)for(int z=center.z-1;z<=center.z+1;z++){ChunkPos pos=new ChunkPos(x,z);world.getChunkManager().addTicket(TRAVEL_TICKET,pos,2,lease);chunks.add(pos);}}
-  catch(RuntimeException failure){for(ChunkPos pos:chunks)world.getChunkManager().removeTicket(TRAVEL_TICKET,pos,2,lease);RpDiagnostics.error(player.getServerWorld(),RpDiagnostics.typeIdForAsset("hunterlamp"),source.lamp.toString(),source.pos,"lamp_chunk_lease","ticket_acquisition_failed",failure);refuse(player,source,"Не удалось запросить загрузку назначения.","ticket_error");return false;}
+  catch(RuntimeException failure){for(ChunkPos pos:chunks)world.getChunkManager().removeTicket(TRAVEL_TICKET,pos,2,lease);DreamwalkerBb.LOG.error("Unable to acquire temporary lamp travel chunks for {}", player.getUuid(), failure);refuse(player,source,"Не удалось запросить загрузку назначения.","ticket_error");return false;}
   WAITING.put(player.getUuid(),new Pending(source.id,target.id,world,lease,List.copyOf(chunks),tick+WAIT_TICKS));
   sendMenu(player,token,destinations(player.getServer(),source),source.name,"Загружается целевой фонарь… Esc отменяет ожидание.",0,true);
-  event(player,source,"lamp_travel",Map.of(),Map.of("destination",target.lamp.toString(),"waitTicks",WAIT_TICKS),"PENDING","temporary_target_chunk_lease");return true;
+  return true;
  }
  private static boolean finishTravel(ServerPlayerEntity player,LampState.Node source,LampState.Node target,RpObjectEntity lamp){
   entityMoved(lamp);ServerWorld world=(ServerWorld)lamp.getWorld();Vec3d landing=findLanding(world,player,lamp.getPos());if(landing==null){refuse(player,source,"Рядом с назначением нет безопасного места прибытия.","no_safe_landing");return false;}
-  Vec3d before=player.getPos();player.teleport(world,landing.x,landing.y,landing.z,player.getYaw(),player.getPitch());COOLDOWNS.put(player.getUuid(),(long)player.getServer().getTicks()+RpConfig.INSTANCE.lampTravelCooldownTicks);CONTEXTS.remove(player.getUuid());sendMenu(player,0,List.of(),"","",0,false);
-  event(player,source,"lamp_travel",Map.of("position",List.of(before.x,before.y,before.z)),Map.of("destination",target.lamp.toString(),"position",List.of(landing.x,landing.y,landing.z),"dimension",target.dimension),"COMMITTED","safe_actual_destination");return true;
+  player.teleport(world,landing.x,landing.y,landing.z,player.getYaw(),player.getPitch());COOLDOWNS.put(player.getUuid(),(long)player.getServer().getTicks()+RpConfig.INSTANCE.lampTravelCooldownTicks);CONTEXTS.remove(player.getUuid());sendMenu(player,0,List.of(),"","",0,false);
+  return true;
  }
- private static void refuse(ServerPlayerEntity player,LampState.Node source,String message,String reason){tell(player,message);event(player,source,"lamp_travel",Map.of(),Map.of(),"REFUSED",reason);if(source!=null&&usableSource(player,source))openNode(player,source,message);else{CONTEXTS.remove(player.getUuid());sendMenu(player,0,List.of(),"",message,0,false);}}
+ private static void refuse(ServerPlayerEntity player,LampState.Node source,String message,String reason){tell(player,message);if(source!=null&&usableSource(player,source))openNode(player,source,message);else{CONTEXTS.remove(player.getUuid());sendMenu(player,0,List.of(),"",message,0,false);}}
  private static boolean usableSource(ServerPlayerEntity player,LampState.Node n){return n.dimension.equals(player.getWorld().getRegistryKey().getValue().toString())&&near(player,loadedLamp(player.getServerWorld(),n.lamp));}
  static boolean near(ServerPlayerEntity player,RpObjectEntity object){return object!=null&&!object.isRemoved()&&object.getWorld()==player.getWorld()&&object.getBoundingBox().squaredMagnitude(player.getEyePos())<=36;}
  static RpObjectEntity loadedLamp(ServerWorld world,UUID id){Entity entity=world.getEntity(id);return entity instanceof RpObjectEntity lamp&&!lamp.isRemoved()&&lamp.assetId().equals("hunterlamp")?lamp:null;}
@@ -134,26 +133,24 @@ public final class LampService {
   }return null;
  }
  private static boolean hazard(net.minecraft.block.BlockState s){return s.isIn(net.minecraft.registry.tag.BlockTags.FIRE)||s.isOf(net.minecraft.block.Blocks.WITHER_ROSE)||s.isOf(net.minecraft.block.Blocks.SWEET_BERRY_BUSH)||s.isOf(net.minecraft.block.Blocks.POWDER_SNOW)||s.isOf(net.minecraft.block.Blocks.NETHER_PORTAL)||s.isOf(net.minecraft.block.Blocks.END_PORTAL)||s.isOf(net.minecraft.block.Blocks.END_GATEWAY);}
- private static void sendMenu(ServerPlayerEntity p,long token,List<LampState.Node> entries,String source,String message,int cooldown,boolean pending){PacketByteBuf out=new PacketByteBuf(Unpooled.buffer());out.writeLong(token);out.writeVarInt(entries.size());for(LampState.Node n:entries){out.writeUuid(n.id);out.writeString(n.name,64);}out.writeString(source,64);out.writeString(message,256);out.writeVarInt(cooldown);out.writeBoolean(pending);RpDiagnostics.network("server","send",LIST_PACKET.toString(),out.readableBytes());if(p.networkHandler!=null)ServerPlayNetworking.send(p,LIST_PACKET,out);}
+ private static void sendMenu(ServerPlayerEntity p,long token,List<LampState.Node> entries,String source,String message,int cooldown,boolean pending){PacketByteBuf out=new PacketByteBuf(Unpooled.buffer());out.writeLong(token);out.writeVarInt(entries.size());for(LampState.Node n:entries){out.writeUuid(n.id);out.writeString(n.name,64);}out.writeString(source,64);out.writeString(message,256);out.writeVarInt(cooldown);out.writeBoolean(pending);if(p.networkHandler!=null)ServerPlayNetworking.send(p,LIST_PACKET,out);}
  private static void tell(ServerPlayerEntity player,String message){player.sendMessage(Text.literal(message),false);}
- private static void protocolError(ServerPlayerEntity p,String reason){RpDiagnostics.error(p.getServerWorld(),RpDiagnostics.typeIdForAsset("hunterlamp"),null,p.getBlockPos(),"malformed_lamp_packet",reason,null);}
- private static void event(ServerPlayerEntity p,LampState.Node n,String action,Map<String,Object> before,Map<String,Object> after,String result,String reason){ServerWorld recordWorld=n==null?p.getServerWorld():world(p.getServer(),n.dimension);if(recordWorld==null)recordWorld=p.getServerWorld();RpDiagnostics.event(recordWorld,RpDiagnostics.typeIdForAsset("hunterlamp"),n==null?null:n.lamp.toString(),n==null?p.getBlockPos():n.pos,action,before,after,result,reason);}
+ private static void protocolError(ServerPlayerEntity p,String reason){DreamwalkerBb.LOG.warn("Invalid lamp packet from {}: {}", p.getUuid(), reason);}
  private static void cancelWaiting(UUID player){Pending p=WAITING.remove(player);if(p!=null)for(ChunkPos chunk:p.chunks)p.world.getChunkManager().removeTicket(TRAVEL_TICKET,chunk,2,p.lease);}
- /** Opening another tool interface can cancel travel without resetting its cooldown. */
+ /** Cancels travel without resetting its cooldown. */
  public static void cancelTravel(ServerPlayerEntity player){cancelWaiting(player.getUuid());CONTEXTS.remove(player.getUuid());}
  private static void clearPlayer(UUID player){cancelWaiting(player);CONTEXTS.remove(player);COOLDOWNS.remove(player);NETWORK_PENDING.remove(player);CANCEL_PENDING.remove(player);LampEditor.clearPlayer(player);}
  static long contextTokenForTest(UUID player){Context c=CONTEXTS.get(player);return c==null?Long.MIN_VALUE:c.token;}
  static boolean travelForTest(ServerPlayerEntity player,UUID destination,long token){return travel(player,destination,token);}
  static void clearPlayerForTest(UUID player){clearPlayer(player);}
- public static void entityMoved(RpObjectEntity lamp){if(lamp==null||!(lamp.getWorld() instanceof ServerWorld world)||!lamp.assetId().equals("hunterlamp"))return;LampState graph=state(world.getServer());LampState.Node n=graph.byEntity(lamp.getUuid());if(n==null)return;Vec3d p=lamp.getPos();String dim=world.getRegistryKey().getValue().toString();if(n.origin.equals(p)&&n.dimension.equals(dim))return;Vec3d before=n.origin;n.origin=p;n.pos=lamp.getBlockPos();n.dimension=dim;graph.markDirty();RpDiagnostics.event(lamp,"lamp_position",Map.of("position",List.of(before.x,before.y,before.z)),Map.of("position",List.of(p.x,p.y,p.z)),"COMMITTED","same_instance_actual_mount");}
+ public static void entityMoved(RpObjectEntity lamp){if(lamp==null||!(lamp.getWorld() instanceof ServerWorld world)||!lamp.assetId().equals("hunterlamp"))return;LampState graph=state(world.getServer());LampState.Node n=graph.byEntity(lamp.getUuid());if(n==null)return;Vec3d p=lamp.getPos();String dim=world.getRegistryKey().getValue().toString();if(n.origin.equals(p)&&n.dimension.equals(dim))return;n.origin=p;n.pos=lamp.getBlockPos();n.dimension=dim;graph.markDirty();}
  public static boolean register(ServerPlayerEntity player,String name){if(!player.hasPermissionLevel(2))return false;RpObjectEntity lamp=dev.dreamwalker.bloodbornerp.object.ObjectRegistry.objectAt(player);return register(player,lamp,name)!=null;}
- static LampState.Node register(ServerPlayerEntity player,RpObjectEntity lamp,String name){if(lamp==null||!LampPolicy.validName(name)||!near(player,lamp))return null;LampState graph=state(player.getServer());LampState.Node old=graph.byEntity(lamp.getUuid());if(old!=null)return old;if(graph.nodes.size()>=RpConfig.INSTANCE.maxLampDestinations)return null;LampState.Node n=new LampState.Node(UUID.randomUUID(),lamp.getUuid(),name,lamp.getWorld().getRegistryKey().getValue().toString(),lamp.getBlockPos());n.origin=lamp.getPos();graph.nodes.put(n.id,n);graph.markDirty();event(player,n,"lamp_register",Map.of(),Map.of("name",name,"node",n.id.toString()),"COMMITTED","explicit_admin_registration");return n;}
- public static boolean rename(MinecraftServer server,UUID id,String name){LampState.Node n=state(server).nodes.get(id);if(n==null||!LampPolicy.validName(name))return false;String before=n.name;n.name=name;state(server).markDirty();adminEvent(server,n,"lamp_rename",Map.of("name",before),Map.of("name",name));return true;}
- public static boolean remove(MinecraftServer server,UUID id){LampState graph=state(server);LampState.Node n=graph.nodes.get(id);if(n==null)return false;boolean removed=graph.removeNode(id);invalidate(server,n);adminEvent(server,n,"lamp_unregister",Map.of("name",n.name),Map.of("removed",true));return removed;}
- public static void removeByEntity(MinecraftServer server,UUID entityId){LampState graph=state(server);for(LampState.Node n:List.copyOf(graph.nodes.values()))if(n.lamp.equals(entityId)){graph.removeNode(n.id);invalidate(server,n);adminEvent(server,n,"lamp_remove",Map.of("name",n.name),Map.of("removed",true));}}
+ static LampState.Node register(ServerPlayerEntity player,RpObjectEntity lamp,String name){if(lamp==null||!LampPolicy.validName(name)||!near(player,lamp))return null;LampState graph=state(player.getServer());LampState.Node old=graph.byEntity(lamp.getUuid());if(old!=null)return old;if(graph.nodes.size()>=RpConfig.INSTANCE.maxLampDestinations)return null;LampState.Node n=new LampState.Node(UUID.randomUUID(),lamp.getUuid(),name,lamp.getWorld().getRegistryKey().getValue().toString(),lamp.getBlockPos());n.origin=lamp.getPos();graph.nodes.put(n.id,n);graph.markDirty();return n;}
+ public static boolean rename(MinecraftServer server,UUID id,String name){LampState.Node n=state(server).nodes.get(id);if(n==null||!LampPolicy.validName(name))return false;n.name=name;state(server).markDirty();return true;}
+ public static boolean remove(MinecraftServer server,UUID id){LampState graph=state(server);LampState.Node n=graph.nodes.get(id);if(n==null)return false;boolean removed=graph.removeNode(id);invalidate(server,n);return removed;}
+ public static void removeByEntity(MinecraftServer server,UUID entityId){LampState graph=state(server);for(LampState.Node n:List.copyOf(graph.nodes.values()))if(n.lamp.equals(entityId)){graph.removeNode(n.id);invalidate(server,n);}}
  static void invalidate(MinecraftServer server,LampState.Node node){for(var e:List.copyOf(CONTEXTS.entrySet()))if(e.getValue().source.equals(node.id)){CONTEXTS.remove(e.getKey());cancelWaiting(e.getKey());}for(var e:List.copyOf(WAITING.entrySet()))if(e.getValue().destination.equals(node.id)){ServerPlayerEntity p=server.getPlayerManager().getPlayer(e.getKey());cancelWaiting(e.getKey());if(p!=null)tell(p,"Целевой фонарь удалён; переход отменён.");}LampEditor.removed(node.lamp);}
- public static boolean route(MinecraftServer server,UUID from,UUID to,boolean open){LampState graph=state(server);LampState.Node source=graph.nodes.get(from);if(source==null)return false;boolean changed;if(open){if(graph.connected(from,to))return false;changed=graph.setConnection(LampState.LEGACY_LINE,from,to,false);}else changed=graph.unlink(LampState.LEGACY_LINE,from,to,false);if(changed)adminEvent(server,source,"lamp_legacy_route",Map.of(),Map.of("destinationNode",to.toString(),"directedOpen",open,"line",LampState.LEGACY_LINE));return changed;}
- private static void adminEvent(MinecraftServer server,LampState.Node n,String action,Map<String,Object> before,Map<String,Object> after){ServerWorld world=world(server,n.dimension);if(world==null)world=server.getOverworld();RpDiagnostics.event(world,RpDiagnostics.typeIdForAsset("hunterlamp"),n.lamp.toString(),n.pos,action,before,after,"COMMITTED","explicit_network_edit");}
+ public static boolean route(MinecraftServer server,UUID from,UUID to,boolean open){LampState graph=state(server);LampState.Node source=graph.nodes.get(from);if(source==null)return false;boolean changed;if(open){if(graph.connected(from,to))return false;changed=graph.setConnection(LampState.LEGACY_LINE,from,to,false);}else changed=graph.unlink(LampState.LEGACY_LINE,from,to,false);return changed;}
  public static List<LampInfo> list(MinecraftServer server){List<LampInfo> out=new ArrayList<>();for(LampState.Node n:state(server).nodes.values()){if(out.size()>=RpConfig.INSTANCE.maxLampDestinations)break;out.add(new LampInfo(n.id,n.name));}return List.copyOf(out);}
  public record LampInfo(UUID id,String name){}
  private record Context(long token,UUID source,long expiresAt){}

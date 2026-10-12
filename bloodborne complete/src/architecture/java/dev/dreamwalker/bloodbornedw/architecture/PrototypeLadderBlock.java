@@ -48,6 +48,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
     public static final BooleanProperty FREESTANDING = BooleanProperty.of("freestanding");
     private final int fixedVariant;
     private final VoxelShape[] collision;
+    private final VoxelShape[] diagonalOutline;
     private final VoxelShape[] outline;
     private final VoxelShape[] sourcePhysical=new VoxelShape[8];
 
@@ -66,6 +67,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         this.fixedVariant=fixedVariant;
         JsonObject geometry = geometry();
         collision = shapes(geometry.getAsJsonArray("northCollision"));
+        diagonalOutline = shapes(geometry.getAsJsonArray("northCollision"),true);
         outline = shapes(geometry.getAsJsonArray("northOutline"));
         for(int yaw=0;yaw<8;yaw++)sourcePhysical[yaw]=cheapRotate(new Box(0,0,13/16.0,1,1,1),yaw);
         setDefaultState(getDefaultState().with(VARIANT, Math.max(0,fixedVariant)).with(PROFILE, Profile.BASE).with(DIAGONAL, false).with(SOURCE_CLONE, false).with(FREESTANDING,false));
@@ -85,15 +87,19 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         if(state.get(SOURCE_CLONE)&&next.isOf(this)&&!next.get(SOURCE_CLONE))world.removeBlockEntity(pos);
     }
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state);
+        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state,context);
+        if(state.get(DIAGONAL)&&!state.get(SOURCE_CLONE)&&!hasBackingMount(state,world,pos,0))return diagonalOutline[yaw(state)];
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:outline[yaw(state)];
     }
     @Override public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        // Angular sections are decorative/pass-through in every physical context,
+        // including old vertically shifted native owners.
+        if(state.get(DIAGONAL))return VoxelShapes.empty();
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,true,state,context);
-        if(state.get(DIAGONAL)&&context instanceof net.minecraft.block.EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity
-                &&(state.get(SOURCE_CLONE)||hasBackingMount(state,world,pos,0)))return VoxelShapes.empty();
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:collision[yaw(state)];
     }
+    /** Retained thin aiming outline, also used by saved vertically shifted owners. */
+    public VoxelShape ordinaryDiagonalOutline(BlockState state){return diagonalOutline[yaw(state)];}
     public VoxelShape climbingShape(BlockState state){return sourcePhysical[yaw(state)];}
     @Override public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) { return VoxelShapes.empty(); }
     @Override public BlockState getPlacementState(ItemPlacementContext context) {
@@ -225,6 +231,9 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         } catch (java.io.IOException failure) { throw new IllegalStateException("Cannot read prototype ladder geometry", failure); }
     }
     private static VoxelShape[] shapes(JsonArray boxes) {
+        return shapes(boxes,false);
+    }
+    private static VoxelShape[] shapes(JsonArray boxes,boolean thinDiagonal) {
         if (boxes == null || boxes.isEmpty() || boxes.size() > 5) throw new IllegalArgumentException("Invalid ladder collision budget");
         VoxelShape[] result = new VoxelShape[8];
         for (int yaw = 0; yaw < result.length; yaw++) {
@@ -234,7 +243,7 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
                 if (source.size() != 6) throw new IllegalArgumentException("Invalid ladder box");
                 Box box = new Box(source.get(0).getAsDouble() / 16, source.get(1).getAsDouble() / 16, source.get(2).getAsDouble() / 16,
                         source.get(3).getAsDouble() / 16, source.get(4).getAsDouble() / 16, source.get(5).getAsDouble() / 16);
-                shape = VoxelShapes.union(shape, cheapRotate(box, yaw));
+                shape = VoxelShapes.union(shape, thinDiagonal?RotatedSectionShape.rotate(box,yaw):cheapRotate(box, yaw));
             }
             result[yaw] = shape.simplify();
         }

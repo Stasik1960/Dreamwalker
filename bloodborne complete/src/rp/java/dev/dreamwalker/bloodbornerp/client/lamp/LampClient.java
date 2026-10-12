@@ -1,6 +1,7 @@
 package dev.dreamwalker.bloodbornerp.client.lamp;
 
 import dev.dreamwalker.bloodbornerp.lamp.LampService;
+import dev.dreamwalker.bloodbornedw.DreamwalkerBb;
 import io.netty.buffer.Unpooled;
 import java.util.*;
 import net.fabricmc.api.EnvType;
@@ -17,7 +18,7 @@ import net.minecraft.text.Text;
 public final class LampClient {
  private LampClient(){}
  public static void initialize(){ClientPlayNetworking.registerGlobalReceiver(LampService.LIST_PACKET,(client,handler,buf,response)->{
-  dev.dreamwalker.bloodbornerp.client.RpClientDiagnostics.network("receive",LampService.LIST_PACKET.toString(),buf.readableBytes());
+
   try{
    if(buf.readableBytes()<9||buf.readableBytes()>65536){fault("lamp_list_invalid_payload_bound");return;}
    long token=buf.readLong();int count=buf.readVarInt();if(count<0||count>256){fault("lamp_list_invalid_destination_count");return;}
@@ -28,9 +29,9 @@ public final class LampClient {
    int cooldown=buf.isReadable()?buf.readVarInt():0;boolean pending=buf.isReadable()&&buf.readBoolean();
    if(cooldown<0||cooldown>12000||buf.isReadable()){fault("lamp_list_invalid_status_or_trailing_bytes");return;}
    client.execute(()->{if(token==0&&entries.isEmpty()&&message.isBlank()){if(client.currentScreen instanceof LampScreen)client.setScreen(null);}else client.setScreen(new LampScreen(token,entries,source,message,cooldown,pending));});
-  }catch(RuntimeException failure){dev.dreamwalker.bloodbornerp.client.RpClientDiagnostics.error(null,"malformed_lamp_packet","lamp_list_atomic_decode_refused",failure);}
+  }catch(RuntimeException failure){DreamwalkerBb.LOG.warn("Unable to decode lamp destination packet", failure);}
  });}
- private static void fault(String reason){dev.dreamwalker.bloodbornerp.client.RpClientDiagnostics.error(null,"malformed_lamp_packet",reason,null);}
+ private static void fault(String reason){DreamwalkerBb.LOG.warn("Invalid lamp destination packet: {}", reason);}
  private record Entry(UUID id,String name){}
  /** No world pause. Source name is the exact clicked node, line names/UUIDs stay out of the player menu. */
  public static final class LampScreen extends Screen {
@@ -57,7 +58,7 @@ public final class LampClient {
    super.render(context,mouseX,mouseY,delta);
   }
   @Override public boolean mouseScrolled(double x,double y,double amount){if(amount!=0&&entries.size()>pageSize){int next=Math.max(0,Math.min((entries.size()-1)/pageSize,page+(amount<0?1:-1)));if(next!=page){page=next;clearAndInit();}return true;}return super.mouseScrolled(x,y,amount);}
-  private void travel(UUID id){if(pending||inFlight||cooldown>0||token==0)return;inFlight=true;PacketByteBuf out=new PacketByteBuf(Unpooled.buffer(24));out.writeUuid(id);out.writeLong(token);dev.dreamwalker.bloodbornerp.client.RpClientDiagnostics.network("send",LampService.TRAVEL_PACKET.toString(),out.readableBytes());ClientPlayNetworking.send(LampService.TRAVEL_PACKET,out);for(ButtonWidget b:destinations)b.active=false;}
-  @Override public void close(){if(token!=0){PacketByteBuf out=new PacketByteBuf(Unpooled.buffer(8));out.writeLong(token);dev.dreamwalker.bloodbornerp.client.RpClientDiagnostics.network("send",LampService.CANCEL_PACKET.toString(),8);ClientPlayNetworking.send(LampService.CANCEL_PACKET,out);}super.close();}
+  private void travel(UUID id){if(pending||inFlight||cooldown>0||token==0)return;inFlight=true;PacketByteBuf out=new PacketByteBuf(Unpooled.buffer(24));out.writeUuid(id);out.writeLong(token);ClientPlayNetworking.send(LampService.TRAVEL_PACKET,out);for(ButtonWidget b:destinations)b.active=false;}
+  @Override public void close(){if(token!=0){PacketByteBuf out=new PacketByteBuf(Unpooled.buffer(8));out.writeLong(token);ClientPlayNetworking.send(LampService.CANCEL_PACKET,out);}super.close();}
  }
 }

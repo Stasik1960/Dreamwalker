@@ -19,12 +19,6 @@ public final class RpCollisionShapes {
 
     /** Preserve the original list and shape objects; add each new exact box once. */
     public static List<VoxelShape> append(EntityView view, Entity mover, Box query, List<VoxelShape> original) {
-        net.minecraft.world.World world=view instanceof net.minecraft.world.World value?value:null;
-        long started=world==null?0:dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.begin(world,true);
-        try{return appendInternal(view,mover,query,original);}
-        finally{if(started!=0)dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.finish(world,null,mover==null?null:mover.getBlockPos(),"rp.collision_index_and_shared_working_volumes",started);}
-    }
-    private static List<VoxelShape> appendInternal(EntityView view,Entity mover,Box query,List<VoxelShape> original){
         List<VoxelShape> result = null;
         Set<Box> seen = null;
         for (RpObjectEntity object : RpObjectIndex.in(view, query)) {

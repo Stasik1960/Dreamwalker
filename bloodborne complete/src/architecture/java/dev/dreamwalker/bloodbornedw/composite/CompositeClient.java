@@ -24,7 +24,6 @@ public final class CompositeClient {
     private static boolean initialized;
     public static void initialize() {
         if(initialized)return; initialized=true;
-        dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
         ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}context.addModels(models);});
         BlockEntityRendererRegistry.register(CompositeArchitecture.CELL_ENTITY, context->new BlockEntityRenderer<CompositeBlockEntity>(){
@@ -43,9 +42,9 @@ public final class CompositeClient {
             double[] bounds=visualBounds(rendered,state);double span=Math.max(bounds[3]-bounds[0],Math.max(bounds[4]-bounds[1],bounds[5]-bounds[2]));float scale=(float)(.85/Math.max(1,span));
             matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null);matrices.pop();
         });
-        ClientPickBlockGatherCallback.EVENT.register((player,hit)->{if(hit instanceof BlockHitResult blockHit){long start=dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.shouldSample("client-process",blockHit.getBlockPos(),"pick-target")?System.nanoTime():0;var owner=CompositeRuntime.target(player.getWorld(),blockHit.getBlockPos(),player);if(start!=0)dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.measured("client-process",blockHit.getBlockPos(),"pick-target.wallElapsed",System.nanoTime()-start);if(owner!=null)return CompositeRuntime.pick(player.getWorld(),owner);}return net.minecraft.item.ItemStack.EMPTY;});
+        ClientPickBlockGatherCallback.EVENT.register((player,hit)->{if(hit instanceof BlockHitResult blockHit){var owner=CompositeRuntime.target(player.getWorld(),blockHit.getBlockPos(),player);if(owner!=null)return CompositeRuntime.pick(player.getWorld(),owner);}return net.minecraft.item.ItemStack.EMPTY;});
         ClientPlayNetworking.registerGlobalReceiver(CompositeNetworking.OWNERS,(client,handler,buffer,response)->{
-            dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.network("client","receive",CompositeNetworking.OWNERS.toString(),buffer.readableBytes());
+            ;
             SyncContext context=new SyncContext(CompositeNetworking.OWNERS);
             try{
                 OwnersPacket packet=decodeOwners(buffer,context);
@@ -59,17 +58,9 @@ public final class CompositeClient {
                 }});
             }catch(RuntimeException failure){context.error(failure);}
         });
-        ClientPlayNetworking.registerGlobalReceiver(CompositeNetworking.OWNERS_SELECTION,(client,handler,buffer,response)->{
-            dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.network("client","receive",CompositeNetworking.OWNERS_SELECTION.toString(),buffer.readableBytes());
-            SyncContext context=new SyncContext(CompositeNetworking.OWNERS_SELECTION);
-            try{
-                SelectionPacket packet=decodeSelection(buffer,context);
-                client.execute(()->{if(client.world!=null&&client.player!=null&&client.world.getRegistryKey().getValue().equals(packet.dimension()))CompositeRuntime.acceptServerSelection(client.world,client.player,packet.owner());});
-            }catch(RuntimeException failure){context.error(failure);}
-        });
+
     }
     private record OwnersPacket(Identifier dimension,Map<Cell,List<CompositeData.Contribution>> values){}
-    private record SelectionPacket(Identifier dimension,dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner owner){}
     /** Decode the complete packet before scheduling any mutation. Limits match the server's
      * 64-cell batch and vanilla's 1 MiB custom S2C payload ceiling; NBT retains its reader limit. */
     private static OwnersPacket decodeOwners(PacketByteBuf buffer,SyncContext context){
@@ -89,16 +80,7 @@ public final class CompositeClient {
         context.stage="trailing-bytes";if(buffer.isReadable())throw new IllegalArgumentException("Trailing owner packet bytes");
         return new OwnersPacket(dimension,Collections.unmodifiableMap(values));
     }
-    private static SelectionPacket decodeSelection(PacketByteBuf buffer,SyncContext context){
-        context.stage="packet-length";checkPacketLength(buffer);
-        context.stage="dimension-id";Identifier dimension=buffer.readIdentifier();
-        context.stage="selection-uuid";UUID uuid=buffer.readUuid();context.instanceId=uuid.toString();
-        context.stage="selection-registry-id";Identifier id=buffer.readIdentifier();context.registry=id;
-        context.stage="selection-root";context.root=buffer.readBlockPos();
-        context.stage="selection-registered-kind";requireCompositeKind(id);
-        context.stage="trailing-bytes";if(buffer.isReadable())throw new IllegalArgumentException("Trailing selection packet bytes");
-        return new SelectionPacket(dimension,new dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner(uuid,id.toString(),CompositeData.cell(context.root)));
-    }
+
     private static void checkPacketLength(PacketByteBuf buffer){if(buffer.readableBytes()<=0||buffer.readableBytes()>1_048_576)throw new IllegalArgumentException("Invalid custom S2C payload length");}
     private static List<CompositeData.Contribution> decodeContributions(NbtCompound tag,SyncContext context){
         requireTag(tag,"owners",NbtElement.LIST_TYPE);NbtList owners=tag.getList("owners",NbtElement.COMPOUND_TYPE);
@@ -135,19 +117,11 @@ public final class CompositeClient {
         final Identifier channel;String stage="header",instanceId="";Identifier registry;net.minecraft.util.math.BlockPos root;
         SyncContext(Identifier channel){this.channel=channel;}
         void error(RuntimeException failure){
-            // Some decoder exceptions include a tag's contents. Retain its class/location,
-            // never the packet or original exception message in the bounded error journal.
-            RuntimeException safe=new IllegalArgumentException("Rejected composite sync ("+failure.getClass().getSimpleName()+")");safe.setStackTrace(failure.getStackTrace());
-            var entry=registry==null?null:dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(registry);
-            String id=registry==null?"UNKNOWN":registry.toString();if(id.length()>160)id=id.substring(0,160);
-            dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.error(entry==null?"UNASSIGNED":entry.temporaryId(),instanceId,root,"COMPOSITE_SYNC_DECODE","Rejected "+channel.getPath()+" at "+stage+"; registry="+id,safe);
-        }
+            dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Rejected composite sync on {} at {} ({}): {}",channel,stage,root,failure.getClass().getSimpleName());
+    }
     }
     private static void renderParts(CompositeRootBlock block,BlockState state,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay,String instanceId,net.minecraft.util.math.BlockPos root){
         MinecraftClient client=MinecraftClient.getInstance();VertexConsumer consumer=consumers.getBuffer(block.spec.translucent?RenderLayer.getTranslucent():RenderLayer.getCutout());
-        boolean diagnostics=dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.enabled();
-        var entry=diagnostics?dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(state):null;String type=entry==null?"UNASSIGNED":entry.temporaryId();
-        long started=diagnostics&&dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.shouldSample(type,instanceId,root,"composite-render-parts")?System.nanoTime():0;
         matrices.push();rotate(matrices,.5,.5,.5,-state.get(CompositeRootBlock.ROTATION)*45,false);
         if(ThinWindowRootBlock.mount(state)!=ThinWindowRootBlock.Mount.VERTICAL){
             rotate(matrices,.5,.5,.5,ThinWindowRootBlock.mount(state)==ThinWindowRootBlock.Mount.FLOOR?90:-90,true);
@@ -160,9 +134,8 @@ public final class CompositeClient {
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
             var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
-            if(diagnostics)dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.visualModel(client.player==null?null:net.minecraft.registry.Registries.ITEM.getId(client.player.getMainHandStack().getItem()).toString(),state,instanceId,root,selectedModel,model,root==null?"inventory-render":"world-root-render");
             client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,1,1,1,light,overlay);matrices.pop();
-        }matrices.pop();if(started!=0)dev.dreamwalker.bloodbornedw.diagnostics.DwClientDiagnostics.measured(type,root,"composite-render-parts.wallElapsed.notGPU",System.nanoTime()-started);
+        }matrices.pop();
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
     private static double[] visualBounds(CompositeRootBlock block,BlockState state){double[] result={0,0,0,1,1,1};for(var bounds:block.spec.pose(state).selection()){result[0]=Math.min(result[0],bounds.from().x()/16);result[1]=Math.min(result[1],bounds.from().y()/16);result[2]=Math.min(result[2],bounds.from().z()/16);result[3]=Math.max(result[3],bounds.to().x()/16);result[4]=Math.max(result[4],bounds.to().y()/16);result[5]=Math.max(result[5],bounds.to().z()/16);}return result;}

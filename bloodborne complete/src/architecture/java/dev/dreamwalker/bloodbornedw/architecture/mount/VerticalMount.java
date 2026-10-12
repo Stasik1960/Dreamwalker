@@ -59,7 +59,10 @@ public final class VerticalMount {
         double amount=payload.getDouble(KEY);TreeMap<Cell,List<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box>> physical=new TreeMap<>(),selected=new TreeMap<>();
         boolean previous=RAW.get();RAW.set(true);
         try{
-            List<net.minecraft.util.math.Box> collision=payload.contains("NativeGeometry",10)?readBoxes(payload.getCompound("NativeGeometry"),"collision"):(amount!=0&&state.getBlock() instanceof PrototypeWallBlock wall?wall.rawCollision(state):state.getBlock().getCollisionShape(state,view,pos,ShapeContext.absent())).getBoundingBoxes();
+            // Old saves may cache the former coarse angular ladder collider.
+            // Its separately authored source backing cube is added below.
+            boolean angularLadder=state.getBlock() instanceof PrototypeLadderBlock&&state.get(PrototypeLadderBlock.DIAGONAL);
+            List<net.minecraft.util.math.Box> collision=angularLadder?List.of():payload.contains("NativeGeometry",10)?readBoxes(payload.getCompound("NativeGeometry"),"collision"):(amount!=0&&state.getBlock() instanceof PrototypeWallBlock wall?wall.rawCollision(state):state.getBlock().getCollisionShape(state,view,pos,ShapeContext.absent())).getBoundingBoxes();
             List<net.minecraft.util.math.Box> outline=payload.contains("NativeGeometry",10)?readBoxes(payload.getCompound("NativeGeometry"),"selection"):state.getBlock().getOutlineShape(state,view,pos,ShapeContext.absent()).getBoundingBoxes();
             for(var box:collision)distribute(box.offset(0,amount,0),physical);
             for(var box:outline)distribute(box.offset(0,amount,0),selected);
@@ -108,9 +111,6 @@ public final class VerticalMount {
         payload.putDouble(KEY,amount);payload.putBoolean("MountEdited",true);boolean previous=HEIGHT_EDIT.get();HEIGHT_EDIT.set(true);
         try{
             var result=CompositeRuntime.transitionPayload(world,own.resident(),state,payload,player);
-            if(dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.enabled(world))dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.record(world,
-                dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.type(state),own.resident().instanceId().toString(),root,"height",
-                Map.of("verticalOffset",before),Map.of("verticalOffset",amount,"fixedRoot",root.toShortString()),result.outcome().name(),result.reason());
             return result.outcome()==TransactionCore.Outcome.COMMITTED;
         }
         finally{HEIGHT_EDIT.set(previous);}

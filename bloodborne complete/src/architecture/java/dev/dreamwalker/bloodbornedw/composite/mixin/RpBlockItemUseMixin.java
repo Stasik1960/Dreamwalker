@@ -1,6 +1,5 @@
 package dev.dreamwalker.bloodbornedw.composite.mixin;
 
-import dev.dreamwalker.bloodbornedw.architecture.BuildingTool;
 import dev.dreamwalker.bloodbornerp.object.RpObjectEntity;
 import dev.dreamwalker.bloodbornerp.object.ObjectRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -21,7 +20,7 @@ public abstract class RpBlockItemUseMixin {
     @Inject(method="doItemUse",at=@At("HEAD"))
     private void dreamwalker$blockBehindRp(CallbackInfo ci){
         MinecraftClient client=(MinecraftClient)(Object)this;
-        if(client.player==null||client.interactionManager==null||BuildingTool.isHeld(client.player)||!(client.crosshairTarget instanceof EntityHitResult entityHit)||!(entityHit.getEntity() instanceof RpObjectEntity))return;
+        if(client.player==null||client.interactionManager==null||!(client.crosshairTarget instanceof EntityHitResult entityHit)||!(entityHit.getEntity() instanceof RpObjectEntity))return;
         if(!(client.player.getMainHandStack().getItem() instanceof BlockItem)&&!(client.player.getOffHandStack().getItem() instanceof BlockItem)
                 &&!ObjectRegistry.isPlacementItem(client.player.getMainHandStack())&&!ObjectRegistry.isPlacementItem(client.player.getOffHandStack()))return;
         HitResult nativeHit=client.player.raycast(client.interactionManager.getReachDistance(),1,false);
