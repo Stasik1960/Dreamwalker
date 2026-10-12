@@ -35,6 +35,7 @@ JAVA_HOME17 должен указывать на Java 17; JAVA_HOME исполь
 Полная команда запуска находится в HANDOFF-RU.md и использует параметры
 --server-bootstrap build/v127-server-bootstrap
 --server-launcher build/v127-server-bootstrap/fabric-server-launch.jar
+--accepted-eula-file <существующий принятый eula.txt с eula=true>
 Сам полный импорт остаётся выключен до отдельной явной команды владельца.
 
 Снятые из каталога авторские поверхности исходной карты сохраняются скрытой

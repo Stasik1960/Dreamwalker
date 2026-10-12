@@ -23,7 +23,7 @@ VERSION = "0.1.0-v12.7-final"
 JAR = ROOT / f"build/libs/dreamwalker-bb-fabric-1.20.1-{VERSION}.jar"
 DEST = REPO / "releases/Dreamwalker-BB/v12.7-final"
 BLOCKBENCH = ROOT / "build/Dreamwalker-BB-V12.7-New-Blockbench-Assets.zip"
-RUNTIME_PLAN = ROOT / "build/v127-runtime-conversion"
+RUNTIME_PLAN = ROOT / "build/v127-runtime-conversion-final"
 SOURCE_HASHES = {
     "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
     "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",

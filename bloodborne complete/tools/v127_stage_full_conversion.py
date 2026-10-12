@@ -50,7 +50,7 @@ def entities_export(dest):
 def runtime_bundle(plan,runtime):
     # Never leave partially rewritten streams looking like an accepted plan.
     with sqlite3.connect(f'file:{plan.resolve()}?mode=ro',uri=True) as con:
-        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Runtime export is blocked while known visible source-style preservation is awaiting a user decision'
+        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(O/'source-style-policy.json'),'Runtime export is blocked unless the finalized visible source-style policy and its SHA match the source plan'
     ordinary_ancestors(runtime);runtime=runtime.absolute();assert not runtime.exists(),'Runtime export must use a fresh absent directory'
     temp=runtime.with_name(runtime.name+'.export-'+uuid.uuid4().hex);export_runtime(plan,temp);rows=entities_export(temp);p=temp/'manifest.json';m=json.loads(p.read_text(encoding='utf-8-sig'));m['runtimeFiles']={f.name:sha(f) for f in temp.glob('*.jsonl.gz')};m['deferredEntityCount']=len(rows);m['offlinePhaseRequiredBeforeServer']=True;dump(p,m);os.replace(temp,runtime);return m
 def ordinary_ancestors(path):
@@ -79,6 +79,7 @@ def stage(plan,runtime,target,execute):
     policy=O/'source-style-policy.json';assert summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(policy),'Final source-style policy/status/hash differs from the complete source plan'
     if runtime.exists():
         bundle=json.loads((runtime/'manifest.json').read_text(encoding='utf-8-sig'));assert bundle['status']=='PASS_COMPLETE_SOURCE_PLAN' and bundle['sourcePlanSha256']==sha(plan),'Stale runtime bundle'
+        assert bundle.get('sourceStylePolicy')==summary['sourceStylePolicy'] and bundle.get('sourceStylePolicySha256')==summary['sourceStylePolicySha256']==sha(policy),'Runtime bundle source-style policy/status/hash differs'
         for name,digest in bundle['runtimeFiles'].items():assert PurePosixPath(name).name==name and sha(runtime/name)==digest,'Runtime stream hash mismatch'
     else:bundle=runtime_bundle(plan,runtime)
     target.parent.mkdir(parents=True,exist_ok=True);target.mkdir();operation=str(uuid.uuid4())
