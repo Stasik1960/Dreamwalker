@@ -373,6 +373,7 @@ public final class CompositeRuntime {
         Map<String,Runnable> tasks=PENDING.remove(world);if(tasks!=null)for(Runnable task:tasks.values())task.run();
     }
     public static void chunkLoaded(ServerWorld world,ChunkPos chunk){
+        CompositeLedger.get(world).prepareChunk(chunk);
         queue(world,"imported-type-migration-chunk:"+chunk.toLong(),()->ImportedTypeMigration.loadedChunk(world,chunk));
         queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
         queue(world,"imported-physical-migration-chunk:"+chunk.toLong(),()->ImportedCollisionMigration.loadedChunk(world,chunk));

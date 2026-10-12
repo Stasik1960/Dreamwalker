@@ -27,6 +27,7 @@ public final class ImportedCollisionMigration {
         final Map<Long, Set<Owner>> chunks = new HashMap<>();
         State(ServerWorld world) {
             var ledger = CompositeLedger.get(world);
+            if(ledger.sharded())return; // Incremental exact root-shard membership below.
             for (Cell cell : ledger.cells()) for (var entry : ledger.at(cell)) if (imported(entry.owner())) {
                 before.computeIfAbsent(entry.owner(), unused -> new TreeMap<>()).put(cell.subtract(entry.owner().root()), entry.shape());
                 chunks.computeIfAbsent(chunk(cell), unused -> new HashSet<>()).add(entry.owner());
@@ -54,6 +55,28 @@ public final class ImportedCollisionMigration {
         return ImportedTypeMigration.pending(world, owner) || RETIRED.contains(owner.registryId()) || imported(owner) && state(world).before.containsKey(owner);
     }
     public static void forget(ServerWorld world) { WORLDS.remove(world); }
+    /** Root-shard index retains all old occupied cells for a future author
+     * collision replacement, including cells outside the first loaded chunk. */
+    public static void shardLoaded(ServerWorld world,Map<Cell,List<CompositeData.Contribution>> cells) {
+        if(!CompositeLedger.get(world).sharded())return;var owners=new HashSet<Owner>();
+        for(var entries:cells.values())for(var entry:entries)if(imported(entry.owner()))owners.add(entry.owner());
+        var state=state(world);
+        for(var entry:CompositeLedger.get(world).savedShardMemberships(owners).entrySet()) {
+            state.before.put(entry.getKey(),new TreeMap<>(entry.getValue()));
+            var keys=new HashSet<Long>();keys.add(chunk(entry.getKey().root()));
+            for(var offset:entry.getValue().keySet())keys.add(chunk(entry.getKey().root().add(offset)));
+            for(long key:keys)state.chunks.computeIfAbsent(key,ignored->new HashSet<>()).add(entry.getKey());
+        }
+    }
+    public static void shardUnloaded(ServerWorld world,long unloaded) {
+        var state=WORLDS.get(world);if(state==null)return;var expired=new HashSet<Owner>();
+        for(var owner:state.chunks.getOrDefault(unloaded,Set.of())) {
+            var mask=state.before.get(owner);boolean attached=mask!=null&&mask.keySet().stream().map(owner.root()::add).anyMatch(cell->chunk(cell)!=unloaded&&loaded(world,cell));
+            if(!attached)expired.add(owner);
+        }
+        for(var owner:expired)state.before.remove(owner);
+        for(var iterator=state.chunks.entrySet().iterator();iterator.hasNext();) {var row=iterator.next();row.getValue().removeAll(expired);if(row.getValue().isEmpty())iterator.remove();}
+    }
     /** A committed type migration already rebuilt this owner's complete saved membership. */
     public static void discardOwner(ServerWorld world, Owner owner) {
         State state = WORLDS.get(world); if (state != null) state.done(owner);

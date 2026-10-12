@@ -25,6 +25,7 @@ public final class CompositeClient {
     public static void initialize() {
         if(initialized)return; initialized=true;
         RemainingSourceTint.initialize();
+        ImportedCompactClient.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
         dev.dreamwalker.bloodbornedw.tool.NativeAlternateVisualClient.initialize();
         ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}models.addAll(ImportedStairLegacyArt.models());context.addModels(models);});

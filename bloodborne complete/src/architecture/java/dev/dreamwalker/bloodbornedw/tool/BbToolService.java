@@ -105,6 +105,17 @@ public final class BbToolService {
         if(!canEdit(player)||Math.abs(delta)!=1||!target.valid(player.getServer()))return false;
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp)return rp.setVerticalOffset(rp.verticalOffset()+delta,player);
         if(target.kind()==ToolTarget.Kind.ARCHITECTURE){var world=target.world(player.getServer());var root=BlockPos.fromLong(target.root());return VerticalMount.setOffset(world,root,VerticalMount.offset(world,root)+delta,player);}
+        if(target.kind()==ToolTarget.Kind.BLOCK){
+            var world=target.world(player.getServer());var root=BlockPos.fromLong(target.root());var state=world.getBlockState(root);
+            if(ImportedCompactBlock.compact(state)){
+                NbtCompound commands=ToolCommands.get(player.getServer()).writeNbt(new NbtCompound());
+                var owner=ImportedCompactBlock.materialize(world,root,player);if(owner==null)return false;
+                var own=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,target.dimension(),owner.instanceId(),root.asLong(),owner.registryId());
+                ToolCommands.restoreBlockRetarget(player.getServer(),commands,target,own);
+                return VerticalMount.setOffset(world,root,VerticalMount.offset(world,root)+delta,player);
+            }
+            return UtilityToolMoves.move(player,target,delta);
+        }
         if(target.kind()==ToolTarget.Kind.ENTITY){var entity=target.entity(player.getServer());var next=entity.getBoundingBox().offset(0,delta,0);if(dev.dreamwalker.bloodbornerp.object.RpPlacementRules.bounds(entity.getWorld(),next)!=null)return false;entity.refreshPositionAfterTeleport(entity.getX(),entity.getY()+delta,entity.getZ());return true;}
         return false;
     }

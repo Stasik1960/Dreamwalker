@@ -42,7 +42,7 @@ public final class PlacementPhysics {
                         BlockPos pos=new BlockPos(x,y,z);
                         if (!world.isChunkLoaded(pos)) return "unloaded_physical_cell:"+pos.toShortString();
                         BlockState state=world.getBlockState(pos);
-                        if (!(excludeOwner!=null&&pos.equals(CompositeData.pos(excludeOwner.root()))&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(state)) && !pos.equals(replacingNative) && !(state.getBlock() instanceof CompositeRootBlock) && !state.isOf(CompositeArchitecture.CELL))
+                        if (!(excludeOwner!=null&&pos.equals(CompositeData.pos(excludeOwner.root()))&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(state)) && !pos.equals(replacingNative) && (!(state.getBlock() instanceof CompositeRootBlock)||ImportedCompactBlock.compact(state)) && !state.isOf(CompositeArchitecture.CELL))
                             for (Box nativeBox : CompositeRuntime.nativeCollision(world,pos,ShapeContext.absent()).getBoundingBoxes())
                                 if (!NoCollidePlacement.ignoringBlocks()&&overlaps(box,nativeBox.offset(pos))&&!retainedIntersection(box,nativeBox.offset(pos),previous)) return "solid_native_overlap:"+pos.toShortString();
                         for (var contribution : CompositeRuntime.contributions(world,pos)) {

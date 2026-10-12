@@ -20,6 +20,7 @@ public final class ImportedTypeMigration {
         final Map<Long, Set<Owner>> chunks = new HashMap<>();
         State(ServerWorld world) {
             var ledger = CompositeLedger.get(world);
+            if(ledger.sharded())return; // Incremental exact root-shard membership below.
             for (Cell cell : ledger.cells()) for (var entry : ledger.at(cell))
                 if (ImportedTypeAliases.merged(entry.owner().registryId())
                         && (!ImportedTypeAliases.canonicalRegistry(entry.owner().registryId()).equals(entry.owner().registryId())
@@ -40,6 +41,31 @@ public final class ImportedTypeMigration {
         return ImportedTypeAliases.merged(owner.registryId()) && state(world).before.containsKey(owner);
     }
     public static void forget(ServerWorld world) { WORLDS.remove(world); }
+    /** Opt-in shards publish complete saved BEFORE membership, never the partial
+     * collection of cells from just the chunk that happened to load first. */
+    public static void shardLoaded(ServerWorld world,Map<Cell,List<CompositeData.Contribution>> cells) {
+        if(!CompositeLedger.get(world).sharded())return;Map<Owner,CompositeData.Contribution> candidates=new HashMap<>();
+        for(var entries:cells.values())for(var entry:entries)if(ImportedTypeAliases.merged(entry.owner().registryId())
+            &&(!ImportedTypeAliases.canonicalRegistry(entry.owner().registryId()).equals(entry.owner().registryId())
+                ||CompositeData.nbt(entry.rootData().blockEntityNbt()).getInt(ImportedTypeAliases.VERSION_KEY)<ImportedTypeAliases.VERSION))candidates.put(entry.owner(),entry);
+        var state=state(world);
+        for(var entry:CompositeLedger.get(world).savedShardMemberships(candidates.keySet()).entrySet()) {
+            state.before.put(entry.getKey(),new TreeMap<>(entry.getValue()));
+            var keys=new HashSet<Long>();keys.add(chunk(entry.getKey().root()));
+            for(var offset:entry.getValue().keySet())keys.add(chunk(entry.getKey().root().add(offset)));
+            for(long key:keys)state.chunks.computeIfAbsent(key,ignored->new LinkedHashSet<>()).add(entry.getKey());
+        }
+    }
+    public static void shardUnloaded(ServerWorld world,long unloaded) {
+        var state=WORLDS.get(world);if(state==null)return;
+        var expired=new HashSet<Owner>();
+        for(var owner:state.chunks.getOrDefault(unloaded,Set.of())) {
+            var mask=state.before.get(owner);boolean attached=mask!=null&&mask.keySet().stream().map(owner.root()::add).anyMatch(cell->chunk(cell)!=unloaded&&loaded(world,cell));
+            if(!attached)expired.add(owner);
+        }
+        for(var owner:expired)state.before.remove(owner);
+        for(var iterator=state.chunks.entrySet().iterator();iterator.hasNext();) {var row=iterator.next();row.getValue().removeAll(expired);if(row.getValue().isEmpty())iterator.remove();}
+    }
     /** Deferred server mutation queue only, after the loading chunk's FULL future. */
     public static void loadedChunk(ServerWorld world, ChunkPos chunk) {
         State state = state(world);

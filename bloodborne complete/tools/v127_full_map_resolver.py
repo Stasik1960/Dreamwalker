@@ -22,7 +22,10 @@ class CurrentResolver(Resolver):
         for path in sorted((RES/'bloodborne_dw/composite').glob('*.json')):
             spec=json.loads(path.read_text(encoding='utf-8-sig'));reg=spec['id'];self.current[reg]=spec
             carrier=spec.get('source',{}).get('carrier')
-            if carrier and not spec['source'].get('profileModel'):self.carriers[carrier]=reg
+            if carrier and not spec['source'].get('profileModel'):
+                mapping=self.maps.get((reg,0));canonical=mapping['newRegistryId'] if mapping else reg
+                follow=self.follow.get((canonical,mapping['newVariant'] if mapping else 0))
+                self.carriers[carrier]=follow['newRegistryId'] if follow else canonical
             frozen=len(self.baseline['descriptors'].get(path.stem,{}).get('variants',[]))
             for vi,v in enumerate(spec['variants']):
                 if vi<frozen:continue
@@ -54,6 +57,10 @@ class CurrentResolver(Resolver):
         names={a['model'] for a in apps}
         if not apps:return {'action':'REMOVE','reason':'SOURCE_BLOCKSTATE_NO_APPLICABLE_BRANCH','sourceCarrier':carrier}
         if names<=self.transparent|self.empty:return {'action':'REMOVE','reason':'SOURCE_ALL_PIXEL_ALPHA_ZERO' if names&self.transparent else 'SOURCE_EMPTY_GEOMETRY','models':sorted(names)}
+        if carrier=='minecraft:jungle_trapdoor':return {'action':'REMOVE','reason':'USER_REMOVED_DAMAGED_SOURCE_TYPE','models':sorted(names)}
+        if carrier=='minecraft:potted_spruce_sapling':return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE','models':sorted(names)}
+        if any(self.classifications.get(name,{}).get('kind')=='INTENTIONAL_EXCLUSION' for name in names):return {'action':'REMOVE','reason':'PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION','models':sorted(names)}
+        if any(name=='minecraft:block/diorite_wall_side_tall' for name in names):return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL','models':sorted(names)}
         if self.carriers.get(carrier) in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_CARRIER','retiredRegistryId':self.carriers[carrier],'models':sorted(names)}
         result=self.resolve(apps)
         if result['resolution'].startswith('EXACT'):

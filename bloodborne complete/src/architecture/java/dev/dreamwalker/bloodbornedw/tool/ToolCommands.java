@@ -78,4 +78,9 @@ public final class ToolCommands extends PersistentState {
     @Override public NbtCompound writeNbt(NbtCompound n){var entries=new NbtList();for(var b:this.entries.values()){var tag=new NbtCompound();tag.put("Target",b.target.write());if(b.storageKey!=null&&!b.storageKey.equals(b.target.key()))tag.putString("AssemblyStorageKey",b.storageKey);tag.putString("Commands",b.text);tag.putInt("PersonalLimit",b.personalLimit);tag.putInt("GlobalLimit",b.globalLimit);tag.putInt("GlobalUsed",b.globalUsed);var players=new NbtList();b.personal.forEach((uuid,used)->{var player=new NbtCompound();player.putUuid("UUID",uuid);player.putInt("Used",used);players.add(player);});tag.put("Players",players);entries.add(tag);}n.put("Entries",entries);return n;}
     /** Transaction snapshot application preserves each imported binding's own counters. */
     public static void restoreAssemblyMigration(MinecraftServer server,NbtCompound n){var state=get(server);state.entries.clear();state.entries.putAll(read(n).entries);state.markDirty();}
+    /** A native palette/utility block becomes or moves an object; retain every
+     * binding's typed text, limits, player counters and unrelated entries. */
+    public static void restoreBlockRetarget(MinecraftServer server,NbtCompound snapshot,ToolTarget before,ToolTarget after){
+        NbtCompound next=snapshot.copy();for(NbtElement raw:next.getList("Entries",NbtElement.COMPOUND_TYPE)){var row=(NbtCompound)raw;var old=ToolTarget.read(row.getCompound("Target"));if(old.kind()==ToolTarget.Kind.BLOCK&&old.dimension().equals(before.dimension())&&old.root()==before.root()&&old.registry().equals(before.registry()))row.put("Target",after.write());}restoreAssemblyMigration(server,next);
+    }
 }

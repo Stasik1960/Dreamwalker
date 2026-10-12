@@ -83,13 +83,25 @@ def dependency_closure(art,models):
     for identifier in models:model(identifier)
     return documents,textures
 
-def make_bbmodel(art,quads,key,name):
+def embedded_texture(art,identifier,tint=None):
+    original=art.blob(identifier,'textures')[1]
+    if tint is None:return original
+    rgba=art.image(identifier).copy();rgba[...,:3]=(rgba[...,:3].astype(float)*np.asarray(tint)).astype(np.uint8)
+    stream=io.BytesIO();Image.fromarray(rgba).save(stream,format='PNG');return stream.getvalue()
+
+def runtime_tint(spec,index,pose,profile):
+    if profile!='alt':return None
+    parts=spec['variants'][index]['poses'].get(pose,spec['variants'][index]['poses']['closed'])['parts']
+    return None if any(p.get('altModel',p['model'])!=p['model'] for p in parts) else [.60,.67,.72]
+
+def make_bbmodel(art,quads,key,name,tint=None):
     identifiers=list(dict.fromkeys(q[2] for q in quads));textures=[]
     for i,identifier in enumerate(identifiers):
-        relative,blob=art.blob(identifier,'textures');image=art.image(identifier);height,width=image.shape[:2]
+        relative,original=art.blob(identifier,'textures');blob=embedded_texture(art,identifier,tint);image=art.image(identifier);height,width=image.shape[:2]
         textures.append({'name':identifier,'uuid':uid(key+'/texture/'+identifier),'id':str(i),'width':width,'height':height,
             'uv_width':16,'uv_height':16,'source':'data:image/png;base64,'+base64.b64encode(blob).decode(),
-            'internal':True,'mode':'bitmap','visible':True,'render_mode':'default','render_sides':'auto'})
+            'internal':True,'mode':'bitmap','visible':True,'render_mode':'default','render_sides':'auto',
+            'dreamwalker_originalPNG_SHA256':digest(original),'dreamwalker_runtimeALTPreviewTint':tint})
     elements=[]
     # Preserve each face's native cyclic vertices, including coincident UV seams.
     # Quad-local vertex identities prevent Blockbench welding authored seams.
@@ -106,6 +118,7 @@ def make_bbmodel(art,quads,key,name):
         'model_identifier':key,'resolution':{'width':16,'height':16},'elements':elements,
         'outliner':[e['uuid'] for e in elements],'textures':textures,
         'dreamwalker_handoff':{'unitsPerBlock':16,'exactRenderedGeometry':True,'perTextureUVUnits':16,
+            'runtimeALTVertexMultiplierPreview':tint,'authoredSourcePNGsUnchangedInSourceJava':True,
             'blockbenchFormatSource':'https://blockbench.net/wiki/docs/bbmodel/',
             'minecraftGenericMeshCaveat':'Keep the included original Java JSON for game reimport; arbitrary composite rotations cannot be exported directly as one legal Java block cube model.'}}
 
@@ -118,7 +131,9 @@ def verify_bbmodel(art,quads,project):
     actual=sorted(digest(p.astype('<f8').tobytes()+u.astype('<f8').tobytes()+t.encode()) for p,u,t in restored)
     assert actual==expected,'BBMODEL quad vertex/UV roundtrip mismatch'
     for texture in textures:
-        blob=base64.b64decode(texture['source'].split(',',1)[1]);assert blob==art.blob(texture['name'],'textures')[1]
+        blob=base64.b64decode(texture['source'].split(',',1)[1]);tint=texture.get('dreamwalker_runtimeALTPreviewTint')
+        assert blob==embedded_texture(art,texture['name'],tint)
+        assert texture['dreamwalker_originalPNG_SHA256']==digest(art.blob(texture['name'],'textures')[1])
     return len(restored)
 
 def composite(frame):
@@ -209,9 +224,11 @@ def export_pass(args,rows,art):
                 for pose in variant['poses']:
                     for profile in ('base','alt'):
                         key=f"{row['id']}/pose-{i:03d}/{pose}-{profile}";quads=quads_for(art,spec,i,pose,profile)
-                        project=make_bbmodel(art,quads,key,spec['displayName']);checked+=verify_bbmodel(art,quads,project)
+                        tint=runtime_tint(spec,i,pose,profile)
+                        project=make_bbmodel(art,quads,key,spec['displayName'],tint);checked+=verify_bbmodel(art,quads,project)
                         relative='editable/'+key+'.bbmodel';blob=json.dumps(project,ensure_ascii=False,separators=(',',':')).encode('utf-8')
-                        z.writestr(relative,blob);entries.append({'pose':i,'state':pose,'profile':profile,'project':relative,'sha256':digest(blob),'quads':len(quads)})
+                        z.writestr(relative,blob);entries.append({'pose':i,'state':pose,'profile':profile,'project':relative,'sha256':digest(blob),'quads':len(quads),
+                            'runtimeALTVertexMultiplierPreview':tint,'originalTextureSHA256s':{t:digest(art.blob(t,'textures')[1]) for t in sorted({q[2] for q in quads})}})
             relative='runtime-descriptors/'+row['id']+'.json';blob=json.dumps(spec,ensure_ascii=False,indent=2).encode('utf-8');z.writestr(relative,blob)
             default=quads_for(art,spec,indices[0]);points=np.asarray([q[0] for q in default]).reshape(-1,3)
             flat=any(abs(v)<1e-7 for v in np.ptp(points,axis=0));plain=(len(default)==6 and len(spec['variants'][indices[0]]['poses']['closed']['parts'])==1)

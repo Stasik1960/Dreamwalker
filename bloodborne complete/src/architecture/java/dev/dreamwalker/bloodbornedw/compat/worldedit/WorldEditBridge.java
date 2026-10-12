@@ -206,7 +206,7 @@ public final class WorldEditBridge {
                 NbtCompound data=new NbtCompound();data.putString("id",id);data.putUuid("UUID",UUID.randomUUID());NbtList location=new NbtList();location.add(NbtDouble.of(p.getX()));location.add(NbtDouble.of(p.getY()));location.add(NbtDouble.of(p.getZ()));data.put("Pos",location);rpAdd.add(data);
             } else if(own(id)&&Registries.BLOCK.containsId(new Identifier(id))) {
                 BlockState state=Registries.BLOCK.get(new Identifier(id)).getDefaultState();for(var entry:value.getStates().entrySet())state=with(state,state.getBlock().getStateManager().getProperty(entry.getKey().getName()),entry.getValue().toString());
-                if(VerticalMount.isArchitecture(state))add.add(CompositeRuntime.instance(world,p,state,UUID.randomUUID(),new NbtCompound()));
+                if(VerticalMount.isArchitecture(state)&&!ImportedCompactBlock.compact(state))add.add(CompositeRuntime.instance(world,p,state,UUID.randomUUID(),new NbtCompound()));
                 else {for(Owner owner:remove)if(CompositeRuntime.remove(world,owner,null,false).outcome()!=TransactionCore.Outcome.COMMITTED)throw new InputParseException("Cannot remove BB owner");for(RpObjectEntity e:rp)e.removeObject();return super.setBlock(v,value);}
             }
             var result=WorldEditObjectTransactions.replace(world,remove,add);

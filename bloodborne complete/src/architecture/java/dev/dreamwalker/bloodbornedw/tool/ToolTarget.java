@@ -34,6 +34,10 @@ public record ToolTarget(Kind kind,String dimension,UUID uuid,long root,String r
             entity instanceof RpObjectEntity rp?rp.assetId():Registries.ENTITY_TYPE.getId(entity.getType()).toString());
     }
     public static ToolTarget block(ServerWorld world,BlockPos clicked,PlayerEntity player){
+        var clickedState=world.getBlockState(clicked);
+        // The marker is the requested native target even if another object's
+        // visual contribution passes through this permissive carrier.
+        if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(clickedState)||ImportedCompactBlock.compact(clickedState))return new ToolTarget(Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,clicked.asLong(),Registries.BLOCK.getId(clickedState.getBlock()).toString());
         var owner=CompositeRuntime.target(world,clicked,player);
         if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,clicked);
         if(owner!=null)return new ToolTarget(Kind.ARCHITECTURE,world.getRegistryKey().getValue().toString(),owner.instanceId(),CompositeData.pos(owner.root()).asLong(),owner.registryId());
@@ -49,7 +53,7 @@ public record ToolTarget(Kind kind,String dimension,UUID uuid,long root,String r
         if(kind==Kind.RP||kind==Kind.ENTITY){var entity=entity(server);return entity!=null&&!entity.isRemoved()
             &&(kind==Kind.RP?entity instanceof RpObjectEntity rp&&rp.assetId().equals(registry):Registries.ENTITY_TYPE.getId(entity.getType()).toString().equals(registry));}
         var pos=BlockPos.fromLong(root);if(!world.isChunkLoaded(pos))return false;
-        if(kind==Kind.BLOCK)return Registries.BLOCK.getId(world.getBlockState(pos).getBlock()).toString().equals(registry);
+        if(kind==Kind.BLOCK){var state=world.getBlockState(pos);return Registries.BLOCK.getId(state.getBlock()).toString().equals(registry)&&(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)||ImportedCompactBlock.compact(state)||VerticalMount.owner(world,pos)==null);}
         var owner=VerticalMount.owner(world,pos);return owner!=null&&owner.instanceId().equals(uuid)&&ImportedTypeAliases.equivalent(owner.registryId(),registry);
     }
     public Vec3d position(MinecraftServer server){var entity=entity(server);if(entity!=null)return entity.getPos();var world=world(server);var pos=BlockPos.fromLong(root);return Vec3d.ofBottomCenter(pos).add(0,kind==Kind.ARCHITECTURE&&world!=null?VerticalMount.offset(world,pos):0,0);}

@@ -23,7 +23,7 @@ public final class NoCollidePlacement {
     private NoCollidePlacement() {}
     public static void initialize(){
         if(initialized)return;initialized=true;
-        CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(literal("bb")
+        CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(literal("bb").requires(source->source.getEntity() instanceof ServerPlayerEntity player&&BuildPermissions.canEdit(player))
             .then(literal("no-collide").requires(source->source.hasPermissionLevel(2)).executes(context->{
                 ServerPlayerEntity player=context.getSource().getPlayerOrThrow();
                 if(!arm(player)){context.getSource().sendError(Text.literal("Нужен размещаемый блок Dreamwalker BB в основной руке."));return 0;}

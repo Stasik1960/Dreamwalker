@@ -25,6 +25,7 @@ public final class CompositeSourceShift {
     }
     public static Shift world(BlockState state,NbtCompound payload){return local(payload).rotate(state.get(CompositeRootBlock.ROTATION));}
     public static Map<Cell,Footprint> footprint(CompositeSpec spec,BlockState state,NbtCompound payload){
+        if(ImportedFullMapCollisionV127.supports(spec,state)){Shift shift=world(state,payload);double offset=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedFullMapCollisionV127.footprint(spec,state,offset,shift.x,shift.y,shift.z);}
         if(ImportedCollisionV126.supports(spec)){Shift shift=world(state,payload);double offset=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedCollisionV126.footprint(spec,state,offset,shift.x,shift.y,shift.z);}
         if(ImportedCollisionV125.supports(spec)){Shift shift=world(state,payload);double offset=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedCollisionV125.footprint(spec,state,offset,shift.x,shift.y,shift.z);}
         Shift local=local(payload);double mount=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);

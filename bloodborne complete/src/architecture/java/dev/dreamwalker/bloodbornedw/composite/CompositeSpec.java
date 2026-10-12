@@ -47,9 +47,11 @@ public final class CompositeSpec {
         List<Variant> parsed = new ArrayList<>();
         for (JsonElement value : document.getAsJsonArray("variants")) {
             JsonObject row=value.getAsJsonObject(),poses = row.getAsJsonObject("poses"); Pose closed = pose(poses.getAsJsonObject("closed"));
-            Pose open = poses.has("open") ? pose(poses.getAsJsonObject("open")) : closed;
+            // Static objects repeat the same source pose in JSON. Share the
+            // immutable result only when every source field is exactly equal.
+            Pose open = poses.has("open")&&!poses.getAsJsonObject("open").equals(poses.getAsJsonObject("closed")) ? pose(poses.getAsJsonObject("open")) : closed;
             readSimpleRotations(closed,poses.getAsJsonObject("closed"));
-            if (poses.has("open")) readSimpleRotations(open,poses.getAsJsonObject("open"));
+            if (open!=closed) readSimpleRotations(open,poses.getAsJsonObject("open"));
             parsed.add(new Variant(closed, open,
                     row.has("visibleBounds")?bound(row.getAsJsonObject("visibleBounds")):null,
                     row.has("mountedPlaneBounds")?bound(row.getAsJsonObject("mountedPlaneBounds")):null,number(row,"mountAlignmentYaw",0)));
@@ -74,6 +76,7 @@ public final class CompositeSpec {
         return state.get(CompositeRootBlock.OPEN) ? variants.get(variant).open : variants.get(variant).closed;
     }
     public Map<Cell, Footprint> footprint(BlockState state, double mountY) {
+        if(ImportedFullMapCollisionV127.supports(this,state))return ImportedFullMapCollisionV127.footprint(this,state,mountY,0,0,0);
         if(ImportedCollisionV126.supports(this))return ImportedCollisionV126.footprint(this,state,mountY,0,0,0);
         if(ImportedCollisionV125.supports(this))return ImportedCollisionV125.footprint(this,state,mountY,0,0,0);
         String key = poseVariant(state) + ":" + state.get(CompositeRootBlock.OPEN) + ":" + state.get(CompositeRootBlock.ROTATION) + ":" + ThinWindowRootBlock.mount(state) + ":" + mountY;
@@ -154,6 +157,7 @@ public final class CompositeSpec {
     }
     /** Diagonal thin boxes use a 1/16-block conservative raster, never their filled AABB. */
     public Map<Cell,List<Box>> simplePhysicalFootprint(BlockState state,double mountY,double shiftX,double shiftY,double shiftZ) {
+        if(ImportedFullMapCollisionV127.supports(this,state))return ImportedFullMapCollisionV127.physicalFootprint(this,state,mountY,shiftX,shiftY,shiftZ);
         if(ImportedCollisionV126.supports(this))return ImportedCollisionV126.physicalFootprint(this,state,mountY,shiftX,shiftY,shiftZ);
         if(ImportedCollisionV125.supports(this))return ImportedCollisionV125.physicalFootprint(this,state,mountY,shiftX,shiftY,shiftZ);
         if(!simplePhysicalCollision)throw new IllegalArgumentException("Only newly imported defaults may use simple physical footprint");

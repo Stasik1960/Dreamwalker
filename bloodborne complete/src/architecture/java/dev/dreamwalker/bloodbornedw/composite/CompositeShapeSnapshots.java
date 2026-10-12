@@ -52,6 +52,10 @@ public final class CompositeShapeSnapshots {
         }
         synchronized void begin(){batchDepth++;}
         synchronized void end(){if(batchDepth<=0)throw new IllegalStateException("Unbalanced shape publication batch");batchDepth--;flush();}
+        synchronized void forgetChunk(long key){
+            if(batchDepth>0)throw new IllegalStateException("Cannot evict a shape shard during an atomic publication batch");
+            pending.keySet().removeIf(cell->chunk(cell)==key);Map<Long,Map<Cell,CellData>> next=new HashMap<>(chunks);next.remove(key);chunks=Map.copyOf(next);
+        }
     }
     private static long chunk(Cell cell){return net.minecraft.util.math.ChunkPos.toLong(cell.x()>>4,cell.z()>>4);}
     private static synchronized Published cache(World world,boolean create){return create?WORLDS.computeIfAbsent(world,ignored->new Published()):WORLDS.get(world);}
@@ -78,6 +82,9 @@ public final class CompositeShapeSnapshots {
     public static void beginBatch(World world){cache(world,true).begin();}
     public static void endBatch(World world){cache(world,true).end();}
     public static synchronized void forget(World world){WORLDS.remove(world);}
+    /** Opt-in server shard eviction; worker readers retain an immutable old
+     * revision safely until their current query finishes, without disk access. */
+    public static void forgetChunk(World world,long chunk){Published cache=cache(world,false);if(cache!=null)cache.forgetChunk(chunk);}
     public static Map<String,Object> metrics(World world){Published cache=cache(world,false);if(cache==null)return Map.of("shapeSnapshotChunks",0,"shapeSnapshotCells",0,"shapeSnapshotPendingCells",0,"shapeSnapshotBatchDepth",0);synchronized(cache){var chunks=cache.chunks;return Map.of("shapeSnapshotChunks",chunks.size(),"shapeSnapshotCells",chunks.values().stream().mapToInt(Map::size).sum(),"shapeSnapshotPendingCells",cache.pending.size(),"shapeSnapshotBatchDepth",cache.batchDepth,"shapeSnapshotScope","immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries");}}
     private CompositeShapeSnapshots(){}
 }

@@ -21,7 +21,8 @@ public class CompositeRootBlock extends BlockWithEntity {
     public static final EnumProperty<Profile> PROFILE=EnumProperty.of("profile",Profile.class);
     public enum Profile implements StringIdentifiable{BASE("base"),ALT("alt");private final String name;Profile(String name){this.name=name;}public String asString(){return name;}}
     public final CompositeSpec spec;
-    public CompositeRootBlock(CompositeSpec spec){super(Settings.create().strength(.4F).nonOpaque().dynamicBounds().pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK));this.spec=spec;setDefaultState(getDefaultState().with(ROTATION,0).with(VARIANT,0).with(OPEN,false).with(PROFILE,Profile.BASE));}
+    public CompositeRootBlock(CompositeSpec spec){this(spec,Settings.create().strength(.4F).nonOpaque().dynamicBounds().pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK));}
+    protected CompositeRootBlock(CompositeSpec spec,Settings settings){super(settings);this.spec=spec;setDefaultState(getDefaultState().with(ROTATION,0).with(VARIANT,0).with(OPEN,false).with(PROFILE,Profile.BASE));}
     @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(ROTATION,VARIANT,OPEN,PROFILE);}
     @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new CompositeBlockEntity(pos,state);}
     @Override public BlockRenderType getRenderType(BlockState state){return BlockRenderType.INVISIBLE;}
