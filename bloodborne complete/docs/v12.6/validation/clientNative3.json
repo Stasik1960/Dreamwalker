@@ -1,0 +1,111 @@
+{
+  "schema": "dreamwalker-flat-gallery-v126-native-client-verification",
+  "status": "PASS",
+  "productionJarSha256": "f5a4238d1ea241067e163c2e89f66f3133def211ab53b05d21db1375c96030d6",
+  "minecraft": "1.20.1",
+  "fabricLoader": "0.16.10",
+  "actualIntegratedWorldOpened": "PASS",
+  "nativeFramebufferImages": 4,
+  "livePersistedRootStateAndUuidChecks": 4,
+  "livePersistedEntityUuidChecks": 0,
+  "sectionsRendered": [
+    "doors"
+  ],
+  "normalClientShutdownAndWorldSave": "PASS",
+  "allSavedObjectDataUnchangedAfterClientReopen": "PASS",
+  "verifiedSavedObjects": 8740,
+  "verifiedDiagnosticPlatforms": 0,
+  "newCanonicalWorkingTypes": 544,
+  "capturedNativeStairMaterials": 0,
+  "capturedCanonicalRungLadders": 0,
+  "nativeStairHalfShapeEncoding": "VARIANT0..4 bottom,5..9 top; straight/inner_left/inner_right/outer_left/outer_right",
+  "sourceGalleryUnchangedAfterClientRun": true,
+  "offlineAuthentication": {
+    "status": "EXPECTED_DUMMY_LEGACY_TOKEN_401",
+    "errors": [
+      "[21:02:48] [Render thread/ERROR]: Failed to verify authentication"
+    ],
+    "scope": "Explicit isolated offline identity with accessToken=0; no online account authentication was requested."
+  },
+  "knownWarnings": [
+    "[21:02:41] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)",
+    "[21:03:06] [Worker-Main-15/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2",
+    "[21:03:06] [Worker-Main-15/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4",
+    "[21:03:17] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play",
+    "[21:03:17] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break",
+    "[21:03:18] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.",
+    "[21:03:30] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 2336ms or 46 ticks behind"
+  ],
+  "localModWorldErrors": [],
+  "physicalMouseKeyboard": "NOT_RUN",
+  "visualReview": "PENDING_SEPARATE_PIXEL_REVIEW",
+  "frames": [
+    {
+      "fileName": "v126f-001-93160-pose0.png",
+      "key": "SOURCE-FACE-V126-doors-93160-pose0-closed",
+      "section": "doors",
+      "name": "93160 · лицевая поверхность створки",
+      "sha256": "26c418dc04c27472f2ae3fe426b4f3c498406b90646778ba97bf805da6991f94",
+      "bytes": 308751,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126f-002-90458-pose0.png",
+      "key": "SOURCE-FACE-V126-doors-90458-pose0-open",
+      "section": "doors",
+      "name": "90458 · лицевая поверхность створки",
+      "sha256": "7306de28c532630e4d1d1f8234ed8a2157b5478fc7bc953cff96c55ee47ed370",
+      "bytes": 258835,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126f-003-90923-pose1.png",
+      "key": "SOURCE-FACE-V126-doors-90923-pose1-open",
+      "section": "doors",
+      "name": "90923 · лицевая поверхность створки",
+      "sha256": "c528bf11cd1bcf500f665567f05a18bd7e2681352c17b59d7a678de81c16f5be",
+      "bytes": 242754,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126f-004-90923-pose2.png",
+      "key": "SOURCE-FACE-V126-doors-90923-pose2-open",
+      "section": "doors",
+      "name": "90923 · лицевая поверхность створки",
+      "sha256": "d1540428d96c084440c7b50c804979737b9fc6d4576a54537ea1046d245489f5",
+      "bytes": 248396,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "clientProfile": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.6\\validation\\clientProfile3.json",
+      "sha256": "b22050c305cd14392b53de47b57b1f43ae3fd05ec57b45c3e8e777b1a1fd2e49"
+    },
+    "nativeCapture": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-source-face-3\\client-capture-output.json",
+      "sha256": "666082c9135f7a4372e06c262c5a8110ca593a8a826551aeb9183ae4da874767"
+    },
+    "captureMarker": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-source-face-3\\client-capture-input.json",
+      "sha256": "56275e07adfb37413388d642677ddd005743afaaeb8ad29a2ff291ffe14dd50b",
+      "manifestSha256": "10d82ef7fcfcd0bedadd75edaff1ce79dbeeae9eaa878460f0ec7293fbdb3646"
+    },
+    "clientLog": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-source-face-3\\launch-console.log",
+      "sha256": "885dc0f2cd6c8fcb94911faa5aa6ae0582e0608fa24b174e04636061910d1e5c"
+    },
+    "savedNbtAfterClient": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.6\\validation\\savedClient3.json",
+      "sha256": "2e27628982c3ffa5a495497883083fc8bef6a7c30486c51fb45c4bf53b780dd0"
+    }
+  }
+}

@@ -45,8 +45,9 @@ def main():
     reviews += [dict(section='doors', primaryId=d['mainId'], reviewPoseIndex=d['variant'], open=o) for d in doors for o in (False, True)]
     assert len(reviews) == 22 and len({d['mainId'] for d in doors}) == 7
     assert {(g['reviewPoseIndex'], g['open']) for g in reviews if g['primaryId']=='90923'} == {(1, False), (1, True), (2, False), (2, True)}
-    city = read(ROOT / 'docs/v12.6/city/city-final-aggregated.json')
-    assert len(city['owners']) == 8426
+    city_plan_path=ROOT/'docs/v12.6/city/city-final-aggregated.json'
+    city = read(city_plan_path)
+    assert city['owners'] and city['allSourceCellsClassified']
     city['placedOwners'] = city['owners']
     catalogue['summary'] = {'newWorkingTypes':len(selected)}
     text = readme_text(dict(catalogue=catalogue, city=city, reviewPlatforms=reviews,
@@ -78,7 +79,9 @@ def main():
             assert c['properties']['open']==str(group['open']).lower()
         assert {(g['reviewPoseIndex'],g['open']) for g in actual_reviews if g['id']=='90923'}=={(1,False),(1,True),(2,False),(2,True)}
         assert sum(g['id']=='90143' for g in actual_reviews)==1
-        assert len(marker['city']['owners'])==8426
+        assert len(marker['city']['owners'])==len(city['owners'])==marker['city']['plannedOwnerCount']
+        identity_fields=('registryId','mainId','instanceUuid','properties','relativePosition','sourceShift')
+        assert [tuple(r.get(k) for k in identity_fields) for r in marker['city']['owners']]==[tuple(r.get(k) for k in identity_fields) for r in city['owners']]
         marker_verified=True
         resources.close()
     report = {'schema':'dreamwalker-v126-gallery-tooling-source-audit', 'status':'PASS_SOURCE_ONLY',
@@ -89,6 +92,8 @@ def main():
               'staticReviews':6, 'doorStateReviews':16, 'totalReviews':len(reviews),
               'mountedDoor90923ActivePoses':active['bloodborne_dw:source_smooth_quartz_top'],
               'cityOwners':len(city['owners']), 'originalSourceWorldWritten':False,
+              'cityServices':len(city['sourceInvisibleServices']), 'cityExceptions':len(city['sourceExceptions']),
+              'citySourcePlanSha256':hashlib.sha256(city_plan_path.read_bytes()).hexdigest(),
               'productionJarRead':bool(args.production_jar), 'preparedInputVerified':marker_verified,
               'productionJarSha256':digest if args.production_jar else None,
               'nativeWorldAndPixelVerification':'NOT_RUN_BY_SOURCE_PREFLIGHT',

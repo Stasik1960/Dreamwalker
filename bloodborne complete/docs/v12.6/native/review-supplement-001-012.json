@@ -1,0 +1,429 @@
+{
+  "schema": "dreamwalker-v126-native-supplement-pixel-review",
+  "status": "PASS_ASSIGNED_PIXELS",
+  "assignedIndices": [
+    1,
+    12
+  ],
+  "observedFrames": 12,
+  "productionJarSha256": "f5a4238d1ea241067e163c2e89f66f3133def211ab53b05d21db1375c96030d6",
+  "captureSha256": "4737b1ae4cc71376b27db21e743350250318921599e197fad5d1f3b7991cd5b3",
+  "pixelIndexSha256": "ea748687fb716d2449fbc8a89e5cae6ed6313e40b9aed5901bd87f85cfa0a102",
+  "reviewScope": "Actual supplemental PNGs plus exact live OPEN owner UUID/root/state; visible double leaves confirmed across paired viewpoints. Limited backside views are not full-face evidence.",
+  "confirmedModelDefects": [],
+  "doubleLeafVisibilityAcrossPairedViews": {
+    "90031": [
+      1,
+      2
+    ],
+    "90266": [
+      4,
+      5
+    ],
+    "93152": [
+      6,
+      7
+    ],
+    "93153": [
+      9,
+      10
+    ]
+  },
+  "fullOpenLeafFaceVisibilityStillNotClaimedFor": [
+    "90458",
+    "90923pose1",
+    "90923pose2"
+  ],
+  "static90143EarlierEdgeViewResolvedByActuallyObservedMainFrame": {
+    "index": 16,
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-1\\screenshots\\v126-017-bloodborne_dw_source_addon_gate2_1.png",
+    "fileName": "v126-017-bloodborne_dw_source_addon_gate2_1.png",
+    "key": "bloodborne_dw:source_addon_gate2_1",
+    "name": "Высокая металлическая декоративная панель",
+    "section": "new",
+    "sha256": "02a1ff920f932787af37b640947ccb66a490c528cb4a3a57844aee2f038f2989",
+    "status": "PASS_OBSERVED_PIXELS",
+    "captureSha256": "9279aa58bbdde61463993ba157288ade477db85f6e9090486a6fafa392e942b5",
+    "observation": "В основнойnativePNG16 видна полная кованая декоративная панель90143: вертикальная решётка, нижняя рамка и наклонный орнамент сверху; это source_addon_gate2_1, не соседнее окно93066."
+  },
+  "frames": [
+    {
+      "index": 1,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-002-V126-doors-90031-pose1-open.png",
+      "fileName": "v126s-002-V126-doors-90031-pose1-open.png",
+      "key": "SUPPLEMENT-V126-doors-90031-pose1-open",
+      "name": "90031 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "495f7cd52afdb5c0390e014a021af910c151a52215d463dd5f83bafbb8fa95f7",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенная открытая90031 находится дальше закрытого соседа слева: видны свободный арочный проём и обе повёрнутые деревянные створки с белыми металлическими деталями. Каменная арка не повернулась.",
+      "targetOpenOwner": {
+        "root": [
+          189,
+          64,
+          191
+        ],
+        "uuid": "479bece7-54fa-32bb-abdb-010d2d8caa24",
+        "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "1"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 2,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-003-V126-doors-90031-pose1-open.png",
+      "fileName": "v126s-003-V126-doors-90031-pose1-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-90031-pose1-open",
+      "name": "90031 · открытые створки с правого бока",
+      "section": "doors",
+      "sha256": "785679d01324cfc93763b1d39736fbe55bf8417bcd957f59fd46819545e737f6",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Правый бок90031: проём открыт, створки расположены поперёк прежней дверной плоскости; в паре с предыдущим видом видны обе створки, без подмены закрытым соседом.",
+      "targetOpenOwner": {
+        "root": [
+          189,
+          64,
+          191
+        ],
+        "uuid": "479bece7-54fa-32bb-abdb-010d2d8caa24",
+        "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "1"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 3,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-004-V126-doors-93160-pose0-open.png",
+      "fileName": "v126s-004-V126-doors-93160-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-93160-pose0-open",
+      "name": "93160 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "2f6c25134023317acd25a3c39e798cef0d2fadad79ecba61eea1eed8ac919573",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "93160OPEN показана узким ребром слева; широкая панель правее относится к отдельному соседу. Широкая поверхность назначенной открытой93160 уже наблюдалась в основном кадре37.",
+      "targetOpenOwner": {
+        "root": [
+          200,
+          64,
+          191
+        ],
+        "uuid": "0b8da58a-905b-38a0-bc49-846fb8f60c20",
+        "registryId": "bloodborne_dw:source_oak_prison_door",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false,
+      "visibilityLimitations": "Ребро панели; широкое лицо проверено основным37."
+    },
+    {
+      "index": 4,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-005-V126-doors-90266-pose0-open.png",
+      "fileName": "v126s-005-V126-doors-90266-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-90266-pose0-open",
+      "name": "90266 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "5e6f3d2d5600d6bd62ab5dc3f242c94131ace09f9c7b6eb1d84e38d19583c9b3",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенные большие ворота90266 стоят дальше закрытого соседа слева: две центральные кованые створки раскрыты, наружные панели и верхние орнаменты остались на месте.",
+      "targetOpenOwner": {
+        "root": [
+          221,
+          64,
+          190
+        ],
+        "uuid": "0d66ab5d-5cd1-343c-a851-40d84245271e",
+        "registryId": "bloodborne_dw:source_allium",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 5,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-006-V126-doors-90266-pose0-open.png",
+      "fileName": "v126s-006-V126-doors-90266-pose0-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-90266-pose0-open",
+      "name": "90266 · открытые створки с правого бока",
+      "section": "doors",
+      "sha256": "dd4e54dcf3092d4cfa30a8b3f914ebbc9a2e5d35eb5f7f6db344078ae317771a",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Правый бок90266: видны обе открытые кованые створки с решёткой и свободный проход между неподвижными наружными секциями.",
+      "targetOpenOwner": {
+        "root": [
+          221,
+          64,
+          190
+        ],
+        "uuid": "0d66ab5d-5cd1-343c-a851-40d84245271e",
+        "registryId": "bloodborne_dw:source_allium",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 6,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-007-V126-doors-93152-pose0-open.png",
+      "fileName": "v126s-007-V126-doors-93152-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-93152-pose0-open",
+      "name": "93152 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "8750bb1acb0e233a8202c122fd4804e6f5c065a5033724559a914924edabd5a1",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенная93152 дальше закрытой копии слева: обе нижние деревянные створки раскрыты, верхняя фрамуга и каменное оформление сохраняются.",
+      "targetOpenOwner": {
+        "root": [
+          239,
+          64,
+          191
+        ],
+        "uuid": "dde78126-60b5-340a-b924-bb7cdddec8fc",
+        "registryId": "bloodborne_dw:source_birch_grille_door",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 7,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-008-V126-doors-93152-pose0-open.png",
+      "fileName": "v126s-008-V126-doors-93152-pose0-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-93152-pose0-open",
+      "name": "93152 · открытые створки с правого бока",
+      "section": "doors",
+      "sha256": "d43930e18b2522a942b3e6a4e1eabd12813ffb24deaec37f0ffb92ddb63f0025",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Правый бок93152: поверхности двух нижних раскрытых створок видны по обе стороны прохода; неподвижное верхнее оформление не стало створкой.",
+      "targetOpenOwner": {
+        "root": [
+          239,
+          64,
+          191
+        ],
+        "uuid": "dde78126-60b5-340a-b924-bb7cdddec8fc",
+        "registryId": "bloodborne_dw:source_birch_grille_door",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 8,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-009-V126-doors-90458-pose0-open.png",
+      "fileName": "v126s-009-V126-doors-90458-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-90458-pose0-open",
+      "name": "90458 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "64ec4098525cdcc02f7748c3766efe99584c617147fa0cc7adf27a38eaac7259",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенная90458 с обратной стороны почти не видна, кроме тонкого вертикального контура; соседняя закрытая копия также не показывает фронтальный каменный рисунок с этой стороны. Этот ракурс не подтверждает всю широкую поверхность открытого полотна.",
+      "targetOpenOwner": {
+        "root": [
+          251,
+          64,
+          191
+        ],
+        "uuid": "5b7c533a-a8ac-305d-9b2a-f23d29e003b4",
+        "registryId": "bloodborne_dw:source_crimson_top",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false,
+      "visibilityLimitations": "Backside/тонкий контур: полная широкая поверхность и фронтальная рамка в этом ракурсе не видны."
+    },
+    {
+      "index": 9,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-010-V126-doors-93153-pose0-open.png",
+      "fileName": "v126s-010-V126-doors-93153-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-93153-pose0-open",
+      "name": "93153 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "af5471dc2fbff16474616440d8415e0e510cd7dbe91437b596e48a71feb89710",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенная93153 дальше закрытого соседа слева: обе нижние деревянные створки открыты, верхняя декоративная панель и боковые стойки сохраняются.",
+      "targetOpenOwner": {
+        "root": [
+          9,
+          64,
+          215
+        ],
+        "uuid": "a865f3da-d758-38cf-8f77-84a3f907f6b1",
+        "registryId": "bloodborne_dw:source_dark_arch_door",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 10,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-011-V126-doors-93153-pose0-open.png",
+      "fileName": "v126s-011-V126-doors-93153-pose0-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-93153-pose0-open",
+      "name": "93153 · открытые створки с правого бока",
+      "section": "doors",
+      "sha256": "ec99ea5636249a8f73b9cd8823fcda29d5d53083134938a20cddd2853f20d6bb",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Правый бок93153: обе раскрытые створки видны под прямым углом к статическому деревянному обрамлению; закрытая соседняя копия находится отдельно дальше.",
+      "targetOpenOwner": {
+        "root": [
+          9,
+          64,
+          215
+        ],
+        "uuid": "a865f3da-d758-38cf-8f77-84a3f907f6b1",
+        "registryId": "bloodborne_dw:source_dark_arch_door",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "0"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false
+    },
+    {
+      "index": 11,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-012-V126-doors-90923-pose1-open.png",
+      "fileName": "v126s-012-V126-doors-90923-pose1-open.png",
+      "key": "SUPPLEMENT-V126-doors-90923-pose1-open",
+      "name": "90923 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "53c97e05e5ee8c5a1e906a296187bbbdff90492d6c0a21d00de16ed383f165e9",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенная90923pose1 с обратной стороны почти не видна, кроме тонкого контура; фронтальная поверхность открытого полотна этим кадром не подтверждается. Основной47 показывает открытую нижнюю арку и сохранённую верхнюю.",
+      "targetOpenOwner": {
+        "root": [
+          21,
+          64,
+          215
+        ],
+        "uuid": "6a049ffd-c1bd-3e86-b9e1-ab720fc3db84",
+        "registryId": "bloodborne_dw:source_smooth_quartz_top",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "1"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false,
+      "visibilityLimitations": "Backside/тонкий контур: полное UV-лицо створки в этом ракурсе не видно."
+    },
+    {
+      "index": 12,
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\screenshots\\v126s-013-V126-doors-90923-pose2-open.png",
+      "fileName": "v126s-013-V126-doors-90923-pose2-open.png",
+      "key": "SUPPLEMENT-V126-doors-90923-pose2-open",
+      "name": "90923 · открытые створки с обратной стороны",
+      "section": "doors",
+      "sha256": "91fe6ecad72648cf610bc854407f54b4b8c8667859a0ffbb3c9621024aafcc88",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Назначенная90923pose2 с обратной стороны почти не видна, кроме тонкого контура; полное UV-лицо этим кадром не подтверждается. Основной49 показывает свободную нижнюю арку и верхнее завершение в монтаже в глубину.",
+      "targetOpenOwner": {
+        "root": [
+          33,
+          64,
+          216
+        ],
+        "uuid": "73812565-455b-3b8b-8ead-b371eaa645e8",
+        "registryId": "bloodborne_dw:source_smooth_quartz_top",
+        "actualState": {
+          "open": "true",
+          "profile": "base",
+          "rotation": "0",
+          "variant": "2"
+        },
+        "rootCheckStatus": "PASS"
+      },
+      "sourcePngActuallyObserved": true,
+      "neighborClosedCopiesNotUsedAsTarget": true,
+      "confirmedModelDefect": false,
+      "missingTextureFallbackObserved": false,
+      "visibilityLimitations": "Backside/тонкий контур: полное UV-лицо створки в этом ракурсе не видно."
+    }
+  ],
+  "nativeInteractionEvidence": "Separate native GameTests; pixel review itself issues no world operations",
+  "worldOrProductionOrImagesModified": false
+}

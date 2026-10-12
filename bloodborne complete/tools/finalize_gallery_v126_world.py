@@ -44,7 +44,15 @@ def main():
     captured={}
     for file in a.capture_input:
         capture=json.loads(file.read_text(encoding='utf8'));assert capture['productionJarSha256']==m['productionJarSha256']
-        for frame in capture['frames']:captured[frame['key']]=frame['camera']
+        for frame in capture['frames']:
+            captured[frame['key']]=frame['camera']
+            # The one-sided93151 detail must be visited from its authored WEST
+            # face. Supplemental main-object views improve navigation without
+            # changing any exhibit or replacing door review cameras.
+            if frame['key'].startswith('SUPPLEMENT-bloodborne_dw:'):
+                captured[frame['key'].removeprefix('SUPPLEMENT-')]=frame['camera']
+            if frame['key'].startswith('SOURCE-FACE-'):
+                captured[frame['key'].removeprefix('SOURCE-FACE-')]=frame['camera']
     allrows=m['exhibits']+m['reviewPlatforms']+[m['city']];first={};index=[]
     for n,row in enumerate(allrows,1):
         section=row['section'];name=row.get('name',row.get('russianLabel','Фрагмент исходного города'));identifier=row.get('id','');key=re.sub('[^a-z0-9_]','_',str(identifier or row['key']).lower())+f'_{n:04d}'

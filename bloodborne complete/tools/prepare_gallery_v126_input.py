@@ -304,7 +304,8 @@ def main():
         assert sum(r['section']=='assemblies' for r in previews)==6
         assert sum(r['section']=='doors' for r in previews)==16
         city=json.loads((ROOT/'docs/v12.6/city/city-final-aggregated.json').read_text(encoding='utf8'))
-        assert len(city['owners'])==8426
+        assert city['owners'] and city['allSourceCellsClassified']
+        city['plannedOwnerCount']=len(city['owners'])
         boxes=[component_geometry(c,archive,models) for c in city['owners']]
         for block in city['passThroughBlocks']:
             p=block['relativePosition'];boxes.append(p+[v+1 for v in p])

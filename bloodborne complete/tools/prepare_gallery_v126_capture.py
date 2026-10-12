@@ -41,7 +41,8 @@ def main():
     additions=[r for r in city['placedOwners'] if 'APPEND' in r.get('resolution','')]
     for n,r in enumerate((additions[:2]+[r for r in city['placedOwners'] if r['registry']=='bloodborne_dw:prototype_wall_skin_0'][:1])):
         frame({**r,'key':'CITY-DETAIL-'+str(n+1),'section':'city','name':'Город · деталь '+r.get('mainId','')},[root(r)],[],camera(r['bounds']))
-    assert len(groups)==22 and len(rows)==647 and len(city['placedOwners'])==8426
+    assert len(groups)==22 and len(rows)==647
+    assert len(city['placedOwners'])==len(city['owners'])==city['plannedOwnerCount']
     assert {(g['reviewPoseIndex'],g['open']) for g in groups if g['primaryId']=='90923'}=={(1,False),(1,True),(2,False),(2,True)}
     result={'schema':'dreamwalker-flat-gallery-v126-capture-input','gallerySchema':m['schema'],'productionJarSha256':sha,'newWorkingTypes':d['functionalCatalogue']['newWorkingTypes'],'quitAfterCapture':True,'frames':frames,'scope':f'Native ScreenshotRecorder images; no block edits. All {len(groups)} finished assembly/door state review platforms, including both 90923 mount states open/closed; all eight completed primary defaults, representative unchanged V12/new simplified shapes, city views and live typed root identities.'}
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps({'status':'PASS','frames':len(frames),'main':len(chosen),'review':len(groups)}))

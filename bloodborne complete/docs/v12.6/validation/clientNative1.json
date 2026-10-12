@@ -1,0 +1,700 @@
+{
+  "schema": "dreamwalker-flat-gallery-v126-native-client-verification",
+  "status": "PASS",
+  "productionJarSha256": "f5a4238d1ea241067e163c2e89f66f3133def211ab53b05d21db1375c96030d6",
+  "minecraft": "1.20.1",
+  "fabricLoader": "0.16.10",
+  "actualIntegratedWorldOpened": "PASS",
+  "nativeFramebufferImages": 57,
+  "livePersistedRootStateAndUuidChecks": 90,
+  "livePersistedEntityUuidChecks": 3,
+  "sectionsRendered": [
+    "absent",
+    "assemblies",
+    "city",
+    "doors",
+    "items",
+    "new",
+    "v12"
+  ],
+  "normalClientShutdownAndWorldSave": "PASS",
+  "allSavedObjectDataUnchangedAfterClientReopen": "PASS",
+  "verifiedSavedObjects": 8740,
+  "verifiedDiagnosticPlatforms": 0,
+  "newCanonicalWorkingTypes": 544,
+  "capturedNativeStairMaterials": 0,
+  "capturedCanonicalRungLadders": 1,
+  "nativeStairHalfShapeEncoding": "VARIANT0..4 bottom,5..9 top; straight/inner_left/inner_right/outer_left/outer_right",
+  "sourceGalleryUnchangedAfterClientRun": true,
+  "offlineAuthentication": {
+    "status": "EXPECTED_DUMMY_LEGACY_TOKEN_401",
+    "errors": [
+      "[20:29:35] [Render thread/ERROR]: Failed to verify authentication"
+    ],
+    "scope": "Explicit isolated offline identity with accessToken=0; no online account authentication was requested."
+  },
+  "knownWarnings": [
+    "[20:29:24] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)",
+    "[20:30:03] [Worker-Main-15/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2",
+    "[20:30:03] [Worker-Main-15/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4",
+    "[20:30:33] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play",
+    "[20:30:33] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break",
+    "[20:30:33] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.",
+    "[20:31:18] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 2283ms or 45 ticks behind"
+  ],
+  "localModWorldErrors": [],
+  "physicalMouseKeyboard": "NOT_RUN",
+  "visualReview": "PENDING_SEPARATE_PIXEL_REVIEW",
+  "frames": [
+    {
+      "fileName": "v126-001-bloodborne_dw_prototype_double_door.png",
+      "key": "bloodborne_dw:prototype_double_door",
+      "section": "v12",
+      "name": "Входная дверь",
+      "sha256": "c9dad75dd0d408cf65fc195b94ee245f5ca5071ca5c48a5cc4fde25697bca704",
+      "bytes": 414335,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-002-bloodborne_rp_wood_gate.png",
+      "key": "bloodborne_rp:wood_gate",
+      "section": "v12",
+      "name": "Деревянные ворота",
+      "sha256": "90d6386cfc3d66476bb41a5aadf7039edace1d6d31d0c443cd4041c9fa76b6bd",
+      "bytes": 655491,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-003-bloodborne_dw_source__wall_dec_bottom.png",
+      "key": "bloodborne_dw:source__wall_dec_bottom",
+      "section": "new",
+      "name": "Настенный орнамент · нижняя",
+      "sha256": "1c703873f0cb8142c96bb56635482cd842a76a1dfdddfaea1c4e053895c41ea6",
+      "bytes": 374895,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-004-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_right1",
+      "section": "new",
+      "name": "Ступенчатый модуль · внешний угол, правая",
+      "sha256": "59bbf837c7a02eed8436f3d0abcc18b9863573d2bd2cc91565c132f5d48baab0",
+      "bytes": 667162,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-005-bloodborne_dw_source_1_spirelamp_001.png",
+      "key": "bloodborne_dw:source_1_spirelamp_001",
+      "section": "absent",
+      "name": "Светильник · вариант 2",
+      "sha256": "f5a7b005b2ac24a92b9d3967b15c8992b184fac82aca47340f1f15fb0c2b27be",
+      "bytes": 401230,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-006-bloodborne_dw_source_ywlloe_stained_glass_pane_noside_alt.png",
+      "key": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+      "section": "absent",
+      "name": "Высокая декоративная стойка · секция",
+      "sha256": "722374baf906b7c1be34df55bb948fa01f0203a23edddd280b56d050b6b75242",
+      "bytes": 518845,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-007-framed_bloodborne_rp_blood_vial.png",
+      "key": "framed:bloodborne_rp:blood_vial",
+      "section": "items",
+      "name": "Blood Vial (optional healing)",
+      "sha256": "1fb97f1e6f30c7e0f512ce8d9e9ef5696d9ce5942b5912b8d79824ac754c85a8",
+      "bytes": 504400,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-008-framed_bloodborne_dw_bb_tool.png",
+      "key": "framed:bloodborne_dw:bb_tool",
+      "section": "items",
+      "name": "Инструмент BB · Поднять на 1 блок",
+      "sha256": "5e69273637f40659fd26c54df339c93a2e84152e38551202f7514b6b7addd2e2",
+      "bytes": 402161,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-009-bloodborne_dw_prototype_wall.png",
+      "key": "bloodborne_dw:prototype_wall",
+      "section": "v12",
+      "name": "Художественная ограда",
+      "sha256": "8d305f851ed6568407a90e97b8a9e9d46ca0b6625129f3a843cd5f9e1ebc152a",
+      "bytes": 371845,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-010-bloodborne_dw_source_hold_wall_lantern.png",
+      "key": "bloodborne_dw:source_hold_wall_lantern",
+      "section": "new",
+      "name": "Подвесной металлический фонарь",
+      "sha256": "2002a9feb8ecc26ebe0f8f9554ff516f80f3c99475d8bf228c63044122249cee",
+      "bytes": 417075,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-011-bloodborne_dw_source_addon_cases_0.png",
+      "key": "bloodborne_dw:source_addon_cases_0",
+      "section": "new",
+      "name": "Стопка старых чемоданов · вариант 1",
+      "sha256": "37cbef841a5c6839fff78c68e95b8086f57fb3fc287a801c10bc34c5cc4feb2e",
+      "bytes": 345457,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-012-bloodborne_dw_source_addon_chain_2.png",
+      "key": "bloodborne_dw:source_addon_chain_2",
+      "section": "new",
+      "name": "Цепь · вариант 3",
+      "sha256": "43912be2eb9786c8d55d6710c60f92448a26bfbb7afbe63343d18253d0de0843",
+      "bytes": 297612,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-013-bloodborne_dw_source_addon_grass_7.png",
+      "key": "bloodborne_dw:source_addon_grass_7",
+      "section": "new",
+      "name": "Пучок травы · вариант 8",
+      "sha256": "0dd7a0b5ab8f5964f58a1ce3ea1e6d5e2abd65724515fcce9d99ba368e9e09a3",
+      "bytes": 332540,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-014-bloodborne_dw_source_acacia_pressure_plate.png",
+      "key": "bloodborne_dw:source_acacia_pressure_plate",
+      "section": "new",
+      "name": "Двустворчатая дверь с каменной аркой",
+      "sha256": "d3eee532127492c50c991957e95e212696dec4579766be843ba369c815710f95",
+      "bytes": 448164,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-015-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_inn.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+      "section": "new",
+      "name": "Каменное окно с орнаментом",
+      "sha256": "f99c223fdaf274bc38305d7c2712d45066e7d75fa0fb9446283ba8e6011ca9c3",
+      "bytes": 486779,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-016-bloodborne_dw_source_addon_log_vertical_0.png",
+      "key": "bloodborne_dw:source_addon_log_vertical_0",
+      "section": "new",
+      "name": "Высокое деревянное украшение",
+      "sha256": "d4f24121ec86d4601269e9be9e428ac968750df714fbfdce1982a1a035108ea9",
+      "bytes": 541752,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-017-bloodborne_dw_source_addon_gate2_1.png",
+      "key": "bloodborne_dw:source_addon_gate2_1",
+      "section": "new",
+      "name": "Высокая металлическая декоративная панель",
+      "sha256": "02a1ff920f932787af37b640947ccb66a490c528cb4a3a57844aee2f038f2989",
+      "bytes": 496553,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-018-bloodborne_dw_source_addon_pilaster_1.png",
+      "key": "bloodborne_dw:source_addon_pilaster_1",
+      "section": "new",
+      "name": "Цельная каменная пилястра",
+      "sha256": "b4fa1648bc9f771f51b788cc5a979addb10273371de0d6c3748a4f7f00e30eff",
+      "bytes": 441531,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-019-bloodborne_dw_source_blackstone_stairs_top.png",
+      "key": "bloodborne_dw:source_blackstone_stairs_top",
+      "section": "new",
+      "name": "Цельное арочное окно",
+      "sha256": "e32e6ebf4994926e5d535552a2960fda64d2cb2e32780325711dc2dc6931a6f3",
+      "bytes": 463803,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-020-bloodborne_dw_source_hold_ladder_02.png",
+      "key": "bloodborne_dw:source_hold_ladder_02",
+      "section": "new",
+      "name": "Приставная каменная лестница",
+      "sha256": "e7c617b88dacd6f6f3679d07893923ed754c5161f3953f3dff1d6e7e625c0112",
+      "bytes": 348542,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-021-bloodborne_dw_source_smooth_quartz_top.png",
+      "key": "bloodborne_dw:source_smooth_quartz_top",
+      "section": "new",
+      "name": "Деревянная дверь с высокой каменной аркой",
+      "sha256": "62863609635277bd397439733e10c5d2a016cf864680944858d4c898e4bd6d80",
+      "bytes": 453873,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-022-bloodborne_dw_source_warped_trapdoor_open_2.png",
+      "key": "bloodborne_dw:source_warped_trapdoor_open_2",
+      "section": "new",
+      "name": "Дверная секция · открытая, вариант 3",
+      "sha256": "561a3a8720673d2af11e1edf7fd64213fa45999bf51ad612e540136b8b2250b1",
+      "bytes": 422935,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-023-bloodborne_dw_source_warped_trapdoor_top.png",
+      "key": "bloodborne_dw:source_warped_trapdoor_top",
+      "section": "new",
+      "name": "Дверная секция · верхняя",
+      "sha256": "eb7a48a820d4b470bc54fdab06552d18aff5ca493e5fe3775a9b6903b14610ac",
+      "bytes": 359143,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-024-bloodborne_dw_source_pressure_plate_window_bottom_4.png",
+      "key": "bloodborne_dw:source_pressure_plate_window_bottom_4",
+      "section": "new",
+      "name": "Большое витражное окно с завершением",
+      "sha256": "470986b6f13894cacdc4d90cca1ce914f39e99ea7243b24c2dcb3dd8d1ee6a41",
+      "bytes": 640855,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-025-bloodborne_dw_source_stairs_waxed_exposed_cut_copper_stairs_oute.png",
+      "key": "bloodborne_dw:source_stairs_waxed_exposed_cut_copper_stairs_outer_3",
+      "section": "new",
+      "name": "Ступенчатый модуль · внешний угол, вариант 4",
+      "sha256": "b202c21bc2301e9ab75b02c26c632b388606d0b31d617472196fbdd75a63e762",
+      "bytes": 617068,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-026-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_right",
+      "section": "new",
+      "name": "Ступенчатый модуль · внешний угол, правая",
+      "sha256": "e7dbacaa8bc19fea4e4c4558ddfe0d78e40cfe7542d217dd57d5f5071bdb5e87",
+      "bytes": 613236,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-027-bloodborne_dw_source_lapis_ore.png",
+      "key": "bloodborne_dw:source_lapis_ore",
+      "section": "absent",
+      "name": "Объёмная декоративная деталь",
+      "sha256": "7faba3202f866f4055ded9c6a00ad4469cc6bbfbdf19df7cb3ef06bc3f3a5c5a",
+      "bytes": 493438,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-028-bloodborne_dw_source_stairs_axed_exposed_cut_copper_stairs_outer.png",
+      "key": "bloodborne_dw:source_stairs_axed_exposed_cut_copper_stairs_outer_3",
+      "section": "absent",
+      "name": "Ступенчатый модуль · внешний угол, вариант 4",
+      "sha256": "7f74579e1954842a58334cd6e1007e7d7d2195cd59691334e2c8727822f5c28c",
+      "bytes": 563283,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-029-V126-assemblies-93066-pose1-closed.png",
+      "key": "V126-assemblies-93066-pose1-closed",
+      "section": "assemblies",
+      "name": "Каменное окно с орнаментом",
+      "sha256": "90cfabd61b7f3b5d2f50f442d0094b66a96557565bee80aa317df7231472eb47",
+      "bytes": 564103,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-030-V126-assemblies-90179-pose1-closed.png",
+      "key": "V126-assemblies-90179-pose1-closed",
+      "section": "assemblies",
+      "name": "Цельная каменная пилястра",
+      "sha256": "7342142445f4bc90b8bc945d7abd08a15a3bc7f91d6e9248633417d24fa38cad",
+      "bytes": 484290,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-031-V126-assemblies-90301-pose1-closed.png",
+      "key": "V126-assemblies-90301-pose1-closed",
+      "section": "assemblies",
+      "name": "Цельное арочное окно",
+      "sha256": "8741360ffd440f4097f90e735f1d712dd46f0a64f84c9f954aa51cca07287e52",
+      "bytes": 491786,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-032-V126-assemblies-90143-pose1-closed.png",
+      "key": "V126-assemblies-90143-pose1-closed",
+      "section": "assemblies",
+      "name": "Высокая металлическая декоративная панель",
+      "sha256": "357f7761cee9990a59b15ef4c138b7690ea1e3b4910d23ebdd3d02edd32af4fd",
+      "bytes": 503121,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-033-V126-assemblies-90160-pose2-closed.png",
+      "key": "V126-assemblies-90160-pose2-closed",
+      "section": "assemblies",
+      "name": "Высокое деревянное украшение",
+      "sha256": "0f6427fe04cb8364b5f843b626a337b94bdea9af654edb06beea494d6d9dd00c",
+      "bytes": 527528,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-034-V126-assemblies-90797-pose2-closed.png",
+      "key": "V126-assemblies-90797-pose2-closed",
+      "section": "assemblies",
+      "name": "Большое витражное окно с завершением",
+      "sha256": "9d62306dd1912187559b24bbc85207eac5733ffeca68f0cdef6cfea23e647d24",
+      "bytes": 555363,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-035-V126-doors-90031-pose1-closed.png",
+      "key": "V126-doors-90031-pose1-closed",
+      "section": "doors",
+      "name": "Двустворчатая дверь с каменной аркой",
+      "sha256": "15a266d794c97bc6c819664ddb9d60b2a6b94e27431f27eb752d76ee7f4172f2",
+      "bytes": 451923,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-036-V126-doors-90031-pose1-open.png",
+      "key": "V126-doors-90031-pose1-open",
+      "section": "doors",
+      "name": "Двустворчатая дверь с каменной аркой",
+      "sha256": "9b239decaed663f0718e5b6093113be996bb219a5c25eedaa1d01f91e28aabed",
+      "bytes": 423330,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-037-V126-doors-93160-pose0-closed.png",
+      "key": "V126-doors-93160-pose0-closed",
+      "section": "doors",
+      "name": "Узкая деревянная дверь",
+      "sha256": "3c4ab3ca330d29f78dc74b9f92026791760fa376f2b3ba777ddf0a560edd991d",
+      "bytes": 407226,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-038-V126-doors-93160-pose0-open.png",
+      "key": "V126-doors-93160-pose0-open",
+      "section": "doors",
+      "name": "Узкая деревянная дверь",
+      "sha256": "9b985475447f8abb3305419a365cf307e73e664bae27dc4daa833751f7f31b6f",
+      "bytes": 408893,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-039-V126-doors-90266-pose0-closed.png",
+      "key": "V126-doors-90266-pose0-closed",
+      "section": "doors",
+      "name": "Большие кованые двустворчатые ворота",
+      "sha256": "6ba35c2d9b8a5e5ed98c7077ccd54c6656aef99ae678949b1e2309fdd0fe2881",
+      "bytes": 550386,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-040-V126-doors-90266-pose0-open.png",
+      "key": "V126-doors-90266-pose0-open",
+      "section": "doors",
+      "name": "Большие кованые двустворчатые ворота",
+      "sha256": "3455902cad623798c4d4cad60971789ebeb33000bd3c51ca7a1bb3d01d01b91f",
+      "bytes": 546565,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-041-V126-doors-93152-pose0-closed.png",
+      "key": "V126-doors-93152-pose0-closed",
+      "section": "doors",
+      "name": "Двустворчатая дверь с застеклённой перемычкой",
+      "sha256": "53d675e1b5b632fccd1207d648b463592b5fc95c192c85cb1d8a14b395e7124b",
+      "bytes": 434501,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-042-V126-doors-93152-pose0-open.png",
+      "key": "V126-doors-93152-pose0-open",
+      "section": "doors",
+      "name": "Двустворчатая дверь с застеклённой перемычкой",
+      "sha256": "fa8460c01126df2e69eb26673abbac83a0ccc78de2e4af2fe0758ebea63581af",
+      "bytes": 444606,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-043-V126-doors-90458-pose0-closed.png",
+      "key": "V126-doors-90458-pose0-closed",
+      "section": "doors",
+      "name": "Деревянная дверь с каменным обрамлением",
+      "sha256": "f8a625803f699581e7017a73662341cefe56f08849e1951aac65a8c15c08c191",
+      "bytes": 377443,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-044-V126-doors-90458-pose0-open.png",
+      "key": "V126-doors-90458-pose0-open",
+      "section": "doors",
+      "name": "Деревянная дверь с каменным обрамлением",
+      "sha256": "f5f0d916218a9599ef9762202f1c001ada2ae47916cdbc41a8987c5b5db2b5cc",
+      "bytes": 384699,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-045-V126-doors-93153-pose0-closed.png",
+      "key": "V126-doors-93153-pose0-closed",
+      "section": "doors",
+      "name": "Двустворчатая дверь с деревянным обрамлением",
+      "sha256": "4a7f6b63dc2f2a66efdd0acb25172992ac50891d8728c823b3ead8d02e9642b7",
+      "bytes": 392637,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-046-V126-doors-93153-pose0-open.png",
+      "key": "V126-doors-93153-pose0-open",
+      "section": "doors",
+      "name": "Двустворчатая дверь с деревянным обрамлением",
+      "sha256": "296f0e562243d7e03778c29ef2b56e3109a93b6059099dfd63061dc97a67f0ea",
+      "bytes": 448447,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-047-V126-doors-90923-pose1-closed.png",
+      "key": "V126-doors-90923-pose1-closed",
+      "section": "doors",
+      "name": "Высокая дверь · монтаж прямой",
+      "sha256": "dbd1de8f2d1079a6e555f80bb6158b207f1e14d4a646bb6c2745b1173c280bfb",
+      "bytes": 445418,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-048-V126-doors-90923-pose1-open.png",
+      "key": "V126-doors-90923-pose1-open",
+      "section": "doors",
+      "name": "Высокая дверь · монтаж прямой",
+      "sha256": "2282c3d10db14a6497b021ae5c5be9eaadf93829984e247a506b8f6394a5c1e5",
+      "bytes": 470659,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-049-V126-doors-90923-pose2-closed.png",
+      "key": "V126-doors-90923-pose2-closed",
+      "section": "doors",
+      "name": "Высокая дверь · монтаж в глубину",
+      "sha256": "f0e6162747bfd5dea0bddbb900a9cbbb627b4721f72079503a570e58122b31f9",
+      "bytes": 476587,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-050-V126-doors-90923-pose2-open.png",
+      "key": "V126-doors-90923-pose2-open",
+      "section": "doors",
+      "name": "Высокая дверь · монтаж в глубину",
+      "sha256": "60fb6ee05b6f172bb1b64f424078f8e034bbc5291972ed47732f068cf5d100a3",
+      "bytes": 440613,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-051-CITY-OVERVIEW-1.png",
+      "key": "CITY-OVERVIEW-1",
+      "section": "city",
+      "name": "Город · обзор 1",
+      "sha256": "9a1d880f96e49d1e9173d3b37f9d4535c9560825b395d9e0b86df2805b67607c",
+      "bytes": 548555,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-052-CITY-OVERVIEW-2.png",
+      "key": "CITY-OVERVIEW-2",
+      "section": "city",
+      "name": "Город · обзор 2",
+      "sha256": "6b586f92cf91a7eaf123ec050b6ba92dd10dc130f807c7309422f1088ca3ae9f",
+      "bytes": 498157,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-053-CITY-OVERVIEW-3.png",
+      "key": "CITY-OVERVIEW-3",
+      "section": "city",
+      "name": "Город · обзор 3",
+      "sha256": "3b8bca06b183dadf688521a2c55c38a77a1505248b99279e1e840d57d63224d3",
+      "bytes": 468634,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-054-CITY-OVERVIEW-4.png",
+      "key": "CITY-OVERVIEW-4",
+      "section": "city",
+      "name": "Город · обзор 4",
+      "sha256": "5485e849269b4b86e440d0e81248d0a3b8ec0558f0cce3da70c035eddb909c64",
+      "bytes": 552651,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-055-CITY-DETAIL-1.png",
+      "key": "CITY-DETAIL-1",
+      "section": "city",
+      "name": "Город · деталь 93167",
+      "sha256": "e88d6b08ee545496ff48c47939d81dd4deda2c66aa465803d12987de0ba79e4d",
+      "bytes": 198757,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-056-CITY-DETAIL-2.png",
+      "key": "CITY-DETAIL-2",
+      "section": "city",
+      "name": "Город · деталь 93167",
+      "sha256": "33d9a8afaa8b670c89099ff169d0babf3db402b2dfee995d8b562a78574cb790",
+      "bytes": 98291,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126-057-CITY-DETAIL-3.png",
+      "key": "CITY-DETAIL-3",
+      "section": "city",
+      "name": "Город · деталь 90011",
+      "sha256": "e6e308f877179f63a784043ac5d9d008935097fd3eece3605131e3329f416c06",
+      "bytes": 408093,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "clientProfile": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.6\\validation\\clientProfile1.json",
+      "sha256": "7a8cb36a2930c9f024e40c56e683e7f5945e112ae0f3010e0aa0a40728c6a348"
+    },
+    "nativeCapture": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-1\\client-capture-output.json",
+      "sha256": "9279aa58bbdde61463993ba157288ade477db85f6e9090486a6fafa392e942b5"
+    },
+    "captureMarker": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-1\\client-capture-input.json",
+      "sha256": "53d92e8992787de667f7746899f61e1444371a9cc06ae27d9a972c5a9a4e68c7",
+      "manifestSha256": "9657f3a34f2c8175a378e37dead92832f58c6e629114c40da84584095a5c70f7"
+    },
+    "clientLog": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-1\\launch-console.log",
+      "sha256": "02184081c011580da7fc6d3b0fd4c93be2044de005dc8ce40ffab72cb668cee6"
+    },
+    "savedNbtAfterClient": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.6\\validation\\savedClient1.json",
+      "sha256": "29a4f4413f24643a867f9dc3ae23be8e20b12c658c2bb373b839d0c4271752e6"
+    }
+  }
+}

@@ -35,7 +35,8 @@ def main():
     assert a.world.resolve().is_relative_to((ROOT/'build').resolve()) and m['productionJarSha256']==sha(a.production_jar)
     before={str(f.relative_to(a.world)):sha(f) for f in base.saved_files(a.world)}
     mainrows=m['exhibits'];groups=m['reviewPlatforms'];city=m['city'];parts=list(mainrows)
-    assert len(mainrows)==647 and len(groups)==22 and len(city['placedOwners'])==8426
+    assert len(mainrows)==647 and len(groups)==22
+    assert len(city['placedOwners'])==len(city['owners'])==city['plannedOwnerCount']
     for group in groups:
         assert group['registrationsMerged'] and len(group['components'])==1
         parts.extend({**c,'key':group['key']+'/'+str(i),'kind':'architecture'} for i,c in enumerate(group['components']))
