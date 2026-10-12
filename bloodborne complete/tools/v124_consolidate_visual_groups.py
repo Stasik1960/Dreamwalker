@@ -88,6 +88,10 @@ def main():
         if primary_id=='90411':group['renderLayerOverride']='translucent';group['renderLayerOverrideReason']='Retain alpha121 window parts in 90459/90665/90666; other members use only alpha0/255.'
         groups.append(group)
     groups.sort(key=lambda g:int(g['mainId']))
+    correction_path=OUT/'native-mapping-corrections.json'
+    if correction_path.exists():
+        from v124_fix_native_mappings import apply_corrections
+        apply_corrections({'groups':groups},json.loads(correction_path.read_text(encoding='utf-8')))
     retained=[p for p in kept if find(p['a']['registryId'])!=find(p['b']['registryId'])]
     material_retained=[]
     for bucket in audit['materialReviewGroups']:

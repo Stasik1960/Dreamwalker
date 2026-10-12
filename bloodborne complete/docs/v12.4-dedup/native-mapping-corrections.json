@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "scope": "POST_ORIGINAL_V12_EXISTING_FUNCTIONAL_GROUPS_ONLY",
+  "nativeDiscrepancyJarSha256": "c30cb62063656b5230c2c2a6e9338ac208a687d9df712f6bc6ced51a1598a728",
+  "mappings": [
+    {
+      "mainId": "90088",
+      "oldRegistryId": "bloodborne_dw:source_addon_chains_7",
+      "oldVariant": 0,
+      "action": "EXACT_NATIVE_YAW_AND_PIVOT",
+      "yawDeltaSteps": 1,
+      "sourceShiftDelta": [
+        -0.0167354346,
+        0.0,
+        0.0845970869
+      ],
+      "reason": "Native page6 reveals a180degree alpha/UV artwork flip. Source element yaw-45 and target yaw0 require added root rotation1; cyclic geometry symmetry must not discard the vertex-to-UV association.",
+      "nativeFrameSha256": "0182263bcc5a3897c4e645aff28ba33adc98df64e0d86b1c47e0a5c544acdd60"
+    },
+    {
+      "mainId": "90182",
+      "oldRegistryId": "bloodborne_dw:source_stairs_jungle_stairs_outer",
+      "oldVariant": 0,
+      "action": "EXACT_SOURCE_POSE_STATE",
+      "sourceName": "Исходная узкая декоративная плоскость",
+      "reason": "Native page12 shows different geometry: target source model has rescale:true at element angle0, which native FaceBakery expands using its45degree factor. Preserve the original source model as an additional state of90182.",
+      "nativeFrameSha256": "765bd282a98f3cfafe2bb1aa69fdd5ac348487ebba6931d30d93338197c28041"
+    },
+    {
+      "mainId": "90637",
+      "oldRegistryId": "bloodborne_dw:source_lever_on",
+      "oldVariant": 0,
+      "action": "EXACT_SOURCE_POSE_STATE",
+      "sourceName": "Рычаг, исходная каменная отделка",
+      "reason": "Native page38 has matching lever silhouette and placement, but different orientation of the dark stone-base markings. Preserve the original vertex-associated stone UV as another state of the same lever type.",
+      "nativeFrameSha256": "c4a335d71952e6c98ce3b11f242be9cac2c15c01ae5ef8fa959d7130195609f7"
+    },
+    {
+      "mainId": "90637",
+      "oldRegistryId": "bloodborne_dw:source_lever_on",
+      "oldVariant": 1,
+      "action": "EXACT_SOURCE_POSE_STATE",
+      "sourceName": "Рычаг, исходная обратная установка",
+      "reason": "Native page38 shows the same reverse-mounted lever, with the stone joint and mottled face pattern in another orientation. Retain exact source UV in a state without adding another placing item.",
+      "nativeFrameSha256": "c4a335d71952e6c98ce3b11f242be9cac2c15c01ae5ef8fa959d7130195609f7"
+    },
+    {
+      "mainId": "90545",
+      "oldRegistryId": "bloodborne_dw:source_quartz_pillar",
+      "oldVariant": 0,
+      "action": "EXACT_SOURCE_POSE_STATE",
+      "sourceName": "Пьедестал, исходная отделка",
+      "reason": "Native page34 shows equal pedestal geometry, while the mottled top stone patch turns relative to the front edge. Exact source UV is retained as a state of the same functional pedestal.",
+      "nativeFrameSha256": "bd67196609950c6bb439b7de73de67f0c0b0dd3e4533df732280909a88d0e5e9"
+    },
+    {
+      "mainId": "93088",
+      "oldRegistryId": "bloodborne_dw:source_stone_button_pressed",
+      "oldVariant": 1,
+      "action": "EXACT_SOURCE_POSE_STATE",
+      "sourceName": "Тонкая каменная плита, исходная отделка",
+      "reason": "Native page54 shows the same thin stone slab with a different light/dark patch arrangement on its upper face. Preserve the source appearance as another slab state; the separate functional type remains removed.",
+      "nativeFrameSha256": "1c3b062a88b9315c3d1cb7be3cf808dedb70b96ef9ca4422d4e85cb979b4e8c0"
+    },
+    {
+      "mainId": "90676",
+      "oldRegistryId": "bloodborne_dw:source_yellow_concrete",
+      "oldVariant": 0,
+      "action": "EXACT_SOURCE_POSE_STATE",
+      "sourceName": "Обрамлённый каменный орнамент, исходная отделка",
+      "reason": "Native page40 has the same full-size framed triangular stone ornament, but vertex-associated stone mottling and face pattern orientation do not exactly match. Preserve the original material/UV state within the existing ornament type.",
+      "nativeFrameSha256": "af7349802bc0918bf8bc506976de9bbdd6ad77802f2a6e65db9125a708907445"
+    }
+  ]
+}

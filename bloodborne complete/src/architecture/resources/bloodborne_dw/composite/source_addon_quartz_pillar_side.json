@@ -89,6 +89,86 @@
         "minecraft:quartz_pillar[variant:axis=x]",
         "minecraft:quartz_pillar[variant:axis=z]"
       ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/jungle_stairs_outer",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                32.0,
+                48.0,
+                8.0625
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          7.9375
+        ],
+        "to": [
+          32.0,
+          48.0,
+          8.0625
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/jungle_stairs_outer"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:jungle_stairs[variant:facing=east,half=bottom,shape=outer_left]",
+        "minecraft:jungle_stairs[variant:facing=east,half=bottom,shape=outer_right]",
+        "minecraft:jungle_stairs[variant:facing=north,half=bottom,shape=outer_left]",
+        "minecraft:jungle_stairs[variant:facing=north,half=bottom,shape=outer_right]",
+        "minecraft:jungle_stairs[variant:facing=south,half=bottom,shape=outer_left]",
+        "minecraft:jungle_stairs[variant:facing=south,half=bottom,shape=outer_right]",
+        "minecraft:jungle_stairs[variant:facing=west,half=bottom,shape=outer_left]",
+        "minecraft:jungle_stairs[variant:facing=west,half=bottom,shape=outer_right]"
+      ]
     }
   ],
   "source": {},

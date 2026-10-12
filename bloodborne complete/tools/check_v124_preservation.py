@@ -1,6 +1,6 @@
 """Freeze-check original V12 content and justify minimal NEW-only integration hooks."""
 from pathlib import Path
-import hashlib,json,subprocess
+import hashlib,json,subprocess,os
 ROOT=Path(__file__).resolve().parents[1];DOC=ROOT/'docs/v12.4-dedup'
 ALLOW={
  'src/architecture/java/dev/dreamwalker/bloodbornedw/'+p for p in [
@@ -19,5 +19,8 @@ def main():
     manifest=json.loads((ROOT/'src/architecture/resources/bloodborne_dw/imported-type-aliases.json').read_text(encoding='utf8'))
     newonly=all(r['oldRegistryId'].startswith('bloodborne_dw:source_') and r['newRegistryId'].startswith('bloodborne_dw:source_') for r in manifest['mappings'])
     result={'baselineCommit':base['baselineCommit'],'unchangedProtectedFiles':same,'newOnlyIntegrationHooks':hooks,'unexpectedChangedProtectedFiles':unexpected,'originalCatalogueRowsUnchanged':rows,'numberReservationsUnchanged':reserved,'mappingScopeNewOnly':newonly,'status':'PASS' if not unexpected and rows and reserved and newonly else 'FAIL'}
-    (DOC/'preservation-audit.json').write_bytes((json.dumps(result,ensure_ascii=False,indent=2)+'\n').encode('utf8'));assert result['status']=='PASS',result
+    report=DOC/'preservation-audit.json';data=(json.dumps(result,ensure_ascii=False,indent=2)+'\n').encode('utf8')
+    if not report.exists() or report.read_bytes()!=data:
+        temporary=report.with_suffix('.atomic.tmp');temporary.write_bytes(data);os.replace(temporary,report)
+    assert result['status']=='PASS',result
 if __name__=='__main__':main()

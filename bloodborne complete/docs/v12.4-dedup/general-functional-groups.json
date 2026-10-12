@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "baselineCommit": "27bf67e",
-  "status": "REVIEWED_SOFTWARE_APPEARANCE_PLAN_PENDING_NATIVE_GAME_COMPARISON",
+  "status": "NATIVE_DISCREPANCIES_CORRECTED_FINAL_ARTIFACT_RECHECK_REQUIRED",
   "scope": "Only simplePhysicalCollision source_ objects added after V12; V12 registrations/resources excluded completely.",
   "renderYawConvention": "CompositeClient rotates -rotation*45deg. Map newRotation=floorMod(oldRotation+yawDeltaSteps,8). sourceShiftDelta is in target-local block axes (the world preservation translation rotated back by the added yaw); old SourceShift must likewise be expressed in target-local axes before addition. Existing CompositeSourceShift.world applies the target yaw.",
   "migrationRequirement": "Do not remove old registrations. Hide aliases from offered catalogue/Creative; migrate saved roots/ledger/item/debug by exact old ID and state, preserve UUID,payload,events,connections,source shift,mount/profile. Existing authored collision hooks remain exact-ID compatible through adapters.",
@@ -4606,11 +4606,11 @@
           "mainId": "90088",
           "mainRegistryId": "bloodborne_dw:source_addon_chains_0",
           "variant": 3,
-          "yawDeltaSteps": 5,
+          "yawDeltaSteps": 1,
           "sourceShiftDelta": [
-            0.2042354346,
+            -0.0167354346,
             0.0,
-            0.0404029131
+            0.0845970869
           ],
           "oldYawPreserved": true,
           "oldMountYPreserved": true,
@@ -4618,7 +4618,8 @@
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
           "representativeRegistryId": "bloodborne_dw:source_addon_chains_3",
-          "representativeVariant": 0
+          "representativeVariant": 0,
+          "nativeCorrectionReason": "Native page6 reveals a180degree alpha/UV artwork flip. Source element yaw-45 and target yaw0 require added root rotation1; cyclic geometry symmetry must not discard the vertex-to-UV association."
         }
       ]
     },
@@ -7752,7 +7753,7 @@
           "oldVariants": 1
         }
       ],
-      "newVariantCount": 1,
+      "newVariantCount": 2,
       "variantPropertyBudget16": true,
       "representatives": [
         {
@@ -7760,6 +7761,12 @@
           "registryId": "bloodborne_dw:source_addon_quartz_pillar_side",
           "oldVariant": 0,
           "name": "Резная каменная база с широким верхом · секция"
+        },
+        {
+          "variant": 1,
+          "registryId": "bloodborne_dw:source_stairs_jungle_stairs_outer",
+          "oldVariant": 0,
+          "name": "Исходная узкая декоративная плоскость"
         }
       ],
       "reason": "Same visible functional object; positions/orientations and minor artwork/posture changes become states of one placing item.",
@@ -7801,7 +7808,7 @@
           "oldVariant": 0,
           "mainId": "90182",
           "mainRegistryId": "bloodborne_dw:source_addon_quartz_pillar_side",
-          "variant": 0,
+          "variant": 1,
           "yawDeltaSteps": 0,
           "sourceShiftDelta": [
             0.0,
@@ -7813,8 +7820,9 @@
           "oldVerticalMountPreserved": true,
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
-          "representativeRegistryId": "bloodborne_dw:source_addon_quartz_pillar_side",
-          "representativeVariant": 0
+          "representativeRegistryId": "bloodborne_dw:source_stairs_jungle_stairs_outer",
+          "representativeVariant": 0,
+          "nativeCorrectionReason": "Native page12 shows different geometry: target source model has rescale:true at element angle0, which native FaceBakery expands using its45degree factor. Preserve the original source model as an additional state of90182."
         }
       ]
     },
@@ -18924,7 +18932,7 @@
           "oldVariants": 1
         }
       ],
-      "newVariantCount": 1,
+      "newVariantCount": 2,
       "variantPropertyBudget16": true,
       "representatives": [
         {
@@ -18932,6 +18940,12 @@
           "registryId": "bloodborne_dw:source_gold_block",
           "oldVariant": 0,
           "name": "Каменный карниз с плетёной резьбой"
+        },
+        {
+          "variant": 1,
+          "registryId": "bloodborne_dw:source_quartz_pillar",
+          "oldVariant": 0,
+          "name": "Пьедестал, исходная отделка"
         }
       ],
       "reason": "Same visible functional object; positions/orientations and minor artwork/posture changes become states of one placing item.",
@@ -18973,20 +18987,21 @@
           "oldVariant": 0,
           "mainId": "90545",
           "mainRegistryId": "bloodborne_dw:source_gold_block",
-          "variant": 0,
-          "yawDeltaSteps": 1,
+          "variant": 1,
+          "yawDeltaSteps": 0,
           "sourceShiftDelta": [
-            -0.0,
             0.0,
-            -0.0
+            0.0,
+            0.0
           ],
           "oldYawPreserved": true,
           "oldMountYPreserved": true,
           "oldVerticalMountPreserved": true,
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
-          "representativeRegistryId": "bloodborne_dw:source_gold_block",
-          "representativeVariant": 0
+          "representativeRegistryId": "bloodborne_dw:source_quartz_pillar",
+          "representativeVariant": 0,
+          "nativeCorrectionReason": "Native page34 shows equal pedestal geometry, while the mottled top stone patch turns relative to the front edge. Exact source UV is retained as a state of the same functional pedestal."
         }
       ]
     },
@@ -20784,7 +20799,7 @@
           "oldVariants": 3
         }
       ],
-      "newVariantCount": 4,
+      "newVariantCount": 6,
       "variantPropertyBudget16": true,
       "representatives": [
         {
@@ -20810,6 +20825,18 @@
           "registryId": "bloodborne_dw:source_lever_on",
           "oldVariant": 2,
           "name": "Рычаг на каменном основании · наклон 90°"
+        },
+        {
+          "variant": 4,
+          "registryId": "bloodborne_dw:source_lever_on",
+          "oldVariant": 0,
+          "name": "Рычаг, исходная каменная отделка"
+        },
+        {
+          "variant": 5,
+          "registryId": "bloodborne_dw:source_lever_on",
+          "oldVariant": 1,
+          "name": "Рычаг, исходная обратная установка"
         }
       ],
       "reason": "Same visible functional object; positions/orientations and minor artwork/posture changes become states of one placing item.",
@@ -20901,20 +20928,21 @@
           "oldVariant": 0,
           "mainId": "90637",
           "mainRegistryId": "bloodborne_dw:source_lever",
-          "variant": 0,
-          "yawDeltaSteps": 4,
+          "variant": 4,
+          "yawDeltaSteps": 0,
           "sourceShiftDelta": [
-            -0.0,
             0.0,
-            -0.0
+            0.0,
+            0.0
           ],
           "oldYawPreserved": true,
           "oldMountYPreserved": true,
           "oldVerticalMountPreserved": true,
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
-          "representativeRegistryId": "bloodborne_dw:source_lever",
-          "representativeVariant": 0
+          "representativeRegistryId": "bloodborne_dw:source_lever_on",
+          "representativeVariant": 0,
+          "nativeCorrectionReason": "Native page38 has matching lever silhouette and placement, but different orientation of the dark stone-base markings. Preserve the original vertex-associated stone UV as another state of the same lever type."
         },
         {
           "oldId": "90638",
@@ -20922,20 +20950,21 @@
           "oldVariant": 1,
           "mainId": "90637",
           "mainRegistryId": "bloodborne_dw:source_lever",
-          "variant": 1,
-          "yawDeltaSteps": 4,
+          "variant": 5,
+          "yawDeltaSteps": 0,
           "sourceShiftDelta": [
-            -0.0,
             0.0,
-            -0.0
+            0.0,
+            0.0
           ],
           "oldYawPreserved": true,
           "oldMountYPreserved": true,
           "oldVerticalMountPreserved": true,
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
-          "representativeRegistryId": "bloodborne_dw:source_lever",
-          "representativeVariant": 1
+          "representativeRegistryId": "bloodborne_dw:source_lever_on",
+          "representativeVariant": 1,
+          "nativeCorrectionReason": "Native page38 shows the same reverse-mounted lever, with the stone joint and mottled face pattern in another orientation. Retain exact source UV in a state without adding another placing item."
         },
         {
           "oldId": "90638",
@@ -21731,7 +21760,7 @@
           "oldVariants": 1
         }
       ],
-      "newVariantCount": 1,
+      "newVariantCount": 2,
       "variantPropertyBudget16": true,
       "representatives": [
         {
@@ -21739,6 +21768,12 @@
           "registryId": "bloodborne_dw:source_magenta_concrete",
           "oldVariant": 0,
           "name": "Каменный блок с треугольными фронтонами"
+        },
+        {
+          "variant": 1,
+          "registryId": "bloodborne_dw:source_yellow_concrete",
+          "oldVariant": 0,
+          "name": "Обрамлённый каменный орнамент, исходная отделка"
         }
       ],
       "reason": "Same visible functional object; positions/orientations and minor artwork/posture changes become states of one placing item.",
@@ -21780,8 +21815,8 @@
           "oldVariant": 0,
           "mainId": "90676",
           "mainRegistryId": "bloodborne_dw:source_magenta_concrete",
-          "variant": 0,
-          "yawDeltaSteps": 7,
+          "variant": 1,
+          "yawDeltaSteps": 0,
           "sourceShiftDelta": [
             0.0,
             0.0,
@@ -21792,8 +21827,9 @@
           "oldVerticalMountPreserved": true,
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
-          "representativeRegistryId": "bloodborne_dw:source_magenta_concrete",
-          "representativeVariant": 0
+          "representativeRegistryId": "bloodborne_dw:source_yellow_concrete",
+          "representativeVariant": 0,
+          "nativeCorrectionReason": "Native page40 has the same full-size framed triangular stone ornament, but vertex-associated stone mottling and face pattern orientation do not exactly match. Preserve the original material/UV state within the existing ornament type."
         }
       ]
     },
@@ -29355,7 +29391,7 @@
           "oldVariants": 6
         }
       ],
-      "newVariantCount": 11,
+      "newVariantCount": 12,
       "variantPropertyBudget16": true,
       "representatives": [
         {
@@ -29423,6 +29459,12 @@
           "registryId": "bloodborne_dw:source_stone_button_pressed",
           "oldVariant": 5,
           "name": "Маленькая каменная пластина · наклон 90°"
+        },
+        {
+          "variant": 11,
+          "registryId": "bloodborne_dw:source_stone_button_pressed",
+          "oldVariant": 1,
+          "name": "Тонкая каменная плита, исходная отделка"
         }
       ],
       "reason": "Same visible functional object; positions/orientations and minor artwork/posture changes become states of one placing item.",
@@ -29590,7 +29632,7 @@
           "oldVariant": 1,
           "mainId": "93088",
           "mainRegistryId": "bloodborne_dw:source_stone_button",
-          "variant": 6,
+          "variant": 11,
           "yawDeltaSteps": 0,
           "sourceShiftDelta": [
             0.0,
@@ -29603,7 +29645,8 @@
           "profilePreserved": true,
           "instanceUuidAndPayloadPreserved": true,
           "representativeRegistryId": "bloodborne_dw:source_stone_button_pressed",
-          "representativeVariant": 0
+          "representativeVariant": 1,
+          "nativeCorrectionReason": "Native page54 shows the same thin stone slab with a different light/dark patch arrangement on its upper face. Preserve the source appearance as another slab state; the separate functional type remains removed."
         },
         {
           "oldId": "93089",
@@ -46724,5 +46767,80 @@
       ],
       "reason": "Atlas content is shared, but these objects have visibly different size or silhouette after position normalization; every member lists its actual model dimensions. Close-size pairs are separately projected and reviewed in retainedNearPairs. A shared atlas alone does not merge a full masonry cube, a half-height walking slab, a stair ascent, an open arch and an upright wall post."
     }
-  ]
+  ],
+  "nativeCorrections": {
+    "schemaVersion": 1,
+    "scope": "POST_ORIGINAL_V12_EXISTING_FUNCTIONAL_GROUPS_ONLY",
+    "nativeDiscrepancyJarSha256": "c30cb62063656b5230c2c2a6e9338ac208a687d9df712f6bc6ced51a1598a728",
+    "mappings": [
+      {
+        "mainId": "90088",
+        "oldRegistryId": "bloodborne_dw:source_addon_chains_7",
+        "oldVariant": 0,
+        "action": "EXACT_NATIVE_YAW_AND_PIVOT",
+        "yawDeltaSteps": 1,
+        "sourceShiftDelta": [
+          -0.0167354346,
+          0.0,
+          0.0845970869
+        ],
+        "reason": "Native page6 reveals a180degree alpha/UV artwork flip. Source element yaw-45 and target yaw0 require added root rotation1; cyclic geometry symmetry must not discard the vertex-to-UV association.",
+        "nativeFrameSha256": "0182263bcc5a3897c4e645aff28ba33adc98df64e0d86b1c47e0a5c544acdd60"
+      },
+      {
+        "mainId": "90182",
+        "oldRegistryId": "bloodborne_dw:source_stairs_jungle_stairs_outer",
+        "oldVariant": 0,
+        "action": "EXACT_SOURCE_POSE_STATE",
+        "sourceName": "Исходная узкая декоративная плоскость",
+        "reason": "Native page12 shows different geometry: target source model has rescale:true at element angle0, which native FaceBakery expands using its45degree factor. Preserve the original source model as an additional state of90182.",
+        "nativeFrameSha256": "765bd282a98f3cfafe2bb1aa69fdd5ac348487ebba6931d30d93338197c28041"
+      },
+      {
+        "mainId": "90637",
+        "oldRegistryId": "bloodborne_dw:source_lever_on",
+        "oldVariant": 0,
+        "action": "EXACT_SOURCE_POSE_STATE",
+        "sourceName": "Рычаг, исходная каменная отделка",
+        "reason": "Native page38 has matching lever silhouette and placement, but different orientation of the dark stone-base markings. Preserve the original vertex-associated stone UV as another state of the same lever type.",
+        "nativeFrameSha256": "c4a335d71952e6c98ce3b11f242be9cac2c15c01ae5ef8fa959d7130195609f7"
+      },
+      {
+        "mainId": "90637",
+        "oldRegistryId": "bloodborne_dw:source_lever_on",
+        "oldVariant": 1,
+        "action": "EXACT_SOURCE_POSE_STATE",
+        "sourceName": "Рычаг, исходная обратная установка",
+        "reason": "Native page38 shows the same reverse-mounted lever, with the stone joint and mottled face pattern in another orientation. Retain exact source UV in a state without adding another placing item.",
+        "nativeFrameSha256": "c4a335d71952e6c98ce3b11f242be9cac2c15c01ae5ef8fa959d7130195609f7"
+      },
+      {
+        "mainId": "90545",
+        "oldRegistryId": "bloodborne_dw:source_quartz_pillar",
+        "oldVariant": 0,
+        "action": "EXACT_SOURCE_POSE_STATE",
+        "sourceName": "Пьедестал, исходная отделка",
+        "reason": "Native page34 shows equal pedestal geometry, while the mottled top stone patch turns relative to the front edge. Exact source UV is retained as a state of the same functional pedestal.",
+        "nativeFrameSha256": "bd67196609950c6bb439b7de73de67f0c0b0dd3e4533df732280909a88d0e5e9"
+      },
+      {
+        "mainId": "93088",
+        "oldRegistryId": "bloodborne_dw:source_stone_button_pressed",
+        "oldVariant": 1,
+        "action": "EXACT_SOURCE_POSE_STATE",
+        "sourceName": "Тонкая каменная плита, исходная отделка",
+        "reason": "Native page54 shows the same thin stone slab with a different light/dark patch arrangement on its upper face. Preserve the source appearance as another slab state; the separate functional type remains removed.",
+        "nativeFrameSha256": "1c3b062a88b9315c3d1cb7be3cf808dedb70b96ef9ca4422d4e85cb979b4e8c0"
+      },
+      {
+        "mainId": "90676",
+        "oldRegistryId": "bloodborne_dw:source_yellow_concrete",
+        "oldVariant": 0,
+        "action": "EXACT_SOURCE_POSE_STATE",
+        "sourceName": "Обрамлённый каменный орнамент, исходная отделка",
+        "reason": "Native page40 has the same full-size framed triangular stone ornament, but vertex-associated stone mottling and face pattern orientation do not exactly match. Preserve the original material/UV state within the existing ornament type.",
+        "nativeFrameSha256": "af7349802bc0918bf8bc506976de9bbdd6ad77802f2a6e65db9125a708907445"
+      }
+    ]
+  }
 }

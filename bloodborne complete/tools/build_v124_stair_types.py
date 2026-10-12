@@ -195,6 +195,17 @@ def generated_pose(primary,half,shape,donor,models,apply):
     filler=next((e for e in elements if e is not base and e is not raised
                  and e['from'][1]==8 and e['to'][1]==16 and e['to'][0]<=8),raised)
     templates={'base':base,'raised':raised,'filler':filler}
+    if primary=='93028':
+        # The authored floor model intentionally maps its east plane to an
+        # entirely transparent atlas region. Reusing that patch made the new
+        # top/right corners visibly hollow after their quarter-turn. Only
+        # newly generated functional models need a complete masonry shell;
+        # their opposite west patch is opaque and has identical Z/Y extent.
+        # Exact legacy source parts/UV remain in ImportedStairLegacyArt.
+        templates=copy.deepcopy(templates)
+        for template in templates.values():
+            template['faces']['east']=copy.deepcopy(template['faces']['west'])
+            template['faces']['east'].pop('cullface',None)
     made=[render_component(templates[kind],box) for kind,box in render_components(shape)]
     identifier=f'bloodborne_dw:block/imported_stairs/{primary}/{shape}'
     model={'credit':'Source-native render components, signed rotated UV crops, and authored opposite faces for new functional states',
