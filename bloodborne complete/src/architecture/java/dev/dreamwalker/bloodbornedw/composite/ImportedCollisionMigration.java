@@ -58,6 +58,12 @@ public final class ImportedCollisionMigration {
     public static void discardOwner(ServerWorld world, Owner owner) {
         State state = WORLDS.get(world); if (state != null) state.done(owner);
     }
+    /** NEW saved assemblies consume the authoritative pre-rebake membership,
+     * including cells that today's simplified descriptor no longer occupies. */
+    public static Optional<Map<Cell,Footprint>> savedMembership(ServerWorld world,Owner owner) {
+        State state=WORLDS.get(world);Map<Cell,Footprint> saved=state==null?null:state.before.get(owner);
+        return saved==null?Optional.empty():Optional.of(Collections.unmodifiableMap(new TreeMap<>(saved)));
+    }
 
     private static void rebuild(ServerWorld world, State state, Owner owner) {
         if (ImportedTypeMigration.pending(world, owner)) return;

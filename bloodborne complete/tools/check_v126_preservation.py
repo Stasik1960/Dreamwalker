@@ -7,6 +7,7 @@ ROOT=Path(__file__).resolve().parents[1];REPO=ROOT.parent;DOC=ROOT/'docs/v12.6';
 JAVA='src/architecture/java/dev/dreamwalker/bloodbornedw/'
 SHARED=['architecture/RemainingArchitecture','composite/CompositeArchitecture','composite/CompositeItem','composite/CompositeRootBlock','composite/CompositeRuntime','composite/CompositeSourceShift','composite/CompositeSpec','composite/ImportedArtworkBlock','composite/ImportedArtworkStates','composite/mixin/CatalogueStackMigrationMixin','link/CompositeMechanismBridge','link/MechanismGroups','link/MechanismLinks','link/MechanismRules','link/MechanismState','link/ObjectPolicies','tool/ToolCommands']
 HOOK_LINES={JAVA+p+'.java':[] for p in SHARED}
+HOOK_LINES[JAVA+'composite/ImportedCollisionMigration.java']=[]
 def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
 def sha(v):return hashlib.sha256(v).hexdigest()
 def baseline(p):return subprocess.check_output(['git','show',BASELINE+':bloodborne complete/'+p],cwd=REPO)
@@ -38,6 +39,7 @@ def run():
         check((res/p).read_bytes()==baseline('src/architecture/resources/bloodborne_dw/'+p),'PRESERVED_PRIOR_RESOURCE_CHANGED',p)
     applied=read(DOC/'applied-content.json');allowed={r['registryId'] for r in applied['groups']}
     doors=read(ROOT/'build/v126-door-plan/door-manifest.json');doorposes={d['registryId']:set(d['variants']) for d in doors['doors']};allowed.update(doorposes)
+    rejected=read(DOC/'doors/explicit-non-doors.json')['objects'];allowed.update(r['registryId'] for r in rejected)
     paths=[r['path'] for r in read(res/'remaining-catalogue.json')['objects']]
     check(len(set(paths))==len(paths)==1045,'REGISTRATION_COHORT_CHANGED')
     for path in paths:

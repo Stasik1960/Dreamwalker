@@ -52,6 +52,7 @@ public final class ImportedAssemblyV126 {
     private static String checked(String registry){if(registry==null||!registry.startsWith("bloodborne_dw:source_")||Identifier.tryParse(registry)==null)throw new IllegalArgumentException("Assembly cannot change original V12: "+registry);return registry;}
     private static String registry(String path){return path.indexOf(':')>=0?path:"bloodborne_dw:"+path;}
     public static List<Recipe> recipes(){return CATALOGUE.recipes;}
+    public static boolean participant(String registry){return registry.equals("bloodborne_dw:source_dark_oak_trapdoor_top")||CATALOGUE.recipes.stream().anyMatch(recipe->recipe.components.stream().anyMatch(component->component.registryId.equals(registry)));}
     public static boolean hidden(String path){String id=ImportedTypeAliases.canonicalRegistry(registry(path));return CATALOGUE.redirects.containsKey(id);}
     public static int installationPose(String path){Recipe recipe=CATALOGUE.primary.get(registry(path));return recipe==null?0:recipe.installationPose;}
     public static List<Integer> activePoses(String path){String id=registry(path);return CATALOGUE.recipes.stream().filter(recipe->recipe.primaryRegistryId.equals(id)).map(Recipe::installationPose).toList();}
@@ -131,7 +132,7 @@ public final class ImportedAssemblyV126 {
             var shift=CompositeSourceShift.world(found,partPayload);var partRecipeShift=component.sourceShift.rotate(component.componentYawDelta);var expected=new CompositeSourceShift.Shift(partRecipeShift.x()-first.sourceShift.x(),partRecipeShift.y()-first.sourceShift.y(),partRecipeShift.z()-first.sourceShift.z()).rotate(yaw);
             double partVertical=partPayload.getDouble("MountY")+partPayload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
             if(Math.abs(shift.x()-actual.x()-expected.x())>1e-6||Math.abs(shift.z()-actual.z()-expected.z())>1e-6||Math.abs(shift.y()+partVertical-actual.y()-vertical-expected.y())>1e-6)return null;
-            parts.add(CompositeRuntime.instance(world,pos,found,own.resident().instanceId(),partPayload));
+            parts.add(savedInstance(world,pos,found,own.resident().instanceId(),partPayload));
         }
         return List.copyOf(parts);
     }
@@ -140,7 +141,7 @@ public final class ImportedAssemblyV126 {
         BlockState next=copyCommon(state,CompositeArchitecture.kindBlock("prototype_double_door").getDefaultState()).with(CompositeRootBlock.VARIANT,0);
         NbtCompound payload=old.copy();var shift=CompositeSourceShift.local(payload);NbtList xyz=new NbtList();xyz.add(NbtDouble.of(shift.x()));xyz.add(NbtDouble.of(shift.y()));xyz.add(NbtDouble.of(shift.z()+.375));payload.put("SourceShift",xyz);
         NbtCompound marker=new NbtCompound();marker.putInt("Version",VERSION);marker.putString("Recipe","EXPLICIT_90479_TO_90001");payload.put(PAYLOAD_KEY,marker);
-        ObjectInstance before=CompositeRuntime.instance(world,CompositeData.pos(owner.root()),state,owner.instanceId(),old),after=CompositeRuntime.instance(world,CompositeData.pos(owner.root()),next,owner.instanceId(),payload);
+        ObjectInstance before=savedInstance(world,CompositeData.pos(owner.root()),state,owner.instanceId(),old),after=CompositeRuntime.instance(world,CompositeData.pos(owner.root()),next,owner.instanceId(),payload);
         NbtList originals=new NbtList();NbtCompound saved=new NbtCompound();saved.put("Owner",CompositeData.owner(before.owner()));saved.put("RootData",CompositeData.data(before.rootData()));originals.add(saved);payload.put(PARTS_KEY,originals);after=CompositeRuntime.instance(world,CompositeData.pos(owner.root()),next,owner.instanceId(),payload);
         return migrate(world,List.of(before),after,CompositeData.pos(owner.root()),"EXPLICIT_90479_TO_90001");
     }
@@ -149,11 +150,12 @@ public final class ImportedAssemblyV126 {
         boolean waiting=false;for(Cell cell:List.copyOf(required)){if(!loaded(world,CompositeData.pos(cell))){defer(world,anchor,CompositeData.pos(cell));waiting=true;}for(var contribution:CompositeLedger.get(world).at(cell))required.add(contribution.owner().root());}
         for(Cell cell:required)if(!loaded(world,CompositeData.pos(cell))){defer(world,anchor,CompositeData.pos(cell));waiting=true;}if(waiting)return rejected("unloaded_assembly_owned_cell");
         var result=CompositeRuntime.migrateApprovedAssembly(world,parts,after);
-        if(result.outcome()==TransactionCore.Outcome.COMMITTED){for(ObjectInstance part:parts)ImportedCollisionMigration.discardOwner(world,part.owner());}
+        if(result.outcome()==TransactionCore.Outcome.COMMITTED){for(ObjectInstance part:parts)ImportedCollisionMigration.discardOwner(world,part.owner());var waitingByChunk=DEFERRED.get(world);if(waitingByChunk!=null)waitingByChunk.entrySet().removeIf(entry->{entry.getValue().remove(anchor);return entry.getValue().isEmpty();});}
         else{String warning=key+"|"+after.owner().instanceId()+"|"+result.reason();var warned=WARNED.computeIfAbsent(world,w->new HashSet<>());if(warned.size()<4096&&warned.add(warning))dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Approved assembly migration deferred {} / {}: {}",key,after.owner().instanceId(),result.reason());}
         return result;
     }
     private static void defer(ServerWorld world,BlockPos anchor,BlockPos missing){DEFERRED.computeIfAbsent(world,w->new HashMap<>()).computeIfAbsent(ChunkPos.toLong(missing.getX()>>4,missing.getZ()>>4),chunk->new LinkedHashSet<>()).add(anchor.toImmutable());}
+    private static ObjectInstance savedInstance(ServerWorld world,BlockPos pos,BlockState state,UUID uuid,NbtCompound payload){ObjectInstance current=CompositeRuntime.instance(world,pos,state,uuid,payload);return ImportedCollisionMigration.savedMembership(world,current.owner()).map(cells->new ObjectInstance(current.owner(),current.rootData(),cells)).orElse(current);}
     public static void forget(ServerWorld world){DEFERRED.remove(world);WARNED.remove(world);}
     private static BlockState copyCommon(BlockState old,BlockState next){for(var entry:old.getEntries().entrySet()){Property<?> property=next.getBlock().getStateManager().getProperty(entry.getKey().getName());if(property!=null)next=parsed(next,property,name(entry.getKey(),entry.getValue()));}return next;}
     private static BlockState setPose(BlockState state,int pose){state=state.with(CompositeRootBlock.VARIANT,pose%16);if(state.getBlock() instanceof ImportedArtworkBlock)state=state.with(ImportedArtworkBlock.bankProperty(state),pose/16);else if(pose>=16)throw new IllegalStateException("Unbanked complete assembly pose");return state;}

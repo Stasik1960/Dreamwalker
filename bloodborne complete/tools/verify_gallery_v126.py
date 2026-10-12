@@ -108,6 +108,7 @@ def main():
         retirement=base.read(ROOT/'src/architecture/resources/bloodborne_dw/imported-style-retirements.json')
         aliases=json.loads(jar.read('bloodborne_dw/imported-type-aliases.json'));remaining=json.loads(jar.read('bloodborne_dw/remaining-catalogue.json'))
         retired={r for g in aliases['groups'] for r in g['members'] if r!=g['primaryRegistryId']}|{r for g in retirement['retirements'] for r in g['aliases']}
+        retired.update(json.loads(jar.read('bloodborne_dw/imported-assembly-v126.json'))['hiddenPartRedirects'])
         working={'bloodborne_dw:'+r['path'] for r in remaining['objects']}-retired
         new=[r['registry'] for r in mainrows if r.get('origin')!='V12' and r['kind']=='architecture'];assert len(new)==len(set(new)) and set(new)==working
         original=base.read(ROOT/'docs/gallery-v12.1/catalogue.json');frozen={r['key']:(r['registry'],r['item'],r['id']) for r in original['exhibits'] if r['origin']=='V12' and r['section']!='error'}

@@ -94,18 +94,9 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
     }
     private static void use(TestContext t,ServerPlayerEntity player,ObjectInstance value) {
         var world=t.getWorld();
-        for(var offset:value.cells().keySet()) {
-            var pos=CompositeData.pos(value.owner().root().add(offset));
-            for(var bounds:world.getBlockState(pos).getOutlineShape(world,pos,ShapeContext.of(player)).getBoundingBoxes()) {
-                double x=pos.getX()+(bounds.minX+bounds.maxX)/2,y=pos.getY()+(bounds.minY+bounds.maxY)/2,z=pos.getZ()+bounds.minZ;
-                player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);player.refreshPositionAndAngles(x,y-player.getStandingEyeHeight(),z-2,0,0);
-                if(!value.owner().equals(CompositeRuntime.target(world,pos,player)))continue;
-                var hit=new BlockHitResult(new Vec3d(x,y,z),Direction.NORTH,pos,false);var current=world.getBlockState(pos);
-                t.assertTrue(current.getBlock().onUse(current,world,pos,player,Hand.MAIN_HAND,hit).isAccepted(),"ordinary selected root/helper RMB callback opens/closes "+value.owner().registryId());
-                return;
-            }
-        }
-        throw new AssertionError("Door has no reachable ordinary aiming part: "+value.owner().registryId());
+        var cells=value.cells().keySet().stream().map(offset->CompositeData.pos(value.owner().root().add(offset))).toList();
+        var hit=CompositeAimV126.aim(t,player,value.owner(),cells);var current=world.getBlockState(hit.getBlockPos());
+        t.assertTrue(current.getBlock().onUse(current,world,hit.getBlockPos(),player,Hand.MAIN_HAND,hit).isAccepted(),"ordinary selected root/helper RMB callback opens/closes "+value.owner().registryId());
     }
     private static void outline(TestContext t,ObjectInstance value) {
         var world=t.getWorld();int physical=0;

@@ -45,6 +45,7 @@ def audit(args):
   old={p:baseline.read(p) for p in baseline.namelist() if not p.endswith('/')}
   proposal=read(DOC/'applied-content.json')
   changed_ids={g['registryId'] for g in proposal['groups']}|{d['registryId'] for d in read(ROOT/'build/v126-door-plan/door-manifest.json')['doors']}
+  changed_ids.update(r['registryId'] for r in read(DOC/'doors/explicit-non-doors.json')['objects'])
   appended={f"bloodborne_dw/composite/{registry.split(':')[1]}.json" for registry in changed_ids}
   metadata_changed={'bloodborne_dw/remaining-catalogue.json','bloodborne_dw/imported-type-aliases.json','bloodborne_dw/debug_catalogue.json'}
   changed=[]

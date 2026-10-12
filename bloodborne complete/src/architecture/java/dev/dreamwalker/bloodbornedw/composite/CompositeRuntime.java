@@ -210,7 +210,7 @@ public final class CompositeRuntime {
             if(drop&&!item.isEmpty())Block.dropStack(world,CompositeData.pos(owner.root()),item);
         }return result;
     }
-    public static TransactionCore.Result execute(FabricCompositeWorld access,TransactionCore.Preparation preparation){CompositeShapeSnapshots.beginBatch(access.world);WRITING.set(WRITING.get()+1);try{var result=core().execute(access,preparation);LAST_RESULT.set(result);return result;}finally{WRITING.set(WRITING.get()-1);CompositeShapeSnapshots.endBatch(access.world);}}
+    public static TransactionCore.Result execute(FabricCompositeWorld access,TransactionCore.Preparation preparation){CompositeShapeSnapshots.beginBatch(access.world);WRITING.set(WRITING.get()+1);try{var result=core().execute(access,preparation);LAST_RESULT.set(result);if(result.outcome()==TransactionCore.Outcome.COMMITTED&&preparation.accepted())for(CellSnapshot next:preparation.plan().writes().values())if(next.resident()!=null&&ImportedAssemblyV126.participant(next.resident().registryId())){Owner owner=next.resident();queue(access.world,"v126-assembly-installed:"+owner.instanceId(),()->ImportedAssemblyV126.installed(access.world,owner));}return result;}finally{WRITING.set(WRITING.get()-1);CompositeShapeSnapshots.endBatch(access.world);}}
     public static TransactionCore.Result lastResult(){return LAST_RESULT.get();}
 
     private static TransactionCore.Result rejected(String reason){var result=new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,reason);LAST_RESULT.set(result);return result;}

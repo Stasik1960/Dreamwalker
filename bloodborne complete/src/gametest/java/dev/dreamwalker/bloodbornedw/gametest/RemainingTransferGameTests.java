@@ -122,13 +122,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         t.runAtTick(cases.size()+2,()->{if(player!=null)player.discard();t.complete();});
     }
     private static BlockHitResult aim(TestContext t,ServerPlayerEntity player,Owner owner) {
-        var world=t.getWorld();
-        for(var cell:cells(world,owner))for(var row:CompositeRuntime.contributions(world,cell))if(row.owner().equals(owner))for(var bounds:world.getBlockState(cell).getOutlineShape(world,cell,ShapeContext.of(player)).getBoundingBoxes()) {
-            double x=cell.getX()+(bounds.minX+bounds.maxX)/2,y=cell.getY()+(bounds.minY+bounds.maxY)/2,z=cell.getZ()+bounds.minZ;
-            player.setStackInHand(Hand.MAIN_HAND,ItemStack.EMPTY);player.refreshPositionAndAngles(x,y-player.getStandingEyeHeight(),z-2,0,0);
-            if(owner.equals(CompositeRuntime.target(world,cell,player)))return new BlockHitResult(new Vec3d(x,y,z),Direction.NORTH,cell,false);
-        }
-        throw new AssertionError("New door has no reachable ordinary selection part: "+owner.registryId());
+        return CompositeAimV126.aim(t,player,owner,cells(t.getWorld(),owner));
     }
     private static void use(TestContext t,ServerPlayerEntity player,Owner owner) {
         var hit=aim(t,player,owner);var state=t.getWorld().getBlockState(hit.getBlockPos());
