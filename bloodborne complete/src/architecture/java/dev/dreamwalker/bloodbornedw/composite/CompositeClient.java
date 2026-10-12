@@ -139,14 +139,15 @@ public final class CompositeClient {
             rotate(matrices,.5,.5,.5,ThinWindowRootBlock.mount(state)==ThinWindowRootBlock.Mount.FLOOR?90:-90,true);
             rotate(matrices,.5,.5,.5,block.spec.variant(state).mountAlignmentYaw(),false);
         }
-        for(var part:ImportedStairLegacyArt.selectedParts(block,state,payload)){
+        var selectedParts=ImportedStairLegacyArt.selectedParts(block,state,payload);
+        boolean generatedAlt=dev.dreamwalker.bloodbornedw.tool.BbAlternateService.generatedAlternate(block,state,selectedParts);
+        for(var part:selectedParts){
             matrices.push();matrices.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.yaw(),false);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.pitch(),true);
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
             var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
-            boolean generatedAlt=dev.dreamwalker.bloodbornedw.tool.BbAlternateService.generatedAlternate(block,state,part);
             float partRed=generatedAlt?red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED:red,partGreen=generatedAlt?green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN:green,partBlue=generatedAlt?blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE:blue;
             boolean sourceEmissive=block.spec.id.getPath().startsWith("source_")&&selectedModel.getPath().startsWith("remaining/source_emissive/");
             client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,partRed,partGreen,partBlue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();

@@ -11,8 +11,8 @@ class CurrentResolver(Resolver):
         super().__init__()
         # Keep frozen source -> current aliases, adding only current append-only
         # source poses. Prefix variants remain exact frozen source candidates.
-        self.retired={r['registryId'] for r in json.loads((RES/'bloodborne_dw/imported-style-retirements.json').read_text())['retirements']}
-        self.transparent={r['model'] for r in json.loads((ROOT/'docs/remaining-transfer/transparent-helper-validation.json').read_text())['models'] if r['status']=='ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO'}
+        self.retired={r['registryId'] for r in json.loads((RES/'bloodborne_dw/imported-style-retirements.json').read_text(encoding='utf-8-sig'))['retirements']}
+        self.transparent={r['model'] for r in json.loads((ROOT/'docs/remaining-transfer/transparent-helper-validation.json').read_text(encoding='utf-8-sig'))['models'] if r['status']=='ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO'}
         inventory=json.loads((ROOT/'docs/remaining-transfer/source-inventory.json').read_text(encoding='utf-8-sig'))
         self.empty={r['model'] for r in inventory['models'] if not any(e.get('faces') for e in r['resolved'].get('elements',[]))}
         self.current={}
@@ -44,10 +44,11 @@ class CurrentResolver(Resolver):
         names={a['model'] for a in apps}
         if not apps:return {'action':'REMOVE','reason':'SOURCE_BLOCKSTATE_NO_APPLICABLE_BRANCH','sourceCarrier':carrier}
         if names<=self.transparent|self.empty:return {'action':'REMOVE','reason':'SOURCE_ALL_PIXEL_ALPHA_ZERO' if names&self.transparent else 'SOURCE_EMPTY_GEOMETRY','models':sorted(names)}
+        if self.carriers.get(carrier) in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_CARRIER','retiredRegistryId':self.carriers[carrier],'models':sorted(names)}
         result=self.resolve(apps)
         if result['resolution'].startswith('EXACT'):
             if result['registryId'] in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_TYPE','retiredRegistryId':result['registryId'],'models':sorted(names)}
-            if result['registryId'] not in self.current:return {'action':'REMOVE','reason':'EXCLUDED_UNREGISTERED_SOURCE_TYPE','excludedRegistryId':result['registryId'],'models':sorted(names)}
+            if result['registryId'] not in self.current and not result['registryId'].startswith(('bloodborne_dw:prototype_wall','bloodborne_dw:prototype_ladder')):return {'action':'REMOVE','reason':'EXCLUDED_UNREGISTERED_SOURCE_TYPE','excludedRegistryId':result['registryId'],'models':sorted(names)}
             return {'action':'OWNER',**result}
         if carrier=='minecraft:polished_deepslate_wall':
             mats={int(a['model'].rsplit('_',1)[1]) for a in apps if '_side_tall_' in a['model']};material=next(iter(mats),6)
@@ -70,7 +71,26 @@ def pose_proposals(resolver,unresolved):
     Existing descriptors/art never modified by dry-run. Missing resources and
     native pose-cap issues are concrete blockers, not invisible substitutions.
     """
-    from v125_map_extra_city_poses import normalized,parts
+    def normalized(apps):
+        options=[]
+        for steps in ([0] if any(a.get('uvlock') for a in apps) else [0,2,4,6]):
+            values=[]
+            for a in apps:
+                c=app_clean(a);y=(c.get('y',0)-steps*45)%360
+                if y:c['y']=y
+                else:c.pop('y',None)
+                values.append(c)
+            values.sort(key=token);options.append((token(values),steps,values))
+        return min(options,key=lambda x:x[0])
+    def parts(apps,offset):
+        result=[];missing=[]
+        for a in apps:
+            ns,local=a['model'].split(':',1);base=f'remaining/source/{ns}/{local}'
+            if a.get('uvlock') and (a.get('x',0) or a.get('y',0)):base=f'remaining/source_uvlock/{ns}/{local}_x{a.get("x",0)}_y{a.get("y",0)}'
+            model='bloodborne_dw:'+base;file=RES/'assets/bloodborne_dw/models'/f'{base}.json'
+            if not file.exists():missing.append(str(file.relative_to(RES)))
+            result.append({'model':model,'offset':offset,'yaw':a.get('y',0),'pitch':a.get('x',0)})
+        return result,missing
     groups={};missing=[]
     for carrier,props,apps,count in unresolved:
         reg=resolver.carriers.get(carrier)

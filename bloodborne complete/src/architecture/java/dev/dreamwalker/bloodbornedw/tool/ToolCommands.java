@@ -28,7 +28,7 @@ public final class ToolCommands extends PersistentState {
         return commands;
     }
     public static boolean save(ServerPlayerEntity player,ToolTarget target,String text,int personal,int global){
-        if(!player.hasPermissionLevel(4)||!target.valid(player.getServer())||personal<1||personal>MAX_USES||global<1||global>MAX_USES)return false;
+        if(target==null||!player.hasPermissionLevel(4)||!target.valid(player.getServer())||personal<1||personal>MAX_USES||global<1||global>MAX_USES)return false;
         var commands=parse(text);var state=get(player.getServer());
         if(commands.isEmpty()){state.entries.values().removeIf(b->b.target.key().equals(target.key()));state.markDirty();return true;}
         if(state.entries.size()>=4096&&!state.entries.containsKey(target.key()))return false;

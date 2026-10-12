@@ -6,6 +6,7 @@ import dev.dreamwalker.bloodbornedw.debug.DebugCatalogue;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.*;

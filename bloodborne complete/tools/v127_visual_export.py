@@ -30,6 +30,10 @@ def inventory():
     marker=json.loads((ROOT/'build/v126-gallery-input.json').read_text(encoding='utf-8'))
     rows=[r for r in marker['catalogue']['exhibits'] if r['origin']!='V12' and r['kind']=='architecture']
     assert len(rows)==544 and len({r['id'] for r in rows})==544
+    overlay=RES/'bloodborne_dw/imported-type-aliases-v127.json'
+    if overlay.exists():
+        retired={member for group in json.loads(overlay.read_text(encoding='utf-8'))['groups'] for member in group['members'] if member!=group['primaryRegistryId']}
+        rows=[r for r in rows if r['registry'] not in retired]
     return sorted(rows,key=lambda r:int(r['id']))
 
 def spec_of(row):return json.loads((RES/'bloodborne_dw/composite'/f"{row['registry'].split(':')[1]}.json").read_text(encoding='utf-8'))
@@ -223,7 +227,14 @@ def export_pass(args,rows,art):
     print(json.dumps({'status':document['status'],**document['summary'],'archiveSha256':document['archiveSha256']}),flush=True)
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('action',choices=['visuals','export']);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('action',choices=['visuals','export','review-sheets']);args=parser.parse_args()
+    if args.action=='review-sheets':
+        report=json.loads((OUT/'visual-inventory.json').read_text(encoding='utf-8'));candidates=report['candidates']
+        for page in range(math.ceil(len(candidates)/40)):
+            subset=candidates[page*40:(page+1)*40];canvas=Image.new('RGB',(1280,2100),tuple(BG))
+            for n,p in enumerate(subset):canvas.paste(Image.open(OUT/p['image']),(640*(n%2),105*(n//2)))
+            canvas.save(OUT/f'projections/candidates-{page:02d}.png')
+        return
     rows=inventory();art=Art(vanilla_jar=VANILLA)
     if args.action=='visuals':visuals_pass(args,rows,art)
     else:export_pass(args,rows,art)
