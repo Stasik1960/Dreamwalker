@@ -204,6 +204,19 @@
       ],
       "defaultInstallationPose": 0,
       "status": "PASS_EXACT_SOURCE_VERTEX_UV_RGBA_TINTINDEX"
+    },
+    {
+      "registryId": "bloodborne_dw:source_lantern",
+      "variant": 3,
+      "mainId": "90941",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/lantern"
+        }
+      ],
+      "defaultInstallationPose": 0,
+      "status": "PASS_EXACT_EXISTING_SOURCE_VERTEX_UV_RGBA_TINTINDEX",
+      "kind": "SOURCE_ONLY_NATIVE_EMISSION_ALIAS"
     }
   ],
   "policy": "Exact incomplete source compatibility states only; no separate Creative item, hand pick returns normal complete installation, ordinary art cycle excludes these fragments."

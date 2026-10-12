@@ -12,6 +12,7 @@ import subprocess
 import time
 import zipfile
 from package_v127_release import ROOT, files, ordinary, read, sha, SOURCE_HASHES
+from prepare_v127_server_bootstrap import stage_bootstrap
 
 
 def metadata(path):
@@ -29,7 +30,9 @@ def main():
     parser.add_argument('--fabric-api', type=Path, required=True)
     parser.add_argument('--geckolib', type=Path, required=True)
     parser.add_argument('--server-launcher', type=Path, required=True)
-    parser.add_argument('--java-home', type=Path, default=Path(os.environ['JAVA_HOME']) if os.environ.get('JAVA_HOME') else None)
+    parser.add_argument('--server-bootstrap', type=Path, help='Verified bundle prepared by prepare_v127_server_bootstrap.py')
+    java_home = os.environ.get('JAVA_HOME17') or os.environ.get('JAVA_HOME')
+    parser.add_argument('--java-home', type=Path, default=Path(java_home) if java_home else None)
     parser.add_argument('--heap-gb', type=int, default=4)
     parser.add_argument('--timeout-hours', type=float, default=24)
     parser.add_argument('--authorize-full-conversion', action='store_true')
@@ -60,6 +63,7 @@ def main():
         assert json.loads(addon.read('dw-conversion-binding.json'))['productionJarSha256'] == sha(sources[0])
     assert not run.exists() or args.resume, 'Choose a fresh server runtime or explicitly resume the same operation'
     run.mkdir(parents=True, exist_ok=True)
+    bootstrap_files = stage_bootstrap(args.server_bootstrap, run, args.server_launcher) if args.server_bootstrap else {}
     mods = run / 'mods'
     mods.mkdir(exist_ok=True)
     intended = {source.name: sha(source) for source in sources}
@@ -89,7 +93,7 @@ def main():
     record = {'status': 'RUNNING', 'mode': marker['mode'], 'productionJarSha256': marker['productionJarSha256'],
               'runtimeManifestSha256': marker['runtimeManifestSha256'], 'derivedWorld': str(world),
               'originalArchivesWritten': False, 'galleryCreated': False, 'javaVersion': version.strip(),
-              'modFiles': intended, 'serverLauncherSha256': sha(launch)}
+              'modFiles': intended, 'serverLauncherSha256': sha(launch), 'bootstrapRuntimeFiles': bootstrap_files}
     start = time.monotonic()
     with (run / 'conversion-console.log').open('wb') as log:
         process = subprocess.Popen(command, cwd=run, stdin=subprocess.PIPE, stdout=log, stderr=subprocess.STDOUT, text=True)

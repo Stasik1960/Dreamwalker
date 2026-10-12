@@ -6,6 +6,7 @@ import dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.*;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner;
 import java.util.*;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 
 /** Whole owner removal/replacement is preflighted before any WorldEdit write.
  * A failed incoming placement never destroys the previous object. No source
@@ -13,6 +14,9 @@ import net.minecraft.server.world.ServerWorld;
 public final class WorldEditObjectTransactions {
     private WorldEditObjectTransactions() {}
     public static TransactionCore.Result replace(ServerWorld world,List<Owner> remove,List<ObjectInstance> add) {
+        return replace(world,remove,add,Map.of());
+    }
+    public static TransactionCore.Result replace(ServerWorld world,List<Owner> remove,List<ObjectInstance> add,Map<BlockPos,CellSnapshot.BlockData> nativeChanges) {
         if(!world.getServer().isOnThread())throw new IllegalStateException("WorldEdit requires the server thread");
         Map<Owner,ObjectInstance> incoming=new LinkedHashMap<>();
         for(ObjectInstance object:add) {
@@ -40,6 +44,14 @@ public final class WorldEditObjectTransactions {
             TransactionCore.Preparation step=CompositeRuntime.core().removal(virtual,owner);
             if(!step.accepted())return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,step.reason());
             overlay.putAll(step.plan().writes());
+        }
+        for(var entry:nativeChanges.entrySet()){
+            BlockPos p=entry.getKey();world.getChunk(p.getX()>>4,p.getZ()>>4);Cell cell=CompositeData.cell(p);CellSnapshot before=virtual.read(cell);if(before.resident()!=null)return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,"WorldEdit native replacement touches an unrelated owner root");var state=CompositeData.state(entry.getValue());
+            if(!state.isAir())for(var box:state.getCollisionShape(world,p,net.minecraft.block.ShapeContext.absent()).getBoundingBoxes()){
+                var placed=box.offset(p);for(Owner guest:before.guests())for(var contribution:CompositeRuntime.contributions(world,p))if(contribution.owner().equals(guest)&&!remove.contains(guest))for(var part:CompositeRuntime.physicalParts(contribution,p))if(dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.overlaps(placed,new net.minecraft.util.math.Box(p.getX()+part.minX(),p.getY()+part.minY(),p.getZ()+part.minZ(),p.getX()+part.maxX(),p.getY()+part.maxY(),p.getZ()+part.maxZ())))return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,"WorldEdit native replacement overlaps an unrelated BB guest");
+                String entity=dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.entityConflict(world,List.of(placed),null,false);if(entity!=null)return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,entity);
+            }
+            var data=entry.getValue();CellSnapshot.Kind kind=state.isAir()?before.guests().isEmpty()?CellSnapshot.Kind.AIR:CellSnapshot.Kind.HELPER:CellSnapshot.Kind.FOREIGN;if(kind==CellSnapshot.Kind.HELPER)data=CompositeData.data(CompositeArchitecture.CELL.getDefaultState(),new net.minecraft.nbt.NbtCompound());overlay.put(cell,new CellSnapshot(kind,data,null,before.guests()));
         }
         for(ObjectInstance object:add) {
             Cell root=object.owner().root();CellSnapshot previous=virtual.read(root);

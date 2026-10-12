@@ -49,6 +49,8 @@ def entities_export(dest):
     return rows
 def runtime_bundle(plan,runtime):
     # Never leave partially rewritten streams looking like an accepted plan.
+    with sqlite3.connect(f'file:{plan.resolve()}?mode=ro',uri=True) as con:
+        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy')!='PENDING_USER_DECISION','Runtime export is blocked while known visible source-style preservation is awaiting a user decision'
     ordinary_ancestors(runtime);runtime=runtime.absolute();assert not runtime.exists(),'Runtime export must use a fresh absent directory'
     temp=runtime.with_name(runtime.name+'.export-'+uuid.uuid4().hex);export_runtime(plan,temp);rows=entities_export(temp);p=temp/'manifest.json';m=json.loads(p.read_text(encoding='utf-8-sig'));m['runtimeFiles']={f.name:sha(f) for f in temp.glob('*.jsonl.gz')};m['deferredEntityCount']=len(rows);m['offlinePhaseRequiredBeforeServer']=True;dump(p,m);os.replace(temp,runtime);return m
 def ordinary_ancestors(path):
@@ -72,7 +74,8 @@ def source_changed(con,decisions,dim,x,y,z):
     return action!='KEEP'
 def stage(plan,runtime,target,execute):
     ordinary_ancestors(plan);ordinary_ancestors(runtime);target=fresh_target(target);plan=plan.resolve();runtime=runtime.resolve();con=sqlite3.connect(f'file:{plan}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN',summary['status'];assert summary['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)},'Original source hashes differ'
-    if not execute:print(token({'status':'PASS_READONLY_READY_TO_STAGE','sourceHashes':summary['sourceHashes'],'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction'}));return
+    if not execute:print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if summary.get('sourceStylePolicy')=='PENDING_USER_DECISION' else 'PASS_READONLY_READY_TO_STAGE','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction and final source-style decision'}));return
+    assert summary.get('sourceStylePolicy')!='PENDING_USER_DECISION','Full conversion is blocked while the known visible source-style preservation policy awaits a user decision'
     if runtime.exists():
         bundle=json.loads((runtime/'manifest.json').read_text(encoding='utf-8-sig'));assert bundle['status']=='PASS_COMPLETE_SOURCE_PLAN' and bundle['sourcePlanSha256']==sha(plan),'Stale runtime bundle'
         for name,digest in bundle['runtimeFiles'].items():assert PurePosixPath(name).name==name and sha(runtime/name)==digest,'Runtime stream hash mismatch'

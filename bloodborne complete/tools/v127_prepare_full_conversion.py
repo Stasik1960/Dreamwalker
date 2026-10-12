@@ -143,6 +143,7 @@ def prepare(path):
 
 def export_runtime(path,dest):
     con=sqlite3.connect(f'file:{path}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN','Never export a runtime plan with unresolved visible author content'
+    assert summary.get('sourceStylePolicy')!='PENDING_USER_DECISION','Never export executable runtime data before the known source-style preservation decision'
     decisions={i:json.loads(d) for i,d in con.execute('SELECT id,data FROM decisions')};dest.mkdir(parents=True,exist_ok=True)
     with gzip.open(dest/'sections.jsonl.gz','wt',encoding='utf8') as out,gzip.open(dest/'owners.jsonl.gz','wt',encoding='utf8') as ownerout:
         for dim,cx,cz,sy,sp,si,di in con.execute('SELECT * FROM sections ORDER BY dimension,cx,cz,sy'):

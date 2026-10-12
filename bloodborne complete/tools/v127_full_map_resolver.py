@@ -45,6 +45,7 @@ class CurrentResolver(Resolver):
             frozen=len(self.baseline['descriptors'].get(path.stem,{}).get('variants',[]))
             for vi,v in enumerate(spec['variants']):
                 if vi<frozen:continue
+                if v.get('sourceLightingCarrier'):continue
                 apps=v.get('sourceClosedApplications',[])
                 if not apps:continue
                 c={'registryId':reg,'variant':vi,'open':False,'applications':apps,'sourcePlacementOffset':v.get('sourcePlacementOffset',[0,0,0]),'name':spec['displayName'],'currentAppend':True}
@@ -110,6 +111,10 @@ class CurrentResolver(Resolver):
         if exact:return {**copy.deepcopy(exact),'mainId':self.ids.get(exact['registryId'],'')}
         result=self.resolve(apps)
         if result['resolution'].startswith('EXACT'):
+            if result['registryId']=='bloodborne_dw:prototype_wood_window':result['properties'].pop('mount',None)
+            if result['registryId']=='bloodborne_dw:source_lantern' and carrier=='minecraft:lantern':
+                for vi,v in enumerate(self.current[result['registryId']]['variants']):
+                    if v.get('sourceLightingCarrier')==carrier:result['properties']['variant']=str(vi);result['sourceOldVariant']=vi;result['resolution']='EXACT_SOURCE_VISUAL_NATIVE_EMISSION_ALIAS';break
             if result['registryId'] in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_TYPE','retiredRegistryId':result['registryId'],'models':sorted(names)}
             if result['registryId'] not in self.current and not result['registryId'].startswith(('bloodborne_dw:prototype_wall','bloodborne_dw:prototype_ladder')):return {'action':'REMOVE','reason':'EXCLUDED_UNREGISTERED_SOURCE_TYPE','excludedRegistryId':result['registryId'],'models':sorted(names)}
             return {'action':'OWNER',**result}

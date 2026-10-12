@@ -26,6 +26,6 @@ public final class SourcePartsV127GameTests implements FabricGameTest {
             c.assertTrue(picked.getSubNbt("CompositePayload")==null&&picked.getSubNbt("BlockEntityTag")==null,"Source UUID and private settings cannot enter the installation item");
             c.assertTrue(CompositeRuntime.remove(world,owner,player,false).outcome()==TransactionCore.Outcome.COMMITTED,"Whole source-only owner removes normally");CompositeRuntime.drain(world);checked++;
         }
-        c.assertTrue(checked==29,"All17 source compatibility pieces and12 tree pieces are verified separately");player.discard();c.complete();
+        c.assertTrue(checked==30,"All18 source compatibility states (including exact lantern emission alias) and12 tree pieces are verified separately");player.discard();c.complete();
     }
 }

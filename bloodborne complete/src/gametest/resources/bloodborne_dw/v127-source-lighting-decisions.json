@@ -140547,10 +140547,9 @@
       "caseId": 2343,
       "action": "OWNER",
       "sourceState": "minecraft:jungle_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]",
-      "targetState": "bloodborne_dw:prototype_wood_window[mount=vertical,open=false,profile=base,rotation=4,variant=0]",
+      "targetState": "bloodborne_dw:prototype_wood_window[open=false,profile=base,rotation=4,variant=0]",
       "targetRegistryId": "bloodborne_dw:prototype_wood_window",
       "targetProperties": {
-        "mount": "vertical",
         "open": "false",
         "profile": "base",
         "rotation": "4",
@@ -193298,10 +193297,9 @@
       "caseId": 3233,
       "action": "OWNER",
       "sourceState": "minecraft:jungle_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
-      "targetState": "bloodborne_dw:prototype_wood_window[mount=vertical,open=false,profile=base,rotation=0,variant=0]",
+      "targetState": "bloodborne_dw:prototype_wood_window[open=false,profile=base,rotation=0,variant=0]",
       "targetRegistryId": "bloodborne_dw:prototype_wood_window",
       "targetProperties": {
-        "mount": "vertical",
         "open": "false",
         "profile": "base",
         "rotation": "0",
@@ -248138,10 +248136,9 @@
       "caseId": 4211,
       "action": "OWNER",
       "sourceState": "minecraft:jungle_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
-      "targetState": "bloodborne_dw:prototype_wood_window[mount=vertical,open=false,profile=base,rotation=2,variant=0]",
+      "targetState": "bloodborne_dw:prototype_wood_window[open=false,profile=base,rotation=2,variant=0]",
       "targetRegistryId": "bloodborne_dw:prototype_wood_window",
       "targetProperties": {
-        "mount": "vertical",
         "open": "false",
         "profile": "base",
         "rotation": "2",
@@ -272213,13 +272210,13 @@
       "caseId": 4675,
       "action": "OWNER",
       "sourceState": "minecraft:lantern[hanging=false,waterlogged=false]",
-      "targetState": "bloodborne_dw:source_lantern[open=false,profile=base,rotation=0,variant=0]",
+      "targetState": "bloodborne_dw:source_lantern[open=false,profile=base,rotation=0,variant=3]",
       "targetRegistryId": "bloodborne_dw:source_lantern",
       "targetProperties": {
         "open": "false",
         "profile": "base",
         "rotation": "0",
-        "variant": "0"
+        "variant": "3"
       },
       "payload": {
         "ImportedTypeVersion": 1,
@@ -278624,12 +278621,12 @@
     }
   ],
   "coordinateRunFile": "docs\\v12.7\\conversion\\source-lighting-coordinate-runs.jsonl.gz",
-  "coordinateRunSha256": "9486a53386321f1f2f429d4625bcaa009960ba3839edbc3d129406321073c07f",
+  "coordinateRunSha256": "deb6222c187d639a7e1109c7789d0e23a63c9f555567fd8365bbbba68d79b361",
   "coordinateEncoding": "X fastest, then Z, then Y; index=(y&15)*256+(z&15)*16+(x&15). Each[start,length] is an exact original source coordinate run. Join by caseId.",
   "sourceArchivesModified": false,
   "runtimeWorldModified": false,
   "boundedIndexPatternCache": 128,
-  "elapsedSeconds": 155.91,
+  "elapsedSeconds": 135.27,
   "wholeOwnerHeightCases": [
     {
       "targetState": "bloodborne_dw:source_original_tree[open=false,profile=base,rotation=0,variant=0]",
