@@ -1,0 +1,66 @@
+{
+  "schema": "dreamwalker-v125-independent-city-native-visual-review-v1",
+  "status": "PASS_ASSIGNED_CITY_VIEWS",
+  "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845",
+  "captureSha256": "90eaa3a74f604e1e86a24927fd25941e656fce8a5beb90c6e714008aeba1413a",
+  "actuallyViewedFrames": 7,
+  "frames": [
+    {
+      "fileName": "v125-076-CITY-OVERVIEW-1.png",
+      "key": "CITY-OVERVIEW-1",
+      "sha256": "c19a66f505871c4086127145ab167f00dd7970683eaaac4668ad6affde50856b",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Городской фрагмент виден целиком на серой платформе: каменная фасадная архитектура, окна, шпили и карнизы. Отдельный верхний элемент башни и края source crop не дорисовываются; дальние неполные чанки вне целевой платформы не считаются отсутствием городских моделей.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-077-CITY-OVERVIEW-2.png",
+      "key": "CITY-OVERVIEW-2",
+      "sha256": "c58d20d9d7e713c63d52e7701d54f4ee5b8ac4fa6cde1fee6865e48ce69cc1ea",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Другой общий ракурс показывает полный городской объём с серой кладкой и тёмно-зелёным шпилем. Отдельный верхний элемент сохранён как source-геометрия; ярких обычных ванильных пород/горшков/грядок в целевой сцене не видно.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-078-CITY-OVERVIEW-3.png",
+      "key": "CITY-OVERVIEW-3",
+      "sha256": "9e3b77bf8a96f79f15a22f1a8755b647158e15313c7ee9c2c5f9cc3a07397f10",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Противоположный ракурс показывает фасады и открытые части фрагмента; серые каменные поверхности и небольшие цветные окна без missing texture. Обрезанные пределы исходного crop и зарегистрированные исключения остаются явными.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-079-CITY-OVERVIEW-4.png",
+      "key": "CITY-OVERVIEW-4",
+      "sha256": "9ce9e6737c4317c189b816bde2984a81b494507612b433b30c3cc699a75809de",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Четвёртый общий ракурс: заполненные текстурой стены, карнизы, окна, парапеты и основная башня видны. Фрагмент стоит на серой платформе, соседние review станции разделены; source-разрывы не подменяются выдуманной архитектурой.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-080-CITY-DETAIL-1.png",
+      "key": "CITY-DETAIL-1",
+      "sha256": "cae102277f4858d47c9d39114f51da3e365281aef3dd7c335aee45648f0f2f14",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Крупный план городского прохода через решётку: видны серые металлические/каменные полосы, декоративные панели, кладка и консольные опоры. Передняя решётка частично закрывает дальние детали; не заявляется полная индивидуальная проверка всех владельцев.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-081-CITY-DETAIL-2.png",
+      "key": "CITY-DETAIL-2",
+      "sha256": "e7b8535505e41387a440c9b551be4d0b6cbc5cf34ef2a795f6fafd9fdaa47d7a",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Крупный план прохода без передней решётки: фактура серой кладки, карнизный пояс и боковые опоры видны, текстурных заглушек нет. Обзор ограничен этой стороной прохода.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-082-CITY-DETAIL-3.png",
+      "key": "CITY-DETAIL-3",
+      "sha256": "0d50cbeeb4014d3b993c477306b56e912cf9117fdf9a184beac1786befe255de",
+      "status": "PASS_OBSERVED_CITY_PIXELS",
+      "observation": "Деталь рядом с существующей native стеной V12: видны каменный столб, парапет с решёткой, арочное цветное окно и резная фасадная отделка. Исходный материал и соседняя геометрия корректно присутствуют.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    }
+  ],
+  "scope": "Four city overviews and three close detail views. This does not certify all4575 individual owners visually; exact source coverage/typed UUID/state/payload and reopen preservation use separate disk/native evidence. Source omissions and crop seams are explicit, no author content reconstructed."
+}

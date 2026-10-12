@@ -12,8 +12,25 @@ from prepare_gallery_v125_input import ArchiveGeometry,component_geometry
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def near(a,b):assert len(a)==len(b) and all(abs(x-y)<1e-5 for x,y in zip(a,b)),(a,b)
+
+def compact_layout(mainrows, groups, city):
+    rows=mainrows+groups+[city];rectangles=[]
+    for row in rows:
+        x,z,w,d=row['platform'];b=row['bounds'];local=row['localVisualBounds']
+        assert w==math.ceil(local[3]-local[0]-1e-8)+2 and d==math.ceil(local[5]-local[2]-1e-8)+2, row['key']
+        assert x-1e-5<=b[0] and b[3]<=x+w+1e-5 and z-1e-5<=b[2] and b[5]<=z+d+1e-5, row['key']
+        if row['section']!='city':assert abs(b[1]-64-row.get('surfaceClearance',0))<1e-5, row['key']
+        rectangles.append((x,z,x+w,z+d,row['key']))
+    rectangles.sort()
+    for i,a in enumerate(rectangles):
+        for b in rectangles[i+1:]:
+            if b[0]>=a[2]+2:break
+            assert a[2]+2<=b[0] or b[2]+2<=a[0] or a[3]+2<=b[1] or b[3]+2<=a[1], (a[4],b[4])
+    return {'status':'PASS','platforms':len(rows),'reviewBottomsSeatedTogether':len(groups),'allPlatformPairGapsAtLeastTwo':True,'sourceCityUsesOneGlobalTranslation':True,
+            'footprint':[max(r[2] for r in rectangles)-min(r[0] for r in rectangles),max(r[3] for r in rectangles)-min(r[1] for r in rectangles)]}
 def main():
     p=argparse.ArgumentParser();p.add_argument('--world',type=Path,required=True);p.add_argument('--manifest',type=Path,required=True);p.add_argument('--production-jar',type=Path,required=True);p.add_argument('--report',type=Path,required=True);p.add_argument('--compare',type=Path);a=p.parse_args()
+    a.world=a.world.resolve()
     m=base.read(a.manifest);assert m['schema']=='dreamwalker-flat-gallery-v125' and m['status']=='PASS_AUTHORED_REQUIRES_PRODUCTION_REOPEN'
     assert a.world.resolve().is_relative_to((ROOT/'build').resolve()) and m['productionJarSha256']==sha(a.production_jar)
     before={str(f.relative_to(a.world)):sha(f) for f in base.saved_files(a.world)}
@@ -111,7 +128,7 @@ def main():
         old=base.read(a.compare);assert old['status']=='PASS' and old['productionJarSha256']==sha(a.production_jar);assert old['stableExhibits']==stable,'Saved state/UUID/payload/owner geometry changed after production reopen';compared=True
     assert all(sha(a.world/rel)==digest for rel,digest in before.items()),'Verifier changed world'
     result={'schema':'dreamwalker-flat-gallery-v125-disk-verification','status':'PASS','productionJarSha256':sha(a.production_jar),'world':str(a.world),'productionReopenCompared':compared,'verifiedExhibits':len(parts),'stableExhibits':stable,
-            'mainGrid':grid(mainrows),'functionalCatalogue':{'status':'PASS','newWorkingTypes':len(new),'styleRetiredWorkingTypes':len(retirement['retirements']),'originalV12CatalogueEqual':True},
+            'mainGrid':grid(mainrows),'compactLayout':compact_layout(mainrows,groups,city),'functionalCatalogue':{'status':'PASS','newWorkingTypes':len(new),'styleRetiredWorkingTypes':len(retirement['retirements']),'originalV12CatalogueEqual':True},
             'savedReviewAndCityGeometryChecks':geometryChecks,'reviewPlatforms':len(groups),'cityOwners':len(city['placedOwners']),'cityPassthroughStatesVerified':len(passthrough),'citySourceCoverage':city['sourceCoverageCount'],'cityAllSourceCellsClassified':city['allSourceCellsClassified'],'platformCells':len(floors),'inputFilesUnchanged':True,'visualAcceptance':'NOT_RUN_BY_DISK_PROOF'}
     base.write(a.report,result);print(json.dumps({k:v for k,v in result.items() if k!='stableExhibits'},ensure_ascii=False))
 

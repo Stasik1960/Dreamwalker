@@ -12,7 +12,7 @@ def main():
         if row['key'] not in used:chosen.append(row);used.add(row['key'])
     for section in ('v12','new','absent','items'):
         r=[x for x in rows if x['section']==section];add(r[0]);add(r[-1])
-    mandatory=('90002','90001','93116','93117','93066','93069','90049','90083','90086','90151','93266','90595')
+    mandatory=('90002','90001','93116','93117','93066','93069','90049','90083','90086','90151','93266','90595','90635')
     for row in rows:
         if row.get('id') in mandatory or any(token in row['registry'] for token in ('halfarch','axed_exposed_cut_copper_stairs_outer_3','axed_oxidized_cut_copper_stairs_outer_right','addon_floor_panels_45','hold_ladder_02')):add(row)
     for row in sorted([r for r in rows if r['kind']=='architecture' and r['origin']!='V12'],key=lambda r:max(r['bounds'][i+3]-r['bounds'][i] for i in range(3)),reverse=True):
@@ -39,8 +39,8 @@ def main():
     # Close city detail checks cover appended conditional poses and native V12
     # walls, retaining source coordinates and the actual current UUID/state.
     additions=[r for r in city['placedOwners'] if 'APPEND' in r.get('resolution','')]
-    for n,r in enumerate((additions[:2]+[r for r in city['placedOwners'] if r['registry']=='bloodborne_dw:prototype_wall'][:1])):
+    for n,r in enumerate((additions[:2]+[r for r in city['placedOwners'] if r['registry']=='bloodborne_dw:prototype_wall_skin_0'][:1])):
         frame({**r,'key':'CITY-DETAIL-'+str(n+1),'section':'city','name':'Город · деталь '+r.get('mainId','')},[root(r)],[],camera(r['bounds']))
-    result={'schema':'dreamwalker-flat-gallery-v125-capture-input','gallerySchema':m['schema'],'productionJarSha256':sha,'newWorkingTypes':d['functionalCatalogue']['newWorkingTypes'],'quitAfterCapture':True,'frames':frames,'scope':'Native ScreenshotRecorder images; no block edits. All45 source construction/door review platforms, representative unchangedV12/new simplified shapes, city views and live typed root identities.'}
+    result={'schema':'dreamwalker-flat-gallery-v125-capture-input','gallerySchema':m['schema'],'productionJarSha256':sha,'newWorkingTypes':d['functionalCatalogue']['newWorkingTypes'],'quitAfterCapture':True,'frames':frames,'scope':'Native ScreenshotRecorder images; no block edits. All49 source construction/door review platforms, representative unchangedV12/new simplified shapes, city views and live typed root identities.'}
     a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps({'status':'PASS','frames':len(frames),'main':len(chosen),'review':len(groups)}))
 if __name__=='__main__':main()
