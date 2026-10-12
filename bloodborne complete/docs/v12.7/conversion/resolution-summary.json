@@ -1,286 +1,31 @@
 {
   "status": "READONLY_COMPLETE_FINITE_SOURCE_AUDIT",
   "counts": {
-    "UNRESOLVED_VISIBLE": 387977,
-    "OWNER": 2069493,
-    "REMOVE": 358094,
-    "WHOLE_CANDIDATE": 1032
+    "OWNER": 2408468,
+    "REMOVE": 404597,
+    "WHOLE_CANDIDATE": 1032,
+    "UNRESOLVED_VISIBLE": 2499
   },
   "reasonCounts": {
-    "NO_EXACT_CURRENT_SOURCE_STATE": 387977,
-    "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES": 1482392,
-    "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 585004,
+    "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 924030,
+    "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES": 1482341,
     "SOURCE_ALL_PIXEL_ALPHA_ZERO": 234153,
     "EXACT_MULTI_CELL_PRIMARY_APPS": 1032,
-    "USER_RETIRED_VANILLA_STYLE_TYPE": 32646,
-    "USER_RETIRED_VANILLA_STYLE_CARRIER": 90324,
-    "PROTECTED_V12_REMOVED_OR_GEOMETRY_INCOMPATIBLE_WALL_STATE": 971,
-    "EXACT_EXISTING_V12_NATIVE_WALL_STATE": 2097
+    "NO_EXACT_CURRENT_SOURCE_STATE": 2499,
+    "USER_RETIRED_VANILLA_STYLE_TYPE": 18174,
+    "USER_RETIRED_VANILLA_STYLE_CARRIER": 150195,
+    "MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE": 220,
+    "USER_REMOVED_DAMAGED_SOURCE_TYPE": 862,
+    "PROTECTED_V12_REMOVED_OR_GEOMETRY_INCOMPATIBLE_WALL_STATE": 98,
+    "EXACT_EXISTING_V12_NATIVE_WALL_STATE": 2097,
+    "PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION": 894,
+    "MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL": 1
   },
-  "requiredConditionalPoses": 1032,
-  "conditionalPoseGroups": 39,
-  "capacityExceededGroups": [
-    {
-      "registryId": "bloodborne_dw:source_assembly_brick_wall",
-      "currentPoseCount": 134,
-      "totalPoseCount": 470
-    }
-  ],
-  "missingDependencies": [
-    "assets\\bloodborne_dw\\models\\remaining\\source\\minecraft\\block\\diorite_wall_side_tall.json"
-  ],
+  "requiredConditionalPoses": 0,
+  "conditionalPoseGroups": 0,
+  "capacityExceededGroups": [],
+  "missingDependencies": [],
   "unrepresentedSourceStates": [
-    {
-      "sourceCarrier": "minecraft:oak_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/oak_log",
-          "y": 270
-        }
-      ],
-      "count": 658,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:spruce_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/spruce_log",
-          "y": 270
-        }
-      ],
-      "count": 659,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:birch_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/birch_log_1",
-          "y": 270
-        }
-      ],
-      "count": 339,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:jungle_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_log",
-          "y": 180
-        }
-      ],
-      "count": 656,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:orange_wool",
-      "sourceProperties": {},
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/orange_wool"
-        }
-      ],
-      "count": 671,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:jungle_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_log",
-          "y": 270
-        }
-      ],
-      "count": 649,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:oak_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/oak_log",
-          "y": 180
-        }
-      ],
-      "count": 648,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:acacia_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/acacia_log",
-          "y": 180
-        }
-      ],
-      "count": 655,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:magenta_wool",
-      "sourceProperties": {},
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/magenta_wool"
-        }
-      ],
-      "count": 670,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:acacia_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/acacia_log",
-          "y": 270
-        }
-      ],
-      "count": 655,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:spruce_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/spruce_log",
-          "y": 180
-        }
-      ],
-      "count": 653,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:white_wool",
-      "sourceProperties": {},
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/white_wool"
-        }
-      ],
-      "count": 378,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:dark_oak_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/dark_oak_log",
-          "y": 180
-        }
-      ],
-      "count": 657,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:light_blue_wool",
-      "sourceProperties": {},
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/light_blue_wool"
-        }
-      ],
-      "count": 669,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:dark_oak_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/dark_oak_log",
-          "y": 270
-        }
-      ],
-      "count": 656,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:birch_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/birch_log",
-          "y": 180
-        }
-      ],
-      "count": 290,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:birch_log",
-      "sourceProperties": {
-        "axis": "x"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/birch_log_1",
-          "y": 180
-        }
-      ],
-      "count": 337,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:cyan_wool",
-      "sourceProperties": {},
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/cyan_wool"
-        }
-      ],
-      "count": 293,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:birch_log",
-      "sourceProperties": {
-        "axis": "z"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/birch_log",
-          "y": 270
-        }
-      ],
-      "count": 321,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
     {
       "sourceCarrier": "minecraft:warped_stairs",
       "sourceProperties": {
@@ -414,17 +159,6 @@
         }
       ],
       "count": 226,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:potted_spruce_sapling",
-      "sourceProperties": {},
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/potted_spruce_sapling"
-        }
-      ],
-      "count": 220,
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
@@ -578,23 +312,6 @@
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
-      "sourceCarrier": "minecraft:jungle_trapdoor",
-      "sourceProperties": {
-        "facing": "north",
-        "half": "bottom",
-        "open": "false",
-        "powered": "false",
-        "waterlogged": "false"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_trapdoor_bottom"
-        }
-      ],
-      "count": 94,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
       "sourceCarrier": "minecraft:acacia_stairs",
       "sourceProperties": {
         "facing": "south",
@@ -608,24 +325,6 @@
         }
       ],
       "count": 53,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:jungle_trapdoor",
-      "sourceProperties": {
-        "facing": "east",
-        "half": "bottom",
-        "open": "false",
-        "powered": "false",
-        "waterlogged": "false"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_trapdoor_bottom",
-          "y": 90
-        }
-      ],
-      "count": 252,
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
@@ -807,24 +506,6 @@
         }
       ],
       "count": 42,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:jungle_trapdoor",
-      "sourceProperties": {
-        "facing": "west",
-        "half": "bottom",
-        "open": "false",
-        "powered": "false",
-        "waterlogged": "false"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_trapdoor_bottom",
-          "y": 270
-        }
-      ],
-      "count": 71,
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
@@ -1312,24 +993,6 @@
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
-      "sourceCarrier": "minecraft:jungle_trapdoor",
-      "sourceProperties": {
-        "facing": "south",
-        "half": "bottom",
-        "open": "false",
-        "powered": "false",
-        "waterlogged": "false"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_trapdoor_bottom",
-          "y": 180
-        }
-      ],
-      "count": 35,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
       "sourceCarrier": "minecraft:warped_door",
       "sourceProperties": {
         "facing": "west",
@@ -1510,55 +1173,11 @@
       },
       "sourceApplications": [
         {
-          "model": "minecraft:block/hold/wood_ladder_03",
-          "y": 270
-        }
-      ],
-      "count": 2,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:beehive",
-      "sourceProperties": {
-        "facing": "west",
-        "honey_level": "1"
-      },
-      "sourceApplications": [
-        {
           "model": "minecraft:block/hold/wood_ladder_02",
           "y": 270
         }
       ],
       "count": 1,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:beehive",
-      "sourceProperties": {
-        "facing": "west",
-        "honey_level": "1"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/hold/wood_ladder_04",
-          "y": 270
-        }
-      ],
-      "count": 3,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:beehive",
-      "sourceProperties": {
-        "facing": "north",
-        "honey_level": "1"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/hold/wood_ladder_03"
-        }
-      ],
-      "count": 8,
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
@@ -1573,20 +1192,6 @@
         }
       ],
       "count": 12,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:beehive",
-      "sourceProperties": {
-        "facing": "north",
-        "honey_level": "1"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/hold/wood_ladder_04"
-        }
-      ],
-      "count": 8,
       "reason": "NO_ACTIVE_CANONICAL_TYPE"
     },
     {
@@ -1637,43 +1242,6 @@
       "sourceApplications": [
         {
           "model": "minecraft:block/addon/oak_door_2",
-          "y": 270
-        }
-      ],
-      "count": 1,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:jungle_trapdoor",
-      "sourceProperties": {
-        "facing": "west",
-        "half": "top",
-        "open": "true",
-        "powered": "false",
-        "waterlogged": "false"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_trapdoor_open",
-          "x": 180,
-          "y": 90
-        }
-      ],
-      "count": 1,
-      "reason": "NO_ACTIVE_CANONICAL_TYPE"
-    },
-    {
-      "sourceCarrier": "minecraft:jungle_trapdoor",
-      "sourceProperties": {
-        "facing": "west",
-        "half": "bottom",
-        "open": "true",
-        "powered": "false",
-        "waterlogged": "false"
-      },
-      "sourceApplications": [
-        {
-          "model": "minecraft:block/jungle_trapdoor_open",
           "y": 270
         }
       ],

@@ -42,10 +42,35 @@ public final class BbAlternateService {
     private static final class Job {
         final ServerPlayerEntity player;final String profile;final Vec3d center;final int radius;
         final CompletableFuture<List<Visit>> discovery;
-        final Deque<ToolTarget> targets=new ArrayDeque<>();
+        TargetCursor cursor;ToolTarget pending;
         final Map<ChunkPos,CompletableFuture<Either<Chunk,ChunkHolder.Unloaded>>> requested=new LinkedHashMap<>();
         List<Visit> visits;Visit current;int index,changed,failed,waitTicks,startedTick;
         Job(ServerPlayerEntity player,String profile,int radius,CompletableFuture<List<Visit>> discovery){this.player=player;this.profile=profile;this.radius=radius;center=player.getPos();this.discovery=discovery;}
+    }
+    /** Only the active chunk's section position and loaded RP UUIDs are kept.
+     * Scanning empty/large palettes cooperates with the same edit tick budget. */
+    private static final class TargetCursor {
+        final ServerWorld world;final WorldChunk chunk;final ChunkSection[] sections;final String dimension;
+        final Iterator<UUID> rp;int section,cell;boolean reviewed,finished;
+        TargetCursor(ServerWorld world,WorldChunk chunk){this.world=world;this.chunk=chunk;sections=chunk.getSectionArray();dimension=world.getRegistryKey().getValue().toString();rp=List.copyOf(RP_CHUNKS.getOrDefault(world,Map.of()).getOrDefault(chunk.getPos().toLong(),Set.of())).iterator();}
+        ToolTarget next(long deadline){
+            while(section<sections.length){
+                if(System.nanoTime()>=deadline)return null;
+                var current=sections[section];if(current==null||!reviewed&&!current.hasAny(BbAlternateService::supports)){section++;cell=0;reviewed=false;continue;}reviewed=true;
+                while(cell<4096){
+                    if((cell&31)==0&&System.nanoTime()>=deadline)return null;
+                    int index=cell++,x=index&15,z=(index>>>4)&15,y=index>>>8;var state=current.getBlockState(x,y,z);if(!supports(state))continue;
+                    var pos=new BlockPos(chunk.getPos().getStartX()+x,(world.getBottomSectionCoord()+section)*16+y,chunk.getPos().getStartZ()+z);
+                    // Utility markers remain their own target even when they
+                    // carry unrelated guest geometry; compact cubes stay BLOCK.
+                    if(DwUtilityBlocks.marker(state)||ImportedCompactBlock.compact(state))return new ToolTarget(ToolTarget.Kind.BLOCK,dimension,null,pos.asLong(),Registries.BLOCK.getId(state.getBlock()).toString());
+                    var owner=VerticalMount.owner(world,pos);return owner==null?new ToolTarget(ToolTarget.Kind.BLOCK,dimension,null,pos.asLong(),Registries.BLOCK.getId(state.getBlock()).toString()):new ToolTarget(ToolTarget.Kind.ARCHITECTURE,dimension,owner.instanceId(),pos.asLong(),owner.registryId());
+                }
+                section++;cell=0;reviewed=false;
+            }
+            while(rp.hasNext()){if(System.nanoTime()>=deadline)return null;var entity=world.getEntity(rp.next());if(entity instanceof RpObjectEntity){var target=ToolTarget.entity(entity);if(target!=null)return target;}}
+            finished=true;return null;
+        }
     }
     private static final Map<MinecraftServer,Status> LAST=new WeakHashMap<>();
     private BbAlternateService(){}
@@ -67,7 +92,7 @@ public final class BbAlternateService {
     public static String profile(ToolTarget target,MinecraftServer server){if(target==null||!target.valid(server))return null;if(target.kind()==ToolTarget.Kind.RP&&target.entity(server) instanceof RpObjectEntity rp)return rp.alternateVisual()?"alt":"base";return target.kind()==ToolTarget.Kind.ARCHITECTURE||target.kind()==ToolTarget.Kind.BLOCK?profile(target.world(server).getBlockState(BlockPos.fromLong(target.root()))):null;}
     public static boolean change(ServerPlayerEntity player,ToolTarget target,String requested){
         if(target==null||!target.valid(player.getServer())||!Set.of("base","alt").contains(requested))return false;
-        var world=target.world(player.getServer());var pos=BlockPos.fromLong(target.root());if(!BuildPermissions.canEdit(world,player,pos))return false;
+        var world=target.world(player.getServer());var pos=target.kind()==ToolTarget.Kind.RP?BlockPos.ofFloored(target.position(player.getServer())):BlockPos.fromLong(target.root());if(!BuildPermissions.canEdit(world,player,pos))return false;
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp){boolean next=requested.equals("alt");if(rp.alternateVisual()==next)return false;rp.setAlternateVisual(next);return true;}
         if(target.kind()!=ToolTarget.Kind.BLOCK&&target.kind()!=ToolTarget.Kind.ARCHITECTURE)return false;
         var before=world.getBlockState(pos);var after=profile(before,requested);if(after==null||after.equals(before))return false;
@@ -107,32 +132,29 @@ public final class BbAlternateService {
             if(job.requested.values().stream().anyMatch(future->!future.isDone()))return;
             if(job.requested.values().stream().anyMatch(future->future.join().left().isEmpty())){job.failed++;next(job);return;}
             if(job.waitTicks++<2)return;
-            if(job.targets.isEmpty()&&job.waitTicks==3){var chunk=job.current.world.getChunkManager().getWorldChunk(job.current.chunk.x,job.current.chunk.z);if(chunk!=null)job.targets.addAll(targets(job.current.world,chunk));}
+            if(job.cursor==null){var chunk=job.current.world.getChunkManager().getWorldChunk(job.current.chunk.x,job.current.chunk.z);if(chunk==null){job.failed++;next(job);return;}job.cursor=new TargetCursor(job.current.world,chunk);}
             // Native compact palettes need no owner UUID, ledger or BE. Do not
             // retain millions of visited cell keys: visits/per-chunk targets
             // are unique and explicit BASE/ALT assignments are idempotent.
             // At most512 cheap candidates/16 owner or RP edits, with an8ms
             // cooperative budget; a single transaction is never interrupted.
             long deadline=System.nanoTime()+8_000_000L;int expensive=0;
-            for(int n=0;n<512&&!job.targets.isEmpty();n++){
+            for(int n=0;n<512;n++){
                 if(n>0&&System.nanoTime()>=deadline)return;
-                var target=job.targets.peek();var world=target.world(server);var root=BlockPos.fromLong(target.root());if(job.radius>0&&target.position(server).squaredDistanceTo(job.center)>(double)job.radius*job.radius){job.targets.remove();continue;}
+                if(job.pending==null)job.pending=job.cursor.next(deadline);
+                if(job.pending==null){if(job.cursor.finished)next(job);return;}
+                var target=job.pending;var world=target.world(server);var root=BlockPos.fromLong(target.root());if(job.radius>0&&target.position(server).squaredDistanceTo(job.center)>(double)job.radius*job.radius){job.pending=null;continue;}
                 if(target.kind()!=ToolTarget.Kind.BLOCK&&expensive>=16)return;
                 if(target.kind()==ToolTarget.Kind.ARCHITECTURE&&world.getBlockEntity(root) instanceof CompositeBlockEntity own&&target.valid(server)){
                     var before=world.getBlockState(root);var after=profile(before,job.profile);if(after!=null&&!after.equals(before)){var instance=CompositeRuntime.instance(world,root,after,target.uuid(),own.payload());for(var cell:instance.cells().keySet()){var pos=CompositeData.pos(instance.owner().root().add(cell));request(job,new ChunkPos(pos));}if(job.requested.values().stream().anyMatch(future->!future.isDone()))return;}
                 }
-                job.targets.remove();if(!target.valid(server))continue;String before=profile(target,server);if(before==null||before.equals(job.profile))continue;if(target.kind()!=ToolTarget.Kind.BLOCK)expensive++;if(change(job.player,target,job.profile))job.changed++;else{job.failed++;dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("BB ALT profile edit rejected at {} {} {}",target.dimension(),root,target.registry());}
+                job.pending=null;if(!target.valid(server))continue;String before=profile(target,server);if(before==null||before.equals(job.profile))continue;if(target.kind()!=ToolTarget.Kind.BLOCK)expensive++;if(change(job.player,target,job.profile))job.changed++;else{job.failed++;dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("BB ALT profile edit rejected at {} {} {}",target.dimension(),root,target.registry());}
             }
-            if(job.targets.isEmpty())next(job);
         }catch(RuntimeException failure){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.error("BB profile job stopped after {} edits",job.changed,failure);job.player.sendMessage(Text.literal("BB: замена остановлена из-за ошибки; изменено "+job.changed+", подробности в журнале."),false);cancel(server);}
     }
-    private static void next(Job job){release(job);job.current=null;job.targets.clear();job.index++;}
+    private static void next(Job job){release(job);job.current=null;job.cursor=null;job.pending=null;job.index++;}
     private static void finish(MinecraftServer server,Job job){cancel(server);job.player.sendMessage(Text.literal("BB: вид "+job.profile+" — изменено "+job.changed+", отклонено "+job.failed+", чанков "+job.index+". Ванильные и чужие объекты не изменялись."),false);}
-    private static List<ToolTarget> targets(ServerWorld world,WorldChunk chunk){var result=new LinkedHashMap<String,ToolTarget>();String dimension=world.getRegistryKey().getValue().toString();
-        for(var pos:chunk.getBlockEntityPositions()){var owner=VerticalMount.owner(world,pos);if(owner!=null&&supports(world.getBlockState(pos))){var target=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,dimension,owner.instanceId(),pos.asLong(),owner.registryId());result.put(target.key(),target);}}
-        var sections=chunk.getSectionArray();for(int s=0;s<sections.length;s++){var section=sections[s];if(section==null||!section.hasAny(BbAlternateService::supports))continue;int baseY=(world.getBottomSectionCoord()+s)*16;for(int y=0;y<16;y++)for(int z=0;z<16;z++)for(int x=0;x<16;x++){var state=section.getBlockState(x,y,z);if(!supports(state))continue;var pos=new BlockPos(chunk.getPos().getStartX()+x,baseY+y,chunk.getPos().getStartZ()+z);var owner=VerticalMount.owner(world,pos);var target=owner==null?new ToolTarget(ToolTarget.Kind.BLOCK,dimension,null,pos.asLong(),Registries.BLOCK.getId(state.getBlock()).toString()):new ToolTarget(ToolTarget.Kind.ARCHITECTURE,dimension,owner.instanceId(),pos.asLong(),owner.registryId());result.put(target.key(),target);}}
-        for(var uuid:List.copyOf(RP_CHUNKS.getOrDefault(world,Map.of()).getOrDefault(chunk.getPos().toLong(),Set.of()))){var entity=world.getEntity(uuid);if(!(entity instanceof RpObjectEntity))continue;var target=ToolTarget.entity(entity);if(target!=null)result.put(target.key(),target);}return List.copyOf(result.values());
-    }
+    private static List<ToolTarget> targets(ServerWorld world,WorldChunk chunk){var result=new ArrayList<ToolTarget>();var cursor=new TargetCursor(world,chunk);while(!cursor.finished){var target=cursor.next(Long.MAX_VALUE);if(target!=null)result.add(target);}return List.copyOf(result);}
     /** Missing NEW authored alternates receive this documented, geometry-neutral darker tone. */
     public static boolean generatedAlternate(CompositeRootBlock block,BlockState state,List<CompositeSpec.Part> parts){return block.spec.id.getPath().startsWith("source_")&&state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT&&!parts.isEmpty()&&parts.stream().allMatch(part->part.model().equals(part.altModel()));}
     public static final float ALT_RED=.60f,ALT_GREEN=.67f,ALT_BLUE=.72f;

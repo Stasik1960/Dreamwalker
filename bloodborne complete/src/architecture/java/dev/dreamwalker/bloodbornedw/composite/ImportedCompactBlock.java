@@ -64,7 +64,9 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
     @Override public VoxelShape getCullingShape(BlockState state,BlockView view,BlockPos pos){return opaque(state)?VoxelShapes.fullCube():super.getCullingShape(state,view,pos);}
     @Override public int getOpacity(BlockState state,BlockView view,BlockPos pos){return opaque(state)?15:super.getOpacity(state,view,pos);}
     @Override public boolean isTransparent(BlockState state,BlockView view,BlockPos pos){return !opaque(state)&&super.isTransparent(state,view,pos);}
-    @Override public ItemStack getPickStack(BlockView view,BlockPos pos,BlockState state){return compact(state)?art(state,new NbtCompound()):super.getPickStack(view,pos,state);}
+    private ItemStack compactArt(BlockState state){NbtCompound payload=new NbtCompound();payload.putInt("ImportedTypeVersion",1);return art(state,payload);}
+    @Override public ItemStack getPickStack(BlockView view,BlockPos pos,BlockState state){return compact(state)?compactArt(state):super.getPickStack(view,pos,state);}
+    @Override public java.util.List<ItemStack> getDroppedStacks(BlockState state,net.minecraft.loot.context.LootContextParameterSet.Builder builder){return compact(state)?List.of(compactArt(state)):super.getDroppedStacks(state,builder);}
     @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit) {
         if(!compact(state))return super.onUse(state,world,pos,player,hand,hit);
         if(player.isSneaking()&&player.getStackInHand(hand).isEmpty()&&TYPES.get(spec.id.toString()).size()>1) {
@@ -78,7 +80,27 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
         public CompactItem(ImportedCompactBlock root){super(root);}
         @Override public ActionResult place(ItemPlacementContext context) {
             NbtCompound tag=context.getStack().getSubNbt("BlockStateTag");
-            return tag!=null&&"true".equals(tag.getString("compact"))?placeNative(context):super.place(context);
+            if(tag==null||!"true".equals(tag.getString("compact")))return super.place(context);
+            ItemStack safe=context.getStack().copy();NbtCompound art=safe.getOrCreateSubNbt("BlockStateTag");art.remove("rotation");art.putString("open","false");safe.getOrCreateNbt().putInt("ImportedTypeVersion",1);
+            int yaw=context.getPlayer()==null?0:Math.floorMod(Math.round(context.getPlayer().getYaw()/45),8);
+            // Native palette rendering is proven only for cardinal orientations.
+            // A 45 degree manual placement uses the normal owned renderer.
+            if(yaw%2!=0)art.putString("compact","false");
+            ItemPlacementContext redirected=new ItemPlacementContext(context){@Override public ItemStack getStack(){return safe;}};
+            ActionResult result=yaw%2==0?placeNative(redirected):super.place(redirected);
+            if(result.isAccepted())context.getStack().decrement(Math.max(0,context.getStack().getCount()-safe.getCount()));return result;
         }
+        @Override protected BlockState getPlacementState(ItemPlacementContext context){
+            var root=(ImportedCompactBlock)getBlock();BlockState state=root.getDefaultState();NbtCompound tag=context.getStack().getSubNbt("BlockStateTag");
+            if(tag!=null)for(var property:root.getStateManager().getProperties())if(tag.contains(property.getName(),8))state=apply(state,property,tag.getString(property.getName()));
+            state=state.with(ROTATION,context.getPlayer()==null?0:Math.floorMod(Math.round(context.getPlayer().getYaw()/45),8));
+            return compact(state)&&canPlace(context,state)?state:null;
+        }
+        @Override protected boolean canPlace(ItemPlacementContext context,BlockState state){
+            if(!super.canPlace(context,state))return false;
+            var pos=context.getBlockPos();var boxes=state.getCollisionShape(context.getWorld(),pos,net.minecraft.block.ShapeContext.absent()).getBoundingBoxes().stream().map(b->b.offset(pos)).toList();
+            return dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.conflict(context.getWorld(),boxes,null,context.getPlayer(),pos)==null;
+        }
+        private static <T extends Comparable<T>> BlockState apply(BlockState s,net.minecraft.state.property.Property<T> p,String value){return p.parse(value).map(v->s.with(p,v)).orElse(s);}
     }
 }

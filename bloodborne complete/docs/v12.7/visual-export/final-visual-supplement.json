@@ -1,0 +1,81 @@
+{
+  "method": "Current native source RGBA/UV transformed geometry; four yaw views of every active pose of newly reserved composite types. Software projection, native client QA tracked separately.",
+  "objects": [
+    {
+      "id": "93228",
+      "registryId": "bloodborne_dw:source_assembly_white_stained_glass_pane",
+      "name": "Решётка с поперечинами",
+      "poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "image": "projections\\final-extra-93228.png",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Горизонтальные поперечины короткой решётки; выглядит как серый металл, а не белое стекло."
+    },
+    {
+      "id": "93229",
+      "registryId": "bloodborne_dw:source_assembly_yellow_stained_glass_pane",
+      "name": "Высокая узорная решётка",
+      "poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "image": "projections\\final-extra-93229.png",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Длинные вертикальные прутья и узор сверху/снизу; отличается от коротких горизонтальных поперечин93228."
+    },
+    {
+      "id": "93232",
+      "registryId": "bloodborne_dw:source_original_tree",
+      "name": "Сухое дерево",
+      "poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "image": "projections\\final-extra-93232.png",
+      "reviewStatus": "PASS_SOFTWARE_TEXTURED_FOUR_YAW_VISUAL_REVIEW",
+      "reasonForSeparateType": "Точная исходная конструкция сухого дерева; состояния сохраняют исходные части ствола и ветвей для исходной карты. Оригинальные деревья V12 защищены от изменений."
+    }
+  ],
+  "nameChanges": [
+    {
+      "id": "93228",
+      "registryId": "bloodborne_dw:source_assembly_white_stained_glass_pane",
+      "beforeName": "Стеклянная панель · белая",
+      "afterName": "Решётка с поперечинами",
+      "reason": "Горизонтальные поперечины короткой решётки; выглядит как серый металл, а не белое стекло.",
+      "descriptorApartFromLabel": "EXACT"
+    },
+    {
+      "id": "93229",
+      "registryId": "bloodborne_dw:source_assembly_yellow_stained_glass_pane",
+      "beforeName": "Стеклянная панель · жёлтая",
+      "afterName": "Высокая узорная решётка",
+      "reason": "Длинные вертикальные прутья и узор сверху/снизу; отличается от коротких горизонтальных поперечин93228.",
+      "descriptorApartFromLabel": "EXACT"
+    }
+  ],
+  "nativeClientReview": "SEE_ROOT_REPORT"
+}

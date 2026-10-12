@@ -23,12 +23,25 @@ def main():
     by_registry = {row['registryId']: row for row in rows}
     assert len({row['temporaryId'] for row in rows}) == len(rows)
     canonical = {row['registryId']: row.get('canonicalRegistryId', row['registryId']) for row in rows}
+    alias_documents = []
     for manifest in ['imported-type-aliases.json', 'imported-type-aliases-v127.json']:
         path = RES / manifest
         if path.exists():
-            for group in load(path)['groups']:
+            document = load(path)
+            alias_documents.append((manifest, document))
+            for group in document['groups']:
                 for member in group['members']:
                     canonical[member] = group['primaryRegistryId']
+    historical = alias_documents[0][1]['mappings']
+    followup = alias_documents[1][1]['mappings'] if len(alias_documents) > 1 else []
+    additions = {(row['oldRegistryId'], row['oldVariant']): row for row in followup}
+    composed = []
+    for row in historical:
+        current = dict(row)
+        later = additions.get((row['newRegistryId'], row['newVariant']))
+        if later:
+            current.update(newId=later['newId'], newRegistryId=later['newRegistryId'], newVariant=later['newVariant'])
+        composed.append(current)
     canonical.update(load(RES / 'imported-assembly-v126.json')['hiddenPartRedirects'])
     def resolve(registry):
         seen = set()
@@ -50,6 +63,13 @@ def main():
                   'rawAliases': row['aliases'], 'kind': row['kind'],
                   'canonicalRegistryId': target, 'canonicalNumericId': by_registry.get(target, {}).get('temporaryId'),
                   'numberReused': False, 'authorExport': 'NOT_SUPPLIED_NOT_APPLIED'}
+        old_pose_mappings = [item for item in composed if item['oldRegistryId'] == registry]
+        current_pose_mappings = [item for item in followup if item['oldRegistryId'] == registry]
+        if old_pose_mappings or current_pose_mappings:
+            record['legacyPoseCorrespondence'] = {
+                'preV124MappingsComposedThroughV127': old_pose_mappings,
+                'currentV124CopiedPoseMappings': current_pose_mappings,
+                'interpretation': 'Version-aware saved-owner/item migration; rotationDelta/sourceShift/properties are exact mapping transforms, not an author collision wildcard. Current nonzero art_bank poses are already canonical and do not reuse historical low-four-bit selectors.'}
         path = RES / 'composite' / (registry.split(':', 1)[1] + '.json')
         if row['kind'] == 'rp_object':
             record.update(collisionTarget=True, runtimeRepresentation='RP_OBJECT_ENTITY',
@@ -106,6 +126,7 @@ def main():
                                      '90003 installation root remains occupied; permitted placement in protruding geometry retained',
                                      'Do not change current simple defaults, NPC collision, placement, support, door motion or no-collide lease when importing player-only data'],
               'nativeSnapshotSha256': sha(args.native_snapshot) if snapshot else None,
+              'migrationManifestSha256': {name: sha(RES / name) for name, _ in alias_documents},
               'targets': output,
               'unassignedTechnicalBlockRegistries': sorted(set(blocks) - set(by_registry))}
     (OUT / 'target-map.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

@@ -105,7 +105,7 @@ public final class WorldEditBridge {
         return CompositeRuntime.contributions(world,p).stream().map(CompositeData.Contribution::owner).distinct().sorted().toList();
     }
     private static List<RpObjectEntity> entities(ServerWorld world,BlockPos p) {
-        return world.getEntitiesByClass(RpObjectEntity.class,new Box(p).expand(16),e->BlockPos.ofFloored(e.getPos()).equals(p));
+        return world.getEntitiesByClass(RpObjectEntity.class,new Box(p).expand(32),e->BlockPos.ofFloored(e.getPos()).equals(p)||e.selectionBoxes().stream().anyMatch(b->b.intersects(new Box(p))));
     }
     private static boolean matches(DebugCatalogue.Entry wanted,String registry) {
         var entry=DebugCatalogue.entry(new Identifier(registry));return entry!=null&&entry.temporaryId().equals(wanted.temporaryId());
@@ -162,7 +162,7 @@ public final class WorldEditBridge {
                 BlockType type=BlockType.REGISTRY.get(id.toString());
                 if(type==null)type=BlockType.REGISTRY.register(id.toString(),new BlockType(id.toString()) {
                     public Map<String,? extends Property<?>> getPropertyMap(){return Map.of();}
-                    public BlockMaterial getMaterial(){return BlockTypes.AIR.getMaterial();}
+                    public BlockMaterial getMaterial(){return BlockTypes.BARRIER.getMaterial();}
                     public String getName(){return e.name();}
                 });
                 RP_TYPES.put(id.toString(),type);
@@ -173,12 +173,13 @@ public final class WorldEditBridge {
             // BEFORE_HISTORY is outside reordering/history/masks. BEFORE_CHANGE
             // handles raw changes (undo/redo) through the same logical adapter.
             if(event.getStage()==com.sk89q.worldedit.EditSession.Stage.BEFORE_HISTORY||event.getStage()==com.sk89q.worldedit.EditSession.Stage.BEFORE_CHANGE)
-                event.setExtent(new ObjectExtent(event.getExtent(),world));
+                event.setExtent(new ObjectExtent(event.getExtent(),world,event.getStage()==com.sk89q.worldedit.EditSession.Stage.BEFORE_HISTORY));
         }
     }
     public static final class ObjectExtent extends AbstractDelegateExtent {
-        private final ServerWorld world;
-        public ObjectExtent(Extent extent,ServerWorld world){super(extent);this.world=world;}
+        private final ServerWorld world;private final boolean outsideHistory;
+        public ObjectExtent(Extent extent,ServerWorld world){this(extent,world,false);}
+        public ObjectExtent(Extent extent,ServerWorld world,boolean outsideHistory){super(extent);this.world=world;this.outsideHistory=outsideHistory;}
         public com.sk89q.worldedit.world.block.BlockState getBlock(BlockVector3 v){return getFullBlock(v).toImmutableState();}
         public BaseBlock getFullBlock(BlockVector3 v) {
             BlockPos p=pos(v);List<Owner> os=owners(world,p);List<RpObjectEntity> es=entities(world,p);if(os.isEmpty()&&es.isEmpty())return super.getFullBlock(v);
@@ -190,6 +191,9 @@ public final class WorldEditBridge {
             }catch(InputParseException failure){throw new IllegalStateException("Cannot expose BB object to WorldEdit",failure);}
         }
         public <T extends BlockStateHolder<T>> boolean setBlock(BlockVector3 v,T value)throws WorldEditException {
+            // The outer adapter supplies logical reads to history/masks, while
+            // writes pass through WorldEdit history and reach the inner adapter.
+            if(outsideHistory)return super.setBlock(v,value);
             if(!world.getServer().isOnThread())throw new InputParseException("BB edits require the server thread");
             BlockPos p=pos(v);world.getChunk(p.getX()>>4,p.getZ()>>4);
             String id=value.getBlockType().getId();BaseBlock block=value.toBaseBlock();NbtCompound old=snapshot(block);

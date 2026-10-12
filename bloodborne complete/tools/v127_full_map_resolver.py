@@ -7,6 +7,17 @@ from v125_map_resolve import Resolver,rotation
 
 RES=ROOT/'src/architecture/resources'
 class CurrentResolver(Resolver):
+    def match(self,expected,actual):
+        # Multipart applications are a multiset. Sorting by the unrotated yaw
+        # and zipping is incorrect when equal models exchange order on rotation.
+        if len(expected)!=len(actual):return None
+        def sig(a,delta=0):
+            return (self.model(a['model']),a.get('x',0),(a.get('y',0)+delta*45)%360,bool(a.get('uvlock',False)))
+        wanted=collections.Counter(sig(a) for a in actual)
+        for delta in range(8):
+            if delta and any(a.get('uvlock') for a in expected):continue
+            if collections.Counter(sig(a,delta) for a in expected)==wanted:return delta
+        return None
     def __init__(self):
         super().__init__()
         # Keep frozen source -> current aliases, adding only current append-only
@@ -34,6 +45,21 @@ class CurrentResolver(Resolver):
                 c={'registryId':reg,'variant':vi,'open':False,'applications':apps,'sourcePlacementOffset':v.get('sourcePlacementOffset',[0,0,0]),'name':spec['displayName'],'currentAppend':True}
                 if len(apps)>1 and any(a.get('offset') for a in apps):self.whole.append(c)
                 else:self.candidates[tuple(sorted(self.model(a['model']) for a in apps))].append(c)
+        # Approved current complete constructions take priority over their old
+        # source pieces. Include source OPEN recipes rather than guessing a door
+        # state from its vanilla carrier properties.
+        self.current_whole=[]
+        for reg,spec in self.current.items():
+            if not reg.startswith('bloodborne_dw:source_') or reg in self.retired:continue
+            if any(old==reg and row['newRegistryId']!=reg for (old,_),row in self.maps.items()):continue
+            for vi,v in enumerate(spec['variants']):
+                for opened,key in [(False,'sourceClosedApplications'),(True,'sourceOpenApplications')]:
+                    apps=v.get(key,[])
+                    if len(apps)>1 and any(any(a.get('offset',[0,0,0])) for a in apps):
+                        self.current_whole.append({'registryId':reg,'variant':vi,'open':opened,'applications':apps,'sourcePlacementOffset':v.get('sourcePlacementOffset',[0,0,0]),'currentAppend':True})
+        special=ROOT/'docs/v12.7/conversion/protected-source-exact-matches.json'
+        self.protected={r['sourceApplicationToken']:r['decision'] for r in json.loads(special.read_text(encoding='utf-8-sig'))['rows']} if special.exists() else {}
+        self.source_defects={token(r['sourceApplications']):r['sourceDefect'] for r in json.loads(special.read_text(encoding='utf-8-sig'))['unmatched'] if r.get('sourceDefect')} if special.exists() else {}
         self.resolve_token.cache_clear()
 
     def target(self,candidate,yaw):
@@ -47,7 +73,7 @@ class CurrentResolver(Resolver):
                 else:result['payload'].pop('SourceShift',None)
             return result
         reg=candidate['registryId'];vi=candidate['variant'];shift=[-float(x)/16 for x in candidate['sourcePlacementOffset']]
-        state={'variant':str(vi%16),'rotation':str(yaw),'profile':'base','open':'false'}
+        state={'variant':str(vi%16),'rotation':str(yaw),'profile':'base','open':str(candidate.get('open',False)).lower()}
         if len(self.current[reg]['variants'])>16:state['art_bank']=str(vi//16)
         payload={'ImportedTypeVersion':1}
         if any(shift):payload['SourceShift']=shift
@@ -59,9 +85,12 @@ class CurrentResolver(Resolver):
         if names<=self.transparent|self.empty:return {'action':'REMOVE','reason':'SOURCE_ALL_PIXEL_ALPHA_ZERO' if names&self.transparent else 'SOURCE_EMPTY_GEOMETRY','models':sorted(names)}
         if carrier=='minecraft:jungle_trapdoor':return {'action':'REMOVE','reason':'USER_REMOVED_DAMAGED_SOURCE_TYPE','models':sorted(names)}
         if carrier=='minecraft:potted_spruce_sapling':return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE','models':sorted(names)}
+        if token(sorted(apps,key=token)) in self.source_defects:return {'action':'REMOVE','reason':'MISSING_AUTHORED_TEXTURE_REFERENCE','sourceDefect':self.source_defects[token(sorted(apps,key=token))],'models':sorted(names)}
         if any(self.classifications.get(name,{}).get('kind')=='INTENTIONAL_EXCLUSION' for name in names):return {'action':'REMOVE','reason':'PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION','models':sorted(names)}
         if any(name=='minecraft:block/diorite_wall_side_tall' for name in names):return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL','models':sorted(names)}
         if self.carriers.get(carrier) in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_CARRIER','retiredRegistryId':self.carriers[carrier],'models':sorted(names)}
+        exact=self.protected.get(token(sorted(apps,key=token)))
+        if exact:return {**copy.deepcopy(exact),'mainId':self.ids.get(exact['registryId'],'')}
         result=self.resolve(apps)
         if result['resolution'].startswith('EXACT'):
             if result['registryId'] in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_TYPE','retiredRegistryId':result['registryId'],'models':sorted(names)}

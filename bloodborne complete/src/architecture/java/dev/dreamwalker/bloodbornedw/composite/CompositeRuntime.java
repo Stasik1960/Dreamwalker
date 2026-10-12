@@ -378,7 +378,7 @@ public final class CompositeRuntime {
         queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
         queue(world,"imported-physical-migration-chunk:"+chunk.toLong(),()->ImportedCollisionMigration.loadedChunk(world,chunk));
         queue(world,"v126-approved-assembly-migration-chunk:"+chunk.toLong(),()->ImportedAssemblyV126.loadedChunk(world,chunk));
-        CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
+        CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.sharded()?ledger.chunkCells(chunk):ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
         BlockPos pos=CompositeData.pos(cell);scheduleCleanup(world,pos);
         // CHUNK_LOAD runs before this chunk's FULL future has completed. Never
         // ask World for a BE here: that would wait recursively for the same
