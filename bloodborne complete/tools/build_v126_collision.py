@@ -94,8 +94,11 @@ def main():
                             # player's normal approach without following rungs.
                             # Every support stays strictly inside the thin
                             # authored functional plane; no outward AABB growth.
-                            physical=[]
-                            for centre_x in (5,8,11):
+                            # Keep the original central support's first-contact
+                            # extent. Additional narrow side supports prevent
+                            # sliding away during a sustained upward climb.
+                            physical=largest_inscribed_single(oriented(solids,yaw))
+                            for centre_x in (5,11):
                                 support=box([centre_x-.5,0,15],[centre_x+.5,16 if v==0 else 32,16])
                                 physical.extend(largest_inscribed_single(oriented(box_solids([support]),yaw)))
                             policy='THREE_INSCRIBED_TALL_FUNCTIONAL_LADDER_SUPPORTS'
