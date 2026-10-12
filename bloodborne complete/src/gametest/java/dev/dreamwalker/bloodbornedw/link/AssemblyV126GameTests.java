@@ -95,6 +95,26 @@ public final class AssemblyV126GameTests implements FabricGameTest {
         });
         for(var value:values)t.assertTrue(!SourceConversionScope.initialInstance(value.owner().instanceId()),"initial saved-fixture overlap privilege ends before the actual migration");
     }
+    /** Read an actual historical ownership cache rather than rebuilding it from
+     * today's descriptor while placing a neighbouring saved member. */
+    private static void installExactCachedSaved(TestContext t,List<ObjectInstance> values) {
+        Map<ObjectInstance.Owner,ObjectInstance> saved=new HashMap<>();Set<UUID> initial=new HashSet<>();
+        for(var value:values){saved.put(value.owner(),value);initial.add(value.owner().instanceId());load(t.getWorld(),value);}
+        SourceConversionScope.initialInstances(initial,()->{
+            for(var value:values){
+                var access=new FabricCompositeWorld(t.getWorld(),Map.of(value.owner(),value)){
+                    @Override public Optional<ObjectInstance> describeRoot(ObjectInstance.Owner owner,dev.dreamwalker.bloodbornedw.runtime.CellSnapshot snapshot){
+                        var historical=saved.get(owner);
+                        if(historical!=null&&owner.equals(snapshot.resident()))return Optional.of(historical);
+                        return super.describeRoot(owner,snapshot);
+                    }
+                };
+                t.assertTrue(CompositeRuntime.execute(access,CompositeRuntime.core().placement(access,value,List.of())).outcome()==TransactionCore.Outcome.COMMITTED,"exact historical cached membership installs: "+value.owner().registryId());
+            }
+            return true;
+        });
+        for(var value:values)t.assertTrue(!SourceConversionScope.initialInstance(value.owner().instanceId()),"historical cache-loading privilege ends before migration");
+    }
     private static ObjectInstance current(ServerWorld world,BlockPos root){var entity=(CompositeBlockEntity)world.getBlockEntity(root);return CompositeRuntime.instance(world,root,world.getBlockState(root),entity.resident().instanceId(),entity.payload());}
     private static void verifyMerged(TestContext t,JsonObject assembly,List<ObjectInstance> old,BlockPos root) {
         var world=t.getWorld();var entity=(CompositeBlockEntity)world.getBlockEntity(root);var owner=entity.resident();var state=world.getBlockState(root);
@@ -135,6 +155,64 @@ public final class AssemblyV126GameTests implements FabricGameTest {
             verifyMerged(t,assembly,values,root);t.assertTrue(t.getWorld().getBlockState(foreign).isOf(Blocks.GOLD_BLOCK),"assembly migration and full removal preserve unrelated native blocks");t.getWorld().removeBlock(foreign,false);
         });}
         for(int i=0;i<cases.size();i++){var action=cases.get(i);t.runAtTick(i+1,action);}t.runAtTick(cases.size()+2,t::complete);
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v126_real_v125_cached_membership")
+    public void realV125Cached90458MembershipIsAuthoritativeWhile90923AssemblyPreservesAForeignOwner(TestContext t) {
+        var world=t.getWorld();var assembly=assemblies().stream().filter(row->row.get("primaryId").getAsString().equals("90923")).findFirst().orElseThrow();
+        var root=t.getAbsolutePos(new BlockPos(20864,96,64));
+        // Cardinal source poses have a real old-only cell below the root. The
+        // V12.5 physical table for90458 is48 units tall; its new functional-door
+        // defaults are32 units tall and are cropped differently after SourceShift.
+        // No invented boxes or corrupt saved records are used in this fixture.
+        for(int extra:new int[]{0,2,4,6}){
+            var currentFragments=before(t,root,assembly,extra);List<ObjectInstance> historical=new ArrayList<>();
+            for(var fragment:currentFragments){
+                var state=CompositeData.state(fragment.rootData());var data=CompositeData.nbt(fragment.rootData().blockEntityNbt());var shift=CompositeSourceShift.world(state,data);
+                var cells=ImportedCollisionV125.footprint(((CompositeRootBlock)state.getBlock()).spec,state,data.getDouble("MountY")+data.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY),shift.x(),shift.y(),shift.z());
+                historical.add(new ObjectInstance(fragment.owner(),fragment.rootData(),cells));
+            }
+            var lower=historical.get(0);t.assertTrue(lower.owner().registryId().equals(registry("90458"))&&!lower.cells().equals(currentFragments.get(0).cells()),"real V12.5 cached90458 footprint differs from today's standalone door defaults");
+            var nextState=pose(assembly.get("primaryRegistryId").getAsString(),assembly.get("installationPose").getAsInt(),CompositeData.state(lower.rootData()).get(CompositeRootBlock.ROTATION));
+            var next=CompositeRuntime.instance(world,root,nextState,lower.owner().instanceId(),CompositeData.nbt(lower.rootData().blockEntityNbt()));
+            var oldOnly=new TreeSet<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell>();
+            for(var member:historical)for(var offset:member.cells().keySet())oldOnly.add(member.owner().root().add(offset));
+            for(var offset:next.cells().keySet())oldOnly.remove(next.owner().root().add(offset));
+            t.assertTrue(!oldOnly.isEmpty(),"real historical assembly contains old-only cached cells absent from the completed object");
+            var shared=oldOnly.first();var foreignPos=CompositeData.pos(shared);var foreignData=new NbtCompound();foreignData.putInt(ImportedTypeAliases.VERSION_KEY,1);foreignData.putLong("ForeignOpaqueLong",Long.MIN_VALUE+91);foreignData.putUuid("ForeignPrivateLink",UUID.randomUUID());
+            var foreign=CompositeRuntime.instance(world,foreignPos,pose(registry("90151"),0,0),UUID.randomUUID(),foreignData);
+            t.assertTrue(foreign.cells().values().stream().allMatch(cell->cell.collision().isEmpty()),"the neighbouring real grass object preserves its intended passability");
+            List<ObjectInstance> saved=new ArrayList<>(historical);saved.add(foreign);ImportedCollisionMigration.forget(world);installExactCachedSaved(t,saved);
+            // Native block-entity and persistent-ledger codecs must preserve the
+            // historical shape, including its shared foreign carrier, verbatim.
+            for(var member:saved){
+                var be=(CompositeBlockEntity)world.getBlockEntity(CompositeData.pos(member.owner().root()));var nbt=be.createNbt();be.readNbt(nbt.copy());
+                t.assertTrue(be.createNbt().equals(nbt)&&be.resident().equals(member.owner()),"native BE reads exact typed historical cache and UUID");
+                for(var offset:member.cells().keySet()){
+                    var entries=CompositeLedger.get(world).at(member.owner().root().add(offset));
+                    t.assertTrue(entries.stream().anyMatch(row->row.owner().equals(member.owner())&&row.shape().equals(member.cells().get(offset))&&row.rootData().equals(member.rootData())),"historical cached owner/shape/root data is actually persisted at every cell");
+                }
+            }
+            var ledger=CompositeLedger.get(world).writeNbt(new NbtCompound());t.assertTrue(CompositeLedger.read(ledger.copy()).writeNbt(new NbtCompound()).equals(ledger),"real saved ledger round-trips the exact historical membership");
+            t.assertTrue(CompositeLedger.get(world).at(shared).stream().anyMatch(row->row.owner().equals(lower.owner()))&&CompositeLedger.get(world).at(shared).stream().anyMatch(row->row.owner().equals(foreign.owner())),"one actual cached cell is shared by the old lower90458 and a distinct foreign owner");
+            ImportedCollisionMigration.forget(world);
+            for(var member:historical){
+                t.assertTrue(ImportedCollisionMigration.pending(world,member.owner()),"real cached owner is explicitly indexed as awaiting physical migration");
+                t.assertTrue(ImportedCollisionMigration.savedMembership(world,member.owner()).orElseThrow().equals(member.cells()),"authoritative BEFORE is the persisted V12.5 membership rather than today's descriptor");
+            }
+            var result=ImportedAssemblyV126.migrateLoadedRoot(world,lower.owner());t.assertTrue(result.outcome()==TransactionCore.Outcome.COMMITTED,"real cached V12.5 assembly atomically merges: "+result.reason());
+            var merged=current(world,root);Set<ObjectInstance.Owner> oldOwners=new HashSet<>();historical.forEach(member->oldOwners.add(member.owner()));
+            for(var cell:oldOnly)t.assertTrue(CompositeLedger.get(world).at(cell).stream().noneMatch(row->oldOwners.contains(row.owner())||row.owner().equals(merged.owner())),"old-only historical contributions are removed without replacing the foreign carrier");
+            for(var member:historical)t.assertTrue(ImportedCollisionMigration.savedMembership(world,member.owner()).isEmpty(),"successful merge discards consumed members' obsolete cached BEFORE");
+            for(var offset:foreign.cells().keySet())t.assertTrue(CompositeLedger.get(world).at(foreign.owner().root().add(offset)).stream().anyMatch(row->row.owner().equals(foreign.owner())&&row.shape().equals(foreign.cells().get(offset))&&row.rootData().equals(foreign.rootData())),"foreign owner retains every exact cached shape and typed private setting");
+            var foreignBe=(CompositeBlockEntity)world.getBlockEntity(foreignPos);t.assertTrue(foreignBe.resident().equals(foreign.owner())&&foreignBe.payload().equals(foreignData),"foreign resident UUID and private payload survive the assembly transaction");
+            verifyMerged(t,assembly,historical,root);
+            t.assertTrue(world.getBlockState(foreignPos).equals(CompositeData.state(foreign.rootData()))&&((CompositeBlockEntity)world.getBlockEntity(foreignPos)).resident().equals(foreign.owner()),"removing the completed object keeps the neighbouring grass installation intact");
+            t.assertTrue(CompositeRuntime.remove(world,foreign.owner(),null,false).outcome()==TransactionCore.Outcome.COMMITTED,"the preserved foreign object remains removable through its own normal transaction");CompositeRuntime.drain(world);
+            for(var cell:oldOnly)t.assertTrue(CompositeLedger.get(world).at(cell).isEmpty()&&world.getBlockState(CompositeData.pos(cell)).isAir(),"after both objects are removed, real old-only cells have no stale helper or ledger entry");
+            ImportedCollisionMigration.forget(world);
+        }
+        t.complete();
     }
 
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v126_lone_old_fragments")
