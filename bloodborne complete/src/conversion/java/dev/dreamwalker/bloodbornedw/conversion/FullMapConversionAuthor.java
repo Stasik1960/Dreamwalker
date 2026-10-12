@@ -33,6 +33,7 @@ public final class FullMapConversionAuthor implements ModInitializer {
     private static final ChunkTicketType<ChunkPos> TICKET = ChunkTicketType.create("dw_explicit_conversion", Comparator.comparingLong(ChunkPos::toLong));
     private static final String[] PHASES = {"owners.jsonl.gz", "whole-objects.jsonl.gz", "entities.jsonl.gz"};
     private static final int MAX_LINE = 16 * 1024 * 1024;
+    private static final String IMPLEMENTED_STYLE = "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA";
     private static final Map<MinecraftServer, Job> JOBS = new WeakHashMap<>();
 
     @Override public void onInitialize() {
@@ -98,6 +99,27 @@ public final class FullMapConversionAuthor implements ModInitializer {
             require(manifest.get("status").getAsString().equals("PASS_COMPLETE_SOURCE_PLAN"), "Unresolved authored source content remains");
             require(manifest.get("knownVisibleGaps").getAsLong() == 0, "Visible source gaps remain");
             require(manifest.getAsJsonObject("sourceHashes").equals(prepared.getAsJsonObject("sourceHashes")), "Original input hashes do not match prepared copy");
+            if (fixture) {
+                require(manifest.has("fixtureOnly") && manifest.get("fixtureOnly").getAsBoolean(), "Fixture mode requires an explicitly bounded fixture plan");
+            } else {
+                require(!manifest.has("fixtureOnly") || !manifest.get("fixtureOnly").getAsBoolean(), "A fixture cannot stand in for the original world");
+                String execution = manifest.has("runtimeExecution") ? manifest.get("runtimeExecution").getAsString() : "";
+                require(!execution.startsWith("BLOCKED") && !execution.startsWith("PENDING"), "Full source plan execution is blocked");
+                require(marker.has("sourcePlanPath") && marker.has("sourceStylePolicyPath"), "Full conversion requires exact source/policy bindings");
+                Path sourcePlan = Path.of(marker.get("sourcePlanPath").getAsString()).toRealPath();
+                Path policyPath = Path.of(marker.get("sourceStylePolicyPath").getAsString()).toRealPath();
+                String sourceSHA = sha(sourcePlan), policySHA = sha(policyPath);
+                JsonObject policy = parseFile(policyPath);
+                require(policy.get("status").getAsString().equals(IMPLEMENTED_STYLE), "Source-style preservation is not implemented");
+                require(manifest.get("sourceStylePolicy").getAsString().equals(IMPLEMENTED_STYLE)
+                        && marker.get("sourceStylePolicy").getAsString().equals(IMPLEMENTED_STYLE), "Source-style policy mismatch");
+                require(manifest.get("sourceStylePolicySha256").getAsString().equals(policySHA)
+                        && marker.get("sourceStylePolicySha256").getAsString().equals(policySHA), "Stale source-style policy binding");
+                require(manifest.get("sourcePlanSha256").getAsString().equals(sourceSHA)
+                        && marker.get("sourcePlanSha256").getAsString().equals(sourceSHA)
+                        && prepared.get("sourcePlanSha256").getAsString().equals(sourceSHA), "Derived copy/source SQLite plan mismatch");
+                require(prepared.get("runtimeManifestSha256").getAsString().equals(planSHA), "Derived copy was staged against another runtime bundle");
+            }
             for (String name : PHASES) {
                 require(manifest.getAsJsonObject("runtimeFiles").has(name), "Missing bounded runtime phase " + name);
                 require(sha(plan.resolve(name)).equals(manifest.getAsJsonObject("runtimeFiles").get(name).getAsString()), "Changed runtime phase " + name);

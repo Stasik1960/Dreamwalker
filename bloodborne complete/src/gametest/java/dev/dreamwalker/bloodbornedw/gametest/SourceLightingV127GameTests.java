@@ -49,9 +49,10 @@ public final class SourceLightingV127GameTests implements FabricGameTest {
     public void everyReachableSourceDecisionAuditsActualEmissionOpacityAndHeight(TestContext t){new Audit(t).step();}
     private static final class Audit {
         final TestContext t;final JsonObject fixture=fixture();final JsonArray cases=fixture.getAsJsonArray("cases"),results=new JsonArray();
-        final BlockPos probe;int index,decodeFailures,newEmissionDifferences,protectedEmissionDifferences,opacityDifferences,heightConflicts;
-        long occurrences,newEmissionDifferenceOccurrences,opacityDifferenceOccurrences;
-        Audit(TestContext t){this.t=t;probe=t.getAbsolutePos(new BlockPos(2,2,2));}
+        final Set<String> opaqueBackingStates=new HashSet<>();final Set<String> opaqueBackingStatesChecked=new HashSet<>();
+        final BlockPos probe;int index,decodeFailures,newEmissionDifferences,protectedEmissionDifferences,opacityDifferences,newOpacityDifferences,fluidDifferences,newFluidDifferences,protectedFluidDifferences,heightConflicts,opaqueBackingOffsetFailures,sourceModelOffsetCases;
+        long occurrences,newEmissionDifferenceOccurrences,opacityDifferenceOccurrences,newOpacityDifferenceOccurrences,newFluidDifferenceOccurrences;
+        Audit(TestContext t){this.t=t;probe=t.getAbsolutePos(new BlockPos(2,2,2));if(fixture.has("enclosedOpaqueSourceStates"))for(var raw:fixture.getAsJsonArray("enclosedOpaqueSourceStates"))opaqueBackingStates.add(raw.getAsString());}
         void footprint(JsonObject input,JsonObject row,BlockState target,String key)throws Exception{
             var payload=StringNbtReader.parse(input.getAsJsonObject("payload").toString());
             var instance=CompositeRuntime.instance(t.getWorld(),probe,target,UUID.nameUUIDFromBytes(("source-lighting-audit:"+key).getBytes(StandardCharsets.UTF_8)),payload);
@@ -68,10 +69,18 @@ public final class SourceLightingV127GameTests implements FabricGameTest {
                 row.addProperty("caseId",caseId);row.addProperty("action",action);row.addProperty("occurrences",count);row.add("sourceState",input.get("sourceState"));row.add("targetState",input.get("targetState"));row.add("samples",input.get("samples"));occurrences+=count;
                 try{
                     var source=decode(input.get("sourceState").getAsString());var target=decode(input.get("targetState").getAsString());
+                    boolean offset=source.hasModelOffset();row.addProperty("sourceHasNativeModelOffset",offset);if(offset)sourceModelOffsetCases++;
+                    if(opaqueBackingStates.contains(input.get("sourceState").getAsString())){opaqueBackingStatesChecked.add(input.get("sourceState").getAsString());if(offset)opaqueBackingOffsetFailures++;}
                     int sourceEmission=source.getLuminance(),targetEmission=target.getLuminance();int sourceOpacity=source.getOpacity(t.getWorld(),probe),targetOpacity=target.getOpacity(t.getWorld(),probe);
                     row.addProperty("sourceLuminance",sourceEmission);row.addProperty("targetLuminance",targetEmission);row.addProperty("sourceOpacity",sourceOpacity);row.addProperty("targetOpacity",targetOpacity);
+                    String sourceFluid=ImportedSourceLightingV127.fluidDescription(source.getFluidState()),targetFluid=ImportedSourceLightingV127.fluidDescription(target.getFluidState());
+                    boolean fluidEqual=sourceFluid.equals(targetFluid);row.addProperty("sourceFluidState",sourceFluid);row.addProperty("targetFluidState",targetFluid);row.addProperty("fluidEqual",fluidEqual);
                     row.addProperty("emissionEqual",sourceEmission==targetEmission);row.addProperty("opacityEqual",sourceOpacity==targetOpacity);row.add("parityPolicy",input.get("parityPolicy"));
                     if(sourceOpacity!=targetOpacity){opacityDifferences++;opacityDifferenceOccurrences+=count;}
+                    if(!fluidEqual)fluidDifferences++;
+                    boolean converted=action.equals("OWNER")||action.equals("COMPACT"),newSource=Registries.BLOCK.getId(target.getBlock()).toString().startsWith("bloodborne_dw:source_");
+                    if(converted&&newSource&&sourceOpacity!=targetOpacity){newOpacityDifferences++;newOpacityDifferenceOccurrences+=count;}
+                    if(converted&&!fluidEqual){if(newSource){newFluidDifferences++;newFluidDifferenceOccurrences+=count;}else protectedFluidDifferences++;}
                     if((action.equals("OWNER")||action.equals("COMPACT"))&&sourceEmission!=targetEmission){
                         if(Registries.BLOCK.getId(target.getBlock()).toString().startsWith("bloodborne_dw:source_")){newEmissionDifferences++;newEmissionDifferenceOccurrences+=count;}
                         else protectedEmissionDifferences++;
@@ -93,23 +102,46 @@ public final class SourceLightingV127GameTests implements FabricGameTest {
                 catch(Exception failure){row.addProperty("nativeStatus","FAIL_NATIVE_WHOLE_OWNER_OCCUPANCY");row.addProperty("error",failure.toString());decodeFailures++;}
                 wholeHeights.add(row);
             }
+            JsonArray helperOptics=new JsonArray();long helperDifferences=0,helperOccurrences=0;int helperIndex=0;
+            if(fixture.has("wholeConsumedHelperCases"))for(var raw:fixture.getAsJsonArray("wholeConsumedHelperCases")){
+                var input=raw.getAsJsonObject();var row=input.deepCopy();long count=input.get("occurrences").getAsLong();helperOccurrences+=count;
+                try{
+                    var source=decode(input.get("sourceState").getAsString());var target=decode(input.get("targetState").getAsString());var payload=StringNbtReader.parse(input.getAsJsonObject("payload").toString());
+                    var instance=CompositeRuntime.instance(t.getWorld(),probe,target,UUID.nameUUIDFromBytes(("source-helper-optics:"+(helperIndex++)).getBytes(StandardCharsets.UTF_8)),payload);
+                    var delta=input.getAsJsonArray("relativeCell");var cell=new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell(delta.get(0).getAsInt(),delta.get(1).getAsInt(),delta.get(2).getAsInt());
+                    boolean occupied=instance.cells().containsKey(cell);var expected=occupied?CompositeArchitecture.CELL.getDefaultState():net.minecraft.block.Blocks.AIR.getDefaultState();
+                    int original=source.getOpacity(t.getWorld(),probe),installed=expected.getOpacity(t.getWorld(),probe);
+                    row.addProperty("sourceOpacity",original);row.addProperty("expectedHelperOrAirOpacity",installed);row.addProperty("expectedCellRole",occupied?"COMPOSITE_HELPER":"AIR_OUTSIDE_FOOTPRINT");row.addProperty("expectedCellRegistryId",Registries.BLOCK.getId(expected.getBlock()).toString());row.addProperty("opacityEqual",original==installed);
+                    if(original!=installed)helperDifferences+=count;row.addProperty("nativeStatus","PASS_NATIVE_SOURCE_AND_ACTUAL_HELPER_CLASS_OPTICS_WITH_INDEPENDENT_OCCUPIED_OFFSET");
+                }catch(Exception failure){row.addProperty("nativeStatus","FAIL_NATIVE_HELPER_CONTEXT_DECODE");row.addProperty("error",failure.toString());decodeFailures++;}
+                helperOptics.add(row);
+            }
             boolean originalGuard=true;
-            for(var block:CompositeArchitecture.blocks())if(!block.spec.id.getPath().startsWith("source_")){var settings=net.minecraft.block.AbstractBlock.Settings.create();originalGuard&=ImportedSourceLightingV127.settings(block.spec,settings)==settings;}
-            var proof=new JsonObject();proof.addProperty("status",decodeFailures==0&&newEmissionDifferences==0&&heightConflicts==0&&originalGuard?"PASS_NATIVE_SOURCE_EMISSION_AND_OWNER_HEIGHT_WITH_REPORTED_OPACITY_NUANCES":"FAIL_NATIVE_SOURCE_EMISSION_OR_OWNER_HEIGHT");
+            var emptyFluid=net.minecraft.fluid.Fluids.EMPTY.getDefaultState();
+            for(var block:CompositeArchitecture.blocks())if(!block.spec.id.getPath().startsWith("source_")){var settings=net.minecraft.block.AbstractBlock.Settings.create();originalGuard&=ImportedSourceLightingV127.settings(block.spec,settings)==settings&&ImportedSourceLightingV127.opacity(block.spec,block.getDefaultState(),7)==7&&ImportedSourceLightingV127.fluid(block.spec,block.getDefaultState(),emptyFluid)==emptyFluid;}
+            originalGuard&=ImportedSourceLightingV127.opacity(null,CompositeArchitecture.blocks().iterator().next().getDefaultState(),7)==7;
+            for(String state:opaqueBackingStates)if(!opaqueBackingStatesChecked.contains(state)){try{if(decode(state).hasModelOffset())opaqueBackingOffsetFailures++;opaqueBackingStatesChecked.add(state);}catch(Exception failure){opaqueBackingOffsetFailures++;}}
+            var proof=new JsonObject();proof.addProperty("status",decodeFailures==0&&newEmissionDifferences==0&&newOpacityDifferences==0&&newFluidDifferences==0&&heightConflicts==0&&opaqueBackingOffsetFailures==0&&originalGuard?"PASS_NATIVE_NEW_SOURCE_EMISSION_OPACITY_FLUID_AND_OWNER_HEIGHT_WITH_REPORTED_PROTECTED_OR_REMOVED_NUANCES":"FAIL_NATIVE_NEW_SOURCE_OPTICS_OR_OWNER_HEIGHT");
             proof.addProperty("uniqueDecisionCases",cases.size());proof.addProperty("exactSourceCellOccurrences",occurrences);proof.addProperty("nativeDecodeFailures",decodeFailures);
             proof.addProperty("newEmissionDifferenceCases",newEmissionDifferences);proof.addProperty("newEmissionDifferenceOccurrences",newEmissionDifferenceOccurrences);proof.addProperty("protectedV12EmissionDifferenceCases",protectedEmissionDifferences);
             proof.addProperty("opacityDifferenceCases",opacityDifferences);proof.addProperty("opacityDifferenceOccurrences",opacityDifferenceOccurrences);proof.addProperty("potentialOwnerBuildHeightConflictCases",heightConflicts);
+            proof.addProperty("newOpacityDifferenceCases",newOpacityDifferences);proof.addProperty("newOpacityDifferenceOccurrences",newOpacityDifferenceOccurrences);proof.addProperty("fluidDifferenceCases",fluidDifferences);proof.addProperty("newFluidDifferenceCases",newFluidDifferences);proof.addProperty("newFluidDifferenceOccurrences",newFluidDifferenceOccurrences);proof.addProperty("protectedV12FluidDifferenceCases",protectedFluidDifferences);
+            proof.addProperty("sourceNativeModelOffsetCases",sourceModelOffsetCases);proof.addProperty("opaqueSourceBackingStateCases",opaqueBackingStates.size());proof.addProperty("opaqueSourceBackingStateCasesChecked",opaqueBackingStatesChecked.size());proof.addProperty("opaqueSourceBackingNativeOffsetFailures",opaqueBackingOffsetFailures);if(fixture.has("enclosedVanillaFillerCells"))proof.add("enclosedVanillaFillerCells",fixture.get("enclosedVanillaFillerCells"));
             proof.addProperty("nativeOverworldBottomY",t.getWorld().getBottomY());proof.addProperty("nativeOverworldTopYExclusive",t.getWorld().getTopY());proof.add("sourceHashes",fixture.get("sourceHashes"));proof.add("coordinateRunFile",fixture.get("coordinateRunFile"));proof.add("coordinateRunSha256",fixture.get("coordinateRunSha256"));proof.add("cases",results);
             proof.add("wholeOwnerHeightCases",wholeHeights);proof.add("wholeOwnerOccurrences",fixture.get("wholeOwnerOccurrences"));
+            proof.add("wholeConsumedHelperOptics",helperOptics);proof.addProperty("wholeConsumedNonrootOccurrencesAudited",helperOccurrences);proof.addProperty("wholeConsumedHelperOpacityDifferenceOccurrences",helperDifferences);
             proof.add("newEmissionMetadata",ImportedSourceLightingV127.diagnostics());
             proof.addProperty("originalV12SettingsIdentityGuard",originalGuard);
-            proof.addProperty("scope","Actual native BlockState.getLuminance/getOpacity in the same isolated test context. No original map or test-world blocks modified. Exact source coordinates join through caseId lossless runs; opacity differences and approved removals are reported separately. Height findings use occupied-cell extrema, not model approximations.");
+            proof.addProperty("scope","Actual native BlockState.getLuminance/getOpacity/getFluidState in the same isolated test context. Every kept/converted NEW root requires exact emission, opacity and fluid parity. No original map or test-world blocks modified. Exact source coordinates join through caseId lossless runs; protected V12 and removed-source optics differences are reported separately. Consumed component/helper-position optics are reported as whole-object context and are not claimed as exact per-cell parity. Height findings use occupied-cell extrema, not model approximations.");
             try{Files.writeString(t.getWorld().getServer().getSavePath(WorldSavePath.ROOT).resolve("v127-source-lighting-native-proof.json"),new GsonBuilder().setPrettyPrinting().create().toJson(proof));}catch(Exception e){throw new IllegalStateException(e);}
             t.assertTrue(cases.size()>0&&occurrences==fixture.get("allPaletteCells").getAsLong(),"Every reachable full-plan source cell occurrence is audited exactly once");
             t.assertTrue(decodeFailures==0,"All kept/converted native decisions decode through actual registries; see v127-source-lighting-native-proof.json");
             t.assertTrue(originalGuard,"Every original V12 root keeps the exact original Settings object through the new-only lighting guard");
             t.assertTrue(heightConflicts==0,"Every source owner occupied cell remains within native build height; see v127-source-lighting-native-proof.json");
-            t.assertTrue(newEmissionDifferences==0,"Every NEW converted source pose preserves actual source emission; see v127-source-lighting-native-proof.json");t.complete();
+            t.assertTrue(newEmissionDifferences==0,"Every NEW converted source pose preserves actual source emission; see v127-source-lighting-native-proof.json");
+            t.assertTrue(newOpacityDifferences==0,"Every NEW converted source pose preserves actual source opacity; see v127-source-lighting-native-proof.json");
+            t.assertTrue(newFluidDifferences==0,"Every NEW converted source wet/dry pose preserves actual source FluidState; see v127-source-lighting-native-proof.json");
+            t.assertTrue(opaqueBackingOffsetFailures==0,"Every source opaque unit backing used to prove enclosed vanilla fillers has no native model offset");t.complete();
         }
     }
 }

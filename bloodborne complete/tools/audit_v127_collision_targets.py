@@ -88,10 +88,13 @@ def main():
             if path.is_file():
                 spec = load(path)
                 state = blocks.get(registry, {})
-                banked = 'art_bank' in state.get('worldPalettePropertyValues', {}) or len(spec['variants']) > 16
+                palette_fields = state.get('worldPalettePropertyValues', {})
+                banked = 'art_bank' in palette_fields or not snapshot and len(spec['variants']) > 16
+                generic_pose = not snapshot or 'variant' in palette_fields
                 record.update(descriptorSha256=sha(path), logicalPoseCount=len(spec['variants']),
-                              poses=[{'logicalPose': index, 'palettePoseFields': {'variant': str(index % 16), **({'art_bank': str(index // 16)} if banked else {})},
-                                      'profiles': ['base', 'alt'], 'openStates': [False, True],
+                              logicalPoseSelector='PALETTE_VARIANT_AND_OPTIONAL_ART_BANK' if generic_pose else 'CLASS_SPECIFIC_RENDER_SELECTOR; consult actual native properties and legacy stair art mappings; logical pose index is not a palette variant',
+                              poses=[{'logicalPose': index, 'palettePoseFields': {'variant': str(index % 16), **({'art_bank': str(index // 16)} if banked else {})} if generic_pose else {},
+                                      'profiles': ['base', 'alt'], 'openStates': [False, True] if not snapshot or 'open' in palette_fields else [False],
                                       'openBehavior': bool(spec.get('openable', False)),
                                       'poseKind': 'AUTHORED_OR_EXPLICIT_SOURCE_APPLICATION'} for index in range(len(spec['variants']))],
                               transformations=['logical pose/art_bank', 'rotation 0..7', 'mount mode if present', 'MountY', 'VerticalOffset', 'local SourceShift once', 'open/closed pose'])

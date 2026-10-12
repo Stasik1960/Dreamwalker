@@ -24,8 +24,18 @@ def main():
                     out.append({'collision':b(row['collision']),'aim':b(row['aim'])})
                 return out
         raise ValueError('Missing fitted physics '+reg+'/'+str(pose))
+    functional={'bloodborne_dw:'+r['path'] for r in json.loads((R/'imported-stair-types.json').read_text(encoding='utf-8-sig'))['stairTypes']}
     for group in conflicts:
         reg=group['registryId'];assert reg.startswith('bloodborne_dw:source_'),reg;old=group['variant'];levels=group['nativeLevels'];base=max(levels,key=lambda level:sum(r['count'] for r in levels[level]));spec=specs.setdefault(reg,json.loads((R/'composite'/f'{reg.split(":")[1]}.json').read_text(encoding='utf-8-sig')))
+        if reg in functional:
+            assert reg=='bloodborne_dw:source_stairs_polished_deepslate_stairs_bottom',reg
+            for level,states in levels.items():
+                for state in states:
+                    wet='waterlogged=true' in state['state']
+                    if not any(r.get('registryId')==reg and r.get('sourceStates')==[state['state']] for r in rows):rows.append({'registryId':reg,'oldVariant':old,'newVariant':old,'open':group['open'],'opacity':int(level),'sourceStates':[state['state']],'sourceNativeCaseIds':[state['caseId']],'stateProperties':{'waterlogged':str(wet).lower()},'geometryAndUvExactCopyOf':old,'kind':'EXISTING_FUNCTIONAL_STAIR_EXPLICIT_NEW_FLUID_STATE'})
+                    for id,d in decisions.items():
+                        if d.get('registryId')==reg and d.get('sourceState')==state['state']:d['properties']['waterlogged']=str(wet).lower();updated[id]=d
+            continue
         for level,states in levels.items():
             if level==base:continue
             alias=next((r for r in rows if r['registryId']==reg and r['oldVariant']==old and r['opacity']==int(level) and r['open']==group['open']),None)
@@ -39,6 +49,11 @@ def main():
                         d['resolution']='EXACT_SOURCE_VISUAL_NATIVE_OPACITY_ALIAS';d['sourceOldVariant']=pose;updated[id]=d
     for reg,spec in specs.items():
         write(R/'composite'/f'{reg.split(":")[1]}.json',spec)
+        if reg in functional:
+            sparse['groups']=[g for g in sparse['groups'] if g['registryId']!=reg]
+            for d in decisions.values():
+                if d.get('registryId')==reg:d['properties'].pop('art_bank',None)
+            continue
         if len(spec['variants'])>16:
             current=next((g for g in sparse['groups'] if g['registryId']==reg),None)
             if current is None:sparse['groups'].append({'registryId':reg,'poses':len(spec['variants']),'bankMax':7,'policy':'NEW-only exact source opacity aliases; old saved states default bank0'})

@@ -56,7 +56,9 @@ def main(path,orphan):
         else:
             row=source.execute('SELECT a.apps,s.state FROM cells c JOIN applications a ON c.applications=a.id JOIN states s ON c.state=s.id WHERE dimension=? AND x=? AND y=? AND z=?',p).fetchone();assert row,p;changes[section][index]=did(classify(json.loads(row[0]),row[1]))
     lut=np.pad(lut,(0,last-len(lut)),mode='constant');lut[len(remap):]=np.arange(len(remap),last,dtype=np.uint16)
-    counts=collections.Counter();reasoncounts=collections.Counter();targetcounts=collections.Counter();sourcecounts=collections.Counter();gaps=[];orphanrows=[];sectioncount=0;start=time.monotonic();temp=ROOT/'build'/('v127-removal-runs-'+uuid.uuid4().hex+'.jsonl.gz')
+    fillerFile=ROOT/'build/v127-enclosed-fillers.sqlite';filler=sqlite3.connect(f'file:{fillerFile}?mode=ro',uri=True) if fillerFile.exists() and r.preserveRetired else None;fillerProof=json.loads((O/'enclosed-vanilla-filler-proof.json').read_text(encoding='utf-8-sig')) if filler else None
+    if fillerProof:assert fillerProof['status']=='PASS_READ_ONLY_OPAQUE_SOURCE_ENCLOSED_FILLER_PROOF' and fillerProof['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)};approvedFillerSources={(row['sourceState'],token(row['sourceApplications'])) for row in fillerProof['opaqueSourceDecisionProofs'] if row['retiredCandidate'] and row['candidateEntireGeometryContainedInUnitCell']}
+    fillerCount=0;counts=collections.Counter();reasoncounts=collections.Counter();targetcounts=collections.Counter();sourcecounts=collections.Counter();gaps=[];orphanrows=[];sectioncount=0;start=time.monotonic();temp=ROOT/'build'/('v127-removal-runs-'+uuid.uuid4().hex+'.jsonl.gz')
     with gzip.open(temp,'wt',encoding='utf8') as removal:
         for dim,cx,cz,sy,sp,si,di in out.execute('SELECT * FROM sections ORDER BY dimension,cx,cz,sy'):
             sourceindex=np.frombuffer(zlib.decompress(si),dtype='<u2');sourcepalette=json.loads(sp);old=np.frombuffer(zlib.decompress(di),dtype='<u2');index=lut[old].copy();section=(dim,cx,cz,sy)
@@ -64,6 +66,14 @@ def main(path,orphan):
                 if not registry.startswith('minecraft:'):
                     index[sourceindex==pi]=did({'action':'REMOVE','reason':'UNKNOWN_SOURCE_REGISTRY_OR_SYSTEM_SERVICE','sourceState':state,'sourceRegistryId':registry,'sourceApplications':[],'policy':'User requested unknown/system cleanup; original ZIP remains immutable'})
             for i,d in changes.get(section,{}).items():index[i]=d
+            if filler:
+                row=filler.execute('SELECT replacement_bits,replacements FROM sections WHERE dimension=? AND cx=? AND cz=? AND sy=?',section).fetchone()
+                if row:
+                    mask=np.unpackbits(np.frombuffer(zlib.decompress(row[0]),dtype=np.uint8),bitorder='little')[:4096].astype(bool);assert int(np.count_nonzero(mask))==row[1]
+                    for i in np.unique(index[mask]):
+                        d=dictionary[int(i)];assert (d.get('sourceState'),token(d.get('sourceApplications',[]))) in approvedFillerSources,('Filler source signature changed',section,i,d)
+                        at=mask&(index==i);index[at]=did({'action':'KEEP','reason':'USER_APPROVED_ENCLOSED_VANILLA_SOURCE_FILLER','sourceState':d['sourceState'],'sourceApplications':d['sourceApplications'],'evidence':'enclosed-vanilla-filler-proof.json','policy':'Exact source geometry entirely within unitcube and six proven opaque source neighbors; ordinary vanilla source carrier material permitted by user'})
+                    fillerCount+=row[1]
             if not np.array_equal(old,index):out.execute('UPDATE sections SET decision_indices=? WHERE dimension=? AND cx=? AND cz=? AND sy=?',(zlib.compress(index.astype('<u2').tobytes(),1),*section))
             for pi,n in enumerate(np.bincount(sourceindex,minlength=len(sourcepalette))):
                 if n:sourcecounts[sourcepalette[pi][0]]+=int(n)
@@ -80,9 +90,11 @@ def main(path,orphan):
             sectioncount+=1
             if sectioncount%10000==0:out.commit();print(token({'sections':sectioncount,'counts':dict(counts),'elapsed':round(time.monotonic()-start,2)}),flush=True)
     os.replace(temp,O/'source-removal-coordinates.jsonl.gz');out.commit();chunks=out.execute('SELECT count(*) FROM chunks').fetchone()[0]
+    if filler:assert fillerCount==fillerProof['provenEnclosedVanillaFillerCells'];filler.close()
     summary={'schemaVersion':1,'status':'PASS_COMPLETE_SOURCE_PLAN' if not gaps and not orphanrows else 'REVIEW_ORPHAN_ACACIA_ONLY' if not gaps else 'FAIL_KNOWN_SOURCE_GAPS','sourceHashes':{'map':sha(MAP),'pack':sha(PACK)},'chunks':chunks,'sections':sectioncount,'allPaletteCells':sum(sourcecounts.values()),'counts':dict(counts),'reasonCounts':dict(reasoncounts),'targetTypeCounts':dict(targetcounts),'wholeObjects':len(whole),'consumedSourceCells':len(consumed),'knownVisibleGaps':len(gaps),'orphanAcaciaCells':len(orphanrows),'gapSamples':gaps[:50],'orphanSamples':orphanrows[:8],'orphanAction':orphan,'removalCoordinateFile':'source-removal-coordinates.jsonl.gz','removalCoordinateFormat':'section linearRuns; index=(y&15)*256+(z&15)*16+(x&15), each[start,length] expands exact coordinates','removalCoordinateSha256':sha(O/'source-removal-coordinates.jsonl.gz'),'decisionDictionaryCount':len(dictionary),'sourceObservedStates':len(sourcecounts),'planFile':str(path.relative_to(ROOT)),'planBytes':path.stat().st_size,'sourceArchivesModified':False,'fullWorldConverted':False,'nativeValidation':'NOT_RUN_FULL_ORIGINAL_BY_USER_REQUEST','initialOverlapPrivilege':'Only incoming deterministicsourceUUID in nonserializedSourceConversionScope; no saved/item permission','RAMPolicy':'Exact native compact palettes; compressed per-section uint16; lazy chunk-sharded remaining owners; no global fullmapowner list','runtimeExecution':'Deferred until explicit user command','elapsedSeconds':round(time.monotonic()-start,2)}
     policy=O/'source-style-policy.json'
-    if policy.exists():summary['sourceStylePolicy']=json.loads(policy.read_text(encoding='utf-8-sig'))['status']
+    if policy.exists():summary['sourceStylePolicy']=json.loads(policy.read_text(encoding='utf-8-sig'))['status'];summary['sourceStylePolicySha256']=sha(policy)
+    summary['enclosedVanillaFillerCells']=fillerCount
     if summary.get('sourceStylePolicy')=='PENDING_USER_DECISION':summary['runtimeExecution']='BLOCKED_PENDING_SOURCE_STYLE_POLICY_AND_EXPLICIT_FULL_CONVERSION_COMMAND'
     out.execute('INSERT OR REPLACE INTO metadata VALUES(?,?)',('summary',token(summary)));out.commit();out.close();source.close();dump(O/'full-conversion-plan.json',summary);dump(O/'full-conversion-known-gaps.json',{'status':'PASS_NO_KNOWN_GAPS' if not gaps else 'FAIL','rows':gaps});dump(O/'orphan-acacia-source-fragments.json',{'status':'USER_REVIEW_REQUIRED' if orphanrows else 'PASS','count':len(orphanrows),'rows':orphanrows});print(token(summary))
 if __name__=='__main__':

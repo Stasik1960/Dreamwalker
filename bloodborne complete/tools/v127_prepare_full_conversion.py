@@ -143,7 +143,7 @@ def prepare(path):
 
 def export_runtime(path,dest):
     con=sqlite3.connect(f'file:{path}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN','Never export a runtime plan with unresolved visible author content'
-    assert summary.get('sourceStylePolicy')!='PENDING_USER_DECISION','Never export executable runtime data before the known source-style preservation decision'
+    assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Never export executable runtime data before the known source-style preservation decision'
     decisions={i:json.loads(d) for i,d in con.execute('SELECT id,data FROM decisions')};dest.mkdir(parents=True,exist_ok=True)
     with gzip.open(dest/'sections.jsonl.gz','wt',encoding='utf8') as out,gzip.open(dest/'owners.jsonl.gz','wt',encoding='utf8') as ownerout:
         for dim,cx,cz,sy,sp,si,di in con.execute('SELECT * FROM sections ORDER BY dimension,cx,cz,sy'):
@@ -155,7 +155,7 @@ def export_runtime(path,dest):
                     for pi in np.unique(sourceindex[at]):
                         state,reg,props=sourcepalette[int(pi)];tok=token({'registryId':reg,'properties':props});pids.setdefault(tok,len(pids));values[at[sourceindex[at]==pi]]=pids[tok]
                 else:
-                    native={'registryId':d['registryId'],'properties':d['properties']} if action=='COMPACT' else {'registryId':'minecraft:air','properties':{}}
+                    native={'registryId':d['registryId'],'properties':d['properties']} if action in {'COMPACT','VANILLA'} else {'registryId':'minecraft:air','properties':{}}
                     tok=token(native);pids.setdefault(tok,len(pids));values[at]=pids[tok]
                     if action=='OWNER':
                         for i in at:
@@ -166,7 +166,7 @@ def export_runtime(path,dest):
     with gzip.open(dest/'whole-objects.jsonl.gz','wt',encoding='utf8') as out:
         for (raw,) in con.execute('SELECT data FROM whole_objects ORDER BY dimension,x,y,z'):
             row=json.loads(raw);d=row.pop('decision');out.write(token({**row,'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']})+'\n')
-    dump(dest/'manifest.json',{**summary,'runtimeFiles':{p.name:sha(p) for p in dest.glob('*.jsonl.gz')},'sourcePlanSha256':sha(path)})
+    dump(dest/'manifest.json',{**summary,'runtimeFiles':{p.name:sha(p) for p in dest.glob('*.jsonl.gz')},'sourcePlanSha256':sha(path),'sourceStylePolicySha256':sha(O/'source-style-policy.json')})
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--plan',type=Path,default=PLAN);p.add_argument('--export-runtime',type=Path);a=p.parse_args()

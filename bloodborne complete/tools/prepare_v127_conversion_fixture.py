@@ -1,6 +1,9 @@
 """Prepare a tiny independent converter fixture; never convert/copy original city.
 
-Only level.dat is read from an existing known flat test world. The new fixture
+Only level.dat is read from a known flat test world or immutable original ZIP.
+The --original-level-template option retains its old level/worldgen schema and
+uses source DataVersion for the tiny new chunk, without copying original terrain.
+The new fixture
 has a fresh air/stone chunk, palette cube, overlapping deferred NEW owners,
 an original native wall, a whole original door, and typed RP entity data.
 Root runs the separately compiled author and production reopen checks.
@@ -13,7 +16,8 @@ import json
 import math
 from pathlib import Path
 import uuid
-from package_v127_release import ROOT, SOURCE_HASHES, sha, read
+import zipfile
+from package_v127_release import ROOT, REPO, SOURCE_HASHES, sha, read, ordinary
 from world_io import *
 
 
@@ -36,25 +40,51 @@ def props(registry):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--level-template', type=Path, required=True)
+    templates = p.add_mutually_exclusive_group(required=True)
+    templates.add_argument('--level-template', type=Path)
+    templates.add_argument('--original-level-template', action='store_true')
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--production-jar', type=Path, required=True)
     a = p.parse_args()
-    output = a.output.absolute()
+    assert ordinary(a.output), 'Reparsed fixture destination rejected'
+    output = a.output.resolve()
     assert output.is_relative_to(ROOT / 'build') and not output.exists()
-    assert a.level_template.resolve().is_relative_to(ROOT / 'build') and a.level_template.name == 'level.dat'
-    template_sha = sha(a.level_template)
+    if a.original_level_template:
+        template = REPO / 'Bloodborne-Blocks/reference-inputs/bbmc-v15-v16/bbmc_v16_map.zip'
+        assert ordinary(template) and sha(template) == SOURCE_HASHES['map'], 'Immutable original map ZIP changed'
+        with zipfile.ZipFile(template) as archive:
+            names = [name for name in archive.namelist() if Path(name).name == 'level.dat']
+            assert len(names) == 1, 'Original level.dat root is ambiguous'
+            level_bytes = archive.read(names[0])
+        level = decode_nbt(gzip.decompress(level_bytes))
+        template_sha = sha(template)
+    else:
+        template = a.level_template
+        assert ordinary(template) and template.resolve().is_relative_to(ROOT / 'build') and template.name == 'level.dat'
+        template_sha = sha(template)
+        level = read_nbt(template)
     output.mkdir(parents=True)
     world, plan = output / 'world', output / 'runtime-plan'
     world.mkdir(); plan.mkdir(); (world / 'region').mkdir()
-    level = read_nbt(a.level_template)
     data = compound(compound(level.root)['Data'])
-    data['LevelName'] = Tag(TAG_STRING, 'V12.7 isolated conversion fixture')
+    source_version = data['DataVersion'].value
+    assert not a.original_level_template or source_version == 2975, 'Unexpected original level schema version'
+    preserved_level = copy.deepcopy(data)
+    if not a.original_level_template:
+        data['LevelName'] = Tag(TAG_STRING, 'V12.7 isolated conversion fixture')
     for key in ['Player', 'CustomBossEvents']:
         data.pop(key, None)
-    for key, value in [('SpawnX', 0), ('SpawnY', 80), ('SpawnZ', 0), ('GameType', 1)]:
+    for key, value in [('SpawnX', 0), ('SpawnY', 80), ('SpawnZ', 0)]:
         data[key] = Tag(TAG_INT, value)
-    data['allowCommands'] = Tag(TAG_BYTE, 1)
+    if not a.original_level_template:
+        data['GameType'] = Tag(TAG_INT, 1)
+        data['allowCommands'] = Tag(TAG_BYTE, 1)
+    data['DataPacks'] = Tag(TAG_COMPOUND, {'Enabled': Tag(TAG_LIST, [Tag(TAG_STRING, 'vanilla'), Tag(TAG_STRING, 'fabric')], TAG_STRING),
+                                        'Disabled': Tag(TAG_LIST, [], TAG_STRING)})
+    # Deferred source function callbacks are disabled in the isolated fixture.
+    data.pop('ScheduledEvents', None)
+    controlled_level_fields = {'LevelName', 'Player', 'CustomBossEvents', 'SpawnX', 'SpawnY', 'SpawnZ', 'GameType', 'allowCommands', 'DataPacks', 'ScheduledEvents'}
+    assert all(data.get(key) == value for key, value in preserved_level.items() if key not in controlled_level_fields), 'Source level/worldgen tags changed outside fixture controls'
     write_nbt(world / 'level.dat', level)
     root = ROOT / 'src/architecture/resources/bloodborne_dw'
     collision = read(root / 'imported-collision-v125.json')
@@ -132,8 +162,8 @@ def main():
             states['data'] = Tag(TAG_LONG_ARRAY, pack_palette_indices(indices, len(palette)))
         sections.append(Tag(TAG_COMPOUND, {'Y': Tag(TAG_BYTE, sy), 'block_states': Tag(TAG_COMPOUND, states),
                           'biomes': Tag(TAG_COMPOUND, {'palette': Tag(TAG_LIST, [Tag(TAG_STRING, 'minecraft:plains')], TAG_STRING)})}))
-    chunk = NbtFile('', Tag(TAG_COMPOUND, {'DataVersion': Tag(TAG_INT, 3465), 'xPos': Tag(TAG_INT, 0), 'zPos': Tag(TAG_INT, 0),
-             'yPos': Tag(TAG_INT, -4), 'Status': Tag(TAG_STRING, 'minecraft:full'), 'LastUpdate': Tag(TAG_LONG, 0),
+    chunk = NbtFile('', Tag(TAG_COMPOUND, {'DataVersion': Tag(TAG_INT, source_version if a.original_level_template else 3465), 'xPos': Tag(TAG_INT, 0), 'zPos': Tag(TAG_INT, 0),
+             'yPos': Tag(TAG_INT, -4), 'Status': Tag(TAG_STRING, 'full' if a.original_level_template else 'minecraft:full'), 'LastUpdate': Tag(TAG_LONG, 0),
              'InhabitedTime': Tag(TAG_LONG, 0), 'sections': Tag(TAG_LIST, sections, TAG_COMPOUND),
              'block_entities': Tag(TAG_LIST, [], TAG_COMPOUND), 'Heightmaps': Tag(TAG_COMPOUND, {})}))
     region = RegionFile(); region.set_chunk(0, 0, chunk, timestamp=0); region.save(world / 'region/r.0.0.mca')
@@ -148,7 +178,11 @@ def main():
     report = {'status': 'PASS_PREPARED_RUNTIME_NOT_RUN', 'productionJarSha256': sha(a.production_jar),
               'world': str(world), 'runtimePlan': str(plan), 'owners': normal, 'wholeObjects': whole,
               'entities': entities, 'compactState': {'registryId': compact['registryId'], 'properties': compact_state, 'position': compact_position},
-              'physicalOverlapExpected': True, 'sourceRootsAirBeforeRuntime': True, 'levelTemplateUnchanged': sha(a.level_template) == template_sha,
+              'physicalOverlapExpected': True, 'sourceRootsAirBeforeRuntime': True, 'levelTemplateUnchanged': sha(template) == template_sha,
+              'levelTemplateSource': 'IMMUTABLE_ORIGINAL_ZIP_LEVEL_ONLY' if a.original_level_template else 'KNOWN_FLAT_TEST_LEVEL_ONLY',
+              'sourceLevelDataVersion': source_version, 'sourceLevelWorldgenTagsPreserved': True,
+              'fixtureChunkDataVersion': source_version if a.original_level_template else 3465,
+              'sourceProgramsExecuted': False, 'sourceScheduledEventsDisabled': True,
               'originalCityConverted': False, 'galleryCreated': False, 'nativeJavaRun': 'NOT_RUN'}
     dump(output / 'fixture-input.json', report)
     print(json.dumps({key: value for key, value in report.items() if key not in ['owners', 'wholeObjects', 'entities']}))

@@ -18,7 +18,7 @@ def main():
     sparse=R/'imported-full-map-v127.json';data=json.loads(sparse.read_text(encoding='utf-8-sig'))
     if not any(r['registryId']==spec['id'] and r['variant']==pose for r in data['objects']):data['objects'].append({'registryId':spec['id'],'variant':pose,'rotations':rotations,'policy':'Exactexistingpose0physics; hidden native source lantern15 counterpart'});write(sparse,data)
     parts=R/'imported-source-parts-v127.json';data=json.loads(parts.read_text(encoding='utf-8-sig'))
-    if not any(r['registryId']==spec['id'] and r['variant']==pose for r in data['parts']):data['parts'].append({'registryId':spec['id'],'variant':pose,'mainId':'90941','sourceApplications':copy.deepcopy(v.get('sourceClosedApplications',spec['variants'][pose]['sourceClosedApplications'])) if pose is not None else [],'defaultInstallationPose':0,'status':'PASS_EXACT_EXISTING_SOURCE_VERTEX_UV_RGBA_TINTINDEX','kind':'SOURCE_ONLY_NATIVE_EMISSION_ALIAS'});write(parts,data)
+    if not any(r['registryId']==spec['id'] and r['variant']==pose for r in data['parts']):data['parts'].append({'registryId':spec['id'],'variant':pose,'mainId':'90631','sourceApplications':copy.deepcopy(spec['variants'][pose]['sourceClosedApplications']),'defaultInstallationPose':0,'status':'PASS_EXACT_EXISTING_SOURCE_VERTEX_UV_RGBA_TINTINDEX','kind':'SOURCE_ONLY_NATIVE_EMISSION_ALIAS'});write(parts,data)
     plan=ROOT/'build/v127-full-conversion-first.sqlite';db=sqlite3.connect(plan);changed=[]
     for id,raw in db.execute('SELECT id,data FROM decisions'):
         d=json.loads(raw);state=d.get('sourceState','')

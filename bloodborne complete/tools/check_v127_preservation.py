@@ -5,6 +5,11 @@ ROOT=Path(__file__).resolve().parents[1];REPO=ROOT.parent;BASE='0c985dc28e4a3890
 RES=ROOT/'src/architecture/resources/bloodborne_dw'
 def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
 def sha(b):return hashlib.sha256(b).hexdigest()
+def file_sha(path):
+    digest=hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda:stream.read(1024*1024),b''):digest.update(chunk)
+    return digest.hexdigest()
 def prior(p):return subprocess.check_output(['git','show',BASE+':bloodborne complete/'+p],cwd=REPO)
 def main():
     failures=[];counts={};hooks=[]
@@ -51,7 +56,7 @@ def main():
     check((ROOT/'docs/COLLISION_IMPORT_HANDOFF.md').read_bytes()==prior('docs/COLLISION_IMPORT_HANDOFF.md'),'COLLISION_CONTRACT_CHANGED')
     inputs=REPO/'Bloodborne-Blocks/reference-inputs/bbmc-v15-v16'
     for file,digest in [('bbmc_v15_resource.zip','29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36'),('bbmc_v16_map.zip','39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08')]:
-        check(sha((inputs/file).read_bytes())==digest,'ORIGINAL_INPUT_CHANGED',file)
+        check(file_sha(inputs/file)==digest,'ORIGINAL_INPUT_CHANGED',file)
     result={'schema':'dreamwalker-v127-preservation','status':'PASS' if not failures else 'FAIL','baselineCommit':BASE,'counts':counts,'changedIntegrationFilesRequiringNativeRegression':hooks,'failures':failures,'originalBaseAppearancePreserved':True,'nativeOriginalAltPolicy':'Colour-only fallback explicitly requested for previously identical native ALT; BASE models frozen','authorCollisionExport':'NOT_SUPPLIED_NOT_APPLIED','nativeGameplay':'NOT_PROVEN_BY_STATIC_AUDIT'}
     out=ROOT/'docs/v12.7/preservation-audit.json';out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps({k:v for k,v in result.items() if k!='changedIntegrationFilesRequiringNativeRegression'},ensure_ascii=False));assert not failures
 if __name__=='__main__':main()

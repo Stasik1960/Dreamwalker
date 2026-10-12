@@ -52,7 +52,10 @@ def ordinary(path: Path) -> bool:
     """Reject links/reparse points, including any ancestor within the workspace."""
     absolute = path.absolute()
     for part in (absolute, *absolute.parents):
-        info = part.lstat()
+        try:
+            info = part.lstat()
+        except FileNotFoundError:
+            continue
         if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
             return False
         if part == REPO:
@@ -150,6 +153,13 @@ def validate(acceptance: Path, runtime_plan: Path, source_plan: Path | None = No
     assert plan["status"] == "PASS_COMPLETE_SOURCE_PLAN", "Full conversion source gaps remain"
     assert plan["knownVisibleGaps"] == 0
     assert plan["sourceHashes"] == SOURCE_HASHES
+    assert not str(plan.get("runtimeExecution", "")).startswith(("BLOCKED", "PENDING")), "Full source plan is not executable yet"
+    policy_path = DOC / "conversion/source-style-policy.json"
+    policy = read(policy_path)
+    implemented_style = "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA"
+    assert policy.get("status") == implemented_style and plan.get("sourceStylePolicy") == implemented_style
+    assert plan.get("sourceStylePolicySha256") == sha(policy_path), "Stale approved source-style policy"
+    assert not plan.get("fixtureOnly", False), "A small fixture is not the full original conversion plan"
     assert plan.get("fullWorldConverted", False) is False
     for name, digest in plan["runtimeFiles"].items():
         path = runtime_plan / name
@@ -174,11 +184,18 @@ def report(acceptance: dict) -> str:
         "Добавлено: общий инструмент BASE/ALT и all; DW-барьер 93230; DW-свет 93231;",
         "разовое no-collide в руке; поддержка WorldEdit и пятизначных ID;",
         "дополнительное объединение клонов, краткие имена и новые Blockbench-проекты.",
+        "93232 — сохранённое дерево; 93233 — одобренные отдельные части дверного",
+        "оформления с состояниями верх/низ. Исходная дверь V12 90001 не заменена.",
         "Исходные ID, нумерация и основной вид V12 сохранены. Старые номера клонов",
         "остаются техническими переходниками и не выдаются за рабочие типы.", "",
         "Память: простые неподвижные модели полной конвертации представлены палитрой",
         "нативных блоков без UUID/BlockEntity на клетку; составные владельцы нового",
         "мира хранятся по чанкам с ограниченным кэшем; BASE/ALT обходит карту лениво.",
+        "Неизменяемые переходы состояний и карты их значений разделяются без",
+        "изменения ID, BlockState, свойств, моделей или физики; чужие моды исключены.",
+        "Одобренные видимые поверхности снятых типов сохраняются скрытой",
+        "совместимостью. Доказанно закрытые непрозрачные кубы внутри строений",
+        "могут стать ванильными наполнителями: при разборке соседей они видимы.",
         "Снижение полного RAM города не вычисляется из одного размера NBT: измерения",
         "и их ограничения приведены в acceptance.json и verification.zip.", "",
         "Проверки: " + "; ".join(f"{k}={v}" for k, v in sorted(acceptance["checks"].items())),
@@ -192,6 +209,11 @@ def report(acceptance: dict) -> str:
         "и точная таблица состояний сохранены; новый импорт выполняется отдельно.",
         "Исходные дефекты и удаления с координатами находятся в verification.zip,",
         "v12.7/conversion/*.json и source-removal-coordinates.jsonl.gz.", "",
+        "Свет/непрозрачность имеют отдельный аудит исходных носителей и моделей;",
+        "полная карта после пересчёта освещения ещё не осматривалась в игре.",
+        "Автономный сервер для будущего импорта подготавливает проверяемый",
+        "bootstrap Minecraft 1.20.1 / Loader 0.16.10 / capsule 1.0.1; Java 17",
+        "выбирается через JAVA_HOME17, затем JAVA_HOME. См. HANDOFF-RU.md.", "",
         "Полная карта подготовлена для следующей явной команды владельца.",
         "Исходный ZIP мира и ресурспака не изменён. При будущем импорте разрешение",
         "на пересечение действует только один раз и не сохраняется как привилегия.",
@@ -215,7 +237,8 @@ def main():
         print(json.dumps({"status": "PASS_PACKAGE_PREFLIGHT", "productionJarSha256": accepted["productionJarSha256"],
                           "sourceArchiveContentCommit": content_commit, "worldConversionAttempted": False}))
         return
-    target = args.destination.absolute()
+    assert ordinary(args.destination), "Reparsed release destination rejected before creating directories"
+    target = args.destination.resolve()
     assert target.is_relative_to(REPO / "releases/Dreamwalker-BB")
     assert not target.exists(), "Never overwrite a historical or partially created release"
     target.parent.mkdir(parents=True, exist_ok=True)

@@ -1,8 +1,20 @@
 {
-  "status": "PENDING_USER_DECISION",
-  "cells": 9481300,
-  "question": "Preserve exact visible authored content through hidden compatible states, without restoring Creative items, or remove it?",
-  "evidence": "retired-source-vanilla-equivalence.json",
-  "exactVanillaKeepCases": 0,
-  "fullWorldConverted": false
+  "status": "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA",
+  "sourceStylePolicy": "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA",
+  "humanAnswer": "Сохранить вид на карте; каталог не восстанавливать",
+  "humanSteering": "В данном случае там где нужно - ставь подходящие блоки из ваниллы.",
+  "visibleAuthoredContent": "Existing reserved IDs/hidden exact compatibility poses only; never restore Creative offers",
+  "appropriateVanilla": "Conservatively proven enclosed full-unit-cube fillers; exposed custom source surfaces keep exact authored appearance",
+  "cells": 9481301,
+  "fullWorldConverted": false,
+  "implementation": {
+    "enclosedVanillaCells": 8433855,
+    "retiredVisibleAndNoncubeCellsPreserved": 1047446,
+    "appropriateVanillaExactFallbackCells": 1,
+    "knownVisibleGaps": 0,
+    "catalogueRestored": false,
+    "geometryProof": "hidden-retired-source-connection-proof.json",
+    "enclosureProof": "enclosed-vanilla-filler-proof.json",
+    "worldWritten": false
+  }
 }

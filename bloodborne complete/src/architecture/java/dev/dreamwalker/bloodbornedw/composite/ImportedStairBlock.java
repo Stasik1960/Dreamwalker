@@ -31,6 +31,7 @@ import net.minecraft.world.WorldAccess;
 /** One item and type for each new native stair appearance; corners follow neighbours. */
 public class ImportedStairBlock extends CompositeRootBlock implements NewStateStorage {
     public static final BooleanProperty TRIM = BooleanProperty.of("trim");
+    public static final BooleanProperty WATERLOGGED = net.minecraft.state.property.Properties.WATERLOGGED;
     public static final EnumProperty<Connections> CONNECTIONS = EnumProperty.of("connections", Connections.class);
     public enum Connections implements StringIdentifiable {
         AUTO("auto"), MANUAL("manual");
@@ -45,6 +46,7 @@ public class ImportedStairBlock extends CompositeRootBlock implements NewStateSt
         super(spec);
         BlockState state = getDefaultState().with(CONNECTIONS, Connections.AUTO);
         if (state.contains(TRIM)) state = state.with(TRIM, false);
+        if (state.contains(WATERLOGGED)) state = state.with(WATERLOGGED, false);
         setDefaultState(ImportedStairShapes.normalize(state));
     }
     public static ImportedStairBlock create(CompositeSpec spec) {
@@ -52,7 +54,7 @@ public class ImportedStairBlock extends CompositeRootBlock implements NewStateSt
     }
     private static final class Trimmed extends ImportedStairBlock {
         private Trimmed(CompositeSpec spec) { super(spec); }
-        @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { super.appendProperties(builder); builder.add(TRIM); }
+        @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { super.appendProperties(builder); builder.add(TRIM,WATERLOGGED); }
     }
     public static boolean isStairPath(String path) { return ImportedStairShapes.isStairPath(path); }
     @Override protected void appendProperties(StateManager.Builder<Block, BlockState> builder) { super.appendProperties(builder); builder.add(CONNECTIONS); }

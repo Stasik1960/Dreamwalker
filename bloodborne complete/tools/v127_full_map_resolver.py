@@ -23,6 +23,9 @@ class CurrentResolver(Resolver):
         # Keep frozen source -> current aliases, adding only current append-only
         # source poses. Prefix variants remain exact frozen source candidates.
         self.retired={r['registryId'] for r in json.loads((RES/'bloodborne_dw/imported-style-retirements.json').read_text(encoding='utf-8-sig'))['retirements']}
+        policy=ROOT/'docs/v12.7/conversion/source-style-policy.json';self.preserveRetired=policy.exists() and json.loads(policy.read_text(encoding='utf-8-sig')).get('status') in {'APPROVED_PENDING_IMPLEMENTATION','APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA'}
+        aliases=ROOT/'docs/v12.7/conversion/source-property-aliases.json';self.propertyAliases={(r['registryId'],r['oldVariant'],state):r for r in json.loads(aliases.read_text(encoding='utf-8-sig'))['rows'] for state in r['sourceStates']} if aliases.exists() else {}
+        button=ROOT/'docs/v12.7/conversion/appropriate-vanilla-button.json';self.vanillaButton={r['sourceState']:r for r in json.loads(button.read_text(encoding='utf-8-sig'))['rows']} if button.exists() else {}
         self.transparent={r['model'] for r in json.loads((ROOT/'docs/remaining-transfer/transparent-helper-validation.json').read_text(encoding='utf-8-sig'))['models'] if r['status']=='ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO'}
         uvzero=ROOT/'docs/v12.7/conversion/source-zero-uv-models.json'
         if uvzero.exists():self.transparent.update(r['model'] for r in json.loads(uvzero.read_text(encoding='utf-8-sig'))['rows'])
@@ -45,7 +48,7 @@ class CurrentResolver(Resolver):
             frozen=len(self.baseline['descriptors'].get(path.stem,{}).get('variants',[]))
             for vi,v in enumerate(spec['variants']):
                 if vi<frozen:continue
-                if v.get('sourceLightingCarrier'):continue
+                if v.get('sourceLightingCarrier') or v.get('sourcePropertyAlias'):continue
                 apps=v.get('sourceClosedApplications',[])
                 if not apps:continue
                 c={'registryId':reg,'variant':vi,'open':False,'applications':apps,'sourcePlacementOffset':v.get('sourcePlacementOffset',[0,0,0]),'name':spec['displayName'],'currentAppend':True}
@@ -56,7 +59,7 @@ class CurrentResolver(Resolver):
         # state from its vanilla carrier properties.
         self.current_whole=[]
         for reg,spec in self.current.items():
-            if not reg.startswith('bloodborne_dw:source_') or reg in self.retired:continue
+            if not reg.startswith('bloodborne_dw:source_') or reg in self.retired and not self.preserveRetired:continue
             if any(old==reg and row['newRegistryId']!=reg for (old,_),row in self.maps.items()):continue
             for vi,v in enumerate(spec['variants']):
                 for opened,key in [(False,'sourceClosedApplications'),(True,'sourceOpenApplications')]:
@@ -99,23 +102,32 @@ class CurrentResolver(Resolver):
         if names<=self.transparent|self.empty:return {'action':'REMOVE','reason':'SOURCE_ALL_PIXEL_ALPHA_ZERO' if names&self.transparent else 'SOURCE_EMPTY_GEOMETRY','models':sorted(names)}
         if carrier=='minecraft:jungle_trapdoor':return {'action':'REMOVE','reason':'USER_REMOVED_DAMAGED_SOURCE_TYPE','models':sorted(names)}
         if carrier=='minecraft:potted_spruce_sapling':return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE','models':sorted(names)}
-        if names=={'minecraft:block/acacia_button'}:return {'action':'REMOVE','reason':'USER_REMOVED_VANILLA_MODEL_TEXTURE_FALLBACK','models':sorted(names),'evidence':'docs/v12.7/conversion/nonfinite-source-fallback-proof.json'}
+        if names=={'minecraft:block/acacia_button'} and not self.preserveRetired:return {'action':'REMOVE','reason':'USER_REMOVED_VANILLA_MODEL_TEXTURE_FALLBACK','models':sorted(names),'evidence':'docs/v12.7/conversion/nonfinite-source-fallback-proof.json'}
+        if names=={'minecraft:block/acacia_button'} and self.preserveRetired:
+            sourceState=carrier+('['+','.join(k+'='+str(v) for k,v in sorted(props.items()))+']' if props else '');row=self.vanillaButton.get(sourceState)
+            if row:return {'action':'VANILLA','registryId':row['targetRegistryId'],'properties':row['targetProperties'],'reason':'EXACT_APPROPRIATE_VANILLA_SOURCE_FALLBACK','evidence':'docs/v12.7/conversion/appropriate-vanilla-button.json'}
         if names=={'minecraft:block/hold/wood_ladder_02'} and len(apps)==1 and not apps[0].get('x',0):
             yaw=apps[0].get('y',0)%360
             if yaw%90==0:return {'action':'OWNER','registryId':'bloodborne_dw:prototype_ladder','mainId':'90006','properties':{'facing':['north','east','south','west'][yaw//90],'variant':'0','profile':'base','waterlogged':'false','diagonal':'false','source_clone':'false','freestanding':'true'},'payload':{},'sourceShift':[0,0,0],'mountY':0.,'resolution':'EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL'}
         if token(sorted(apps,key=token)) in self.source_defects:return {'action':'REMOVE','reason':'MISSING_AUTHORED_TEXTURE_REFERENCE','sourceDefect':self.source_defects[token(sorted(apps,key=token))],'models':sorted(names)}
         if any(self.classifications.get(name,{}).get('kind')=='INTENTIONAL_EXCLUSION' for name in names):return {'action':'REMOVE','reason':'PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION','models':sorted(names)}
         if any(name=='minecraft:block/diorite_wall_side_tall' for name in names):return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL','models':sorted(names)}
-        if self.carriers.get(carrier) in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_CARRIER','retiredRegistryId':self.carriers[carrier],'models':sorted(names)}
+        if self.carriers.get(carrier) in self.retired and not self.preserveRetired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_CARRIER','retiredRegistryId':self.carriers[carrier],'models':sorted(names)}
         exact=self.protected.get(token(sorted(apps,key=token)))
         if exact:return {**copy.deepcopy(exact),'mainId':self.ids.get(exact['registryId'],'')}
         result=self.resolve(apps)
         if result['resolution'].startswith('EXACT'):
             if result['registryId']=='bloodborne_dw:prototype_wood_window':result['properties'].pop('mount',None)
-            if result['registryId']=='bloodborne_dw:source_lantern' and carrier=='minecraft:lantern':
+            if result['registryId']=='bloodborne_dw:source_lantern' and carrier=='minecraft:lantern' and int(result['properties']['variant'])==0:
                 for vi,v in enumerate(self.current[result['registryId']]['variants']):
                     if v.get('sourceLightingCarrier')==carrier:result['properties']['variant']=str(vi);result['sourceOldVariant']=vi;result['resolution']='EXACT_SOURCE_VISUAL_NATIVE_EMISSION_ALIAS';break
-            if result['registryId'] in self.retired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_TYPE','retiredRegistryId':result['registryId'],'models':sorted(names)}
+            pose=int(result['properties'].get('variant',0))+16*int(result['properties'].get('art_bank',0));sourceState=carrier+('['+','.join(k+'='+str(v) for k,v in sorted(props.items()))+']' if props else '')
+            alias=self.propertyAliases.get((result['registryId'],pose,sourceState))
+            if alias:
+                result['properties']['variant']=str(alias['newVariant']%16)
+                if result['registryId'] in self.banked:result['properties']['art_bank']=str(alias['newVariant']//16)
+                result['properties'].update(alias.get('stateProperties',{}));result['sourceOldVariant']=alias['newVariant'];result['resolution']='EXACT_SOURCE_VISUAL_NATIVE_OPACITY_FLUID_ALIAS'
+            if result['registryId'] in self.retired and not self.preserveRetired:return {'action':'REMOVE','reason':'USER_RETIRED_VANILLA_STYLE_TYPE','retiredRegistryId':result['registryId'],'models':sorted(names)}
             if result['registryId'] not in self.current and not result['registryId'].startswith(('bloodborne_dw:prototype_wall','bloodborne_dw:prototype_ladder')):return {'action':'REMOVE','reason':'EXCLUDED_UNREGISTERED_SOURCE_TYPE','excludedRegistryId':result['registryId'],'models':sorted(names)}
             return {'action':'OWNER',**result}
         if carrier=='minecraft:polished_deepslate_wall':

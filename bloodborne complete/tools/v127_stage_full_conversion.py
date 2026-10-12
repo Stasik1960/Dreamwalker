@@ -50,7 +50,7 @@ def entities_export(dest):
 def runtime_bundle(plan,runtime):
     # Never leave partially rewritten streams looking like an accepted plan.
     with sqlite3.connect(f'file:{plan.resolve()}?mode=ro',uri=True) as con:
-        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy')!='PENDING_USER_DECISION','Runtime export is blocked while known visible source-style preservation is awaiting a user decision'
+        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Runtime export is blocked while known visible source-style preservation is awaiting a user decision'
     ordinary_ancestors(runtime);runtime=runtime.absolute();assert not runtime.exists(),'Runtime export must use a fresh absent directory'
     temp=runtime.with_name(runtime.name+'.export-'+uuid.uuid4().hex);export_runtime(plan,temp);rows=entities_export(temp);p=temp/'manifest.json';m=json.loads(p.read_text(encoding='utf-8-sig'));m['runtimeFiles']={f.name:sha(f) for f in temp.glob('*.jsonl.gz')};m['deferredEntityCount']=len(rows);m['offlinePhaseRequiredBeforeServer']=True;dump(p,m);os.replace(temp,runtime);return m
 def ordinary_ancestors(path):
@@ -74,8 +74,9 @@ def source_changed(con,decisions,dim,x,y,z):
     return action!='KEEP'
 def stage(plan,runtime,target,execute):
     ordinary_ancestors(plan);ordinary_ancestors(runtime);target=fresh_target(target);plan=plan.resolve();runtime=runtime.resolve();con=sqlite3.connect(f'file:{plan}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN',summary['status'];assert summary['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)},'Original source hashes differ'
-    if not execute:print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if summary.get('sourceStylePolicy')=='PENDING_USER_DECISION' else 'PASS_READONLY_READY_TO_STAGE','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction and final source-style decision'}));return
-    assert summary.get('sourceStylePolicy')!='PENDING_USER_DECISION','Full conversion is blocked while the known visible source-style preservation policy awaits a user decision'
+    if not execute:print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if summary.get('sourceStylePolicy') in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'} else 'PASS_READONLY_READY_TO_STAGE','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction and final source-style decision'}));return
+    assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Full conversion is blocked while the known visible source-style preservation policy awaits a user decision'
+    policy=O/'source-style-policy.json';assert summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(policy),'Final source-style policy/status/hash differs from the complete source plan'
     if runtime.exists():
         bundle=json.loads((runtime/'manifest.json').read_text(encoding='utf-8-sig'));assert bundle['status']=='PASS_COMPLETE_SOURCE_PLAN' and bundle['sourcePlanSha256']==sha(plan),'Stale runtime bundle'
         for name,digest in bundle['runtimeFiles'].items():assert PurePosixPath(name).name==name and sha(runtime/name)==digest,'Runtime stream hash mismatch'
@@ -126,7 +127,7 @@ def stage(plan,runtime,target,execute):
                                     _,reg,props=sourcepalette[int(pi)];ind[at[old[at]==pi]]=pid({'registryId':reg,'properties':props})
                             else:
                                 assert d['action'] in {'OWNER','COMPACT','CONSUMED','REMOVE'},d
-                                state={'registryId':d['registryId'],'properties':d['properties']} if d['action']=='COMPACT' else {'registryId':'minecraft:air','properties':{}}
+                                state={'registryId':d['registryId'],'properties':d['properties']} if d['action'] in {'COMPACT','VANILLA'} else {'registryId':'minecraft:air','properties':{}}
                                 ind[at]=pid(state)
                         bs={'palette':Tag(TAG_LIST,palette,TAG_COMPOUND)}
                         if len(palette)>1:bs['data']=Tag(TAG_LONG_ARRAY,pack_palette_indices(ind.tolist(),len(palette)))
@@ -151,7 +152,7 @@ def stage(plan,runtime,target,execute):
                     chunks+=1
                 destination.write_bytes(region.to_bytes());print(token({'member':member,'chunks':chunks,'changedSections':changed}),flush=True)
             elif pp.name in {'level.dat','level.dat_old'}:
-                nbt=decode_nbt(gzip.decompress(raw));fields=compound(nbt.root);data=compound(fields['Data']);previous=copy.deepcopy(data.get('DataPacks'));data['DataPacks']=Tag(TAG_COMPOUND,{'Enabled':Tag(TAG_LIST,[Tag(TAG_STRING,'vanilla'),Tag(TAG_STRING,'fabric')],TAG_STRING),'Disabled':Tag(TAG_LIST,[],TAG_STRING)});destination.write_bytes(gzip.compress(encode_nbt(nbt),mtime=0));all_members.append({'member':member,'decision':'DISABLE_SOURCE_DATAPACKS_BEFORE_DERIVED_LOAD','sourcePackNames':[] if previous is None else [t.value for t in compound(previous).get('Enabled',Tag(TAG_LIST,[],TAG_STRING)).value]})
+                nbt=decode_nbt(gzip.decompress(raw));fields=compound(nbt.root);data=compound(fields['Data']);scheduled=copy.deepcopy(data.get('ScheduledEvents'));data['ScheduledEvents']=Tag(TAG_LIST,[],TAG_COMPOUND);all_members.append({'member':member,'decision':'REMOVE_SOURCE_SCHEDULED_FUNCTION_CALLBACKS','sourceEventCount':0 if scheduled is None else len(scheduled.value),'typedSourceSha256':None if scheduled is None else __import__('hashlib').sha256(encode_nbt(NbtFile('ScheduledEvents',scheduled))).hexdigest()});previous=copy.deepcopy(data.get('DataPacks'));data['DataPacks']=Tag(TAG_COMPOUND,{'Enabled':Tag(TAG_LIST,[Tag(TAG_STRING,'vanilla'),Tag(TAG_STRING,'fabric')],TAG_STRING),'Disabled':Tag(TAG_LIST,[],TAG_STRING)});destination.write_bytes(gzip.compress(encode_nbt(nbt),mtime=0));all_members.append({'member':member,'decision':'DISABLE_SOURCE_DATAPACKS_BEFORE_DERIVED_LOAD','sourcePackNames':[] if previous is None else [t.value for t in compound(previous).get('Enabled',Tag(TAG_LIST,[],TAG_STRING)).value]})
             elif pp.name in {'session.lock','uid.dat'}:all_members.append({'member':member,'decision':'REMOVE_SOURCE_SESSION_ID'})
             else:destination.write_bytes(raw)
     marker={'schemaVersion':1,'status':'PASS_DERIVED_COPY_PREPARED','operationId':operation,'sourceHashes':summary['sourceHashes'],'targetRealPath':str(target),'sourcePlanSha256':sha(plan),'runtimeManifestSha256':sha(runtime/'manifest.json'),'runtimeDirectory':str(runtime),'changedSections':changed,'sourceChunks':chunks,'sourceBlockEntitiesRemoved':be_removed,'sourceMemberActions':all_members,'obsoleteCarrierTicksRemoved':ticks_removed,'fullOwnerAuthoringComplete':False,'nextPhase':'Disabled FullMapConversionAuthor runs only against this explicitly staged copy','originalArchivesModified':False,'elapsedSeconds':round(time.monotonic()-start,2)};dump(target/'dw-derived-copy.json',marker);print(token(marker));con.close()

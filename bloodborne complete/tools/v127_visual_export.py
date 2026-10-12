@@ -22,7 +22,7 @@ BG=np.array([39,48,55],dtype=np.uint8)
 def write_json(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
     staged=path.with_name(path.name+'.v127-write.tmp')
-    staged.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    staged.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
     for attempt in range(5):
         try:staged.replace(path);return
         except OSError:

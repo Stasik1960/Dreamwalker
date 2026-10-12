@@ -6,6 +6,7 @@ the official Minecraft 1.20.1/Fabric 0.16.10 server launcher and pinned dependen
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -13,6 +14,31 @@ import time
 import zipfile
 from package_v127_release import ROOT, files, ordinary, read, sha, SOURCE_HASHES
 from prepare_v127_server_bootstrap import stage_bootstrap
+
+IMPLEMENTED_STYLE = 'APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA'
+
+
+def validate_full_plan(world, plan, manifest, source_plan, style_policy, fixture_only):
+    """Read-only gate before any server/profile writes; old exports fail closed."""
+    prepared = read(world / 'dw-derived-copy.json')
+    if fixture_only:
+        assert manifest.get('fixtureOnly') is True, 'Fixture mode requires an explicitly bounded fixture plan'
+        return {}
+    assert not manifest.get('fixtureOnly', False), 'A fixture cannot stand in for the original world'
+    assert not str(manifest.get('runtimeExecution', '')).startswith(('BLOCKED', 'PENDING')), 'Full plan execution is still blocked'
+    source_plan, style_policy = source_plan.resolve(), style_policy.resolve()
+    assert source_plan.is_relative_to(ROOT / 'build') and style_policy.is_relative_to(ROOT)
+    assert ordinary(source_plan) and ordinary(style_policy)
+    policy = read(style_policy)
+    assert policy.get('status') == IMPLEMENTED_STYLE, 'Approved source-style preservation has not been fully implemented'
+    assert manifest.get('sourceStylePolicy') == IMPLEMENTED_STYLE
+    assert manifest.get('sourceStylePolicySha256') == sha(style_policy), 'Stale source-style policy binding'
+    assert manifest.get('sourcePlanSha256') == sha(source_plan), 'Stale source SQLite plan binding'
+    assert prepared.get('sourcePlanSha256') == manifest['sourcePlanSha256'], 'Derived world was staged from another plan'
+    assert prepared.get('runtimeManifestSha256') == sha(plan / 'manifest.json'), 'Derived world was staged against another runtime bundle'
+    return {'sourcePlanPath': str(source_plan), 'sourcePlanSha256': manifest['sourcePlanSha256'],
+            'sourceStylePolicyPath': str(style_policy), 'sourceStylePolicySha256': manifest['sourceStylePolicySha256'],
+            'sourceStylePolicy': IMPLEMENTED_STYLE}
 
 
 def metadata(path):
@@ -25,12 +51,15 @@ def main():
     parser.add_argument('--derived-world', type=Path, required=True)
     parser.add_argument('--runtime-plan', type=Path, required=True)
     parser.add_argument('--runtime-directory', type=Path, required=True)
+    parser.add_argument('--source-plan', type=Path, default=ROOT / 'build/v127-full-conversion-first.sqlite')
+    parser.add_argument('--source-style-policy', type=Path, default=ROOT / 'docs/v12.7/conversion/source-style-policy.json')
     parser.add_argument('--production-jar', type=Path, required=True)
     parser.add_argument('--author-jar', type=Path, required=True)
     parser.add_argument('--fabric-api', type=Path, required=True)
     parser.add_argument('--geckolib', type=Path, required=True)
     parser.add_argument('--server-launcher', type=Path, required=True)
     parser.add_argument('--server-bootstrap', type=Path, help='Verified bundle prepared by prepare_v127_server_bootstrap.py')
+    parser.add_argument('--accepted-eula-file', type=Path, required=True, help='Existing eula=true evidence; copied, never invented')
     java_home = os.environ.get('JAVA_HOME17') or os.environ.get('JAVA_HOME')
     parser.add_argument('--java-home', type=Path, default=Path(java_home) if java_home else None)
     parser.add_argument('--heap-gb', type=int, default=4)
@@ -42,10 +71,14 @@ def main():
     assert args.authorize_full_conversion or args.fixture_only, 'Full conversion remains disabled until explicitly requested'
     assert not (args.authorize_full_conversion and args.fixture_only)
     assert args.java_home and 2 <= args.heap_gb <= 12 and 0 < args.timeout_hours <= 72
+    eula = args.accepted_eula_file.resolve()
+    assert ordinary(args.accepted_eula_file) and eula.is_file()
+    assert re.search(r'(?m)^\s*eula\s*=\s*true\s*$', eula.read_text(encoding='utf-8-sig')), 'Existing accepted EULA evidence required'
     java = args.java_home / 'bin' / ('java.exe' if os.name == 'nt' else 'java')
     version = subprocess.run([str(java), '-version'], capture_output=True, text=True, check=True).stderr
     assert 'version "17.' in version or 'openjdk 17.' in version, 'Java 17 is required'
-    world, plan, run = args.derived_world.resolve(), args.runtime_plan.resolve(), args.runtime_directory.absolute()
+    assert all(ordinary(path) for path in (args.derived_world, args.runtime_plan, args.runtime_directory)), 'Reparsed conversion destination/input rejected'
+    world, plan, run = args.derived_world.resolve(), args.runtime_plan.resolve(), args.runtime_directory.resolve()
     assert world.is_relative_to(ROOT / 'build') and plan.is_relative_to(ROOT / 'build') and run.is_relative_to(ROOT / 'build')
     assert ordinary(world) and (world / 'level.dat').is_file() and world != run
     derived = read(world / 'dw-derived-copy.json')
@@ -55,6 +88,7 @@ def main():
     assert manifest['sourceHashes'] == derived['sourceHashes']
     for name, digest in manifest['runtimeFiles'].items():
         assert (plan / name).parent.resolve() == plan and sha(plan / name) == digest
+    full_bindings = validate_full_plan(world, plan, manifest, args.source_plan, args.source_style_policy, args.fixture_only)
     sources = [args.production_jar.resolve(), args.author_jar.resolve(), args.fabric_api.resolve(), args.geckolib.resolve()]
     expected = ['bloodborne_dw', 'dreamwalker_full_conversion_author', 'fabric-api', 'geckolib']
     for source, mod_id in zip(sources, expected):
@@ -65,6 +99,7 @@ def main():
     run.mkdir(parents=True, exist_ok=True)
     bootstrap_files = stage_bootstrap(args.server_bootstrap, run, args.server_launcher) if args.server_bootstrap else {}
     mods = run / 'mods'
+    assert ordinary(mods), 'Reparsed isolated mod directory rejected'
     mods.mkdir(exist_ok=True)
     intended = {source.name: sha(source) for source in sources}
     existing = {path.name: sha(path) for path in mods.glob('*.jar')}
@@ -78,11 +113,15 @@ def main():
               'explicitConversionAuthorized': True, 'offlinePreparationStatus': derived['status'],
               'operationId': derived['operationId'], 'targetWorldPath': str(world), 'runtimePlanPath': str(plan),
               'runtimeManifestSha256': sha(plan / 'manifest.json'), 'productionJarSha256': sha(sources[0])}
+    marker.update(full_bindings)
     input_path = run / 'dw-full-conversion-input.json'
     if input_path.is_file():
         assert read(input_path) == marker, 'Resume marker belongs to another operation or JAR'
     input_path.write_text(json.dumps(marker, indent=2) + '\n', encoding='utf8')
-    (run / 'eula.txt').write_text('eula=true\n', encoding='ascii')
+    if (run / 'eula.txt').exists():
+        assert sha(run / 'eula.txt') == sha(eula), 'Resume EULA evidence changed'
+    else:
+        shutil.copyfile(eula, run / 'eula.txt')
     (run / 'server.properties').write_text('server-ip=127.0.0.1\nserver-port=25595\nonline-mode=false\nmax-players=0\n'
                                           'enable-command-block=false\nspawn-protection=0\nview-distance=2\nsimulation-distance=2\n'
                                           f'level-name={world.name}\n', encoding='utf8')
@@ -94,6 +133,7 @@ def main():
               'runtimeManifestSha256': marker['runtimeManifestSha256'], 'derivedWorld': str(world),
               'originalArchivesWritten': False, 'galleryCreated': False, 'javaVersion': version.strip(),
               'modFiles': intended, 'serverLauncherSha256': sha(launch), 'bootstrapRuntimeFiles': bootstrap_files}
+    record['acceptedEulaSha256'] = sha(eula)
     start = time.monotonic()
     with (run / 'conversion-console.log').open('wb') as log:
         process = subprocess.Popen(command, cwd=run, stdin=subprocess.PIPE, stdout=log, stderr=subprocess.STDOUT, text=True)

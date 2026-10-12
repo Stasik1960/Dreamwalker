@@ -57,7 +57,7 @@ def main():
             file=RES/'assets/bloodborne_dw/blockstates'/f'{reg.split(":")[1]}.json';old=json.loads(file.read_text(encoding='utf-8-sig'))
             if 'multipart' in old and any('compact' in r.get('when',{}) for r in old['multipart']):write(file,{'variants':{'':old['multipart'][0]['apply']}})
             continue
-        if not reg.startswith('bloodborne_dw:source_') or reg in resolver.retired or reg in stairs or spec.get('openable') or spec.get('support',{}).get('required') or spec.get('importedClimbingBounds'):continue
+        if not reg.startswith('bloodborne_dw:source_') or reg in resolver.retired and not resolver.preserveRetired or reg in stairs or spec.get('openable') or spec.get('support',{}).get('required') or spec.get('importedClimbingBounds'):continue
         path=reg.split(':')[1];poses=[];models={};checks=[];shapes={};opaque=[]
         for index,v in enumerate(spec['variants']):
             p=v['poses']['closed'];parts=p['parts']

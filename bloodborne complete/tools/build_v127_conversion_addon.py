@@ -1,7 +1,7 @@
 """Build the explicitly enabled full-map author separately; no production mutation.
 
 --prepare-only emits the opt-in Gradle init/resources without starting Java.
-Root serializes all Java processes. JAVA_HOME must select Java 17 on each device.
+Root serializes all Java processes. JAVA_HOME17 (or JAVA_HOME) selects Java 17.
 """
 import argparse
 import json
@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 import subprocess
 import zipfile
-from package_v127_release import ROOT, sha
+from package_v127_release import ROOT, sha, ordinary
 
 
 def main():
@@ -22,7 +22,8 @@ def main():
     args = parser.parse_args()
     production = args.production_jar.resolve()
     digest = sha(production)
-    output = args.output.absolute()
+    assert ordinary(args.output), 'Reparsed add-on preparation destination rejected'
+    output = args.output.resolve()
     assert output.is_relative_to(ROOT / 'build') and not output.exists()
     output.mkdir(parents=True)
     resources = output / 'resources'
@@ -69,13 +70,15 @@ def main():
     report = {'status': 'PASS_PREPARED_NOT_COMPILED', 'productionJarSha256': digest,
               'initScript': str(init), 'runtimeDirectory': str(runtime), 'worldConversionAttempted': False}
     if not args.prepare_only:
-        assert os.environ.get('JAVA_HOME'), 'Set JAVA_HOME to Java 17; this helper never guesses a device path'
+        java_home = os.environ.get('JAVA_HOME17') or os.environ.get('JAVA_HOME')
+        assert java_home, 'Set JAVA_HOME17 or JAVA_HOME to Java 17; this helper never guesses a device path'
         wrapper = ROOT / ('gradlew.bat' if os.name == 'nt' else 'gradlew')
         command = [str(wrapper), '--no-daemon', '-I', str(init), 'remapV127ConversionJar']
         if args.offline:
             command.insert(1, '--offline')
         with (output / 'build.log').open('wb') as log:
-            code = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT).returncode
+            code = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
+                                  env=dict(os.environ, JAVA_HOME=java_home)).returncode
         addon = ROOT / 'build/libs/dreamwalker-v127-full-conversion-author-1.2.7.jar'
         assert code == 0 and addon.is_file() and sha(production) == digest, 'Author build failed or production changed'
         with zipfile.ZipFile(addon) as archive:

@@ -89,7 +89,7 @@ public class ImportedCompactBlock extends ImportedArtworkBlock {
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView view,BlockPos pos,ShapeContext context){return compact(state)?pose(state).collision.get(state.get(ROTATION)):super.getCollisionShape(state,view,pos,context);}
     @Override public VoxelShape getOutlineShape(BlockState state,BlockView view,BlockPos pos,ShapeContext context){return compact(state)?pose(state).aim.get(state.get(ROTATION)):super.getOutlineShape(state,view,pos,context);}
     @Override public VoxelShape getCullingShape(BlockState state,BlockView view,BlockPos pos){return opaque(state)?VoxelShapes.fullCube():super.getCullingShape(state,view,pos);}
-    @Override public int getOpacity(BlockState state,BlockView view,BlockPos pos){return opaque(state)?15:super.getOpacity(state,view,pos);}
+    @Override public int getOpacity(BlockState state,BlockView view,BlockPos pos){return ImportedSourceLightingV127.opacity(spec,state,opaque(state)?15:0);}
     @Override public boolean isTransparent(BlockState state,BlockView view,BlockPos pos){return !opaque(state)&&super.isTransparent(state,view,pos);}
     private ItemStack compactArt(BlockState state){NbtCompound payload=new NbtCompound();payload.putInt("ImportedTypeVersion",1);return art(state,payload);}
     @Override public ItemStack getPickStack(BlockView view,BlockPos pos,BlockState state){return compact(state)?compactArt(state):super.getPickStack(view,pos,state);}
