@@ -17,6 +17,8 @@ class CurrentResolver(Resolver):
         self.empty={r['model'] for r in inventory['models'] if not any(e.get('faces') for e in r['resolved'].get('elements',[]))}
         self.current={}
         self.carriers={}
+        follow=RES/'bloodborne_dw/imported-type-aliases-v127.json'
+        self.follow={(r['oldRegistryId'],r['oldVariant']):r for r in json.loads(follow.read_text(encoding='utf-8-sig')).get('mappings',[])} if follow.exists() else {}
         for path in sorted((RES/'bloodborne_dw/composite').glob('*.json')):
             spec=json.loads(path.read_text(encoding='utf-8-sig'));reg=spec['id'];self.current[reg]=spec
             carrier=spec.get('source',{}).get('carrier')
@@ -32,7 +34,15 @@ class CurrentResolver(Resolver):
         self.resolve_token.cache_clear()
 
     def target(self,candidate,yaw):
-        if not candidate.get('currentAppend'):return super().target(candidate,yaw)
+        if not candidate.get('currentAppend'):
+            result=super().target(candidate,yaw)
+            mapping=self.follow.get((result['registryId'],int(result['properties']['variant'])))
+            if mapping:
+                result['registryId']=mapping['newRegistryId'];result['mainId']=mapping['newId'];result['properties']['variant']=str(mapping['newVariant']);result['properties']['rotation']=str((int(result['properties']['rotation'])+mapping['rotationDelta'])%8)
+                inv=rotation(result['sourceShift'],-mapping['rotationDelta']);shift=[round(inv[i]+mapping['sourceShift'][i],10) for i in range(3)];result['sourceShift']=shift
+                if any(shift):result['payload']['SourceShift']=shift
+                else:result['payload'].pop('SourceShift',None)
+            return result
         reg=candidate['registryId'];vi=candidate['variant'];shift=[-float(x)/16 for x in candidate['sourcePlacementOffset']]
         state={'variant':str(vi%16),'rotation':str(yaw),'profile':'base','open':'false'}
         if len(self.current[reg]['variants'])>16:state['art_bank']=str(vi//16)

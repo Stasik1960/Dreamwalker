@@ -90,6 +90,7 @@ public final class BbToolService {
                 .then(literal("all").executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",-1)?1:0))
                 .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
             .then(literal("cancel").executes(context->{var player=context.getSource().getPlayerOrThrow();boolean cancelled=BbAlternateService.cancel(player.getServer());player.sendMessage(Text.literal(cancelled?"BB: замена вида остановлена; уже выполненные изменения сохранены.":"BB: активной замены вида нет."),false);return cancelled?1:0;}))
+            .then(literal("status").executes(context->{var player=context.getSource().getPlayerOrThrow();var status=BbAlternateService.status(player.getServer());player.sendMessage(Text.literal("BB: "+(status.running()?"замена выполняется":"замена не выполняется")+"; изменено "+status.changed()+", отклонено "+status.failed()+", чанки "+status.chunksDone()+" / "+status.chunksTotal()+"."),false);return 1;}))
             .then(literal("none").executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=0;clearSelection(player);player.sendMessage(Text.literal("BB: выбор одного объекта."),false);return 1;}))));
     }
     public static void apply(ServerPlayerEntity player,ToolTarget target){

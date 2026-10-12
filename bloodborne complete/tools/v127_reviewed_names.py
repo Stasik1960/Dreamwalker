@@ -5,9 +5,20 @@ V12 catalogue entries are outside this edit. Fresh reads preserve concurrent
 V12.7 ALT/behaviour work owned by the parent agent.
 """
 from __future__ import annotations
-import argparse, hashlib, json
+import argparse, hashlib, json, time
 from pathlib import Path
 from v127_visual_export import ROOT,RES,OUT,write_json
+
+def label_write(path,value):
+    # A Windows source file can briefly be held by a concurrent read-only
+    # resource scanner. Stage complete UTF8 before the atomic replacement.
+    staged=path.with_name(path.name+'.v127-name.tmp')
+    staged.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    for attempt in range(5):
+        try:staged.replace(path);return
+        except OSError:
+            if attempt==4:raise
+            time.sleep(.1)
 
 # Row/column order is the numbered object order in current-00..06.png. Each
 # entry was chosen from the rendered source surface, not vanilla carrier name.
@@ -108,12 +119,19 @@ def main():
             'evidence':'Actual current rendered source geometry/UV/RGBA at four normalized yaws; original V12 type excluded.'})
     write_json(OUT/'reviewed-short-names.json',{'status':'VISUALLY_REVIEWED_SHORT_RUSSIAN_NAMES','objects':mapping,'originalV12Untouched':True,'numericAndRegistryIdsUnchanged':True})
     if not a.apply:return
-    updates={r['registryId']:r for r in mapping};proof=[]
+    followup=json.loads((RES/'bloodborne_dw/imported-type-aliases-v127.json').read_text(encoding='utf-8'))
+    retired={member for group in followup['groups'] for member in group['members'] if member!=group['primaryRegistryId']}
+    updates={r['registryId']:r for r in mapping if r['registryId'] not in retired};proof=[]
+    # Default panels in90899/90903 are half slabs, as proved by exact geometry.
+    for r in mapping:
+        if r['id']=='90899':r['newName']='Замшелая кирпичная плита'
+        if r['id']=='90903':r['newName']='Зелёная кирпичная плита'
+    write_json(OUT/'reviewed-short-names.json',{'status':'VISUALLY_REVIEWED_SHORT_RUSSIAN_NAMES','objects':mapping,'originalV12Untouched':True,'numericAndRegistryIdsUnchanged':True})
     for registry,row in updates.items():
         path=RES/'bloodborne_dw/composite'/f"{registry.split(':')[1]}.json";before=json.loads(path.read_text(encoding='utf-8'));after=json.loads(path.read_text(encoding='utf-8'))
         assert after.get('simplePhysicalCollision') is True
         after['displayName']=row['newName'];compare=after.copy();compare['displayName']=before['displayName'];assert compare==before
-        write_json(path,after);proof.append({'path':str(path.relative_to(ROOT)),'onlyChangedField':'displayName'})
+        label_write(path,after);proof.append({'path':str(path.relative_to(ROOT)),'onlyChangedField':'displayName'})
     catalogue=RES/'bloodborne_dw/remaining-catalogue.json';data=json.loads(catalogue.read_text(encoding='utf-8'))
     for object in data['objects']:
         registry='bloodborne_dw:'+object['path']
@@ -124,13 +142,13 @@ def main():
         metadata=json.loads((RES/'bloodborne_dw/imported-assembly-v126.json').read_text(encoding='utf-8'))
         for recipe in metadata['recipes']:
             if recipe['primaryRegistryId']==registry:object['variants'][recipe['installationPose']]['name']=name+(' · в глубину' if registry=='bloodborne_dw:source_smooth_quartz_top' and recipe['installationPose']==2 else '')
-    write_json(catalogue,data)
+    label_write(catalogue,data)
     debug=RES/'bloodborne_dw/debug_catalogue.json';data=json.loads(debug.read_text(encoding='utf-8'))
     protected_before={r['temporaryId']:r for r in data['entries'] if r['registryId'] not in updates}
     for entry in data['entries']:
         if entry['registryId'] in updates:entry['name']=updates[entry['registryId']]['newName']
     assert protected_before=={r['temporaryId']:r for r in data['entries'] if r['registryId'] not in updates}
-    write_json(debug,data)
+    label_write(debug,data)
     write_json(OUT/'name-application.json',{'status':'PASS','workingNamesReviewed':544,'descriptorLabelsChanged':len(proof),'paths':proof,
         'originalV12AndInactiveDebugEntriesExact':True,'idsGeometryStatesPhysicsDependenciesExact':True})
     print(json.dumps({'status':'PASS','workingNamesReviewed':544,'descriptorLabelsChanged':len(proof)}))

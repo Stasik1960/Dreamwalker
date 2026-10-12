@@ -190,7 +190,7 @@ public final class WorldEditBridge {
             }catch(InputParseException failure){throw new IllegalStateException("Cannot expose BB object to WorldEdit",failure);}
         }
         public <T extends BlockStateHolder<T>> boolean setBlock(BlockVector3 v,T value)throws WorldEditException {
-            if(!world.getServer().isOnThread())throw new WorldEditException("BB edits require the server thread");
+            if(!world.getServer().isOnThread())throw new InputParseException("BB edits require the server thread");
             BlockPos p=pos(v);world.getChunk(p.getX()>>4,p.getZ()>>4);
             String id=value.getBlockType().getId();BaseBlock block=value.toBaseBlock();NbtCompound old=snapshot(block);
             List<Owner> remove=new ArrayList<>(owners(world,p));List<RpObjectEntity> rp=new ArrayList<>(entities(world,p));
@@ -198,7 +198,7 @@ public final class WorldEditBridge {
             if(old==null&&!own(id)&&remove.isEmpty()&&rp.isEmpty())return super.setBlock(v,value);
             List<ObjectInstance> add=new ArrayList<>();List<NbtCompound> rpAdd=new ArrayList<>();
             if(old!=null) {
-                int[] anchor=old.getIntArray("Anchor");if(anchor.length!=3)throw new WorldEditException("Invalid BB clipboard anchor");
+                int[] anchor=old.getIntArray("Anchor");if(anchor.length!=3)throw new InputParseException("Invalid BB clipboard anchor");
                 BlockPos delta=p.subtract(new BlockPos(anchor[0],anchor[1],anchor[2]));
                 for(NbtElement raw:old.getList("Roots",10)){NbtCompound row=(NbtCompound)raw;Owner owner=CompositeData.owner(row.getCompound("Owner"));var data=CompositeData.data(row.getCompound("Data"));BlockPos root=CompositeData.pos(owner.root()).add(delta);UUID uuid=delta.equals(BlockPos.ORIGIN)?owner.instanceId():UUID.randomUUID();add.add(CompositeRuntime.instance(world,root,CompositeData.state(data),uuid,CompositeData.nbt(data.blockEntityNbt())));}
                 for(NbtElement raw:old.getList("Rp",10)){NbtCompound copy=((NbtCompound)raw).copy();NbtList at=copy.getList("Pos",6);NbtList shifted=new NbtList();shifted.add(NbtDouble.of(at.getDouble(0)+delta.getX()));shifted.add(NbtDouble.of(at.getDouble(1)+delta.getY()));shifted.add(NbtDouble.of(at.getDouble(2)+delta.getZ()));copy.put("Pos",shifted);if(!delta.equals(BlockPos.ORIGIN))copy.putUuid("UUID",UUID.randomUUID());rpAdd.add(copy);}
@@ -207,10 +207,10 @@ public final class WorldEditBridge {
             } else if(own(id)&&Registries.BLOCK.containsId(new Identifier(id))) {
                 BlockState state=Registries.BLOCK.get(new Identifier(id)).getDefaultState();for(var entry:value.getStates().entrySet())state=with(state,state.getBlock().getStateManager().getProperty(entry.getKey().getName()),entry.getValue().toString());
                 if(VerticalMount.isArchitecture(state))add.add(CompositeRuntime.instance(world,p,state,UUID.randomUUID(),new NbtCompound()));
-                else {for(Owner owner:remove)if(CompositeRuntime.remove(world,owner,null,false).outcome()!=TransactionCore.Outcome.COMMITTED)throw new WorldEditException("Cannot remove BB owner");for(RpObjectEntity e:rp)e.removeObject();return super.setBlock(v,value);}
+                else {for(Owner owner:remove)if(CompositeRuntime.remove(world,owner,null,false).outcome()!=TransactionCore.Outcome.COMMITTED)throw new InputParseException("Cannot remove BB owner");for(RpObjectEntity e:rp)e.removeObject();return super.setBlock(v,value);}
             }
             var result=WorldEditObjectTransactions.replace(world,remove,add);
-            if(result.outcome()!=TransactionCore.Outcome.COMMITTED)throw new WorldEditException("BB whole-object edit rejected: "+result.reason());
+            if(result.outcome()!=TransactionCore.Outcome.COMMITTED)throw new InputParseException("BB whole-object edit rejected: "+result.reason());
             for(RpObjectEntity entity:rp)entity.removeObject();
             for(NbtCompound data:rpAdd)net.minecraft.entity.EntityType.loadEntityWithPassengers(data,world,e->{world.spawnEntity(e);return e;});
             if(old!=null||!add.isEmpty()||!rpAdd.isEmpty()||id.equals("minecraft:air"))return true;

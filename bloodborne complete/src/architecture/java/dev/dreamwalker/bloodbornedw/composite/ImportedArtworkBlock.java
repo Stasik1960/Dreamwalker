@@ -17,15 +17,16 @@ public class ImportedArtworkBlock extends CompositeRootBlock {
         }catch(java.io.IOException failure){throw new IllegalStateException("Cannot read NEW art banks",failure);}
     }
     public static boolean isBankedPath(String path){return BANKED.contains(path);}
-    public static int variantBudget(String path){return path.equals("source_assembly_brick_wall")?144:128;}
+    public static int variantBudget(String path){return path.equals("source_assembly_brick_wall")?480:128;}
     public static ImportedArtworkBlock create(CompositeSpec spec){return spec.id.getPath().equals("source_assembly_brick_wall")?new Expanded(spec):new ImportedArtworkBlock(spec);}
     public static IntProperty bankProperty(BlockState state){return state.getBlock() instanceof Expanded?Expanded.BANK:ART_BANK;}
     public ImportedArtworkBlock(CompositeSpec spec){super(spec);setDefaultState(getDefaultState().with(bankProperty(getDefaultState()),0));}
     @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){super.appendProperties(builder);builder.add(this instanceof Expanded?Expanded.BANK:ART_BANK);}
     public static int variant(BlockState state){return state.get(bankProperty(state))*16+state.get(VARIANT);}
-    /** Only the NEW brick-wall family needs the ninth bank for reviewed city connections. */
+    /** Only the NEW brick-wall family needs thirty banks for exact authored
+     * weighted/conditional unions across the complete original city. */
     private static final class Expanded extends ImportedArtworkBlock {
-        private static final IntProperty BANK=IntProperty.of("art_bank",0,8);
+        private static final IntProperty BANK=IntProperty.of("art_bank",0,29);
         private Expanded(CompositeSpec spec){super(spec);}
     }
 }

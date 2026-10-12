@@ -79,6 +79,21 @@ public final class ImportedCollisionV125 {
         }
         if (registered.size()!=1045 || !objects.keySet().equals(registered))
             throw new IllegalArgumentException("NEW collision resource differs from the exact registered cohort");
+        // V12.7 keeps the old fitted-shape archive immutable. Exact current
+        // alias poses copied to an appended primary art state retain the same
+        // collision/aim tables at every yaw, rather than falling back to pose0.
+        var followup=ImportedCollisionV125.class.getResourceAsStream("/bloodborne_dw/imported-type-aliases-v127.json");
+        if(followup!=null)try(var reader=new InputStreamReader(followup,StandardCharsets.UTF_8)) {
+            for(var raw:JsonParser.parseReader(reader).getAsJsonObject().getAsJsonArray("mappings")) {
+                var row=raw.getAsJsonObject();String old=row.get("oldRegistryId").getAsString(),next=row.get("newRegistryId").getAsString();
+                int oldPose=row.get("oldVariant").getAsInt(),nextPose=row.get("newVariant").getAsInt();
+                if(!registered.contains(old)||!registered.contains(next)||oldPose<0||oldPose>=objects.get(old).size())
+                    throw new IllegalArgumentException("Unknown V12.7 retained collision pose "+old);
+                var values=new ArrayList<>(objects.get(next));
+                if(nextPose!=values.size())throw new IllegalArgumentException("V12.7 fitted collision poses must append contiguously: "+next);
+                values.add(objects.get(old).get(oldPose));objects.put(next,List.copyOf(values));
+            }
+        }catch(Exception failure){throw new IllegalStateException("Invalid V12.7 retained collision followup",failure);}
         return new Tables(Map.copyOf(objects),List.copyOf(shapes));
     }
 

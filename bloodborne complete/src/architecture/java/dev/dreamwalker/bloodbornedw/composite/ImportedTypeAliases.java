@@ -83,8 +83,66 @@ public final class ImportedTypeAliases {
             }
             for (var entry : canonical.entrySet()) if (!entry.getValue().equals(canonical.get(entry.getValue())))
                 throw new IllegalArgumentException("Imported primary cannot itself be another group alias: " + entry.getValue());
-            return new Catalogue(Collections.unmodifiableMap(canonical), Collections.unmodifiableMap(mappings), Set.copyOf(members), Set.copyOf(oneItem));
+            return followup(canonical, mappings, members, oneItem);
         } catch (Exception failure) { throw new IllegalStateException("Invalid imported type equivalence manifest", failure); }
+    }
+
+    /** A separate V12.7 pass preserves the historical1281 JSON mappings.
+     * Existing NEW canonical poses are copied exactly, so this followup changes
+     * only the target registry and appended pose. Historical yaw/shift transforms
+     * are composed once in memory rather than reapplied to current version1 saves. */
+    private static Catalogue followup(Map<String,String> canonical, Map<Key,Mapping> mappings,
+            Set<String> members, Set<String> oneItem) throws Exception {
+        var input=ImportedTypeAliases.class.getResourceAsStream("/bloodborne_dw/imported-type-aliases-v127.json");
+        if(input==null)return new Catalogue(Collections.unmodifiableMap(canonical),Collections.unmodifiableMap(mappings),Set.copyOf(members),Set.copyOf(oneItem));
+        Map<Key,Mapping> additions=new LinkedHashMap<>();
+        try(var reader=new InputStreamReader(input,StandardCharsets.UTF_8)) {
+            var root=JsonParser.parseReader(reader).getAsJsonObject();
+            if(root.get("schemaVersion").getAsInt()!=1)throw new IllegalArgumentException("Unsupported V12.7 equivalence schema");
+            Set<String> stageMembers=new HashSet<>();
+            for(var raw:root.getAsJsonArray("groups")) {
+                var group=raw.getAsJsonObject();checkedNumber(group.get("primaryId").getAsString());
+                String primary=checkedRegistry(group.get("primaryRegistryId").getAsString());boolean found=false;
+                for(var memberRaw:group.getAsJsonArray("members")) {
+                    String member=checkedRegistry(memberRaw.getAsString());
+                    if(!stageMembers.add(member))throw new IllegalArgumentException("Repeated V12.7 equivalence member "+member);
+                    if(!canonical.getOrDefault(member,member).equals(member))throw new IllegalArgumentException("V12.7 requires a current primary, not a historical alias: "+member);
+                    canonical.put(member,primary);members.add(member);
+                    if(group.get("oneItem").getAsBoolean())oneItem.add(member);
+                    found|=member.equals(primary);
+                }
+                if(!found)throw new IllegalArgumentException("Missing V12.7 group primary "+primary);
+            }
+            for(var raw:root.getAsJsonArray("mappings")) {
+                var row=raw.getAsJsonObject();String old=checkedRegistry(row.get("oldRegistryId").getAsString()),next=checkedRegistry(row.get("newRegistryId").getAsString());
+                int oldPose=row.get("oldVariant").getAsInt(),nextPose=row.get("newVariant").getAsInt();
+                if(oldPose<0||oldPose>15||nextPose<0||nextPose>15||row.get("rotationDelta").getAsInt()!=0)throw new IllegalArgumentException("V12.7 exact copied pose out of range: "+old);
+                var shift=row.getAsJsonArray("sourceShift");
+                if(shift.size()!=3||shift.get(0).getAsDouble()!=0||shift.get(1).getAsDouble()!=0||shift.get(2).getAsDouble()!=0||!row.getAsJsonObject("properties").entrySet().isEmpty())
+                    throw new IllegalArgumentException("V12.7 copied poses must preserve yaw, shift and state properties: "+old);
+                if(!next.equals(canonical.get(old)))throw new IllegalArgumentException("V12.7 pose/group disagreement: "+old);
+                var mapping=new Mapping(checkedNumber(row.get("oldId").getAsString()),old,oldPose,checkedNumber(row.get("newId").getAsString()),next,nextPose,0,new CompositeSourceShift.Shift(0,0,0),Map.of());
+                if(additions.putIfAbsent(new Key(old,oldPose),mapping)!=null)throw new IllegalArgumentException("Repeated V12.7 copied pose "+old+"/"+oldPose);
+            }
+        }
+        for(var entry:new ArrayList<>(mappings.entrySet())) {
+            var old=entry.getValue();var next=additions.get(new Key(old.newRegistryId,old.newVariant));
+            if(next!=null)mappings.put(entry.getKey(),new Mapping(old.oldId,old.oldRegistryId,old.oldVariant,next.newId,next.newRegistryId,next.newVariant,old.rotationDelta,old.sourceShift,old.properties));
+        }
+        // Current version1 items/owners on a just-retired primary must use the
+        // current pose directly, independent of its earlier raw self mapping.
+        mappings.putAll(additions);
+        for(String registry:new ArrayList<>(canonical.keySet())) {
+            String next=canonical.get(registry);Set<String> seen=new HashSet<>();
+            while(!next.equals(canonical.getOrDefault(next,next))) {
+                if(!seen.add(next))throw new IllegalArgumentException("Cyclic V12.7 equivalence "+registry);
+                next=canonical.get(next);
+            }
+            canonical.put(registry,next);
+        }
+        for(var mapping:mappings.values())if(!mapping.newRegistryId.equals(canonical.get(mapping.oldRegistryId)))
+            throw new IllegalArgumentException("Composed V12.7 mapping disagrees with final primary "+mapping.oldRegistryId);
+        return new Catalogue(Collections.unmodifiableMap(canonical),Collections.unmodifiableMap(mappings),Set.copyOf(members),Set.copyOf(oneItem));
     }
 
     public static String canonicalRegistry(String registry) {

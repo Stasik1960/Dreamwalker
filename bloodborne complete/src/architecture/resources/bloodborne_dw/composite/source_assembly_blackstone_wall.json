@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "units": 16,
   "id": "bloodborne_dw:source_assembly_blackstone_wall",
-  "displayName": "Каменный постамент с широким верхом",
+  "displayName": "Каменный постамент с карнизом",
   "openable": false,
   "layer": "cutout",
   "support": {
@@ -3113,6 +3113,786 @@
       ],
       "sourceOpenApplications": [],
       "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          15.0
+        ]
+      },
+      "sourceVariant": "Исходное соединение 13",
+      "sourcePlacementOffset": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "localOrigin": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:blackstone_wall[east=none,north=low,south=tall,up=false,waterlogged=false,west=none]",
+        "minecraft:blackstone_wall[east=none,north=none,south=tall,up=false,waterlogged=false,west=none]",
+        "minecraft:blackstone_wall[east=tall,north=none,south=none,up=false,waterlogged=false,west=low]",
+        "minecraft:blackstone_wall[east=tall,north=none,south=none,up=false,waterlogged=false,west=none]",
+        "minecraft:blackstone_wall[east=low,north=none,south=none,up=false,waterlogged=false,west=tall]",
+        "minecraft:blackstone_wall[east=none,north=none,south=none,up=false,waterlogged=false,west=tall]",
+        "minecraft:blackstone_wall[east=none,north=tall,south=low,up=false,waterlogged=false,west=none]",
+        "minecraft:blackstone_wall[east=none,north=tall,south=none,up=false,waterlogged=false,west=none]",
+        "minecraft:blackstone_wall[east=none,north=tall,south=none,up=false,waterlogged=false,west=low]",
+        "minecraft:blackstone_wall[east=low,north=tall,south=none,up=false,waterlogged=false,west=none]"
+      ],
+      "v127FullSourceSingleCell": true
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 270,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 90,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 270,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 90,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/blackstone_wall_2",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  16.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  16.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  0.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  16.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          16.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Исходное соединение 14",
+      "sourcePlacementOffset": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "localOrigin": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2",
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/blackstone_wall_2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:blackstone_wall[east=tall,north=tall,south=tall,up=false,waterlogged=false,west=tall]"
+      ],
+      "v127FullSourceSingleCell": true
     }
   ],
   "source": {

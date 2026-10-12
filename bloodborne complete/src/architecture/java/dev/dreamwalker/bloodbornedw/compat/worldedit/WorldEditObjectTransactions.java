@@ -13,7 +13,7 @@ import net.minecraft.server.world.ServerWorld;
 public final class WorldEditObjectTransactions {
     private WorldEditObjectTransactions() {}
     public static TransactionCore.Result replace(ServerWorld world,List<Owner> remove,List<ObjectInstance> add) {
-        world.getServer().assertOnThread();
+        if(!world.getServer().isOnThread())throw new IllegalStateException("WorldEdit requires the server thread");
         Map<Owner,ObjectInstance> incoming=new LinkedHashMap<>();
         for(ObjectInstance object:add) {
             for(Cell offset:object.cells().keySet())world.getChunk((object.owner().root().x()+offset.x())>>4,(object.owner().root().z()+offset.z())>>4);
@@ -42,6 +42,10 @@ public final class WorldEditObjectTransactions {
             overlay.putAll(step.plan().writes());
         }
         for(ObjectInstance object:add) {
+            Cell root=object.owner().root();CellSnapshot previous=virtual.read(root);
+            // WorldEdit explicitly replaces the targeted native carrier. This
+            // affects only the requested root, preserving unrelated guests.
+            if(previous.kind()==CellSnapshot.Kind.FOREIGN)overlay.put(root,new CellSnapshot(previous.guests().isEmpty()?CellSnapshot.Kind.AIR:CellSnapshot.Kind.HELPER,CompositeData.data(previous.guests().isEmpty()?net.minecraft.block.Blocks.AIR.getDefaultState():CompositeArchitecture.CELL.getDefaultState(),new net.minecraft.nbt.NbtCompound()),null,previous.guests()));
             TransactionCore.Preparation step=CompositeRuntime.core().placement(virtual,object,List.of());
             if(!step.accepted())return new TransactionCore.Result(TransactionCore.Outcome.REJECTED,0,step.reason());
             overlay.putAll(step.plan().writes());

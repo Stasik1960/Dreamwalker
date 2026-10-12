@@ -13,5 +13,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class NoCollideInventoryMixin {
     @Shadow public ServerPlayerEntity player;
     @Inject(method={"onClickSlot","onCreativeInventoryAction","onUpdateSelectedSlot","onPlayerAction"},at=@At("HEAD"))
-    private void dreamwalker$forgetMovedItem(CallbackInfo ci){NoCollidePlacement.invalidate(player);}
+    private void dreamwalker$forgetMovedItem(CallbackInfo ci){if(player.getServer().isOnThread())NoCollidePlacement.invalidate(player);}
 }

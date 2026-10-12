@@ -5,7 +5,7 @@ use native rendered quad coordinates, per-face UV and embedded original PNGs;
 ordinary MC source JSON/parent/texture closure is included independently.
 """
 from __future__ import annotations
-import argparse, base64, copy, csv, hashlib, io, json, math, uuid, zipfile
+import argparse, base64, copy, csv, hashlib, io, json, math, time, uuid, zipfile
 from collections import defaultdict
 from functools import lru_cache
 from pathlib import Path
@@ -21,7 +21,13 @@ BG=np.array([39,48,55],dtype=np.uint8)
 
 def write_json(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
-    path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    staged=path.with_name(path.name+'.v127-write.tmp')
+    staged.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    for attempt in range(5):
+        try:staged.replace(path);return
+        except OSError:
+            if attempt==4:raise
+            time.sleep(.1)
 
 def digest(data):return hashlib.sha256(data).hexdigest()
 def uid(key):return str(uuid.uuid5(uuid.NAMESPACE_URL,'dreamwalker:v127:export:'+key))

@@ -2,18 +2,19 @@
   "status": "PASS_READONLY_EXHAUSTIVE_FINITE_CELL_CLASSIFICATION",
   "scope": "All2,816,596actualfinite source cells grouped by exact XYZ-weighted source application+state; all nonfinite sections scanned separately.",
   "counts": {
-    "UNRESOLVED_VISIBLE": 445402,
+    "UNRESOLVED_VISIBLE": 387977,
     "OWNER": 2069493,
-    "REMOVE": 300669,
+    "REMOVE": 358094,
     "WHOLE_CANDIDATE": 1032
   },
   "reasonCounts": {
-    "NO_EXACT_CURRENT_SOURCE_STATE": 445402,
-    "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES": 1494260,
-    "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 573136,
+    "NO_EXACT_CURRENT_SOURCE_STATE": 387977,
+    "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES": 1482392,
+    "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS": 585004,
     "SOURCE_ALL_PIXEL_ALPHA_ZERO": 234153,
     "EXACT_MULTI_CELL_PRIMARY_APPS": 1032,
-    "USER_RETIRED_VANILLA_STYLE_TYPE": 65545,
+    "USER_RETIRED_VANILLA_STYLE_TYPE": 32646,
+    "USER_RETIRED_VANILLA_STYLE_CARRIER": 90324,
     "PROTECTED_V12_REMOVED_OR_GEOMETRY_INCOMPATIBLE_WALL_STATE": 971,
     "EXACT_EXISTING_V12_NATIVE_WALL_STATE": 2097
   },
@@ -7744,34 +7745,29 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_polished_andesite_slab",
-        "mainId": "90758",
+        "registryId": "bloodborne_dw:source_cobbled_deepslate_slab",
+        "mainId": "90421",
         "properties": {
-          "variant": "0",
+          "variant": "2",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_polished_andesite_slab",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           0.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_cobbled_deepslate_slab",
+        "sourceOldVariant": 2,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -7786,34 +7782,29 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_polished_andesite_slab",
-        "mainId": "90758",
+        "registryId": "bloodborne_dw:source_cobbled_deepslate_slab",
+        "mainId": "90421",
         "properties": {
-          "variant": "0",
+          "variant": "2",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_polished_andesite_slab",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           0.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_cobbled_deepslate_slab",
+        "sourceOldVariant": 2,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -9785,10 +9776,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_polished_andesite_slab",
-        "mainId": "90758",
+        "registryId": "bloodborne_dw:source_cobbled_deepslate_slab",
+        "mainId": "90421",
         "properties": {
-          "variant": "1",
+          "variant": "3",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -9807,12 +9798,12 @@
             -0.0
           ]
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_polished_andesite_slab",
-        "sourceOldVariant": 1,
+        "sourceOldRegistryId": "bloodborne_dw:source_cobbled_deepslate_slab",
+        "sourceOldVariant": 3,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -13324,26 +13315,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -13410,7 +13387,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -13482,27 +13459,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -13570,27 +13532,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -13614,26 +13561,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -13658,7 +13591,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -13687,27 +13620,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -13732,27 +13650,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -16881,22 +16784,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -21569,31 +21462,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -21887,7 +21761,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -21955,31 +21829,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -23234,10 +23089,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_snow_height8",
-        "mainId": "90940",
+        "registryId": "bloodborne_dw:source_cobblestone_slab",
+        "mainId": "90435",
         "properties": {
-          "variant": "1",
+          "variant": "4",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -23256,12 +23111,12 @@
             -0.0
           ]
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_snow_height8",
-        "sourceOldVariant": 1,
+        "sourceOldRegistryId": "bloodborne_dw:source_cobblestone_slab",
+        "sourceOldVariant": 4,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -32535,7 +32390,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -32617,7 +32472,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side_tall"
@@ -32838,28 +32693,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -32891,7 +32731,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side"
@@ -32972,27 +32812,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -33220,28 +33046,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -33265,27 +33076,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -33995,32 +33792,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -34049,32 +33827,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -38583,32 +38342,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -42158,7 +41897,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post"
@@ -52898,31 +52637,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -53231,37 +52951,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -56006,33 +55702,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -56062,33 +55738,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -56117,32 +55773,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -56218,32 +55855,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -56320,32 +55938,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -56422,32 +56021,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -56476,32 +56056,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -56530,32 +56091,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -56580,28 +56122,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -56626,28 +56153,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -56671,27 +56183,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -56715,27 +56213,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -63591,22 +63075,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -63626,22 +63100,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -70236,7 +69700,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -70754,33 +70218,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -70989,32 +70433,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -71081,23 +70506,11 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -76034,10 +75447,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_polished_granite_slab",
-        "mainId": "90776",
+        "registryId": "bloodborne_dw:source_cobblestone_slab",
+        "mainId": "90435",
         "properties": {
-          "variant": "0",
+          "variant": "2",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -76051,17 +75464,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_polished_granite_slab",
-        "sourceOldVariant": 0,
+        "sourceOldRegistryId": "bloodborne_dw:source_cobblestone_slab",
+        "sourceOldVariant": 2,
         "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
-          -0.0,
-          0.0,
-          -0.0
-        ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -80481,28 +79889,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -81771,32 +81164,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -81826,7 +81199,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -81964,37 +81337,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -83445,7 +82794,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -83483,37 +82832,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -83655,37 +82980,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -83714,32 +83015,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -83768,32 +83050,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -83823,33 +83086,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -83878,32 +83121,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -84849,33 +84073,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -85769,28 +84972,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -86744,33 +85932,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -87616,33 +86783,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -87672,33 +86819,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -87727,32 +86854,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -92038,31 +91146,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -93856,37 +92945,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -93976,37 +93041,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -94035,32 +93076,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -94714,22 +93736,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -98320,7 +97332,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -99182,32 +98194,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -99236,32 +98229,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -103013,32 +101987,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -103067,32 +102022,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -105024,37 +103960,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -105088,37 +104000,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -105139,7 +104027,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -108480,27 +107368,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -108674,22 +107548,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -119296,27 +118160,11 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -132571,27 +131419,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          }
         ]
       }
     },
@@ -133312,27 +132146,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -141763,22 +140582,11 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -141800,23 +140608,11 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -143591,37 +142387,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -143655,37 +142427,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -143719,37 +142467,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -144149,37 +142873,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -144213,37 +142913,13 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -146434,7 +145110,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -148288,10 +146964,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "1",
+          "variant": "8",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -148305,12 +146981,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 1,
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 8,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -148325,10 +147001,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "1",
+          "variant": "8",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -148342,12 +147018,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 1,
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 8,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -149093,10 +147769,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "3",
+          "variant": "10",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -149110,12 +147786,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 3,
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 10,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -149130,10 +147806,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "3",
+          "variant": "10",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -149147,12 +147823,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 3,
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 10,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -149167,34 +147843,29 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "0",
+          "variant": "7",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           0.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 7,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -149209,34 +147880,29 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "0",
+          "variant": "7",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           0.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 7,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -149251,10 +147917,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "2",
+          "variant": "9",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -149268,12 +147934,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 2,
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 9,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -149288,10 +147954,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "mainId": "90903",
+        "registryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "mainId": "90899",
         "properties": {
-          "variant": "2",
+          "variant": "9",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -149305,12 +147971,12 @@
         "payload": {
           "ImportedTypeVersion": 1
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
-        "sourceOldVariant": 2,
+        "sourceOldRegistryId": "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_00",
+        "sourceOldVariant": 9,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -152073,7 +150739,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side_tall"
@@ -152252,33 +150918,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -155178,33 +153823,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -155235,33 +153859,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -155580,33 +154183,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 180
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true
-          }
         ]
       }
     },
@@ -156390,27 +154972,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_post"
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 90
-          }
         ]
       }
     },
@@ -165671,34 +164238,29 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_snow_height8",
-        "mainId": "90940",
+        "registryId": "bloodborne_dw:source_cobblestone_slab",
+        "mainId": "90435",
         "properties": {
-          "variant": "0",
+          "variant": "3",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_snow_height8",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           0.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_cobblestone_slab",
+        "sourceOldVariant": 3,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -190185,39 +188747,34 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_red_tulip_2",
-        "mainId": "90871",
+        "registryId": "bloodborne_dw:source_red_tulip_1",
+        "mainId": "90870",
         "properties": {
-          "variant": "0",
+          "variant": "1",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1,
-          "SourceShift": [
-            0.0,
-            -1.0,
-            0.0
-          ]
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_red_tulip_2",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           -1.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1,
+          "SourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ]
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_red_tulip_1",
+        "sourceOldVariant": 1,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
@@ -190832,10 +189389,10 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_red_tulip_2",
-        "mainId": "90871",
+        "registryId": "bloodborne_dw:source_red_tulip_1",
+        "mainId": "90870",
         "properties": {
-          "variant": "1",
+          "variant": "2",
           "rotation": "0",
           "profile": "base",
           "open": "false"
@@ -190854,12 +189411,12 @@
             -0.0
           ]
         },
-        "sourceOldRegistryId": "bloodborne_dw:source_red_tulip_2",
-        "sourceOldVariant": 1,
+        "sourceOldRegistryId": "bloodborne_dw:source_red_tulip_1",
+        "sourceOldVariant": 2,
         "sourceOldRotation": 0,
         "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 2
+        "equivalentSourceBackedAlternatives": 3
       }
     },
     {
@@ -196141,24 +194698,12 @@
         }
       ],
       "decision": {
-        "action": "UNRESOLVED_VISIBLE",
-        "reason": "NO_EXACT_CURRENT_SOURCE_STATE",
-        "sourceCarrier": "minecraft:mossy_cobblestone_wall",
+        "action": "REMOVE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
+        "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_side",
           "minecraft:block/mossy_cobblestone_wall_side_tall"
-        ],
-        "sourceApplications": [
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side",
-            "uvlock": true,
-            "y": 90
-          },
-          {
-            "model": "minecraft:block/mossy_cobblestone_wall_side_tall",
-            "uvlock": true,
-            "y": 270
-          }
         ]
       }
     },
@@ -196404,7 +194949,7 @@
       ],
       "decision": {
         "action": "REMOVE",
-        "reason": "USER_RETIRED_VANILLA_STYLE_TYPE",
+        "reason": "USER_RETIRED_VANILLA_STYLE_CARRIER",
         "retiredRegistryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
         "models": [
           "minecraft:block/mossy_cobblestone_wall_post",
@@ -197679,34 +196224,29 @@
       ],
       "decision": {
         "action": "OWNER",
-        "registryId": "bloodborne_dw:source_nether_brick_slab",
-        "mainId": "90706",
+        "registryId": "bloodborne_dw:source_brick_slab",
+        "mainId": "90320",
         "properties": {
-          "variant": "0",
+          "variant": "2",
           "rotation": "0",
           "profile": "base",
           "open": "false"
         },
         "mountY": 0.0,
         "sourceShift": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "payload": {
-          "ImportedTypeVersion": 1
-        },
-        "sourceOldRegistryId": "bloodborne_dw:source_nether_brick_slab",
-        "sourceOldVariant": 0,
-        "sourceOldRotation": 0,
-        "sourceNormalizationCompensation": [
           -0.0,
           0.0,
           -0.0
         ],
-        "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+        "payload": {
+          "ImportedTypeVersion": 1
+        },
+        "sourceOldRegistryId": "bloodborne_dw:source_brick_slab",
+        "sourceOldVariant": 2,
+        "sourceOldRotation": 0,
+        "resolution": "EXACT_CURRENT_APPENDED_SOURCE_APPLICATIONS",
         "sourceAliasesUsed": [],
-        "equivalentSourceBackedAlternatives": 1
+        "equivalentSourceBackedAlternatives": 2
       }
     },
     {
