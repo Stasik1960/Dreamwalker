@@ -28,6 +28,9 @@ class CurrentResolver(Resolver):
         self.empty={r['model'] for r in inventory['models'] if not any(e.get('faces') for e in r['resolved'].get('elements',[]))}
         self.current={}
         self.carriers={}
+        bankmeta=json.loads((RES/'bloodborne_dw/imported-full-map-v127.json').read_text(encoding='utf-8-sig'))
+        self.banked={g['registryId'] for g in bankmeta.get('groups',[]) if g.get('bankMax',0)>0}
+        self.banked.update(g['primaryRegistryId'] for g in json.loads((RES/'bloodborne_dw/imported-type-aliases.json').read_text(encoding='utf-8-sig'))['groups'] if g.get('kind')=='artwork' and g.get('poses',0)>16)
         follow=RES/'bloodborne_dw/imported-type-aliases-v127.json'
         self.follow={(r['oldRegistryId'],r['oldVariant']):r for r in json.loads(follow.read_text(encoding='utf-8-sig')).get('mappings',[])} if follow.exists() else {}
         for path in sorted((RES/'bloodborne_dw/composite').glob('*.json')):
@@ -71,6 +74,8 @@ class CurrentResolver(Resolver):
                 inv=rotation(result['sourceShift'],-mapping['rotationDelta']);shift=[round(inv[i]+mapping['sourceShift'][i],10) for i in range(3)];result['sourceShift']=shift
                 if any(shift):result['payload']['SourceShift']=shift
                 else:result['payload'].pop('SourceShift',None)
+            if result['registryId'] in self.banked:
+                logical=int(result['properties']['variant'])+16*int(result['properties'].get('art_bank',0));result['properties']['variant']=str(logical%16);result['properties']['art_bank']=str(logical//16)
             return result
         reg=candidate['registryId'];vi=candidate['variant'];shift=[-float(x)/16 for x in candidate['sourcePlacementOffset']]
         state={'variant':str(vi%16),'rotation':str(yaw),'profile':'base','open':str(candidate.get('open',False)).lower()}
