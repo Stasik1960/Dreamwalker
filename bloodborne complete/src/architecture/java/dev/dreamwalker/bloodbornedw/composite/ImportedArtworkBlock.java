@@ -5,7 +5,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 
 /** NEW assembly connection/art states beyond sixteen; legacy blocks keep their state space. */
-public class ImportedArtworkBlock extends CompositeRootBlock {
+public class ImportedArtworkBlock extends CompositeRootBlock implements NewStateStorage {
     public static final IntProperty ART_BANK=IntProperty.of("art_bank",0,7);
     private static final java.util.Set<String> BANKED=loadBanks();
     private static java.util.Set<String> loadBanks(){
@@ -25,8 +25,9 @@ public class ImportedArtworkBlock extends CompositeRootBlock {
     public static ImportedArtworkBlock create(CompositeSpec spec){return spec.id.getPath().equals("source_assembly_brick_wall")?new Expanded(spec):spec.id.getPath().equals("source_assembly_deepslate_brick_wall")?new ExpandedDeepslate(spec):new ImportedArtworkBlock(spec);}
     public static IntProperty bankProperty(BlockState state){return (IntProperty)state.getBlock().getStateManager().getProperty("art_bank");}
     public ImportedArtworkBlock(CompositeSpec spec){super(spec);setDefaultState(getDefaultState().with(bankProperty(getDefaultState()),0));}
+    protected ImportedArtworkBlock(CompositeSpec spec,Settings settings){super(spec,settings);IntProperty bank=bankProperty(getDefaultState());if(bank!=null)setDefaultState(getDefaultState().with(bank,0));}
     @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){super.appendProperties(builder);builder.add(this instanceof Expanded?Expanded.BANK:this instanceof ExpandedDeepslate?ExpandedDeepslate.BANK:ART_BANK);}
-    public static int variant(BlockState state){return state.get(bankProperty(state))*16+state.get(VARIANT);}
+    public static int variant(BlockState state){IntProperty bank=bankProperty(state);return (bank==null?0:state.get(bank)*16)+state.get(VARIANT);}
     /** Only the NEW brick-wall family needs thirty banks for exact authored
      * weighted/conditional unions across the complete original city. */
     private static final class Expanded extends ImportedArtworkBlock {

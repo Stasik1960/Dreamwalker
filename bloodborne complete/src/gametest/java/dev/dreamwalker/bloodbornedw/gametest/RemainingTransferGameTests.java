@@ -68,7 +68,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     private static ItemStack art(CompositeRootBlock block,int variant,CompositeRootBlock.Profile profile) {
         return block.art(poseState(block,variant).with(CompositeRootBlock.PROFILE,profile),ImportedTypeAliases.markPayload(null));
     }
-    private static BlockState poseState(CompositeRootBlock block,int pose){BlockState state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose%16);if(block instanceof ImportedArtworkBlock)state=state.with(ImportedArtworkBlock.bankProperty(state),pose/16);if(block instanceof ImportedLadderBlock)state=state.with(ImportedLadderBlock.HEIGHT,pose==0?ImportedLadderBlock.Height.ONE:ImportedLadderBlock.Height.TWO);return state;}
+    private static BlockState poseState(CompositeRootBlock block,int pose){BlockState state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose%16);if(block instanceof ImportedArtworkBlock&&ImportedArtworkBlock.bankProperty(state)!=null)state=state.with(ImportedArtworkBlock.bankProperty(state),pose/16);if(block instanceof ImportedLadderBlock)state=state.with(ImportedLadderBlock.HEIGHT,pose==0?ImportedLadderBlock.Height.ONE:ImportedLadderBlock.Height.TWO);return state;}
     private static void preload(ServerWorld world,BlockPos root,CompositeRootBlock block,int variant,int yaw) {
         var state=poseState(block,variant).with(CompositeRootBlock.ROTATION,yaw);
         Set<BlockPos> required=new HashSet<>();
@@ -165,7 +165,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 var saved=entity.createNbt();var loaded=new CompositeBlockEntity(root,world.getBlockState(root));loaded.readNbt(saved);
                 t.assertTrue(loaded.resident().equals(owner)&&loaded.payload().equals(payload)&&loaded.contributions().equals(entity.contributions()),"typed owner/payload/contributions round-trip exactly: "+block.spec.id);
                 var picked=CompositeRuntime.pick(world,owner);var art=picked.getSubNbt("BlockStateTag");
-                t.assertTrue(picked.isOf(block.asItem())&&art!=null&&Integer.parseInt(art.getString("variant"))+(block instanceof ImportedArtworkBlock?16*Integer.parseInt(art.getString("art_bank")):0)==selected&&art.getString("profile").equals(profile.asString()),"pick retains exact new artistic pose/profile");
+                t.assertTrue(picked.isOf(block.asItem())&&art!=null&&Integer.parseInt(art.getString("variant"))+(block instanceof ImportedArtworkBlock&&ImportedArtworkBlock.bankProperty(block.getDefaultState())!=null?16*Integer.parseInt(art.getString("art_bank")):0)==selected&&art.getString("profile").equals(profile.asString()),"pick retains exact new artistic pose/profile");
                 t.assertTrue(picked.getSubNbt("CompositePayload")==null&&picked.getSubNbt("BlockEntityTag")==null,"pick does not carry owner UUID, typed payload or mechanisms");
                 removed(t,player,owner);
                 var copy=place(t,player,root,block,selected,6,picked);
@@ -297,3 +297,4 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         t.assertTrue(!cases.isEmpty(),"new finished door/trapdoor openable states are registered");eachTick(t,player,cases);
     }
 }
+

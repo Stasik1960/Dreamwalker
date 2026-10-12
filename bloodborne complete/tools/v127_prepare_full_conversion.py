@@ -5,10 +5,11 @@ The derived SQLite plan stores compressed per-section decisions rather than a
 All source ZIPs remain opened read-only. Runtime output is a bounded JSONL stream.
 """
 from __future__ import annotations
-import argparse,collections,copy,gzip,hashlib,json,sqlite3,time,zipfile,zlib
+import argparse,collections,copy,gzip,hashlib,json,sqlite3,time,zipfile,zlib,uuid,os
 from pathlib import Path,PurePosixPath
 import numpy as np
-from v125_map_index import ROOT,MAP,PACK,CACHE,token,app_clean,dump,sha
+from v125_map_index import ROOT,MAP,PACK,CACHE,token,app_clean,sha
+from v127_apply_full_map_poses import write as dump
 from v125_map_resolve import source_uuid,rotation
 from v127_full_map_resolver import CurrentResolver
 from scan_original_map_models import branches_for,raw_blockstates,normalized_model,weighted_indices
@@ -50,10 +51,13 @@ def whole_pass(r,source,out):
     return consumed,whole,attempts
 
 def prepare(path):
-    if path.exists():raise FileExistsError('Derived plan exists; choose a fresh --plan path or inspect it')
+    resume=path.exists()
     O.mkdir(parents=True,exist_ok=True);r=CurrentResolver();source=sqlite3.connect(f'file:{CACHE}?mode=ro',uri=True);out=sqlite3.connect(path)
-    out.executescript('PRAGMA journal_mode=OFF;PRAGMA synchronous=OFF;CREATE TABLE decisions(id INTEGER PRIMARY KEY,data TEXT UNIQUE);CREATE TABLE sections(dimension TEXT,cx INT,cz INT,sy INT,source_palette TEXT,source_indices BLOB,decision_indices BLOB,PRIMARY KEY(dimension,cx,cz,sy));CREATE TABLE chunks(dimension TEXT,cx INT,cz INT,member TEXT,source_nbt_sha256 TEXT,PRIMARY KEY(dimension,cx,cz));CREATE TABLE whole_objects(id INT PRIMARY KEY,dimension TEXT,x INT,y INT,z INT,data TEXT);CREATE TABLE consumed(dimension TEXT,x INT,y INT,z INT,whole_id INT,PRIMARY KEY(dimension,x,y,z));CREATE TABLE metadata(key TEXT PRIMARY KEY,data TEXT);')
-    consumed,whole,attempts=whole_pass(r,source,out);print(token({'wholeObjects':len(whole),'consumed':len(consumed),'wholeAttempts':attempts}),flush=True)
+    if not resume:out.executescript('PRAGMA journal_mode=OFF;PRAGMA synchronous=OFF;CREATE TABLE decisions(id INTEGER PRIMARY KEY,data TEXT UNIQUE);CREATE TABLE sections(dimension TEXT,cx INT,cz INT,sy INT,source_palette TEXT,source_indices BLOB,decision_indices BLOB,PRIMARY KEY(dimension,cx,cz,sy));CREATE TABLE chunks(dimension TEXT,cx INT,cz INT,member TEXT,source_nbt_sha256 TEXT,PRIMARY KEY(dimension,cx,cz));CREATE TABLE whole_objects(id INT PRIMARY KEY,dimension TEXT,x INT,y INT,z INT,data TEXT);CREATE TABLE consumed(dimension TEXT,x INT,y INT,z INT,whole_id INT,PRIMARY KEY(dimension,x,y,z));CREATE TABLE metadata(key TEXT PRIMARY KEY,data TEXT);')
+    if resume:
+        consumed={(d,x,y,z):i for d,x,y,z,i in out.execute('SELECT * FROM consumed')};whole=[json.loads(d) for (d,) in out.execute('SELECT data FROM whole_objects ORDER BY id')];attempts=0
+    else:consumed,whole,attempts=whole_pass(r,source,out)
+    print(token({'wholeObjects':len(whole),'consumed':len(consumed),'wholeAttempts':attempts,'resume':resume}),flush=True)
     compactdoc=json.loads((RES/'bloodborne_dw/imported-compact-v127.json').read_text(encoding='utf-8-sig'));compact={t['registryId']:set(t['poses']) for t in compactdoc['types']}
     raw,_,_=raw_blockstates();state_groups={};classification={};decisions={};decision_values=[];actions=collections.Counter();reasons=collections.Counter();types=collections.Counter();sourcecounts=collections.Counter();chunks=sections=0;start=time.monotonic();unresolved=[];samples=collections.defaultdict(list)
     consumed_chunks=collections.defaultdict(lambda:collections.defaultdict(dict))
@@ -62,14 +66,18 @@ def prepare(path):
         key=token(d)
         if key not in decisions:decisions[key]=len(decisions);decision_values.append(d);out.execute('INSERT INTO decisions VALUES(?,?)',(decisions[key],key))
         return decisions[key]
+    if resume:
+        for i,rawdecision in out.execute('SELECT id,data FROM decisions ORDER BY id'):decisions[rawdecision]=i;decision_values.append(json.loads(rawdecision))
+    existing_chunks={(d,x,z) for d,x,z in out.execute('SELECT dimension,cx,cz FROM chunks')} if resume else set()
     default=decision_id({'action':'KEEP','reason':'SOURCE_UNAFFECTED_VANILLA_STATE'})
-    removals=gzip.open(O/'source-removal-coordinates.jsonl.gz','wt',encoding='utf8')
+    removal_temp=ROOT/'build'/('v127-removal-'+uuid.uuid4().hex+'.jsonl.gz');removals=gzip.open(removal_temp,'wt',encoding='utf8')
     with zipfile.ZipFile(MAP) as archive:
         members=sorted(n for n in archive.namelist() if n.endswith('.mca') and PurePosixPath(n).parent.name=='region')
         for rn,member in enumerate(members,1):
             dim=dimension_for(member,'');region=RegionFile(archive.read(member))
             for stored in region.chunks():
                 nbt=stored.nbt();root=compound(nbt.root);root=compound(root['Level']) if 'Level' in root else root;cx,cz=int(root['xPos'].value),int(root['zPos'].value);chunks+=1
+                if (dim,cx,cz) in existing_chunks:continue
                 # NBT canonical stream isn't needed: the source stored compressed
                 # chunk record is hashed and the ZIP hash protects all sectors.
                 out.execute('INSERT INTO chunks VALUES(?,?,?,?,?)',(dim,cx,cz,member,hashlib.sha256(stored.compressed_payload).hexdigest()))
@@ -124,14 +132,14 @@ def prepare(path):
                                     if len(samples[row['reason']])<8:samples[row['reason']].append(row)
                     out.execute('INSERT INTO sections VALUES(?,?,?,?,?,?,?)',(dim,cx,cz,sy,token(desc),zlib.compress(np.asarray(ind,dtype='<u2').tobytes(),1),zlib.compress(dest.astype('<u2').tobytes(),1)))
             out.commit();dump(O/'full-plan-progress.json',{'status':'RUNNING','regions':rn,'regionsTotal':len(members),'chunks':chunks,'sections':sections,'counts':dict(actions),'elapsedSeconds':round(time.monotonic()-start,2)});print(token({'region':rn,'chunks':chunks,'sections':sections,'actions':dict(actions)}),flush=True)
-    removals.close()
+    removals.close();os.replace(removal_temp,O/'source-removal-coordinates.jsonl.gz')
     summary={'schemaVersion':1,'status':'PASS_COMPLETE_SOURCE_PLAN' if not unresolved else 'FAIL_KNOWN_VISIBLE_SOURCE_GAPS','sourceHashes':{'map':sha(MAP),'pack':sha(PACK)},'chunks':chunks,'sections':sections,'allPaletteCells':sum(sourcecounts.values()),'counts':dict(actions),'reasonCounts':dict(reasons),'targetTypeCounts':dict(types),'wholeObjects':len(whole),'consumedSourceCells':len(consumed),'knownVisibleGaps':len(unresolved),'gapSamples':unresolved[:200],'removalCoordinateFile':'source-removal-coordinates.jsonl.gz','removalCoordinateSha256':sha(O/'source-removal-coordinates.jsonl.gz'),'sourceResolutionContextCount':len(classification),'decisionDictionaryCount':len(decisions),'planFile':str(path.relative_to(ROOT)),'planBytes':path.stat().st_size,'sourceArchivesModified':False,'fullWorldConverted':False,'RAMPolicy':'One region/chunk/section at a time; compressed uint16 source+action arrays and shared decisions; compact palettes allocate no UUID/BE/owner ledger. No 58m per-cell object list.','initialOverlapPrivilege':'Only initial derived owner UUID, in nonserialized SourceConversionScope; normal pick/break/rebuild has no import exception.','nativeValidation':'NOT_RUN_FULL_ORIGINAL_CONVERSION_BY_USER_REQUEST','elapsedSeconds':round(time.monotonic()-start,2)}
-    out.execute('INSERT INTO metadata VALUES(?,?)',('summary',token(summary)));out.commit();out.close();source.close();dump(O/'full-conversion-plan.json',summary);dump(O/'full-conversion-known-gaps.json',{'status':'PASS_NO_GAPS' if not unresolved else 'FAIL','rows':unresolved});print(token(summary))
+    out.execute('INSERT OR REPLACE INTO metadata VALUES(?,?)',('summary',token(summary)));out.commit();out.close();source.close();dump(O/'full-conversion-plan.json',summary);dump(O/'full-conversion-known-gaps.json',{'status':'PASS_NO_GAPS' if not unresolved else 'FAIL','rows':unresolved});print(token(summary))
 
 def export_runtime(path,dest):
     con=sqlite3.connect(f'file:{path}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN','Never export a runtime plan with unresolved visible author content'
     decisions={i:json.loads(d) for i,d in con.execute('SELECT id,data FROM decisions')};dest.mkdir(parents=True,exist_ok=True)
-    with gzip.open(dest/'sections.jsonl.gz','wt',encoding='utf8') as out:
+    with gzip.open(dest/'sections.jsonl.gz','wt',encoding='utf8') as out,gzip.open(dest/'owners.jsonl.gz','wt',encoding='utf8') as ownerout:
         for dim,cx,cz,sy,sp,si,di in con.execute('SELECT * FROM sections ORDER BY dimension,cx,cz,sy'):
             index=np.frombuffer(zlib.decompress(di),dtype='<u2');sourceindex=np.frombuffer(zlib.decompress(si),dtype='<u2');sourcepalette=json.loads(sp);palette=[];pids={};values=np.zeros(4096,dtype='<u2');owners=[]
             if np.all(index==0):continue
@@ -141,16 +149,17 @@ def export_runtime(path,dest):
                     for pi in np.unique(sourceindex[at]):
                         state,reg,props=sourcepalette[int(pi)];tok=token({'registryId':reg,'properties':props});pids.setdefault(tok,len(pids));values[at[sourceindex[at]==pi]]=pids[tok]
                 else:
-                    native={'registryId':d['registryId'],'properties':d['properties']} if action=='COMPACT' or action=='OWNER' and d['registryId'].startswith('bloodborne_dw:prototype_wall') else {'registryId':'minecraft:air','properties':{}}
+                    native={'registryId':d['registryId'],'properties':d['properties']} if action=='COMPACT' else {'registryId':'minecraft:air','properties':{}}
                     tok=token(native);pids.setdefault(tok,len(pids));values[at]=pids[tok]
-                    if action=='OWNER' and not d['registryId'].startswith('bloodborne_dw:prototype_wall'):
+                    if action=='OWNER':
                         for i in at:
-                            p=[cx*16+(int(i)&15),sy*16+(int(i)>>8),cz*16+((int(i)>>4)&15)];owners.append({'position':p,'instanceUuid':source_uuid(dim,p),'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']})
+                            p=[cx*16+(int(i)&15),sy*16+(int(i)>>8),cz*16+((int(i)>>4)&15)];row={'dimension':dim,'position':p,'instanceUuid':source_uuid(dim,p),'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']};owners.append(row);ownerout.write(token(row)+'\n')
             palette=[None]*len(pids)
             for key,i in pids.items():palette[i]=json.loads(key)
             out.write(token({'dimension':dim,'chunk':[cx,cz],'sectionY':sy,'palette':palette,'indices':values.tolist(),'owners':owners})+'\n')
     with gzip.open(dest/'whole-objects.jsonl.gz','wt',encoding='utf8') as out:
-        for (row,) in con.execute('SELECT data FROM whole_objects ORDER BY dimension,x,y,z'):out.write(row+'\n')
+        for (raw,) in con.execute('SELECT data FROM whole_objects ORDER BY dimension,x,y,z'):
+            row=json.loads(raw);d=row.pop('decision');out.write(token({**row,'registryId':d['registryId'],'properties':d['properties'],'payload':d['payload']})+'\n')
     dump(dest/'manifest.json',{**summary,'runtimeFiles':{p.name:sha(p) for p in dest.glob('*.jsonl.gz')},'sourcePlanSha256':sha(path)})
 
 if __name__=='__main__':

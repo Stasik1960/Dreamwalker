@@ -51,7 +51,7 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
     private static NbtCompound payload(){var value=new NbtCompound();value.putInt(ImportedTypeAliases.VERSION_KEY,1);return value;}
     private static BlockState state(Door door,int yaw,boolean open) {
         var value=block(door).getDefaultState().with(CompositeRootBlock.VARIANT,door.pose%16).with(CompositeRootBlock.ROTATION,yaw).with(CompositeRootBlock.OPEN,open);
-        if(value.getBlock() instanceof ImportedArtworkBlock)value=value.with(ImportedArtworkBlock.bankProperty(value),door.pose/16);
+        if(value.getBlock() instanceof ImportedArtworkBlock&&ImportedArtworkBlock.bankProperty(value)!=null)value=value.with(ImportedArtworkBlock.bankProperty(value),door.pose/16);
         return value;
     }
     private static ServerPlayerEntity player(ServerWorld world) {
@@ -235,3 +235,4 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         t.assertTrue(actual.extraYaw()==(expected.has("extraYaw")?expected.get("extraYaw").getAsDouble():0),message+" additional source orientation");
     }
 }
+

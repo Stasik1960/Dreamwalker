@@ -29,7 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 /** One item and type for each new native stair appearance; corners follow neighbours. */
-public class ImportedStairBlock extends CompositeRootBlock {
+public class ImportedStairBlock extends CompositeRootBlock implements NewStateStorage {
     public static final BooleanProperty TRIM = BooleanProperty.of("trim");
     public static final EnumProperty<Connections> CONNECTIONS = EnumProperty.of("connections", Connections.class);
     public enum Connections implements StringIdentifiable {

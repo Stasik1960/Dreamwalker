@@ -21,7 +21,7 @@ import net.minecraft.world.*;
  * Old/new hand-built owners retain compact=false and their existing UUID/NBT.
  * compact=true is an explicitly proven source-import state, never a whole-ID
  * replacement. No per-cell BE or global owner ledger is allocated in that mode. */
-public final class ImportedCompactBlock extends CompositeRootBlock {
+public class ImportedCompactBlock extends ImportedArtworkBlock {
     public static final BooleanProperty COMPACT=BooleanProperty.of("compact");
     private record Pose(boolean opaque,List<VoxelShape> collision,List<VoxelShape> aim) {}
     private static final Map<String,Map<Integer,Pose>> TYPES=load();
@@ -43,7 +43,7 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
                 Set<Integer> opaque=new HashSet<>();for(var n:row.getAsJsonArray("opaquePoses"))opaque.add(n.getAsInt());
                 Map<Integer,Pose> poses=new LinkedHashMap<>();
                 for(var n:row.getAsJsonArray("poses")) {
-                    int pose=n.getAsInt();if(pose<0||pose>15)throw new IllegalArgumentException("Compact pose range");
+                    int pose=n.getAsInt();if(pose<0||pose>479)throw new IllegalArgumentException("Compact pose range");
                     var rotations=row.getAsJsonObject("shapes").getAsJsonArray(Integer.toString(pose));
                     if(rotations.size()!=8)throw new IllegalArgumentException("Compact pose requires eight reviewed physics orientations");
                     List<VoxelShape> collision=new ArrayList<>(),aim=new ArrayList<>();
@@ -65,8 +65,8 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
         }catch(IOException failure){throw new IllegalStateException("Cannot read exact compact cube states",failure);}
     }
     public static boolean supports(String path){return TYPES.containsKey(path.contains(":")?path:"bloodborne_dw:"+path);}
-    public static boolean compact(BlockState state){return state.getBlock() instanceof ImportedCompactBlock block&&state.get(COMPACT)&&state.get(ROTATION)%2==0&&TYPES.get(block.spec.id.toString()).containsKey(state.get(VARIANT));}
-    private static Pose pose(BlockState state){return TYPES.get(((ImportedCompactBlock)state.getBlock()).spec.id.toString()).get(state.get(VARIANT));}
+    public static boolean compact(BlockState state){return state.getBlock() instanceof ImportedCompactBlock block&&state.get(COMPACT)&&state.get(ROTATION)%2==0&&TYPES.get(block.spec.id.toString()).containsKey(ImportedArtworkBlock.variant(state));}
+    private static Pose pose(BlockState state){return TYPES.get(((ImportedCompactBlock)state.getBlock()).spec.id.toString()).get(ImportedArtworkBlock.variant(state));}
     public static boolean opaque(BlockState state){return compact(state)&&pose(state).opaque;}
     /** Materialize only the explicitly selected palette cube for height/tool
      * editing. The transaction keeps all unrelated guests and restores the
@@ -79,7 +79,11 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
         return result.outcome()==dev.dreamwalker.bloodbornedw.runtime.TransactionCore.Outcome.COMMITTED?object.owner():null;
     }
     public ImportedCompactBlock(CompositeSpec spec){super(spec,Settings.create().strength(.4F).dynamicBounds().pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).solidBlock((state,view,pos)->opaque(state)).suffocates((state,view,pos)->opaque(state)).blockVision((state,view,pos)->opaque(state)));setDefaultState(getDefaultState().with(COMPACT,false));}
-    @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){super.appendProperties(builder);builder.add(COMPACT);}
+    public static ImportedCompactBlock create(CompositeSpec spec){if(spec.variants.size()<=16)return new ImportedCompactBlock(spec);if(spec.id.getPath().equals("source_assembly_brick_wall"))return new Brick(spec);if(spec.id.getPath().equals("source_assembly_deepslate_brick_wall"))return new Deepslate(spec);return new Banked(spec);}
+    private static class Banked extends ImportedCompactBlock {private Banked(CompositeSpec spec){super(spec);}}
+    private static final class Brick extends Banked {private static final net.minecraft.state.property.IntProperty BANK=net.minecraft.state.property.IntProperty.of("art_bank",0,29);private Brick(CompositeSpec spec){super(spec);}}
+    private static final class Deepslate extends Banked {private static final net.minecraft.state.property.IntProperty BANK=net.minecraft.state.property.IntProperty.of("art_bank",0,9);private Deepslate(CompositeSpec spec){super(spec);}}
+    @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(ROTATION,VARIANT,OPEN,PROFILE,COMPACT);if(this instanceof Banked)builder.add(this instanceof Brick?Brick.BANK:this instanceof Deepslate?Deepslate.BANK:ART_BANK);}
     @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return compact(state)?null:super.createBlockEntity(pos,state);}
     @Override public BlockRenderType getRenderType(BlockState state){return compact(state)?BlockRenderType.MODEL:super.getRenderType(state);}
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView view,BlockPos pos,ShapeContext context){return compact(state)?pose(state).collision.get(state.get(ROTATION)):super.getCollisionShape(state,view,pos,context);}
@@ -93,8 +97,8 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
     @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit) {
         if(!compact(state))return super.onUse(state,world,pos,player,hand,hit);
         if(player.isSneaking()&&player.getStackInHand(hand).isEmpty()&&TYPES.get(spec.id.toString()).size()>1) {
-            var allowed=new ArrayList<>(TYPES.get(spec.id.toString()).keySet());Collections.sort(allowed);int next=allowed.get((allowed.indexOf(state.get(VARIANT))+1)%allowed.size());
-            if(!world.isClient)world.setBlockState(pos,state.with(VARIANT,next),Block.NOTIFY_ALL);return ActionResult.SUCCESS;
+            var allowed=new ArrayList<>(TYPES.get(spec.id.toString()).keySet());Collections.sort(allowed);int next=allowed.get((allowed.indexOf(ImportedArtworkBlock.variant(state))+1)%allowed.size());BlockState changed=state.with(VARIANT,next%16);if(bankProperty(state)!=null)changed=changed.with(bankProperty(state),next/16);
+            if(!world.isClient)world.setBlockState(pos,changed,Block.NOTIFY_ALL);return ActionResult.SUCCESS;
         }
         return ActionResult.PASS;
     }

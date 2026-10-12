@@ -10,7 +10,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.StringIdentifiable;
 
 /** The same imported rung ladder offers its authored one/two-cell lengths as states. */
-public final class ImportedLadderBlock extends CompositeRootBlock {
+public final class ImportedLadderBlock extends CompositeRootBlock implements NewStateStorage {
     public static final EnumProperty<Height> HEIGHT = EnumProperty.of("height", Height.class);
     public enum Height implements StringIdentifiable {
         ONE("one"), TWO("two");

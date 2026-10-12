@@ -158,7 +158,8 @@ public final class ImportedAssemblyV126 {
     private static ObjectInstance savedInstance(ServerWorld world,BlockPos pos,BlockState state,UUID uuid,NbtCompound payload){ObjectInstance current=CompositeRuntime.instance(world,pos,state,uuid,payload);return ImportedCollisionMigration.savedMembership(world,current.owner()).map(cells->new ObjectInstance(current.owner(),current.rootData(),cells)).orElse(current);}
     public static void forget(ServerWorld world){DEFERRED.remove(world);WARNED.remove(world);}
     private static BlockState copyCommon(BlockState old,BlockState next){for(var entry:old.getEntries().entrySet()){Property<?> property=next.getBlock().getStateManager().getProperty(entry.getKey().getName());if(property!=null)next=parsed(next,property,name(entry.getKey(),entry.getValue()));}return next;}
-    private static BlockState setPose(BlockState state,int pose){state=state.with(CompositeRootBlock.VARIANT,pose%16);if(state.getBlock() instanceof ImportedArtworkBlock)state=state.with(ImportedArtworkBlock.bankProperty(state),pose/16);else if(pose>=16)throw new IllegalStateException("Unbanked complete assembly pose");return state;}
+    private static BlockState setPose(BlockState state,int pose){state=state.with(CompositeRootBlock.VARIANT,pose%16);if(state.getBlock() instanceof ImportedArtworkBlock&&ImportedArtworkBlock.bankProperty(state)!=null)state=state.with(ImportedArtworkBlock.bankProperty(state),pose/16);else if(pose>=16)throw new IllegalStateException("Unbanked complete assembly pose");return state;}
     @SuppressWarnings({"rawtypes","unchecked"})private static String name(Property property,Comparable value){return property.name(value);}
     private static <T extends Comparable<T>> BlockState parsed(BlockState state,Property<T> property,String value){return property.parse(value).map(parsed->state.with(property,parsed)).orElse(state);}
 }
+

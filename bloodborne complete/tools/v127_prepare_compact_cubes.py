@@ -48,7 +48,7 @@ def main():
             return [{'collision':b(r['collision']),'aim':b(r['aim'])} for r in rows]
         return None
     for reg,spec in resolver.current.items():
-        if not reg.startswith('bloodborne_dw:source_') or reg in resolver.retired or reg in stairs or len(spec['variants'])>16 or spec.get('openable') or spec.get('support',{}).get('required') or spec.get('importedClimbingBounds'):continue
+        if not reg.startswith('bloodborne_dw:source_') or reg in resolver.retired or reg in stairs or spec.get('openable') or spec.get('support',{}).get('required') or spec.get('importedClimbingBounds'):continue
         path=reg.split(':')[1];poses=[];models={};checks=[];shapes={};opaque=[]
         for index,v in enumerate(spec['variants']):
             p=v['poses']['closed'];parts=p['parts']
@@ -77,11 +77,13 @@ def main():
                 for part in models[index]:
                     application={'model':part['model'],'y':int((part.get('yaw',0)+yaw*45)%360)}
                     if part.get('pitch'):application['x']=int(part['pitch']%360)
-                    multipart.append({'when':{'compact':'true','variant':str(index),'rotation':str(yaw)},'apply':application})
+                    when={'compact':'true','variant':str(index%16),'rotation':str(yaw)}
+                    if len(spec['variants'])>16:when['art_bank']=str(index//16)
+                    multipart.append({'when':when,'apply':application})
         write(file,{'multipart':multipart})
         row={'registryId':reg,'mainId':resolver.ids.get(reg,''),'poses':poses,'opaquePoses':opaque,'shapes':shapes,'layer':spec.get('layer','cutout'),'stateProperty':'compact','default':False,'sourceConditions':'Exact stationary one-cell source model/physics; even cardinal rotation, zero SourceShift/mount; original owners stay false','nativeModelsUseSamePrivateSourceParents':True}
         types.append(row);proof.append({**row,'blockstateBeforeSha256':before,'blockstateAfterSha256':sha(file),'poseChecks':checks,'oldModeRetainsEmptyModelAndOwnerRenderer':True})
     write(RES/'bloodborne_dw/imported-compact-v127.json',{'schemaVersion':1,'unitsPerBlock':16,'types':types,'policy':'Opt-in full-map source palette only. Exact stationary contained meshes inclsprite/cutout retainphysical/aim tables; opaqueunitcubes use nativeculling. Preserved old/default owners retain compact=false and their UUID/payload/collision consumers. No originalV12registry accepted.'})
-    dump(OUT/'compact-cube-proof.json',{'status':'PASS_EXACT_OPAQUE_UNIT_CUBES_NATIVE_SOURCE_MODELS','types':proof,'typeCount':len(types),'poseCount':sum(len(t['poses']) for t in types),'sourceMapConverted':False,'sourceHashes':{'map':sha(MAP),'pack':sha(PACK)},'nativeValidation':'NOT_RUN_BY_OFFLINE_SOURCE_PROOF'})
+    dump(OUT/'compact-cube-proof.json',{'status':'PASS_EXACT_CONTAINED_SOURCE_NATIVE_MODELS','types':proof,'typeCount':len(types),'poseCount':sum(len(t['poses']) for t in types),'sourceMapConverted':False,'sourceHashes':{'map':sha(MAP),'pack':sha(PACK)},'nativeValidation':'NOT_RUN_BY_OFFLINE_SOURCE_PROOF'})
     print(json.dumps({'types':len(types),'poses':sum(len(t['poses']) for t in types),'ids':[t['mainId'] for t in types]}))
 if __name__=='__main__':main()

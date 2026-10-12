@@ -30,7 +30,7 @@ class CurrentResolver(Resolver):
         self.carriers={}
         bankmeta=json.loads((RES/'bloodborne_dw/imported-full-map-v127.json').read_text(encoding='utf-8-sig'))
         self.banked={g['registryId'] for g in bankmeta.get('groups',[]) if g.get('bankMax',0)>0}
-        self.banked.update(g['primaryRegistryId'] for g in json.loads((RES/'bloodborne_dw/imported-type-aliases.json').read_text(encoding='utf-8-sig'))['groups'] if g.get('kind')=='artwork' and g.get('poses',0)>16)
+        self.banked.update(g['primaryRegistryId'] for g in json.loads((RES/'bloodborne_dw/imported-type-aliases.json').read_text(encoding='utf-8-sig'))['groups'] if g.get('kind')=='artwork' and g.get('poseCount',0)>16)
         follow=RES/'bloodborne_dw/imported-type-aliases-v127.json'
         self.follow={(r['oldRegistryId'],r['oldVariant']):r for r in json.loads(follow.read_text(encoding='utf-8-sig')).get('mappings',[])} if follow.exists() else {}
         for path in sorted((RES/'bloodborne_dw/composite').glob('*.json')):
@@ -62,10 +62,16 @@ class CurrentResolver(Resolver):
                         self.current_whole.append({'registryId':reg,'variant':vi,'open':opened,'applications':apps,'sourcePlacementOffset':v.get('sourcePlacementOffset',[0,0,0]),'currentAppend':True})
         special=ROOT/'docs/v12.7/conversion/protected-source-exact-matches.json'
         self.protected={r['sourceApplicationToken']:r['decision'] for r in json.loads(special.read_text(encoding='utf-8-sig'))['rows']} if special.exists() else {}
+        if special.exists():
+            for row in json.loads(special.read_text(encoding='utf-8-sig'))['rows']:
+                if len(row['sourceApplications'])>1 and any(any(a.get('offset',[0,0,0])) for a in row['sourceApplications']):
+                    d=row['decision'];self.current_whole.append({'registryId':d['registryId'],'variant':int(d['properties']['variant']),'open':d['properties']['open']=='true','applications':row['sourceApplications'],'protectedTarget':d})
         self.source_defects={token(r['sourceApplications']):r['sourceDefect'] for r in json.loads(special.read_text(encoding='utf-8-sig'))['unmatched'] if r.get('sourceDefect')} if special.exists() else {}
         self.resolve_token.cache_clear()
 
     def target(self,candidate,yaw):
+        if candidate.get('protectedTarget'):
+            result=copy.deepcopy(candidate['protectedTarget']);result['properties']['rotation']=str((int(result['properties']['rotation'])+yaw)%8);result['mainId']=self.ids[result['registryId']];return result
         if not candidate.get('currentAppend'):
             result=super().target(candidate,yaw)
             mapping=self.follow.get((result['registryId'],int(result['properties']['variant'])))
@@ -92,7 +98,7 @@ class CurrentResolver(Resolver):
         if carrier=='minecraft:potted_spruce_sapling':return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_MODEL_OR_TEXTURE','models':sorted(names)}
         if names=={'minecraft:block/hold/wood_ladder_02'} and len(apps)==1 and not apps[0].get('x',0):
             yaw=apps[0].get('y',0)%360
-            if yaw%90==0:return {'action':'OWNER','registryId':'bloodborne_dw:prototype_ladder','mainId':'90006','properties':{'facing':['north','east','south','west'][yaw//90],'variant':'0','profile':'base','waterlogged':'false','diagonal':'false','source_clone':'true','freestanding':'true'},'payload':{},'sourceShift':[0,0,0],'mountY':0.,'resolution':'EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL'}
+            if yaw%90==0:return {'action':'OWNER','registryId':'bloodborne_dw:prototype_ladder','mainId':'90006','properties':{'facing':['north','east','south','west'][yaw//90],'variant':'0','profile':'base','waterlogged':'false','diagonal':'false','source_clone':'false','freestanding':'true'},'payload':{},'sourceShift':[0,0,0],'mountY':0.,'resolution':'EXACT_PROTECTED_NATIVE_SOURCE_LADDER_BLOCKSTATE_MODEL'}
         if token(sorted(apps,key=token)) in self.source_defects:return {'action':'REMOVE','reason':'MISSING_AUTHORED_TEXTURE_REFERENCE','sourceDefect':self.source_defects[token(sorted(apps,key=token))],'models':sorted(names)}
         if any(self.classifications.get(name,{}).get('kind')=='INTENTIONAL_EXCLUSION' for name in names):return {'action':'REMOVE','reason':'PREEXISTING_INTENTIONAL_SOURCE_VARIANT_EXCLUSION','models':sorted(names)}
         if any(name=='minecraft:block/diorite_wall_side_tall' for name in names):return {'action':'REMOVE','reason':'MISSING_AUTHORED_SOURCE_PARENT_TEMPLATE_WALL_TALL','models':sorted(names)}

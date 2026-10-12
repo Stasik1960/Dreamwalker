@@ -39,7 +39,7 @@ public final class AssemblyV126GameTests implements FabricGameTest {
     }
     private static String registry(String number){return DebugCatalogue.entries().stream().filter(row->row.temporaryId().equals(number)).findFirst().orElseThrow().registryId().toString();}
     private static CompositeRootBlock block(String registry){return (CompositeRootBlock)Registries.BLOCK.get(new Identifier(registry));}
-    private static BlockState pose(String registry,int pose,int yaw){var value=block(registry).getDefaultState().with(CompositeRootBlock.VARIANT,pose%16).with(CompositeRootBlock.ROTATION,yaw);if(value.getBlock() instanceof ImportedArtworkBlock)value=value.with(ImportedArtworkBlock.bankProperty(value),pose/16);return value;}
+    private static BlockState pose(String registry,int pose,int yaw){var value=block(registry).getDefaultState().with(CompositeRootBlock.VARIANT,pose%16).with(CompositeRootBlock.ROTATION,yaw);if(value.getBlock() instanceof ImportedArtworkBlock&&ImportedArtworkBlock.bankProperty(value)!=null)value=value.with(ImportedArtworkBlock.bankProperty(value),pose/16);return value;}
     private static ServerPlayerEntity player(ServerWorld world) {
         var value=new ServerPlayerEntity(world.getServer(),world,new GameProfile(UUID.randomUUID(),"Assembly126Probe"));
         var connection=new ClientConnection(NetworkSide.SERVERBOUND){@Override public void send(Packet<?> packet){}@Override public void send(Packet<?> packet,PacketCallbacks callbacks){}};
@@ -367,3 +367,4 @@ public final class AssemblyV126GameTests implements FabricGameTest {
         t.complete();
     }
 }
+
