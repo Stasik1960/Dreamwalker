@@ -1,5 +1,5 @@
 """Independent read-only NBT proof: main catalogue, source assemblies, city."""
-import argparse,hashlib,json,math
+import argparse,hashlib,json,math,re
 from collections import defaultdict
 from pathlib import Path
 import zipfile
@@ -7,7 +7,7 @@ import verify_flat_gallery as base
 from verify_gallery_v124 import grid,visual_saved
 from world_io import RegionFile,Tag,compound,read_nbt,section_blocks
 from verify_remaining_saved_world import owner,contribution,typed_hash
-from prepare_gallery_v126_input import ArchiveGeometry,component_geometry
+from prepare_gallery_v126_input import ArchiveGeometry,component_geometry,assembly_contract,pose_index
 
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -35,6 +35,7 @@ def main():
     assert a.world.resolve().is_relative_to((ROOT/'build').resolve()) and m['productionJarSha256']==sha(a.production_jar)
     before={str(f.relative_to(a.world)):sha(f) for f in base.saved_files(a.world)}
     mainrows=m['exhibits'];groups=m['reviewPlatforms'];city=m['city'];parts=list(mainrows)
+    assert len(mainrows)==647 and len(groups)==22 and len(city['placedOwners'])==8426
     for group in groups:
         assert group['registrationsMerged'] and len(group['components'])==1
         parts.extend({**c,'key':group['key']+'/'+str(i),'kind':'architecture'} for i,c in enumerate(group['components']))
@@ -100,17 +101,40 @@ def main():
     for row in mainrows+groups:
         sign=signs[tuple(row['labelPos'])];assert sign['is_waxed'] and sign['front_text']==sign['back_text']
         assert json.loads(sign['front_text']['messages'][0])['text']==row.get('name',row.get('russianLabel'))[:26]
+        if row in groups:
+            assert re.fullmatch(r'\d{5}',row['primaryId'])
+            assert json.loads(sign['front_text']['messages'][1])['text']=='ID '+row['primaryId']
     for row in mainrows:
         if row['kind']!='architecture':
             e=entities[row['uuid']];assert e['id']==('minecraft:item_frame' if row['kind']=='item_frame' else row['registry'])
             stable.append({'key':row['key'],'uuid':row['uuid'],'entity':{k:e[k] for k in ('id','UUID','Pos','Rotation','Item','Facing','Fixed','Scale','Open','Locked','VerticalOffset') if k in e}})
     with zipfile.ZipFile(a.production_jar) as jar:
-        retirement=base.read(ROOT/'src/architecture/resources/bloodborne_dw/imported-style-retirements.json')
+        retirement=json.loads(jar.read('bloodborne_dw/imported-style-retirements.json'))
         aliases=json.loads(jar.read('bloodborne_dw/imported-type-aliases.json'));remaining=json.loads(jar.read('bloodborne_dw/remaining-catalogue.json'))
         retired={r for g in aliases['groups'] for r in g['members'] if r!=g['primaryRegistryId']}|{r for g in retirement['retirements'] for r in g['aliases']}
-        retired.update(json.loads(jar.read('bloodborne_dw/imported-assembly-v126.json'))['hiddenPartRedirects'])
+        assemblies,installations,active=assembly_contract(jar)
+        retired.update(assemblies['hiddenPartRedirects'])
         working={'bloodborne_dw:'+r['path'] for r in remaining['objects']}-retired
         new=[r['registry'] for r in mainrows if r.get('origin')!='V12' and r['kind']=='architecture'];assert len(new)==len(set(new)) and set(new)==working
+        newrows=[r for r in mainrows if r.get('origin')!='V12' and r['kind']=='architecture']
+        assert len(newrows)==544 and len({r['id'] for r in newrows})==544
+        assert all(re.fullmatch(r'\d{5}',r['id']) for r in newrows)
+        numeric={r['registryId']:r['temporaryId'] for r in json.loads(jar.read('bloodborne_dw/debug_catalogue.json'))['entries']}
+        selected={r['registry']:r for r in newrows}
+        for registry,pose in installations.items():assert pose_index(selected[registry])==pose
+        reviewtypes={}
+        for group in groups:
+            component=group['components'][0];registry=component['registry']
+            assert registry not in retired and group['primaryId']==numeric[registry]
+            assert reviewtypes.setdefault(group['primaryId'],registry)==registry
+            actual=pose_index({'registry':registry,'placedState':component['placedState'],'blockStateTag':component['placedState']})
+            assert actual==group['reviewPoseIndex']
+            if registry in active:assert actual in active[registry]
+            assert component['placedState']['open']==str(group['open']).lower()
+        assert sum(r['id']=='90143' for r in newrows)==1
+        assert sum(g['primaryId']=='90143' for g in groups)==1
+        mounted=[g for g in groups if g['primaryId']=='90923']
+        assert {(g['reviewPoseIndex'],g['open']) for g in mounted}=={(1,False),(1,True),(2,False),(2,True)}
         original=base.read(ROOT/'docs/gallery-v12.1/catalogue.json');frozen={r['key']:(r['registry'],r['item'],r['id']) for r in original['exhibits'] if r['origin']=='V12' and r['section']!='error'}
         current={r['key']:(r['registry'],r['item'],r['id']) for r in mainrows if r['origin']=='V12' and r['kind']!='item_frame'};assert frozen==current
         models=ArchiveGeometry(jar,Path('C:/Users/vakir/.gradle/caches/fabric-loom/1.20.1/minecraft-client.jar'))
@@ -129,7 +153,7 @@ def main():
         old=base.read(a.compare);assert old['status']=='PASS' and old['productionJarSha256']==sha(a.production_jar);assert old['stableExhibits']==stable,'Saved state/UUID/payload/owner geometry changed after production reopen';compared=True
     assert all(sha(a.world/rel)==digest for rel,digest in before.items()),'Verifier changed world'
     result={'schema':'dreamwalker-flat-gallery-v126-disk-verification','status':'PASS','productionJarSha256':sha(a.production_jar),'world':str(a.world),'productionReopenCompared':compared,'verifiedExhibits':len(parts),'stableExhibits':stable,
-            'mainGrid':grid(mainrows),'compactLayout':compact_layout(mainrows,groups,city),'functionalCatalogue':{'status':'PASS','newWorkingTypes':len(new),'styleRetiredWorkingTypes':len(retirement['retirements']),'originalV12CatalogueEqual':True},
+            'mainGrid':grid(mainrows),'compactLayout':compact_layout(mainrows,groups,city),'functionalCatalogue':{'status':'PASS','newWorkingTypes':len(new),'styleRetiredWorkingTypes':len(retirement['retirements']),'originalV12CatalogueEqual':True,'completeAssemblyPrimaries':len(installations),'hiddenPartsExcluded':True,'uniqueWorkingFiveDigitIds':True,'mountedDoor90923Poses':[1,2],'reviewFiveDigitIdsVerifiedInSigns':True},
             'savedReviewAndCityGeometryChecks':geometryChecks,'reviewPlatforms':len(groups),'cityOwners':len(city['placedOwners']),'cityPassthroughStatesVerified':len(passthrough),'citySourceCoverage':city['sourceCoverageCount'],'cityAllSourceCellsClassified':city['allSourceCellsClassified'],'platformCells':len(floors),'inputFilesUnchanged':True,'visualAcceptance':'NOT_RUN_BY_DISK_PROOF'}
     base.write(a.report,result);print(json.dumps({k:v for k,v in result.items() if k!='stableExhibits'},ensure_ascii=False))
 

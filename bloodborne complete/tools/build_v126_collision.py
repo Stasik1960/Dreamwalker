@@ -87,6 +87,18 @@ def main():
                         if not sourcebox:physical=[];policy='PRESERVED_PASSABLE'
                         elif purposeful and yaw%2==0:
                             physical=rotate_clip_boxes(sourcebox,yaw,crop=False);policy='PURPOSEFUL_FEW_CARDINAL_CUBOIDS'
+                        elif ladder:
+                            # A single tiny inscribed column lets Minecraft's
+                            # axis-separated movement slide past a45-degree
+                            # ladder. Three tall structural supports hold the
+                            # player's normal approach without following rungs.
+                            # Every support stays strictly inside the thin
+                            # authored functional plane; no outward AABB growth.
+                            physical=[]
+                            for centre_x in (5,8,11):
+                                support=box([centre_x-.5,0,15],[centre_x+.5,16 if v==0 else 32,16])
+                                physical.extend(largest_inscribed_single(oriented(box_solids([support]),yaw)))
+                            policy='THREE_INSCRIBED_TALL_FUNCTIONAL_LADDER_SUPPORTS'
                         elif solids:
                             source=oriented(solids,yaw);low,high=envelope(source)
                             if not purposeful and axis_aligned(source) and max(high-low)<=16.000001:

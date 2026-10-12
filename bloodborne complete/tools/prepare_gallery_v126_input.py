@@ -10,6 +10,7 @@ import copy
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 import zipfile
 import gzip
@@ -20,6 +21,22 @@ from gallery_platform_plan import rotate, bounds_of_points
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = 'dreamwalker-flat-gallery-v126'
+
+
+def assembly_contract(archive):
+    """Use the runtime recipes packaged with this exact production JAR."""
+    metadata = json.loads(archive.read('bloodborne_dw/imported-assembly-v126.json'))
+    defaults, active, pairs = {}, {}, set()
+    for recipe in metadata['recipes']:
+        registry, pose = recipe['primaryRegistryId'], recipe['installationPose']
+        assert (registry, pose) not in pairs
+        pairs.add((registry, pose))
+        defaults.setdefault(registry, pose)
+        active.setdefault(registry, []).append(pose)
+    assert len(metadata['recipes']) == 9 and len(defaults) == 8
+    assert active['bloodborne_dw:source_smooth_quartz_top'] == [1, 2]
+    assert not set(defaults).intersection(metadata['hiddenPartRedirects'])
+    return metadata, defaults, active
 
 
 class ArchiveGeometry(Visuals):
@@ -95,10 +112,8 @@ def canonical_catalogue(original, archive):
     retired.update(member for group in style['retirements'] for member in group['aliases'])
     names = {'bloodborne_dw:' + row['path']: row for row in remaining['objects']}
     numbers = {row['registryId']: row for row in debug['entries']}
-    assembly_plan=json.loads((ROOT/'build/v126-assembly-plan/assembly-manifest.json').read_text(encoding='utf8'))
-    hidden={n for g in assembly_plan['assemblies'] for n in g['hideIndependentPartIds']}|{'90479'}
-    retired.update(r['registryId'] for r in debug['entries'] if r['temporaryId'] in hidden)
-    installations={g['primaryRegistryId']:g['installationPose'] for g in assembly_plan['assemblies']}
+    assembly, installations, active = assembly_contract(archive)
+    retired.update(assembly['hiddenPartRedirects'])
     stair_paths = {'bloodborne_dw:' + row['path'] for row in stairs['stairTypes']}
     ladder_paths = {'bloodborne_dw:' + row['path'] for row in stairs['ladderTypes']}
     all_rows = original['exhibits']
@@ -120,7 +135,11 @@ def canonical_catalogue(original, archive):
             kept_new.add(registry)
             assert registry in names, 'Working NEW object missing production catalogue: ' + registry
             group = groups.get(registry)
-            family = [r for member in (group['members'] if group else [registry]) for r in source_rows.get(member, [])]
+            family_members = set(group['members'] if group else [registry])
+            for recipe in assembly['recipes']:
+                if recipe['primaryRegistryId'] == registry:
+                    family_members.update(c['registryId'] for c in recipe['components'])
+            family = [r for member in sorted(family_members) for r in source_rows.get(member, [])]
             assert family
             # Absent means every source-art member of this functional type was
             # absent. Mixed types belong to new; exact source status stays below.
@@ -138,17 +157,24 @@ def canonical_catalogue(original, archive):
             if registry in ladder_paths:
                 row['state']['height'] = 'one'
             if group and group['kind'] == 'artwork' and group.get('poseCount', 0) > 16:
-                row['state']['art_bank'] = '0'
-            row['sourceModels'] = names[registry]['variants'][0]['sourceModels']
+                row['state']['art_bank'] = str(row['variant']//16)
+            row['sourceModels'] = names[registry]['variants'][row['variant']]['sourceModels']
             row['sourceParts'] = []
             row['sourceGroupIds'] = sorted({r['id'] for r in family})
             row['sourceGroupMapStates'] = [{'key': r['key'], 'mapStatus': r.get('mapStatus', ''), 'section': r['section']} for r in family]
-            row['workingTypePolicy'] = 'ONE_PRIMARY_INSTALLATION_ITEM_DEFAULT_STATE; all art, mount and connections remain interactive states'
+            row['workingTypePolicy'] = 'ONE_PRIMARY_INSTALLATION_ITEM_DEFAULT_STATE; completed art, mount and connection poses are states; unmatched old fragments stay hidden compatibility'
             row['availablePoseCount'] = len(names[registry]['variants'])
+            if registry in active:
+                row['workingPoseIndices'] = active[registry]
+                row['hiddenCompatibilityPoseIndices'] = [i for i in range(row['availablePoseCount']) if i not in active[registry]]
         exhibits.append(row)
     expected_new = {registry for registry in names if registry not in retired}
     assert kept_new == expected_new, 'Missing/unexpected NEW gallery working types: ' + repr(sorted(expected_new ^ kept_new))
     assert len({row['key'] for row in exhibits}) == len(exhibits)
+    new_rows = [r for r in exhibits if r['origin'] != 'V12' and r['kind'] == 'architecture']
+    assert len(new_rows) == 544 and len({r['id'] for r in new_rows}) == 544
+    assert all(re.fullmatch(r'\d{5}', r['id']) for r in new_rows)
+    assert len([r for r in new_rows if r['id'] == '90143']) == 1
     catalogue['exhibits'] = exhibits
     catalogue['styleRetirements'] = style['retirements']
     catalogue['retiredCompatibilityAliasCount'] = sum(member != group['primaryRegistryId'] for group in groups.values() for member in group['members'])
@@ -245,13 +271,22 @@ def main():
         doors=json.loads((ROOT/'build/v126-door-plan/door-manifest.json').read_text(encoding='utf8'))
         doors['doors']+=json.loads((ROOT/'build/v126-city-mounteddoor/door-manifest.json').read_text(encoding='utf8'))['doors']
         previews=[]
+        assembly, installations, active = assembly_contract(archive)
+        debug_numbers = {r['registryId']:r['temporaryId'] for r in json.loads(archive.read('bloodborne_dw/debug_catalogue.json'))['entries']}
         definitions=[(g['primaryRegistryId'],g['primaryId'],g['installationPose'],g['displayName'],'assemblies',False) for g in plan['assemblies'] if not g['doorRequiresLeafPartitionAndOpenPose']]
         for g in doors['doors']:
             descriptor=json.loads(archive.read('bloodborne_dw/composite/'+g['registryId'].split(':')[1]+'.json'))
-            number=next(r['temporaryId'] for r in json.loads(archive.read('bloodborne_dw/debug_catalogue.json'))['entries'] if r['registryId']==g['registryId'])
+            number=debug_numbers[g['registryId']]
             for opened in (False,True):definitions.append((g['registryId'],number,g['variant'],descriptor['displayName'],'doors',opened))
         for registry,number,pose,name,section,opened in definitions:
+            assert re.fullmatch(r'\d{5}',number) and debug_numbers[registry] == number
+            if registry in active:assert pose in active[registry]
             specpath='bloodborne_dw/composite/'+registry.split(':')[1]+'.json'
+            descriptor=json.loads(archive.read(specpath))
+            assert 0 <= pose < len(descriptor['variants'])
+            if section=='doors':assert descriptor['openable'] and 'open' in descriptor['variants'][pose]['poses']
+            if registry=='bloodborne_dw:source_smooth_quartz_top':
+                name='Высокая дверь · монтаж '+('в глубину' if pose==2 else 'прямой')
             component={'number':1,'relativePosition':[0,0,0],'registryId':registry,'mainId':number,
                 'properties':{'variant':str(pose%16),'rotation':'0','profile':'base','open':str(opened).lower()},
                 'mountY':0,'sourceShift':[0,0,0],'payload':{'ImportedTypeVersion':1},
@@ -261,9 +296,15 @@ def main():
                  'primaryId':number,'russianLabel':name,'open':opened,'components':[component],
                  'registrationsMerged':True,'doorPropertiesChanged':section=='doors',
                  'status':'WORKING_ONE_PIECE_TYPE_RMB_90_DEGREES' if section=='doors' else 'APPROVED_ONE_PIECE_TYPE'}
+            row['reviewPoseIndex']=pose
+            row['id'],row['registry']=number,registry
             row['localVisualBounds']=component_geometry(component,archive,models)
             previews.append(row)
+        assert len(previews)==22 and len({r['key'] for r in previews})==22
+        assert sum(r['section']=='assemblies' for r in previews)==6
+        assert sum(r['section']=='doors' for r in previews)==16
         city=json.loads((ROOT/'docs/v12.6/city/city-final-aggregated.json').read_text(encoding='utf8'))
+        assert len(city['owners'])==8426
         boxes=[component_geometry(c,archive,models) for c in city['owners']]
         for block in city['passThroughBlocks']:
             p=block['relativePosition'];boxes.append(p+[v+1 for v in p])
