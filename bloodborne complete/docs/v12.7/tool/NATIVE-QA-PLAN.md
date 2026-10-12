@@ -15,10 +15,20 @@ Root must serialize all Java/Gradle/client/server processes through Guard. Build
 tools/run_v124_stage.py --name v127-native-addon tools/build_v127_qa_addon.py --production-jar build/libs/<current-v127-jar>.jar --output build/v127-native-addon
 ```
 
-Launch with the existing `run_v11_client.py`, isolated fresh flat world, cached
-Java17, `--quick-play --launch`, this add-on, generated `--capture-input`, independent
-run name, username and no source resourcepack. Its standard server fixture should
-be created fresh with cheats enabled; do not copy the old gallery or original map.
+Create an ordinary fresh flat world with production only using the existing
+`run_v11_server.py` and an existing accepted EULA file. Its normal startup/save/stop
+creates `build/runtime-server-<name>/isolated-smoke-world`; no authoring add-on is
+used. Then `prepare_v127_native_inputs.py` verifies the flat generator, rejects any
+gallery manifest, copies without following links, enables creative/cheats only in
+the new copy, binds the production SHA, and verifies the source remains unchanged:
+
+```text
+tools/prepare_v127_native_inputs.py --production-jar build/libs/<jar>.jar --fixture-source build/runtime-server-<fresh-name>/isolated-smoke-world --output build/v127-native-input
+tools/run_v11_client.py --jar build/libs/<jar>.jar --fixture build/v127-native-input/world --run-name v127-functions --report build/v127-native-client-launch.json --username V127Functions --qa-addon build/libs/dreamwalker-v127-native-functions-qa-1.2.7.jar --capture-input build/v127-native-input/client-capture-input.json --quick-play --launch
+```
+
+Use cached Java17 and no source resourcepack. All commands remain serialized
+through Guard. Do not copy the old gallery or original map.
 
 The client sends actual creative-slot and interactBlock packets to hand-place:
 original wall, original freestanding ladder, new wooden barrel, RP curtain,
@@ -33,9 +43,26 @@ DW-barrier, DW-light held marker, and empty-hand invisible light14 at night.
 SHA and original PNG hashes. Native wall/ladder baked ABGR colours are recorded.
 Light14 is read from the actual synchronized client light storage.
 
+The fresh run additionally saves explicit tool-command fixtures on the barrel,
+DW-barrier and DW-light, including typed personal/global use counters. After all
+frames, the real integrated server records native owner/RP UUIDs, every fixture's
+registered state/profile, exact command SNBT and light14 before normal shutdown.
+Heap/cache counts are observed before/after `all` and before shutdown, without
+forced GC or synthetic estimates.
+
 `PASS_ENGINE_CAPTURE` is not a pixel-review or reopen claim. Root must inspect all
-raw frames with view_image, record observations and original SHA, wait for normal
-client shutdown/save, then open and save the resulting world once more using the
-production JAR without this QA add-on. Compare UUID, IDs, states, RP BbAltVisual and
-light data on reopen. Physical mouse/keyboard input remains NOT_RUN; interaction
-manager and normal network handling are the evidence for hand placement.
+raw frames with view_image and wait for normal client shutdown/save. Prepare a
+second fresh evidence directory from that saved function world:
+
+```text
+tools/prepare_v127_native_inputs.py --production-jar build/libs/<jar>.jar --fixture-source build/runtime-client-v127-functions/saves/prototype-fixture --output build/v127-native-reopen-input --previous-evidence build/runtime-client-v127-functions/v127-native-client-qa.json
+tools/run_v11_client.py --jar build/libs/<jar>.jar --fixture build/v127-native-reopen-input/world --run-name v127-functions-reopen --report build/v127-native-reopen-launch.json --username V127Functions --qa-addon build/libs/dreamwalker-v127-native-functions-qa-1.2.7.jar --capture-input build/v127-native-reopen-input/client-capture-input.json --quick-play --launch
+```
+
+The marker adds `v127ReopenOnly`; the add-on does not place objects, seed commands,
+or run `all` again. It records existing ALT/marker frames, actual reopened heap,
+then requires exact equality of UUIDs, states, RP profile, light and all command
+limits/counters. Only that result is `PASS_ENGINE_REOPEN`. A production-only native
+server/client reopen remains a separate compatibility check. Physical keyboard
+and mouse input remains NOT_RUN; client interaction manager and normal packets
+are the evidence for hand placement.

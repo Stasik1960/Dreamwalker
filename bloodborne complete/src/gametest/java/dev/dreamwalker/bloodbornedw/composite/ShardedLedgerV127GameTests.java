@@ -40,6 +40,7 @@ public final class ShardedLedgerV127GameTests implements FabricGameTest {
             store.put(root,List.of(rootContribution));store.put(other,List.of(sideContribution,foreign));
             store.put(unrelated.root(),List.of(foreign));
             t.assertTrue(keys.size()==2&&indexChanges.get()>=2,"Compact index contains two chunkkeys, not every cell/UUID");
+            t.assertTrue(store.chunkCells(new ChunkPos(chunkX,chunkZ)).equals(Set.of(root,unrelated.root()))&&store.chunkCells(new ChunkPos(chunkX+1,chunkZ)).equals(Set.of(other)),"Watched-chunk synchronization contains only that chunk's cells");
             var expected=new TreeMap<Cell,Footprint>();expected.put(Cell.ORIGIN,full);expected.put(new Cell(1,0,0),thin);
             t.assertTrue(store.savedMemberships(Set.of(owner)).get(owner).equals(expected),"Root shard records the entire cross-chunk authoritative BEFORE");
             // Same storage sequence used by native transaction rollback: alter

@@ -11,6 +11,8 @@ import net.minecraft.util.ActionResult;
 public class CompositeItem extends BlockItem {
     private final CompositeRootBlock root;
     public CompositeItem(CompositeRootBlock block){super(block,new Settings());root=block;}
+    /** Invoke vanilla placement on this registered item; never allocate an unregistered Item helper. */
+    protected final ActionResult placeNative(ItemPlacementContext context){return super.place(context);}
     @Override public ActionResult place(ItemPlacementContext context){
         return dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.place(context,()->placeInternal(context));
     }

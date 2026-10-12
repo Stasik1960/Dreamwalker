@@ -75,11 +75,10 @@ public final class ImportedCompactBlock extends CompositeRootBlock {
     }
     /** A compact cube's copied item uses ordinary native block placement. */
     public static final class CompactItem extends CompositeItem {
-        private final BlockItem nativeItem;
-        public CompactItem(ImportedCompactBlock root){super(root);nativeItem=new BlockItem(root,new Item.Settings());}
+        public CompactItem(ImportedCompactBlock root){super(root);}
         @Override public ActionResult place(ItemPlacementContext context) {
             NbtCompound tag=context.getStack().getSubNbt("BlockStateTag");
-            return tag!=null&&"true".equals(tag.getString("compact"))?nativeItem.place(context):super.place(context);
+            return tag!=null&&"true".equals(tag.getString("compact"))?placeNative(context):super.place(context);
         }
     }
 }

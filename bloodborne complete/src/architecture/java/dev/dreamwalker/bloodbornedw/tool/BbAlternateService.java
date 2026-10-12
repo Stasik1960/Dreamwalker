@@ -42,7 +42,7 @@ public final class BbAlternateService {
     private static final class Job {
         final ServerPlayerEntity player;final String profile;final Vec3d center;final int radius;
         final CompletableFuture<List<Visit>> discovery;
-        final Set<String> seen=new HashSet<>();final Deque<ToolTarget> targets=new ArrayDeque<>();
+        final Deque<ToolTarget> targets=new ArrayDeque<>();
         final Map<ChunkPos,CompletableFuture<Either<Chunk,ChunkHolder.Unloaded>>> requested=new LinkedHashMap<>();
         List<Visit> visits;Visit current;int index,changed,failed,waitTicks,startedTick;
         Job(ServerPlayerEntity player,String profile,int radius,CompletableFuture<List<Visit>> discovery){this.player=player;this.profile=profile;this.radius=radius;center=player.getPos();this.discovery=discovery;}
@@ -80,15 +80,14 @@ public final class BbAlternateService {
         for(long key:LOADED.getOrDefault(world,Set.of())){var chunk=new ChunkPos(key);double dx=Math.max(0,Math.abs((chunk.getStartX()+8)-player.getX())-8),dz=Math.max(0,Math.abs((chunk.getStartZ()+8)-player.getZ())-8);if(dx*dx+dz*dz>(double)radius*radius)continue;
             var loaded=world.getChunkManager().getWorldChunk(chunk.x,chunk.z);if(loaded!=null)for(var candidate:targets(world,loaded)){if(candidate.position(player.getServer()).squaredDistanceTo(player.getPos())>(double)radius*radius)continue;if(sameType(selected,candidate,player.getServer()))result.put(candidate.key(),candidate);}}
         // A directly installed fixture or just-attached native owner may precede a CHUNK_LOAD callback.
-        var owners=new HashSet<>(CompositeShapeSnapshots.attachedOwners(world));var ledger=CompositeLedger.get(world);for(var cell:ledger.cells())for(var contribution:ledger.at(cell))owners.add(contribution.owner());
-        for(var owner:owners){var pos=CompositeData.pos(owner.root());if(!world.isChunkLoaded(pos))continue;var candidate=ToolTarget.block(world,pos,player);if(candidate!=null&&candidate.position(player.getServer()).squaredDistanceTo(player.getPos())<=(double)radius*radius&&sameType(selected,candidate,player.getServer()))result.put(candidate.key(),candidate);}
+        for(var owner:CompositeShapeSnapshots.attachedOwners(world)){var pos=CompositeData.pos(owner.root());if(!world.isChunkLoaded(pos))continue;var candidate=ToolTarget.block(world,pos,player);if(candidate!=null&&candidate.position(player.getServer()).squaredDistanceTo(player.getPos())<=(double)radius*radius&&sameType(selected,candidate,player.getServer()))result.put(candidate.key(),candidate);}
         if(selected.position(player.getServer()).squaredDistanceTo(player.getPos())<=(double)radius*radius)result.put(selected.key(),selected);return List.copyOf(result.values());
     }
     private static boolean sameType(ToolTarget a,ToolTarget b,MinecraftServer server){if(a.kind()==ToolTarget.Kind.RP||b.kind()==ToolTarget.Kind.RP)return a.kind()==b.kind()&&a.registry().equals(b.registry());var x=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(a.world(server).getBlockState(BlockPos.fromLong(a.root())));var y=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(b.world(server).getBlockState(BlockPos.fromLong(b.root())));return x!=null&&y!=null?x.temporaryId().equals(y.temporaryId()):a.registry().equals(b.registry());}
     public static boolean start(ServerPlayerEntity player,String requested,int radius){
         if(!BuildPermissions.canEdit(player)||!Set.of("base","alt").contains(requested)||radius==0)return false;
         var server=player.getServer();if(JOBS.containsKey(server)){player.sendMessage(Text.literal("BB: замена вида уже выполняется. /bb cancel прекращает её."),false);return false;}
-        List<Directory> dirs=new ArrayList<>();for(var world:server.getWorlds()){if(radius>0&&world!=player.getServerWorld())continue;var loaded=new HashSet<>(LOADED.getOrDefault(world,Set.of()));for(var owner:CompositeShapeSnapshots.attachedOwners(world))loaded.add(new ChunkPos(CompositeData.pos(owner.root())).toLong());for(var cell:CompositeLedger.get(world).cells())loaded.add(ChunkPos.toLong(cell.x()>>4,cell.z()>>4));for(var entity:world.iterateEntities())if(entity instanceof RpObjectEntity)loaded.add(entity.getChunkPos().toLong());dirs.add(new Directory(world,DimensionType.getSaveDirectory(world.getRegistryKey(),server.getSavePath(WorldSavePath.ROOT)),Set.copyOf(loaded)));}
+        List<Directory> dirs=new ArrayList<>();for(var world:server.getWorlds()){if(radius>0&&world!=player.getServerWorld())continue;var loaded=new HashSet<>(LOADED.getOrDefault(world,Set.of()));for(var owner:CompositeShapeSnapshots.attachedOwners(world))loaded.add(new ChunkPos(CompositeData.pos(owner.root())).toLong());loaded.addAll(RP_CHUNKS.getOrDefault(world,Map.of()).keySet());dirs.add(new Directory(world,DimensionType.getSaveDirectory(world.getRegistryKey(),server.getSavePath(WorldSavePath.ROOT)),Set.copyOf(loaded)));}
         Vec3d center=player.getPos();var discovery=CompletableFuture.supplyAsync(()->discover(dirs)).thenApply(visits->radius<0?visits:visits.stream().filter(visit->{double dx=Math.max(0,Math.abs((visit.chunk.getStartX()+8)-center.x)-8),dz=Math.max(0,Math.abs((visit.chunk.getStartZ()+8)-center.z)-8);return dx*dx+dz*dz<=(double)radius*radius;}).toList());JOBS.put(server,new Job(player,requested,radius,discovery));player.sendMessage(Text.literal("BB: запущена замена на "+requested+(radius<0?" по всей сохранённой карте во всех измерениях":" в радиусе "+radius)+". Чанки обрабатываются последовательно."),false);return true;
     }
     /** Package-private seam uses actual chunk/profile transactions without scanning other concurrently running test fixtures. */
@@ -109,12 +108,20 @@ public final class BbAlternateService {
             if(job.requested.values().stream().anyMatch(future->future.join().left().isEmpty())){job.failed++;next(job);return;}
             if(job.waitTicks++<2)return;
             if(job.targets.isEmpty()&&job.waitTicks==3){var chunk=job.current.world.getChunkManager().getWorldChunk(job.current.chunk.x,job.current.chunk.z);if(chunk!=null)job.targets.addAll(targets(job.current.world,chunk));}
-            for(int n=0;n<16&&!job.targets.isEmpty();n++){
+            // Native compact palettes need no owner UUID, ledger or BE. Do not
+            // retain millions of visited cell keys: visits/per-chunk targets
+            // are unique and explicit BASE/ALT assignments are idempotent.
+            // At most512 cheap candidates/16 owner or RP edits, with an8ms
+            // cooperative budget; a single transaction is never interrupted.
+            long deadline=System.nanoTime()+8_000_000L;int expensive=0;
+            for(int n=0;n<512&&!job.targets.isEmpty();n++){
+                if(n>0&&System.nanoTime()>=deadline)return;
                 var target=job.targets.peek();var world=target.world(server);var root=BlockPos.fromLong(target.root());if(job.radius>0&&target.position(server).squaredDistanceTo(job.center)>(double)job.radius*job.radius){job.targets.remove();continue;}
+                if(target.kind()!=ToolTarget.Kind.BLOCK&&expensive>=16)return;
                 if(target.kind()==ToolTarget.Kind.ARCHITECTURE&&world.getBlockEntity(root) instanceof CompositeBlockEntity own&&target.valid(server)){
                     var before=world.getBlockState(root);var after=profile(before,job.profile);if(after!=null&&!after.equals(before)){var instance=CompositeRuntime.instance(world,root,after,target.uuid(),own.payload());for(var cell:instance.cells().keySet()){var pos=CompositeData.pos(instance.owner().root().add(cell));request(job,new ChunkPos(pos));}if(job.requested.values().stream().anyMatch(future->!future.isDone()))return;}
                 }
-                job.targets.remove();if(!job.seen.add(target.key())||!target.valid(server))continue;String before=profile(target,server);if(before==null||before.equals(job.profile))continue;if(change(job.player,target,job.profile))job.changed++;else{job.failed++;dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("BB ALT profile edit rejected at {} {} {}",target.dimension(),root,target.registry());}
+                job.targets.remove();if(!target.valid(server))continue;String before=profile(target,server);if(before==null||before.equals(job.profile))continue;if(target.kind()!=ToolTarget.Kind.BLOCK)expensive++;if(change(job.player,target,job.profile))job.changed++;else{job.failed++;dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("BB ALT profile edit rejected at {} {} {}",target.dimension(),root,target.registry());}
             }
             if(job.targets.isEmpty())next(job);
         }catch(RuntimeException failure){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.error("BB profile job stopped after {} edits",job.changed,failure);job.player.sendMessage(Text.literal("BB: замена остановлена из-за ошибки; изменено "+job.changed+", подробности в журнале."),false);cancel(server);}

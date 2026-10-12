@@ -41,7 +41,6 @@ def inventory():
         retired={member for group in json.loads(overlay.read_text(encoding='utf-8'))['groups'] for member in group['members'] if member!=group['primaryRegistryId']}
         rows=[r for r in rows if r['registry'] not in retired]
     current=json.loads((RES/'bloodborne_dw/remaining-catalogue.json').read_text(encoding='utf-8'))
-    original={r['path'] for r in json.loads((ROOT/'docs/v12.4-dedup/baseline-content.json').read_text(encoding='utf-8'))['catalogue']['objects']} if False else {r['path'] for r in json.loads((ROOT/'docs/v12.4-dedup/baseline-content.json').read_text(encoding='utf-8')).get('catalogue',{}).get('objects',[])}
     # Every original1045 path has a historic debug ID <=93227. Newly declared
     # extra sources have fresh reserved IDs and their own descriptor.
     debug=json.loads((RES/'bloodborne_dw/debug_catalogue.json').read_text(encoding='utf-8'))
@@ -129,7 +128,7 @@ def make_bbmodel(art,quads,key,name,tint=None):
     # Quad-local vertex identities prevent Blockbench welding authored seams.
     for texture_index,identifier in enumerate(identifiers):
         vertices,faces={},{}
-        for j,(points,uv,texture,tint) in enumerate(quads):
+        for j,(points,uv,texture,source_tint_index) in enumerate(quads):
             if texture!=identifier:continue
             keys=[f'v{j}_{i}' for i in range(4)]
             for k,p in zip(keys,points):vertices[k]=[float(v) for v in p]
@@ -139,7 +138,7 @@ def make_bbmodel(art,quads,key,name,tint=None):
     return {'meta':{'format_version':'4.10','model_format':'free','box_uv':False},'name':name,
         'model_identifier':key,'resolution':{'width':16,'height':16},'elements':elements,
         'outliner':[e['uuid'] for e in elements],'textures':textures,
-        'dreamwalker_handoff':{'unitsPerBlock':16,'exactRenderedGeometry':True,'perTextureUVUnits':16,
+        'dreamwalker_handoff':{'unitsPerBlock':16,'exactRenderedGeometry':True,'sourceFaceUVUnits':16,
             'runtimeALTVertexMultiplierPreview':tint,'authoredSourcePNGsUnchangedInSourceJava':True,
             'blockbenchFormatSource':'https://blockbench.net/wiki/docs/bbmodel/',
             'minecraftGenericMeshCaveat':'Keep the included original Java JSON for game reimport; arbitrary composite rotations cannot be exported directly as one legal Java block cube model.'}}
@@ -274,8 +273,26 @@ def export_pass(args,rows,art):
         z.writestr('INDEX.json',json.dumps(document,ensure_ascii=False,indent=2).encode('utf-8'))
         table=io.StringIO();writer=csv.writer(table,delimiter='\t');writer.writerow(['id','registryId','russianName','kind','projectCount','firstProject'])
         for r in index:writer.writerow([r['id'],r['registryId'],r['name'],r['kind'],len(r['editableProjects']),r['editableProjects'][0]['project']])
+        for number in ('93230','93231'):
+            variants=[r for r in utility if r['id']==number];first=variants[0]
+            writer.writerow([number,first['registryId'],first['name'],'invisible-utility',len(variants),first['project']])
         z.writestr('INDEX-RU.tsv',table.getvalue().encode('utf-8-sig'))
-        z.writestr('README-RU.txt',('Новые объекты Dreamwalker BB V12.7 для Blockbench\n\nОригинальные объекты V12 не включены. Каждый пятизначный ID имеет папку editable/ID; pose — индекс рабочего состояния, closed/open — состояние двери, base/alt — внешний вид. Откройте любой .bbmodel через File > Open Model. Все PNG встроены: исходный ресурспак и Minecraft не нужны. Грани сохраняют реальные координаты модели (16 единиц на блок), UV и исходные PNG побайтно, включая прозрачность.\n\nСложные составные объекты сохранены как Generic Model mesh: произвольные повороты частей/наклоны нельзя без потерь записать одним Minecraft Java cube JSON. Меш можно редактировать в Blockbench; для возврата изменений в мод используйте исходные source-java/assets/... JSON и runtime-descriptors/ID.json с точным ID/pose. Геометрия экспортирована, авторская коллизия не реконструируется.\n\nДля простых кубов и плоских спрайтов нужные PNG перечислены в INDEX.json -> textureDependencies и находятся в source-java/assets/.../textures. INDEX-RU.tsv связывает ID, название, вид и проект. source-java содержит полное замыкание parent/textures, а не неполные модели с потерянными ссылками.\n\nФормат: Blockbench 4.10-compatible .bbmodel, Generic Model, UV16 на каждой текстуре; актуальный загрузчик Blockbench поддерживает этот формат: https://blockbench.net/wiki/docs/bbmodel/ . Проверка: каждая грань обратным чтением проекта совпадает с native rendered vertex/UV, встроенные PNG имеют исходный SHA256; архив проверен CRC. GUI открытие редактором отдельно отмечается в отчёте, не подменяется этой проверкой.\n').encode('utf-8'))
+        z.writestr('README-RU.txt',('''Новые объекты Dreamwalker BB V12.7 для Blockbench
+
+Оригинальные типы V12 не включены. Каждый пятизначный ID имеет папку editable/ID; pose — индекс рабочего состояния, closed/open — состояние двери, base/alt — внешний вид. Откройте любой .bbmodel через File > Open Model. PNG встроены: исходный ресурспак и Minecraft не нужны. Грани сохраняют реальные координаты модели (16 единиц на блок) и UV. В source-java лежат исходные PNG побайтно, включая прозрачность, и метаданные анимации .png.mcmeta.
+
+Сложные составные объекты сохранены как Generic Model mesh: произвольные повороты частей/наклоны нельзя без потерь записать одним Minecraft Java cube JSON. Меш можно редактировать в Blockbench; для возврата изменений в мод используйте source-java/assets/... JSON и runtime-descriptors/ID.json с точным ID/pose. Геометрия экспортирована, авторская коллизия не реконструируется.
+
+Для простых кубов и плоских спрайтов PNG перечислены в INDEX.json -> textureDependencies и находятся в source-java/assets/.../textures. INDEX-RU.tsv связывает ID, название, вид и проект. source-java содержит полное замыкание parent/textures. Исторические служебные части входят только как зависимости; снятые с каталога дубликаты не предлагаются отдельными рабочими типами.
+
+ALT с авторской альтернативной моделью сохраняется с её исходными PNG. Если у всей позы нет авторского ALT, игра умножает RGB вершин на (0.60, 0.67, 0.72). Только в editable/*-alt.bbmodel этот множитель запечён в копию PNG для удобного просмотра; alpha, UV и геометрия сохранены. Исходный PNG в source-java не меняется. INDEX и проект явно указывают runtimeALTVertexMultiplierPreview и SHA256 исходного PNG.
+
+Анимированные PNG сохранены целыми полосами кадров вместе с .mcmeta. Generic-просмотр показывает первый кадр, не проигрывает Minecraft-анимацию. UV-канва текстуры масштабирована по размеру кадра, чтобы исходные UV не показывали всю полосу на одной грани. Метаданные анимации и номер кадра указаны в проекте.
+
+93230 dw-барьер и 93231 Невидимый свет имеют отдельные проекты и исходные текстуры. Их куб здесь видим для редактирования. В игре сохраняется невидимость и показ маркера при удержании предмета.
+
+Формат: Blockbench 4.10-compatible .bbmodel, Generic Model; описание формата https://blockbench.net/wiki/docs/bbmodel/ . Проверка: каждая грань после обратного чтения проекта совпадает с исходными rendered vertex/UV; встроенные PNG совпадают с исходными либо с явно указанной ALT preview-копией; исходные SHA256 проверены; архив проверен CRC. GUI открытие редактором отдельно отмечается в отчёте и не подменяется этой проверкой.
+''').encode('utf-8'))
     with zipfile.ZipFile(archive) as z:assert z.testzip() is None
     document['archive']=str(archive);document['archiveSha256']=digest(archive.read_bytes());document['archiveBytes']=archive.stat().st_size
     write_json(OUT/'blockbench-export.json',document)

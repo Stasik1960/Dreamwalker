@@ -117,6 +117,7 @@ public final class ShardedCompositeLedger {
         CompositeShapeSnapshots.ledger(world,cell,values);
     }
     public Set<Cell> loadedCells(){mainThread();var cells=new HashSet<Cell>();for(var shard:cached.values())cells.addAll(shard.cells.keySet());return Set.copyOf(cells);}
+    public Set<Cell> chunkCells(ChunkPos pos){mainThread();long key=pos.toLong();if(!loaded(key))throw new IllegalStateException("Chunk-watch synchronization requires an actually loaded chunk");return known.contains(key)?Set.copyOf(cached(key).cells.keySet()):Set.of();}
     public Set<Long> knownChunks(){mainThread();return Set.copyOf(known);}
     /** Exact whole BEFORE masks, even if only one occupied chunk has loaded.
      * Root shards are read once per input batch and not retained when unloaded. */
