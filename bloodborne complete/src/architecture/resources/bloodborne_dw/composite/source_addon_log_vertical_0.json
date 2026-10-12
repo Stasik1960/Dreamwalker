@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "units": 16,
   "id": "bloodborne_dw:source_addon_log_vertical_0",
-  "displayName": "Вертикальное деревянное украшение · вариант 1",
+  "displayName": "Высокое деревянное украшение",
   "openable": false,
   "layer": "cutout",
   "support": {
@@ -395,11 +395,77 @@
       "sourceStateRefs": [
         "minecraft:end_stone[variant:]"
       ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/log_vertical_1",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/log_vertical_0",
+              "offset": [
+                0.0,
+                64.0,
+                0.0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                3.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                13.0,
+                96.0,
+                13.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                3.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                13.0,
+                96.0,
+                13.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          3.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          13.0,
+          96.0,
+          13.0
+        ]
+      }
     }
   ],
   "source": {},
   "anchorPolicy": "floor",
   "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
   "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
-  "simplePhysicalCollision": true
+  "simplePhysicalCollision": true,
+  "v126AssemblyPolicy": "Completed installation pose appended after all unchanged old indices. Creative, placement and art cycling expose only completed pose; old fragment poses remain hidden compatibility states. Root runtime performs neighborhood recognition and preserves unmatched fragments.",
+  "v126DefaultPhysicsStatus": "STAGED_COMPONENT_UNION_REQUIRES_ROOT_FINAL_FITTED_PHYSICS_AND_NATIVE_TESTS"
 }

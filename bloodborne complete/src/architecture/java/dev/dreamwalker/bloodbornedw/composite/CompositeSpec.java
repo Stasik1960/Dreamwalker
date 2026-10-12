@@ -54,7 +54,7 @@ public final class CompositeSpec {
                     row.has("visibleBounds")?bound(row.getAsJsonObject("visibleBounds")):null,
                     row.has("mountedPlaneBounds")?bound(row.getAsJsonObject("mountedPlaneBounds")):null,number(row,"mountAlignmentYaw",0)));
         }
-        if (parsed.isEmpty() || parsed.size() > (ImportedArtworkBlock.isBankedPath(id.getPath())?128:id.getPath().equals("source_stairs_polished_deepslate_stairs_bottom")?20:16)) throw new IllegalArgumentException("Composite variant budget: " + id);
+        if (parsed.isEmpty() || parsed.size() > (ImportedArtworkBlock.isBankedPath(id.getPath())?ImportedArtworkBlock.variantBudget(id.getPath()):id.getPath().equals("source_stairs_polished_deepslate_stairs_bottom")?20:16)) throw new IllegalArgumentException("Composite variant budget: " + id);
         variants = List.copyOf(parsed);
     }
     public static CompositeSpec load(String path) {
@@ -74,6 +74,7 @@ public final class CompositeSpec {
         return state.get(CompositeRootBlock.OPEN) ? variants.get(variant).open : variants.get(variant).closed;
     }
     public Map<Cell, Footprint> footprint(BlockState state, double mountY) {
+        if(ImportedCollisionV126.supports(this))return ImportedCollisionV126.footprint(this,state,mountY,0,0,0);
         if(ImportedCollisionV125.supports(this))return ImportedCollisionV125.footprint(this,state,mountY,0,0,0);
         String key = poseVariant(state) + ":" + state.get(CompositeRootBlock.OPEN) + ":" + state.get(CompositeRootBlock.ROTATION) + ":" + ThinWindowRootBlock.mount(state) + ":" + mountY;
         Map<Cell,Footprint> cached=shapes.get(key);if(cached!=null)return cached;
@@ -153,6 +154,7 @@ public final class CompositeSpec {
     }
     /** Diagonal thin boxes use a 1/16-block conservative raster, never their filled AABB. */
     public Map<Cell,List<Box>> simplePhysicalFootprint(BlockState state,double mountY,double shiftX,double shiftY,double shiftZ) {
+        if(ImportedCollisionV126.supports(this))return ImportedCollisionV126.physicalFootprint(this,state,mountY,shiftX,shiftY,shiftZ);
         if(ImportedCollisionV125.supports(this))return ImportedCollisionV125.physicalFootprint(this,state,mountY,shiftX,shiftY,shiftZ);
         if(!simplePhysicalCollision)throw new IllegalArgumentException("Only newly imported defaults may use simple physical footprint");
         Pose current=pose(state);List<List<Bounds>> rotations=simpleRotations.get(current);

@@ -50,7 +50,7 @@ public class CompositeRootBlock extends BlockWithEntity {
                 CompositeSourceShift.Shift shift=CompositeSourceShift.local(payload);
                 if(shift.x()!=0||shift.y()!=0||shift.z()!=0){net.minecraft.nbt.NbtList artShift=new net.minecraft.nbt.NbtList();artShift.add(net.minecraft.nbt.NbtDouble.of(shift.x()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.y()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.z()));stack.getOrCreateNbt().put(ImportedTypeAliases.SHIFT_ART_KEY,artShift);}
             }
-            return ImportedTypeAliases.canonicalStack(stack);
+            return ImportedAssemblyV126.canonicalStack(ImportedTypeAliases.canonicalStack(stack));
         }
         return stack;
     }

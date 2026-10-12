@@ -17,7 +17,7 @@ public final class CompositeItem extends BlockItem {
     private ActionResult placeInternal(ItemPlacementContext context){
         if(context.getPlayer()==null||!context.getWorld().isChunkLoaded(context.getBlockPos()))return ActionResult.FAIL;
         if(root.spec.simplePhysicalCollision){
-            ItemStack converted=ImportedTypeAliases.canonicalStack(context.getStack());
+            ItemStack converted=ImportedAssemblyV126.canonicalStack(ImportedTypeAliases.canonicalStack(context.getStack()));
             if(converted!=context.getStack()){
                 ItemPlacementContext redirected=new ItemPlacementContext(context){@Override public ItemStack getStack(){return converted;}};
                 ActionResult result=((CompositeItem)converted.getItem()).place(redirected);

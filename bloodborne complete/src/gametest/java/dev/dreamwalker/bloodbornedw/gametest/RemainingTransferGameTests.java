@@ -47,7 +47,12 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     private static List<CompositeRootBlock> added() {
         return CompositeArchitecture.blocks().stream().filter(block->block.spec.id.getPath().startsWith("source_"))
             .filter(block->ImportedTypeAliases.canonicalRegistry(block.spec.id.toString()).equals(block.spec.id.toString())&&!(block instanceof ImportedStairBlock))
+            .filter(block->!ImportedAssemblyV126.hidden(block.spec.id.getPath()))
             .sorted(Comparator.comparing(block->block.spec.id.toString())).toList();
+    }
+    private static List<Integer> workingPoses(CompositeRootBlock block) {
+        var active=ImportedAssemblyV126.activePoses(block.spec.id.getPath());
+        return active.isEmpty()?java.util.stream.IntStream.range(0,block.spec.variants.size()).boxed().toList():active;
     }
     private static ServerPlayerEntity player(ServerWorld world) {
         var player=new ServerPlayerEntity(world.getServer(),world,new GameProfile(UUID.randomUUID(),"TransferProbe"));
@@ -63,7 +68,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     private static ItemStack art(CompositeRootBlock block,int variant,CompositeRootBlock.Profile profile) {
         return block.art(poseState(block,variant).with(CompositeRootBlock.PROFILE,profile),ImportedTypeAliases.markPayload(null));
     }
-    private static BlockState poseState(CompositeRootBlock block,int pose){BlockState state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose%16);if(block instanceof ImportedArtworkBlock)state=state.with(ImportedArtworkBlock.ART_BANK,pose/16);if(block instanceof ImportedLadderBlock)state=state.with(ImportedLadderBlock.HEIGHT,pose==0?ImportedLadderBlock.Height.ONE:ImportedLadderBlock.Height.TWO);return state;}
+    private static BlockState poseState(CompositeRootBlock block,int pose){BlockState state=block.getDefaultState().with(CompositeRootBlock.VARIANT,pose%16);if(block instanceof ImportedArtworkBlock)state=state.with(ImportedArtworkBlock.bankProperty(state),pose/16);if(block instanceof ImportedLadderBlock)state=state.with(ImportedLadderBlock.HEIGHT,pose==0?ImportedLadderBlock.Height.ONE:ImportedLadderBlock.Height.TWO);return state;}
     private static void preload(ServerWorld world,BlockPos root,CompositeRootBlock block,int variant,int yaw) {
         var state=poseState(block,variant).with(CompositeRootBlock.ROTATION,yaw);
         Set<BlockPos> required=new HashSet<>();
@@ -135,7 +140,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         var world=t.getWorld();var root=t.getAbsolutePos(new BlockPos(64,96,64));var player=player(world);
         var additions=added();t.assertTrue(!additions.isEmpty(),"remaining transfer registers new source composites");
         List<Runnable> cases=new ArrayList<>();
-        for(var block:additions)for(int variant=0;variant<block.spec.variants.size();variant++)for(int yaw:new int[]{0,1,2,3,4,5,6,7}) {
+        for(var block:additions)for(int variant:workingPoses(block))for(int yaw:new int[]{0,1,2,3,4,5,6,7}) {
             final int selected=variant;
             cases.add(()->{
                 var owner=place(t,player,root,block,selected,yaw,art(block,selected,CompositeRootBlock.Profile.BASE));
@@ -157,7 +162,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     public void everyNewVariantPickCopiesOnlyArtWithNewUuidAndTypedNbtRoundTrips(TestContext t) {
         var world=t.getWorld();var root=t.getAbsolutePos(new BlockPos(4096,96,64));var player=player(world);
         List<Runnable> cases=new ArrayList<>();
-        for(var block:added())for(int variant=0;variant<block.spec.variants.size();variant++) {
+        for(var block:added())for(int variant:workingPoses(block)) {
             final int selected=variant;
             cases.add(()->{
                 var profile=block.spec.variants.get(selected).closed().parts().stream().anyMatch(part->!part.model().equals(part.altModel()))?CompositeRootBlock.Profile.ALT:CompositeRootBlock.Profile.BASE;
@@ -187,7 +192,8 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         var world=t.getWorld();var root=t.getAbsolutePos(new BlockPos(8192,96,64));var player=player(world);
         List<Runnable> cases=new ArrayList<>();
         for(var block:added())cases.add(()->{
-                var owner=place(t,player,root,block,0,0,art(block,0,CompositeRootBlock.Profile.BASE));
+                int pose=ImportedAssemblyV126.installationPose(block.spec.id.getPath());
+                var owner=place(t,player,root,block,pose,0,art(block,pose,CompositeRootBlock.Profile.BASE));
                 var state=world.getBlockState(root);
                 for(var direction:Direction.values()) {
                     var neighbor=root.offset(direction);
@@ -253,25 +259,26 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 retiredRegistrations++;
                 t.assertTrue(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.creativeVariants(new ItemStack(block.asItem())).isEmpty(),"retired main or alias produces no placing stack "+registry);
                 t.assertTrue(stacks.stream().noneMatch(stack->stack.isOf(block.asItem())),"retired main or alias is hidden in unified Creative "+registry);
-            } else if(ImportedTypeAliases.canonicalRegistry(registry).equals(registry)) active.add(registry);
+            } else if(ImportedTypeAliases.canonicalRegistry(registry).equals(registry)&&!ImportedAssemblyV126.hidden(block.spec.id.getPath())) active.add(registry);
         }
         Set<String> offered=new HashSet<>();
         for(var stack:stacks) {
             String registry=Registries.ITEM.getId(stack.getItem()).toString();
             if(registry.startsWith("bloodborne_dw:source_")) {
                 t.assertTrue(!ImportedStyleRetirements.retired(registry),"Creative never offers a retired NEW type");
+                t.assertTrue(!ImportedAssemblyV126.hidden(Registries.ITEM.getId(stack.getItem()).getPath()),"Creative never offers an approved assembly's technical old part");
                 t.assertTrue(offered.add(registry),"one Creative installing item per active NEW type");
             }
         }
         t.assertTrue(registered==1045&&retiredRegistrations==30,"all 1045 saved NEW registrations remain, including 30 hidden main/alias registrations");
-        t.assertTrue(active.size()==551&&offered.equals(active),"Creative offers exactly the 551 retained NEW working types");
+        t.assertTrue(active.size()==544&&offered.equals(active),"Creative offers exactly 544 NEW working types after seven approved independent parts leave the old 551-type catalogue");
         t.complete();
     }
 
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=60000,batchId="remaining_transfer_doors")
     public void newDoorsOpenCloseByOrdinaryCallbackAndBridgeRejectsOldInstanceWhilePickKeepsOpenArt(TestContext t) {
         var world=t.getWorld();var root=t.getAbsolutePos(new BlockPos(12288,96,64));var player=player(world);List<Runnable> cases=new ArrayList<>();
-        for(var block:added())if(block.spec.openable)for(int variant=0;variant<block.spec.variants.size();variant++) {
+        for(var block:added())if(block.spec.openable)for(int variant:workingPoses(block)) {
             final int selected=variant;
             cases.add(()->{
                 var owner=place(t,player,root,block,selected,0,art(block,selected,CompositeRootBlock.Profile.BASE));

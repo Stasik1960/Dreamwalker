@@ -33,7 +33,7 @@ public final class RemainingArchitecture {
                     if (name.isBlank()) throw new IllegalStateException("Empty artwork name " + path);
                     names.add(name);
                 }
-                if (names.isEmpty() || names.size() > (dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.isBankedPath(path)?128:path.equals("source_stairs_polished_deepslate_stairs_bottom")?20:16) || result.putIfAbsent(path, new Artwork(path, List.copyOf(names))) != null)
+                if (names.isEmpty() || names.size() > (dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.isBankedPath(path)?dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.variantBudget(path):path.equals("source_stairs_polished_deepslate_stairs_bottom")?20:16) || result.putIfAbsent(path, new Artwork(path, List.copyOf(names))) != null)
                     throw new IllegalStateException("Invalid/repeated artwork " + path);
             }
             return Collections.unmodifiableMap(result);
@@ -60,11 +60,14 @@ public final class RemainingArchitecture {
         Identifier id = Registries.ITEM.getId(original.getItem());
         Artwork artwork = id.getNamespace().equals("bloodborne_dw") ? ARTWORKS.get(id.getPath()) : null;
         if (artwork == null) return List.of(original.copy());
+        if (dev.dreamwalker.bloodbornedw.composite.ImportedAssemblyV126.hidden(id.getPath())) return List.of();
         if (dev.dreamwalker.bloodbornedw.composite.ImportedStyleRetirements.retired(id)) return List.of();
         if (!dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases.canonicalRegistry(id.toString()).equals(id.toString())) return List.of();
         ItemStack stack = original.copy();
         stack.getOrCreateNbt().putInt("ImportedTypeVersion",1);
-        stack.getOrCreateSubNbt("BlockStateTag").putString("variant","0");
+        int pose=dev.dreamwalker.bloodbornedw.composite.ImportedAssemblyV126.installationPose(id.getPath());
+        stack.getOrCreateSubNbt("BlockStateTag").putString("variant",Integer.toString(pose%16));
+        if(pose>=16)stack.getOrCreateSubNbt("BlockStateTag").putString("art_bank",Integer.toString(pose/16));
         return List.of(stack);
     }
 

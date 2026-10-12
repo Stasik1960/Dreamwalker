@@ -1636,6 +1636,152 @@
         "minecraft:acacia_fence[east=false,north=false,south=false,waterlogged=false,west=true]"
       ],
       "v125SourceSingleCell": true
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_fence_post",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_fence_post",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 270,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                14.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_fence_post",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_fence_post",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 270,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                2.0,
+                0.0,
+                2.0
+              ],
+              "to": [
+                14.0,
+                16.0,
+                14.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          2.0,
+          0.0,
+          2.0
+        ],
+        "to": [
+          14.0,
+          16.0,
+          14.0
+        ]
+      },
+      "sourceVariant": "Сочетание исходной ячейки 9",
+      "sourcePlacementOffset": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "localOrigin": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/acacia_fence_post",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/acacia_fence_post",
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:acacia_fence[east=false,north=false,south=false,waterlogged=false,west=true]"
+      ],
+      "v126SourceSingleCell": true
     }
   ],
   "source": {

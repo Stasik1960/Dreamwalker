@@ -49,7 +49,9 @@ public final class CompositeRuntime {
         else if(!(block instanceof ThinWindowRootBlock))payload.remove("MountY");
         if(block instanceof ThinWindowRootBlock&&!GlazingMount.seat(world,pos,state,payload))return rejected("missing_glazing_support_on_clicked_face");
         ObjectInstance object=instance(world,pos,state,uuid,payload);FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of(object.owner(),object));
-        return execute(access,core().placement(access,object,checks(world,player,object,block)));
+        var result=execute(access,core().placement(access,object,checks(world,player,object,block)));
+        if(result.outcome()==TransactionCore.Outcome.COMMITTED&&state.getBlock() instanceof CompositeRootBlock imported&&imported.spec.id.getPath().startsWith("source_"))queue(world,"v126-assembly-installed:"+object.owner().instanceId(),()->ImportedAssemblyV126.installed(world,object.owner()));
+        return result;
     }
     public static TransactionCore.Result transition(ServerWorld world,Owner owner,BlockState next,PlayerEntity player){
         next=ImportedStairShapes.normalize(next);
@@ -88,6 +90,65 @@ public final class CompositeRuntime {
         ObjectInstance object=instance(world,pos,next,owner.instanceId(),payload);
         FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of(object.owner(),object));
         return execute(access,core().migrateAlias(access,owner,object,List.of()));
+    }
+    /** One rollback-capable transaction consumes approved complete NEW parts.
+     * Virtual removal/placement preparations never write intermediate cells.
+     */
+    public static TransactionCore.Result migrateApprovedAssembly(ServerWorld world,List<ObjectInstance> before,ObjectInstance after){
+        if(before.isEmpty()||before.size()>8||!before.get(0).owner().instanceId().equals(after.owner().instanceId())||!before.get(0).owner().root().equals(after.owner().root()))return rejected("invalid_assembly_identity");
+        Map<Owner,ObjectInstance> saved=new LinkedHashMap<>();for(ObjectInstance part:before){if(!part.owner().registryId().startsWith("bloodborne_dw:source_")||saved.putIfAbsent(part.owner(),part)!=null)return rejected("unreviewed_or_duplicate_assembly_part");}
+        boolean replacement=before.size()==1&&before.get(0).owner().registryId().equals("bloodborne_dw:source_dark_oak_trapdoor_top")&&after.owner().registryId().equals("bloodborne_dw:prototype_double_door");
+        BlockState next=CompositeData.state(after.rootData());if(!replacement&&!ImportedAssemblyV126.complete(next))return rejected("unreviewed_assembly_target");
+        List<net.minecraft.util.math.Box> oldPhysical=before.stream().flatMap(part->dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.physicalBoxes(part).stream()).toList();
+        Map<dev.dreamwalker.bloodbornedw.link.MechanismLinks.TargetRef,dev.dreamwalker.bloodbornedw.link.MechanismLinks.TargetRef> refs=new LinkedHashMap<>();
+        var target=dev.dreamwalker.bloodbornedw.link.CompositeMechanismBridge.reference(world,after.owner());before.forEach(part->refs.put(dev.dreamwalker.bloodbornedw.link.CompositeMechanismBridge.reference(world,part.owner()),target));
+        dev.dreamwalker.bloodbornedw.link.ArchitectureReferenceMigration.Prepared metadata;
+        try{metadata=dev.dreamwalker.bloodbornedw.link.ArchitectureReferenceMigration.prepare(world.getServer(),refs);}catch(IllegalStateException failure){return rejected("assembly_reference_preflight:"+failure.getMessage());}
+        NbtCompound enriched=CompositeData.nbt(after.rootData().blockEntityNbt());enriched.put("ImportedAssemblyV126References",metadata.provenance());after=instance(world,CompositeData.pos(after.owner().root()),next,after.owner().instanceId(),enriched);
+        var access=new FabricCompositeWorld(world,Map.of(after.owner(),after)){
+            private boolean restoring;
+            @Override public Optional<ObjectInstance> describeRoot(Owner owner,CellSnapshot snapshot){ObjectInstance old=saved.get(owner);if(old!=null&&owner.equals(snapshot.resident())&&snapshot.data().equals(old.rootData()))return Optional.of(old);return super.describeRoot(owner,snapshot);}
+            @Override public boolean intersectsEntities(Cell cell,Footprint proposed){return false;}
+            @Override public boolean allowsReviewedOverlap(ObjectInstance incoming,ObjectInstance existing,Cell cell){
+                // Explicit90479 replacement is a one-time saved-source import.
+                // Future ordinary placements/transitions have no such privilege.
+                if(replacement)return true;
+                if(existing.owner().registryId().equals("bloodborne_dw:prototype_roof")&&!cell.equals(existing.owner().root()))return true;
+                for(var a:incoming.at(cell).collision())for(var b:existing.at(cell).collision())if(!dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.retainedIntersection(new net.minecraft.util.math.Box(cell.x()+a.minX(),cell.y()+a.minY(),cell.z()+a.minZ(),cell.x()+a.maxX(),cell.y()+a.maxY(),cell.z()+a.maxZ()),new net.minecraft.util.math.Box(cell.x()+b.minX(),cell.y()+b.minY(),cell.z()+b.minZ(),cell.x()+b.maxX(),cell.y()+b.maxY(),cell.z()+b.maxZ()),oldPhysical))return false;return true;
+            }
+            @Override public void publishCommitted(List<Cell> cells){if(!restoring)metadata.commit();super.publishCommitted(cells);}
+            @Override public boolean restoreSilently(Cell cell,CellSnapshot previous){restoring=true;metadata.rollback();return super.restoreSilently(cell,previous);}
+        };
+        Map<Cell,CellSnapshot> expected=new TreeMap<>(),overlay=new TreeMap<>();
+        TransactionCore.WorldAccess virtual=new TransactionCore.WorldAccess(){
+            @Override public void assertMutationThread(){access.assertMutationThread();}
+            @Override public String dimensionKey(){return access.dimensionKey();}
+            @Override public boolean isLoaded(Cell cell){return access.isLoaded(cell);}
+            @Override public boolean inBounds(Cell cell){return access.inBounds(cell);}
+            @Override public CellSnapshot read(Cell cell){if(!expected.containsKey(cell))expected.put(cell,access.read(cell));return overlay.getOrDefault(cell,expected.get(cell));}
+            @Override public Optional<ObjectInstance> describeRoot(Owner owner,CellSnapshot snapshot){return access.describeRoot(owner,snapshot);}
+            @Override public boolean supportsGuestBindings(CellSnapshot carrier){return access.supportsGuestBindings(carrier);}
+            @Override public boolean allowsReviewedOverlap(ObjectInstance incoming,ObjectInstance existing,Cell cell){return access.allowsReviewedOverlap(incoming,existing,cell);}
+            @Override public boolean intersectsEntities(Cell cell,Footprint proposed){return false;}
+            @Override public boolean needsRefresh(Cell cell,CellSnapshot old,CellSnapshot next){return access.needsRefresh(cell,old,next);}
+            @Override public boolean writeSilently(Cell cell,CellSnapshot next){throw new IllegalStateException("Virtual assembly preflight cannot write the world");}
+            @Override public void publishCommitted(List<Cell> cells){throw new IllegalStateException("Virtual assembly preflight cannot publish");}
+        };
+        for(ObjectInstance part:before){var removal=core().removal(virtual,part.owner());if(!removal.accepted())return rejected("assembly_detach_preflight:"+removal.reason());overlay.putAll(removal.plan().writes());}
+        var placement=core().placement(virtual,after,List.of((proposed,reads)->{
+            if(replacement)return null;
+            for(var box:dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.physicalBoxes(proposed))
+                for(int x=(int)Math.floor(box.minX+1e-7)-1;x<(int)Math.ceil(box.maxX-1e-7)+1;x++)for(int y=(int)Math.floor(box.minY+1e-7)-1;y<(int)Math.ceil(box.maxY-1e-7)+1;y++)for(int z=(int)Math.floor(box.minZ+1e-7)-1;z<(int)Math.ceil(box.maxZ-1e-7)+1;z++){
+                    BlockPos cell=new BlockPos(x,y,z);if(!world.isChunkLoaded(cell))return "unloaded_assembly_physical_neighbor:"+cell.toShortString();reads.require(CompositeData.cell(cell));
+                    BlockState carrier=world.getBlockState(cell);if(carrier.getBlock() instanceof CompositeRootBlock||carrier.isOf(CompositeArchitecture.CELL))continue;
+                    for(var obstacle:nativeCollision(carrier,world,cell,ShapeContext.absent()).getBoundingBoxes())if(!dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics.retainedIntersection(box,obstacle.offset(cell),oldPhysical))return "solid_native_assembly_neighbor:"+cell.toShortString();
+                }
+            return null;
+        }));
+        if(!placement.accepted())return rejected("assembly_attach_preflight:"+placement.reason());overlay.putAll(placement.plan().writes());
+        overlay.entrySet().removeIf(entry->entry.getValue().equals(expected.get(entry.getKey()))&&!access.needsRefresh(entry.getKey(),expected.get(entry.getKey()),entry.getValue()));
+        var plan=new TransactionCore.Preparation(new TransactionCore.Plan(access.dimensionKey(),expected,overlay,Map.of()),null);
+        var result=execute(access,plan);if(result.outcome()!=TransactionCore.Outcome.COMMITTED)metadata.rollback();return result;
     }
     /** Native stair corners update around players; only NEW derived shape may change here. */
     public static TransactionCore.Result transitionImportedStair(ServerWorld world,Owner owner,BlockState next){
@@ -315,6 +376,7 @@ public final class CompositeRuntime {
         queue(world,"imported-type-migration-chunk:"+chunk.toLong(),()->ImportedTypeMigration.loadedChunk(world,chunk));
         queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
         queue(world,"imported-physical-migration-chunk:"+chunk.toLong(),()->ImportedCollisionMigration.loadedChunk(world,chunk));
+        queue(world,"v126-approved-assembly-migration-chunk:"+chunk.toLong(),()->ImportedAssemblyV126.loadedChunk(world,chunk));
         CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
         BlockPos pos=CompositeData.pos(cell);scheduleCleanup(world,pos);
         // CHUNK_LOAD runs before this chunk's FULL future has completed. Never

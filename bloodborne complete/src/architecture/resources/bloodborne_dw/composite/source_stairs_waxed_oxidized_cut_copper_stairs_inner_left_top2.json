@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "units": 16,
   "id": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
-  "displayName": "Ступенчатый модуль · внутренний угол, верхняя, левая",
+  "displayName": "Каменное окно с орнаментом",
   "openable": false,
   "layer": "translucent",
   "support": {
@@ -278,11 +278,125 @@
         "minecraft:waxed_oxidized_cut_copper_stairs[variant:facing=south,half=top,shape=inner_left]",
         "minecraft:waxed_oxidized_cut_copper_stairs[variant:facing=west,half=top,shape=inner_left]"
       ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/waxed_oxidized_cut_copper_stairs_inner_left_top2",
+              "offset": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/waxed_oxidized_cut_copper_stairs_inner_right_top2",
+              "offset": [
+                0.0,
+                36.0,
+                0.0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                44.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                68.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -10.0,
+                20.0,
+                4.0
+              ],
+              "to": [
+                26.0,
+                44.0,
+                12.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                44.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                68.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -10.0,
+                20.0,
+                4.0
+              ],
+              "to": [
+                26.0,
+                44.0,
+                12.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          32.0,
+          68.0,
+          16.0
+        ]
+      }
     }
   ],
   "source": {},
   "anchorPolicy": "floor",
   "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
   "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
-  "simplePhysicalCollision": true
+  "simplePhysicalCollision": true,
+  "v126AssemblyPolicy": "Completed installation pose appended after all unchanged old indices. Creative, placement and art cycling expose only completed pose; old fragment poses remain hidden compatibility states. Root runtime performs neighborhood recognition and preserves unmatched fragments.",
+  "v126DefaultPhysicsStatus": "STAGED_COMPONENT_UNION_REQUIRES_ROOT_FINAL_FITTED_PHYSICS_AND_NATIVE_TESTS"
 }
