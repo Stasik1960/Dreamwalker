@@ -87,7 +87,7 @@ public final class NativeV127ClientQa implements ClientModInitializer {
         var model=client.getBlockRenderManager().getModel(state);var quads=new ArrayList<>(model.getQuads(state,null,Random.create(0)));
         for(var face:Direction.values())quads.addAll(model.getQuads(state,face,Random.create(0)));return quads;
     }
-    private void verifyAuthoredGrassProviders(MinecraftClient client){
+    private void verifyAuthoredGrassProviders(MinecraftClient client)throws Exception{
         var pos=new BlockPos(50,64,0);var placed=client.world.getBlockState(pos);require(ImportedCompactBlock.compact(placed)&&client.world.getBlockEntity(pos)==null,"Authored grass station is the actual native no-BE palette representation");
         require(allQuads(client,placed).stream().anyMatch(quad->quad.getColorIndex()==0),"Native authored grass model retains tint-index0 quads");
         var provider=net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry.BLOCK;
