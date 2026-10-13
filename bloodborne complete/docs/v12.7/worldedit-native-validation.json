@@ -1,25 +1,25 @@
 {
-  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS17",
-  "sourceCheckpointAtRun": "7be6a98655bb01801350db7154877921124ca3a9",
-  "productionJarSha256AtRun": "800a54032ffcea371bf1aa8de791c9ac789b8c6c7296384f3b370e61ab4236de",
-  "allNativeXmlCases": 123,
+  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS20",
+  "sourceCheckpointAtRun": "60013302a7f5244f87a0bdba67227899ff2e0a88",
+  "productionJarSha256AtRun": "c7e843590be5a7525af4805bffec989b30999a1f35eb3cb907e912cb45f546ea",
+  "allNativeXmlCases": 127,
   "failures": 0,
   "skipped": 0,
   "realWorldEditApiCases": [
     {
       "name": "worldeditrpv127gametests.numericrpclipboardandselectivedeleteundokeeptypedsettingsandcounters",
       "status": "PASS",
-      "seconds": "0.235"
+      "seconds": "0.242"
     },
     {
       "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
       "status": "PASS",
-      "seconds": "0.088"
+      "seconds": "0.074"
     },
     {
       "name": "worldeditv127gametests.clipboardlinkedownersremaponlyactuallycopiedmembersandkeeponependingevent",
       "status": "PASS",
-      "seconds": "0.069"
+      "seconds": "0.077"
     }
   ],
   "worldEditVersion": "7.2.15+6463-5ca4dff",
@@ -53,8 +53,8 @@
     "status": "PASS_REAL_OPTIONAL_WORLDEDIT_RP_ROUNDTRIP",
     "worldEditVersion": "7.2.15+6463-5ca4dff",
     "fiveDigitId": "91029",
-    "sourceUuid": "57113459-eff8-4bb9-b315-585da040fc00",
-    "copiedUuid": "5bd7aa55-5397-4e1c-8066-93bae0cb72b4",
+    "sourceUuid": "381fac77-c499-4964-b5db-ca0463f8cd68",
+    "copiedUuid": "126ba852-a008-4982-8c7b-3c4a746d3f5d",
     "parserAndActor": "ACTUAL_FABRIC_ADAPTER",
     "numericPlacement": "PASS",
     "actualEditSessionGetFullBlock": "PASS",
@@ -87,44 +87,49 @@
   "galleryCreated": false,
   "evidence": [
     {
-      "path": "build/test-results/gametest/TEST-tests17.xml",
-      "bytes": 20001,
-      "sha256": "63fd88ae64c2c8451ea8827cd11925b7d2971918e0fffb597c7b6ed6c77e55f8"
+      "path": "build/test-results/gametest/TEST-tests20.xml",
+      "bytes": 20688,
+      "sha256": "14b4fb4269916d13bcf1f14fb87e7dbec48d6540e1c006c9f85c37e12e24e91c"
     },
     {
-      "path": "build/v127-validation/tests17/result.json",
+      "path": "build/v127-validation/tests20/result.json",
       "bytes": 827,
-      "sha256": "20cd14973e7eccbdf106c920e589a2e25f6ce210ff28079dfc355c117b96f4df"
+      "sha256": "52187b32ec9b670c050e6b3afce5bdd53a149959d0be4d6e92c95f77f6ffe2d5"
     },
     {
-      "path": "build/v127-validation/tests17/gradle.log",
-      "bytes": 293634,
-      "sha256": "eb2cc6fced3ff78b6ce3335dd195d771eb71896212a82b1d50dd60c9aa6b3373"
+      "path": "build/v127-validation/tests20/gradle.log",
+      "bytes": 299869,
+      "sha256": "1da4a193fd81831d124264328112c3855c0e2acabfa8d9231f41f0186b1b2a44"
     },
     {
-      "path": "build/gametest-tests17/world/v127-worldedit-rp-native-proof.json",
+      "path": "build/gametest-tests20/world/v127-worldedit-rp-native-proof.json",
       "bytes": 621,
-      "sha256": "50e6d3d1fd108647463c7ae6114b383ded11f064f803aff56e68812c2e883338"
+      "sha256": "1b56422f7a86a7d1d0ab1fc88d20918d966fc7599024f6f5de1a1b5b118156b0"
     },
     {
-      "path": "build/gametest-tests17/world/v127-worldedit-linked-native-proof.json",
+      "path": "build/gametest-tests20/world/v127-worldedit-linked-native-proof.json",
       "bytes": 444,
       "sha256": "87d7a1518f94fca11d53488810ffb595f42eb62a6ddb50d89b019d05fd4fa846"
     },
     {
-      "path": "build/gametest-tests17/world/v127-source-model-offset-native-proof.json",
+      "path": "build/gametest-tests20/world/v127-source-model-offset-native-proof.json",
       "bytes": 32876,
       "sha256": "bac1e9ffaaec6dceed1a84bc310f119031116bfd7ee917a57958815f0fc4351d"
     },
     {
-      "path": "build/gametest-tests17/world/v127-source-lighting-native-proof.json",
+      "path": "build/gametest-tests20/world/v127-source-lighting-native-proof.json",
       "bytes": 8001961,
-      "sha256": "58f64d52d13faa31a4942d2a25b23c784f943eecd07629954599a89ea6fa8cec"
+      "sha256": "8f8abbbdd9bd89e6caa00ddf5cf68445cbbe8cd71de8e7b315346bb9dab07f85"
     },
     {
       "path": "build/v127-runtime-conversion-final2/manifest.json",
       "bytes": 32109,
       "sha256": "af4853248d1ee116101110f3eedcaf7528fb9b1bb2e9fe26e3bf6b0ec3cebbd7"
+    },
+    {
+      "path": "build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7-final.jar",
+      "bytes": 42023491,
+      "sha256": "c7e843590be5a7525af4805bffec989b30999a1f35eb3cb907e912cb45f546ea"
     }
   ]
 }

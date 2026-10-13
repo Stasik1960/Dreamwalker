@@ -101,6 +101,7 @@ public final class NativeV127ClientQa implements ClientModInitializer {
         }
         var vanilla=provider.get(net.minecraft.block.Blocks.GRASS_BLOCK);require(vanilla!=null&&vanilla.getColor(net.minecraft.block.Blocks.GRASS_BLOCK.getDefaultState(),client.world,pos,0)==net.minecraft.client.color.world.BiomeColors.getGrassColor(client.world,pos),"Original vanilla grass color provider remains standard");
         report.addProperty("authoredNativeGrassBiomeAndInventoryTint","PASS_ACTUAL_CLIENT_COLOR_PROVIDERS");
+        if(!report.has("sourceGeneratedAltNativeVertices"))report.add("sourceGeneratedAltNativeVertices",NativeGeneratedAltV127Qa.verify(client));
     }
     private boolean placed(MinecraftClient client,Case current){if(current.rp)return rp(client)!=null;return current.stack.getItem() instanceof BlockItem item&&client.world.getBlockState(current.root).isOf(item.getBlock());}
     private RpObjectEntity rp(MinecraftClient client){for(var entity:client.world.getEntities())if(entity instanceof RpObjectEntity rp&&rp.assetId().equals("curtainsmall"))return rp;return null;}

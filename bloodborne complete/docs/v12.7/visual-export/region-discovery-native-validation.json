@@ -1,0 +1,25 @@
+{
+  "status": "PASS_FINAL_NATIVE_REGION_DISCOVERY",
+  "nativeRun": "tests20 WITH actual WorldEdit",
+  "sourceCommit": "60013302a7f5244f87a0bdba67227899ff2e0a88",
+  "productionJarSha256": "c7e843590be5a7525af4805bffec989b30999a1f35eb3cb907e912cb45f546ea",
+  "nativeTestcases": [
+    "bbregiondiscoveryv127gametests.nativeemptyregionstubkeepsloadedunionandindexesthefirstrealsave",
+    "bbregiondiscoveryv127gametests.nonzeropartialcoldheadersfailinsteadofsilentlyskippingsavedtargets"
+  ],
+  "nativeProofSha256": "5c7e9ce0a2d36bb2543e0a57492b695814785642c161f8d149aaa8cb779f58d6",
+  "nativeProof": {
+    "status": "PASS_NATIVE_EMPTY_REGION_FIRST_SAVE_AND_LOADED_UNION",
+    "nativeConstructorInitialBytes": 0,
+    "nativeFirstSaveBytes": 8209,
+    "loadedChunk": 4294967311,
+    "savedChunk": 416611827648,
+    "diskAndLoadedUnion": true
+  },
+  "nonzeroPartialHeaderLengthsRejected": [
+    1,
+    12,
+    4095
+  ],
+  "scope": "Actual native RegionFile open/read zero-byte lifecycle, first stream save/index/read, retained loaded live mod chunk union, and explicit malformed nonempty cold-header rejection. No source world or resource pack writes."
+}

@@ -145,6 +145,9 @@ public final class CompositeClient {
         }
         var selectedParts=ImportedStairLegacyArt.selectedParts(block,state,payload);
         boolean generatedAlt=dev.dreamwalker.bloodbornedw.tool.BbAlternateService.generatedAlternate(block,state,selectedParts);
+        // Native model rendering applies its RGB arguments only to tinted quads.
+        // Tone every emitted face for generated NEW alternates, after source tint.
+        if(generatedAlt)consumer=generatedAlternateConsumer(consumer);
         for(var part:selectedParts){
             matrices.push();matrices.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.yaw(),false);
@@ -152,10 +155,25 @@ public final class CompositeClient {
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
             var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
-            float partRed=generatedAlt?red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED:red,partGreen=generatedAlt?green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN:green,partBlue=generatedAlt?blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE:blue;
             boolean sourceEmissive=block.spec.id.getPath().startsWith("source_")&&selectedModel.getPath().startsWith("remaining/source_emissive/");
-            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,partRed,partGreen,partBlue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
+            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,red,green,blue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
         }matrices.pop();
+    }
+    /** Uniform generated-ALT tone. The native quad tint, alpha, UV and lighting remain intact. */
+    private static VertexConsumer generatedAlternateConsumer(VertexConsumer target){return new GeneratedAlternateConsumer(target);}
+    private static final class GeneratedAlternateConsumer implements VertexConsumer {
+        private final VertexConsumer target;
+        GeneratedAlternateConsumer(VertexConsumer target){this.target=target;}
+        @Override public VertexConsumer vertex(double x,double y,double z){target.vertex(x,y,z);return this;}
+        @Override public VertexConsumer color(int red,int green,int blue,int alpha){target.color(Math.round(red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED),Math.round(green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN),Math.round(blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE),alpha);return this;}
+        @Override public VertexConsumer texture(float u,float v){target.texture(u,v);return this;}
+        @Override public VertexConsumer overlay(int u,int v){target.overlay(u,v);return this;}
+        @Override public VertexConsumer light(int u,int v){target.light(u,v);return this;}
+        @Override public VertexConsumer normal(float x,float y,float z){target.normal(x,y,z);return this;}
+        @Override public void next(){target.next();}
+        @Override public void fixedColor(int red,int green,int blue,int alpha){target.fixedColor(Math.round(red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED),Math.round(green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN),Math.round(blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE),alpha);}
+        @Override public void unfixColor(){target.unfixColor();}
+        @Override public void vertex(float x,float y,float z,float red,float green,float blue,float alpha,float u,float v,int overlay,int light,float normalX,float normalY,float normalZ){target.vertex(x,y,z,red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED,green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN,blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE,alpha,u,v,overlay,light,normalX,normalY,normalZ);}
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
     private static <T extends Comparable<T>> BlockState itemArt(BlockState state,net.minecraft.state.property.Property<T> property,String value){return property.parse(value).map(v->state.with(property,v)).orElse(state);}
