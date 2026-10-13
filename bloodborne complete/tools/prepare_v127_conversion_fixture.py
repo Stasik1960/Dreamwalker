@@ -85,6 +85,11 @@ def main():
     data.pop('ScheduledEvents', None)
     controlled_level_fields = {'LevelName', 'Player', 'CustomBossEvents', 'SpawnX', 'SpawnY', 'SpawnZ', 'GameType', 'allowCommands', 'DataPacks', 'ScheduledEvents'}
     assert all(data.get(key) == value for key, value in preserved_level.items() if key not in controlled_level_fields), 'Source level/worldgen tags changed outside fixture controls'
+    # Independent typed baseline, outside the world the native author may write.
+    # Do not trust that author's mutable originalRules report as the baseline.
+    game_rules_baseline = output / 'prepared-game-rules.nbt'
+    assert data['GameRules'].type == TAG_COMPOUND
+    write_nbt(game_rules_baseline, NbtFile('GameRules', copy.deepcopy(data['GameRules'])))
     write_nbt(world / 'level.dat', level)
     root = ROOT / 'src/architecture/resources/bloodborne_dw'
     collision = read(root / 'imported-collision-v125.json')
@@ -182,6 +187,8 @@ def main():
               'levelTemplateSource': 'IMMUTABLE_ORIGINAL_ZIP_LEVEL_ONLY' if a.original_level_template else 'KNOWN_FLAT_TEST_LEVEL_ONLY',
               'sourceLevelDataVersion': source_version, 'sourceLevelWorldgenTagsPreserved': True,
               'fixtureChunkDataVersion': source_version if a.original_level_template else 3465,
+              'preparedGameRulesPath': str(game_rules_baseline), 'preparedGameRulesSha256': sha(game_rules_baseline),
+              'preparedGameRulesCapturedBeforeNativeAuthor': True,
               'sourceProgramsExecuted': False, 'sourceScheduledEventsDisabled': True,
               'originalCityConverted': False, 'galleryCreated': False, 'nativeJavaRun': 'NOT_RUN'}
     dump(output / 'fixture-input.json', report)

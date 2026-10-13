@@ -1,18 +1,18 @@
 {
   "status": "PASS_FINAL_NATIVE_REGION_DISCOVERY",
-  "nativeRun": "tests21 WITH actual WorldEdit",
-  "sourceCommit": "d44c8d6f96f0546758532c6eb36213d1866e76e6",
-  "productionJarSha256": "cd5236cb01252357d24d7323479adeaaf3b174da52764e95f8e86279675f3bd7",
+  "nativeRun": "tests24 WITH actual WorldEdit",
+  "sourceCommit": "60f58db5c17dec7a2563400ef6368236788199e5",
+  "productionJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
   "nativeTestcases": [
-    "bbregiondiscoveryv127gametests.nativeemptyregionstubkeepsloadedunionandindexesthefirstrealsave",
-    "bbregiondiscoveryv127gametests.nonzeropartialcoldheadersfailinsteadofsilentlyskippingsavedtargets"
+    "bbregiondiscoveryv127gametests.nonzeropartialcoldheadersfailinsteadofsilentlyskippingsavedtargets",
+    "bbregiondiscoveryv127gametests.nativeemptyregionstubkeepsloadedunionandindexesthefirstrealsave"
   ],
-  "nativeProofSha256": "5c7e9ce0a2d36bb2543e0a57492b695814785642c161f8d149aaa8cb779f58d6",
+  "nativeProofSha256": "02e7162ac2ffce256e51ccbae1c93b61bbb0bc189d6c46d565e37b69b1b0bc62",
   "nativeProof": {
     "status": "PASS_NATIVE_EMPTY_REGION_FIRST_SAVE_AND_LOADED_UNION",
     "nativeConstructorInitialBytes": 0,
     "nativeFirstSaveBytes": 8209,
-    "loadedChunk": 4294967311,
+    "loadedChunk": 4294967312,
     "savedChunk": 416611827648,
     "diskAndLoadedUnion": true
   },
@@ -21,5 +21,5 @@
     12,
     4095
   ],
-  "scope": "Actual native RegionFile open/read zero-byte lifecycle, first stream save/index/read, retained loaded live mod chunk union, and explicit malformed nonempty cold-header rejection. No source world or resource pack writes."
+  "scope": "Actual native zero-byte RegionFile lifecycle, first compressed save and loaded/disk union; malformed nonempty headers rejected."
 }

@@ -134,14 +134,25 @@ public final class FullMapConversionAuthor implements ModInitializer {
                 committed = previous.get("committed").getAsLong(); alreadyPresent = previous.get("alreadyPresent").getAsLong();
             }
             require(phase >= 0 && phase <= PHASES.length && line >= 0, "Invalid durable cursor");
+            Map<GameRules,Rules> sharedOriginals = new IdentityHashMap<>();
             for (ServerWorld world : server.getWorlds()) {
                 CompositeLedger.enableSharding(world);
                 String dimension = world.getRegistryKey().getValue().toString();
-                Rules original = previous != null && previous.has("originalRules")
+                require(previous == null || previous.has("originalRules") && previous.getAsJsonObject("originalRules").has(dimension), "Missing original game rules on resume: " + dimension);
+                if (previous != null) {
+                    JsonObject savedRules = previous.getAsJsonObject("originalRules").getAsJsonObject(dimension);
+                    require(savedRules != null && List.of("daylight", "spawning", "fire", "weather", "randomTicks").stream().allMatch(savedRules::has), "Incomplete original game rules on resume: " + dimension);
+                }
+                Rules original = previous != null
                         ? JSON.fromJson(previous.getAsJsonObject("originalRules").get(dimension), Rules.class) : new Rules(world);
                 require(original != null, "Missing original game rules on resume");
-                rules.put(world, original); Rules.freeze(world);
+                Rules shared = sharedOriginals.putIfAbsent(world.getGameRules(), original);
+                require(shared == null || shared.equals(original), "Conflicting saved originals for dimensions sharing game rules: " + dimension);
+                rules.put(world, original);
             }
+            // Vanilla dimensions share GameRules. Capture ALL originals before
+            // freezing any world, including every durable resume record.
+            for (ServerWorld world : rules.keySet()) Rules.freeze(world);
             if (previous == null) durable("RUNNING");
             openPhase(); write(report, snapshot("RUNNING", null));
         }

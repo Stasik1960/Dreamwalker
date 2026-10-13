@@ -124,7 +124,33 @@ def snapshot(world, fixture):
     level = compound(compound(read_nbt(world / 'level.dat').root)['Data'])
     result['levelDataVersion'] = level['DataVersion'].value
     result['rules'] = {key: value.value for key, value in compound(level['GameRules']).items()}
+    result['typedRules'] = {key: typed(value) for key, value in compound(level['GameRules']).items()}
     return result
+
+
+def assert_original_game_rules(fixture, runtime, first, second, fixture_directory):
+    """Prepared typed source baseline, independent of the native author's claims."""
+    assert fixture['preparedGameRulesCapturedBeforeNativeAuthor'] is True
+    baseline = Path(fixture['preparedGameRulesPath']).resolve()
+    assert baseline == fixture_directory.resolve() / 'prepared-game-rules.nbt' and ordinary(baseline)
+    assert sha(baseline) == fixture['preparedGameRulesSha256'], 'Prepared independent GameRules baseline changed'
+    original = compound(read_nbt(baseline).root)
+    assert original, 'Prepared source GameRules baseline is empty'
+    for key, value in original.items():
+        expected = typed(value)
+        assert first['typedRules'].get(key) == expected, ('Native author changed prepared source GameRule', key, expected, first['typedRules'].get(key))
+        assert second['typedRules'].get(key) == expected, ('Production reopen changed prepared source GameRule', key, expected, second['typedRules'].get(key))
+    fields = {'doDaylightCycle': 'daylight', 'doMobSpawning': 'spawning', 'doFireTick': 'fire',
+              'doWeatherCycle': 'weather', 'randomTickSpeed': 'randomTicks'}
+    originals = runtime['originalRules']
+    assert all(dimension in originals for dimension in ('minecraft:overworld', 'minecraft:the_nether', 'minecraft:the_end'))
+    for dimension, claimed in originals.items():
+        for key, field in fields.items():
+            assert key in original and original[key].type == 8
+            assert str(claimed[field]).lower() == original[key].value, ('Author originalRules disagrees with independent prepared baseline', dimension, key, claimed[field], original[key].value)
+    return {'source': 'INDEPENDENT_TYPED_PREPARED_NBT_BEFORE_NATIVE_AUTHOR', 'sha256': sha(baseline),
+            'preparedRuleCount': len(original), 'checkedOriginalRuleDimensions': sorted(originals),
+            'nativeAddedRuleKeysAllowed': sorted(set(first['typedRules']) - set(original))}
 
 
 def main():
@@ -155,11 +181,7 @@ def main():
     runtime = author['runtimeResult']
     assert runtime['committed'] == len(fixture['owners']) + len(fixture['wholeObjects']) + len(fixture['entities'])
     assert runtime['phase'] == 3 and runtime['initialOverlapPrivilegeSerialized'] is False
-    expected_rules = {'doDaylightCycle': 'daylight', 'doMobSpawning': 'spawning', 'doFireTick': 'fire',
-                      'doWeatherCycle': 'weather', 'randomTickSpeed': 'randomTicks'}
-    original = runtime['originalRules']['minecraft:overworld']
-    for key, field in expected_rules.items():
-        assert first['rules'][key] == str(original[field]).lower()
+    rule_proof = assert_original_game_rules(fixture, runtime, first, second, args.fixture_input.parent)
     value = {'status': 'PASS_NATIVE_FIXTURE_CONVERTED_AND_PRODUCTION_REOPENED', 'productionJarSha256': digest,
              'levelTemplateSource': fixture.get('levelTemplateSource', 'KNOWN_FLAT_TEST_LEVEL_ONLY'),
              'sourceLevelDataVersion': fixture.get('sourceLevelDataVersion'),
@@ -169,11 +191,12 @@ def main():
              'dictionaryShards': len(first['shards']), 'nativeCompactPaletteWithoutBlockEntity': 'PASS',
              'initialOverlappingOwnersNativeInstall': 'PASS', 'exactUuidStateTypedPayloadGuestGeometryReopen': 'PASS',
              'originalGameRulesRestored': 'PASS', 'savedOverlapPrivilege': False,
+             'originalGameRulesIndependentBaseline': rule_proof,
              'volatileVanillaEntityCountersExcludedFromFunctionalComparison': sorted(VOLATILE_ENTITY_FIELDS),
              'ordinaryReplacementAfterBreak': 'SEPARATE_NATIVE_UTILITY_GAMETEST',
              'fullOriginalWorldConverted': False, 'galleryCreated': False,
              'snapshotSha256': hashlib.sha256(json.dumps(first, sort_keys=True).encode()).hexdigest(),
-             'evidence': {str(path): sha(path) for path in (args.fixture_input, args.conversion_launch, args.reopen_launch)}}
+             'evidence': {str(path): sha(path) for path in (args.fixture_input, args.conversion_launch, args.reopen_launch, Path(fixture['preparedGameRulesPath']))}}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
     print(json.dumps(value))

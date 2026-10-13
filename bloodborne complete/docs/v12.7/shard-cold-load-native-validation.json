@@ -1,0 +1,33 @@
+{
+  "status": "PASS_FINAL_NATIVE_COLD_SHARD_LIFECYCLE",
+  "sourceCommit": "60f58db5c17dec7a2563400ef6368236788199e5",
+  "productionJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+  "nativeTestcases": [
+    "shardchunkloadv127gametests.actualcoldchunkcallbackpublishesindexedshardbeforefullfutureandhandlesemptychunk"
+  ],
+  "proof": {
+    "status": "PASS_REAL_COLD_NATIVE_CHUNK_LOAD_BEFORE_FULL_PUBLICATION",
+    "indexedAndUnindexedCallbackCount": 2,
+    "actualNativeShardReads": 1,
+    "workerDiskReads": 0,
+    "maxRetainedShardCount": 1,
+    "retainedShardCountAfterUnload": 0,
+    "ownerUuidTypedNbtCollisionAndSelection": "EXACT"
+  },
+  "evidence": [
+    {
+      "path": "build/gametest-tests24/world/v127-shard-cold-load-native-proof.json",
+      "sha256": "d67307575cf71e807b5e94b8b199f7ad5533110a7f2932492409b3dbe3172788"
+    },
+    {
+      "path": "build/test-results/gametest/TEST-tests24.xml",
+      "sha256": "631ca079a3aaabe630340a6bc68252a524e14007b40e452bd80e34cb016805c4"
+    },
+    {
+      "path": "build/v127-validation/tests24/result.json",
+      "sha256": "23be4469771ba5c8cd699b3620d80b237b1d54948b7d95f55b4239afbfc80deb"
+    }
+  ],
+  "fullOriginalWorldConverted": false,
+  "galleryCreated": false
+}

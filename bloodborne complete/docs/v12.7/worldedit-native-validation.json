@@ -1,60 +1,41 @@
 {
-  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS21",
-  "sourceCheckpointAtRun": "d44c8d6f96f0546758532c6eb36213d1866e76e6",
-  "productionJarSha256AtRun": "cd5236cb01252357d24d7323479adeaaf3b174da52764e95f8e86279675f3bd7",
-  "allNativeXmlCases": 127,
+  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS24",
+  "sourceCheckpointAtRun": "60f58db5c17dec7a2563400ef6368236788199e5",
+  "productionJarSha256AtRun": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+  "allNativeXmlCases": 129,
   "failures": 0,
   "skipped": 0,
+  "worldEditVersion": "7.2.15+6463-5ca4dff",
+  "officialOptionalJarSha256": "17db6b3e94f52d25426684663e1e1846823cbb7907f1c365ac329e5bc7bfaf2c",
   "realWorldEditApiCases": [
     {
       "name": "worldeditrpv127gametests.numericrpclipboardandselectivedeleteundokeeptypedsettingsandcounters",
       "status": "PASS",
-      "seconds": "0.401"
+      "seconds": "0.167"
     },
     {
       "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
       "status": "PASS",
-      "seconds": "0.112"
+      "seconds": "0.081"
     },
     {
       "name": "worldeditv127gametests.clipboardlinkedownersremaponlyactuallycopiedmembersandkeeponependingevent",
       "status": "PASS",
-      "seconds": "0.087"
+      "seconds": "0.061"
     }
   ],
-  "worldEditVersion": "7.2.15+6463-5ca4dff",
-  "officialOptionalJarSha256": "17db6b3e94f52d25426684663e1e1846823cbb7907f1c365ac329e5bc7bfaf2c",
   "nativeRuntime": {
     "java": 17,
     "minecraft": "1.20.1",
-    "loader": "Fabric",
     "heapGiB": 3,
     "activeProcessors": 4
   },
-  "stateGraph": {
-    "nativeStates": 972375,
-    "blockTypes": 1071,
-    "avoidedNeighborCells": 25243220,
-    "vanillaGuavaOrderedViews": "PASS",
-    "exactPublicStateIdentity": "PASS"
-  },
-  "verified": [
-    "Five-digit owned-block and RP patterns use the real Fabric parser and Actor",
-    "Numeric mask selects complete owned objects through a touched helper cell",
-    "Typed owner/RP settings and personal/global command counters survive actual delete/undo",
-    "EditSession.getFullBlock clipboard makes one independent owner or RP UUID",
-    "Native compact cells remain editable without a block entity",
-    "Copied linked component retains existing external UUIDs until its other members are actually copied",
-    "Two copied owners and one copied RP lever resolve internal links exclusively to their copied UUIDs",
-    "Original connected component remains unchanged",
-    "One copied pending event retains a stable sequence Number across later member and helper writes"
-  ],
   "rpTypedProof": {
     "status": "PASS_REAL_OPTIONAL_WORLDEDIT_RP_ROUNDTRIP",
     "worldEditVersion": "7.2.15+6463-5ca4dff",
     "fiveDigitId": "91029",
-    "sourceUuid": "c9f524c4-306c-442d-8177-7116a75314e0",
-    "copiedUuid": "2615a7c1-a77b-4ce3-86be-22582f50a7f9",
+    "sourceUuid": "00770454-0948-4907-8b36-12fe5d4c705c",
+    "copiedUuid": "7722809a-5b4c-4447-aaeb-1065f78f32a2",
     "parserAndActor": "ACTUAL_FABRIC_ADAPTER",
     "numericPlacement": "PASS",
     "actualEditSessionGetFullBlock": "PASS",
@@ -78,59 +59,41 @@
     "repeatedHelperWrites": "NO_EXTRA_EVENTS_OR_COUNTER_RESET",
     "commandsExecuted": 0
   },
-  "copyLifetime": "Session-local aggregate per paste delta; only meaningful reference metadata retained; no static global reference cache",
-  "partialCopyPolicy": "Existing external references remain real; within the same EditSession, later actually copied members replace those links in the copied component. Closing the session retains intentional external references for uncopied members",
-  "baselineRegressionEvidence": "worldedit-linked-baseline.json",
-  "sourceModelsOrPhysicsChangedByLinkedFix": false,
-  "sourcePlanSha256": "270292357105bdcfe9a38dd931bb9a0b28f4eb11d36a74644a390dfb81a07d29",
   "fullOriginalWorldConverted": false,
   "galleryCreated": false,
   "evidence": [
     {
-      "path": "build/test-results/gametest/TEST-tests21.xml",
-      "bytes": 20677,
-      "sha256": "eb5c3925a401352feade1b3ffdc64a2f5776a795912268742b552c09778c8894"
+      "path": "build/test-results/gametest/TEST-tests24.xml",
+      "sha256": "631ca079a3aaabe630340a6bc68252a524e14007b40e452bd80e34cb016805c4"
     },
     {
-      "path": "build/v127-validation/tests21/result.json",
-      "bytes": 827,
-      "sha256": "7c35f6dc7ce7e4743a054139eeba1fb76da67f964809c57f6f0f6f186a9af5f7"
+      "path": "build/v127-validation/tests24/result.json",
+      "sha256": "23be4469771ba5c8cd699b3620d80b237b1d54948b7d95f55b4239afbfc80deb"
     },
     {
-      "path": "build/v127-validation/tests21/gradle.log",
-      "bytes": 300035,
-      "sha256": "c4df60b0cd25d775b3210ea4da12003e87335ef86a0f334ac5b84c4fbf875081"
+      "path": "build/v127-validation/tests24/gradle.log",
+      "sha256": "863203b62faa6c6adb66518b0796a103237426468925b169e2ea4209473bbd80"
     },
     {
-      "path": "build/gametest-tests21/world/v127-worldedit-rp-native-proof.json",
-      "bytes": 621,
-      "sha256": "19afafd944ad76741563af999fcfa38b2d1c79336e3d42e253bd58aabac9754b"
+      "path": "build/gametest-tests24/world/v127-worldedit-rp-native-proof.json",
+      "sha256": "75818ff0a4c98c3cebad29365b18aad8cae440f5ccd61d82d658ef94c634a152"
     },
     {
-      "path": "build/gametest-tests21/world/v127-worldedit-linked-native-proof.json",
-      "bytes": 444,
+      "path": "build/gametest-tests24/world/v127-worldedit-linked-native-proof.json",
       "sha256": "87d7a1518f94fca11d53488810ffb595f42eb62a6ddb50d89b019d05fd4fa846"
     },
     {
-      "path": "build/gametest-tests21/world/v127-source-model-offset-native-proof.json",
-      "bytes": 32876,
+      "path": "build/gametest-tests24/world/v127-source-model-offset-native-proof.json",
       "sha256": "bac1e9ffaaec6dceed1a84bc310f119031116bfd7ee917a57958815f0fc4351d"
     },
     {
-      "path": "build/gametest-tests21/world/v127-source-lighting-native-proof.json",
-      "bytes": 8001961,
-      "sha256": "4a42590977bd59bed4e7f1cdf44b5ae9784196b7725eba06e3c185c642f3f65f"
-    },
-    {
-      "path": "build/v127-runtime-conversion-final2/manifest.json",
-      "bytes": 32109,
-      "sha256": "af4853248d1ee116101110f3eedcaf7528fb9b1bb2e9fe26e3bf6b0ec3cebbd7"
+      "path": "build/gametest-tests24/world/v127-source-lighting-native-proof.json",
+      "sha256": "facb4c6d9ee75259f73727480a79f46ab677b0ff8bd78d51909ef67abb5066c1"
     },
     {
       "path": "build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7-final.jar",
-      "bytes": 42024929,
-      "sha256": "cd5236cb01252357d24d7323479adeaaf3b174da52764e95f8e86279675f3bd7"
+      "sha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1"
     }
   ],
-  "historicalNativeValidation": "worldedit-native-validation-tests20.json"
+  "historicalNativeValidation": "worldedit-native-validation-tests21.json"
 }
