@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "status": "PASS_CHECKPOINT_BOUND_NUANCE_INVENTORY_NOT_A_FULL_PROPAGATED_LIGHT_RENDER_PROOF",
-  "nativeRun": "tests20",
-  "sourceCommit": "60013302a7f5244f87a0bdba67227899ff2e0a88",
-  "nativeProof": "build/gametest-tests20/world/v127-source-lighting-native-proof.json",
-  "nativeProofSha256": "8f8abbbdd9bd89e6caa00ddf5cf68445cbbe8cd71de8e7b315346bb9dab07f85",
+  "nativeRun": "tests21",
+  "sourceCommit": "d44c8d6f96f0546758532c6eb36213d1866e76e6",
+  "nativeProof": "build/gametest-tests21/world/v127-source-lighting-native-proof.json",
+  "nativeProofSha256": "4a42590977bd59bed4e7f1cdf44b5ae9784196b7725eba06e3c185c642f3f65f",
   "sourceHashes": {
     "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
     "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
@@ -31140,5 +31140,13 @@
   ],
   "sourceCoordinateRunBytes": 144690892,
   "extractionSeconds": 4.12,
-  "finalAcceptanceScope": "Native tests20 WITH real WorldEdit passed 127/0/0 against source checkpoint 60013302a7f5244f87a0bdba67227899ff2e0a88, including linked multi-owner clipboard, utility placement, and actual native region-header lifecycle. Client cache contracts have separate actual PASS evidence; complete frame capture/reopen remain pending the parent final client run."
+  "finalAcceptanceScope": "Native tests21 WITH real WorldEdit passed 127/0/0 against source checkpoint d44c8d6f96f0546758532c6eb36213d1866e76e6. Client24 generated-ALT production render contract and complete frame/reopen proof remain pending. Earlier client23 engine/cache PASS was rejected by actual pixel review for untinted NEW-owner ALT; that failure history is retained separately.",
+  "priorSuccessfulNativeEvidence": [
+    {
+      "nativeRun": "tests20",
+      "sourceCommit": "60013302a7f5244f87a0bdba67227899ff2e0a88",
+      "nativeProofSha256": "8f8abbbdd9bd89e6caa00ddf5cf68445cbbe8cd71de8e7b315346bb9dab07f85",
+      "status": "PASS_COMPLETE_127_WITH_ACTUAL_WORLDEDIT_PRIOR_CHECKPOINT"
+    }
+  ]
 }

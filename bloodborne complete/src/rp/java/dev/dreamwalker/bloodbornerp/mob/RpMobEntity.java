@@ -17,15 +17,11 @@ import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.boss.BossBar;
-import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -64,15 +60,12 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
   Map.entry("rotted_corpse", new MobProfile(16.0D, 0.22D, 3.0D)));
  private final String assetId;
  private final AnimatableInstanceCache animationCache = GeckoLibUtil.createInstanceCache(this);
- @Nullable private final ServerBossBar bossBar;
  private static final TrackedData<Boolean> FROZEN=DataTracker.registerData(RpMobEntity.class,TrackedDataHandlerRegistry.BOOLEAN);
  private int animationTicks;
 
  public RpMobEntity(EntityType<? extends RpMobEntity> type, World world, String assetId) {
   super(type, world);
   this.assetId = assetId;
-  this.bossBar = isBoss(assetId) ? new ServerBossBar(asset().displayName() == null
-   ? net.minecraft.text.Text.literal(assetId) : net.minecraft.text.Text.literal(asset().displayName()), BossBar.Color.RED, BossBar.Style.PROGRESS) : null;
  }
 
  @Override public String assetId() { return assetId; }
@@ -106,9 +99,6 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
  }
  private record MobProfile(double health, double speed, double damage) {}
 
- private static boolean isBoss(String id) {
-  return id.equals("cleric_beast") || id.equals("vicar_amelia") || id.equals("blood_starved_beast");
- }
  public boolean usesRangedAttack() { return assetId.equals("huntsman_d") || assetId.equals("huntsman_wheelchair"); }
 
  @Override protected void initGoals() {
@@ -133,7 +123,6 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
    getNavigation().stop();
    setVelocity(Vec3d.ZERO);
   }
-  if (!getWorld().isClient && bossBar != null) bossBar.setPercent(MathHelper.clamp(getHealth() / getMaxHealth(), 0.0F, 1.0F));
 
  }
 
@@ -149,9 +138,6 @@ public final class RpMobEntity extends HostileEntity implements GeoEntity, Asset
  }
  @Override public boolean isAiDisabled() { return isFrozen() || super.isAiDisabled(); }
  @Override public boolean canImmediatelyDespawn(double distanceSquared) { return false; }
- @Override public void onStartedTrackingBy(ServerPlayerEntity player) { super.onStartedTrackingBy(player); if (bossBar != null) bossBar.addPlayer(player); }
- @Override public void onStoppedTrackingBy(ServerPlayerEntity player) { super.onStoppedTrackingBy(player); if (bossBar != null) bossBar.removePlayer(player); }
- @Override public void onDeath(net.minecraft.entity.damage.DamageSource source) { if (bossBar != null) bossBar.clearPlayers(); super.onDeath(source); }
  @Override public void writeCustomDataToNbt(NbtCompound nbt) { super.writeCustomDataToNbt(nbt); nbt.putBoolean(FROZEN_NBT, isFrozen()); dev.dreamwalker.bloodbornerp.content.SourceLegacyPayload.write(nbt,sourceLegacyPayload,this); }
  @Override public void readCustomDataFromNbt(NbtCompound nbt) { sourceLegacyPayload=dev.dreamwalker.bloodbornerp.content.SourceLegacyPayload.read(nbt,this); super.readCustomDataFromNbt(nbt); setFrozen(nbt.getBoolean(FROZEN_NBT)); }
 

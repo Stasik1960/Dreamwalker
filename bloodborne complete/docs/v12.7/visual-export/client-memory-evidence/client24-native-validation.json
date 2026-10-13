@@ -1,0 +1,419 @@
+{
+  "status": "PASS_NATIVE_CAPTURE_AND_GENERATED_ALT_CONTRACT_PIXEL_REOPEN_PENDING",
+  "sourceCommit": "d44c8d6f96f0546758532c6eb36213d1866e76e6",
+  "productionJarSha256": "cd5236cb01252357d24d7323479adeaaf3b174da52764e95f8e86279675f3bd7",
+  "nativeCapturedFrames": 17,
+  "generatedAlternateProductionPath": {
+    "cases": [
+      {
+        "id": "source_addon_barrel_0",
+        "nativeTintedQuads": 0,
+        "nativeUntintedQuads": 12,
+        "emittedVertices": 48,
+        "onceTonedVertices": 48,
+        "geometryUvAlphaLightOverlayNormals": "EXACT_UNCHANGED",
+        "status": "PASS_ACTUAL_PRODUCTION_RENDER_PATH"
+      },
+      {
+        "id": "source_grass_block",
+        "nativeTintedQuads": 5,
+        "nativeUntintedQuads": 5,
+        "emittedVertices": 40,
+        "onceTonedVertices": 40,
+        "geometryUvAlphaLightOverlayNormals": "EXACT_UNCHANGED",
+        "status": "PASS_ACTUAL_PRODUCTION_RENDER_PATH"
+      }
+    ],
+    "status": "PASS_NATIVE_SOURCE_GENERATED_ALT_ALL_FACES_ONCE",
+    "method": "Private production CompositeClient.renderParts with actual baked source models, native BlockModelRenderer and recording VertexConsumer; independent RGB factors .60/.67/.72"
+  },
+  "actualAllJob": {
+    "running": false,
+    "changed": 8,
+    "failed": 0,
+    "chunksDone": 2025,
+    "chunksTotal": 2025
+  },
+  "nativeHeapSnapshots": [
+    {
+      "operation": "native_jvm_memory_and_cache_snapshot",
+      "name": "after_open_before_hand_placement",
+      "usedHeapBytes": 2204106752,
+      "committedHeapBytes": 3625975808,
+      "maximumHeapBytes": 4294967296,
+      "alternateModelCache": {
+        "sharedAlternateColoredQuads": 0,
+        "perWorldOrPositionCacheEntries": 0,
+        "alternateModelWrappers": 7867
+      },
+      "clientOwnerGeometryCache": {
+        "shapeSnapshotCells": 0,
+        "shapeSnapshotChunks": 0,
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0
+      }
+    },
+    {
+      "operation": "native_jvm_memory_and_cache_snapshot",
+      "name": "before_alt_all",
+      "usedHeapBytes": 1653049344,
+      "committedHeapBytes": 3625975808,
+      "maximumHeapBytes": 4294967296,
+      "alternateModelCache": {
+        "sharedAlternateColoredQuads": 0,
+        "perWorldOrPositionCacheEntries": 0,
+        "alternateModelWrappers": 7867
+      },
+      "clientOwnerGeometryCache": {
+        "shapeSnapshotCells": 5,
+        "shapeSnapshotChunks": 3,
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0
+      }
+    },
+    {
+      "operation": "native_jvm_memory_and_cache_snapshot",
+      "name": "after_alt_all_complete",
+      "usedHeapBytes": 2030509552,
+      "committedHeapBytes": 3625975808,
+      "maximumHeapBytes": 4294967296,
+      "alternateModelCache": {
+        "sharedAlternateColoredQuads": 0,
+        "perWorldOrPositionCacheEntries": 0,
+        "alternateModelWrappers": 7867
+      },
+      "clientOwnerGeometryCache": {
+        "shapeSnapshotCells": 6,
+        "shapeSnapshotChunks": 3,
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0
+      }
+    },
+    {
+      "operation": "native_jvm_memory_and_cache_snapshot",
+      "name": "before_normal_save_shutdown",
+      "usedHeapBytes": 2934423968,
+      "committedHeapBytes": 3625975808,
+      "maximumHeapBytes": 4294967296,
+      "alternateModelCache": {
+        "sharedAlternateColoredQuads": 48,
+        "perWorldOrPositionCacheEntries": 0,
+        "alternateModelWrappers": 7867
+      },
+      "clientOwnerGeometryCache": {
+        "shapeSnapshotCells": 6,
+        "shapeSnapshotChunks": 3,
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0
+      }
+    }
+  ],
+  "memoryInterpretation": "Observed native JVM heap/cache snapshots; no forced GC, synthetic memory estimate or client-memory claim from server GameTests",
+  "rawFrameMetadata": [
+    {
+      "fileName": "v127-base-wall.png",
+      "name": "v127-base-wall",
+      "actualCamera": [
+        0.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 308,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "34652b5c05c9e0e0206ef3c87442ebe0b88b7fdf16b05b7c7ab3dc0d6689bf1a",
+      "bytes": 215849
+    },
+    {
+      "fileName": "v127-base-ladder.png",
+      "name": "v127-base-ladder",
+      "actualCamera": [
+        6.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 374,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "59c9ff2fc27ed3e22f609c26e5544eb15cd53e97f28ad70ec6e8b9351ac3949e",
+      "bytes": 159935
+    },
+    {
+      "fileName": "v127-base-barrel.png",
+      "name": "v127-base-barrel",
+      "actualCamera": [
+        12.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 439,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "af1379a2c64255a29996e1d4a86a5bc1e8b7702659839234b068839d845e75cc",
+      "bytes": 156923
+    },
+    {
+      "fileName": "v127-base-curtain.png",
+      "name": "v127-base-curtain",
+      "actualCamera": [
+        20.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 504,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "4d6acb541c92b54a7173087e384832e9f339c90afd37f131ef13683c9c8217a0",
+      "bytes": 183888
+    },
+    {
+      "fileName": "v127-base-compact.png",
+      "name": "v127-base-compact",
+      "actualCamera": [
+        44.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 571,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "97489aa5c0b49caf163813f3f32d6f2a0c34569386c7135637c80a8de5409199",
+      "bytes": 180243
+    },
+    {
+      "fileName": "v127-base-grass.png",
+      "name": "v127-base-grass",
+      "actualCamera": [
+        50.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 637,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "c43e8cfd0cdb321d3817762fc219036b39ec9c6cab836f8dedef3ca8b19fc4fa",
+      "bytes": 209879
+    },
+    {
+      "fileName": "v127-alt-wall.png",
+      "name": "v127-alt-wall",
+      "actualCamera": [
+        0.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9523,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "1244dc8b0f658db18d349e721b173fb58364b48abaa006ed713fb0af02dc22c5",
+      "bytes": 170893
+    },
+    {
+      "fileName": "v127-alt-ladder.png",
+      "name": "v127-alt-ladder",
+      "actualCamera": [
+        6.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9589,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "9c6bdb48cf027539cd99c363ce90cb56f4c856921a6c1572b37f2de7d2f54627",
+      "bytes": 137794
+    },
+    {
+      "fileName": "v127-alt-barrel.png",
+      "name": "v127-alt-barrel",
+      "actualCamera": [
+        12.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9654,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "03dbdb31813d3f98540314e71d1a5628e66b66478076d91e5874fee94d864737",
+      "bytes": 149630
+    },
+    {
+      "fileName": "v127-alt-curtain.png",
+      "name": "v127-alt-curtain",
+      "actualCamera": [
+        20.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9720,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "a50f68de79c654ec6914ee3ccbecb70917e155f6638bc5cafd6e404d38db6233",
+      "bytes": 172543
+    },
+    {
+      "fileName": "v127-alt-compact.png",
+      "name": "v127-alt-compact",
+      "actualCamera": [
+        44.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9785,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "5079f3f554f7dd6f3187aaee644893db761c356948b8181679f104f5e74e0c02",
+      "bytes": 159732
+    },
+    {
+      "fileName": "v127-alt-grass.png",
+      "name": "v127-alt-grass",
+      "actualCamera": [
+        50.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9851,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "021fe40313f404a3a9aaf64535dab987dc26c6082c6c95fd6d2d2c89f9e37c58",
+      "bytes": 201223
+    },
+    {
+      "fileName": "v127-dw-barrier-yellow-held.png",
+      "name": "v127-dw-barrier-yellow-held",
+      "actualCamera": [
+        30.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "bloodborne_dw:dw_barrier",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9916,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "993b45907e31a51d3a10a28dabdfaf634abe5a764f35fdd92abf61eb514b9533",
+      "bytes": 152923
+    },
+    {
+      "fileName": "v127-vanilla-barrier-red-held.png",
+      "name": "v127-vanilla-barrier-red-held",
+      "actualCamera": [
+        32.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:barrier",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 9982,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "86ad6d46369af6b8a31ec67b000693eeed3178ec74a2b3672a76a99e1ed8de5d",
+      "bytes": 154107
+    },
+    {
+      "fileName": "v127-dw-barrier-empty-hidden.png",
+      "name": "v127-dw-barrier-empty-hidden",
+      "actualCamera": [
+        30.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 100,
+      "worldTick": 10097,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "620e7b44cf487c550bd581277c5f44dab1322fb13a114262b08cdd96c730a226",
+      "bytes": 141796
+    },
+    {
+      "fileName": "v127-dw-light-held-marker.png",
+      "name": "v127-dw-light-held-marker",
+      "actualCamera": [
+        38.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "bloodborne_dw:dw_light",
+      "settledTicksAfterEquip": 50,
+      "worldTick": 10163,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "cecf996a08d29833f59fedbcc2dfba40469b03c2411e725f6064e9f5a55171a4",
+      "bytes": 246845
+    },
+    {
+      "fileName": "v127-dw-light-empty-hidden-light14.png",
+      "name": "v127-dw-light-empty-hidden-light14",
+      "actualCamera": [
+        38.5,
+        64.0,
+        -3.5,
+        0.0,
+        18.0
+      ],
+      "heldItem": "minecraft:air",
+      "settledTicksAfterEquip": 100,
+      "worldTick": 10279,
+      "status": "PASS_CAPTURE_REQUIRES_PIXEL_REVIEW",
+      "sha256": "9c71472a8290f0fd8c685abb058f5497b53377460e4f4b19a7a2792403faab45",
+      "bytes": 266910
+    }
+  ],
+  "framebufferFilesCopiedByteExact": true,
+  "authoredGrassColorProviders": "PASS_ACTUAL_CLIENT_COLOR_PROVIDERS",
+  "physicalMouseKeyboardInput": "NOT_RUN",
+  "independentBarrelPairPixelReview": "PASS_ACTUAL_RAW_BASE_ALT_DIFFERENCE",
+  "completePixelReview": "PENDING_ROOT_ALL17",
+  "normalSaveAndReopen": "PENDING_ROOT_ACTUAL_REOPEN",
+  "historicalPixelFailure": "Client23 native engine/cache PASS was rejected for visually unchanged NEW-owner ALT; preserved in client23-partial-validation.json and its raw frames",
+  "originalWorldWritten": false
+}
