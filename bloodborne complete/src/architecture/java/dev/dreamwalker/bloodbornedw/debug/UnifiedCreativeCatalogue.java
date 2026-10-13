@@ -38,11 +38,12 @@ public final class UnifiedCreativeCatalogue {
             if(Registries.ITEM.containsId(item)&&Registries.ITEM.get(item)!=Items.AIR)offered.putIfAbsent(item,new ItemStack(Registries.ITEM.get(item)));
         });
         // Keep already existing RP weapons/items/eggs that have no TEMP row.
+        if(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM!=null)offered.put(dev.dreamwalker.bloodbornedw.tool.BbToolService.ID,new ItemStack(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM));
         // No helper, technical architecture block or retired RP placer enters.
         Registries.ITEM.getIds().stream().filter(id->id.getNamespace().equals("bloodborne_rp")).sorted(Comparator.comparing(Identifier::toString)).forEach(id->{
             if(id.getPath().endsWith("_placer")&&!ObjectRegistry.isCanonicalPlacementItem(id.getPath().substring(0,id.getPath().length()-7)))return;
             offered.putIfAbsent(id,new ItemStack(Registries.ITEM.get(id)));
         });
-        return offered.values().stream().map(ItemStack::copy).toList();
+        return offered.values().stream().flatMap(stack->dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.creativeVariants(stack).stream()).toList();
     }
 }

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "v124_stair_types",
+  "status": "PREVIEW_FAIL_FIXED_SOURCE_PENDING_FINAL_NATIVE_CAPTURE",
+  "productionJarSha256": "62dadc6680fe7abb800e0aa422d35194f37ac45bdb56d996154474ee8673c7f7",
+  "rawCaptureOutput": "build/runtime-client-v124-comparison-preview-3/v124-client-comparison-output.json",
+  "rawPngDirectory": "build/runtime-client-v124-comparison-preview-3/screenshots",
+  "rawPngPattern": "v124-type-comparison-NNN.png",
+  "rawImagesModified": false,
+  "visitedRawPages": [56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175],
+  "frameIdentity": "Individual PNG SHA-256 values are recorded in the bound rawCaptureOutput above; these pages were opened as original PNGs without crop, compositing or recoloring.",
+  "retainedMaterialPairCount": 36,
+  "retainedMaterialReviewPages": [155, 156, 157, 158],
+  "materialDecision": "KEEP_19_NOTICABLY_DIFFERENT_SURFACES",
+  "materialReasonsDocument": "docs/v12.4-dedup/stair-review/material-differences.md",
+  "visibleRetainedExamples": [
+    {"ids": ["90437", "93094"], "difference": "Large irregular cobbles and dark cracks versus nearly continuous fine gray aggregate"},
+    {"ids": ["90423", "90760"], "difference": "Broad smooth gray panels versus strongly framed rectangular tiles"},
+    {"ids": ["90692", "90862"], "difference": "Mottled brown stonework versus longitudinal brown wooden planks"},
+    {"ids": ["90275", "90276"], "difference": "Crosshatched bamboo mosaic versus continuous parallel fibers"},
+    {"ids": ["90322", "90550"], "difference": "Long rectangular masonry bricks versus large repeating oval architectural ornament"},
+    {"ids": ["93028", "93081"], "difference": "Broad almost continuous smooth stone faces versus large squares enclosed by dark rectangular borders"}
+  ],
+  "functionalReview": {
+    "kind": "FUNCTIONAL_NEW_STATE",
+    "firstPairIndexZeroBased": 1893,
+    "pairsVisuallyVisited": 200,
+    "pages": [158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175],
+    "intentionalDifferences": "New straight/outer/top forms absent from the original material are compared with the nearest source silhouette; silhouette differences are intentional, while exterior-face completeness and authored atlas regions must remain correct.",
+    "confirmedPreviewDefects": [
+      {"ids": ["90275", "90276", "90409", "90686", "90701", "90862", "93004", "93028"], "affectedGeneratedStates": 75, "defect": "Generated render boxes merged physical Y layers, causing UV to extrapolate outside the source atlas rectangle; visible gray/green/yellow/pink unrelated patches appear on tread and corner faces"},
+      {"ids": ["93028"], "defect": "Some generated top forms lack broad upward exterior faces because the source bottom model omitted its downward faces"}
+    ],
+    "sourceCorrection": "Separate source-compatible render components by layer and crop signed/rotated UV inside authored face rectangles; borrow valid authored opposite face only for newly generated missing exterior faces. Simplified physical boxes remain unchanged.",
+    "sourceProof": "build/v124-stair-render-resource-proof-namefix.json",
+    "nativeFinalStatus": "NOT_RUN"
+  },
+  "legacyAppearanceReview": {
+    "samplePages": [56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
+    "confirmedPreviewExamples": [
+      {"id": "90276", "oldVariants": [2, 4], "defect": "Parallel bamboo tread fibers turn by90degrees after normalization even though installed silhouette matches"},
+      {"id": "90322", "oldVariants": [2, 4], "defect": "Brick tread UV direction changes under the otherwise correct rotation mapping"},
+      {"id": "90409", "oldVariants": [2, 4], "defect": "Authored UV-locked wood surfaces cannot be represented exactly by one canonical part plus tool yaw"},
+      {"id": "90523", "oldVariants": [2, 4, 5], "defect": "Prominent fluted stripes and tread direction change after source orientation is collapsed into root yaw"},
+      {"id": "90686", "oldVariants": [2, 4, 5, 7], "defect": "Red mangrove tread fibers turn despite an otherwise identical installed shape"}
+    ],
+    "cause": "Intrinsic source facing/UV locking and independent installed tool yaw had been conflated. Geometric rotation mapping is correct, but the original material UV orientation is a separate art setting.",
+    "sourceCorrection": "A validated immutable ImportedStairLegacyArt key chooses exact source models and UV parts normalized to canonical pose, for matching registry/functional variant/trim only. AUTO changing the logical shape falls back to the canonical functional model. No extra BlockState dimensions or physical shapes are introduced.",
+    "appearanceTable": "bloodborne_dw/imported-stair-legacy-art.json",
+    "sourceProof": "build/v124-stair-legacy-art-proof.json",
+    "sourceProofStatus": "PASS",
+    "sourceProofChecks": 5008,
+    "sourceProofIncludes": "All313 stair source states, eight world yaws, BASE/ALT, nonzero SourceShift,311 exact source model JSONs,200 unchanged canonical physics/outline poses",
+    "nativeFinalStatus": "NOT_RUN"
+  },
+  "nextRequiredEvidence": "Final-JAR raw native comparison of all313 migrated stair states plus two ladder mappings, all200 canonical functional stair forms, followed by the freshly authored gallery opening/reopening and raw gallery client captures. Build2 screenshots remain FAIL evidence, never final PASS."
+}

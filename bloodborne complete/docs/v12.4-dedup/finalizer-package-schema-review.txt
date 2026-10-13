@@ -1,0 +1,52 @@
+Finalizer/package schema review — 2026-10-12
+==========================================
+This is a tools review, not final artifact acceptance. No Java, Gradle, release
+finalizer or packaging process was executed for this review.
+
+Completed integration corrections
+---------------------------------
+The dedicated native save checker now emits productionJarSha256 as well as
+afterProductionJarSha256, both derived from the actual candidate JAR bytes.
+Both native outputs, both server profiles, their actual runtime output/logs,
+the saved fixtures and the manifest must match that candidate.
+
+The finalizer preserves the concrete native partial-chunk result through
+nativePendingChunkOrdering, then nativePendingChunkProbeSelection, then the
+bound dedicated proof's naturalPartialChunkProbe. It no longer replaces the
+specific unobserved-cohort reason with a generic NOT_RUN.
+
+Packaging now revalidates every acceptance evidence path/byte SHA before any
+release directory is created. Project inputs and parent paths reject reparse
+points. Docs/world enumeration rejects reparse directories before descending;
+archive members are checked again, and ZIP contents are compared to source SHA.
+Existing release directories still cannot be overwritten.
+
+Historical C30 evidence
+-----------------------
+Five original dedicated results are preserved byte-for-byte as
+native-C30-attempt1-save.json, native-C30-attempt1-reopen.json,
+native-C30-attempt1-migration-profile.json,
+native-C30-attempt1-reopen-profile.json, and
+native-C30-attempt1-save-evidence.json. File hashes and lengths are recorded in
+native-C30-attempt1-preserved-evidence.json.
+The C30 pages26–55 manual review records 360 visible matching pairs and each raw
+PNG hash in native-C30-attempt1-migration-review-26-55.json. These observed pixel
+verdicts may be carried only when a later actual PNG is byte-identical; changed
+frames require fresh inspection. Separate C30 defects93145/93021 remain grounds
+for a new build and fresh native migration/reopen/ordinary-item verification.
+
+Criteria checked for consistency
+--------------------------------
+The finalizer requires successful combined build and GameTest XML, bound native
+migration/reopen with exact mapping count, complete ordinary item interaction
+coverage and ledger checks, the independent native save proof, complete client
+image review, ordinary-server gallery reopen without QA addon, client gallery
+open/save plus saved-state/disk geometry checks, resource dependencies, original
+V12 catalogue and ID reservation preservation, and unchanged source references.
+The report records physical input/FPS/account-auth checks as NOT_RUN and author
+collision data as NOT_SUPPLIED_NOT_APPLIED. Native partial loading is its own
+explicit status; server item PASS does not imply pixel acceptance.
+
+Read-only AST parsing succeeded for finalize_v124_report.py,
+package_v124_release.py and check_v124_native_save_evidence.py. Final acceptance
+and archive generation remain the root agent's later artifact-bound stages.

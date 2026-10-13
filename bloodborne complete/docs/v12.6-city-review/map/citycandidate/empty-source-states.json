@@ -1,0 +1,92 @@
+{
+  "status": "READONLY_EXACT_SOURCE_JSON_EVIDENCE",
+  "packSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+  "rows": [
+    {
+      "carrier": "minecraft:acacia_planks",
+      "sourceProperties": {},
+      "sourcePosition": [
+        192,
+        76,
+        -1086
+      ],
+      "sourceJsonPath": "assets/minecraft/blockstates/acacia_planks.json",
+      "sourceJson": {
+        "variants": {
+          "facing=east": {
+            "model": "minecraft:block/lectern",
+            "y": 90
+          },
+          "facing=north": {
+            "model": "minecraft:block/bell"
+          },
+          "facing=south": {
+            "model": "minecraft:block/lectern",
+            "y": 180
+          },
+          "facing=west": {
+            "model": "minecraft:block/lectern",
+            "y": 270
+          }
+        }
+      },
+      "selectedApplications": [],
+      "sourceJsonSha256": "15d196cfa0b1a1b251f785c233e1b6ce85570fc05610998264ad7d22f5d59aab"
+    },
+    {
+      "carrier": "minecraft:red_nether_brick_wall",
+      "sourceProperties": {
+        "east": "low",
+        "north": "none",
+        "south": "none",
+        "up": "false",
+        "waterlogged": "false",
+        "west": "low"
+      },
+      "sourcePosition": [
+        176,
+        68,
+        -1071
+      ],
+      "sourceJsonPath": "assets/minecraft/blockstates/red_nether_brick_wall.json",
+      "sourceJson": {
+        "multipart": [
+          {
+            "when": {
+              "north": "tall"
+            },
+            "apply": {
+              "model": "minecraft:block/red_nether_brick_wall_side_tall_north"
+            }
+          },
+          {
+            "when": {
+              "east": "tall"
+            },
+            "apply": {
+              "model": "minecraft:block/red_nether_brick_wall_side_tall_east"
+            }
+          },
+          {
+            "when": {
+              "south": "tall"
+            },
+            "apply": {
+              "model": "minecraft:block/red_nether_brick_wall_side_tall_south"
+            }
+          },
+          {
+            "when": {
+              "west": "tall"
+            },
+            "apply": {
+              "model": "minecraft:block/red_nether_brick_wall_side_tall_west"
+            }
+          }
+        ]
+      },
+      "selectedApplications": [],
+      "sourceJsonSha256": "4e37143b8c018f247453b834807dc6cf05dac695af8e63b9fdff115726e94a12"
+    }
+  ]
+}

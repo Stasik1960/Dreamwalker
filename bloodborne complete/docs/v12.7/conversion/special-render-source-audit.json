@@ -1,0 +1,300 @@
+{
+  "status": "PASS_SPECIAL_RENDER_SOURCE_ASSETS_PRESERVED",
+  "sourceHashes": {
+    "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+  },
+  "resources": [
+    {
+      "resource": "assets/minecraft/textures/block/water_still.png",
+      "sourceOverrides": false,
+      "decision": "UNCHANGED_VANILLA_SPECIAL_RENDER_SOURCE"
+    },
+    {
+      "resource": "assets/minecraft/textures/block/water_flow.png",
+      "sourceOverrides": false,
+      "decision": "UNCHANGED_VANILLA_SPECIAL_RENDER_SOURCE"
+    },
+    {
+      "resource": "assets/minecraft/textures/block/lava_still.png",
+      "sourceOverrides": false,
+      "decision": "UNCHANGED_VANILLA_SPECIAL_RENDER_SOURCE"
+    },
+    {
+      "resource": "assets/minecraft/textures/block/lava_flow.png",
+      "sourceOverrides": false,
+      "decision": "UNCHANGED_VANILLA_SPECIAL_RENDER_SOURCE"
+    },
+    {
+      "resource": "assets/minecraft/textures/block/water_overlay.png",
+      "sourceOverrides": false,
+      "decision": "UNCHANGED_VANILLA_SPECIAL_RENDER_SOURCE"
+    },
+    {
+      "resource": "assets/minecraft/textures/colormap/grass.png",
+      "sourceOverrides": true,
+      "sourcePixelDimensions": [
+        256,
+        256,
+        4
+      ],
+      "vanillaPixelDimensions": [
+        256,
+        256,
+        4
+      ],
+      "pixelsEqual": false,
+      "sourceSha256": "d34580a3adbdce78a83b2c77a9d2a590cfa28ba2c96a4407d99ff402b44f29c9",
+      "vanillaSha256": "1450fdf2f4fd6d4571fe19641b6d412d850014e9fdc10f5a33e21f446a7d4ac4",
+      "decision": "SCOPED_NEW_SOURCE_GRASS_PALETTE_PRESERVED",
+      "uniqueSourceRgbaColours": 242,
+      "sourceRgbaExamples": [
+        [
+          99,
+          103,
+          113,
+          255
+        ],
+        [
+          100,
+          104,
+          114,
+          255
+        ],
+        [
+          100,
+          105,
+          113,
+          255
+        ],
+        [
+          100,
+          105,
+          114,
+          255
+        ],
+        [
+          101,
+          105,
+          114,
+          255
+        ],
+        [
+          101,
+          105,
+          115,
+          255
+        ],
+        [
+          101,
+          106,
+          114,
+          255
+        ],
+        [
+          101,
+          106,
+          115,
+          255
+        ],
+        [
+          101,
+          107,
+          114,
+          255
+        ],
+        [
+          101,
+          108,
+          114,
+          255
+        ],
+        [
+          102,
+          106,
+          115,
+          255
+        ],
+        [
+          102,
+          107,
+          115,
+          255
+        ]
+      ],
+      "plainsClimateIndex": [
+        50,
+        173
+      ],
+      "sourcePlainsRgba": [
+        111,
+        117,
+        120,
+        255
+      ],
+      "vanillaPlainsRgba": [
+        145,
+        189,
+        89,
+        255
+      ],
+      "scopedImportedPaletteSha256": "d34580a3adbdce78a83b2c77a9d2a590cfa28ba2c96a4407d99ff402b44f29c9",
+      "providerSource": "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/RemainingSourceTint.java",
+      "runtimeProviderValidation": "Separate real client provider fixture; this audit proves immutable source/copy pixel identity only"
+    },
+    {
+      "resource": "assets/minecraft/textures/colormap/foliage.png",
+      "sourceOverrides": true,
+      "sourcePixelDimensions": [
+        256,
+        256,
+        4
+      ],
+      "vanillaPixelDimensions": [
+        256,
+        256,
+        4
+      ],
+      "pixelsEqual": true,
+      "sourceSha256": "41c447ebba8933e2b9d995e82b26eb43d70d1d033cca98e6840cccfc0ebc6080",
+      "vanillaSha256": "41c447ebba8933e2b9d995e82b26eb43d70d1d033cca98e6840cccfc0ebc6080",
+      "decision": "UNCHANGED_VANILLA_SPECIAL_RENDER_SOURCE",
+      "uniqueSourceRgbaColours": 8837,
+      "sourceRgbaExamples": [
+        [
+          26,
+          191,
+          0,
+          255
+        ],
+        [
+          27,
+          191,
+          0,
+          255
+        ],
+        [
+          28,
+          164,
+          73,
+          255
+        ],
+        [
+          28,
+          191,
+          1,
+          255
+        ],
+        [
+          29,
+          163,
+          70,
+          255
+        ],
+        [
+          29,
+          163,
+          73,
+          255
+        ],
+        [
+          29,
+          191,
+          1,
+          255
+        ],
+        [
+          29,
+          191,
+          2,
+          255
+        ],
+        [
+          30,
+          162,
+          67,
+          255
+        ],
+        [
+          30,
+          162,
+          70,
+          255
+        ],
+        [
+          30,
+          162,
+          71,
+          255
+        ],
+        [
+          30,
+          162,
+          73,
+          255
+        ]
+      ],
+      "plainsClimateIndex": [
+        50,
+        173
+      ],
+      "sourcePlainsRgba": [
+        119,
+        171,
+        47,
+        255
+      ],
+      "vanillaPlainsRgba": [
+        119,
+        171,
+        47,
+        255
+      ]
+    }
+  ],
+  "actualFluidBlockSourceCases": [
+    {
+      "caseId": 3469,
+      "sourceState": "minecraft:water[level=4]",
+      "targetState": "minecraft:water[level=4]",
+      "action": "KEEP",
+      "occurrences": 4
+    },
+    {
+      "caseId": 3470,
+      "sourceState": "minecraft:water[level=3]",
+      "targetState": "minecraft:water[level=3]",
+      "action": "KEEP",
+      "occurrences": 7
+    },
+    {
+      "caseId": 3471,
+      "sourceState": "minecraft:water[level=2]",
+      "targetState": "minecraft:water[level=2]",
+      "action": "KEEP",
+      "occurrences": 10
+    },
+    {
+      "caseId": 3472,
+      "sourceState": "minecraft:water[level=1]",
+      "targetState": "minecraft:water[level=1]",
+      "action": "KEEP",
+      "occurrences": 20
+    },
+    {
+      "caseId": 3623,
+      "sourceState": "minecraft:water[level=0]",
+      "targetState": "minecraft:water[level=0]",
+      "action": "KEEP",
+      "occurrences": 491
+    },
+    {
+      "caseId": 4765,
+      "sourceState": "minecraft:water[level=8]",
+      "targetState": "minecraft:water[level=8]",
+      "action": "KEEP",
+      "occurrences": 110
+    }
+  ],
+  "originalWorldWritten": false
+}

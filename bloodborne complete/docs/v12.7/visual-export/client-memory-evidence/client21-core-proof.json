@@ -1,0 +1,37 @@
+{
+  "productionJarSha256": "800a54032ffcea371bf1aa8de791c9ac789b8c6c7296384f3b370e61ab4236de",
+  "rawNativeModelHeaderIdentities": "PASS",
+  "status": "PASS_ACTUAL_CLIENT_CORE_AND_FABRIC_CALLBACK_CONTRACT",
+  "exactChildOrderTransformUvAndReload": "PASS",
+  "actualChildBakeCalls": 12,
+  "childBakeContextSamples": [
+    "bloodborne_dw:qa_top_a -\u003e bloodborne_dw:block/qa_a",
+    "bloodborne_dw:qa_top_a -\u003e bloodborne_dw:block/qa_b",
+    "bloodborne_dw:qa_top_b -\u003e bloodborne_dw:block/qa_a",
+    "bloodborne_dw:qa_top_b -\u003e bloodborne_dw:block/qa_b",
+    "bloodborne_dw:qa_changed_child -\u003e bloodborne_dw:block/qa_a",
+    "bloodborne_dw:qa_changed_child -\u003e bloodborne_dw:block/qa_b",
+    "bloodborne_dw:qa_rotation -\u003e bloodborne_dw:block/qa_a",
+    "bloodborne_dw:qa_rotation -\u003e bloodborne_dw:block/qa_b",
+    "bloodborne_dw:qa_reload -\u003e bloodborne_dw:block/qa_a",
+    "bloodborne_dw:qa_reload -\u003e bloodborne_dw:block/qa_b",
+    "bloodborne_dw:qa_foreign_a -\u003e bloodborne_dw:block/qa_a",
+    "bloodborne_dw:qa_foreign_b -\u003e bloodborne_dw:block/qa_a"
+  ],
+  "concurrentRawQuadComparisons": 2048,
+  "registeredStateCacheSize": 32,
+  "registeredStateDomainBound": 30720,
+  "foreignAndUnregisteredStateNotRetained": true,
+  "maximumEntriesPerParsedModel": 1,
+  "runtimeCoreCounters": {
+    "reusedExactOwnedGraphs": 379649,
+    "maximumEntriesPerParsedModel": 1,
+    "builtExactOwnedGraphs": 261
+  },
+  "actualOwnedTopLevelCallbacks": 973461,
+  "actualForeignTopLevelCallbacks": 25397,
+  "actualOwnedBeforeBakeCallbacks": 973461,
+  "actualForeignBeforeBakeCallbacks": 25397,
+  "firstActualOwnedId": "bloodborne_dw:prototype_wall_skin_0#connections\u003dmanual,east\u003dnone,north\u003dtall,profile\u003dalt,rotation\u003d4,south\u003dtall,up\u003dtrue,waterlogged\u003dtrue,west\u003dlow",
+  "lastActualOwnedId": "bloodborne_dw:prototype_wall#connections\u003dauto,east\u003dnone,material\u003d6,north\u003dnone,profile\u003dbase,rotation\u003d2,south\u003dlow,up\u003dfalse,waterlogged\u003dtrue,west\u003dtall"
+}

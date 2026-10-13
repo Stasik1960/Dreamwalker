@@ -1,0 +1,41 @@
+{
+  "status": "PROVISIONAL_NATIVE_WORLDEDIT_TESTS15_NOT_FINAL_ACCEPTANCE",
+  "sourceCheckpointAtRun": "339b36a5a2c919154de948523f6e5912eba434e8",
+  "candidateProductionJarSha256AtRun": "34c2f13cc2e3ca070d628e04ac438b6e1f167f960169789605b921cb43ea7065",
+  "allNativeXmlCases": 122,
+  "xmlFailureErrorSkipped": 0,
+  "realWorldEditApiCases": 2,
+  "sourceButtonSupportCases": 1,
+  "worldEditVersion": "7.2.15+6463-5ca4dff",
+  "optionalModPresentProvenByNativeLog": true,
+  "optionalNotRunMarkerPresent": false,
+  "cases": [
+    {
+      "name": "worldeditrpv127gametests.numericrpclipboardandselectivedeleteundokeeptypedsettingsandcounters",
+      "classname": "fabric-gametest-api-v1:empty",
+      "time": "0.145"
+    },
+    {
+      "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
+      "classname": "fabric-gametest-api-v1:empty",
+      "time": "0.062"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "build/test-results/gametest/TEST-tests15.xml",
+      "sha256": "2ac29220452323b4da724ed06a78cfdd76e6cd6d42eae02636d7eda91770f8db"
+    },
+    {
+      "path": "build/gametest-tests15/logs/latest.log",
+      "sha256": "622485f9a6985bdedcd1b89bc4b7c011b728f51313c37d6c16ffe832dd34f1ee"
+    },
+    {
+      "path": "build/gametest-tests15/world/v127-worldedit-rp-native-proof.json",
+      "sha256": "e3cf2e3b31b73a41ea9bf0dff7311a55f1fec3388f5cac5961c0ac6190435acd"
+    }
+  ],
+  "pending": "Narrow multi-owner linked clipboard UUID correction and final tests16/build19; do not use this provisional proof as final WorldEdit acceptance",
+  "fullOriginalWorldConverted": false,
+  "galleryCreated": false
+}

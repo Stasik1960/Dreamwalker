@@ -1,6 +1,5 @@
 package dev.dreamwalker.bloodbornerp.client;
 
-import dev.dreamwalker.bloodbornerp.client.lamp.LampClient;
 import dev.dreamwalker.bloodbornerp.client.weapon.WeaponClient;
 import dev.dreamwalker.bloodbornerp.content.AssetCatalog;
 import dev.dreamwalker.bloodbornerp.mob.MobRegistry;
@@ -16,7 +15,7 @@ public final class BloodborneRpClient implements ClientModInitializer {
       new CatalogMobRenderer(context,AssetCatalog.get(id).scale())));
   ObjectRegistry.TYPES.forEach((id,type)->EntityRendererRegistry.register(type,context->
       new CatalogObjectRenderer(context,AssetCatalog.get(id).scale())));
+  RpPlacementItemRenderer.initialize();
   WeaponClient.initialize();
-  LampClient.initialize();
  }
 }

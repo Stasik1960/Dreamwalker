@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "analysis_commit": "e40cf0151c972df693cc4fb5a8306323c93f8756",
+  "map_sha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+  "pack_sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+  "source_archive_unchanged": true,
+  "terrain_regions": 47,
+  "terrain_chunks": 35890,
+  "terrain_sections": 861360,
+  "world_unique_block_ids": 484,
+  "world_unique_states": 3852,
+  "affected_carriers_checked": 577,
+  "pack_blockstate_overrides_checked": 246,
+  "pack_models_checked": 1112,
+  "branches_checked": 3181,
+  "fully_absent_carriers": 107,
+  "fully_absent_pack_blockstate_carriers": 14,
+  "fully_absent_inherited_carriers": 93,
+  "absent_branches": 853,
+  "absent_branches_on_present_carriers": 602,
+  "independent_absent_source_models": 107,
+  "absent_complete_assembly_variants_proven_by_all_parts": 8,
+  "absent_complete_assembly_types_proven_by_all_parts": 2,
+  "independent_absent_by_kind": {
+    "FINISHED_UNUSED_ART": 61,
+    "STANDALONE_REFERENCED_ART": 46
+  },
+  "all_absent_model_paths_by_kind": {
+    "ASSEMBLY_PART": 2,
+    "EMPTY_OR_PARENT_HELPER": 2,
+    "EXACT_DUPLICATE": 10,
+    "FINISHED_UNUSED_ART": 68,
+    "MULTIPART_SERVICE_PART": 5,
+    "RESOURCE_OR_ITEM": 4,
+    "SOURCE_DEFECT": 49,
+    "STANDALONE_REFERENCED_ART": 73,
+    "TEMPLATE_OR_INVENTORY_HELPER": 3,
+    "UNCHANGED_VANILLA": 30
+  },
+  "all_model_statuses": {
+    "ABSENT_NO_BLOCKSTATE_REFERENCE": 119,
+    "ABSENT_NO_SELECTED_MAP_APPLICATION": 105,
+    "ABSENT_PATH_VISUAL_DUPLICATE_PRESENT": 22,
+    "PRESENT_DIRECT_APPLICATION": 1063,
+    "PRESENT_PARENT_DEPENDENCY": 11
+  },
+  "matching_checks": {
+    "status": "PASS",
+    "cases": 8
+  },
+  "positional_rng_checks": {
+    "status": "PASS",
+    "scalar_vector_comparisons": 40024,
+    "coordinate_samples": 5003,
+    "bytecode": "rng-bytecode.txt",
+    "bytecode_sha256": "bc0ca4ee26be00f8f9f7c0afbaab4138ccbcb22db4f76badc7c2d788d8d3d050",
+    "int_min_policy": "Math.abs(Integer.MIN_VALUE) remains negative; Weighting.getAt returns first entry for negative ticket; helper maps that outcome to option 0",
+    "seed_policy": "int32 x*3129871, int64 z*116129781, signed long square/add and arithmetic >>16; classic LCG signed nextLong halves; multipart pre-nextLong then reset same seed for every applicable child",
+    "seed_override_audit": "seed-override-audit.json",
+    "weighted_seed_override_carriers": [],
+    "condition_boolean_policy": "JSON booleans use Gson lowercase true/false; legacy pure matcher receives normalized condition primitives only; source branch labels retain original JSON",
+    "weighted_branch_cell_applications": 55439742,
+    "integer_min_value_branch_cell_hits": 0
+  },
+  "scope": "All stored terrain blocks in every region entry of original ZIP. Not inventories, CIT, entities, occlusion or ungenerated terrain.",
+  "world_state_evidence_sha256": "f767f8a854804056288e3129a7ff62c166a66e7e8d06dfc05095ad2cb4c64b0b",
+  "model_application_evidence_sha256": "ed87aa2b7b80fed8ea4516222414ee5dc8bd29e660af2bae926126e5d5f65a99"
+}

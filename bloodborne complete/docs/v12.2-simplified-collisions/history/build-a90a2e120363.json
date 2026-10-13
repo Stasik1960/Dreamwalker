@@ -1,0 +1,31 @@
+{
+  "command": [
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\gradlew.bat",
+    "--no-daemon",
+    "-Dorg.gradle.java.home=C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma",
+    "-Pgametest_run_name=v122-main3",
+    "build",
+    "compileGametestJava",
+    "runGametest"
+  ],
+  "exitCode": 0,
+  "status": "PASS",
+  "utc": "2026-10-11T17:10:36.579732+00:00",
+  "log": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\remaining-transfer\\v122-main3\\gradle.log",
+  "javaHome": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma",
+  "gameTests": "PASS",
+  "worldScope": "Fresh GameTest world only; source map and gallery untouched",
+  "productionJarSha256": "a90a2e120363e08d1944b72a706905a94f967836f71377d8a7a154a72497c2e7",
+  "gameTestCount": 63,
+  "gameTestFailures": 0,
+  "gameTestXmlSha256": "4f18148a85da824a67aecc91baa064447210ddb2cbb24a246accc4d7eaf32b5f",
+  "previousAttempt": {
+    "run": "v122-main1",
+    "status": "FAIL",
+    "passed": 62,
+    "failed": 1,
+    "reason": "NEW test compared raw physical-list emptiness with runtime physics after required six-face trimming. The assertion now accounts for oriented/cropped forms; independent all-state oracle and separate strict boundary checks provide additional evidence.",
+    "protectedV12Tests": "PASS",
+    "finalRetest": "PASS_63_OF_63"
+  }
+}

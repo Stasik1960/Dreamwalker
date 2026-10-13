@@ -1,0 +1,25 @@
+{
+  "status": "PASS_FINAL_NATIVE_REGION_DISCOVERY",
+  "nativeRun": "tests28 WITH actual WorldEdit",
+  "sourceCommit": "f1000f341b19279251df45a3c82f517e0c6b6c2d",
+  "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+  "nativeTestcases": [
+    "bbregiondiscoveryv127gametests.nonzeropartialcoldheadersfailinsteadofsilentlyskippingsavedtargets",
+    "bbregiondiscoveryv127gametests.nativeemptyregionstubkeepsloadedunionandindexesthefirstrealsave"
+  ],
+  "nativeProofSha256": "02e7162ac2ffce256e51ccbae1c93b61bbb0bc189d6c46d565e37b69b1b0bc62",
+  "nativeProof": {
+    "status": "PASS_NATIVE_EMPTY_REGION_FIRST_SAVE_AND_LOADED_UNION",
+    "nativeConstructorInitialBytes": 0,
+    "nativeFirstSaveBytes": 8209,
+    "loadedChunk": 4294967312,
+    "savedChunk": 416611827648,
+    "diskAndLoadedUnion": true
+  },
+  "nonzeroPartialHeaderLengthsRejected": [
+    1,
+    12,
+    4095
+  ],
+  "scope": "Actual native zero-byte RegionFile lifecycle, first compressed save and loaded/disk union; malformed nonempty headers rejected."
+}

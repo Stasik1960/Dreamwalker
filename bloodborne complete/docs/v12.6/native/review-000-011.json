@@ -1,0 +1,133 @@
+{
+  "status": "PASS_ASSIGNED_PIXELS",
+  "productionJarSha256": "f5a4238d1ea241067e163c2e89f66f3133def211ab53b05d21db1375c96030d6",
+  "captureSha256": "9279aa58bbdde61463993ba157288ade477db85f6e9090486a6fafa392e942b5",
+  "index": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v126-native-pixel-index-1\\index.json",
+  "assignedIndices": [
+    0,
+    11
+  ],
+  "rawPngsInspected": 12,
+  "frames": [
+    {
+      "index": 0,
+      "fileName": "v126-001-bloodborne_dw_prototype_double_door.png",
+      "key": "bloodborne_dw:prototype_double_door",
+      "sha256": "c9dad75dd0d408cf65fc195b94ee245f5ca5071ca5c48a5cc4fde25697bca704",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Полностью видна закрытая оригинальная дверь 90001: тёмные деревянные панели, центральный орнамент и верхняя перемычка. Нижняя кромка лежит на голубой платформе. Видимых пропавших текстур нет; механизм открытия этот неподвижный кадр не проверяет.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 1,
+      "fileName": "v126-002-bloodborne_rp_wood_gate.png",
+      "key": "bloodborne_rp:wood_gate",
+      "sha256": "90d6386cfc3d66476bb41a5aadf7039edace1d6d31d0c443cd4041c9fa76b6bd",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Оригинальные деревянные ворота видны с косого бокового ракурса: высокая тёмная панель, верхнее завершение и толстая боковая стойка. Основание стоит на голубой платформе; текстуры дерева отображаются. Соседнее дерево относится к отдельной платформе.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 2,
+      "fileName": "v126-003-bloodborne_dw_source__wall_dec_bottom.png",
+      "key": "bloodborne_dw:source__wall_dec_bottom",
+      "sha256": "1c703873f0cb8142c96bb56635482cd842a76a1dfdddfaea1c4e053895c41ea6",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Нижний настенный орнамент 90423 виден целиком: серый каменный карниз и два нижних выступа. Минимальная нижняя часть доходит до зелёной платформы, модель не спрятана в ней. Каменная фактура и детали читаются, замещающих пурпурных текстур нет.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 3,
+      "fileName": "v126-004-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_right1",
+      "sha256": "59bbf837c7a02eed8436f3d0abcc18b9863573d2bd2cc91565c132f5d48baab0",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "В центре целиком виден высокий узкий каменный модуль с изогнутой верхней частью, его нижний конец расположен на зелёной платформе. Видны последовательные каменные сегменты без пропавших текстур. Соседние более широкие полу-арки стоят на отдельных платформах.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 4,
+      "fileName": "v126-005-bloodborne_dw_source_1_spirelamp_001.png",
+      "key": "bloodborne_dw:source_1_spirelamp_001",
+      "sha256": "f5a7b005b2ac24a92b9d3967b15c8992b184fac82aca47340f1f15fb0c2b27be",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Светильник 90281 показывает исходную крупную светло-серую кубическую модель с пятнистой каменной фактурой и тёмными краями; видна также верхняя грань. Куб стоит на жёлтой платформе. Форма сопоставлена с исходным six-face кубом 1_spirelamp_001; видимый серый цвет не признан ошибкой текстуры.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 5,
+      "fileName": "v126-006-bloodborne_dw_source_ywlloe_stained_glass_pane_noside_alt.png",
+      "key": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+      "sha256": "722374baf906b7c1be34df55bb948fa01f0203a23edddd280b56d050b6b75242",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Стойка 93151: видны жёлтая платформа и её табличка, но тонкая исходная WEST-грань снята с обратной EAST-стороны и отсекается. Сам объект в этом исходном кадре не виден. Величина его видимых границ — X=.4375, Y=0..2, Z=.4375..5625; крупная каменная арка справа относится к соседнему образцу. Для проверки лицевой стороны потребовался дополнительный западный ракурс; дефект модели не установлен. Ограничение этого исходного ракурса закрыто отдельно просмотренным западным кадром v126s-001; он показывает всю тонкую грань с её фактурой и основанием.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET",
+      "coverage": "ORIGINAL_BACKFACE_LIMITATION_COVERED_BY_OBSERVED_WEST_SIDE_SUPPLEMENT",
+      "supplementalEvidence": {
+        "captureSha256": "4737b1ae4cc71376b27db21e743350250318921599e197fad5d1f3b7991cd5b3",
+        "fileName": "v126s-001-bloodborne_dw_source_ywlloe_stained_glass_pane_noside_alt.png",
+        "sha256": "9d323104df2eba54ef1427892ed29d3bbfa4286fde18d7796ec0967839dfd43d",
+        "review": "review-supplement-000.json"
+      }
+    },
+    {
+      "index": 6,
+      "fileName": "v126-007-framed_bloodborne_rp_blood_vial.png",
+      "key": "framed:bloodborne_rp:blood_vial",
+      "sha256": "1fb97f1e6f30c7e0f512ce8d9e9ef5696d9ce5942b5912b8d79824ac754c85a8",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Предмет Blood Vial виден как иконка голубоватого пузырька в рамке на каменном демонстрационном кубе. Куб установлен на синей платформе, рядом читается табличка предмета V12. Незаконного размещения предмета как мирового блока и пропавшей иконки не наблюдается.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 7,
+      "fileName": "v126-008-framed_bloodborne_dw_bb_tool.png",
+      "key": "framed:bloodborne_dw:bb_tool",
+      "sha256": "5e69273637f40659fd26c54df339c93a2e84152e38551202f7514b6b7addd2e2",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Инструмент BB виден как диагональная иконка инструмента в рамке на каменном демонстрационном кубе. Куб стоит на синей платформе, табличка показывает инструмент BB. Иконка отображается, отсутствующих текстур нет.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 8,
+      "fileName": "v126-009-bloodborne_dw_prototype_wall.png",
+      "key": "bloodborne_dw:prototype_wall",
+      "sha256": "8d305f851ed6568407a90e97b8a9e9d46ca0b6625129f3a843cd5f9e1ebc152a",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Оригинальная ограда 90002 в состоянии без соседей представлена одним каменным столбиком: видны верхняя и две боковые грани, основание на голубой платформе. Снимок показывает ожидаемый отдельный столбик; соединение с соседями относится к отдельной игровой проверке.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 9,
+      "fileName": "v126-010-bloodborne_dw_source_hold_wall_lantern.png",
+      "key": "bloodborne_dw:source_hold_wall_lantern",
+      "sha256": "2002a9feb8ecc26ebe0f8f9554ff516f80f3c99475d8bf228c63044122249cee",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Подвесной фонарь 90595 виден целиком: верхняя подвеска, серый корпус со светлой вставкой и тонкий нижний декор. Минимальные нижние детали касаются уровня зелёной платформы; приподнятый корпус соответствует подвесной модели. Пропавших текстур не видно.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 10,
+      "fileName": "v126-011-bloodborne_dw_source_addon_cases_0.png",
+      "key": "bloodborne_dw:source_addon_cases_0",
+      "sha256": "37cbef841a5c6839fff78c68e95b8086f57fb3fc287a801c10bc34c5cc4feb2e",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Стопка старых чемоданов 90083 видна целиком на зелёной платформе: три основных предмета с коричневыми крышками и сине-зелёными боковинами, плюс низкая часть справа. Нижние кромки стоят на поверхности; прозрачные промежутки и исходная фактура сохранены.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    },
+    {
+      "index": 11,
+      "fileName": "v126-012-bloodborne_dw_source_addon_chain_2.png",
+      "key": "bloodborne_dw:source_addon_chain_2",
+      "sha256": "43912be2eb9786c8d55d6710c60f92448a26bfbb7afbe63343d18253d0de0843",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Цепь 90086 видна как короткая тонкая серая последовательность звеньев над поверхностью зелёной платформы. Весь объект помещается в кадре, табличка показывает вариант 3. Прозрачность вокруг звеньев работает, пустое пространство не заполнено текстурой-заглушкой.",
+      "inspection": "RAW_PNG_AND_CONTACT_SHEET"
+    }
+  ],
+  "pendingSupplementalKeys": [],
+  "supplementalFramesInspected": 1,
+  "confirmedNewModelDefects": [],
+  "physicalInteractionAndCollisionChecks": "NOT_RUN_BY_PIXEL_REVIEW",
+  "originalV12Modified": false
+}

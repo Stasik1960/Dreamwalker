@@ -1,0 +1,35 @@
+{
+  "status": "PASS_EXACT_AUTHOR_TEXTURED_VANILLA_PARENT_SOURCE_POSES",
+  "rows": [
+    {
+      "registryId": "bloodborne_dw:source_deepslate",
+      "variant": 2,
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/deepslate_mirrored"
+        }
+      ],
+      "status": "PASS_EXACT_SOURCE_VERTICES_UV_RGBA_TINTINDEX",
+      "dependencyEvidence": "vanilla1.20.1deepslate_mirrored exists; bothPNGtextures are suppliedbyv15, so old SOURCE_DEFECT label is stale."
+    },
+    {
+      "registryId": "bloodborne_dw:source_deepslate",
+      "variant": 3,
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/deepslate_mirrored",
+          "x": 90
+        }
+      ],
+      "status": "PASS_EXACT_SOURCE_VERTICES_UV_RGBA_TINTINDEX",
+      "dependencyEvidence": "vanilla1.20.1deepslate_mirrored exists; bothPNGtextures are suppliedbyv15, so old SOURCE_DEFECT label is stale."
+    }
+  ],
+  "sourceCellCount": 417,
+  "separateVanillaFallbackRemoval": {
+    "sourceModel": "minecraft:block/acacia_button",
+    "count": 1,
+    "reason": "Vanilla1.20.1buttonmodel/parent/acacia_planksPNGallunchanged byv15; removeperuserstylepolicy."
+  },
+  "sourceWorldConverted": false
+}

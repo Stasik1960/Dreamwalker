@@ -1,0 +1,425 @@
+{
+  "schema": "dreamwalker-v12-reported-regression-static-v1",
+  "status": "PASS",
+  "publishedV12Jar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\releases\\Dreamwalker-BB\\v12\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.jar",
+  "publishedV12Sha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+  "deliveredV122Jar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\releases\\Dreamwalker-BB\\v12.2-simple-collisions\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar",
+  "deliveredV122Sha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "oldEntryCount": 1197,
+  "oldCatalogueRows": 116,
+  "oldRowsAndAliasesExact": true,
+  "oldAssetsAndCompositeDescriptorsChecked": 941,
+  "oldResourceDifferences": [],
+  "wallClassesChecked": 22,
+  "wallClassesAndMigrationExact": true,
+  "rpClassesChecked": 53,
+  "rpClassesExact": true,
+  "wall90002And90011AlreadyInV12": {
+    "90002": {
+      "temporaryId": "90002",
+      "finalId": null,
+      "kind": "architecture",
+      "name": "Художественная ограда",
+      "registryId": "bloodborne_dw:prototype_wall",
+      "aliases": [
+        "bloodborne_dw:prototype_wall"
+      ]
+    },
+    "90011": {
+      "temporaryId": "90011",
+      "finalId": null,
+      "kind": "architecture",
+      "name": "Ограда · исходный материал 0",
+      "registryId": "bloodborne_dw:prototype_wall_skin_0",
+      "aliases": [
+        "bloodborne_dw:prototype_wall_skin_0"
+      ]
+    },
+    "90012": {
+      "temporaryId": "90012",
+      "finalId": null,
+      "kind": "architecture",
+      "name": "Ограда · исходный материал 1",
+      "registryId": "bloodborne_dw:prototype_wall_skin_1",
+      "aliases": [
+        "bloodborne_dw:prototype_wall_skin_1"
+      ]
+    }
+  },
+  "oldWallTextureSha256": {
+    "0": "d487e1dddb4dbefe889fad89dac09bf4a6f990b427995a8ee2f7dd118b09da23",
+    "6": "47b030ee41ca00129b92070b5d4600d5eef94f437e164931a055aef4dc5d7786"
+  },
+  "wallTall0And6TextureBytesIdentical": false,
+  "changedOldEntries": [
+    {
+      "entry": "bloodborne_dw/debug_catalogue.json",
+      "oldSha256": "0e124be76f5fa5af78d5338bca745acb7680c08a676ea11ae69086501b790e02",
+      "newSha256": "2fcf1309657401e09be0f6ce97f9164cbb79b63370dd42a8209e06849147d24e"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/DreamwalkerBb.class",
+      "oldSha256": "1acf11f02cbebad29b23cf5a0ff54d9f4885b8baf1fa3dc372d1c1d36c91c065",
+      "newSha256": "ef1d9737606cb5a0c86cde9a834fdd8a3ba3a93317d197a772491f89da79bae0"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeClient$1.class",
+      "oldSha256": "8065cf2ff03268cd2dd874cdabeb039111974b341b458e4174e4f233883ccdcf",
+      "newSha256": "3575cd93e1f00ba5c8833347f54fd135d8edbea58685d718a92a5c206f75ca1f"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeClient$OwnersPacket.class",
+      "oldSha256": "28a95f5eed22273a85a9ae857a240605ca5e175aa4b261b8128d84a64451cef1",
+      "newSha256": "0826bab221b6955d68a64c84038a631bf59a404913d784e1989be3ad2daf4b90"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeClient$SyncContext.class",
+      "oldSha256": "8acaec642f7945e9135e6cf2b1fbc7366711afebec7b88e721344a5879f2e387",
+      "newSha256": "06426dedd4cb6a7e4c8ccaa1a67260d208a130ceb8c8346594a4d79e6f333a01"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeClient.class",
+      "oldSha256": "600006a7aa8c1f3d66bb8f5d886aafcc65d75503f12c7efebbe03557917f1204",
+      "newSha256": "7ea7cde929ae5c1481aa94660ad6a7ad841c476c9db673351d384e3cb3e03331"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeItem.class",
+      "oldSha256": "2f4147b238dc136389f8ec1c5d9f6473983048bcbf420bf740c70e7b68d64e6a",
+      "newSha256": "fe2715c8de677bfefd25f59ae629fd165ce0ffa0bff3d5fb5045a4c21a51fdf0"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime$1Hit.class",
+      "oldSha256": "3ee146aacaf4769ff839211cd806588a92b845f0a31c55d4ec6ffea457943b81",
+      "newSha256": "85fb88330164517cbcd5d160d2c8ba2fc405549f6d0d560b58001cea7aa7f975"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.class",
+      "oldSha256": "535723e60a64b6cdf1c9851673de18a2964c5e3afa3e05cd1ba262cda83e1995",
+      "newSha256": "82ac46ef94e2c4ba794789860238a215f32489e97382d8cf1b5f6d6071749ed5"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.class",
+      "oldSha256": "c3bf92ef08493e49bbb6bcba411d3cb783a92a45556162b036dd852fa7b63392",
+      "newSha256": "82a580bbfc9ccfb866318031ad8681e1c1d5e36391ed152b6a457cc1d97953c6"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/CompositeSpec.class",
+      "oldSha256": "a1d9bf4a4326379f2a3cd8900856b7f932c2be82417a65696beecbfdc39cd253",
+      "newSha256": "668e88cefbcfb508491de0afcd833b5d11ded207459c1de7b108c8f586f9c0e7"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld.class",
+      "oldSha256": "e9e1e0501ed45386308f61f824929dabe19eb2b467a62fa726789ac56e2550cd",
+      "newSha256": "5dd4e92bed30f20341ecc2c357d2f2cf2039f5838f6577b5da9b6155395ae1ef"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/composite/mixin/RpClimbingMixin.class",
+      "oldSha256": "9a1b89d68d7eae9dccb46ee3bd4c8ec97d41dd0abb1ebcad5f90b17d77fb1f21",
+      "newSha256": "c253acf51e8e7057f93a734d2183c689629aca24845ac97278acafac02354d03"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/debug/UnifiedCreativeCatalogue.class",
+      "oldSha256": "5efcd543ae50ddfd9acc8f3710804ba0870a4f4aaca1bbfa6a512d195b0a5667",
+      "newSha256": "c23f54aaf787deca0fee8292ea8187319298bfddc8494f5aded2b53b061ee928"
+    },
+    {
+      "entry": "dev/dreamwalker/bloodbornedw/link/CompositeMechanismBridge.class",
+      "oldSha256": "dc72ccc90ccc345e536d4fc620206067b4e88574d410dae5b811fa5aa4d88b43",
+      "newSha256": "d139b92eda0fda8660b796ff949cf11ffedad600e06739a2bc4417c9af442687"
+    },
+    {
+      "entry": "fabric.mod.json",
+      "oldSha256": "57a83c6d65940773d4be103e9ff15ac3b5a8a1c0e387bd38877cb02636fa4081",
+      "newSha256": "3b803a740b02bc15f8e808908df7330decc75471ece202d19d99fc589cc6a747"
+    }
+  ],
+  "changedOldClasses": [
+    "dev/dreamwalker/bloodbornedw/DreamwalkerBb.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient$1.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient$OwnersPacket.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient$SyncContext.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeClient.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeItem.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime$1Hit.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSpec.class",
+    "dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld.class",
+    "dev/dreamwalker/bloodbornedw/composite/mixin/RpClimbingMixin.class",
+    "dev/dreamwalker/bloodbornedw/debug/UnifiedCreativeCatalogue.class",
+    "dev/dreamwalker/bloodbornedw/link/CompositeMechanismBridge.class"
+  ],
+  "missingOldEntries": [],
+  "otherNonclassChanges": [],
+  "changedOldImplementationSources": [
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeClient.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeItem.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSpec.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/mixin/RpClimbingMixin.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/debug/UnifiedCreativeCatalogue.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/DreamwalkerBb.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/link/CompositeMechanismBridge.java",
+    "src/architecture/resources/bloodborne_dw/debug_catalogue.json"
+  ],
+  "unexpectedSourceChanges": [],
+  "unexpectedClassChanges": [],
+  "galleryNativeV12Poses": [
+    {
+      "key": "bloodborne_dw:prototype_double_door",
+      "id": "90001",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        2,
+        64,
+        1
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_thin_window",
+      "id": "90004",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "mount": "vertical",
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        9,
+        64,
+        1
+      ],
+      "verticalOffset": 0.8125
+    },
+    {
+      "key": "bloodborne_dw:prototype_glass_window_02",
+      "id": "90010",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "mount": "vertical",
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        16,
+        64,
+        1
+      ],
+      "verticalOffset": 0.8125
+    },
+    {
+      "key": "bloodborne_dw:prototype_glass_window_03",
+      "id": "90020",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "mount": "vertical",
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        23,
+        64,
+        1
+      ],
+      "verticalOffset": 0.8125
+    },
+    {
+      "key": "bloodborne_dw:prototype_wall",
+      "id": "90002",
+      "state": {},
+      "blockStateTag": {
+        "connections": "manual",
+        "up": "true",
+        "north": "tall",
+        "east": "none",
+        "south": "none",
+        "west": "none",
+        "rotation": "0"
+      },
+      "placedState": {
+        "connections": "manual",
+        "east": "none",
+        "material": "6",
+        "north": "tall",
+        "profile": "base",
+        "rotation": "0",
+        "south": "none",
+        "up": "true",
+        "waterlogged": "false",
+        "west": "none"
+      },
+      "root": [
+        1,
+        64,
+        6
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_wall_skin_0",
+      "id": "90011",
+      "state": {},
+      "blockStateTag": {
+        "connections": "manual",
+        "up": "true",
+        "north": "tall",
+        "east": "none",
+        "south": "none",
+        "west": "none",
+        "rotation": "0"
+      },
+      "placedState": {
+        "connections": "manual",
+        "east": "none",
+        "north": "tall",
+        "profile": "base",
+        "rotation": "0",
+        "south": "none",
+        "up": "true",
+        "waterlogged": "false",
+        "west": "none"
+      },
+      "root": [
+        6,
+        64,
+        6
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_wall_skin_1",
+      "id": "90012",
+      "state": {},
+      "blockStateTag": {
+        "connections": "manual",
+        "up": "true",
+        "north": "none",
+        "east": "none",
+        "south": "none",
+        "west": "none",
+        "rotation": "1"
+      },
+      "placedState": {
+        "connections": "manual",
+        "east": "none",
+        "north": "none",
+        "profile": "base",
+        "rotation": "1",
+        "south": "none",
+        "up": "true",
+        "waterlogged": "false",
+        "west": "none"
+      },
+      "root": [
+        11,
+        64,
+        6
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_roof",
+      "id": "90003",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        1,
+        64,
+        11
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_tree",
+      "id": "90005",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        5,
+        64,
+        21
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_ladder",
+      "id": "90006",
+      "state": {},
+      "blockStateTag": {
+        "facing": "north",
+        "variant": "0",
+        "profile": "base",
+        "waterlogged": "false",
+        "diagonal": "false",
+        "source_clone": "false",
+        "freestanding": "true"
+      },
+      "placedState": {
+        "diagonal": "false",
+        "facing": "north",
+        "freestanding": "true",
+        "profile": "base",
+        "source_clone": "false",
+        "variant": "0",
+        "waterlogged": "false"
+      },
+      "root": [
+        2,
+        64,
+        29
+      ],
+      "verticalOffset": 0.0
+    },
+    {
+      "key": "bloodborne_dw:prototype_wood_window",
+      "id": "90007",
+      "state": {},
+      "blockStateTag": {},
+      "placedState": {
+        "open": "false",
+        "profile": "base",
+        "rotation": "0",
+        "variant": "0"
+      },
+      "root": [
+        2,
+        64,
+        36
+      ],
+      "verticalOffset": 0.0
+    }
+  ],
+  "failures": [],
+  "scopeLimit": "Byte/source/resource comparison and explicit shared-hook review; not an exhaustive manual gameplay test of every old mechanism. Native wall placement comparison is reported separately."
+}

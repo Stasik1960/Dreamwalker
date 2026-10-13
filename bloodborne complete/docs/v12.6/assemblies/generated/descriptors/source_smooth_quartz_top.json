@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_smooth_quartz_top",
+  "displayName": "Деревянная дверь с высокой каменной аркой",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/smooth_quartz_top",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                -5.0
+              ],
+              "to": [
+                24.0,
+                32.0,
+                0.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8.0,
+                0.0,
+                -5.0
+              ],
+              "to": [
+                -1.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                -8.0,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                24.0,
+                32.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                17.0,
+                0.0,
+                -5.0
+              ],
+              "to": [
+                24.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -8.0,
+                  0.0,
+                  -5.0
+                ],
+                "to": [
+                  24.0,
+                  32.0,
+                  0.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  16.0,
+                  0.0,
+                  -8.0
+                ],
+                "to": [
+                  21.0,
+                  32.0,
+                  24.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  0.0,
+                  2.34314575
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.0,
+                  0.0,
+                  16.0
+                ],
+                "to": [
+                  24.0,
+                  32.0,
+                  21.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.0,
+                  0.0,
+                  -8.0
+                ],
+                "to": [
+                  0.0,
+                  32.0,
+                  24.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.0,
+          0.0,
+          -5.0
+        ],
+        "to": [
+          24.0,
+          32.0,
+          0.0
+        ]
+      },
+      "sourceVariant": "Каменная арка на двух опорах · верхняя",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/smooth_quartz_top"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:smooth_quartz_stairs[variant:facing=east,half=bottom,shape=straight]",
+        "minecraft:smooth_quartz_stairs[variant:facing=north,half=bottom,shape=straight]",
+        "minecraft:smooth_quartz_stairs[variant:facing=south,half=bottom,shape=straight]",
+        "minecraft:smooth_quartz_stairs[variant:facing=west,half=bottom,shape=straight]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_top",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/smooth_quartz_top",
+              "offset": [
+                0.0,
+                48.0,
+                0.0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -7.9999993,
+                32.0000004,
+                -4.9999995
+              ],
+              "to": [
+                -1.0000007,
+                35.9999996,
+                -5e-07
+              ]
+            },
+            {
+              "from": [
+                -7.9999968,
+                32.0000032,
+                -1.9999998
+              ],
+              "to": [
+                23.9999968,
+                63.999996800000005,
+                -2e-07
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -3.0
+              ],
+              "to": [
+                21.0,
+                48.0,
+                1.0
+              ]
+            },
+            {
+              "from": [
+                17.0000007,
+                32.0000004,
+                -4.9999995
+              ],
+              "to": [
+                23.9999993,
+                35.9999996,
+                -5e-07
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -7.9999993,
+                32.0000004,
+                -4.9999995
+              ],
+              "to": [
+                -1.0000007,
+                35.9999996,
+                -5e-07
+              ]
+            },
+            {
+              "from": [
+                -7.9999968,
+                32.0000032,
+                -1.9999998
+              ],
+              "to": [
+                23.9999968,
+                63.999996800000005,
+                -2e-07
+              ]
+            },
+            {
+              "from": [
+                -6.0,
+                0.0,
+                -3.0
+              ],
+              "to": [
+                21.0,
+                48.0,
+                1.0
+              ]
+            },
+            {
+              "from": [
+                17.0000007,
+                32.0000004,
+                -4.9999995
+              ],
+              "to": [
+                23.9999993,
+                35.9999996,
+                -5e-07
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.0,
+          0.0,
+          -5.0
+        ],
+        "to": [
+          24.0,
+          64.0,
+          1.0
+        ]
+      }
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true,
+  "v126AssemblyPolicy": "Completed installation pose appended after all unchanged old indices. Creative, placement and art cycling expose only completed pose; old fragment poses remain hidden compatibility states. Root runtime performs neighborhood recognition and preserves unmatched fragments.",
+  "v126DefaultPhysicsStatus": "STAGED_COMPONENT_UNION_REQUIRES_ROOT_FINAL_FITTED_PHYSICS_AND_NATIVE_TESTS"
+}

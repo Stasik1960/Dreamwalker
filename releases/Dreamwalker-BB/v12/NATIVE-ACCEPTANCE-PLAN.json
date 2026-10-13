@@ -1,0 +1,430 @@
+{
+  "schema": "dreamwalker-v12-native-acceptance-plan-v1",
+  "status": "PREPARED_NOT_RUN",
+  "productionJarSha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+  "modVersion": "0.1.0-v12",
+  "galleryManifestSha256": "c74e8323d6b7106e78b2ae6853750a80497e91af83256bf2460ed6406c605710",
+  "galleryExhibits": 121,
+  "cases": [
+    {
+      "case": "G1",
+      "name": "G1 Каталог",
+      "nativeAction": "Открыть свежую галерею",
+      "assert": "Ровно один bb_tool в рамке; все текущие предметы и NPC; понятные инструкции и `/function dw_gallery:tool`",
+      "status": "PENDING"
+    },
+    {
+      "case": "T1",
+      "name": "T1 Режимы",
+      "nativeAction": "Пять ПКМ инструментом, затем шестой",
+      "assert": "Пять режимов по кругу; шестой возвращает первый; переключение не применяет действие",
+      "status": "PENDING"
+    },
+    {
+      "case": "T2",
+      "name": "T2 Сдвиг",
+      "nativeAction": "Вверх ЛКМ, затем вниз ЛКМ; повтор внутри занятого объёма",
+      "assert": "Y меняется ровно на +1/-1; ID, UUID и прочие настройки сохраняются; пересечение не блокирует операцию",
+      "status": "PENDING"
+    },
+    {
+      "case": "T3",
+      "name": "T3 Собака",
+      "nativeAction": "Особый режим: скрыть и вернуть",
+      "assert": "`DogsVisible` меняется false→true, нативные кадры подтверждают видимость; это не удаление клетки",
+      "status": "PENDING"
+    },
+    {
+      "case": "T4",
+      "name": "T4 Дверь",
+      "nativeAction": "Переключить manual/levers-only, обычный ПКМ в каждом состоянии",
+      "assert": "Manual выполняет прежнее действие; levers-only оставляет Open без изменения и сообщает «не поддаётся»",
+      "status": "PENDING"
+    },
+    {
+      "case": "T5",
+      "name": "T5 ALL",
+      "nativeAction": "Выбрать 6 разных рычагов, затем цель",
+      "assert": "Одна постоянная ALL-группа: ровно 6 источников и эта цель, исходно все флаги false",
+      "status": "PENDING"
+    },
+    {
+      "case": "T6",
+      "name": "T6 Переполнение",
+      "nativeAction": "При выборе попытаться добавить 7-й рычаг",
+      "assert": "«слишком много рычагов в связке!»; состав остаётся 6, посторонняя группа не создаётся",
+      "status": "PENDING"
+    },
+    {
+      "case": "T7",
+      "name": "T7 Неполный ALL",
+      "nativeAction": "Обычные ПКМ на первых пяти; повтор уже активного",
+      "assert": "Цель остаётся закрытой, повторы не меняют флаги; «Механизм работает, но чего-то не хватает...»",
+      "status": "PENDING"
+    },
+    {
+      "case": "T8",
+      "name": "T8 Полный ALL",
+      "nativeAction": "Активировать шестой, затем после окончания анимации любой источник",
+      "assert": "Цель открывается, «Что-то открылось...»; следующее нажатие закрывает цель и сбрасывает все 6 флагов",
+      "status": "PENDING"
+    },
+    {
+      "case": "T9",
+      "name": "T9 Повтор анимации",
+      "nativeAction": "Повторить обычное взаимодействие до конца перехода",
+      "assert": "Не создаётся новый переход и не обрывается текущая анимация",
+      "status": "PENDING"
+    },
+    {
+      "case": "T10",
+      "name": "T10 Фонари",
+      "nativeAction": "Особым режимом выбрать два; обычный ПКМ A→B и B→A",
+      "assert": "Пара двунаправленна; перемещение находится у второго реального объекта, не у устаревшего UUID",
+      "status": "PENDING"
+    },
+    {
+      "case": "T11",
+      "name": "T11 BASE/ALT",
+      "nativeAction": "Особый режим на объекте с двумя вариантами, затем на объекте без ALT",
+      "assert": "Переключение доступного варианта; отсутствие ALT не повреждает объект",
+      "status": "PENDING"
+    },
+    {
+      "case": "T12",
+      "name": "T12 Радиус",
+      "nativeAction": "Выбрать объект; `/bb select <radius>`; затем `/bb none`",
+      "assert": "ALT применяется только к тому же ID в радиусе; третий за радиусом и другой ID не меняются; выбор очищен",
+      "status": "PENDING"
+    },
+    {
+      "case": "C1",
+      "name": "C1 Консоль",
+      "nativeAction": "Режим console: открыть GUI, ввести несколько строк и сохранить",
+      "assert": "Все строки сохранены и выполняются в заданном порядке; обычное действие объекта также происходит",
+      "status": "PENDING"
+    },
+    {
+      "case": "C2",
+      "name": "C2 Границы",
+      "nativeAction": "Значения 1/999999, 0/1000000 и новое окно без настройки",
+      "assert": "Валидные границы принимаются; недопустимые отвергаются без изменения данных; default999999",
+      "status": "PENDING"
+    },
+    {
+      "case": "C3",
+      "name": "C3 Личный лимит",
+      "nativeAction": "Лимит2: игрокA три раза; затем игрокB один раз",
+      "assert": "СчётчикA выполняется дважды, третье действие не запускает команды; первый раз B выполняется независимо",
+      "status": "PENDING"
+    },
+    {
+      "case": "C4",
+      "name": "C4 Общий лимит",
+      "nativeAction": "Лимит2: A один раз, B два раза",
+      "assert": "Всего две команды независимо от игрока; третье взаимодействие сохраняет обычное действие объекта",
+      "status": "PENDING"
+    },
+    {
+      "case": "P1",
+      "name": "P1 Сохранение",
+      "nativeAction": "save-all flush, штатно закрыть клиент/сервер, повторно зайти",
+      "assert": "UUID, позиции, ALL-состав/флаги, lamp-пара, lock, команды, лимиты и использованные счётчики сохраняются",
+      "status": "PENDING"
+    },
+    {
+      "case": "P2",
+      "name": "P2 Загруженная дверь",
+      "nativeAction": "Первый кадр после входа при заранее устойчивом Open=true",
+      "assert": "`isOpen=true`, `animationBusy=false`; лишний переход при загрузке не появился",
+      "status": "PENDING"
+    },
+    {
+      "case": "D1",
+      "name": "D1 Удаление",
+      "nativeAction": "Режим remove на участнике действующей группы с командами",
+      "assert": "Вся связка очищается; команды/счётчики удаляются только у выбранного объекта. Привязки команд других участников и других групп сохраняются",
+      "status": "PENDING"
+    },
+    {
+      "case": "D2",
+      "name": "D2 Разрушение",
+      "nativeAction": "Создать маленькую новую группу; обычным инструментом сломать участника",
+      "assert": "Вся его связка и команды разрушенного объекта очищены; команды остальных участников сохраняются, после save/rejoin связь не воскресает",
+      "status": "PENDING"
+    },
+    {
+      "case": "L1",
+      "name": "L1 Контур90006",
+      "nativeAction": "Поставить обычную и45°, навести прицел, сломать реальным ЛКМ",
+      "assert": "У каждой авторской секции один AABB-контура; native outline/raycast/break работают, угловая физическая коллизия остаётся пустой",
+      "status": "PENDING"
+    }
+  ],
+  "localhostPort": 55796,
+  "freshDerivedWorldOnlySetupCommands": [
+    "fill -48 64 -6 -2 79 34 minecraft:air",
+    "fill -48 80 -6 -2 95 34 minecraft:air",
+    "fill -48 96 -6 -2 111 34 minecraft:air",
+    "fill -48 112 -6 -2 127 34 minecraft:air",
+    "fill -48 128 -6 -2 128 34 minecraft:air",
+    "fill -48 63 -6 -2 63 34 minecraft:smooth_stone",
+    "scoreboard objectives add dw_v12_personal dummy",
+    "scoreboard objectives add dw_v12_global dummy",
+    "summon bloodborne_rp:door_1 -8 64 8 {UUID:[I;382272474,-1375248451,-1454119679,1875727625],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -40 64 8 {UUID:[I;-1380304295,-1275374515,-1288041224,479259872],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -36 64 8 {UUID:[I;1963844049,-1955111832,-1495542632,445737304],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -32 64 8 {UUID:[I;1555794608,-612149688,-1247680606,1365126250],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -28 64 8 {UUID:[I;1940533139,-1485286072,-1706127319,1745075948],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -24 64 8 {UUID:[I;406722919,1393777068,-1733688655,-1354906764],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -20 64 8 {UUID:[I;305021010,318395774,-1394735524,1453373051],NoGravity:1b}",
+    "summon bloodborne_rp:lever_1 -16 64 8 {UUID:[I;1314129703,2045400559,-1425512317,1358801207],NoGravity:1b}",
+    "summon bloodborne_rp:hunterlamp -36 64 24 {UUID:[I;-121673157,2137349823,-1447797983,1651493939],NoGravity:1b}",
+    "summon bloodborne_rp:hunterlamp -8 64 24 {UUID:[I;-1817615889,-679846058,-1554249763,-1045881308],NoGravity:1b}",
+    "summon bloodborne_rp:cage_obj_1 -46 64 28 {UUID:[I;1868725747,1690916972,-1859118413,-1367334811],NoGravity:1b}"
+  ],
+  "fixtureActors": [
+    {
+      "role": "door",
+      "registry": "bloodborne_rp:door_1",
+      "uuid": "16c903da-ae07-5fbd-a953-e5016fcd5509",
+      "position": [
+        -8,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Pos",
+        "data get entity 16c903da-ae07-5fbd-a953-e5016fcd5509 Open"
+      ]
+    },
+    {
+      "role": "lever1",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "adba3a59-b3fb-544d-b33a-0cf81c90ece0",
+      "position": [
+        -40,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity adba3a59-b3fb-544d-b33a-0cf81c90ece0 Pos",
+        "data get entity adba3a59-b3fb-544d-b33a-0cf81c90ece0 Open"
+      ]
+    },
+    {
+      "role": "lever2",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "750de1d1-8b77-5c68-a6db-d4981a916958",
+      "position": [
+        -36,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 750de1d1-8b77-5c68-a6db-d4981a916958 Pos",
+        "data get entity 750de1d1-8b77-5c68-a6db-d4981a916958 Open"
+      ]
+    },
+    {
+      "role": "lever3",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "5cbb8ab0-db83-5648-b5a1-e7a2515e2c6a",
+      "position": [
+        -32,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 5cbb8ab0-db83-5648-b5a1-e7a2515e2c6a Pos",
+        "data get entity 5cbb8ab0-db83-5648-b5a1-e7a2515e2c6a Open"
+      ]
+    },
+    {
+      "role": "lever4",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "73aa2f93-a778-5548-9a4e-90296803beec",
+      "position": [
+        -28,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 73aa2f93-a778-5548-9a4e-90296803beec Pos",
+        "data get entity 73aa2f93-a778-5548-9a4e-90296803beec Open"
+      ]
+    },
+    {
+      "role": "lever5",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "183e1967-5313-59ac-98aa-02b1af3dc374",
+      "position": [
+        -24,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 183e1967-5313-59ac-98aa-02b1af3dc374 Pos",
+        "data get entity 183e1967-5313-59ac-98aa-02b1af3dc374 Open"
+      ]
+    },
+    {
+      "role": "lever6",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "122e4052-12fa-557e-acde-065c56a0b67b",
+      "position": [
+        -20,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 122e4052-12fa-557e-acde-065c56a0b67b Pos",
+        "data get entity 122e4052-12fa-557e-acde-065c56a0b67b Open"
+      ]
+    },
+    {
+      "role": "lever7",
+      "registry": "bloodborne_rp:lever_1",
+      "uuid": "4e540727-79ea-55ef-ab08-688350fda937",
+      "position": [
+        -16,
+        64,
+        8
+      ],
+      "readOnlyQueries": [
+        "data get entity 4e540727-79ea-55ef-ab08-688350fda937 Pos",
+        "data get entity 4e540727-79ea-55ef-ab08-688350fda937 Open"
+      ]
+    },
+    {
+      "role": "lamp_a",
+      "registry": "bloodborne_rp:hunterlamp",
+      "uuid": "f8bf6a3b-7f65-5ebf-a9b4-5b21626fcc33",
+      "position": [
+        -36,
+        64,
+        24
+      ],
+      "readOnlyQueries": [
+        "data get entity f8bf6a3b-7f65-5ebf-a9b4-5b21626fcc33 Pos",
+        "data get entity f8bf6a3b-7f65-5ebf-a9b4-5b21626fcc33 Open"
+      ]
+    },
+    {
+      "role": "lamp_b",
+      "registry": "bloodborne_rp:hunterlamp",
+      "uuid": "93a961ef-d77a-5f56-a35c-07ddc1a91e24",
+      "position": [
+        -8,
+        64,
+        24
+      ],
+      "readOnlyQueries": [
+        "data get entity 93a961ef-d77a-5f56-a35c-07ddc1a91e24 Pos",
+        "data get entity 93a961ef-d77a-5f56-a35c-07ddc1a91e24 Open"
+      ]
+    },
+    {
+      "role": "dog",
+      "registry": "bloodborne_rp:cage_obj_1",
+      "uuid": "6f627df3-64c9-586c-9130-1ab3ae802065",
+      "position": [
+        -46,
+        64,
+        28
+      ],
+      "readOnlyQueries": [
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 Pos",
+        "data get entity 6f627df3-64c9-586c-9130-1ab3ae802065 Open"
+      ]
+    }
+  ],
+  "zonePreparation": {
+    "clearBounds": [
+      -48,
+      64,
+      -6,
+      -2,
+      128,
+      34
+    ],
+    "airBatches": 5,
+    "maxBlocksPerAirBatch": 30832,
+    "floorY": 63,
+    "standingY": 64,
+    "scope": "Fresh derived QA world only; original gallery and published snapshots unchanged"
+  },
+  "playerExecutedInventoryCommands": [
+    "give @s bloodborne_dw:bb_tool",
+    "give @s bloodborne_dw:prototype_roof 3",
+    "give @s bloodborne_dw:prototype_ladder 2"
+  ],
+  "ordinaryPlayerPlacements": [
+    {
+      "registry": "bloodborne_dw:prototype_roof",
+      "roots": [
+        [
+          -44,
+          64,
+          -3
+        ],
+        [
+          -40,
+          64,
+          -3
+        ],
+        [
+          -28,
+          64,
+          -3
+        ]
+      ],
+      "assert": "/bb select radius6 affects first2 sameID, leaves third outside radius and unrelated IDs unchanged"
+    },
+    {
+      "registry": "bloodborne_dw:prototype_ladder",
+      "roots": [
+        [
+          -18,
+          64,
+          -3
+        ],
+        [
+          -12,
+          64,
+          -3
+        ]
+      ],
+      "assert": "Ordinary cardinal and45-degree item placement; one outline AABB, target/break works, diagonal physical remains empty"
+    }
+  ],
+  "neutralGuiCommandLines": {
+    "personal": [
+      "scoreboard players add @s dw_v12_personal 1"
+    ],
+    "global": [
+      "scoreboard players add #global dw_v12_global 1"
+    ]
+  },
+  "nativeFrameBudget": "10..20 purposeful images: mode/GUI/chat, dog, ALL incomplete/open/reset, pair, limits, rejoin; no bulk old PNG replay",
+  "serverReadOnlyAssertions": [
+    "data get entity <UUID> Pos/Open/Locked/DogsVisible",
+    "scoreboard players get <player> dw_v12_personal",
+    "scoreboard players get #global dw_v12_global"
+  ],
+  "existingJavaAssertions": [
+    "RpObjectEntity.isOpen/animationBusy/dogsVisible/verticalOffset",
+    "MechanismRules.list/rule/flag",
+    "MechanismLinks.targets/sources/inspect",
+    "ObjectPolicies.leversOnly",
+    "LampState saved NBT",
+    "BbToolItem.mode; BbToolService.move/special/alternate/clear/save; ToolCommands.view/writeNbt"
+  ],
+  "commandDeletionScope": "Remove whole link component; only selected/deleted object loses its commands and durable counters. Other members keep their own command bindings.",
+  "newApiContract": "Server GameTests measure real callbacks/packets and scoreboard effects; native GUI/tool inputs and whole-server rejoin remain separate acceptance.",
+  "rejoin": "Native save-all flush; normal close server/clients; fresh byte-verified saved-world copy and new client run; compare UUID/positions/group/pair/commands/limits/counters.",
+  "clientPreparation": "Existing run_v11_client --server127.0.0.1 --port --username distinctA/B --qa-keybindings; prepare only, root controls --launch.",
+  "inputOwnership": "Root performs real clicks/keys and live commands. No automated clicks, mocked player proof or background Sky activation.",
+  "setupCommandsSent": false,
+  "GUI_launched": false
+}

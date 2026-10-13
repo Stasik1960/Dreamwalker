@@ -17,8 +17,8 @@ import net.minecraft.world.World;
 public final class CompositeShapeSnapshots {
     private static final Map<World,Published> WORLDS=new WeakHashMap<>();
     public record Root(UUID token,Owner resident,double offset,BlockPos sourceRoot) {}
-    private record CellData(List<CompositeData.Contribution> ledger,List<CompositeData.Contribution> entity,Root root) {
-        private static final CellData EMPTY=new CellData(List.of(),List.of(),null);
+    private record CellData(List<CompositeData.Contribution> ledger,List<CompositeData.Contribution> entity,Root root,int sourceOpacity) {
+        private static final CellData EMPTY=new CellData(List.of(),List.of(),null,0);
         List<CompositeData.Contribution> entries(){return ledger.isEmpty()?entity:ledger;}
         boolean empty(){return ledger.isEmpty()&&entity.isEmpty()&&root==null;}
     }
@@ -26,56 +26,76 @@ public final class CompositeShapeSnapshots {
         volatile Map<Long,Map<Cell,CellData>> chunks=Map.of();
         final Map<Cell,CellData> pending=new HashMap<>();
         int batchDepth;
+        long sourceCarrierLightChecks;
         CellData at(Cell cell){return chunks.getOrDefault(chunk(cell),Map.of()).getOrDefault(cell,CellData.EMPTY);}
         synchronized CellData current(Cell cell){return pending.getOrDefault(cell,at(cell));}
-        synchronized void change(Cell cell,List<CompositeData.Contribution> ledger,List<CompositeData.Contribution> entity,Root root,boolean changeLedger,boolean changeEntity,boolean batch){
+        synchronized void change(World world,Cell cell,List<CompositeData.Contribution> ledger,List<CompositeData.Contribution> entity,Root root,boolean changeLedger,boolean changeEntity,boolean batch){
             CellData old=pending.getOrDefault(cell,at(cell));
-            pending.put(cell,new CellData(changeLedger?List.copyOf(ledger):old.ledger,changeEntity?List.copyOf(entity):old.entity,changeEntity?root:old.root));
-            if(!batch)flush();
+            var nextLedger=changeLedger?List.copyOf(ledger):old.ledger;var nextEntity=changeEntity?List.copyOf(entity):old.entity;
+            pending.put(cell,new CellData(nextLedger,nextEntity,changeEntity?root:old.root,ImportedWholeSourceOpticsV127.publishedOpacity(cell,nextLedger.isEmpty()?nextEntity:nextLedger)));
+            if(!batch)flush(world);
         }
-        synchronized void retire(Cell cell,UUID token,boolean batch){
+        synchronized void retire(World world,Cell cell,UUID token,boolean batch){
             CellData old=pending.getOrDefault(cell,at(cell));
             if(old.root==null||!old.root.token().equals(token))return;
-            pending.put(cell,new CellData(old.ledger,List.of(),null));if(!batch)flush();
+            pending.put(cell,new CellData(old.ledger,List.of(),null,ImportedWholeSourceOpticsV127.publishedOpacity(cell,old.ledger)));if(!batch)flush(world);
         }
-        synchronized void flush(){
+        synchronized void flush(World world){
             if(batchDepth>0)return;
             if(pending.isEmpty())return;
             Map<Long,Map<Cell,CellData>> next=new HashMap<>(chunks);
             Map<Long,Map<Cell,CellData>> changed=new HashMap<>();
+            List<Cell> sourceLightChanges=new ArrayList<>();
             for(var row:pending.entrySet()){
+                if(at(row.getKey()).sourceOpacity!=row.getValue().sourceOpacity)sourceLightChanges.add(row.getKey());
                 long key=chunk(row.getKey());Map<Cell,CellData> cells=changed.computeIfAbsent(key,ignored->new HashMap<>(next.getOrDefault(key,Map.of())));
                 if(row.getValue().empty())cells.remove(row.getKey());else cells.put(row.getKey(),row.getValue());
             }
             for(var row:changed.entrySet())if(row.getValue().isEmpty())next.remove(row.getKey());else next.put(row.getKey(),Map.copyOf(row.getValue()));
             chunks=Map.copyOf(next);pending.clear();
+            // A dynamic helper may retain the identical native block state while
+            // its flagged NEW source opacity changes. Recheck only those cells,
+            // after the complete immutable revision is visible to light workers.
+            if(world instanceof ServerWorld server)for(var cell:sourceLightChanges){var pos=CompositeData.pos(cell);if(server.isChunkLoaded(pos)){server.getChunkManager().getLightingProvider().checkBlock(pos);sourceCarrierLightChecks++;}}
         }
         synchronized void begin(){batchDepth++;}
-        synchronized void end(){if(batchDepth<=0)throw new IllegalStateException("Unbalanced shape publication batch");batchDepth--;flush();}
+        synchronized void end(World world){if(batchDepth<=0)throw new IllegalStateException("Unbalanced shape publication batch");batchDepth--;flush(world);}
+        synchronized void forgetChunk(long key){
+            if(batchDepth>0)throw new IllegalStateException("Cannot evict a shape shard during an atomic publication batch");
+            pending.keySet().removeIf(cell->chunk(cell)==key);Map<Long,Map<Cell,CellData>> next=new HashMap<>(chunks);next.remove(key);chunks=Map.copyOf(next);
+        }
     }
     private static long chunk(Cell cell){return net.minecraft.util.math.ChunkPos.toLong(cell.x()>>4,cell.z()>>4);}
     private static synchronized Published cache(World world,boolean create){return create?WORLDS.computeIfAbsent(world,ignored->new Published()):WORLDS.get(world);}
     public static boolean worker(BlockView view){return view instanceof ServerWorld world&&!world.getServer().isOnThread();}
     private static CellData data(BlockView view,BlockPos pos){if(!(view instanceof World world)||pos==null)return CellData.EMPTY;Published cache=cache(world,false);return cache==null?CellData.EMPTY:worker(view)?cache.at(CompositeData.cell(pos)):cache.current(CompositeData.cell(pos));}
     public static List<CompositeData.Contribution> contributions(BlockView view,BlockPos pos){return data(view,pos).entries();}
+    /** A light worker reads the already published scalar; no owner NBT, registry,
+     * chunk, block entity or persistent state is read during this query. */
+    public static int sourceCarrierOpacity(BlockView view,BlockPos pos){return data(view,pos).sourceOpacity;}
     public static Owner owner(BlockView view,BlockPos pos){CellData data=data(view,pos);if(data.root!=null)return data.root.resident();for(var entry:data.entries())if(entry.owner().root().equals(CompositeData.cell(pos)))return entry.owner();return null;}
+    /** Existing attached native roots also have owners before their first height edit. */
+    public static Set<Owner> attachedOwners(World world){Published published=cache(world,false);if(published==null)return Set.of();Set<Owner> owners=new HashSet<>();for(var cells:published.chunks.values())for(var data:cells.values())if(data.root()!=null&&data.root().resident()!=null)owners.add(data.root().resident());return Set.copyOf(owners);}
     /** Known replacement UUIDs are rejected. Missing/unloaded root metadata is
      * deferred, just as an unloaded owner is on the authoritative main thread. */
     public static boolean validOrDeferred(BlockView view,Owner owner){Root root=data(view,CompositeData.pos(owner.root())).root;return root==null||owner.equals(root.resident());}
     public static double offset(BlockView view,BlockPos pos){CellData data=data(view,pos);if(data.root!=null)return data.root.offset();for(var entry:data.entries())if(entry.owner().root().equals(CompositeData.cell(pos)))return offset(entry);return 0;}
     public static boolean shiftedSourceBacking(BlockView view,BlockPos pos){CellData data=data(view,pos);if(data.root!=null&&data.root.sourceRoot()!=null)return offset(view,data.root.sourceRoot())!=0;for(var entry:data.entries())if("true".equals(entry.rootData().properties().get("source_clone"))&&offset(entry)!=0)return true;return false;}
     private static double offset(CompositeData.Contribution entry){return CompositeData.nbt(entry.rootData().blockEntityNbt()).getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);}
-    public static void ledger(World world,Cell cell,List<CompositeData.Contribution> entries){cache(world,true).change(cell,entries,List.of(),null,true,false,CompositeRuntime.writing());}
-    public static void ledgerLoaded(World world,Map<Cell,List<CompositeData.Contribution>> cells){Published cache=cache(world,true);synchronized(cache){for(var row:cells.entrySet())cache.change(row.getKey(),row.getValue(),List.of(),null,true,false,true);cache.flush();}}
+    public static void ledger(World world,Cell cell,List<CompositeData.Contribution> entries){cache(world,true).change(world,cell,entries,List.of(),null,true,false,CompositeRuntime.writing());}
+    public static void ledgerLoaded(World world,Map<Cell,List<CompositeData.Contribution>> cells){Published cache=cache(world,true);synchronized(cache){for(var row:cells.entrySet())cache.change(world,row.getKey(),row.getValue(),List.of(),null,true,false,true);cache.flush(world);}}
     public static void entity(World world,BlockPos pos,UUID token,Owner owner,List<CompositeData.Contribution> entries,NbtCompound payload,BlockPos sourceRoot){
         if(world==null)return;Root root=new Root(token,owner,payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY),sourceRoot==null?null:sourceRoot.toImmutable());
-        cache(world,true).change(CompositeData.cell(pos),List.of(),entries,root,false,true,CompositeRuntime.writing());
+        cache(world,true).change(world,CompositeData.cell(pos),List.of(),entries,root,false,true,CompositeRuntime.writing());
     }
-    public static void retired(World world,BlockPos pos,UUID token){if(world==null)return;Published cache=cache(world,false);if(cache!=null)cache.retire(CompositeData.cell(pos),token,CompositeRuntime.writing());}
-    public static void flush(World world){Published cache=cache(world,false);if(cache!=null)cache.flush();}
+    public static void retired(World world,BlockPos pos,UUID token){if(world==null)return;Published cache=cache(world,false);if(cache!=null)cache.retire(world,CompositeData.cell(pos),token,CompositeRuntime.writing());}
+    public static void flush(World world){Published cache=cache(world,false);if(cache!=null)cache.flush(world);}
     public static void beginBatch(World world){cache(world,true).begin();}
-    public static void endBatch(World world){cache(world,true).end();}
+    public static void endBatch(World world){cache(world,true).end(world);}
     public static synchronized void forget(World world){WORLDS.remove(world);}
-    public static Map<String,Object> metrics(World world){Published cache=cache(world,false);if(cache==null)return Map.of("shapeSnapshotChunks",0,"shapeSnapshotCells",0,"shapeSnapshotPendingCells",0,"shapeSnapshotBatchDepth",0);synchronized(cache){var chunks=cache.chunks;return Map.of("shapeSnapshotChunks",chunks.size(),"shapeSnapshotCells",chunks.values().stream().mapToInt(Map::size).sum(),"shapeSnapshotPendingCells",cache.pending.size(),"shapeSnapshotBatchDepth",cache.batchDepth,"shapeSnapshotScope","immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries");}}
+    /** Opt-in server shard eviction; worker readers retain an immutable old
+     * revision safely until their current query finishes, without disk access. */
+    public static void forgetChunk(World world,long chunk){Published cache=cache(world,false);if(cache!=null)cache.forgetChunk(chunk);}
+    public static Map<String,Object> metrics(World world){Published cache=cache(world,false);if(cache==null)return Map.of("shapeSnapshotChunks",0,"shapeSnapshotCells",0,"shapeSnapshotPendingCells",0,"shapeSnapshotBatchDepth",0,"sourceCarrierLightChecks",0L);synchronized(cache){var chunks=cache.chunks;return Map.of("shapeSnapshotChunks",chunks.size(),"shapeSnapshotCells",chunks.values().stream().mapToInt(Map::size).sum(),"shapeSnapshotPendingCells",cache.pending.size(),"shapeSnapshotBatchDepth",cache.batchDepth,"sourceCarrierLightChecks",cache.sourceCarrierLightChecks,"shapeSnapshotScope","immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries");}}
     private CompositeShapeSnapshots(){}
 }

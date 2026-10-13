@@ -17,7 +17,7 @@ import subprocess
 import uuid
 import zipfile
 from ensure_client_assets import ensure_assets
-from run_v11_server import DEPENDENCIES, ROOT, USER, copy_verified, fetch, files_without_links, ordinary, require, sha, write_json
+from run_v11_server import DEPENDENCIES, ROOT, USER, copy_verified, copy_extra_mods, extra_mod_inputs, fetch, files_without_links, ordinary, require, sha, write_json
 
 WORLD_NAME = 'prototype-fixture'
 
@@ -86,7 +86,7 @@ def options_text(args):
     return options
 
 
-def prepare(args, run, artifact_sha, qa):
+def prepare(args, run, artifact_sha, qa, extras):
     mods = run / 'mods';mods.mkdir(parents=True)
     copy_verified(args.jar.resolve(), mods / args.jar.name)
     if qa['qaAddon']:
@@ -102,6 +102,7 @@ def prepare(args, run, artifact_sha, qa):
         require(source is not None, 'Missing exact cached dependency: ' + name + ':' + version)
         copy_verified(source, mods / source.name)
         modset.append({'coordinate': group + ':' + name + ':' + version, 'source': str(source), 'sha256': sha(source)})
+    extra_mods = copy_extra_mods(extras, mods)
     java = args.java_home.resolve() / 'bin/java.exe'
     java_version = subprocess.run([str(java), '-version'], capture_output=True, text=True, check=True).stderr.strip()
     require(re.search(r'version "17\.', java_version), 'Client requires actual Java17')
@@ -164,6 +165,7 @@ def prepare(args, run, artifact_sha, qa):
               'width': args.width, 'height': args.height, 'guiScale': args.gui_scale, 'maxFps': args.max_fps, 'quickPlay': bool(args.quick_play or args.server),
               'renderDistance': args.render_distance, 'simulationDistance': 5, 'qaKeybindings': args.qa_keybindings,
               'cachedProjectDependencies': modset, 'libraries': libraries, 'loader_metadata_url': loader_url,
+              'extraMods': extra_mods,
               'loader_metadata_sha256': hashlib.sha256(loader_bytes).hexdigest(), 'assets': str(assets),
               'asset_index_sha1': hashlib.sha1(asset_index.read_bytes()).hexdigest(), 'isolated_asset_provenance': asset_provenance,
               'offline_username': username, 'offline_uuid': identity, 'fixture': str(fixture) if fixture else None,
@@ -197,6 +199,7 @@ def main():
     parser.add_argument('--render-distance', type=int, choices=range(2, 33), default=5)
     parser.add_argument('--qa-keybindings', action='store_true', help='Only isolated options: use F8, attack F9, arrows movement, jump F10')
     parser.add_argument('--qa-addon', type=Path, help='Explicit separate dreamwalker_gallery_author JAR from project build/libs')
+    parser.add_argument('--extra-mod', type=Path, action='append', default=[], help='Explicit regular compatibility JAR under project build; no production or QA replacements')
     parser.add_argument('--capture-input', type=Path, help='Explicit production-bound camera marker from project build')
     parser.add_argument('--heap-gb', type=int, choices=range(2, 9), default=4)
     args = parser.parse_args()
@@ -205,6 +208,7 @@ def main():
     require(640 <= args.width <= 3840 and 360 <= args.height <= 2160, 'Invalid game window dimensions')
     artifact = args.jar.resolve();ordinary(artifact);artifact_sha = sha(artifact)
     qa = qa_inputs(args, artifact_sha)
+    extras = extra_mod_inputs(args.extra_mod)
     run = ROOT / 'build' / ('runtime-client-' + args.run_name)
     if run.exists():
         require(args.launch, 'Refusing to overwrite an existing prepared/game run')
@@ -213,6 +217,8 @@ def main():
                 and result['artifact_sha256'] == artifact_sha and result['fixture'] == (str(args.fixture.resolve()) if args.fixture else None)
                 and result.get('offline_username') == args.username
                 and result.get('qaAddon') == qa['qaAddon'] and result.get('captureInput') == qa['captureInput']
+                and [{k: v for k, v in record.items() if k not in ('copyByteVerification', 'copiedSha256')}
+                     for record in result.get('extraMods', [])] == extras
                 and result.get('qaKeybindings') == args.qa_keybindings and result.get('renderDistance') == args.render_distance
                 and result.get('server') == ({'host': args.server, 'port': args.port} if args.server else None),
                 'Existing prepared run does not match this artifact/target/identity or was already launched')
@@ -220,7 +226,7 @@ def main():
             path = run / row['path'];require(path.resolve().is_relative_to(run.resolve()), 'Prepared file leaves run directory')
             ordinary(path);require(sha(path) == row['sha256'], 'Prepared client file changed: ' + row['path'])
     else:
-        result = prepare(args, run, artifact_sha, qa)
+        result = prepare(args, run, artifact_sha, qa, extras)
     if result['derived_world_copy']:
         source = Path(result['derived_world_copy']['source'])
         result['derived_world_copy']['source_unchanged_at_launch'] = all(sha(source / row['path']) == row['sha256'] for row in result['derived_world_copy']['files'])

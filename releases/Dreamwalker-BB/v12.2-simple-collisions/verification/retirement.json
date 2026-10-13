@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "baselineCommit": "4bcb19ce6",
+  "previousGalleryDamagedActualVariants": 3,
+  "removedRegistryTypes": 2,
+  "newTypesRemaining": 1045,
+  "reservedIds": [
+    "93148",
+    "93149"
+  ],
+  "removedObjects": [
+    {
+      "path": "source_jungle_trapdoor_bottom",
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_bottom",
+      "reservedNumber": "93148",
+      "variants": [
+        0
+      ],
+      "reason": "USER_REQUEST_REMOVE_ALL_PREVIOUS_RED_DAMAGED_OBJECTS",
+      "sourceIssues": [
+        {
+          "model": "minecraft:block/jungle_trapdoor_bottom",
+          "texture": "block/texture",
+          "type": "MISSING_TEXTURE"
+        }
+      ],
+      "offered": false
+    },
+    {
+      "path": "source_jungle_trapdoor_open",
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_open",
+      "reservedNumber": "93149",
+      "variants": [
+        0,
+        1
+      ],
+      "reason": "USER_REQUEST_REMOVE_ALL_PREVIOUS_RED_DAMAGED_OBJECTS",
+      "sourceIssues": [
+        {
+          "model": "minecraft:block/jungle_trapdoor_open",
+          "texture": "block/texture",
+          "type": "MISSING_TEXTURE"
+        }
+      ],
+      "offered": false
+    }
+  ],
+  "removedFiles": [
+    {
+      "path": "src/architecture/resources/bloodborne_dw/composite/source_jungle_trapdoor_bottom.json",
+      "sha256": "9af612b247f6b2da7105b3848774d044728a986b230c5516527f48e309fc27ef"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/blockstates/source_jungle_trapdoor_bottom.json",
+      "sha256": "08e6d8462c82fec8ecffa90b0cfd026146862d6373ae377d7ce09e09768e8bf0"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/item/source_jungle_trapdoor_bottom.json",
+      "sha256": "0225ee519c456314f796dce2d5eec489754e1e810e1ad61ca542317b2759a345"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/block/source_jungle_trapdoor_bottom_empty.json",
+      "sha256": "7f5f823811c76e8f2919244cb4353717ca4d5466c8c703f6caca2043fa32a689"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/remaining/source/minecraft/block/jungle_trapdoor_bottom.json",
+      "sha256": "7e0510f4c5803edbf73d0cc88a7f9150db93d06b20086a46abe2b4972e602d40"
+    },
+    {
+      "path": "src/architecture/resources/bloodborne_dw/composite/source_jungle_trapdoor_open.json",
+      "sha256": "b74be90e11ec0315461514c77437f6f771079664c5a5b29c5fb18cc6c1f07ef4"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/blockstates/source_jungle_trapdoor_open.json",
+      "sha256": "9621264ccae4eaded55b530b5a721940fe8a19b590846628bc7e598dbaa932a6"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/item/source_jungle_trapdoor_open.json",
+      "sha256": "0225ee519c456314f796dce2d5eec489754e1e810e1ad61ca542317b2759a345"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/block/source_jungle_trapdoor_open_empty.json",
+      "sha256": "7f5f823811c76e8f2919244cb4353717ca4d5466c8c703f6caca2043fa32a689"
+    },
+    {
+      "path": "src/architecture/resources/assets/bloodborne_dw/models/remaining/source/minecraft/block/jungle_trapdoor_open.json",
+      "sha256": "d79e9adb38add2301bf8e82be5f4ba1b30d05a37039a3d9538151c71bb6d14a8"
+    }
+  ],
+  "diagnosticOnlyPathsWereNeverModBlocks": 57,
+  "v12ObjectsChanged": 0
+}

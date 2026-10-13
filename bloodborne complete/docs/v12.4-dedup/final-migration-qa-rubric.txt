@@ -1,0 +1,98 @@
+Final artifact-bound migration QA rubric
+=======================================
+These are acceptance criteria, not claims that the final run has occurred.
+Every result must identify the checkpoint, final combined JAR SHA and QA addon
+SHA. Build/GameTest success alone does not prove client appearance or saved data.
+
+Baseline fixture and exact state coverage
+----------------------------------------
+PASS requires a fresh isolated save authored by V12.3 production SHA
+34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054.
+Require artExpectationVersion=1; do not use the old preview expectations that
+predate the authored stair selector. Exactly one saved UUID/root/old state must
+exist for every final mapping. Every saved mapping object must equal the final
+manifest entry; matching counts alone cannot hide an altered mapping.
+Before/after fixtures and source save SHA evidence must show source unchanged.
+
+The appearance handoff has exactly 313 native-stair keys, each
+oldRegistry|oldVariant, matching the final manifest's stairs groups. The other
+two functional mappings are ladders. No extra/missing keys, duplicates, or
+target registry/variant/rotation/trim differences are allowed. All current stair
+sourceShift mapping vectors are zero. A 2026-10-12 read-only comparison confirms
+313 expected/table/unique keys and zero differences; this is static evidence.
+
+The QA builder's ordinary mapping row intentionally has no separate selector
+field. LegacyTypeSaveAuthor/V124QaEvidence derives its expected selector from
+the reviewed group kind and old registry/variant independently of production
+conversion. Actual production transformed payloads and canonical item stacks
+must contain the same validated selector. New functional state review rows must
+remain independent of saved old-state overlays and contain no legacy selector.
+
+Saved-world migration and reopen
+-------------------------------
+PASS requires every exact fixture to preserve UUID/root, current canonical ID,
+mapped variant/yaw/profile/open/mount properties and exact typed payload. The
+payload comparison includes transformed SourceShift, vertical/mount offsets,
+opaque settings, linked UUID data and the exact authored stair selector.
+Every ledger cell/rootData/shape must match the canonical instance; global
+membership must have no retired owners, duplicate owners, holes or orphan cells.
+No required old or new cell may be rewritten before the whole assembly can load.
+Reopen with the identical final production SHA must remain canonical without a
+second mapping, retain selector/data/counters and leave no pending index entry.
+
+Natural root-only/helper-first loading
+-------------------------------------
+Read nativePendingChunkEvidence per probe, not just the overall PASS status.
+PASS partialPhase requires an actually missing required FULL chunk, real native
+chunk callbacks, pending=true and byte-equivalent old ledger/root payload until
+complete loading. Root-first also checks old owner/registry before commit.
+PASS completion requires canonical registry with the same saved UUID/root and
+exact mapped typed payload, then pending=false for old and canonical owners.
+The two probes should use distinct saved owners/types and no forced tickets in
+the partial stage. Automatic/startup tickets that already loaded the assembly
+must produce NOT_RUN with the stated reason; completion PASS cannot upgrade that
+partial phase. Naturally touched foreign roots are included in the required set.
+Spaced legacy fixtures do not prove overlapping foreign-BE behavior; keep that
+claim limited to separately executed core/GameTests or a real shared-carrier test.
+
+Yaw, user offsets and authored appearance
+----------------------------------------
+All-mapping GameTests must pass sourceShift transformation for every yaw0..7:
+newYaw=(oldYaw+delta)%8 and newLocalShift=rotate(oldLocalShift,-delta)+mapShift.
+Arbitrary prior user SourceShift and typed mount/settings data must survive.
+For each of 313 stair keys, normalized original parts preserve geometry/UV,
+including source upper halves; root yaw correction composes with the normalized
+part yaw/offset pivot correction. Render-only selector does not alter physics,
+outline or footprint. Native capture must directly review the authored old and
+selected new parts; equal JSON/bounds alone does not establish visual PASS.
+Blank/culled before/after panels are NOT_RUN until an alternate camera exposes
+their faces. Preview generated-stair UV defects must not be relabeled PASS from
+the new table; inspect final artifact-bound pixels for every affected cohort.
+Fresh AUTO shape/material review is separate from migrated authored appearance.
+
+Actual item interactions and retained commands
+----------------------------------------------
+PASS requires raw hidden old ItemStack direct use and native ItemStack.fromNbt,
+retaining count and unrelated typed item NBT while exposing the primary item.
+Ordinary placement must create a canonical fresh UUID, never restore private
+owner/link/BE payload, and retain the validated artistic selector and art shift.
+Native OUTLINE ray, getPickStack, whole-object break and copied-item reinstall
+must preserve art/material/half/mount/selector while using fresh UUIDs. AUTO
+corner shape and direction derive from placement/neighbors; a source selector
+must fall back to canonical parts when the actual shape/trim differs, and may be
+used again when that same form returns. No extra Creative item is permitted.
+The server interaction helper uses a reusable unspawned packet-sink actor; this
+does not count as physical mouse/keyboard or player walking evidence.
+Old ToolTarget/commands must retain saved personal/global spent counts through
+registry canonicalization and reopen. Real saved lever/policy/transition events
+are PASS only when present and executed; a cohort with no openables is explicitly
+NOT_APPLICABLE, never an invented link/event PASS.
+
+Original V12 and packaging
+-------------------------
+All 116 original catalogue rows and reserved numbers must remain exact. No
+original registry occurs in the imported mapping/art tables. Source/RP/model/
+texture preservation hashes and documented shared hook guards must pass again
+for the final build. No QA classes, addons or fixture resources enter production.
+The source map and old galleries stay unchanged; gallery authoring/open/reopen
+uses a new derived world and the final artifact SHA only.

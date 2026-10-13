@@ -1,5 +1,10 @@
 # Original pre-Bloodborne-Blocks world and resource pack
 
+The separately supplied original **BBMC v16 map and v15 resource pack** are now
+available in [bbmc-v15-v16/](bbmc-v15-v16/README.md), published at the owner's
+request on 2026-10-11. They are distinct from the older inputs described below
+and from converted Dreamwalker maps; see their manifest for exact hashes.
+
 The project owner identifies the current `ether.zip` as the original world
 **before any replacement with Bloodborne-Blocks blocks**. It supersedes the
 incorrect world supplied earlier. Only this corrected world is present in the

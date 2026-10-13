@@ -1,0 +1,39 @@
+RP placer icons, revision V12.3
+
+Scope: 69 canonical offered RP object placer items from V12 and 7 retained
+compatibility aliases. Exact resource list and model/texture hashes are in
+RP-ICON-MANIFEST.json. No registry, catalogue, entity, placement, interaction,
+animation, collision, saved-state, model geometry or texture changes.
+
+The item model now selects Minecraft's builtin/entity model. Fabric's existing
+BuiltinItemRendererRegistry invokes a client-only renderer of the original
+GeckoLib cubes, UV and textures. The renderer copies the original bone snapshots;
+it never spawns/ticks an entity or mutates the bones used by installed objects.
+The static model is shown from an oblique angle. The authored wood_gate resting
+sample uses the same existing AuthoredObjectMotion sampling as its world model.
+
+All transformed vertices, including nested bone and cube rotations, are measured
+in the icon orientation. A uniform scale puts the whole model inside a centred
+cube of side 0.82, independent of large dimensions or off-centre model origins.
+Small and large objects retain their proportions. Item GUI, held, dropped and
+item-frame contexts use the same miniature with context-specific display scale.
+The item renderer caches the copied bones and fit until GeckoLib replaces the
+baked model on resource reload. The item does not run animation controllers.
+
+PASS_RESOURCE_PREPARATION: all 76 item model JSONs generated and each original
+geometry and texture dependency found. No armor-stand layer remains in these
+placer models.
+
+PASS_NATIVE_CANONICAL_ICONS: the final combined JAR compiled successfully. Native
+client run runtime-client-v123-outline-icons-3 drew all 69 canonical catalogue
+items on two unmodified ScreenshotRecorder pages. Source baked bone transforms
+and visibility stayed exactly unchanged before and after every draw. Independent
+visual inspection confirmed visible textured 3D models fitted within their cells,
+with no armor-stand placeholders or clipping. The final native client run
+completed all nine captures and exited normally. Evidence is in client/ and the
+independent review is client/visual-review.json. Production SHA-256:
+34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054.
+
+NOT_RUN: the seven hidden compatibility aliases were not directly drawn on these
+canonical catalogue pages. Their item models and canonical asset mapping were
+verified statically; they share the same client renderer.

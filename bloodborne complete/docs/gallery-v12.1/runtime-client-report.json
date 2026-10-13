@@ -1,0 +1,326 @@
+{
+  "schema": "dreamwalker-flat-gallery-native-client-verification-v1",
+  "status": "PASS",
+  "productionJarSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+  "minecraft": "1.20.1",
+  "fabricLoader": "0.16.10",
+  "actualIntegratedWorldOpened": "PASS",
+  "nativeFramebufferImages": 24,
+  "livePersistedRootStateAndUuidChecks": 16,
+  "livePersistedEntityUuidChecks": 7,
+  "sectionsRendered": [
+    "absent",
+    "error",
+    "new",
+    "v12"
+  ],
+  "normalClientShutdownAndWorldSave": "PASS",
+  "allSavedObjectDataUnchangedAfterClientReopen": "PASS",
+  "verifiedSavedObjects": 1885,
+  "verifiedDiagnosticPlatforms": 57,
+  "sourceGalleryUnchangedAfterClientRun": true,
+  "offlineAuthentication": {
+    "status": "EXPECTED_DUMMY_LEGACY_TOKEN_401",
+    "errors": [
+      "[17:27:07] [Render thread/ERROR]: Failed to verify authentication"
+    ],
+    "scope": "Explicit isolated offline identity with accessToken=0; no online account authentication was requested."
+  },
+  "knownWarnings": [
+    "[17:27:01] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)",
+    "[17:27:24] [Worker-Main-15/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2",
+    "[17:27:24] [Worker-Main-15/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4",
+    "[17:27:33] [Worker-Main-14/WARN]: Missing textures in model bloodborne_dw:remaining/source/minecraft/block/jungle_trapdoor_bottom:",
+    "[17:27:33] [Worker-Main-14/WARN]: Missing textures in model bloodborne_dw:remaining/source/minecraft/block/jungle_trapdoor_open:",
+    "[17:27:34] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play",
+    "[17:27:34] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break",
+    "[17:27:34] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program."
+  ],
+  "localModWorldErrors": [],
+  "physicalMouseKeyboard": "NOT_RUN",
+  "visualReview": "PENDING_SEPARATE_PIXEL_REVIEW",
+  "frames": [
+    {
+      "fileName": "gallery-01-bloodborne_dw_prototype_double_door.png",
+      "key": "bloodborne_dw:prototype_double_door",
+      "section": "v12",
+      "name": "Входная дверь",
+      "sha256": "0fe88f3616c2b450f8d3a1db93ebc7330e1a0925f4204fe1c916fd247c1b99a6",
+      "bytes": 502135,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-02-bloodborne_rp_wood_gate.png",
+      "key": "bloodborne_rp:wood_gate",
+      "section": "v12",
+      "name": "Деревянные ворота",
+      "sha256": "b7ec1be4d6e81fc3303f93ff14bff931162361a536832223953c97791adcf2ed",
+      "bytes": 629785,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-03-bloodborne_rp_elevator.png",
+      "key": "bloodborne_rp:elevator",
+      "section": "v12",
+      "name": "Лифт",
+      "sha256": "2aea3bcd234cbd5f4228239e395ff375d23b6a0314409bb957e4300e75a961d8",
+      "bytes": 296769,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-04-bloodborne_dw_source__wall_dec_bottom_variant_0_.png",
+      "key": "bloodborne_dw:source__wall_dec_bottom[variant=0]",
+      "section": "new",
+      "name": "Настенный орнамент · нижняя",
+      "sha256": "89b1411e4a92175006a18f9ce0276193d7bb5cc9f93ce2660aa3a00bde590bcf",
+      "bytes": 315174,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-05-bloodborne_dw_source_assembly_white_stained_glass_pane_variant_6_.png",
+      "key": "bloodborne_dw:source_assembly_white_stained_glass_pane[variant=6]",
+      "section": "new",
+      "name": "Стеклянная панель · белая · Южный конец",
+      "sha256": "91c1899e359578bb381431cdbf01133866666d9d2dd8b102d1dfaca048a3e0ac",
+      "bytes": 291241,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-06-bloodborne_dw_source_black_concrete_powder_variant_0_.png",
+      "key": "bloodborne_dw:source_black_concrete_powder[variant=0]",
+      "section": "new",
+      "name": "Декоративная каменная поверхность · чёрный",
+      "sha256": "0d84a152d54d34c59451f30e845dfcb265d0e141ea74f9e9e15336200f09cd04",
+      "bytes": 412301,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-07-bloodborne_dw_source_1_spirelamp_001_variant_0_.png",
+      "key": "bloodborne_dw:source_1_spirelamp_001[variant=0]",
+      "section": "absent",
+      "name": "Светильник · вариант 2",
+      "sha256": "b63033b1f8ceca06e1774d15f4468af0e8c51624ed57fbd301ecfcc7aac7040c",
+      "bytes": 306059,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-08-bloodborne_dw_source_assembly_yellow_stained_glass_pane_variant_6_.png",
+      "key": "bloodborne_dw:source_assembly_yellow_stained_glass_pane[variant=6]",
+      "section": "absent",
+      "name": "Стеклянная панель · жёлтая · Южный конец",
+      "sha256": "4757142e4090a263effa5381e490ef2f21a2778b28b1357cbe0db16057b48215",
+      "bytes": 363827,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-09-bloodborne_dw_source_stairs_axed_exposed_cut_copper_stairs_outer_3_varia.png",
+      "key": "bloodborne_dw:source_stairs_axed_exposed_cut_copper_stairs_outer_3[variant=0]",
+      "section": "absent",
+      "name": "Ступенчатый модуль · внешний угол, вариант 4",
+      "sha256": "aca78070072b7d02ebea59cfba653b0c4dc703d62de2d381cc68e1fd4c7fe0a0",
+      "bytes": 431832,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-10-bloodborne_dw_source_jungle_trapdoor_bottom_variant_0_.png",
+      "key": "bloodborne_dw:source_jungle_trapdoor_bottom[variant=0]",
+      "section": "error",
+      "name": "Дверная секция · нижняя",
+      "sha256": "fe9e4ca5de7a18d1c2a2455965a6c4a5da756068d6eabb1bbd64ab746b427ce7",
+      "bytes": 337738,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-11-source-defect_minecraft_block_tinted_flower_pot_cross.png",
+      "key": "source-defect:minecraft:block/tinted_flower_pot_cross",
+      "section": "error",
+      "name": "Ошибка исходника · tinted_flower_pot_cross",
+      "sha256": "bdd0ec633902fcb100442469e67fc234eefc3927f53d35f277a61d64ed051daf",
+      "bytes": 306721,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-12-bloodborne_dw_prototype_wall.png",
+      "key": "bloodborne_dw:prototype_wall",
+      "section": "v12",
+      "name": "Художественная ограда",
+      "sha256": "9dea9e211f989006856b5bc28e0be8eb98d1cb8de1844be6262aea7dd8dc84d4",
+      "bytes": 306321,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-13-bloodborne_dw_prototype_ladder.png",
+      "key": "bloodborne_dw:prototype_ladder",
+      "section": "v12",
+      "name": "Вертикальная деревянная лестница",
+      "sha256": "92d0848150a7d024ceed335da08231fcb97e40bcec6a8b34bed45d0122a147f1",
+      "bytes": 336768,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-14-bloodborne_rp_babycart.png",
+      "key": "bloodborne_rp:babycart",
+      "section": "v12",
+      "name": "Детская коляска",
+      "sha256": "bd86535fc4a0813adfbdc9f9d571375a11c6e702b14888aa3cedee0543ea6c0f",
+      "bytes": 405173,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-15-bloodborne_dw_source_gothic_window_left_variant_0_.png",
+      "key": "bloodborne_dw:source_gothic_window_left[variant=0]",
+      "section": "absent",
+      "name": "Готическое окно · левая секция",
+      "sha256": "95574e52a05e2dee6f4394b284aad1fbf7767488db1dc375a90b3724caa1a16d",
+      "bytes": 408414,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-16-bloodborne_dw_source_assembly_yellow_stained_glass_pane_variant_0_.png",
+      "key": "bloodborne_dw:source_assembly_yellow_stained_glass_pane[variant=0]",
+      "section": "absent",
+      "name": "Стеклянная панель · жёлтая · Столб",
+      "sha256": "24f293563acd05fb52a88309b7d3216f4397a00d7a16eff868dcdccfdf0a84b6",
+      "bytes": 304186,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-17-bloodborne_dw_source_addon_statue_2_variant_0_.png",
+      "key": "bloodborne_dw:source_addon_statue_2[variant=0]",
+      "section": "absent",
+      "name": "Статуя · вариант 3",
+      "sha256": "3558c6174188e9a81ef0534243e167161d1d03bc751116d9cae76eee3df2bb45",
+      "bytes": 362450,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-18-bloodborne_dw_source_addon_statue_3_variant_0_.png",
+      "key": "bloodborne_dw:source_addon_statue_3[variant=0]",
+      "section": "absent",
+      "name": "Статуя · вариант 4",
+      "sha256": "379be81bdb932b5eea101e3c942ed4ee34066f8bb076a629e5cd1b519f50acb4",
+      "bytes": 349658,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-19-bloodborne_dw_source_addon_bag_4_variant_0_.png",
+      "key": "bloodborne_dw:source_addon_bag_4[variant=0]",
+      "section": "absent",
+      "name": "Мешок · вариант 5",
+      "sha256": "3ab669ecb0e1111216e137808047acfc4741d54a5f2073235f25b7e98e60a52f",
+      "bytes": 327604,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-20-bloodborne_dw_source_addon_bag_5_variant_0_.png",
+      "key": "bloodborne_dw:source_addon_bag_5[variant=0]",
+      "section": "absent",
+      "name": "Мешок · вариант 6",
+      "sha256": "b4f96ca12a0193c38e7ea0122e6e6d9da26980327e15f6ac3d73f6c1bc91841a",
+      "bytes": 325742,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-21-bloodborne_rp_ladder.png",
+      "key": "bloodborne_rp:ladder",
+      "section": "v12",
+      "name": "Лестница RP",
+      "sha256": "0ec73ae511ac34ea0a7934f7753aa0e0f5ee3be6ae2cdd14aef30b7a6471977f",
+      "bytes": 672698,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-22-bloodborne_rp_cage_obj_2.png",
+      "key": "bloodborne_rp:cage_obj_2",
+      "section": "v12",
+      "name": "Клетка · вариант 2",
+      "sha256": "b703c5f6bff1ed064c721258d93b9fa1976514bc5c438c87e3836cf14e7393a2",
+      "bytes": 539911,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-23-bloodborne_rp_cage_obj_1.png",
+      "key": "bloodborne_rp:cage_obj_1",
+      "section": "v12",
+      "name": "Клетка · вариант 1",
+      "sha256": "775c254ad30b988fd4ac13911eac2ae0e968f5f4799c02d3de8f1a365b7bef7a",
+      "bytes": 582601,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    },
+    {
+      "fileName": "gallery-24-bloodborne_rp_cage_obj_3.png",
+      "key": "bloodborne_rp:cage_obj_3",
+      "section": "v12",
+      "name": "Клетка · вариант 3",
+      "sha256": "64e921f844505266cb38831218c8baabb5d00e2d308a12a706097d0e55105f4f",
+      "bytes": 518586,
+      "liveRootChecks": 0,
+      "liveEntityChecks": 1,
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "clientProfile": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\flat-gallery\\client-profile.json",
+      "sha256": "e765ac150439499e05f3361e5711223909886b498a2c22ca2eaa046c19a9f3cf"
+    },
+    "nativeCapture": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-flatgallery-1\\client-capture-output.json",
+      "sha256": "50c8edb99042376a65bd52558ccea69122605c4c0edc617d397a94115ded5da3"
+    },
+    "clientLog": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-flatgallery-1\\launch-console.log",
+      "sha256": "3e5d614ded09df2442d044803ab8ce7720e18d294aac279a6e43985824e281da"
+    },
+    "savedNbtAfterClient": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\flat-gallery\\disk-client-after.json",
+      "sha256": "d6283b288afb3b3ee5fe64a470f08e37fe3419f1ab8707e27a8e057b8c1244ef"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "read_only_source_scope": true,
+  "checks": {
+    "raw_pack_models_covered": 1112,
+    "all_model_rows": 1320,
+    "unclassified_models": 0,
+    "invalid_template_explicit_defect": true,
+    "duplicate_rows_with_positive_exact_visual_alias": 22,
+    "positive_alias_pairs_checked": 25,
+    "independent_absent_models": 107,
+    "absent_complete_assembly_variants": 8,
+    "absent_complete_assembly_types": 2,
+    "all_branches_matched_against_actual_states": 3181,
+    "absent_branch_csv_exact_set": 853
+  },
+  "evidence_sha256": {
+    "all-models.csv": "ccff38a82ba8e0b7940e182a88c7f66d990a9397d0b3f1e4b6cdd4524f05fca9",
+    "absent-objects.csv": "f87cb1ac6478bd9bfc6b14efc5d36c12bc1a469838915b1877804c7bb99ce3cf",
+    "absent-states.csv": "f04d6f59741208551f9d0245ea4739224042790967a3aecb739ea389456558cb",
+    "summary.json": "a2391e45835bbd94e38877309cc8d9409c0ea5bd87602269c6054b80f9f0abe6",
+    "world-states.json": "f767f8a854804056288e3129a7ff62c166a66e7e8d06dfc05095ad2cb4c64b0b",
+    "model-usage.json": "ed87aa2b7b80fed8ea4516222414ee5dc8bd29e660af2bae926126e5d5f65a99",
+    "absent-objects-short.csv": "acadce949bafe33568f015174f460b1e7f44a3dac53b051020fc60da81ad8e39",
+    "REPORT.md": "9f706da9f7503d21fb7bf03e25b20c981fd76c44e4e5feab6fe0ab58b91b8b7e"
+  },
+  "audit_code_sha256": "205285d63c36a3bde706c8c9db77cf7dfa55b60ebf9142e7a4581d9bdca102ba",
+  "previous_semantic_review_code_sha256": "9ce8efa9772f06c4096e7a4bdcbece8c90a21772408395e0aadf45247e3ea4cd",
+  "output_extension_review": {
+    "status": "PASS",
+    "short_csv_rows": 115,
+    "columns": [
+      "numericId",
+      "russianName",
+      "registryId",
+      "offeredTargets",
+      "sourceModel"
+    ],
+    "exact_projection_of_previously_verified_full_csv": true,
+    "matching_helpers_rechecked": {
+      "status": "PASS",
+      "cases": 8
+    },
+    "note": "Current code adds only a five-column viewing CSV and its report link. All previously verified semantic evidence hashes remain unchanged."
+  }
+}

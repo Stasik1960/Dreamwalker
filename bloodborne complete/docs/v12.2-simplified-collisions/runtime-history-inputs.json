@@ -1,0 +1,55 @@
+{
+  "resolvedProductionDefects": [
+    {
+      "failure": "NEW fractional physical cuboids were enlarged by the old 16³ shape raster, observed with source_potted_fern rotation 1.",
+      "runtimeKind": "physics",
+      "affectedArtifactSha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+      "evidence": ["build/runtime-server-v122-collision-3/collision-runtime-audit.json", "build/v122-runtime/collision-server-3.json"],
+      "verifiedResolution": "NEW-only exact ordinary VoxelShapes cuboids for native/foreign cells, mixed owners, support heights and placement entity checks. OLD raster and aiming are preserved. Final raw/native bounds and actual player movement retested."
+    },
+    {
+      "failure": "A queued cleanup closure decoded a retired registry's old open property through Minecraft AIR after the retirement transaction, crashing an old saved-world load.",
+      "runtimeKind": "migration",
+      "affectedArtifactSha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+      "evidence": ["build/v122-runtime/migration-server-2.json", "build/runtime-server-v122-migration-2/crash-reports/crash-2026-10-11_19.57.32-server.txt"],
+      "verifiedResolution": "An exact two-ID retirement guard suppresses captured obsolete cleanup closures; retirement transaction removes only those owners' cached bindings. Final old-world load verifies all three retired variants have zero bindings and preserves V12/foreign NBT."
+    },
+    {
+      "failure": "A native blocking ArmorStand in a changed source_acacia_fence_gate cell caused entity_obstruction and left the old saved NEW physical defaults unchanged.",
+      "runtimeKind": "migration",
+      "affectedArtifactSha256": "a90a2e120363e08d1944b72a706905a94f967836f71377d8a7a154a72497c2e7",
+      "evidence": ["build/runtime-server-v122-migration-5/collision-saved-migration-audit.json", "build/v122-runtime/migration-server-5.json"],
+      "verifiedResolution": "Only the admitted same-UUID loaded-BE migration adapter waives entity obstruction for automatic rebaking. Ordinary placement and rotation keep their original entity policy. Final old-world test reproduces ordinary refusal and verifies migration completion with the same living entity retained."
+    }
+  ],
+  "correctedQaFixtureAssumptions": [
+    {
+      "failure": "A fractional entity-placement witness was placed in a remote chunk before native entity-query publication; a later arch probe used a single three-block diagonal move, whose vanilla axis resolution sweeps an L-shaped route outside the real passage.",
+      "runtimeKind": "physics",
+      "affectedArtifactSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+      "evidence": ["build/runtime-server-v122-collision-4/collision-runtime-audit.json", "build/runtime-server-v122-collision-5/collision-runtime-audit.json"],
+      "verifiedResolution": "The native ArmorStand query is verified in a ready spawn chunk, with NEW exact false and unchanged OLD raster true at the same boundary. Rotated arch traversal uses sixty normal 0.05-block moves along the straight lane and records the total displacement."
+    },
+    {
+      "failure": "Low pots legitimately allow ordinary player autostepping; the first side probe incorrectly expected a horizontal block, and a second full-length probe ended past the pot back on the ground.",
+      "runtimeKind": "physics",
+      "affectedArtifactSha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+      "evidence": ["build/runtime-server-v122-collision-1/collision-runtime-audit.json", "build/runtime-server-v122-collision-2/collision-runtime-audit.json"],
+      "verifiedResolution": "Side isolation temporarily disables stepping only for that probe; a separate ordinary-step test with the default height ends on the pot centre and records actual X/Y movement. A real stone floor supports the fixture."
+    },
+    {
+      "failure": "A protected V12 native ladder may legitimately have an empty saved helper ledger; the initial fixture required an origin contribution for every V12 object.",
+      "runtimeKind": "migration",
+      "affectedArtifactSha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+      "evidence": ["build/v122-runtime/migration-server-1.json"],
+      "verifiedResolution": "The origin membership requirement applies only to saved NEW composite roots. Protected V12 full typed NBT and ledger, including an empty ledger, are compared exactly."
+    },
+    {
+      "failure": "The first occupied witness used a nonblocking native pig; the next witness intersected an unchanged local stair part which needed no entity recheck.",
+      "runtimeKind": "migration",
+      "affectedArtifactSha256": "a90a2e120363e08d1944b72a706905a94f967836f71377d8a7a154a72497c2e7",
+      "evidence": ["build/v122-runtime/migration-server-3.json", "build/v122-runtime/migration-server-4.json", "build/runtime-server-v122-migration-4/collision-saved-migration-audit.json"],
+      "verifiedResolution": "Use a native ArmorStand with measured intersectionChecked=true, choose a cell with actually changed saved/current collision lists, verify direct adapter intersection, and require the ordinary transaction's measured entity refusal."
+    }
+  ]
+}

@@ -1,0 +1,984 @@
+{
+  "status": "PASS",
+  "newHelperSyntax": [
+    "build_gallery_v122_addon.py",
+    "prepare_gallery_v122_capture.py",
+    "collect_gallery_v122_client.py",
+    "prepare_gallery_v122_input.py",
+    "validate_gallery_v122_plan.py",
+    "validate_gallery_v122_labels.py",
+    "verify_gallery_v122.py",
+    "finalize_gallery_v122_world.py"
+  ],
+  "preservedRpModelsRead": 69,
+  "scope": "Syntax + independent RP cube/bone/yaw/scale validation on previous saved gallery only, no game launch or modification",
+  "sourceWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-flatgallery-author-1\\isolated-smoke-world",
+  "items": [
+    {
+      "key": "bloodborne_rp:babycart",
+      "sourceRenderedBounds": [
+        221.84375,
+        64.96823167744571,
+        2.4375,
+        224.46875,
+        67.375,
+        3.5625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9682316774457149,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:boat",
+      "sourceRenderedBounds": [
+        238.11535917550086,
+        64.973431875,
+        2.37657628268756,
+        247.88464082449914,
+        66.75,
+        5.623423715522425
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9734318750000028,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:cabriolet_closed",
+      "sourceRenderedBounds": [
+        256.05508907948973,
+        64.8125,
+        2.84375,
+        262.5625,
+        68.79809584547235,
+        5.15625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8125,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:cabriolet_open",
+      "sourceRenderedBounds": [
+        274.4375,
+        64.8125,
+        2.84375,
+        280.5625,
+        69.29701054296868,
+        5.15625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8125,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:cage_obj_1",
+      "sourceRenderedBounds": [
+        298.9432593059316,
+        77.78738057149661,
+        10.167445533544969,
+        304.26565490501883,
+        84.9375,
+        17.89107118083
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 13.787380571496612,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:cage_obj_2",
+      "sourceRenderedBounds": [
+        14.07394890516765,
+        77.78738057149661,
+        47.85087387026945,
+        19.437569573143733,
+        84.5,
+        52.390937379730545
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 13.787380571496612,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:cage_obj_3",
+      "sourceRenderedBounds": [
+        45.525695064846346,
+        77.78738057149661,
+        46.52010995995418,
+        54.07815490501885,
+        83.0,
+        52.01373150208981
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 13.787380571496612,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:carriage",
+      "sourceRenderedBounds": [
+        72.256494375,
+        64.9375,
+        36.40625,
+        81.256494375,
+        71.625,
+        41.59375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9375,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:chair",
+      "sourceRenderedBounds": [
+        88.28775281386537,
+        64.0,
+        36.42824685643154,
+        89.54822741234587,
+        65.875,
+        37.57175314356846
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:chandelier_large",
+      "sourceRenderedBounds": [
+        101.93772907946631,
+        64.0,
+        36.8125,
+        109.06227092053369,
+        87.125,
+        44.1875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:chandelier_small",
+      "sourceRenderedBounds": [
+        116.38203153913771,
+        64.0,
+        36.27695755652644,
+        118.61796846086229,
+        70.25,
+        38.72304244347356
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:chest",
+      "sourceRenderedBounds": [
+        133.5,
+        64.0,
+        36.125,
+        134.625,
+        65.15625,
+        37.875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffin_1",
+      "sourceRenderedBounds": [
+        146.0312933098587,
+        64.9549620861955,
+        36.460849943676266,
+        147.9687066901413,
+        67.58493410352762,
+        37.76373125282297
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9549620861954935,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffin_2",
+      "sourceRenderedBounds": [
+        158.2737299785275,
+        64.86993961184373,
+        36.67493062800405,
+        159.7262700214725,
+        67.92457259597548,
+        37.87222342411711
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8699396118437335,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffin_3",
+      "sourceRenderedBounds": [
+        182.347255625,
+        64.9458614800566,
+        36.5908914212774,
+        183.659755625,
+        67.84239215560268,
+        37.77903661272148
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9458614800566068,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffin_stand",
+      "sourceRenderedBounds": [
+        208.734375,
+        64.0,
+        36.03125,
+        211.234375,
+        69.0,
+        37.96875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffins_1",
+      "sourceRenderedBounds": [
+        221.4062933098587,
+        64.86993961184373,
+        36.460849943676266,
+        224.3512700214725,
+        67.92457259597548,
+        37.87222342411711
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8699396118437335,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffins_2",
+      "sourceRenderedBounds": [
+        238.6487299785275,
+        64.86993961184373,
+        36.460849943676266,
+        241.6562066901413,
+        67.92457259597548,
+        37.87222342411711
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8699396118437335,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffins_3",
+      "sourceRenderedBounds": [
+        256.62658444173655,
+        64.9458614337453,
+        36.5908914212774,
+        259.284755625,
+        67.84239220778775,
+        37.895488008847884
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9458614337453071,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffins_4",
+      "sourceRenderedBounds": [
+        274.62658444173655,
+        64.86993961184373,
+        36.59747212104347,
+        277.3512700214725,
+        67.92457259597548,
+        37.895488008847884
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8699396118437335,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:coffins_5",
+      "sourceRenderedBounds": [
+        287.39090895764593,
+        64.7767913003052,
+        36.54818255974792,
+        290.53673604432345,
+        67.99488592624512,
+        37.93547332603131
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.7767913003052058,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:cross_beast",
+      "sourceRenderedBounds": [
+        2.4805814558324806,
+        64.84933233223083,
+        71.48058145583248,
+        6.059725848956138,
+        70.10925239909423,
+        75.3207489691652
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8493323322308299,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:curtain_half",
+      "sourceRenderedBounds": [
+        37.75,
+        64.1875,
+        71.0,
+        38.25,
+        71.0625,
+        75.0
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.1875,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:curtains",
+      "sourceRenderedBounds": [
+        72.75,
+        64.1875,
+        71.5,
+        73.25,
+        71.0625,
+        80.5
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.1875,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:curtainsmall",
+      "sourceRenderedBounds": [
+        88.85558373926376,
+        64.015625,
+        71.375,
+        89.0,
+        67.65625,
+        74.625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.015625,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:dog_cage",
+      "sourceRenderedBounds": [
+        101.125,
+        64.0,
+        71.0625,
+        105.875,
+        67.9375,
+        73.9375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:dog_cage1",
+      "sourceRenderedBounds": [
+        116.625,
+        64.0,
+        71.5625,
+        121.375,
+        67.9375,
+        74.4375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:dog_cage2",
+      "sourceRenderedBounds": [
+        133.625,
+        64.0,
+        71.25686272957047,
+        138.375,
+        68.5,
+        74.85053320648419
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:dog_cage3",
+      "sourceRenderedBounds": [
+        146.625,
+        64.0,
+        71.75,
+        151.375,
+        66.5625,
+        74.25
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:door_1",
+      "sourceRenderedBounds": [
+        158.5,
+        64.0,
+        71.375,
+        159.5,
+        69.5625,
+        74.625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:door_2",
+      "sourceRenderedBounds": [
+        183.5,
+        64.0,
+        71.09375,
+        184.5,
+        69.5625,
+        74.96875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:door_empty",
+      "sourceRenderedBounds": [
+        208.5,
+        64.0,
+        71.375,
+        209.5,
+        69.5625,
+        74.625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:elevator",
+      "sourceRenderedBounds": [
+        221.609375,
+        64.0,
+        71.440388125,
+        230.640625,
+        106.5625,
+        78.0
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_1",
+      "sourceRenderedBounds": [
+        239.1484375,
+        64.0,
+        71.90625,
+        240.8359375,
+        68.1875,
+        76.09375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_10",
+      "sourceRenderedBounds": [
+        256.7890625,
+        64.0,
+        71.476616875,
+        259.2265625,
+        69.625,
+        74.476616875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_11",
+      "sourceRenderedBounds": [
+        275.40625,
+        64.0,
+        71.21875,
+        276.656881961989,
+        67.0625,
+        74.78125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_12",
+      "sourceRenderedBounds": [
+        288.421875,
+        64.0,
+        72.28588951192556,
+        289.640625,
+        67.375,
+        73.81003876384031
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_13",
+      "sourceRenderedBounds": [
+        3.376886875,
+        64.0,
+        87.65147299181365,
+        4.780162272317452,
+        67.823275625,
+        90.355925
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_14",
+      "sourceRenderedBounds": [
+        37.37434375,
+        64.0,
+        87.30489380920969,
+        42.62565625,
+        67.83042187361268,
+        92.63374125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_15",
+      "sourceRenderedBounds": [
+        73.1484375,
+        64.0,
+        87.90625,
+        74.8359375,
+        68.1875,
+        92.09375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_16",
+      "sourceRenderedBounds": [
+        88.7890625,
+        64.0,
+        87.476616875,
+        91.2265625,
+        69.0625,
+        90.476616875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_2",
+      "sourceRenderedBounds": [
+        102.037055,
+        64.0,
+        87.44363114761833,
+        103.9198675,
+        68.87500003423055,
+        90.55636885238167
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_books",
+      "sourceRenderedBounds": [
+        116.1484375,
+        64.0,
+        87.90625,
+        117.8359375,
+        68.1875,
+        92.09375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_cabinet_pantry",
+      "sourceRenderedBounds": [
+        133.40625,
+        64.0,
+        87.78125,
+        136.59375,
+        69.81422486644115,
+        94.21875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:furniture_pantry",
+      "sourceRenderedBounds": [
+        146.75,
+        64.0,
+        87.0,
+        149.25,
+        69.4375,
+        91.0
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:gate_empty",
+      "sourceRenderedBounds": [
+        158.1875,
+        64.0,
+        87.6875,
+        161.8125,
+        77.0625,
+        100.3125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:hearse",
+      "sourceRenderedBounds": [
+        182.837255625,
+        64.9375,
+        87.33394660940672,
+        201.162744375,
+        73.01902379465652,
+        94.734375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9375,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:hook",
+      "sourceRenderedBounds": [
+        208.5,
+        64.75,
+        87.46875,
+        212.59375,
+        72.375,
+        90.53125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.75,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:horse_carcass",
+      "sourceRenderedBounds": [
+        221.03125,
+        64.625,
+        87.156476875,
+        228.59375,
+        66.79576945662545,
+        93.031476875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.625,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:hunterlamp",
+      "sourceRenderedBounds": [
+        238.53125,
+        64.893638125,
+        87.65515905802116,
+        239.33043828589211,
+        66.90908511495165,
+        88.28234094197884
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.8936381249999954,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:ladder",
+      "sourceRenderedBounds": [
+        256.25,
+        64.0,
+        88.296875,
+        260.234375,
+        95.5625,
+        89.796875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:lamp_npc",
+      "sourceRenderedBounds": [
+        274.8125,
+        64.0,
+        87.8125,
+        275.1875,
+        65.25,
+        88.1875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:lever_1",
+      "sourceRenderedBounds": [
+        287.7999999821186,
+        64.79395999692977,
+        87.52499999292195,
+        289.90000001341105,
+        67.04338540086937,
+        88.47500000707805
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.7939599969297717,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:lever_2",
+      "sourceRenderedBounds": [
+        2.5,
+        64.875,
+        107.21875,
+        3.5,
+        66.90229289358422,
+        109.13136119552509
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.875,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:long_table",
+      "sourceRenderedBounds": [
+        37.90625,
+        64.0,
+        107.8125,
+        40.21115785298563,
+        65.378125,
+        114.32086089700067
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:main_gate",
+      "sourceRenderedBounds": [
+        73.1875,
+        64.0,
+        107.6875,
+        76.8125,
+        77.0625,
+        120.3125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:npc_window",
+      "sourceRenderedBounds": [
+        88.1875,
+        64.0,
+        107.40625,
+        89.25,
+        68.03125,
+        110.03125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:odeon_tomb",
+      "sourceRenderedBounds": [
+        101.5,
+        64.0,
+        107.5,
+        108.5,
+        83.5,
+        114.86588755101305
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:ropes",
+      "sourceRenderedBounds": [
+        116.0738959933993,
+        64.0,
+        107.9363794964505,
+        126.6761040066007,
+        69.625,
+        118.0
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:small_gate",
+      "sourceRenderedBounds": [
+        134.1875,
+        64.0,
+        107.6875,
+        135.8125,
+        71.25,
+        114.3125
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:smallcross",
+      "sourceRenderedBounds": [
+        146.98790016644938,
+        64.662165625,
+        107.56530344445476,
+        149.71377657618706,
+        70.44250151802217,
+        112.36997983105591
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.6621656250000001,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:stairs",
+      "sourceRenderedBounds": [
+        158.3125,
+        64.44419625,
+        119.0625,
+        175.0625,
+        79.875,
+        122.5625
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.4441962500000045,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:statue_1",
+      "sourceRenderedBounds": [
+        182.15625,
+        64.0,
+        107.15625,
+        183.84375,
+        71.30565708383935,
+        108.84375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:trapdoor",
+      "sourceRenderedBounds": [
+        208.625,
+        64.0,
+        107.625,
+        213.375,
+        68.28425841560326,
+        112.375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:tree1",
+      "sourceRenderedBounds": [
+        221.5761321630601,
+        64.26483889399434,
+        107.6301875,
+        231.88995881229943,
+        81.86895797594308,
+        119.1926875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.26483889399433735,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:tree2",
+      "sourceRenderedBounds": [
+        238.61369191201692,
+        64.26483889399434,
+        107.25480247090306,
+        249.06218894856235,
+        76.875,
+        118.15412880760898
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.26483889399433735,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:tree3",
+      "sourceRenderedBounds": [
+        256.4262065188527,
+        64.26483889399434,
+        107.0975608900783,
+        267.2616564466022,
+        77.38779388673692,
+        117.70426715144336
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.26483889399433735,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:wheelchair",
+      "sourceRenderedBounds": [
+        274.21875,
+        64.9375,
+        107.40625,
+        276.6875,
+        67.3311357122541,
+        108.59375
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.9375,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    },
+    {
+      "key": "bloodborne_rp:wood_gate",
+      "sourceRenderedBounds": [
+        287.4375,
+        64.0,
+        107.8125,
+        289.5625,
+        80.3125,
+        123.1875
+      ],
+      "oldPlatformY": 64,
+      "oldRenderedBottomAboveFloor": 0.0,
+      "tightBoundsWithinPriorConservativeVisualPhysicsBounds": true
+    }
+  ]
+}

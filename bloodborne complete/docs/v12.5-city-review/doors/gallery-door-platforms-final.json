@@ -1,0 +1,1905 @@
+{
+  "schemaVersion": 1,
+  "status": "DOOR_REVIEW_PLATFORMS_READY_EXISTING_FUNCTION_UNCHANGED",
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "mapSha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+  "packSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+  "platformCount": 18,
+  "platforms": [
+    {
+      "key": "DOOR-REVIEW-90001",
+      "russianLabel": "Входная дверь · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 1,
+      "sourcePixelObservation": "Р‘РѕР»СЊС€Р°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ РґРІСѓСЃС‚РІРѕСЂС‡Р°С‚Р°СЏ РґРІРµСЂСЊ; Р°РІС‚РѕСЂСЃРєР°СЏ РЅРёР¶РЅСЏСЏ С‡Р°СЃС‚СЊ, V12 90001.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -93,
+            59,
+            -212
+          ],
+          "sourceState": "minecraft:acacia_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -25,
+            80,
+            -196
+          ],
+          "sourceState": "minecraft:acacia_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -74,
+            76,
+            -166
+          ],
+          "sourceState": "minecraft:acacia_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 85,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:prototype_double_door",
+          "mainId": "90001",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "payload": {},
+          "resolution": "PROTECTED_V12_EXISTING_DEFAULT_REFERENCE_ONLY",
+          "sourceApplications": []
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": true,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 1,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90031",
+      "russianLabel": "Объёмная декоративная деталь · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 5,
+      "sourcePixelObservation": "РЁРёСЂРѕРєР°СЏ РјРµС‚Р°Р»Р»РёС‡РµСЃРєР°СЏ РѕСЂРЅР°РјРµРЅС‚РёСЂРѕРІР°РЅРЅР°СЏ СЂРµС€С‘С‚РєР° РІ РґРІСѓС… СЂР°РјР°С…90031; РґРІРµСЂСЊ/РІРѕСЂРѕС‚Р° Р»РёР±Рѕ РѕРєРѕРЅРЅР°СЏ СЂРµС€С‘С‚РєР° вЂ” С‚СЂРµР±СѓРµС‚СЃСЏ РїСЂРѕСЃРјРѕС‚СЂ РЅР°Р·РЅР°С‡РµРЅРёСЏ.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            55,
+            44,
+            -995
+          ],
+          "sourceState": "minecraft:acacia_pressure_plate[powered=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            82,
+            54,
+            -994
+          ],
+          "sourceState": "minecraft:acacia_pressure_plate[powered=true]"
+        }
+      ],
+      "occurrences": 4,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+          "mainId": "90031",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_acacia_pressure_plate",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/acacia_pressure_plate"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 2,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90143",
+      "russianLabel": "Секция ворот · вариант 2 · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 23,
+      "sourcePixelObservation": "Р’РµСЂС‚РёРєР°Р»СЊРЅР°СЏ РјРµС‚Р°Р»Р»РёС‡РµСЃРєР°СЏ СЃС‚РІРѕСЂРєР°/РїР°РЅРµР»СЊ СЃ РѕСЂРЅР°РјРµРЅС‚РѕРј90143; РІРѕР·РјРѕР¶РЅР°СЏ СЃРµРєС†РёСЏ РІРѕСЂРѕС‚.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -126,
+            48,
+            -31
+          ],
+          "sourceState": "minecraft:oxidized_cut_copper_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -112,
+            48,
+            -31
+          ],
+          "sourceState": "minecraft:oxidized_cut_copper_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -86,
+            85,
+            227
+          ],
+          "sourceState": "minecraft:oxidized_cut_copper_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 22,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_addon_gate2_1",
+          "mainId": "90143",
+          "properties": {
+            "variant": "0",
+            "rotation": "2",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_addon_gate2_1",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 2,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/gate2_1"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 3,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-93156",
+      "russianLabel": "Большие решётчатые ворота · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 24,
+      "sourcePixelObservation": "РќРёР·РєР°СЏ С‡Р°СЃС‚СЊ Р±РѕР»СЊС€РѕР№ РјРµС‚Р°Р»Р»РёС‡РµСЃРєРѕР№ СЂРµС€С‘С‚РєРё; РёСЃС‚РѕС‡РЅРёРє С†РµР»СЊРЅС‹С… РІРѕСЂРѕС‚93156.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -8,
+            82,
+            -172
+          ],
+          "sourceState": "minecraft:stripped_jungle_log[axis=x]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -4,
+            97,
+            52
+          ],
+          "sourceState": "minecraft:stripped_jungle_log[axis=z]"
+        }
+      ],
+      "occurrences": 40,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_large_grille_gate",
+          "mainId": "93156",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -0.8125,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -0.8125,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_large_grille_gate",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -0.8125,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/gate_bottom"
+            },
+            {
+              "model": "minecraft:block/addon/gate_top",
+              "offset": [
+                0,
+                48,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 4,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-93160",
+      "russianLabel": "Решётчатая тюремная дверь · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 29,
+      "sourcePixelObservation": "РЈР·РєР°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ РґРІРµСЂРЅР°СЏ СЃС‚РІРѕСЂРєР° РЅРёР¶РЅРµР№ СЃРµРєС†РёРё; С†РµР»СЊРЅС‹Р№ РёСЃС‚РѕС‡РЅРёРє93160.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            146,
+            77,
+            -832
+          ],
+          "sourceState": "minecraft:oak_door[facing=east,half=upper,hinge=left,open=false,powered=false]"
+        }
+      ],
+      "occurrences": 3,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_oak_prison_door",
+          "mainId": "93160",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_oak_prison_door",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/oak_door_1"
+            },
+            {
+              "model": "minecraft:block/addon/oak_door_2",
+              "offset": [
+                0,
+                16,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 5,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90247",
+      "russianLabel": "Металлические ворота · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 42,
+      "sourcePixelObservation": "РџСЂСЏРјРѕСѓРіРѕР»СЊРЅР°СЏ СЂРµС€С‘С‚РєР° СЃ РєР°РјРµРЅРЅС‹РјРё Р±РѕРєРѕРІС‹РјРё СЃС‚РѕР№РєР°РјРё90247; РІРёР·СѓР°Р»СЊРЅРѕ РїСЂРёРіРѕРґРЅР° РґР»СЏ РѕРєРЅР° Р»РёР±Рѕ РєР°Р»РёС‚РєРё.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -7,
+            98,
+            -39
+          ],
+          "sourceState": "minecraft:stripped_oak_log[axis=z]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            93,
+            121,
+            -708
+          ],
+          "sourceState": "minecraft:stripped_oak_log[axis=x]"
+        }
+      ],
+      "occurrences": 43,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_addon_wall_deco_3",
+          "mainId": "90247",
+          "properties": {
+            "variant": "0",
+            "rotation": "4",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              0.0,
+              -1.0,
+              0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_addon_wall_deco_3",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 4,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/wall_deco_3"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 6,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-93159",
+      "russianLabel": "Высокая каменная горгулья · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 46,
+      "sourcePixelObservation": "Р’С‹СЃРѕРєР°СЏ РєР°РјРµРЅРЅР°СЏ Р±РѕРєРѕРІР°СЏ СЂР°РјР° СЃ РІРµСЂС‚РёРєР°Р»СЊРЅС‹Рј РѕСЂРЅР°РјРµРЅС‚РѕРј; РёСЃС…РѕРґРЅРѕРµ РёРјСЏwarped_door/СЂР°РЅРЅРµРµ РЅР°Р·РІР°РЅРёРµРіРѕСЂРіСѓР»СЊСЏ РЅРµ РґРѕРєР°Р·С‹РІР°РµС‚ С„СѓРЅРєС†РёСЋ РґРІРµСЂРё.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -1,
+            30,
+            -1003
+          ],
+          "sourceState": "minecraft:warped_door[facing=east,half=lower,hinge=right,open=false,powered=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -35,
+            -5,
+            -948
+          ],
+          "sourceState": "minecraft:warped_door[facing=north,half=lower,hinge=left,open=false,powered=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -131,
+            29,
+            -1061
+          ],
+          "sourceState": "minecraft:warped_door[facing=south,half=lower,hinge=right,open=false,powered=false]"
+        }
+      ],
+      "occurrences": 39,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_warped_gargoyle",
+          "mainId": "93159",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_warped_gargoyle",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/warped_door_bottom"
+            },
+            {
+              "model": "minecraft:block/addon/warped_door_top",
+              "offset": [
+                0,
+                48,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 7,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90266",
+      "russianLabel": "Декоративная панель · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 51,
+      "sourcePixelObservation": "Р”РІСѓС…РїР°РЅРµР»СЊРЅР°СЏ РѕСЂРЅР°РјРµРЅС‚РёСЂРѕРІР°РЅРЅР°СЏ РјРµС‚Р°Р»Р»РёС‡РµСЃРєР°СЏ СЂРµС€С‘С‚РєР°allium; РіРѕС‚РѕРІС‹Р№ РёСЃС‚РѕС‡РЅРёРє РЅРµ РЅР°Р№РґРµРЅ РЅР° РєР°СЂС‚Рµ, РЅСѓР¶РµРЅ РѕС‚РґРµР»СЊРЅС‹Р№ preview.",
+      "sourceExamples": [],
+      "occurrences": 0,
+      "sourceUnusedFinished": true,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_allium",
+          "mainId": "90266",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_allium",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/allium"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 8,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-93152",
+      "russianLabel": "Решётчатая дверь с каменным завершением · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 52,
+      "sourcePixelObservation": "Р”РІСѓСЃС‚РІРѕСЂС‡Р°С‚Р°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ РґРІРµСЂСЊ РІ РєР°РјРµРЅРЅРѕР№ СЂР°РјРєРµ; РЅРёР¶РЅСЏСЏ С‡Р°СЃС‚СЊ93152.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -248,
+            53,
+            -230
+          ],
+          "sourceState": "minecraft:birch_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -271,
+            53,
+            -189
+          ],
+          "sourceState": "minecraft:birch_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -157,
+            40,
+            -117
+          ],
+          "sourceState": "minecraft:birch_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 252,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_birch_grille_door",
+          "mainId": "93152",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_birch_grille_door",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/bir_door_1"
+            },
+            {
+              "model": "minecraft:block/bir_door_2",
+              "offset": [
+                0,
+                48,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 9,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90458",
+      "russianLabel": "Деревянный горизонтальный карниз · верхняя · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 65,
+      "sourcePixelObservation": "РЈР·РєР°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ РґРІРµСЂСЊ СЃ Р°СЂРѕС‡РЅС‹Рј РєР°РјРµРЅРЅС‹Рј РѕР±СЂР°РјР»РµРЅРёРµРј,90458.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -11,
+            110,
+            -242
+          ],
+          "sourceState": "minecraft:crimson_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -261,
+            80,
+            -235
+          ],
+          "sourceState": "minecraft:crimson_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -260,
+            80,
+            -234
+          ],
+          "sourceState": "minecraft:crimson_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 1399,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_crimson_top",
+          "mainId": "90458",
+          "properties": {
+            "variant": "0",
+            "rotation": "6",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_crimson_top",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 6,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/crimson_top"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 10,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-93153",
+      "russianLabel": "Арочная дверь в кирпичной раме · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 70,
+      "sourcePixelObservation": "Р РµР·РЅР°СЏ РґРІСѓСЃС‚РІРѕСЂС‡Р°С‚Р°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ РґРІРµСЂСЊ; РЅРёР¶РЅСЏСЏ С‡Р°СЃС‚СЊ93153.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -126,
+            47,
+            -244
+          ],
+          "sourceState": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -80,
+            71,
+            -242
+          ],
+          "sourceState": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -289,
+            69,
+            -213
+          ],
+          "sourceState": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 591,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_dark_arch_door",
+          "mainId": "93153",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_dark_arch_door",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/dark_door_1"
+            },
+            {
+              "model": "minecraft:block/dark_door_2",
+              "offset": [
+                0,
+                32,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 11,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90479",
+      "russianLabel": "Дверная секция · верхняя · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 78,
+      "sourcePixelObservation": "Р РµР·РЅР°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ РґРІСѓСЃС‚РІРѕСЂС‡Р°С‚Р°СЏ РїР°РЅРµР»СЊ90479; РІС‹РіР»СЏРґРёС‚ РєР°Рє СЃС‚РІРѕСЂРєРё, РЅРѕСЃРёС‚РµР»СЊtrapdoor РЅРµ РѕРїСЂРµРґРµР»СЏРµС‚ С„СѓРЅРєС†РёСЋ.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -278,
+            50,
+            -228
+          ],
+          "sourceState": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+        }
+      ],
+      "occurrences": 42,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_dark_oak_trapdoor_top",
+          "mainId": "90479",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -0.6875,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -0.6875,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_dark_oak_trapdoor_top",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -0.6875,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/dark_oak_trapdoor_top"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 12,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-93147",
+      "russianLabel": "Дверная секция · вариант 2 · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 80,
+      "sourcePixelObservation": "РќРµР±РѕР»СЊС€Р°СЏ РґРµСЂРµРІСЏРЅРЅР°СЏ Р¶Р°Р»СЋР·РёР№РЅР°СЏ РїР°РЅРµР»СЊ РІ РєР°РјРµРЅРЅРѕР№ СЂР°РјРєРµ93147; СЃС‚Р°РІРЅСЏ Р»РёР±Рѕ РґРІРµСЂСЊ, РЅСѓР¶РµРЅ РїСЂРѕСЃРјРѕС‚СЂ РІ РєРѕРЅС‚РµРєСЃС‚Рµ.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -307,
+            70,
+            -221
+          ],
+          "sourceState": "minecraft:spruce_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -272,
+            53,
+            -224
+          ],
+          "sourceState": "minecraft:spruce_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -23,
+            81,
+            -196
+          ],
+          "sourceState": "minecraft:spruce_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 588,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_door_1",
+          "mainId": "93147",
+          "properties": {
+            "variant": "0",
+            "rotation": "2",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -0.625,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -0.625,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_door_1",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 2,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -0.625,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/door_1"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 13,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90623",
+      "russianLabel": "Объёмная декоративная деталь · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 90,
+      "sourcePixelObservation": "Р”РµСЂРµРІСЏРЅРЅР°СЏ РґРІСѓСЃС‚РІРѕСЂС‡Р°С‚Р°СЏ РїР°РЅРµР»СЊ РІ РєР°РјРµРЅРЅРѕР№ СЂР°РјРµ90623; РІРѕР·РјРѕР¶РЅР°СЏ РЅРёР¶РЅСЏСЏ РґРІРµСЂРЅР°СЏ СЃРµРєС†РёСЏ, РёСЃС…РѕРґРЅС‹Р№ РЅРѕСЃРёС‚РµР»СЊpressure_plate РЅРµ РѕРїСЂРµРґРµР»СЏРµС‚ С„СѓРЅРєС†РёСЋ.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            55,
+            46,
+            -995
+          ],
+          "sourceState": "minecraft:jungle_pressure_plate[powered=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            82,
+            56,
+            -994
+          ],
+          "sourceState": "minecraft:jungle_pressure_plate[powered=true]"
+        }
+      ],
+      "occurrences": 4,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_jungle_pressure_plate",
+          "mainId": "90623",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_jungle_pressure_plate",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/jungle_pressure_plate"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 14,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-REVIEW-90777",
+      "russianLabel": "Ступенчатый модуль · просмотр двери/ворот",
+      "kind": "SOURCE_VISIBLE_DOOR_GATE_OR_CONTEXT_REVIEW",
+      "confidence": "ACTUAL_SOURCE_PROJECTION_NOMINATION_FUNCTION_NOT_DECIDED",
+      "sourceReviewNumber": 112,
+      "sourcePixelObservation": "Р§С‘СЂРЅР°СЏ РјРµС‚Р°Р»Р»РёС‡РµСЃРєР°СЏ СЂРµС€С‘С‚РєР°90777; РІРѕР·РјРѕР¶РЅР°СЏ РєР°Р»РёС‚РєР° РёР»Рё С„СЂР°РіРјРµРЅС‚ РѕРіСЂР°РґС‹, С„СѓРЅРєС†РёСЏ РЅРµРѕРґРЅРѕР·РЅР°С‡РЅР°.",
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -155,
+            59,
+            -103
+          ],
+          "sourceState": "minecraft:polished_granite_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -66,
+            96,
+            -777
+          ],
+          "sourceState": "minecraft:polished_granite_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "position": [
+            -21,
+            118,
+            -722
+          ],
+          "sourceState": "minecraft:polished_granite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+        }
+      ],
+      "occurrences": 138,
+      "sourceUnusedFinished": false,
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_polished_granite_stairs",
+          "mainId": "90777",
+          "properties": {
+            "variant": "0",
+            "rotation": "2",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_polished_granite_stairs",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 2,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/polished_granite_stairs"
+            }
+          ]
+        }
+      ],
+      "preserveExistingOpenability": true,
+      "originalV12ReferenceOnly": false,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 15,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-929:1092:0,2,0",
+      "russianLabel": "Арочная деревянная дверь · верхняя каменная арка",
+      "kind": "SUSPECTED_DOOR_SOURCE_ASSEMBLY_PREVIEW",
+      "status": "READY_FOR_SOURCE_LAYOUT_PREVIEW",
+      "confidence": "SOURCE_REPEAT_VISIBLE_COMPLEMENTARY_ROLES_REVIEW_REQUIRED",
+      "occurrences": 18,
+      "touchOccurrences": 18,
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            -30,
+            92,
+            -802
+          ],
+          "second": [
+            -30,
+            94,
+            -802
+          ],
+          "firstSourceState": "minecraft:crimson_stairs[facing=west,half=top,shape=straight,waterlogged=false]",
+          "secondSourceState": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+          "envelopeGapBlocks": [
+            0,
+            0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            -30,
+            92,
+            -800
+          ],
+          "second": [
+            -30,
+            94,
+            -800
+          ],
+          "firstSourceState": "minecraft:crimson_stairs[facing=west,half=top,shape=straight,waterlogged=false]",
+          "secondSourceState": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+          "envelopeGapBlocks": [
+            0,
+            0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            -69,
+            107,
+            -763
+          ],
+          "second": [
+            -69,
+            109,
+            -763
+          ],
+          "firstSourceState": "minecraft:crimson_stairs[facing=west,half=top,shape=straight,waterlogged=false]",
+          "secondSourceState": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]",
+          "envelopeGapBlocks": [
+            0,
+            0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        }
+      ],
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_crimson_top",
+          "mainId": "90458",
+          "properties": {
+            "variant": "0",
+            "rotation": "2",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_crimson_top",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 2,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/crimson_top",
+              "y": 90
+            }
+          ],
+          "sourceVisualBoundsLocal": [
+            0.9375,
+            -1.0,
+            -0.375,
+            1.1875,
+            2.0,
+            1.3125
+          ]
+        },
+        {
+          "number": 2,
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_smooth_quartz_top",
+          "mainId": "90923",
+          "properties": {
+            "variant": "0",
+            "rotation": "2",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_smooth_quartz_top",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 2,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/smooth_quartz_top",
+              "y": 90
+            }
+          ],
+          "sourceVisualBoundsLocal": [
+            1.0,
+            -1.0,
+            -0.5,
+            1.3125,
+            1.0,
+            1.5
+          ]
+        }
+      ],
+      "wholeItemDecision": "NOT_MADE",
+      "minimumSpacingBetweenPlatforms": 2,
+      "platformRule": "Union of actual component visual envelopes + two block margin; preserve relative source cell positions. One vertical translation for whole assembly permitted to seat its lowest visual point; no per-part reseating.",
+      "groupMainIds": [
+        "90458",
+        "90923"
+      ],
+      "alternativeSourceLayouts": 4,
+      "allAlternativeCandidateKeys": [
+        "929:1092:0,2,0",
+        "869:1091:0,2,0",
+        "927:1090:0,2,0",
+        "931:1093:0,2,0"
+      ],
+      "sourceLayoutGroupPolicy": "One representative actual source layout per canonical component ID group. Full alternative typed poses and offsets retained in gallery-preview-assemblies.json for review; no model/registration merge.",
+      "boundaryReason": "Арочная деревянная дверь · верхняя каменная арка; точная совместная исходная раскладка с касанием конвертов. Не подтверждает слияние предметов или механизм двери.",
+      "preserveExistingOpenability": true,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 16,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-2681:2231:0,3,0",
+      "russianLabel": "Металлические ворота · створка и орнаментированный верх",
+      "kind": "SUSPECTED_DOOR_SOURCE_ASSEMBLY_PREVIEW",
+      "status": "READY_FOR_SOURCE_LAYOUT_PREVIEW",
+      "confidence": "SOURCE_REPEAT_VISIBLE_COMPLEMENTARY_ROLES_REVIEW_REQUIRED",
+      "occurrences": 6,
+      "touchOccurrences": 6,
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            -86,
+            85,
+            227
+          ],
+          "second": [
+            -86,
+            88,
+            227
+          ],
+          "firstSourceState": "minecraft:oxidized_cut_copper_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+          "secondSourceState": "minecraft:cut_copper_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+          "envelopeGapBlocks": [
+            0,
+            0.0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            -82,
+            85,
+            227
+          ],
+          "second": [
+            -82,
+            88,
+            227
+          ],
+          "firstSourceState": "minecraft:oxidized_cut_copper_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+          "secondSourceState": "minecraft:cut_copper_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+          "envelopeGapBlocks": [
+            0,
+            0.0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            80,
+            92,
+            -61
+          ],
+          "second": [
+            80,
+            95,
+            -61
+          ],
+          "firstSourceState": "minecraft:oxidized_cut_copper_stairs[facing=north,half=top,shape=straight,waterlogged=false]",
+          "secondSourceState": "minecraft:cut_copper_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]",
+          "envelopeGapBlocks": [
+            0,
+            0.0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        }
+      ],
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_addon_gate2_1",
+          "mainId": "90143",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_addon_gate2_1",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/gate2_1"
+            }
+          ],
+          "sourceVisualBoundsLocal": [
+            0.0,
+            -1.0,
+            0.4375,
+            2.0,
+            2.0,
+            0.5625
+          ]
+        },
+        {
+          "number": 2,
+          "relativePosition": [
+            0,
+            3,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_addon_gate2_0",
+          "mainId": "90142",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_addon_gate2_0",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/addon/gate2_0"
+            }
+          ],
+          "sourceVisualBoundsLocal": [
+            0.0,
+            -1.0,
+            0.4375,
+            2.0,
+            2.0,
+            0.5625
+          ]
+        }
+      ],
+      "wholeItemDecision": "NOT_MADE",
+      "minimumSpacingBetweenPlatforms": 2,
+      "platformRule": "Union of actual component visual envelopes + two block margin; preserve relative source cell positions. One vertical translation for whole assembly permitted to seat its lowest visual point; no per-part reseating.",
+      "groupMainIds": [
+        "90143",
+        "90142"
+      ],
+      "alternativeSourceLayouts": 4,
+      "allAlternativeCandidateKeys": [
+        "2681:2231:0,3,0",
+        "2682:2209:0,3,0",
+        "1967:3449:0,3,0",
+        "1969:2227:0,3,0"
+      ],
+      "sourceLayoutGroupPolicy": "One representative actual source layout per canonical component ID group. Full alternative typed poses and offsets retained in gallery-preview-assemblies.json for review; no model/registration merge.",
+      "boundaryReason": "Металлические ворота · створка и орнаментированный верх; точная совместная исходная раскладка с касанием конвертов. Не подтверждает слияние предметов или механизм двери.",
+      "preserveExistingOpenability": true,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 17,
+      "nativeReview": "NOT_RUN"
+    },
+    {
+      "key": "DOOR-2951:2953:0,2,0",
+      "russianLabel": "Деревянная дверь · нижние панели и решётчатое завершение",
+      "kind": "SUSPECTED_DOOR_SOURCE_ASSEMBLY_PREVIEW",
+      "status": "READY_FOR_SOURCE_LAYOUT_PREVIEW",
+      "confidence": "SOURCE_REPEAT_VISIBLE_COMPLEMENTARY_ROLES_REVIEW_REQUIRED",
+      "occurrences": 2,
+      "touchOccurrences": 2,
+      "sourceExamples": [
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            55,
+            44,
+            -995
+          ],
+          "second": [
+            55,
+            46,
+            -995
+          ],
+          "firstSourceState": "minecraft:acacia_pressure_plate[powered=false]",
+          "secondSourceState": "minecraft:jungle_pressure_plate[powered=false]",
+          "envelopeGapBlocks": [
+            0,
+            0.0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        },
+        {
+          "dimension": "minecraft:overworld",
+          "first": [
+            64,
+            53,
+            -762
+          ],
+          "second": [
+            64,
+            55,
+            -762
+          ],
+          "firstSourceState": "minecraft:acacia_pressure_plate[powered=false]",
+          "secondSourceState": "minecraft:jungle_pressure_plate[powered=false]",
+          "envelopeGapBlocks": [
+            0,
+            0.0,
+            0
+          ],
+          "envelopesWithinHalfBlock": true
+        }
+      ],
+      "components": [
+        {
+          "number": 1,
+          "relativePosition": [
+            0,
+            0,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_acacia_pressure_plate",
+          "mainId": "90031",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1,
+            "SourceShift": [
+              -0.0,
+              -1.0,
+              -0.0
+            ]
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_acacia_pressure_plate",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            -1.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/acacia_pressure_plate"
+            }
+          ],
+          "sourceVisualBoundsLocal": [
+            -0.9375,
+            -1.0,
+            0.1875,
+            1.9375,
+            2.0,
+            0.8125
+          ]
+        },
+        {
+          "number": 2,
+          "relativePosition": [
+            0,
+            2,
+            0
+          ],
+          "registryId": "bloodborne_dw:source_jungle_pressure_plate",
+          "mainId": "90623",
+          "properties": {
+            "variant": "0",
+            "rotation": "0",
+            "profile": "base",
+            "open": "false"
+          },
+          "mountY": 0.0,
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "payload": {
+            "ImportedTypeVersion": 1
+          },
+          "sourceOldRegistryId": "bloodborne_dw:source_jungle_pressure_plate",
+          "sourceOldVariant": 0,
+          "sourceOldRotation": 0,
+          "sourceNormalizationCompensation": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "resolution": "EXACT_SOURCE_APPLICATIONS_THEN_V124_ALIASES",
+          "sourceAliasesUsed": [],
+          "equivalentSourceBackedAlternatives": 1,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/jungle_pressure_plate"
+            }
+          ],
+          "sourceVisualBoundsLocal": [
+            -0.9375,
+            0.0,
+            0.1875,
+            1.9375,
+            1.5625,
+            0.8125
+          ]
+        }
+      ],
+      "wholeItemDecision": "NOT_MADE",
+      "minimumSpacingBetweenPlatforms": 2,
+      "platformRule": "Union of actual component visual envelopes + two block margin; preserve relative source cell positions. One vertical translation for whole assembly permitted to seat its lowest visual point; no per-part reseating.",
+      "groupMainIds": [
+        "90031",
+        "90623"
+      ],
+      "alternativeSourceLayouts": 2,
+      "allAlternativeCandidateKeys": [
+        "2951:2953:0,2,0",
+        "2964:2965:0,2,0"
+      ],
+      "sourceLayoutGroupPolicy": "One representative actual source layout per canonical component ID group. Full alternative typed poses and offsets retained in gallery-preview-assemblies.json for review; no model/registration merge.",
+      "boundaryReason": "Деревянная дверь · нижние панели и решётчатое завершение; точная совместная исходная раскладка с касанием конвертов. Не подтверждает слияние предметов или механизм двери.",
+      "preserveExistingOpenability": true,
+      "sourceProjectionManuallyViewed": true,
+      "sourceProjectionTileNumber": 18,
+      "nativeReview": "NOT_RUN"
+    }
+  ],
+  "galleryIntegration": {
+    "preserveSourceRelativePositions": true,
+    "oneSharedVerticalSeatingTranslation": true,
+    "noIndividualReseating": true,
+    "marginBlocks": 2,
+    "betweenPlatformsBlocks": 2,
+    "labelOnlyNoFunctionalMerge": true
+  },
+  "scope": "Existing canonical IDs only, one source-backed reference pertype plus separately labelled door composition hypotheses. No openability/property/model changes. Source-unused90266 included; original90001copied for review only.",
+  "sourceProjectionReview": {
+    "status": "ACTUALLY_VIEWED_JOINED_SOURCE_POLYGONS",
+    "sheetFile": "docs\\v12.5-city-review\\doors\\doors-joined-source-sheet.png",
+    "sheetSha256": "c158a2f589e07ac54c92c09d7439a8b6687be30fb17f240d51aeafea70c4cfb1",
+    "platformsActuallyViewed": 18,
+    "nativeGamePixels": "NOT_RUN",
+    "observation": "Complementarywindowframes/capsandstoneornament,doorpanels/transoms,continuouspilaster/ladder/wooddecorationarevisibleinjoinedsourceprojections. OrdinaryLwallcornerandtwoseparateroundwindowsremovedtoreportafteractualpixelinspection. Doorgrille/shutter/framefunctionremainsreviewhypothesis."
+  },
+  "styleRetirementSha256": "f5d453f54411c3ddb724f913706f38041c733cc7756c89e2ffbd2f3f721f48be",
+  "uniquePlatformKeys": "PASS",
+  "uniqueRelativeComponentRoots": "PASS"
+}

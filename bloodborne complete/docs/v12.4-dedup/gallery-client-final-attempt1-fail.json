@@ -1,0 +1,234 @@
+{
+  "schema": "dreamwalker-flat-gallery-client-v1",
+  "productionJarSha256": "c30cb62063656b5230c2c2a6e9338ac208a687d9df712f6bc6ced51a1598a728",
+  "inputSha256": "89c592dd9dc910dfe75d96b6b30a4cbe83a20d90d51be040927be074a2ed3f14",
+  "expectedFrames": 48,
+  "frames": [
+    {
+      "fileName": "gallery-01-bloodborne_dw_prototype_double_door.png",
+      "key": "bloodborne_dw:prototype_double_door",
+      "section": "v12",
+      "name": "Входная дверь",
+      "camera": [
+        3.85,
+        65.78,
+        -3.9,
+        14.0362,
+        14.1181
+      ],
+      "command": "tp @s 3.85 65.78 -3.9 14.0362 14.1181",
+      "waitTicks": 80,
+      "rootChecks": [
+        {
+          "root": [
+            2,
+            64,
+            1
+          ],
+          "registry": "bloodborne_dw:prototype_double_door",
+          "uuid": "2ebe192d-8d93-4bd9-915b-cdd803b6a5eb",
+          "variant": "0",
+          "profile": "base",
+          "open": "false",
+          "rotation": "0"
+        }
+      ],
+      "entityChecks": [],
+      "actualCamera": [
+        3.85,
+        65.78,
+        -3.9,
+        14.0362,
+        14.1181
+      ],
+      "world": "minecraft:overworld",
+      "worldTick": 867,
+      "actualRenderedCamera": [
+        3.85,
+        67.39999988555908,
+        -3.9,
+        14.0362,
+        14.1181
+      ],
+      "renderedCameraVerified": true,
+      "frameRenderEvents": 116,
+      "poseCorrections": 1,
+      "actualRootChecks": [
+        {
+          "root": [
+            2,
+            64,
+            1
+          ],
+          "registry": "bloodborne_dw:prototype_double_door",
+          "uuid": "2ebe192d-8d93-4bd9-915b-cdd803b6a5eb",
+          "variant": "0",
+          "profile": "base",
+          "open": "false",
+          "rotation": "0",
+          "actualRegistry": "bloodborne_dw:prototype_double_door",
+          "actualProperties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          },
+          "actualUuid": "2ebe192d-8d93-4bd9-915b-cdd803b6a5eb",
+          "status": "PASS"
+        }
+      ],
+      "actualEntityChecks": [],
+      "status": "PASS",
+      "settledTicks": 80,
+      "sha256": "08c23a0023970316800abae7a905f31b10db91c41e96350480044704f7610468",
+      "bytes": 391870,
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "fileName": "gallery-02-bloodborne_rp_wood_gate.png",
+      "key": "bloodborne_rp:wood_gate",
+      "section": "v12",
+      "name": "Деревянные ворота",
+      "camera": [
+        8.0055,
+        74.125,
+        341.9781,
+        14.0362,
+        8.9839
+      ],
+      "command": "tp @s 8.0055 74.125 341.9781 14.0362 8.9839",
+      "waitTicks": 80,
+      "rootChecks": [],
+      "entityChecks": [
+        {
+          "registry": "bloodborne_rp:wood_gate",
+          "uuid": "3c6b5268-f809-44e8-a6bc-b432e1bb7cf1"
+        }
+      ],
+      "actualCamera": [
+        8.0055,
+        74.125,
+        341.9781,
+        14.0362,
+        8.9839
+      ],
+      "world": "minecraft:overworld",
+      "worldTick": 951,
+      "actualRenderedCamera": [
+        8.0055,
+        75.74499988555908,
+        341.9781,
+        14.0362,
+        8.9839
+      ],
+      "renderedCameraVerified": true,
+      "frameRenderEvents": 120,
+      "poseCorrections": 1,
+      "actualRootChecks": [],
+      "actualEntityChecks": [
+        {
+          "registry": "bloodborne_rp:wood_gate",
+          "uuid": "3c6b5268-f809-44e8-a6bc-b432e1bb7cf1",
+          "actualUuid": "3c6b5268-f809-44e8-a6bc-b432e1bb7cf1",
+          "actualRegistry": "bloodborne_rp:wood_gate",
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS",
+      "settledTicks": 80,
+      "sha256": "7a6262e2762162d143e9aef84d12935ce4d2bae56807fdb3155d959990da22e7",
+      "bytes": 532731,
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "captureMethod": "Minecraft ScreenshotRecorder, native completed framebuffer; live client blockstate and UUID reads",
+  "physicalMouseKeyboard": "NOT_RUN",
+  "status": "FAIL_CAPTURE",
+  "captureComplete": false,
+  "capturedFrames": 2,
+  "cameraController": "marker-gated planned pose at client ticks and GameRenderer.renderWorld HEAD, before native Camera.update",
+  "criticalCameraToleranceUnchanged": true,
+  "captureHudHidden": true,
+  "failure": "java.lang.IllegalStateException: Persisted client entity UUID is not loaded: 9365d6ff-3ce2-4101-bbac-bcbca61ed849",
+  "failureDiagnostics": {
+    "frameIndexOneBased": 3,
+    "age": 80,
+    "settled": 80,
+    "maxSettled": 80,
+    "renderReady": true,
+    "frameRenderEvents": 119,
+    "poseCorrections": 1,
+    "renderedCameraVerified": true,
+    "lastRenderedCamera": [
+      20.3648,
+      94.64499988555909,
+      102.0406,
+      14.0362,
+      8.9839
+    ],
+    "sent": true,
+    "waiting": false,
+    "paused": false,
+    "windowFocused": true,
+    "skipGameRender": false,
+    "perspective": "FIRST_PERSON",
+    "windowWidth": 1280,
+    "windowHeight": 720,
+    "failedFrame": {
+      "fileName": "gallery-03-bloodborne_rp_elevator.png",
+      "key": "bloodborne_rp:elevator",
+      "section": "v12",
+      "name": "Лифт",
+      "camera": [
+        20.3648,
+        93.025,
+        102.0406,
+        14.0362,
+        8.9839
+      ],
+      "command": "tp @s 20.3648 93.025 102.0406 14.0362 8.9839",
+      "waitTicks": 80,
+      "rootChecks": [],
+      "entityChecks": [
+        {
+          "registry": "bloodborne_rp:elevator",
+          "uuid": "9365d6ff-3ce2-4101-bbac-bcbca61ed849"
+        }
+      ]
+    },
+    "actualPlayerPose": [
+      20.3648,
+      93.025,
+      102.0406,
+      14.0362,
+      8.9839
+    ],
+    "spectator": true,
+    "flying": true,
+    "poseErrors": [
+      0.0,
+      0.0,
+      0.0,
+      -4.302978506842692E-7,
+      7.019042946865284E-8
+    ],
+    "positionWithinTolerance": true,
+    "yawWithinTolerance": true,
+    "pitchWithinTolerance": true,
+    "legacyPlayerChunkGate": true,
+    "actualPlayerChunkLoaded": true,
+    "cameraEntityIsPlayer": true,
+    "cameraEntityUuid": "be1a6349-ed2c-310b-83b4-e531ed2bbcdc",
+    "cameraEntityPose": [
+      20.3648,
+      93.025,
+      102.0406,
+      14.0362,
+      8.9839
+    ],
+    "worldTick": 1033
+  },
+  "normalStopAfterFailureRequested": true
+}

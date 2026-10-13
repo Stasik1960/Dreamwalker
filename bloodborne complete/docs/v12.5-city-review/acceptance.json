@@ -1,0 +1,141 @@
+{
+  "schema": "dreamwalker-v125-final-acceptance",
+  "status": "PASS",
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "productionSourceCheckpoint": "e8d2204ccfbaeb8ca4b6aabd97ec8f5f07446bc1",
+  "qaCheckpoint": "d39412f2eeef0a2395441c77d231ad073931d9ae",
+  "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845",
+  "gameTestCount": 76,
+  "gameTestXml": "docs/v12.5-city-review/validation/gameTests.xml",
+  "galleryWorld": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v125-flatgallery-package-production\\isolated-smoke-world",
+  "counts": {
+    "newWorkingBefore": 572,
+    "newWorkingAfter": 551,
+    "retiredStyleTypes": 21,
+    "reservedNumbers": 1322,
+    "preservedOldStateMappings": 1281,
+    "appendedSourceCellPoses": 94,
+    "mainPlatforms": 654,
+    "constructionReviewPlatforms": 31,
+    "doorReviewPlatforms": 18,
+    "cityOwners": 4575,
+    "savedExhibits": 5331,
+    "nativeFramebufferImages": 102,
+    "sourceInvisibleServices": 448,
+    "styleOmittedSourceCells": 113,
+    "originalSourceExceptions": 9,
+    "explicitSourceOmissions": 122
+  },
+  "compactFootprint": [
+    255,
+    250
+  ],
+  "originalV12": "PASS_PRESERVED",
+  "originalMapAndPack": "PASS_BYTE_UNCHANGED",
+  "sourceArchives": {
+    "bbmc_v15_resource.zip": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "bbmc_v16_map.zip": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08"
+  },
+  "initialCityOverlap": {
+    "scopeIsEmptyOutsideInitialPlacement": true,
+    "status": "PASS_BREAK_THEN_NORMAL_REPLACEMENT_REJECTED_RESTORED_INITIAL_UUID",
+    "testedRegistry": "bloodborne_dw:source__wall_dec_top_1",
+    "testedUuid": "6607a680-a8d0-514b-84db-3b51c9c50353",
+    "normalRejection": "Result[outcome=REJECTED, changedCells=0, reason=collision_with_owned_object:Cell[x=228, y=67, z=227]]"
+  },
+  "evidence": {
+    "build": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\build.json",
+      "sha256": "163a64a33b8d9fde3b170a7b82b177e89bff475c6859035fa2ccec8e934f78fe",
+      "status": "PASS"
+    },
+    "preservation": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\preservation.json",
+      "sha256": "b6b54947016d4371a8e3a861cc20e64b8a1f67b7d8127f14820caf3d272d97e2",
+      "status": "PASS"
+    },
+    "resources": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\resources.json",
+      "sha256": "22b575169348172af8d9b7ae9a549784e292760b5cb96388402b297c971dc4d8",
+      "status": "PASS"
+    },
+    "collisionOffline": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\collisionOffline.json",
+      "sha256": "0b461b8c97607dc6afe5ac05485a5dbfecb0da4eb909a77e955c950e3ebe2369",
+      "status": "PASS_OFFLINE_RESOURCE_AND_GEOMETRY"
+    },
+    "sourcePoseUv": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\sourcePoseUv.json",
+      "sha256": "caeb4622872167ae220df89694f0ace366752a2d7864a5e6c1e3e34803b11c11",
+      "status": "PASS_SOURCE_GEOMETRY_UV_RGBA_PROOF"
+    },
+    "nativePixels": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\nativePixels.json",
+      "sha256": "4e7481fa5535e0c436849c50ae2d31a652ba744a1c8e2e44ee951f1b8e7a79e6",
+      "status": "PASS"
+    },
+    "serverAuthor": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\serverAuthor.json",
+      "sha256": "3227b259e60b37bc06cc3eef9c5ab7af080e3a186d8ee65651c2d9ebcc788584",
+      "status": "PASS"
+    },
+    "serverReopenAllChunks": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\serverReopenAllChunks.json",
+      "sha256": "c5d4e1b8ecfa890f2b483920b708b1d3b1e17a3ad69cf2daa3b9dc0f46ebeac6",
+      "status": "PASS"
+    },
+    "serverFinal": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\serverFinal.json",
+      "sha256": "7972966d0c6b26bceb722e439d250d3db773bf3e979bf9049785baf4fe2b76f5",
+      "status": "PASS"
+    },
+    "savedFinal": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\savedFinal.json",
+      "sha256": "310d7f0128c844d024ee15a556843f2b6851ea456d35ebe9fe896fb70ad996e7",
+      "status": "PASS"
+    },
+    "savedClient1": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\savedClient1.json",
+      "sha256": "9c091905056fc341de4bc069794ff3f2d867fbd2e6ca5a89fd375610d9385283",
+      "status": "PASS"
+    },
+    "savedClient2": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\savedClient2.json",
+      "sha256": "73236ad776f9102c5b902f1384c807638b09fb2724d7c1c3f9d24b4565a881db",
+      "status": "PASS"
+    },
+    "savedClient3": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\savedClient3.json",
+      "sha256": "2a993405a97b76c6339ddcea5b08724dc687a2909dc6901902e8c797af9e1e39",
+      "status": "PASS"
+    },
+    "gameTests": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.5-city-review\\validation\\gameTests.xml",
+      "sha256": "bad2cc6f04b36f7dfd5046a64a09fcca3fb687d637b1706bbad8ebcd4b19fb1f",
+      "status": "PASS"
+    }
+  },
+  "checks": {
+    "build": "PASS",
+    "gameTests": "PASS",
+    "modelAndTextureDependencies": "PASS",
+    "collisionShapeContainment": "PASS_OFFLINE",
+    "nativeMovementAndBlockPlacement": "PASS",
+    "galleryServerOpenSaveReopen": "PASS",
+    "galleryClientOpenSaveReopen": "PASS",
+    "nativePixelReview": "PASS_REPRESENTATIVE_MAIN_ALL49_PREVIEWS_CITY7",
+    "allSavedUuidStatePayloadAndOwnership": "PASS",
+    "physicalMouseKeyboard": "NOT_RUN",
+    "everyCityOwnerVisuallyInspected": "NOT_RUN",
+    "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED"
+  },
+  "currentUnresolvedTestFailures": [],
+  "historicalResolvedFailures": [
+    "First gallery attempt90482 terrain top-only source cube conflicted with floor; gallery-only central floor display fixed, production model/physics unchanged.",
+    "Initial verifier relative-path mistake corrected; all independent disk proofs PASS.",
+    "Back-face-only source views replaced with observed visible-side native supplements."
+  ],
+  "assemblyRegistrationsMerged": false,
+  "newDoorOpeningBehaviorAdded": false,
+  "qaAddonRequiredForGallery": false
+}

@@ -1,0 +1,124 @@
+{
+  "schema": "dreamwalker-independent-transparent-helper-proof-v1",
+  "status": "PASS",
+  "packSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+  "withdrawnObjects": [
+    "source_glass",
+    "source_ladder",
+    "source_assembly_glass_pane"
+  ],
+  "withdrawnStates": 9,
+  "models": [
+    {
+      "path": "source_glass",
+      "model": "minecraft:block/glass",
+      "faces": 6,
+      "visibleTextures": [
+        "minecraft:block/glass"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    },
+    {
+      "path": "source_ladder",
+      "model": "minecraft:block/ladder",
+      "faces": 2,
+      "visibleTextures": [
+        "minecraft:block/ladder"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    },
+    {
+      "path": "source_assembly_glass_pane",
+      "model": "minecraft:block/glass_pane_post",
+      "faces": 2,
+      "visibleTextures": [
+        "minecraft:block/glass_pane_top"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    },
+    {
+      "path": "source_assembly_glass_pane",
+      "model": "minecraft:block/glass_pane_side",
+      "faces": 5,
+      "visibleTextures": [
+        "minecraft:block/glass",
+        "minecraft:block/glass_pane_top"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    },
+    {
+      "path": "source_assembly_glass_pane",
+      "model": "minecraft:block/glass_pane_side_alt",
+      "faces": 5,
+      "visibleTextures": [
+        "minecraft:block/glass",
+        "minecraft:block/glass_pane_top"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    },
+    {
+      "path": "source_assembly_glass_pane",
+      "model": "minecraft:block/glass_pane_noside",
+      "faces": 1,
+      "visibleTextures": [
+        "minecraft:block/glass"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    },
+    {
+      "path": "source_assembly_glass_pane",
+      "model": "minecraft:block/glass_pane_noside_alt",
+      "faces": 1,
+      "visibleTextures": [
+        "minecraft:block/glass"
+      ],
+      "status": "ALL_VISIBLE_FACE_PIXELS_ALPHA_ZERO"
+    }
+  ],
+  "textures": [
+    {
+      "texture": "minecraft:block/glass",
+      "entry": "assets/minecraft/textures/block/glass.png",
+      "origin": "SOURCE_PACK",
+      "sha256": "a4aa217e56eee27c7a9031177393dda33652aaa0ccc35e5b9a96b6e792c287f9",
+      "size": [
+        16,
+        16
+      ],
+      "wholeImageAlphaExtrema": [
+        0,
+        0
+      ]
+    },
+    {
+      "texture": "minecraft:block/ladder",
+      "entry": "assets/minecraft/textures/block/ladder.png",
+      "origin": "SOURCE_PACK",
+      "sha256": "8d9285e57657d4bf53b0e4f77fa52cd66c518722b77c44eb33f0869a18787181",
+      "size": [
+        16,
+        16
+      ],
+      "wholeImageAlphaExtrema": [
+        0,
+        0
+      ]
+    },
+    {
+      "texture": "minecraft:block/glass_pane_top",
+      "entry": "assets/minecraft/textures/block/glass_pane_top.png",
+      "origin": "SOURCE_PACK",
+      "sha256": "a4aa217e56eee27c7a9031177393dda33652aaa0ccc35e5b9a96b6e792c287f9",
+      "size": [
+        16,
+        16
+      ],
+      "wholeImageAlphaExtrema": [
+        0,
+        0
+      ]
+    }
+  ],
+  "policy": "Only source-declared fully transparent PNG faces; no replacement texture or geometry invented. Five-digit number reservations are audited by the catalogue planner separately.",
+  "failures": []
+}

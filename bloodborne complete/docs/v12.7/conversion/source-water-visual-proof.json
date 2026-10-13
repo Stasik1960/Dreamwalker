@@ -1,0 +1,77 @@
+{
+  "status": "PASS_SOURCE_WATER_SPRITES_ANIMATION_AND_TINT_USE_NATIVE_DEFAULTS",
+  "sourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+  "sprites": [
+    {
+      "sprite": "water_still",
+      "sourceSpriteOverride": false,
+      "sourceAnimationOverride": false,
+      "sourceRgbaSha256": "b7762139e1ba7833d62482335a2f97820ee92b02db92e67772404d19e0cd1bc7",
+      "nativeRgbaSha256": "b7762139e1ba7833d62482335a2f97820ee92b02db92e67772404d19e0cd1bc7",
+      "rgbaShape": [
+        512,
+        16,
+        4
+      ],
+      "rgbaEqual": true,
+      "animationEqual": true,
+      "sourceAnimation": {
+        "animation": {
+          "frametime": 2
+        }
+      },
+      "nativeAnimation": {
+        "animation": {
+          "frametime": 2
+        }
+      }
+    },
+    {
+      "sprite": "water_flow",
+      "sourceSpriteOverride": false,
+      "sourceAnimationOverride": false,
+      "sourceRgbaSha256": "dc39fad867297c563ab32d2f0fe61eb485abb5781af7682ba7ccaa89fafc34c3",
+      "nativeRgbaSha256": "dc39fad867297c563ab32d2f0fe61eb485abb5781af7682ba7ccaa89fafc34c3",
+      "rgbaShape": [
+        1024,
+        32,
+        4
+      ],
+      "rgbaEqual": true,
+      "animationEqual": true,
+      "sourceAnimation": {
+        "animation": {}
+      },
+      "nativeAnimation": {
+        "animation": {}
+      }
+    },
+    {
+      "sprite": "water_overlay",
+      "sourceSpriteOverride": false,
+      "sourceAnimationOverride": false,
+      "sourceRgbaSha256": "5537fe17cdcf7c5f4384c85cff856897a3257d46738dbf7f02926f7c59750d87",
+      "nativeRgbaSha256": "5537fe17cdcf7c5f4384c85cff856897a3257d46738dbf7f02926f7c59750d87",
+      "rgbaShape": [
+        16,
+        16,
+        4
+      ],
+      "rgbaEqual": true,
+      "animationEqual": true,
+      "sourceAnimation": null,
+      "nativeAnimation": null
+    }
+  ],
+  "waterNamedFilesInSourcePack": [],
+  "sourceColorProperties": {
+    "assets/minecraft/optifine/color.properties": "lilypad=3c8207\r\n"
+  },
+  "waterOrPaletteColorDirectives": [],
+  "sourceColormaps": [
+    "assets/minecraft/textures/colormap/foliage.png",
+    "assets/minecraft/textures/colormap/grass.png"
+  ],
+  "scope": "The actual source pack defines no water sprite/animation/OptiFine water tint override. Its sole color.properties directive is lilypad. Water in source and converted worlds therefore uses the same Minecraft1.20.1 native sprite pixels/animation and biome water color when original biomes remain unchanged. FluidState native parity is separately tested; this is not a shader or client-frame claim. Ordinary vanilla water handlers/textures remain unmodified.",
+  "worldOrPackModified": false
+}

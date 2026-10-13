@@ -1,0 +1,2949 @@
+{
+  "schema": "dreamwalker-remaining-transfer-client-network-v1",
+  "productionJarSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+  "mode": "INTERACT",
+  "manualMouseKeyboardInput": "NOT_RUN",
+  "scope": "Actual MinecraftClientInteractionManager interactBlock/attackBlock and actual MinecraftClient doItemPick, localhost server acknowledgement by synced owner UUID; no Windows input injection or source world",
+  "cases": [
+    {
+      "case": "bench",
+      "id": "bloodborne_dw:source_hold_bench_2",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "creative_flight_navigation_packet",
+          "clientWorldTick": 7065,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7093,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7095,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "35a7da15-ddb8-4851-bd0b-c0f0842e6a83"
+        },
+        {
+          "operation": "creative_flight_navigation_packet",
+          "clientWorldTick": 7095,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7108,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7120,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "35a7da15-ddb8-4851-bd0b-c0f0842e6a83"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7141,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7142,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "2c731e89-6b78-4513-89a8-14a5a86cf8e2"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7155,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7167,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "2c731e89-6b78-4513-89a8-14a5a86cf8e2"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7188,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7190,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "7a11bfdd-e242-4d27-9de2-a8beded42276"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7203,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7215,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "7a11bfdd-e242-4d27-9de2-a8beded42276"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7236,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7237,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "928998b6-677e-4275-b6e1-418f06744c08"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7250,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7262,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "928998b6-677e-4275-b6e1-418f06744c08"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7283,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7284,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "991118a7-1735-4df1-a509-5fb4bb6ed21b"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7297,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7309,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "991118a7-1735-4df1-a509-5fb4bb6ed21b"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7329,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7330,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "f8769542-319c-4f4a-9137-22398d489207"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7343,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7355,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "f8769542-319c-4f4a-9137-22398d489207"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7376,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7378,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "1dcad788-9269-4709-b674-22e3e5bab442"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7392,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7404,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "1dcad788-9269-4709-b674-22e3e5bab442"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7425,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7426,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "3fa1d343-764b-420a-b021-590a276685ed"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 7439,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "3fa1d343-764b-420a-b021-590a276685ed"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7460,
+          "at": [
+            36,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 7462,
+          "at": [
+            36,
+            128,
+            16
+          ],
+          "ownerUuid": "0c6410a0-2b77-4d9e-b053-4ba6fbb2b1df"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7475,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 7487,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "3fa1d343-764b-420a-b021-590a276685ed"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7500,
+          "at": [
+            36,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 7512,
+          "at": [
+            36,
+            128,
+            16
+          ],
+          "ownerUuid": "0c6410a0-2b77-4d9e-b053-4ba6fbb2b1df"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7533,
+          "at": [
+            16,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 7534,
+          "at": [
+            16,
+            128,
+            16
+          ],
+          "ownerUuid": "5e596c0e-7639-44dc-8270-b00c02912978"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "5e596c0e-7639-44dc-8270-b00c02912978",
+      "root": [
+        16,
+        128,
+        16
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "barrel",
+      "id": "bloodborne_dw:source_addon_barrel_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7556,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7557,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "8027e14a-268e-4030-9769-7cba136fa83a"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7570,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7582,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "8027e14a-268e-4030-9769-7cba136fa83a"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7602,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7604,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "7fbf1a30-8dfd-4c7b-8b99-088fcc8cefc1"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7617,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7629,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "7fbf1a30-8dfd-4c7b-8b99-088fcc8cefc1"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7650,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7652,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "2072922b-d945-4ea6-8ce1-b9ea577c549d"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7665,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7677,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "2072922b-d945-4ea6-8ce1-b9ea577c549d"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7699,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7700,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "47681980-5844-4c84-83de-caaacc27b6a4"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7713,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7725,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "47681980-5844-4c84-83de-caaacc27b6a4"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7746,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7748,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "78b02cc8-b078-40be-b042-a3cef5c469bf"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7761,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7773,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "78b02cc8-b078-40be-b042-a3cef5c469bf"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7794,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7796,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "3ec9bf0d-47bf-4a0e-98b4-c55a5642722a"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7809,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7821,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "3ec9bf0d-47bf-4a0e-98b4-c55a5642722a"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7842,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7843,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "2e29ee45-ef4f-41ce-adcc-193bd0e7fdf2"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7856,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 7868,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "2e29ee45-ef4f-41ce-adcc-193bd0e7fdf2"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7889,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 7890,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "8ceda68e-7f47-4563-8589-cf4443bf33e3"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 7903,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "8ceda68e-7f47-4563-8589-cf4443bf33e3"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7923,
+          "at": [
+            84,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 7924,
+          "at": [
+            84,
+            128,
+            16
+          ],
+          "ownerUuid": "613aad1c-1867-4af0-8b87-a59f2c17bd6b"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7937,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 7949,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "8ceda68e-7f47-4563-8589-cf4443bf33e3"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 7963,
+          "at": [
+            84,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 7975,
+          "at": [
+            84,
+            128,
+            16
+          ],
+          "ownerUuid": "613aad1c-1867-4af0-8b87-a59f2c17bd6b"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 7996,
+          "at": [
+            64,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 7997,
+          "at": [
+            64,
+            128,
+            16
+          ],
+          "ownerUuid": "6a6cbab9-8459-404f-90de-bc60990b9c02"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "6a6cbab9-8459-404f-90de-bc60990b9c02",
+      "root": [
+        64,
+        128,
+        16
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "books",
+      "id": "bloodborne_dw:source_addon_books_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8019,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8020,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "187aafb5-c6a6-4c66-80f0-4bf16ce45693"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8033,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8045,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "187aafb5-c6a6-4c66-80f0-4bf16ce45693"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8066,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8067,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "46346ad4-9a44-4ec5-875e-388cb619c9b7"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8080,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8091,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "46346ad4-9a44-4ec5-875e-388cb619c9b7"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8112,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8114,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "22e4c403-d45a-4651-a352-b2f22e7f5dc0"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8127,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8139,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "22e4c403-d45a-4651-a352-b2f22e7f5dc0"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8160,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8162,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "163dbab4-72e8-401b-b830-031d96fe5588"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8175,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8188,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "163dbab4-72e8-401b-b830-031d96fe5588"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8209,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8210,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "7f01e5cc-15a8-4b14-bf4f-05dd1b880b1c"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8223,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8235,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "7f01e5cc-15a8-4b14-bf4f-05dd1b880b1c"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8256,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8258,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "65875119-01bf-4dd4-b2b2-5157eb6c9d43"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8271,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8282,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "65875119-01bf-4dd4-b2b2-5157eb6c9d43"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8303,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8304,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "fbb87945-87c6-4add-984a-2ec86f891674"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8317,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8329,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "fbb87945-87c6-4add-984a-2ec86f891674"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8351,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8352,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "c0962b4e-d897-4fc8-84ba-dad70aae23a8"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 8365,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "c0962b4e-d897-4fc8-84ba-dad70aae23a8"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8386,
+          "at": [
+            132,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 8387,
+          "at": [
+            132,
+            128,
+            16
+          ],
+          "ownerUuid": "1d7186b7-04dd-45f5-b0a5-a0b2f597d154"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8400,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 8412,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "c0962b4e-d897-4fc8-84ba-dad70aae23a8"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8425,
+          "at": [
+            132,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 8437,
+          "at": [
+            132,
+            128,
+            16
+          ],
+          "ownerUuid": "1d7186b7-04dd-45f5-b0a5-a0b2f597d154"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8458,
+          "at": [
+            112,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 8460,
+          "at": [
+            112,
+            128,
+            16
+          ],
+          "ownerUuid": "c256b5b6-b262-4d56-a8de-b44a73e22a76"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "c256b5b6-b262-4d56-a8de-b44a73e22a76",
+      "root": [
+        112,
+        128,
+        16
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "bag",
+      "id": "bloodborne_dw:source_addon_bag_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8482,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8483,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "0c8dc0b3-e008-4393-a791-7a4f341bb569"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8496,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8508,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "0c8dc0b3-e008-4393-a791-7a4f341bb569"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8528,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8530,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "0b53e541-cc5f-4841-9b3a-97ceaaac6c80"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8543,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8555,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "0b53e541-cc5f-4841-9b3a-97ceaaac6c80"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8576,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8578,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "e2671a79-5556-42fc-b6a6-fb6c921e8900"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8591,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8604,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "e2671a79-5556-42fc-b6a6-fb6c921e8900"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8625,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8626,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "76124cc1-3143-48c8-aeed-e48a8c241594"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8639,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8651,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "76124cc1-3143-48c8-aeed-e48a8c241594"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8672,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8673,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "29c38d5c-10bb-4a50-a39d-a2f3f7726ada"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8686,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8698,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "29c38d5c-10bb-4a50-a39d-a2f3f7726ada"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8719,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8720,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "c079aa5f-cccc-4ccc-9cfe-6f9d3e3c9a81"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8733,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8745,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "c079aa5f-cccc-4ccc-9cfe-6f9d3e3c9a81"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8766,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8767,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "0547ac76-bb8e-4248-9c9e-2e05d1e76788"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8780,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_before_rotation",
+          "clientWorldTick": 8792,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "0547ac76-bb8e-4248-9c9e-2e05d1e76788"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8813,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8814,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "eec8783f-c1aa-45be-a534-f4c37ee8edbb"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 8826,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "eec8783f-c1aa-45be-a534-f4c37ee8edbb"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8848,
+          "at": [
+            180,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 8849,
+          "at": [
+            180,
+            128,
+            16
+          ],
+          "ownerUuid": "888cc2ca-a8f6-4a7c-90d0-fda66e4b8561"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8862,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 8874,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "eec8783f-c1aa-45be-a534-f4c37ee8edbb"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8887,
+          "at": [
+            180,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 8899,
+          "at": [
+            180,
+            128,
+            16
+          ],
+          "ownerUuid": "888cc2ca-a8f6-4a7c-90d0-fda66e4b8561"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8920,
+          "at": [
+            160,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 8922,
+          "at": [
+            160,
+            128,
+            16
+          ],
+          "ownerUuid": "16617069-fec4-4b4b-b4a4-f3522474fc28"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "16617069-fec4-4b4b-b4a4-f3522474fc28",
+      "root": [
+        160,
+        128,
+        16
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "lamp",
+      "id": "bloodborne_dw:source_1_spirelamp_001",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8944,
+          "at": [
+            208,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 8945,
+          "at": [
+            208,
+            128,
+            16
+          ],
+          "ownerUuid": "a0cb9e26-138e-40dd-a433-cae1d392f47b"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 8958,
+          "at": [
+            208,
+            128,
+            16
+          ],
+          "ownerUuid": "a0cb9e26-138e-40dd-a433-cae1d392f47b"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 8979,
+          "at": [
+            228,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 8980,
+          "at": [
+            228,
+            128,
+            16
+          ],
+          "ownerUuid": "65c0dace-e2dc-407e-88bd-fd87694a5dbf"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 8993,
+          "at": [
+            208,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9005,
+          "at": [
+            208,
+            128,
+            16
+          ],
+          "ownerUuid": "a0cb9e26-138e-40dd-a433-cae1d392f47b"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9018,
+          "at": [
+            228,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9029,
+          "at": [
+            228,
+            128,
+            16
+          ],
+          "ownerUuid": "65c0dace-e2dc-407e-88bd-fd87694a5dbf"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9050,
+          "at": [
+            208,
+            128,
+            16
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9052,
+          "at": [
+            208,
+            128,
+            16
+          ],
+          "ownerUuid": "1b585757-84b1-4a9d-b73e-ccf84830d765"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "1b585757-84b1-4a9d-b73e-ccf84830d765",
+      "root": [
+        208,
+        128,
+        16
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "statue",
+      "id": "bloodborne_dw:source_hold_statue_5",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9074,
+          "at": [
+            16,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9076,
+          "at": [
+            16,
+            128,
+            64
+          ],
+          "ownerUuid": "3e25f8c8-41a9-489c-93f1-a46134bf40f5"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9089,
+          "at": [
+            16,
+            128,
+            64
+          ],
+          "ownerUuid": "3e25f8c8-41a9-489c-93f1-a46134bf40f5"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9110,
+          "at": [
+            36,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9112,
+          "at": [
+            36,
+            128,
+            64
+          ],
+          "ownerUuid": "5131b495-e33a-4410-8aa4-a0fdf2489d3c"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9126,
+          "at": [
+            16,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9138,
+          "at": [
+            16,
+            128,
+            64
+          ],
+          "ownerUuid": "3e25f8c8-41a9-489c-93f1-a46134bf40f5"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9151,
+          "at": [
+            36,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9163,
+          "at": [
+            36,
+            128,
+            64
+          ],
+          "ownerUuid": "5131b495-e33a-4410-8aa4-a0fdf2489d3c"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9184,
+          "at": [
+            16,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9185,
+          "at": [
+            16,
+            128,
+            64
+          ],
+          "ownerUuid": "c88a85fc-3187-4038-8c30-755913aaeb3c"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "c88a85fc-3187-4038-8c30-755913aaeb3c",
+      "root": [
+        16,
+        128,
+        64
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "roof",
+      "id": "bloodborne_dw:source_addon_roof_spike_side",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9207,
+          "at": [
+            64,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9208,
+          "at": [
+            64,
+            128,
+            64
+          ],
+          "ownerUuid": "3c589464-8595-4e07-a4f8-4ba7d8051dba"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9221,
+          "at": [
+            64,
+            128,
+            64
+          ],
+          "ownerUuid": "3c589464-8595-4e07-a4f8-4ba7d8051dba"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9242,
+          "at": [
+            84,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9244,
+          "at": [
+            84,
+            128,
+            64
+          ],
+          "ownerUuid": "060d9c67-3b89-42ab-9414-00f92b77dffd"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9257,
+          "at": [
+            64,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9269,
+          "at": [
+            64,
+            128,
+            64
+          ],
+          "ownerUuid": "3c589464-8595-4e07-a4f8-4ba7d8051dba"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9282,
+          "at": [
+            84,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9294,
+          "at": [
+            84,
+            128,
+            64
+          ],
+          "ownerUuid": "060d9c67-3b89-42ab-9414-00f92b77dffd"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9315,
+          "at": [
+            64,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9316,
+          "at": [
+            64,
+            128,
+            64
+          ],
+          "ownerUuid": "049b37a1-cab4-4892-892f-b9f36019f3dd"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "049b37a1-cab4-4892-892f-b9f36019f3dd",
+      "root": [
+        64,
+        128,
+        64
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "whole_door",
+      "id": "bloodborne_dw:source_warped_gargoyle",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9338,
+          "at": [
+            112,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9339,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "56777f67-67eb-4f17-b40f-61bbddc91685"
+        },
+        {
+          "operation": "interactBlock_use_packet",
+          "clientWorldTick": 9360,
+          "at": [
+            112,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "open_ack",
+          "clientWorldTick": 9361,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "56777f67-67eb-4f17-b40f-61bbddc91685"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9374,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "56777f67-67eb-4f17-b40f-61bbddc91685"
+        },
+        {
+          "operation": "interactBlock_use_packet",
+          "clientWorldTick": 9395,
+          "at": [
+            112,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "close_ack",
+          "clientWorldTick": 9397,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "56777f67-67eb-4f17-b40f-61bbddc91685"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9417,
+          "at": [
+            132,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9418,
+          "at": [
+            132,
+            128,
+            64
+          ],
+          "ownerUuid": "00cf74d1-e93d-4a4b-9618-335e8895377e"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9431,
+          "at": [
+            112,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9443,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "56777f67-67eb-4f17-b40f-61bbddc91685"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9456,
+          "at": [
+            132,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9468,
+          "at": [
+            132,
+            128,
+            64
+          ],
+          "ownerUuid": "00cf74d1-e93d-4a4b-9618-335e8895377e"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9490,
+          "at": [
+            112,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9491,
+          "at": [
+            112,
+            128,
+            64
+          ],
+          "ownerUuid": "24a75e7a-8fb0-4f7d-911a-5cd8b4e36211"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "24a75e7a-8fb0-4f7d-911a-5cd8b4e36211",
+      "root": [
+        112,
+        128,
+        64
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "pitched_asymmetric",
+      "id": "bloodborne_dw:source_stone_button",
+      "variant": 1,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9513,
+          "at": [
+            160,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9514,
+          "at": [
+            160,
+            128,
+            64
+          ],
+          "ownerUuid": "52ab30af-6ed2-4771-a9b9-9f21ae543e23"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9527,
+          "at": [
+            160,
+            128,
+            64
+          ],
+          "ownerUuid": "52ab30af-6ed2-4771-a9b9-9f21ae543e23"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9548,
+          "at": [
+            180,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9550,
+          "at": [
+            180,
+            128,
+            64
+          ],
+          "ownerUuid": "8e6029ee-6d79-49ee-836a-091be00b7021"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9563,
+          "at": [
+            160,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9575,
+          "at": [
+            160,
+            128,
+            64
+          ],
+          "ownerUuid": "52ab30af-6ed2-4771-a9b9-9f21ae543e23"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9588,
+          "at": [
+            180,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9600,
+          "at": [
+            180,
+            128,
+            64
+          ],
+          "ownerUuid": "8e6029ee-6d79-49ee-836a-091be00b7021"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9621,
+          "at": [
+            160,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9622,
+          "at": [
+            160,
+            128,
+            64
+          ],
+          "ownerUuid": "0f11aef0-26c1-434c-bda8-74a86bbe22d0"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "0f11aef0-26c1-434c-bda8-74a86bbe22d0",
+      "root": [
+        160,
+        128,
+        64
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "uvlocked_group",
+      "id": "bloodborne_dw:source_stone_button",
+      "variant": 2,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9644,
+          "at": [
+            208,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9645,
+          "at": [
+            208,
+            128,
+            64
+          ],
+          "ownerUuid": "53f5d273-7aa0-4c66-8484-b2a95ca29892"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9658,
+          "at": [
+            208,
+            128,
+            64
+          ],
+          "ownerUuid": "53f5d273-7aa0-4c66-8484-b2a95ca29892"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9679,
+          "at": [
+            228,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9680,
+          "at": [
+            228,
+            128,
+            64
+          ],
+          "ownerUuid": "ad248825-f405-4b6a-a431-3daf4d621726"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9693,
+          "at": [
+            208,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9705,
+          "at": [
+            208,
+            128,
+            64
+          ],
+          "ownerUuid": "53f5d273-7aa0-4c66-8484-b2a95ca29892"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9718,
+          "at": [
+            228,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9729,
+          "at": [
+            228,
+            128,
+            64
+          ],
+          "ownerUuid": "ad248825-f405-4b6a-a431-3daf4d621726"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9750,
+          "at": [
+            208,
+            128,
+            64
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9752,
+          "at": [
+            208,
+            128,
+            64
+          ],
+          "ownerUuid": "6c6262f3-78b9-4d31-b954-de4b0e822e2a"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "6c6262f3-78b9-4d31-b954-de4b0e822e2a",
+      "root": [
+        208,
+        128,
+        64
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "emissive_overlay",
+      "id": "bloodborne_dw:source_lantern_1",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9774,
+          "at": [
+            16,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9776,
+          "at": [
+            16,
+            128,
+            112
+          ],
+          "ownerUuid": "7c627e3f-b052-4616-b54d-b1296e18a73d"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9789,
+          "at": [
+            16,
+            128,
+            112
+          ],
+          "ownerUuid": "7c627e3f-b052-4616-b54d-b1296e18a73d"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9811,
+          "at": [
+            36,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9812,
+          "at": [
+            36,
+            128,
+            112
+          ],
+          "ownerUuid": "0df7399e-ea97-46c4-b902-e281f73b5e1e"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9825,
+          "at": [
+            16,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9837,
+          "at": [
+            16,
+            128,
+            112
+          ],
+          "ownerUuid": "7c627e3f-b052-4616-b54d-b1296e18a73d"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9850,
+          "at": [
+            36,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9862,
+          "at": [
+            36,
+            128,
+            112
+          ],
+          "ownerUuid": "0df7399e-ea97-46c4-b902-e281f73b5e1e"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9883,
+          "at": [
+            16,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 9884,
+          "at": [
+            16,
+            128,
+            112
+          ],
+          "ownerUuid": "1a3836a0-bb9b-4836-b7bf-8a58a81c6c41"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "1a3836a0-bb9b-4836-b7bf-8a58a81c6c41",
+      "root": [
+        16,
+        128,
+        112
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "helper_only_selection",
+      "id": "bloodborne_dw:source_addon_crimson_button_5",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9906,
+          "at": [
+            64,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 9908,
+          "at": [
+            64,
+            128,
+            112
+          ],
+          "ownerUuid": "f69312aa-dab3-4bc8-91ad-3827abc6da46"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 9921,
+          "at": [
+            64,
+            128,
+            112
+          ],
+          "ownerUuid": "f69312aa-dab3-4bc8-91ad-3827abc6da46"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 9942,
+          "at": [
+            84,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 9944,
+          "at": [
+            84,
+            128,
+            112
+          ],
+          "ownerUuid": "b16e9eab-a647-4fa1-b3d6-7dc88bf0ee0a"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9957,
+          "at": [
+            64,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 9969,
+          "at": [
+            64,
+            128,
+            112
+          ],
+          "ownerUuid": "f69312aa-dab3-4bc8-91ad-3827abc6da46"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 9982,
+          "at": [
+            84,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 9994,
+          "at": [
+            84,
+            128,
+            112
+          ],
+          "ownerUuid": "b16e9eab-a647-4fa1-b3d6-7dc88bf0ee0a"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10015,
+          "at": [
+            64,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 10016,
+          "at": [
+            64,
+            128,
+            112
+          ],
+          "ownerUuid": "5e9f735b-2e22-476d-8d9f-e13a4ca171a8"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "5e9f735b-2e22-476d-8d9f-e13a4ca171a8",
+      "root": [
+        64,
+        128,
+        112
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "biome_tint",
+      "id": "bloodborne_dw:source_grass_block",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10038,
+          "at": [
+            112,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 10040,
+          "at": [
+            112,
+            128,
+            112
+          ],
+          "ownerUuid": "2a313e0b-7ee6-498a-848f-7e2866ef7629"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 10053,
+          "at": [
+            112,
+            128,
+            112
+          ],
+          "ownerUuid": "2a313e0b-7ee6-498a-848f-7e2866ef7629"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10074,
+          "at": [
+            132,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 10075,
+          "at": [
+            132,
+            128,
+            112
+          ],
+          "ownerUuid": "b70a8cb7-f46e-4f44-b20a-9b9cb7c86e69"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 10088,
+          "at": [
+            112,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 10100,
+          "at": [
+            112,
+            128,
+            112
+          ],
+          "ownerUuid": "2a313e0b-7ee6-498a-848f-7e2866ef7629"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 10113,
+          "at": [
+            132,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 10124,
+          "at": [
+            132,
+            128,
+            112
+          ],
+          "ownerUuid": "b70a8cb7-f46e-4f44-b20a-9b9cb7c86e69"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10145,
+          "at": [
+            112,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 10146,
+          "at": [
+            112,
+            128,
+            112
+          ],
+          "ownerUuid": "3fb7ef71-5ab9-4582-8101-0ac950a3e12e"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "3fb7ef71-5ab9-4582-8101-0ac950a3e12e",
+      "root": [
+        112,
+        128,
+        112
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "authored_grass_variant",
+      "id": "bloodborne_dw:source_bricks_grass_block_0",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10168,
+          "at": [
+            160,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 10170,
+          "at": [
+            160,
+            128,
+            112
+          ],
+          "ownerUuid": "f1d83fd7-7990-410b-ae45-8f174fe3babb"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 10184,
+          "at": [
+            160,
+            128,
+            112
+          ],
+          "ownerUuid": "f1d83fd7-7990-410b-ae45-8f174fe3babb"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10205,
+          "at": [
+            180,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 10206,
+          "at": [
+            180,
+            128,
+            112
+          ],
+          "ownerUuid": "186f42d9-d089-44e4-9943-d0c2eba70781"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 10219,
+          "at": [
+            160,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 10231,
+          "at": [
+            160,
+            128,
+            112
+          ],
+          "ownerUuid": "f1d83fd7-7990-410b-ae45-8f174fe3babb"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 10244,
+          "at": [
+            180,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 10256,
+          "at": [
+            180,
+            128,
+            112
+          ],
+          "ownerUuid": "186f42d9-d089-44e4-9943-d0c2eba70781"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10277,
+          "at": [
+            160,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 10278,
+          "at": [
+            160,
+            128,
+            112
+          ],
+          "ownerUuid": "7a6e818c-d814-4a04-b314-343eaf8576ad"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "7a6e818c-d814-4a04-b314-343eaf8576ad",
+      "root": [
+        160,
+        128,
+        112
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    },
+    {
+      "case": "authored_fern_tint",
+      "id": "bloodborne_dw:source_potted_fern",
+      "variant": 0,
+      "operations": [
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10300,
+          "at": [
+            208,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_initial",
+          "clientWorldTick": 10302,
+          "at": [
+            208,
+            128,
+            112
+          ],
+          "ownerUuid": "20af761c-a360-48bd-ad33-2d5a4139ed39"
+        },
+        {
+          "operation": "actual_doItemPick",
+          "clientWorldTick": 10315,
+          "at": [
+            208,
+            128,
+            112
+          ],
+          "ownerUuid": "20af761c-a360-48bd-ad33-2d5a4139ed39"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10336,
+          "at": [
+            228,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "server_ack_copy",
+          "clientWorldTick": 10337,
+          "at": [
+            228,
+            128,
+            112
+          ],
+          "ownerUuid": "1e9b61fb-c6bb-4201-8e87-587436f3bfd6"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 10350,
+          "at": [
+            208,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_original_ack",
+          "clientWorldTick": 10362,
+          "at": [
+            208,
+            128,
+            112
+          ],
+          "ownerUuid": "20af761c-a360-48bd-ad33-2d5a4139ed39"
+        },
+        {
+          "operation": "attackBlock_packet",
+          "clientWorldTick": 10375,
+          "at": [
+            228,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "remove_copy_ack",
+          "clientWorldTick": 10387,
+          "at": [
+            228,
+            128,
+            112
+          ],
+          "ownerUuid": "1e9b61fb-c6bb-4201-8e87-587436f3bfd6"
+        },
+        {
+          "operation": "interactBlock_place_packet",
+          "clientWorldTick": 10407,
+          "at": [
+            208,
+            128,
+            112
+          ]
+        },
+        {
+          "operation": "retained_for_save_rejoin",
+          "clientWorldTick": 10408,
+          "at": [
+            208,
+            128,
+            112
+          ],
+          "ownerUuid": "de7f65ba-381f-4199-aba5-525e01867c1b"
+        }
+      ],
+      "status": "PASS",
+      "retainedOwnerUuid": "de7f65ba-381f-4199-aba5-525e01867c1b",
+      "root": [
+        208,
+        128,
+        112
+      ],
+      "retainedRotation": 0,
+      "retainedOpen": false
+    }
+  ],
+  "status": "PASS",
+  "stage": "WAIT_FINAL",
+  "caseIndex": 15,
+  "stageTicks": 1,
+  "updatedUtc": "2026-10-11T13:13:10.277312700Z"
+}

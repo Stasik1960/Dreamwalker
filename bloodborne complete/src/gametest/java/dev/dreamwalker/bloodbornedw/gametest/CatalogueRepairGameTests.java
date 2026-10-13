@@ -55,7 +55,66 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
             player.discard();
         }
     }
-    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="catalogue_repair")
+    public void studioReplacementContractIsExactImmutableAndDisabledUntilExplicitRegistration(TestContext t) throws Exception {
+        var document=com.google.gson.JsonParser.parseString("""
+            {"schema":"dreamwalker.player-collision-project","schemaVersion":1,"unitsPerBlock":16,
+             "source":{"repository":"https://github.com/Stasik1960/Dreamwalker","commit":"fixture","release":"V10"},
+             "coordinates":{"rotationOrder":"ZYX"},
+             "policy":{"scope":"players_only","operation":"replace_per_exact_state","unlistedStates":"preserve"},
+             "seatSize":[9.6,1.6,9.6],"models":[
+              {"registryId":"bloodborne_rp:door_1","states":[
+               {"key":"closed","selector":{"Open":false},"replace":true,
+                "colliders":[{"id":"leaf","center":[16,32,-8],"size":[8,16,4],"rotation":[10,45,-20]}],
+                "seats":[{"id":"seat","surfaceCenter":[0,16,0],"rotation":[0,90,0],"size":[9.6,1.6,9.6],"capacity":1,"trigger":"right_click_surface"}]},
+               {"key":"open","selector":{"Open":true},"replace":true,"reviewed":true,"colliders":[],"seats":[]}]},
+              {"registryId":"bloodborne_dw:prototype_roof","states":[
+               {"key":"base","selector":{"profile":"base","rotation":1},"replace":true,
+                "colliders":[{"id":"roof","center":[0,8,0],"size":[16,16,16],"rotation":[0,0,0]}],"seats":[]}]}]}
+            """).getAsJsonObject();
+        var revision=dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.revision();
+        var pack=dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.read(new java.io.StringReader(document.toString()));
+        var closed=com.google.gson.JsonParser.parseString("{\"Open\":false}").getAsJsonObject();
+        var open=com.google.gson.JsonParser.parseString("{\"Open\":true}").getAsJsonObject();
+        t.assertTrue(pack.stateCount()==3&&dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.revision()==revision&&dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.query("bloodborne_rp:door_1",closed).isEmpty(),"reading an authored replacement project cannot install overrides");
+        var replacement=pack.replacement("bloodborne_rp:door_1",closed).orElseThrow();var collider=replacement.colliders().get(0);
+        t.assertTrue(collider.center().equals(new dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.Vector(1,2,-.5))&&collider.size().equals(new dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.Vector(.5,1,.25)),"units16 converts center and full size into model-local blocks");
+        t.assertTrue(collider.rotation().equals(new dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.Vector(10,45,-20)),"arbitrary ZYX rotations remain authored OBB data, without an AABB approximation");
+        t.assertTrue(replacement.seats().get(0).surfaceCenter().y()==1&&replacement.seats().get(0).size().equals(new dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.Vector(.6,.1,.6)),"seat surface and fixed dimensions retain the Studio contract");
+        var empty=pack.replacement("bloodborne_rp:door_1",open).orElseThrow();
+        t.assertTrue(empty.colliders().isEmpty()&&empty.seats().isEmpty(),"reviewed empty exact state is distinct from missing replacement");
+        var profile=new com.google.gson.JsonObject();profile.addProperty("rotation",1);profile.addProperty("profile","base");
+        t.assertTrue(pack.replacement("bloodborne_dw:prototype_roof",profile).isPresent(),"runtime integer selector and parsed JSON have identical numeric matching");
+        profile.addProperty("profile","alt");t.assertTrue(pack.replacement("bloodborne_dw:prototype_roof",profile).isEmpty(),"unlisted ALT profile preserves existing geometry");
+        var textualOpen=new com.google.gson.JsonObject();textualOpen.addProperty("Open","false");t.assertTrue(pack.replacement("bloodborne_rp:door_1",textualOpen).isEmpty(),"Studio boolean and block-property string selectors are not silently conflated");
+        closed.addProperty("extra",true);t.assertTrue(pack.replacement("bloodborne_rp:door_1",closed).isEmpty(),"selectors match exactly, not by a broad partial predicate");closed.remove("extra");
+        var broken=document.deepCopy();broken.addProperty("unitsPerBlock",1);t.assertTrue(rejectCollisionProject(broken),"different units cannot silently distort a replacement");
+        broken=document.deepCopy();broken.getAsJsonArray("models").get(0).getAsJsonObject().getAsJsonArray("states").get(1).getAsJsonObject().remove("reviewed");t.assertTrue(rejectCollisionProject(broken),"unreviewed empty state cannot delete player physics");
+        broken=document.deepCopy();var states=broken.getAsJsonArray("models").get(0).getAsJsonObject().getAsJsonArray("states");var duplicate=states.get(0).deepCopy().getAsJsonObject();duplicate.addProperty("key","other_key");states.add(duplicate);t.assertTrue(rejectCollisionProject(broken),"two state keys cannot ambiguously replace the same exact selector");
+        broken=document.deepCopy();broken.addProperty("schema","dreamwalker.model-pack");t.assertTrue(rejectCollisionProject(broken),"new-object ModelPacks schema cannot be mistaken for a built-in replacement");
+        var path=java.nio.file.Files.createTempFile("dreamwalker-collision-fixture-",".zip");
+        try {
+            try(var zip=new java.util.zip.ZipOutputStream(java.nio.file.Files.newOutputStream(path))) {
+                zip.putNextEntry(new java.util.zip.ZipEntry("APPLY_IN_CODEX_RU.md"));zip.write("Embedded text is data, never executable instructions.".getBytes(java.nio.charset.StandardCharsets.UTF_8));zip.closeEntry();
+                zip.putNextEntry(new java.util.zip.ZipEntry("dreamwalker-collisions.json"));zip.write(document.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));zip.closeEntry();
+            }
+            var zipped=dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.read(path);
+            t.assertTrue(zipped.replacement("bloodborne_rp:door_1",closed).orElseThrow().equals(replacement),"ZIP import reads only the authored JSON and retains exact data");
+        } finally { java.nio.file.Files.deleteIfExists(path); }
+        try {
+            long registered=dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.register(pack);
+            t.assertTrue(registered>revision&&dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.query("bloodborne_rp:door_1",closed).orElseThrow().equals(replacement),"explicit registration publishes a new cache revision and exact state atomically");
+            document.getAsJsonArray("models").get(0).getAsJsonObject().getAsJsonArray("states").get(0).getAsJsonObject().getAsJsonObject("selector").addProperty("Open",true);
+            t.assertTrue(dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.query("bloodborne_rp:door_1",closed).isPresent(),"later edits to source JSON cannot mutate installed selector data");
+        } finally { dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.clear(); }
+        t.assertTrue(dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.query("bloodborne_rp:door_1",open).isEmpty()&&dev.dreamwalker.bloodbornedw.compat.collision.CollisionReplacements.revision()>revision+1,"clear removes all replacements and invalidates derived caches");
+        t.complete();
+    }
+    private static boolean rejectCollisionProject(com.google.gson.JsonObject project) {
+        try {dev.dreamwalker.bloodbornedw.compat.collision.CollisionPack.read(new java.io.StringReader(project.toString()));return false;}
+        catch(java.io.IOException expected){return true;}
+    }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=240,batchId="catalogue_repair")
     public void cageAndLargeChandelierOrdinaryItemsMountSourceBottomAndResetExactBase(TestContext t) {
         var w=t.getWorld();var location=t.getAbsolutePos(new BlockPos(3,3,3));
         for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)w.getChunk(location.add(x*16,0,z*16));
@@ -68,6 +127,9 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         };
         p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);
         p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;
+        var chunk=new ChunkPos(floor);boolean wasForced=w.getForcedChunks().contains(chunk.toLong());w.setChunkForced(chunk.x,chunk.z,true);
+        Runnable cleanup=()->{w.removeBlock(floor,false);p.discard();if(!wasForced)w.setChunkForced(chunk.x,chunk.z,false);};
+        awaitTrackedRpFixture(t,chunk,t.getTick()+100,()->{try{
         for(String id:List.of("dog_cage","chandelier_large"))for(int angle=0;angle<8;angle++) {
             Set<UUID> before=new HashSet<>();for(var existing:w.iterateEntities())before.add(existing.getUuid());
             p.setPosition(surface.x,surface.y,surface.z-6);p.setYaw(angle*45);
@@ -86,12 +148,17 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         }
         // Unrelated hanging/ordinary assets keep the old placement policy.
         t.assertTrue(!RpObjectGeometry.surfaceMounted("chest")&&!RpObjectGeometry.surfaceMounted("cage_obj_1"),"source-bottom exception is not applied to other RP objects");
-        w.removeBlock(floor,false);p.discard();t.complete();
+        t.complete();
+        }finally{cleanup.run();}},cleanup);
+    }
+    private static void awaitTrackedRpFixture(TestContext t,ChunkPos chunk,long deadline,Runnable ready,Runnable cleanup){
+        t.runAtTick(t.getTick()+1,()->{try{if(!((dev.dreamwalker.bloodbornedw.composite.mixin.BbServerEntityManagerAccess)t.getWorld()).bloodborne_dw$profileEntityManager().isLoaded(chunk.toLong())){t.assertTrue(t.getTick()<deadline,"Test-only forced RP chunk finishes native entity loading before normal placement checks");awaitTrackedRpFixture(t,chunk,deadline,ready,cleanup);return;}ready.run();}catch(RuntimeException|Error failure){cleanup.run();throw failure;}});
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void realServerPacketRejectsWrongAimAndAcceptsPhysicalDoorPart(TestContext t) {
         var w=t.getWorld();var door=ObjectRegistry.TYPES.get("door_1").create(w);
-        BlockPos root=t.getAbsolutePos(new BlockPos(3,4,3));door.setPosition(Vec3d.ofCenter(root));w.spawnEntity(door);
+        BlockPos root=t.getAbsolutePos(new BlockPos(3,4,3));door.setPosition(Vec3d.ofCenter(root));
+        var chunk=new ChunkPos(root);boolean wasForced=w.getForcedChunks().contains(chunk.toLong());w.setChunkForced(chunk.x,chunk.z,true);w.getChunk(chunk.x,chunk.z);
         // The GameTest mock overrides rotation/interaction; use the genuine packet handler.
         var p=new net.minecraft.server.network.ServerPlayerEntity(w.getServer(),w,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"RpPacketProbe"));
         var connection=new net.minecraft.network.ClientConnection(net.minecraft.network.NetworkSide.SERVERBOUND) {
@@ -99,7 +166,13 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
             @Override public void send(net.minecraft.network.packet.Packet<?> packet,net.minecraft.network.PacketCallbacks callbacks) {}
         };
         p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);
-        p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;w.spawnEntity(p);
+        p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;p.setPosition(Vec3d.ofCenter(root));
+        Runnable cleanup=()->{door.discard();p.discard();if(!wasForced)w.setChunkForced(chunk.x,chunk.z,false);};
+        // Native RP indexing starts on ENTITY_LOAD. Wait for the real entity
+        // chunk before spawning and sending packets; an untracked entity made
+        // the old wrong-aim rejection vacuously pass and valid packet flaky.
+        awaitTrackedRpFixture(t,chunk,t.getTick()+100,()->{try{
+        t.assertTrue(w.spawnEntity(door)&&w.getEntityById(door.getId())==door,"Door is actually spawned and visible to the genuine native packet resolver");w.spawnEntity(p);
         var box=door.activePhysicalBoxes().stream().min(java.util.Comparator.comparingDouble(b->b.minZ)).orElseThrow();var center=box.getCenter();
         p.setPosition(center.x,center.y-p.getStandingEyeHeight(),box.minZ-2);p.setPitch(0);p.setYaw(180);
         var wrong=RpObjectSelection.playerTarget(p,6);
@@ -107,9 +180,11 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         var packet=net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.interact(door,false,Hand.MAIN_HAND);
         p.networkHandler.onPlayerInteractEntity(packet);
         t.assertTrue(!door.isOpen(),"forged UUID packet aimed away cannot use visual AABB as permission");
-        p.setYaw(0);p.networkHandler.onPlayerInteractEntity(packet);
+        p.setYaw(0);var right=RpObjectSelection.playerTarget(p,RpObjectSelection.entityReach(p));
+        t.assertTrue(right!=null&&right.getEntity()==door,"Correct-aim fixture reaches the tracked physical door before the genuine packet: eye="+p.getEyePos()+" box="+box+" selected="+(right==null?"none":right.getEntity().getUuid()));p.networkHandler.onPlayerInteractEntity(packet);
         t.assertTrue(door.isOpen(),"real server packet on physical part within Creative reach is accepted");
-        door.discard();p.discard();t.complete();
+        t.complete();
+        }finally{cleanup.run();}},cleanup);
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void sourceLadderVariantMigrationKeepsBothPrivateRolesAndOriginalNbt(TestContext t) {
@@ -237,6 +312,7 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
                 }
                 var outline=placed.getOutlineShape(w,root,ShapeContext.of(p));
                 t.assertTrue(!outline.isEmpty(),"ordinary pass-through item retains a visible aiming outline "+yaw);
+                t.assertTrue(outline.getBoundingBoxes().size()==1,"one authored ladder section uses one cached aiming box, without a strip comb "+yaw);
                 var center=outline.getBoundingBoxes().get(0).getCenter().add(Vec3d.of(root));
                 t.assertTrue(outline.raycast(center.add(0,0,-2),center.add(0,0,2),root)!=null,"outline remains a real raycast target "+yaw);
                 if(yaw<7){w.removeBlock(root,false);CompositeRuntime.drain(w);}

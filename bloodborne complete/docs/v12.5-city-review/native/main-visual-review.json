@@ -1,0 +1,276 @@
+{
+  "schema": "dreamwalker-v125-main-native-visual-review-v1",
+  "status": "PARTIAL_25_PASS_1_ALTERNATE_VIEW_REQUIRED",
+  "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845",
+  "rawCaptureOutput": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v125-flatgallery-native-1\\client-capture-output.json",
+  "captureStatusAtReview": "CAPTURE_COMPLETE",
+  "assignedFrames": 26,
+  "actuallyViewedFrames": 26,
+  "visiblePassFrames": 25,
+  "visibleFailFrames": 0,
+  "notAcceptedFrames": 1,
+  "frames": [
+    {
+      "index": 1,
+      "fileName": "v125-001-bloodborne_dw_prototype_double_door.png",
+      "key": "bloodborne_dw:prototype_double_door",
+      "sha256": "c76444af304c4cb79d6b35e7e3c5165cfad319062f6a4a9d0f1dbf1b7cb4b9ed",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Исходная V12: резная высокая дверь целиком видна; лицевая отделка без missing texture, нижний край на голубой платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 2,
+      "fileName": "v125-002-bloodborne_rp_wood_gate.png",
+      "key": "bloodborne_rp:wood_gate",
+      "sha256": "0544c9d5160a7101846acf6028f80309e953c981edb0550f711e501cddae5fd0",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Исходная V12 RP: большие деревянные ворота видны полностью, включая верхний фронтон и основание; выветренная резная отделка и посадка сохранены.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 3,
+      "fileName": "v125-003-bloodborne_dw_source__wall_dec_bottom.png",
+      "key": "bloodborne_dw:source__wall_dec_bottom",
+      "sha256": "2f84453b901a325fb1f8a05a20d299cc466dfec4c37f0b2d6414a389d199cef4",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Серый настенный карниз на двух опорах: верх, прорезь и обе ножки видны; ножки стоят на зелёной поверхности, материал BB.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 4,
+      "fileName": "v125-004-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_right1",
+      "sha256": "13fa56b2139db5c7ff819236a5dcb85fdf9d5dedab7972eb34ab5a0ad3e16692",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Высокий изогнутый каменный архитектурный сегмент виден от нижнего основания до верхнего конца; поверхности серой кладки заполнены, на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 5,
+      "fileName": "v125-005-bloodborne_dw_source_1_spirelamp_001.png",
+      "key": "bloodborne_dw:source_1_spirelamp_001",
+      "sha256": "610231d752c2cca3de6f87a6b4afb6e1938144f5ac667d8249beb5816fb35dbc",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Крупная серая архитектурная деталь с краевыми рамками полностью видна на жёлтой платформе; материал приглушённый, без яркой ванильной поверхности.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 6,
+      "fileName": "v125-006-bloodborne_dw_source_ywlloe_stained_glass_pane_noside_alt.png",
+      "key": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+      "sha256": "503aec221a0cac25b0f7dc716524c0ba2e86e05344d00e5852b8da878ab2eda8",
+      "status": "NOT_ACCEPTED_BACKFACE_CULLED",
+      "observation": "Целевой 93151 в этом ракурсе не виден. У исходной модели только WEST face, камера находится EAST. Это штатная односторонняя отсечка; визуальная приёмка целевой поверхности требует нового WEST ракурса.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 7,
+      "fileName": "v125-007-framed_bloodborne_rp_blood_vial.png",
+      "key": "framed:bloodborne_rp:blood_vial",
+      "sha256": "9d8cbc995a69f42edd2bbc754455ee258bfe6cbfc8fdbbff11f285b8d88d036b",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Флакон V12 показан в рамке на каменном основании на синей платформе; значок и крепление видны.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 8,
+      "fileName": "v125-008-framed_bloodborne_dw_bb_tool.png",
+      "key": "framed:bloodborne_dw:bb_tool",
+      "sha256": "021e1aea95ce5b386b176522dac695ebc09fa55bdf0aba1e02eb24ba57c82e1d",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Инструмент V12 показан в рамке на основании; значок гаечного ключа читается, рамка находится над синей платформой.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 9,
+      "fileName": "v125-009-bloodborne_dw_prototype_wall.png",
+      "key": "bloodborne_dw:prototype_wall",
+      "sha256": "e283f2e79cb85d3c039c3f556fa443159b608aa1536bcc7791c8b4fdb55932c8",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Исходная V12: самостоятельный каменный столб художественной ограды виден; тёмная кладка и нижняя посадка на голубую платформу сохранены. Этот кадр не доказывает соседние соединения.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 10,
+      "fileName": "v125-010-bloodborne_dw_source_hold_wall_lantern.png",
+      "key": "bloodborne_dw:source_hold_wall_lantern",
+      "sha256": "aab106fc7751b17789de901698a5f0a2091bec1003d90bc6997aebc1b578a57c",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Вытянутый BB-фонарь с кронштейном и нижними фигурными подвесами виден полностью; прозрачные промежутки и белые окна правильны, нижние концы на поверхности платформы.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 11,
+      "fileName": "v125-011-bloodborne_dw_source_addon_cases_0.png",
+      "key": "bloodborne_dw:source_addon_cases_0",
+      "sha256": "da24c93439cedb77395c7bbe41d2737b4d82ad39ce2543318e8919dabebc57e1",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Составная стопка чемоданов видна полностью: бурые крышки, зеленовато-серые корпуса и отдельные наклоны; нижние части стоят на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 12,
+      "fileName": "v125-012-bloodborne_dw_source_addon_chain_2.png",
+      "key": "bloodborne_dw:source_addon_chain_2",
+      "sha256": "fc47b2d4349d0bded2df5fead305ceeb51c369cf32e83ab389e2008d715931d9",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Плоская тёмная цепь BB видна на зелёной платформе; широкие звенья и альфа-просветы читаются, нет исчезновения модели.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 13,
+      "fileName": "v125-013-bloodborne_dw_source_addon_grass_7.png",
+      "key": "bloodborne_dw:source_addon_grass_7",
+      "sha256": "cdde0d5d185ff51efad33ac2e22a6c59d815e27aa8352575621a3ab51558175d",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Два сухих серых растительных фрагмента видны на зелёной платформе; прозрачная прорезная растительность отличается от обычной зелёной Minecraft-травы.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 14,
+      "fileName": "v125-014-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_inn.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+      "sha256": "93b73a180297d2d782f8b9570c44f1f0c3d2cba8e6e77fec7f7bc4230d58741a",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Архитектурная оконная/решётчатая секция видна полностью: серая рамка, вертикальные переплёты и светло-зелёные стеклянные вставки; низ на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 15,
+      "fileName": "v125-015-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_inn.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_right_top2",
+      "sha256": "b26de956de757032e9e751ba276b0658366d5127a9657ae647ace37b8caac26e",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Высокая арочная оконная секция видна целиком с серой каменной рамкой и бурым узором над зелёным стеклом; обе боковые части на поверхности платформы.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 16,
+      "fileName": "v125-016-bloodborne_dw_source_hold_ladder_02.png",
+      "key": "bloodborne_dw:source_hold_ladder_02",
+      "sha256": "81b77e59020a9cb5aeee5d9fbd05ceb775a91f2c19f0e3120518863fda238f90",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Приставной каменный модуль ONE виден полностью: две вертикальные опоры и поперечина, обе ножки на зелёной платформе. Подъём и HEIGHT TWO проверяются отдельно игровыми тестами.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 17,
+      "fileName": "v125-017-bloodborne_dw_source_warped_trapdoor_open_2.png",
+      "key": "bloodborne_dw:source_warped_trapdoor_open_2",
+      "sha256": "44fc975a0ea1c110ec20b852c7e46d67419f3aa138bb211ed126aa33c9445f0e",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Арочная секция с серой резной рамкой и голубовато-зелёной вставкой видна полностью; нижние стойки стоят на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 18,
+      "fileName": "v125-018-bloodborne_dw_source_warped_trapdoor_top.png",
+      "key": "bloodborne_dw:source_warped_trapdoor_top",
+      "sha256": "820d174f17b0a506c5a93b6d98e0d314fbf8533ebcd38010178ea32449817d25",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Нижняя прямоугольная секция с каменными стойками и голубовато-зелёной вставкой полностью видна, без пропавших текстур; на поверхности платформы.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 19,
+      "fileName": "v125-019-bloodborne_dw_source_stairs_waxed_exposed_cut_copper_stairs_oute.png",
+      "key": "bloodborne_dw:source_stairs_waxed_exposed_cut_copper_stairs_outer_3",
+      "sha256": "339f7323105489f956b5d6d8b3ef40ad53cc479e388b45f3432113a2cd1697e3",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Крупный каменный изогнутый сегмент с основанием и широким верхним продолжением виден целиком; кладка BB, основание на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 20,
+      "fileName": "v125-020-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_right",
+      "sha256": "590bd77b30d200aac82d3ed6d00af600815a93ecb08e7fb14c1111939c20bfb6",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Тонкий длинный изогнутый каменный профиль виден от нижней стойки до широкого верхнего конца; нижняя точка касается зелёной платформы.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 21,
+      "fileName": "v125-021-bloodborne_dw_source_lapis_ore.png",
+      "key": "bloodborne_dw:source_lapis_ore",
+      "sha256": "218185790a935d2cbb4db52b5b20267f7e45c7f7e253138bdf10615c6e79e3dc",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Широкая низкая прямоугольная деталь из серой рамочной кладки полностью видна на жёлтой платформе; верх и боковые грани заполнены.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 22,
+      "fileName": "v125-022-bloodborne_dw_source_stairs_axed_exposed_cut_copper_stairs_outer.png",
+      "key": "bloodborne_dw:source_stairs_axed_exposed_cut_copper_stairs_outer_3",
+      "sha256": "d8104c85044f6a9839b913cee177b3bbe36446dd5717d1a984758ab829a066f9",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Изогнутый сегмент с крупными рамочными каменными панелями полностью виден на жёлтой платформе; нижняя вертикальная часть посажена на поверхность.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 23,
+      "fileName": "v125-023-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_left1",
+      "sha256": "938af7461e43559187c5736af1e08c8ce103b5de0836e056f9552a3e134b5aca",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Высокий широкий каменный сегмент с карнизом и изогнутой верхней частью виден полностью; серые поверхности заполнены, основание на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 24,
+      "fileName": "v125-024-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_out.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_outer_left",
+      "sha256": "abdeb0ae70d8871345b221a8dfdcd216ad253df2f575c7bc6020fbeca1bb340f",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Высокий каменный сегмент с изогнутой верхней частью и рамочным боковым рисунком полностью виден; низ стоит на зелёной платформе.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 25,
+      "fileName": "v125-025-bloodborne_dw_source_black_concrete_powder.png",
+      "key": "bloodborne_dw:source_black_concrete_powder",
+      "sha256": "e18e47a5a35b95830f01d574a7a28c3afaf39eeb3e78c919cca481d155751c2e",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Двухуровневая широкая каменная платформа 90635 видна целиком; верхние плоскости и боковые грани заполнены тёмной BB-кладкой, нижний уровень стоит на зелёной поверхности.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    },
+    {
+      "index": 26,
+      "fileName": "v125-026-bloodborne_dw_source_stairs_waxed_oxidized_cut_copper_stairs_inn.png",
+      "key": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_right",
+      "sha256": "1d116b653434d071ce5649840126700c6ed9ea5e0cb2e3fbc1547d2187d7c6f8",
+      "status": "PASS_OBSERVED_PIXELS",
+      "observation": "Раздельные исходные части тонкого изогнутого профиля видны: нижний короткий вертикальный фрагмент на платформе и верхний наклонный фрагмент. Разрыв соответствует сохранённому source-модулю; не заявляется цельная заполненная арка или ванильные ступени.",
+      "method": "Actual raw ScreenshotRecorder PNG inspected with view_image; no image edits",
+      "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845"
+    }
+  ],
+  "knownScopeLimits": "This is direct rendered appearance and gallery seating review only. Root/state checks or capture completion do not establish visual PASS. Movement, neighbour connection and save integrity use their separate runtime evidence.",
+  "pending": "93151 requires actual WEST-face supplemental screenshots; EAST back-face screenshot stays explicitly unaccepted."
+}

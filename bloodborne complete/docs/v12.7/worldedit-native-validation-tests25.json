@@ -1,0 +1,99 @@
+{
+  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS25",
+  "sourceCheckpointAtRun": "935f099c1cbac00a6c49da0391a81adfbd40aea0",
+  "productionJarSha256AtRun": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+  "allNativeXmlCases": 129,
+  "failures": 0,
+  "skipped": 0,
+  "worldEditVersion": "7.2.15+6463-5ca4dff",
+  "officialOptionalJarSha256": "17db6b3e94f52d25426684663e1e1846823cbb7907f1c365ac329e5bc7bfaf2c",
+  "realWorldEditApiCases": [
+    {
+      "name": "worldeditrpv127gametests.numericrpclipboardandselectivedeleteundokeeptypedsettingsandcounters",
+      "status": "PASS",
+      "seconds": "0.385"
+    },
+    {
+      "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
+      "status": "PASS",
+      "seconds": "0.121"
+    },
+    {
+      "name": "worldeditv127gametests.clipboardlinkedownersremaponlyactuallycopiedmembersandkeeponependingevent",
+      "status": "PASS",
+      "seconds": "0.074"
+    }
+  ],
+  "nativeRuntime": {
+    "java": 17,
+    "minecraft": "1.20.1",
+    "heapGiB": 3,
+    "activeProcessors": 4
+  },
+  "rpTypedProof": {
+    "status": "PASS_REAL_OPTIONAL_WORLDEDIT_RP_ROUNDTRIP",
+    "worldEditVersion": "7.2.15+6463-5ca4dff",
+    "fiveDigitId": "91029",
+    "sourceUuid": "64fa3ca1-8527-4820-aa2d-9600d84226d2",
+    "copiedUuid": "404e15f2-7aef-487a-8a8e-39e7a190490b",
+    "parserAndActor": "ACTUAL_FABRIC_ADAPTER",
+    "numericPlacement": "PASS",
+    "actualEditSessionGetFullBlock": "PASS",
+    "exactTypedSettingsAndSourcePayload": "PASS",
+    "independentCopiedUuidAndRemappedCounters": "PASS",
+    "selectiveNumericMaskAirRemoval": "PASS",
+    "unrelatedNativeOwnerPreserved": "PASS",
+    "actualUndoOriginalUuidAndCounters": "PASS",
+    "commandsExecuted": 0
+  },
+  "linkedComponentProof": {
+    "status": "PASS_REAL_WORLDEDIT_LINKED_COMPONENT_COPY",
+    "worldEditVersion": "7.2.15+6463-5ca4dff",
+    "ownedMembers": 2,
+    "rpMembers": 1,
+    "partialCopyExternalReferences": "PRESERVED_ACTUAL_UUIDS",
+    "wholeCopyInternalReferences": "COPIED_UUIDS_ONLY",
+    "originalComponentUnchanged": true,
+    "copiedPendingEvents": 1,
+    "stableCopiedEventNumber": 24,
+    "repeatedHelperWrites": "NO_EXTRA_EVENTS_OR_COUNTER_RESET",
+    "commandsExecuted": 0
+  },
+  "fullOriginalWorldConverted": false,
+  "galleryCreated": false,
+  "evidence": [
+    {
+      "path": "build/test-results/gametest/TEST-tests25.xml",
+      "sha256": "9903b8ae1692bf19eed6655be12b69bb1a7c40d2561ea697eb148bd2a58bc9c4"
+    },
+    {
+      "path": "build/v127-validation/tests25/result.json",
+      "sha256": "519d1ea018b895c0a3f92e824c6d67c7b18bb16db756e1a0b2b38f7f3d4fbb3e"
+    },
+    {
+      "path": "build/v127-validation/tests25/gradle.log",
+      "sha256": "c51f3a71527aa837d025c392d17269122a427da113a7cd16b9196e2d9b49b325"
+    },
+    {
+      "path": "build/gametest-tests25/world/v127-worldedit-rp-native-proof.json",
+      "sha256": "109d93593bb888cf03ae2c954c6d6f84e89a9ab205cd78093e6e5f581c1357b5"
+    },
+    {
+      "path": "build/gametest-tests25/world/v127-worldedit-linked-native-proof.json",
+      "sha256": "87d7a1518f94fca11d53488810ffb595f42eb62a6ddb50d89b019d05fd4fa846"
+    },
+    {
+      "path": "build/gametest-tests25/world/v127-source-model-offset-native-proof.json",
+      "sha256": "bac1e9ffaaec6dceed1a84bc310f119031116bfd7ee917a57958815f0fc4351d"
+    },
+    {
+      "path": "build/gametest-tests25/world/v127-source-lighting-native-proof.json",
+      "sha256": "8f8abbbdd9bd89e6caa00ddf5cf68445cbbe8cd71de8e7b315346bb9dab07f85"
+    },
+    {
+      "path": "build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7-final.jar",
+      "sha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1"
+    }
+  ],
+  "historicalNativeValidation": "worldedit-native-validation-tests24.json"
+}

@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_hold_wall_lantern_2",
+  "displayName": "Круглая вывеска",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/hold/wall_lantern_2",
+              "offset": [
+                0,
+                4.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                7.5,
+                0.0,
+                -8.75
+              ],
+              "to": [
+                8.5,
+                32.0,
+                29.25
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                4.5,
+                2.0,
+                29.1875
+              ],
+              "to": [
+                11.5,
+                34.0,
+                29.3125
+              ]
+            },
+            {
+              "from": [
+                7.5,
+                0.0,
+                -5.75
+              ],
+              "to": [
+                8.5,
+                16.0,
+                8.25
+              ]
+            },
+            {
+              "from": [
+                7.75,
+                2.0,
+                -8.75
+              ],
+              "to": [
+                8.25,
+                32.0,
+                29.25
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  7.5,
+                  0.0,
+                  -8.75
+                ],
+                "to": [
+                  8.5,
+                  32.0,
+                  29.25
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.2027958,
+                  0.0,
+                  -4.02081528
+                ],
+                "to": [
+                  20.02081528,
+                  32.0,
+                  23.2027958
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.25,
+                  0.0,
+                  7.5
+                ],
+                "to": [
+                  24.75,
+                  32.0,
+                  8.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.2027958,
+                  0.0,
+                  -7.2027958
+                ],
+                "to": [
+                  20.02081528,
+                  32.0,
+                  20.02081528
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  7.5,
+                  0.0,
+                  -13.25
+                ],
+                "to": [
+                  8.5,
+                  32.0,
+                  24.75
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.02081528,
+                  0.0,
+                  -7.2027958
+                ],
+                "to": [
+                  23.2027958,
+                  32.0,
+                  20.02081528
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -8.75,
+                  0.0,
+                  7.5
+                ],
+                "to": [
+                  29.25,
+                  32.0,
+                  8.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.02081528,
+                  0.0,
+                  -4.02081528
+                ],
+                "to": [
+                  23.2027958,
+                  32.0,
+                  23.2027958
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.5,
+          0.0,
+          -8.75
+        ],
+        "to": [
+          11.5,
+          34.0,
+          29.3125
+        ]
+      },
+      "sourceVariant": "Фонарь · вариант 3",
+      "sourcePlacementOffset": [
+        0,
+        4.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        4.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/hold/wall_lantern_2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:polished_blackstone_button[variant:face=wall,facing=east,powered=true]",
+        "minecraft:polished_blackstone_button[variant:face=wall,facing=north,powered=true]",
+        "minecraft:polished_blackstone_button[variant:face=wall,facing=south,powered=true]",
+        "minecraft:polished_blackstone_button[variant:face=wall,facing=west,powered=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

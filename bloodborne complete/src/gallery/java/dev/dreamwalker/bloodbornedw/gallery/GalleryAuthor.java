@@ -41,6 +41,7 @@ public final class GalleryAuthor implements ModInitializer {
     private static final BlockPos VIRTUAL = new BlockPos(0,64,0);
     private static final Path INPUT = Path.of("catalogue-gallery-input.json");
     private static final Path OUTPUT = Path.of("catalogue-gallery-output.json");
+    private static final Identifier BB_TOOL = new Identifier("bloodborne_dw","bb_tool");
     private static final Map<MinecraftServer,Author> AUTHORS = new WeakHashMap<>();
     private static final ChunkTicketType<ChunkPos> TICKET = ChunkTicketType.create("dreamwalker_gallery_author",Comparator.comparingLong(ChunkPos::toLong));
     private record Exhibit(ItemStack item,String kind,Identifier registry,String number,String name) {}
@@ -61,7 +62,7 @@ public final class GalleryAuthor implements ModInitializer {
         final JsonObject report = new JsonObject();
         final JsonArray rows = new JsonArray();
         final boolean dense,visualDense,altArchitecture;
-        final String layout;
+        final String layout,revision;
         final Map<Exhibit,Platform> densePlatforms = new IdentityHashMap<>();
         final Map<Exhibit,Box> visualPackingBounds = new IdentityHashMap<>();
         int index,age,nextX;
@@ -69,12 +70,14 @@ public final class GalleryAuthor implements ModInitializer {
         boolean finalizing;
         Author(MinecraftServer s,JsonObject marker) {
             server=s;world=s.getOverworld();
+            revision=marker.get("revision").getAsString();
             layout=marker.has("layout")?marker.get("layout").getAsString():"single_east_west_sequence";
             String architectureProfile=marker.has("architectureProfile")?marker.get("architectureProfile").getAsString():"base";
             require(Set.of("single_east_west_sequence","dense","dense_visual").contains(layout),"Unknown gallery layout: "+layout);
             require(Set.of("base","alt").contains(architectureProfile),"Unknown architecture profile: "+architectureProfile);
             dense=!layout.equals("single_east_west_sequence");visualDense=layout.equals("dense_visual");altArchitecture=architectureProfile.equals("alt");
             report.addProperty("schema","dreamwalker-v11-gallery-v1");
+            report.addProperty("revision",revision);
             report.addProperty("status","RUNNING");
             report.addProperty("productionJarSha256",marker.get("productionJarSha256").getAsString());
             report.addProperty("architectureProfile",architectureProfile);
@@ -104,6 +107,7 @@ public final class GalleryAuthor implements ModInitializer {
                 exhibits.add(new Exhibit(ItemStack.EMPTY,"rp_mob",registry,entry==null?"":entry.temporaryId(),entry==null?type.getKey():entry.name()));
             }
             report.add("expectedItems",itemIds);report.add("expectedNpcs",npcIds);
+            require(!revision.equals("V12")||seen.contains(BB_TOOL),"V12 BB tool is not offered by the current creative catalogue");
             if(visualDense) {
                 JsonObject envelopes=marker.getAsJsonObject("visualPackingBounds");
                 require(envelopes!=null&&envelopes.size()==exhibits.size(),"Visual layout requires an envelope for every exhibit");
@@ -256,6 +260,15 @@ public final class GalleryAuthor implements ModInitializer {
             JsonObject row=new JsonObject();row.addProperty("id",e.number);row.addProperty("registry",e.registry.toString());row.addProperty("name",e.name);row.addProperty("kind",e.kind);
             row.addProperty("item",e.item.isEmpty()?"":Registries.ITEM.getId(e.item.getItem()).toString());row.addProperty("uuid",uuid.toString());
             row.addProperty("representation",representation);row.addProperty("boundsSource",boundsSource);row.addProperty("floor",Registries.BLOCK.getId(flooring).toString());
+            if(e.registry.equals(BB_TOOL)) {
+                require(representation.equals("item_frame"),"BB tool must be a framed non-placeable item");
+                row.addProperty("toolInstructions","TOOL-INSTRUCTIONS.txt");
+                if(world.getBlockEntity(new BlockPos(platform.x,64,platform.z)) instanceof SignBlockEntity sign) {
+                    sign.setText(sign.getFrontText().withMessage(0,Text.literal("BB инструмент"))
+                        .withMessage(1,Text.literal("ПКМ: режим")).withMessage(2,Text.literal("ЛКМ: действие"))
+                        .withMessage(3,Text.literal("/bb none")),true);sign.markDirty();
+                }
+            }
             if(e.kind.equals("architecture"))row.addProperty("architectureProfile",altArchitecture?"alt":"base");
             row.add("root",JSON.toJsonTree(List.of(root.getX(),root.getY(),root.getZ())));row.add("bounds",box(actual));
             row.add("visualBounds",box(visual));row.addProperty("visualBoundsSource",visualBoundsSource);
@@ -279,7 +292,8 @@ public final class GalleryAuthor implements ModInitializer {
                 "execute as @a[tag=!dw_gallery_entered] run gamemode creative @s\nexecute as @a[tag=!dw_gallery_entered] run tp @s 0.5 64 -5.5 0 0\ntag @a[tag=!dw_gallery_entered] add dw_gallery_entered\n");
             load(new Box(-2,63,-9,4,68,-2));
             for(int px=-2;px<4;px++)for(int pz=-9;pz<-2;pz++)world.setBlockState(new BlockPos(px,63,pz),Blocks.SMOOTH_STONE.getDefaultState(),Block.NOTIFY_ALL);
-            label(new BlockPos(0,64,-8),"Dreamwalker BB v11","","Каталог → восток");
+            label(new BlockPos(0,64,-8),"Dreamwalker BB "+revision.toLowerCase(Locale.ROOT),"","Каталог → восток");
+            report.addProperty("bbToolFramed",rows.asList().stream().anyMatch(r->r.getAsJsonObject().get("item").getAsString().equals(BB_TOOL.toString())));
             report.addProperty("cataloguePlaced",rows.size());report.addProperty("standPlaced",0);
             for(String kind:List.of("architecture","rp_object","rp_mob","rp_item"))report.addProperty(kind,rows.asList().stream().filter(r->r.getAsJsonObject().get("kind").getAsString().equals(kind)).count());
             report.addProperty("platformMargin",2);report.addProperty("nearestPlatformEdgeGap",2);report.addProperty("layout",layout);
@@ -297,7 +311,7 @@ public final class GalleryAuthor implements ModInitializer {
             try {
                 JsonObject marker=JsonParser.parseString(Files.readString(INPUT)).getAsJsonObject();
                 require("FRESH_ISOLATED_CATALOGUE_GALLERY_ONLY".equals(marker.get("guard").getAsString()),"Wrong gallery guard");
-                require("V11".equals(marker.get("revision").getAsString()),"Wrong gallery revision");
+                require(Set.of("V11","V12").contains(marker.get("revision").getAsString()),"Wrong gallery revision");
                 require(server.getSaveProperties().getLevelName().equals("isolated-smoke-world")
                     &&server.getOverworld().getChunkManager().getChunkGenerator() instanceof FlatChunkGenerator&&!Files.exists(OUTPUT),"Fresh isolated flat world required");
                 AUTHORS.put(server,new Author(server,marker));

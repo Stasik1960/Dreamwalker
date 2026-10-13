@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_sand",
+  "displayName": "Куб деревянной панели",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/sand",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -1.5,
+                0.0,
+                -1.5
+              ],
+              "to": [
+                17.5,
+                16.0,
+                17.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -1.5,
+                0.0,
+                -1.5
+              ],
+              "to": [
+                17.5,
+                16.0,
+                17.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -1.5,
+                  0.0,
+                  -1.5
+                ],
+                "to": [
+                  17.5,
+                  16.0,
+                  17.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.43502884,
+                  0.0,
+                  -5.43502884
+                ],
+                "to": [
+                  21.43502884,
+                  16.0,
+                  21.43502884
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.5,
+                  0.0,
+                  -1.5
+                ],
+                "to": [
+                  17.5,
+                  16.0,
+                  17.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.43502884,
+                  0.0,
+                  -5.43502884
+                ],
+                "to": [
+                  21.43502884,
+                  16.0,
+                  21.43502884
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.5,
+                  0.0,
+                  -1.5
+                ],
+                "to": [
+                  17.5,
+                  16.0,
+                  17.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.43502884,
+                  0.0,
+                  -5.43502884
+                ],
+                "to": [
+                  21.43502884,
+                  16.0,
+                  21.43502884
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.5,
+                  0.0,
+                  -1.5
+                ],
+                "to": [
+                  17.5,
+                  16.0,
+                  17.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.43502884,
+                  0.0,
+                  -5.43502884
+                ],
+                "to": [
+                  21.43502884,
+                  16.0,
+                  21.43502884
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -1.5,
+          0.0,
+          -1.5
+        ],
+        "to": [
+          17.5,
+          16.0,
+          17.5
+        ]
+      },
+      "sourceVariant": "Серый камень с вертикальной фактурой",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/sand"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:sand[variant:]",
+        "minecraft:sand[variant:]",
+        "minecraft:sand[variant:]",
+        "minecraft:sand[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

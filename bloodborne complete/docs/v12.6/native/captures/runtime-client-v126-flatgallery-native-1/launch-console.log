@@ -1,0 +1,268 @@
+[20:29:18] [main/INFO]: Loading Minecraft 1.20.1 with Fabric Loader 0.16.10
+[20:29:18] [main/INFO]: Fabric is preparing JARs on first launch, this may take a few seconds...
+[20:29:18] [main/INFO]: Loading 61 mods:
+	- bloodborne_dw 0.1.0-v12.6-functional-assemblies
+	- dreamwalker_gallery_author 1.2.7
+	- fabric-api 0.92.9+1.20.1
+	   |-- fabric-api-base 0.4.32+1802ada577
+	   |-- fabric-api-lookup-api-v1 1.6.37+1802ada577
+	   |-- fabric-biome-api-v1 13.0.15+93aa238b77
+	   |-- fabric-block-api-v1 1.0.12+1802ada577
+	   |-- fabric-block-view-api-v2 1.0.3+924f046a77
+	   |-- fabric-blockrenderlayer-v1 1.1.42+1802ada577
+	   |-- fabric-client-tags-api-v1 1.1.3+1802ada577
+	   |-- fabric-command-api-v1 1.2.35+f71b366f77
+	   |-- fabric-command-api-v2 2.2.14+1802ada577
+	   |-- fabric-commands-v0 0.2.52+df3654b377
+	   |-- fabric-containers-v0 0.1.68+df3654b377
+	   |-- fabric-content-registries-v0 4.0.13+1802ada577
+	   |-- fabric-convention-tags-v1 1.5.6+1802ada577
+	   |-- fabric-crash-report-info-v1 0.2.20+1802ada577
+	   |-- fabric-data-attachment-api-v1 1.0.2+de0fd6d177
+	   |-- fabric-data-generation-api-v1 12.3.9+1802ada577
+	   |-- fabric-dimensions-v1 2.1.55+1802ada577
+	   |-- fabric-entity-events-v1 1.6.1+1c78457f77
+	   |-- fabric-events-interaction-v0 0.6.6+13a40c6677
+	   |-- fabric-events-lifecycle-v0 0.2.64+df3654b377
+	   |-- fabric-game-rule-api-v1 1.0.41+1802ada577
+	   |-- fabric-item-api-v1 2.1.29+1802ada577
+	   |-- fabric-item-group-api-v1 4.0.14+1802ada577
+	   |-- fabric-key-binding-api-v1 1.0.38+1802ada577
+	   |-- fabric-keybindings-v0 0.2.36+df3654b377
+	   |-- fabric-lifecycle-events-v1 2.2.23+1802ada577
+	   |-- fabric-loot-api-v2 1.2.3+1802ada577
+	   |-- fabric-loot-tables-v1 1.1.47+9e7660c677
+	   |-- fabric-message-api-v1 5.1.10+1802ada577
+	   |-- fabric-mining-level-api-v1 2.1.52+1802ada577
+	   |-- fabric-model-loading-api-v1 1.0.4+1802ada577
+	   |-- fabric-models-v0 0.4.3+9386d8a777
+	   |-- fabric-networking-api-v1 1.3.15+0caff8d077
+	   |-- fabric-networking-v0 0.3.55+df3654b377
+	   |-- fabric-object-builder-api-v1 11.1.5+e35120df77
+	   |-- fabric-particles-v1 1.1.3+1802ada577
+	   |-- fabric-recipe-api-v1 1.0.25+1802ada577
+	   |-- fabric-registry-sync-v0 2.4.1+4c0a70e677
+	   |-- fabric-renderer-api-v1 3.2.2+1802ada577
+	   |-- fabric-renderer-indigo 1.5.3+85287f9f77
+	   |-- fabric-renderer-registries-v1 3.2.47+df3654b377
+	   |-- fabric-rendering-data-attachment-v1 0.3.39+92a0d36777
+	   |-- fabric-rendering-fluids-v1 3.0.29+1802ada577
+	   |-- fabric-rendering-v0 1.1.50+df3654b377
+	   |-- fabric-rendering-v1 3.0.9+1802ada577
+	   |-- fabric-resource-conditions-api-v1 2.3.9+1802ada577
+	   |-- fabric-resource-loader-v0 0.11.12+fb82e9d777
+	   |-- fabric-screen-api-v1 2.0.9+1802ada577
+	   |-- fabric-screen-handler-api-v1 1.3.34+1802ada577
+	   |-- fabric-sound-api-v1 1.0.14+1802ada577
+	   |-- fabric-transfer-api-v1 3.3.6+8dd72ea377
+	   \-- fabric-transitive-access-wideners-v1 4.3.2+1802ada577
+	- fabricloader 0.16.10
+	   \-- mixinextras 0.4.1
+	- geckolib 4.4.9
+	   \-- com_eliotlash_mclib_mclib 20
+	- java 17
+	- minecraft 1.20.1
+[20:29:19] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/vakir/.codex/worktrees/3f07/DW/bloodborne%20complete/build/runtime-client-v126-flatgallery-native-1/libraries/net/fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[20:29:24] [main/INFO]: Compatibility level set to JAVA_17
+[20:29:24] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)
+[20:29:26] [main/INFO]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[20:29:32] [Datafixer Bootstrap/INFO]: 188 Datafixer optimizations took 126 milliseconds
+[20:29:34] [Render thread/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[20:29:35] [Render thread/ERROR]: Failed to verify authentication
+com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
+	at com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:56) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:156) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.<init>(YggdrasilUserApiService.java:55) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.createUserApiService(YggdrasilAuthenticationService.java:124) ~[authlib-4.0.43.jar:?]
+	at net.minecraft.class_310.method_31382(class_310.java:733) ~[client-intermediary.jar:?]
+	at net.minecraft.class_310.<init>(class_310.java:442) ~[client-intermediary.jar:?]
+	at net.minecraft.client.main.Main.main(Main.java:211) ~[minecraft-client.jar:?]
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) ~[fabric-loader-0.16.10.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) ~[fabric-loader-0.16.10.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) ~[fabric-loader-0.16.10.jar:?]
+Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 401
+	at com.mojang.authlib.minecraft.client.MinecraftClient.readInputStream(MinecraftClient.java:85) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:48) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:129) ~[authlib-4.0.43.jar:?]
+	... 8 more
+[20:29:35] [Render thread/INFO]: Setting user: DreamwalkerQA
+[20:29:35] [Render thread/INFO]: Dreamwalker BB V12: simple BB tool, preserved architecture and RP
+[20:29:59] [Render thread/INFO]: Bloodborne RP initialized: standard Minecraft health; independent namespace
+[20:30:00] [Render thread/INFO]: [Indigo] Registering Indigo renderer!
+[20:30:01] [Render thread/INFO]: Backend library: LWJGL version 3.3.1 SNAPSHOT
+[20:30:03] [Render thread/INFO]: Reloading ResourceManager: vanilla, fabric (bloodborne_dw, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-view-api-v2, fabric-blockrenderlayer-v1, fabric-client-tags-api-v1, fabric-command-api-v1, fabric-command-api-v2, fabric-commands-v0, fabric-containers-v0, fabric-content-registries-v0, fabric-convention-tags-v1, fabric-crash-report-info-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-events-lifecycle-v0, fabric-game-rule-api-v1, fabric-item-api-v1, fabric-item-group-api-v1, fabric-key-binding-api-v1, fabric-keybindings-v0, fabric-lifecycle-events-v1, fabric-loot-api-v2, fabric-loot-tables-v1, fabric-message-api-v1, fabric-mining-level-api-v1, fabric-model-loading-api-v1, fabric-models-v0, fabric-networking-api-v1, fabric-networking-v0, fabric-object-builder-api-v1, fabric-particles-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-renderer-registries-v1, fabric-rendering-data-attachment-v1, fabric-rendering-fluids-v1, fabric-rendering-v0, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-screen-api-v1, fabric-screen-handler-api-v1, fabric-sound-api-v1, fabric-transfer-api-v1, fabric-transitive-access-wideners-v1, fabricloader, geckolib)
+[20:30:03] [Worker-Main-5/INFO]: Found unifont_all_no_pua-15.0.06.hex, loading
+[20:30:03] [Worker-Main-15/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2
+[20:30:03] [Worker-Main-15/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4
+[20:30:33] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play
+[20:30:33] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[20:30:33] [Render thread/INFO]: OpenAL initialized on device OpenAL Soft on Динамики (Realtek(R) Audio)
+[20:30:33] [Render thread/INFO]: Sound engine started
+[20:30:33] [Render thread/INFO]: Created: 2048x2048x2 minecraft:textures/atlas/blocks.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[20:30:33] [Render thread/INFO]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[20:30:33] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[20:30:34] [Render thread/INFO]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[20:30:34] [Render thread/INFO]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[20:30:34] [Render thread/INFO]: Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[20:30:36] [Render thread/INFO]: Loaded 7 recipes
+[20:30:36] [Render thread/INFO]: Loaded 1271 advancements
+[20:30:37] [Render thread/INFO]: Applied 0 biome modifications to 0 of 64 new biomes in 1.196 ms
+[20:30:37] [Server thread/INFO]: Starting integrated minecraft server version 1.20.1
+[20:30:37] [Server thread/INFO]: Generating keypair
+[20:30:38] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 0%
+[20:30:42] [Render thread/INFO]: Preparing spawn area: 15%
+[20:30:43] [Render thread/INFO]: Preparing spawn area: 59%
+[20:30:48] [Render thread/INFO]: Time elapsed: 10720 ms
+[20:30:49] [Server thread/INFO]: Changing view distance to 5, from 10
+[20:30:49] [Server thread/INFO]: Changing simulation distance to 5, from 0
+[20:30:50] [Server thread/INFO]: DreamwalkerQA[local:E:031fba36] logged in with entity id 52 at (-4.5, 64.0, -12.5)
+[20:30:50] [Server thread/INFO]: DreamwalkerQA joined the game
+[20:30:52] [Render thread/INFO]: [System] [CHAT] BB V12.6: /function dw_gallery:help. Окна: :assemblies, двери: :doors, город: :city.
+[20:30:52] [Render thread/INFO]: Loaded 2 advancements
+[20:30:53] [Server thread/INFO]: [DreamwalkerQA: Set own game mode to Spectator Mode]
+[20:30:53] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 3.850000, 65.780000, -3.900000]
+[20:30:53] [Render thread/INFO]: [System] [CHAT] Set own game mode to Spectator Mode
+[20:30:53] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 3.850000, 65.780000, -3.900000
+[20:30:57] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 23.005500, 74.125000, 34.978100]
+[20:30:57] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 23.005500, 74.125000, 34.978100
+[20:31:02] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 24.625000, 64.686300, 45.500000]
+[20:31:02] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 24.625000, 64.686300, 45.500000
+[20:31:07] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 203.682700, 73.436400, 152.269300]
+[20:31:07] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 203.682700, 73.436400, 152.269300
+[20:31:11] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 205.625000, 64.780000, 167.000000]
+[20:31:11] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 205.625000, 64.780000, 167.000000
+[20:31:16] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 108.125000, 64.780000, 187.000000]
+[20:31:16] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 108.125000, 64.780000, 187.000000
+[20:31:18] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 2283ms or 45 ticks behind
+[20:31:23] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 112.625000, 64.280000, 186.968800]
+[20:31:23] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 112.625000, 64.280000, 186.968800
+[20:31:27] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 132.625000, 64.280000, 204.968800]
+[20:31:27] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 132.625000, 64.280000, 204.968800
+[20:31:32] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 16.625000, 64.280000, -3.000000]
+[20:31:32] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 16.625000, 64.280000, -3.000000
+[20:31:38] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 34.625000, 65.061300, 51.500000]
+[20:31:38] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 34.625000, 65.061300, 51.500000
+[20:31:43] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 61.125000, 64.342500, 45.500000]
+[20:31:43] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 61.125000, 64.342500, 45.500000
+[20:31:47] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 67.125000, 63.936300, 45.500000]
+[20:31:47] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 67.125000, 63.936300, 45.500000
+[20:31:52] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 73.125000, 64.155000, 45.500000]
+[20:31:52] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 73.125000, 64.155000, 45.500000
+[20:31:57] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 123.039800, 66.061300, 43.340600]
+[20:31:57] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 123.039800, 66.061300, 43.340600
+[20:32:01] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 143.934400, 65.905000, 68.762500]
+[20:32:01] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 143.934400, 65.905000, 68.762500
+[20:32:06] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 155.525000, 66.780000, 46.400000]
+[20:32:06] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 155.525000, 66.780000, 46.400000
+[20:32:11] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 239.025000, 66.780000, 41.400000]
+[20:32:11] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 239.025000, 66.780000, 41.400000
+[20:32:15] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 226.125000, 65.280000, 50.000000]
+[20:32:15] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 226.125000, 65.280000, 50.000000
+[20:32:20] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 232.587100, 66.131300, 48.151400]
+[20:32:20] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 232.587100, 66.131300, 48.151400
+[20:32:25] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 232.125000, 64.280000, 55.000000]
+[20:32:25] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 232.125000, 64.280000, 55.000000
+[20:32:29] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 226.350000, 65.780000, 59.100000]
+[20:32:29] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 226.350000, 65.780000, 59.100000
+[20:32:34] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 238.125000, 64.967500, 65.000000]
+[20:32:34] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 238.125000, 64.967500, 65.000000
+[20:32:39] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 244.125000, 64.280000, 65.000000]
+[20:32:39] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 244.125000, 64.280000, 65.000000
+[20:32:43] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 88.174600, 69.152500, 158.301600]
+[20:32:43] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 88.174600, 69.152500, 158.301600
+[20:32:50] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 141.532200, 70.982100, 154.871100]
+[20:32:50] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 141.532200, 70.982100, 154.871100
+[20:32:55] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 193.340000, 70.572100, 156.139800]
+[20:32:55] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 193.340000, 70.572100, 156.139800
+[20:33:00] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 83.125000, 64.280000, 188.500000]
+[20:33:00] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 83.125000, 64.280000, 188.500000
+[20:33:07] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 101.595000, 66.698200, 183.120000]
+[20:33:07] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 101.595000, 66.698200, 183.120000
+[20:33:12] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 143.934400, 65.905000, 185.762500]
+[20:33:12] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 143.934400, 65.905000, 185.762500
+[20:33:17] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 150.125000, 65.280000, 187.000000]
+[20:33:17] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 150.125000, 65.280000, 187.000000
+[20:33:21] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 156.587100, 66.131300, 185.151400]
+[20:33:21] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 156.587100, 66.131300, 185.151400
+[20:33:26] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 163.025000, 66.780000, 183.400000]
+[20:33:26] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 163.025000, 66.780000, 183.400000
+[20:33:31] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 168.525000, 66.780000, 183.400000]
+[20:33:31] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 168.525000, 66.780000, 183.400000
+[20:33:35] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 177.174600, 69.152500, 179.301600]
+[20:33:35] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 177.174600, 69.152500, 179.301600
+[20:33:40] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 184.039800, 66.061300, 185.340600]
+[20:33:40] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 184.039800, 66.061300, 185.340600
+[20:33:45] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 191.039800, 66.061300, 185.840600]
+[20:33:45] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 191.039800, 66.061300, 185.840600
+[20:33:49] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 196.850000, 65.780000, 186.100000]
+[20:33:49] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 196.850000, 65.780000, 186.100000
+[20:33:54] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 201.850000, 65.780000, 186.100000]
+[20:33:54] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 201.850000, 65.780000, 186.100000
+[20:33:59] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 212.719900, 69.249100, 178.620500]
+[20:33:59] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 212.719900, 69.249100, 178.620500
+[20:34:03] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 225.719900, 69.249100, 179.620500]
+[20:34:03] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 225.719900, 69.249100, 179.620500
+[20:34:08] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 234.440600, 66.655000, 183.737500]
+[20:34:08] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 234.440600, 66.655000, 183.737500
+[20:34:13] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 241.440600, 66.655000, 184.237500]
+[20:34:13] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 241.440600, 66.655000, 184.237500
+[20:34:17] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 247.125000, 65.280000, 187.000000]
+[20:34:17] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 247.125000, 65.280000, 187.000000
+[20:34:22] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 253.125000, 65.280000, 187.500000]
+[20:34:22] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 253.125000, 65.280000, 187.500000
+[20:34:27] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 3.850000, 65.780000, 210.100000]
+[20:34:27] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 3.850000, 65.780000, 210.100000
+[20:34:34] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 10.850000, 65.780000, 210.600000]
+[20:34:34] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 10.850000, 65.780000, 210.600000
+[20:34:38] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 17.350000, 65.780000, 210.100000]
+[20:34:38] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 17.350000, 65.780000, 210.100000
+[20:34:43] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 23.350000, 65.780000, 210.600000]
+[20:34:43] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 23.350000, 65.780000, 210.600000
+[20:34:48] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 29.350000, 65.780000, 210.600000]
+[20:34:48] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 29.350000, 65.780000, 210.600000
+[20:34:52] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 35.350000, 65.780000, 211.100000]
+[20:34:52] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 35.350000, 65.780000, 211.100000
+[20:34:57] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 72.650507, 120.380000, 196.564721]
+[20:34:57] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 72.650507, 120.380000, 196.564721
+[20:35:02] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 124.650507, 120.380000, 248.564721]
+[20:35:02] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 124.650507, 120.380000, 248.564721
+[20:35:06] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 72.650507, 120.380000, 300.564721]
+[20:35:06] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 72.650507, 120.380000, 300.564721
+[20:35:11] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 20.650507, 120.380000, 248.564721]
+[20:35:11] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 20.650507, 120.380000, 248.564721
+[20:35:16] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 55.625000, 74.217500, 220.000000]
+[20:35:16] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 55.625000, 74.217500, 220.000000
+[20:35:20] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 55.625000, 74.217500, 221.000000]
+[20:35:20] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 55.625000, 74.217500, 221.000000
+[20:35:25] [Server thread/INFO]: [DreamwalkerQA: Teleported DreamwalkerQA to 65.750000, 69.280000, 212.875000]
+[20:35:25] [Render thread/INFO]: [System] [CHAT] Teleported DreamwalkerQA to 65.750000, 69.280000, 212.875000
+[20:35:31] [Render thread/INFO]: Stopping!
+[20:35:31] [Server thread/INFO]: DreamwalkerQA lost connection: Disconnected
+[20:35:31] [Server thread/INFO]: DreamwalkerQA left the game
+[20:35:31] [Server thread/INFO]: Stopping singleplayer server as player logged out
+[20:35:31] [Server thread/INFO]: Stopping server
+[20:35:31] [Server thread/INFO]: Saving players
+[20:35:31] [Server thread/INFO]: Saving worlds
+[20:35:33] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Dreamwalker BB V12.6 · Галерея и город]'/minecraft:overworld
+[20:35:33] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Dreamwalker BB V12.6 · Галерея и город]'/minecraft:the_nether
+[20:35:33] [Server thread/INFO]: Saving chunks for level 'ServerLevel[Dreamwalker BB V12.6 · Галерея и город]'/minecraft:the_end
+[20:35:33] [Server thread/INFO]: ThreadedAnvilChunkStorage (prototype-fixture): All chunks are saved
+[20:35:33] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[20:35:33] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[20:35:33] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved

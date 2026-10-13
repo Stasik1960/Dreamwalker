@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_OFFLINE_RESOURCE_AND_GEOMETRY",
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "registeredNewTypes": 1045,
+  "workingNewTypes": 551,
+  "poseVariants": 2534,
+  "selectorsChecked": 81088,
+  "metadataSha256": "d326175ab836e4555f04475c348afdbb065d8b8a87c8dc3185adb2d2ee8d7cf9",
+  "resourceBytes": 2741312,
+  "tables": 900,
+  "samplePattern": "5x5x5 points per unique fitted cuboid/domain; offline fitting also checks each analysis-cell corner and centre",
+  "counts": {
+    "functionalCardinalExact": 3424,
+    "preservedPassable": 6304
+  },
+  "emptyFormerlySolidOrientations": [],
+  "failures": [],
+  "originalV12LegacySourceBelowThreeGuards": "BYTE_EQUAL_AFTER_REMOVING_EXACT_NEW_GUARDS",
+  "sourceModelsAnd313LegacyArt": "UNCHANGED",
+  "nativeRescaleRule": "abs_angle_22.5_uses_22.5_factor_all_other_angles_including_zero_use_45_factor",
+  "priorDomainExceptions": [
+    "source_allium: old carrier AABB differs from native rescaled visible panels; up to3 source-contained support boxes"
+  ],
+  "runtimeMemoryBounds": {
+    "metadataLoadedOnce": true,
+    "cacheKeys": 4096,
+    "cachedCells": 65536,
+    "cachedBoxReferences": 262144,
+    "runtimeRaster": false,
+    "cacheWorldReferences": false
+  },
+  "authorCollisionExport": "NOT_SUPPLIED_NOT_APPLIED",
+  "nativeGameTests": "NOT_RUN",
+  "clientChecks": "NOT_RUN"
+}

@@ -19,6 +19,8 @@ public class CompositeBlockEntity extends BlockEntity {
     public Owner resident(){return resident;}
     public List<CompositeData.Contribution> contributions(){return contributions;}
     public NbtCompound payload(){return payload.copy();}
+    /** Render-thread NEW-source reader only. Never mutate or retain this owned compound. */
+    NbtCompound sourceRenderPayload(){return payload;}
     public double verticalOffset(){return payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);}
     public double mountY(){return payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);}
     public void set(Owner owner,List<CompositeData.Contribution> entries,NbtCompound extra){resident=owner;contributions=List.copyOf(entries);payload=extra.copy();markDirty();publishShapeSnapshot();}

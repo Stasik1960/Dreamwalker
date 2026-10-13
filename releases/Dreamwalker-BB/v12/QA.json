@@ -1,0 +1,255 @@
+{
+  "schema": "dreamwalker-v12-delivery-qa-v1",
+  "status": "PASS_BUILD_GALLERY_AND_22_NATIVE_CASES",
+  "productionJarSha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+  "worldZipSha256": "2b761218d600ac462b641afc6fcfbec64a3ac8a217534f60f4db93ae53f80dc5",
+  "gallery": {
+    "status": "PASS_V12_GALLERY_PACKAGE",
+    "revision": "V12",
+    "productionJarSha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+    "worldZip": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\v12-gallery-final\\Dreamwalker-BB-v12-Gallery.zip",
+    "worldZipSha256": "2b761218d600ac462b641afc6fcfbec64a3ac8a217534f60f4db93ae53f80dc5",
+    "worldFiles": 154,
+    "offeredItems": 103,
+    "realNpcs": 18,
+    "exhibits": 121,
+    "authoringAddonRequired": false,
+    "productionOnlyReopen": true,
+    "exactTwoBlockGaps": true,
+    "actualClientVisualAcceptance": "NOT_RUN"
+  },
+  "productionOnlyReopen": {
+    "status": "PASS_PRODUCTION_ONLY_V12",
+    "verifiedExhibits": 121,
+    "identitiesPosesAndTypedStatesUnchanged": true,
+    "boundsPlusTwo": true,
+    "exactTwoBlockGaps": true
+  },
+  "serverGameTests": {
+    "tests": 58,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "transactionCoreChecks": 21,
+  "buildResultSha256": "f4d441af035946279c8a946a05aab4df96581553d161117a5b53627874fabf62",
+  "gameTestsXmlSha256": "ffef0eb940139c0df2941b81bff64605e5e7635cadb89420d908e71ac02eb649",
+  "toolFramedExactlyOnce": true,
+  "nativeAcceptanceCases": [
+    {
+      "case": "G1",
+      "name": "G1 Каталог",
+      "nativeAction": "Открыть свежую галерею",
+      "assert": "Ровно один bb_tool в рамке; все текущие предметы и NPC; понятные инструкции и `/function dw_gallery:tool`",
+      "status": "PASS",
+      "evidence": "Fresh row gallery opened; native bb_tool frame screenshot + production-only disk121 census/function tool."
+    },
+    {
+      "case": "T1",
+      "name": "T1 Режимы",
+      "nativeAction": "Пять ПКМ инструментом, затем шестой",
+      "assert": "Пять режимов по кругу; шестой возвращает первый; переключение не применяет действие",
+      "status": "PASS",
+      "evidence": "Native F8→SelectedItem.BBMode queries 1,2,3,4,0,1; mode did not change a target."
+    },
+    {
+      "case": "T2",
+      "name": "T2 Сдвиг",
+      "nativeAction": "Вверх ЛКМ, затем вниз ЛКМ; повтор внутри занятого объёма",
+      "assert": "Y меняется ровно на +1/-1; ID, UUID и прочие настройки сохраняются; пересечение не блокирует операцию",
+      "status": "PASS",
+      "evidence": "Native F9 moved original cage UUID down into stone floor64→63 and up63→64, offsets−1→0; native frames and vanilla Pos queries."
+    },
+    {
+      "case": "T3",
+      "name": "T3 Собака",
+      "nativeAction": "Особый режим: скрыть и вернуть",
+      "assert": "`DogsVisible` меняется false→true, нативные кадры подтверждают видимость; это не удаление клетки",
+      "status": "PASS",
+      "evidence": "Native F9 changes DogsVisible true→false→true; same-camera native before/hidden frames and exact unchanged cage UUID."
+    },
+    {
+      "case": "T4",
+      "name": "T4 Дверь",
+      "nativeAction": "Переключить manual/levers-only, обычный ПКМ в каждом состоянии",
+      "assert": "Manual выполняет прежнее действие; levers-only оставляет Open без изменения и сообщает «не поддаётся»",
+      "status": "PASS",
+      "evidence": "Native tool toggles manual/levers-only; normal F8 reports exact не поддаётся/Open0, returned manual F8 opens; two native F8 inputs during transition retain Open1, later ordinary F8 closes."
+    },
+    {
+      "case": "T5",
+      "name": "T5 ALL",
+      "nativeAction": "Выбрать 6 разных рычагов, затем цель",
+      "assert": "Одна постоянная ALL-группа: ровно 6 источников и эта цель, исходно все флаги false",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T6",
+      "name": "T6 Переполнение",
+      "nativeAction": "При выборе попытаться добавить 7-й рычаг",
+      "assert": "«слишком много рычагов в связке!»; состав остаётся 6, посторонняя группа не создаётся",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T7",
+      "name": "T7 Неполный ALL",
+      "nativeAction": "Обычные ПКМ на первых пяти; повтор уже активного",
+      "assert": "Цель остаётся закрытой, повторы не меняют флаги; «Механизм работает, но чего-то не хватает...»",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T8",
+      "name": "T8 Полный ALL",
+      "nativeAction": "Активировать шестой, затем после окончания анимации любой источник",
+      "assert": "Цель открывается, «Что-то открылось...»; следующее нажатие закрывает цель и сбрасывает все 6 флагов",
+      "status": "PASS",
+      "evidence": "Actual F9 selected six levers, seventh rejected in F2 23.55.37; F9 bound door. Five native F8 + repeat kept door Open0; sixth Open1/F2 23.56.21; later source F8 Open0 and all reset/save. World NBT captured."
+    },
+    {
+      "case": "T9",
+      "name": "T9 Повтор анимации",
+      "nativeAction": "Повторить обычное взаимодействие до конца перехода",
+      "assert": "Не создаётся новый переход и не обрывается текущая анимация",
+      "status": "PASS",
+      "evidence": "Native tool toggles manual/levers-only; normal F8 reports exact не поддаётся/Open0, returned manual F8 opens; two native F8 inputs during transition retain Open1, later ordinary F8 closes."
+    },
+    {
+      "case": "T10",
+      "name": "T10 Фонари",
+      "nativeAction": "Особым режимом выбрать два; обычный ПКМ A→B и B→A",
+      "assert": "Пара двунаправленна; перемещение находится у второго реального объекта, не у устаревшего UUID",
+      "status": "PASS",
+      "evidence": "Actual tool F9 paired two hunterlamp; ordinary F8 A→B at [-5.5,64,24.5] and B→A [-33.5,64,24.5], F2 23.56.52/23.57.03, no GUI."
+    },
+    {
+      "case": "T11",
+      "name": "T11 BASE/ALT",
+      "nativeAction": "Особый режим на объекте с двумя вариантами, затем на объекте без ALT",
+      "assert": "Переключение доступного варианта; отсутствие ALT не повреждает объект",
+      "status": "PASS",
+      "evidence": "Ordinary real3roof placement, F9 singleBASE/ALT; nativechat /bb select6 -> first2ALT verified serverstate, outsideBASE; /bb none -> firstBASE neighborALT. F9 stone lackingALT unchanged. Native F2radius23:04:02 and consoleIF assertions; otherIDs predicate also actualGameTest."
+    },
+    {
+      "case": "T12",
+      "name": "T12 Радиус",
+      "nativeAction": "Выбрать объект; `/bb select <radius>`; затем `/bb none`",
+      "assert": "ALT применяется только к тому же ID в радиусе; третий за радиусом и другой ID не меняются; выбор очищен",
+      "status": "PASS",
+      "evidence": "Ordinary real3roof placement, F9 singleBASE/ALT; nativechat /bb select6 -> first2ALT verified serverstate, outsideBASE; /bb none -> firstBASE neighborALT. F9 stone lackingALT unchanged. Native F2radius23:04:02 and consoleIF assertions; otherIDs predicate also actualGameTest."
+    },
+    {
+      "case": "C1",
+      "name": "C1 Консоль",
+      "nativeAction": "Режим console: открыть GUI, ввести несколько строк и сохранить",
+      "assert": "Все строки сохранены и выполняются в заданном порядке; обычное действие объекта также происходит",
+      "status": "PASS",
+      "evidence": "GUI F9 on cage accepted two lines (F2 23.59.25) and real F8 produced both scoreboards exactly2. Separate door GUI #door global2: F8 simultaneously #door1 and Open1 (23.00.43)."
+    },
+    {
+      "case": "C2",
+      "name": "C2 Границы",
+      "nativeAction": "Значения 1/999999, 0/1000000 и новое окно без настройки",
+      "assert": "Валидные границы принимаются; недопустимые отвергаются без изменения данных; default999999",
+      "status": "PASS",
+      "evidence": "Native new GUI defaults999999, zero rejected in GUI and preserved editor (00.59.33), valid1/1 saved via GUI; valid999999 preserved in other bindings. Real server GameTest additionally rejects1000000/zero unchanged, all58PASS. GUI fields bounded to6digits."
+    },
+    {
+      "case": "C3",
+      "name": "C3 Личный лимит",
+      "nativeAction": "Лимит2: игрокA три раза; затем игрокB один раз",
+      "assert": "СчётчикA выполняется дважды, третье действие не запускает команды; первый раз B выполняется независимо",
+      "status": "PASS",
+      "evidence": "Native A three F8 -> personal2/global2, B one -> B1/A2/global3. Saved perUUID counts, F2 second-player-limits."
+    },
+    {
+      "case": "C4",
+      "name": "C4 Общий лимит",
+      "nativeAction": "Лимит2: A один раз, B два раза",
+      "assert": "Всего две команды независимо от игрока; третье взаимодействие сохраняет обычное действие объекта",
+      "status": "PASS",
+      "evidence": "A door click #door1/Open1; B click #door2/Open0; B third click #door remains2/Open1: normal action preserved after shared exhaustion. Real native F8, saved console23:02:22/30 and F2global-spent-normal-action."
+    },
+    {
+      "case": "P1",
+      "name": "P1 Сохранение",
+      "nativeAction": "save-all flush, штатно закрыть клиент/сервер, повторно зайти",
+      "assert": "UUID, позиции, ALL-состав/флаги, lamp-пара, lock, команды, лимиты и использованные счётчики сохраняются",
+      "status": "PASS",
+      "evidence": "Normal Sky AltF4 clients and qa-normal-stop server Exit0, byte-verified fresh saved-world copy, real rejoin A. Independent before/after snapshots semanticState identical differences[] for UUID/Pos/Open, ALL6/Active6, policies/pairs/bindings/limits/counters. Native F8 cage exhausted staysA2/global3; lampF8stillteleports. Fresh server copies the world only, so OP4 editor authorization must be granted separately; native editor attempt correctly denied without OP4."
+    },
+    {
+      "case": "P2",
+      "name": "P2 Загруженная дверь",
+      "nativeAction": "Первый кадр после входа при заранее устойчивом Open=true",
+      "assert": "`isOpen=true`, `animationBusy=false`; лишний переход при загрузке не появился",
+      "status": "PASS",
+      "evidence": "First native F2 after rejoin00:07:32 shows same stable open door as pre-rejoin00:05:35; saved+liveOpen1. Actual GameTest reload transition-lock assertion and restoringData load path supplement visual verdict (no claim of per-tick capture)."
+    },
+    {
+      "case": "D1",
+      "name": "D1 Удаление",
+      "nativeAction": "Режим remove на участнике действующей группы с командами",
+      "assert": "Вся связка очищается; команды/счётчики удаляются только у выбранного объекта. Привязки команд других участников и других групп сохраняются",
+      "status": "PASS",
+      "evidence": "Actual native CLEAR F9 on lever1 removed all6group; persisted Groups[]; selected lever1 binding absent while cage3used and door2used preserved (data NBT)."
+    },
+    {
+      "case": "D2",
+      "name": "D2 Разрушение",
+      "nativeAction": "Создать маленькую новую группу; обычным инструментом сломать участника",
+      "assert": "Вся его связка и команды разрушенного объекта очищены; команды остальных участников сохраняются, после save/rejoin связь не воскресает",
+      "status": "PASS",
+      "evidence": "Native SPECIAL lever7→door then ordinary empty-hand F9 destroyedlever7, groupNBT[] with2unrelatedbindings preserved. Rejoin query BROKEN_LEVER_NOT_RESURRECTED and semantic compare preserve missing7; no group resurrection. Destroyed-object command cleanup also actualserverGameTest."
+    },
+    {
+      "case": "L1",
+      "name": "L1 Контур90006",
+      "nativeAction": "Поставить обычную и45°, навести прицел, сломать реальным ЛКМ",
+      "assert": "У каждой авторской секции один AABB-контура; native outline/raycast/break работают, угловая физическая коллизия остаётся пустой",
+      "status": "PASS",
+      "evidence": "Ordinary BlockItem F8 placement cardinal/45, native F2 23.57.29/38 simple contour and native empty-hand F9 both removed roots; server IF AIR proofs. Actual GameTest verifies diagonal collision EMPTY."
+    }
+  ],
+  "nativeClientActionsRun": true,
+  "scope": "Server callbacks/packets/scoreboards and saved-world identities/geometry verified. Real V12 GUI/tool actions and full native rejoin remain pending.",
+  "oldReleasesModified": false,
+  "nativeAcceptance": {
+    "status": "PASS_22_NATIVE_CASES",
+    "report": "NATIVE-ACCEPTANCE.json",
+    "originalReportSha256": "63e740b22590243dae972dc8a5c28144bcebdf050d5c1de435c9e7561d4dca66",
+    "publishedReportSha256": "3ba292143c08afd483ec5680e22357cecb0b5502a7cdab94db0584f159a6cc32",
+    "nativeFrames": 51,
+    "selectedNativeFrames": 20,
+    "bundledEvidenceReferences": 9,
+    "evidenceIndex": "NATIVE-EVIDENCE.json",
+    "evidenceArchive": "QA-EVIDENCE.zip",
+    "evidenceArchiveSha256": "6a3bb1839321427b511fde48fcd37d2ff76b3f9131b85327fb88a3b80f6e6449",
+    "evidenceArchiveBytes": 2882652,
+    "scope": "Root-reported22 native functional cases; PNG integrity is verified separately. This is not continuous video, FPS/MSPT or AI/combat measurement.",
+    "closedGallerySnapshotUnchanged": true
+  },
+  "revision": "V12",
+  "gameTests": {
+    "total": 58,
+    "passed": 58,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "xml": "GAME-TESTS.xml",
+    "xmlSha256": "ffef0eb940139c0df2941b81bff64605e5e7635cadb89420d908e71ac02eb649"
+  },
+  "transactionChecks": {
+    "passed": 21,
+    "buildResultSha256": "f4d441af035946279c8a946a05aab4df96581553d161117a5b53627874fabf62"
+  },
+  "productionJar": {
+    "file": "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.jar",
+    "sha256": "baaf38ab7449c2336dff7f882ee26677002b99b046238160f5d8b8d87e23ddf6",
+    "bytes": 32819785,
+    "fabricMetadataId": "bloodborne_dw",
+    "fabricMetadataVersion": "0.1.0-v12"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "dreamwalker-v122-final-policy-integrity-v1",
+  "status": "PASS",
+  "scope": "Read-only final JAR data audit; does not substitute for Minecraft runtime checks.",
+  "jar": "build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar",
+  "jarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "expectedJarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "geometryOracle": "Independent JAR model graph, actual element corner/rescale and renderer transforms; BASE and ALT profiles, all eight yaw values.",
+  "geometryRoundingToleranceModelUnits": 1e-06,
+  "jarModelDocumentsRead": 1511,
+  "modelGraphDigestSha256": "15e410e97ef5295daea0970aa65f479c6bfe02775d235d9fc2df0afe056ad0ae",
+  "descriptorsComparedByteForByte": 1213,
+  "v12DescriptorsUnchangedAndNotOptedIn": 7,
+  "importedObjects": 1045,
+  "variants": 1802,
+  "poses": 1803,
+  "orientations": 14424,
+  "physicalBoxesAcrossEightAlternatives": 15480,
+  "maximumPhysicalBoxesPerOrientation": 3,
+  "renderedProfileEnvelopesChecked": 28848,
+  "descriptorInventoryDigestSha256": "51142557c2a3669d96430d78f7921a76b2993ac6a9d22622c677b751cc1880d9",
+  "strictBoundaryEvidence": {
+    "status": "PASS",
+    "report": "docs\\v12.2-simplified-collisions\\boundary-math.json",
+    "reportSha256": "5713578b309a7e06cee0429b7df9daddb8af4a8e8c942314015c6599ec351948",
+    "sources": {
+      "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedCollisionMath.java": "22f42f0d25de266eb2a8710301bcbc31e5a8cc0933cdcd2acd52c22673cb9b8d",
+      "src/test/java/dev/dreamwalker/bloodbornedw/composite/ImportedCollisionMathChecks.java": "e6de9083edab1f1fb1c1f22ea471687b61f8c55fac28dd72c673164c3e6ad293"
+    },
+    "checks": 303,
+    "threshold": "STRICT overflow <0.5 independently for six faces; equality and just-above remain; mount and SourceShift before crop"
+  },
+  "failuresCount": 0,
+  "failures": []
+}

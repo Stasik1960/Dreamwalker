@@ -1,0 +1,31 @@
+// Explicit opt-in QA source set, absent from the combined production JAR.
+gradle.projectsEvaluated {
+    def project = gradle.rootProject
+    if (!project.plugins.hasPlugin('fabric-loom')) throw new GradleException('Fabric Loom project required')
+    project.sourceSets {
+        remainingqa {
+            java.srcDirs = ['src/remainingqa/java']
+            resources.srcDirs = ['src/remainingqa/resources']
+            compileClasspath += project.sourceSets.main.output + project.sourceSets.main.compileClasspath
+            runtimeClasspath += project.sourceSets.main.output + project.sourceSets.main.runtimeClasspath
+        }
+    }
+    project.configurations.remainingqaImplementation.extendsFrom(project.configurations.implementation)
+    project.configurations.remainingqaRuntimeOnly.extendsFrom(project.configurations.runtimeOnly)
+    def qaJar = project.tasks.register('remainingQaJar', Jar) {
+        dependsOn project.tasks.named('remainingqaClasses')
+        from project.sourceSets.remainingqa.output
+        archiveBaseName = 'dreamwalker-remaining-transfer-qa'
+        archiveClassifier = 'dev'
+    }
+    // Loom's task type is resolved from the already loaded project plugin.
+    def remapType = project.tasks.named('remapJar').get().getClass().superclass
+    project.tasks.register('remapRemainingQaJar', remapType) {
+        dependsOn qaJar
+        inputFile.set(qaJar.flatMap { it.archiveFile })
+        classpath.from(project.sourceSets.main.output, project.sourceSets.main.compileClasspath)
+        archiveBaseName = 'dreamwalker-remaining-transfer-qa'
+        archiveClassifier = ''
+        addNestedDependencies = false
+    }
+}

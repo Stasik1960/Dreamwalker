@@ -1,0 +1,671 @@
+{
+  "schema": "dreamwalker-v127-gallery-acceptance-v1",
+  "status": "PASS_GALLERY_ACCEPTED",
+  "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+  "galleryCreated": true,
+  "originalMapChanged": false,
+  "workingNewTypes": 541,
+  "mainPlatforms": 644,
+  "reviewPlatforms": 22,
+  "cityOwners": 8071,
+  "worldEdit": "PASS_ACTUAL_18_PLAYER_COMMANDS",
+  "nativeCaptureAndReopen": "PASS",
+  "savedObjects": "PASS_8737_EXACT_TYPED_SAVE_REOPEN",
+  "pixelReview": "PASS_22_NATIVE_FRAMES",
+  "finalRuntimeExtraMods": [
+    "worldedit"
+  ],
+  "userModpackInstalled": false,
+  "optimizationModsInstalled": false,
+  "qaNeededForWorld": false,
+  "performanceMeasurements": [
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:prototype_wall",
+      "wallSeconds": 20.0069162,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 986,
+        "meanMilliseconds": 20.269077991886412,
+        "p50Milliseconds": 20.129,
+        "p95Milliseconds": 23.0419,
+        "p99Milliseconds": 29.5008,
+        "maxMilliseconds": 54.9722,
+        "samplesOver50ms": 1,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9853109,
+        "averageObservedFps": 49.33623524465661,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.89966575,
+        "p50Milliseconds": 3.8407,
+        "p95Milliseconds": 4.2175,
+        "p99Milliseconds": 5.3967,
+        "maxMilliseconds": 6.3259,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5598663,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 987,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:source_addon_cases_0",
+      "wallSeconds": 20.0047576,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 659,
+        "meanMilliseconds": 30.30690015174507,
+        "p50Milliseconds": 31.8031,
+        "p95Milliseconds": 34.157,
+        "p99Milliseconds": 37.9089,
+        "maxMilliseconds": 71.2838,
+        "samplesOver50ms": 1,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9722472,
+        "averageObservedFps": 32.995786272863675,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 5.1457735,
+        "p50Milliseconds": 5.0806,
+        "p95Milliseconds": 5.596,
+        "p99Milliseconds": 6.1993,
+        "maxMilliseconds": 7.7016,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 2.0583094,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 660,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:source_hold_ladder_02",
+      "wallSeconds": 20.0857794,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 412,
+        "meanMilliseconds": 48.63580169902912,
+        "p50Milliseconds": 47.3872,
+        "p95Milliseconds": 54.8767,
+        "p99Milliseconds": 71.4559,
+        "maxMilliseconds": 81.955,
+        "samplesOver50ms": 78,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 20.0379503,
+        "averageObservedFps": 20.560985222126238,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 402,
+        "meanMilliseconds": 4.331851741293533,
+        "p50Milliseconds": 4.2139,
+        "p95Milliseconds": 4.855,
+        "p99Milliseconds": 6.2291,
+        "maxMilliseconds": 8.1279,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7414044,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 413,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:source_original_tree",
+      "wallSeconds": 20.052119,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 246,
+        "meanMilliseconds": 81.20102642276423,
+        "p50Milliseconds": 79.1923,
+        "p95Milliseconds": 93.2112,
+        "p99Milliseconds": 113.9023,
+        "maxMilliseconds": 137.8606,
+        "samplesOver50ms": 246,
+        "samplesOver100ms": 5,
+        "sampledSeconds": 19.9754525,
+        "averageObservedFps": 12.315115264597885,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.400550124688279,
+        "p50Milliseconds": 4.2803,
+        "p95Milliseconds": 4.9761,
+        "p99Milliseconds": 6.6236,
+        "maxMilliseconds": 10.9072,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7646206,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 247,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:source_door_fragment",
+      "wallSeconds": 20.0496453,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 704,
+        "meanMilliseconds": 28.436494460227273,
+        "p50Milliseconds": 29.861,
+        "p95Milliseconds": 32.1052,
+        "p99Milliseconds": 37.821,
+        "maxMilliseconds": 61.0432,
+        "samplesOver50ms": 2,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 20.0192921,
+        "averageObservedFps": 35.16607862472819,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 5.474953366583541,
+        "p50Milliseconds": 5.3748,
+        "p95Milliseconds": 6.0276,
+        "p99Milliseconds": 6.6111,
+        "maxMilliseconds": 7.7083,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 2.1954563,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 705,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:dw_barrier",
+      "wallSeconds": 20.0315181,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 248,
+        "meanMilliseconds": 80.45112258064516,
+        "p50Milliseconds": 78.5648,
+        "p95Milliseconds": 93.4014,
+        "p99Milliseconds": 102.7739,
+        "maxMilliseconds": 133.8275,
+        "samplesOver50ms": 248,
+        "samplesOver100ms": 6,
+        "sampledSeconds": 19.9518784,
+        "averageObservedFps": 12.42990735148025,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.475275311720698,
+        "p50Milliseconds": 4.352,
+        "p95Milliseconds": 5.2737,
+        "p99Milliseconds": 6.4909,
+        "maxMilliseconds": 7.1145,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7945854,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 249,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:dw_light",
+      "wallSeconds": 20.02881,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 252,
+        "meanMilliseconds": 79.18393253968254,
+        "p50Milliseconds": 77.377,
+        "p95Milliseconds": 90.4688,
+        "p99Milliseconds": 101.8167,
+        "maxMilliseconds": 114.9926,
+        "samplesOver50ms": 252,
+        "samplesOver100ms": 3,
+        "sampledSeconds": 19.954351,
+        "averageObservedFps": 12.628824660847151,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.4286972568578555,
+        "p50Milliseconds": 4.3075,
+        "p95Milliseconds": 5.1717,
+        "p99Milliseconds": 6.4903,
+        "maxMilliseconds": 7.8382,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7759076,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 253,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_rp:wood_gate",
+      "wallSeconds": 20.051715,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 941,
+        "meanMilliseconds": 21.284024442082888,
+        "p50Milliseconds": 20.9472,
+        "p95Milliseconds": 24.9561,
+        "p99Milliseconds": 32.1328,
+        "maxMilliseconds": 42.4181,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 20.028267,
+        "averageObservedFps": 46.983595734967984,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 3.924641645885287,
+        "p50Milliseconds": 3.8174,
+        "p95Milliseconds": 4.3825,
+        "p99Milliseconds": 5.9217,
+        "maxMilliseconds": 7.6029,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5737813,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 942,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "V127-doors-90031-pose1-closed",
+      "wallSeconds": 20.0497117,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 356,
+        "meanMilliseconds": 56.15347696629213,
+        "p50Milliseconds": 54.7525,
+        "p95Milliseconds": 65.7299,
+        "p99Milliseconds": 72.1563,
+        "maxMilliseconds": 115.4748,
+        "samplesOver50ms": 356,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 19.9906378,
+        "averageObservedFps": 17.808336260286804,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.427777805486285,
+        "p50Milliseconds": 4.3138,
+        "p95Milliseconds": 5.1005,
+        "p99Milliseconds": 5.916,
+        "maxMilliseconds": 8.4467,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7755389,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 357,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "CITY-OVERVIEW",
+      "wallSeconds": 20.0009412,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 258,
+        "meanMilliseconds": 77.19823837209302,
+        "p50Milliseconds": 75.0112,
+        "p95Milliseconds": 87.7188,
+        "p99Milliseconds": 98.1829,
+        "maxMilliseconds": 129.4973,
+        "samplesOver50ms": 258,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 19.9171455,
+        "averageObservedFps": 12.95366346548003,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 4.282482,
+        "p50Milliseconds": 4.1622,
+        "p95Milliseconds": 4.9493,
+        "p99Milliseconds": 5.357,
+        "maxMilliseconds": 6.1922,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7129928,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 259,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "CITY-DETAIL",
+      "wallSeconds": 20.0126691,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 405,
+        "meanMilliseconds": 49.292342469135804,
+        "p50Milliseconds": 48.088,
+        "p95Milliseconds": 55.5603,
+        "p99Milliseconds": 62.4522,
+        "maxMilliseconds": 67.8212,
+        "samplesOver50ms": 118,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9633987,
+        "averageObservedFps": 20.287126760635203,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.334988778054863,
+        "p50Milliseconds": 4.244,
+        "p95Milliseconds": 4.9237,
+        "p99Milliseconds": 5.2272,
+        "maxMilliseconds": 5.8873,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7383305,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 406,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    }
+  ],
+  "wholeProcessMemory": {
+    "status": "PASS_PROCESS_OBSERVATION",
+    "pid": 196332,
+    "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+    "method": "Windows GetProcessMemoryInfo, one observation per second; whole Java process, no attribution to the mod and no forced GC",
+    "exitCode": 0,
+    "peakWorkingSetBytes": 4723101696,
+    "peakPrivateCommitBytes": 6154977280,
+    "observedSeconds": 552.53
+  },
+  "loggedErrorLines": [
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:17:30] [Render thread/ERROR]: Failed to verify authentication"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:31:04] [Render thread/ERROR]: Failed to verify authentication"
+    }
+  ],
+  "warnings": [
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:17:22] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:18:28] [Worker-Main-6/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:18:28] [Worker-Main-6/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:22:18] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:22:18] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:22:20] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program."
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client5",
+      "line": "[19:22:33] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 5911ms or 118 ticks behind"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:30:57] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:31:52] [Worker-Main-3/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:31:52] [Worker-Main-3/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:35:00] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:35:00] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break"
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:35:01] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program."
+    },
+    {
+      "run": "runtime-client-v127-new-gallery-client6-reopen",
+      "line": "[19:35:13] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 6299ms or 125 ticks behind"
+    }
+  ],
+  "fatalGameErrors": [],
+  "physicalInput": "NOT_RUN",
+  "visualFindings": [
+    {
+      "status": "FAIL_KNOWN_LIGHTING_RENDER_REGRESSION",
+      "description": "Часть новых моделей почернела: рендер применяет свет из непрозрачной клетки корня ко всей модели. Причина локализована по коду и сохранению; исправление не внесено. Галерея передаётся по просьбе пользователя для поиска других проблем.",
+      "diagnosis": "docs/v12.7-gallery/black-blocks-diagnosis.json",
+      "defaultNewArchitectureSamplesWithZeroRootSky": 169,
+      "newArchitectureSamples": 539,
+      "originalTexturesComparedByteIdentical": 236,
+      "additionalDiagnosticAB": "NOT_RUN_QA_ADDON_LAUNCH_FAILED",
+      "fullResourcePackVisualParity": "NOT_CONFIRMED"
+    }
+  ],
+  "visualCorrectness": "FAIL_KNOWN_LIGHTING_RENDER_REGRESSION",
+  "releasePurpose": "ISSUE_DISCOVERY_WITH_DISCLOSED_KNOWN_DEFECT",
+  "cameraControl": "QA locks the planned camera at client ticks and GameRenderer.renderWorld HEAD; GLFW requests window focus before each station. Native focus samples establish actual focus; legacy raw focusControl=false text is superseded by this explicit control description.",
+  "knownLimits": [
+    "Dense scenes remain expensive; measurements do not establish vanilla-equivalent cost or universal60FPS.",
+    "Client startup includes costly model/state loading.",
+    "Whole original source city has not been converted or benchmarked.",
+    "Native automated gameplay; physical keyboard/mouse not used."
+  ],
+  "correctedQaAttempts": [
+    "Author generator unused stair art_bank removed.",
+    "Command prefix in QA corrected.",
+    "QA player moved outside incoming collision footprint."
+  ],
+  "evidence": [
+    {
+      "path": "build\\v127-new-gallery-disk2.json",
+      "sha256": "f29adbfdef81dd5943cd6a051a74e767ef556869e90e6ed3066205961ac1bdec"
+    },
+    {
+      "path": "build\\v127-new-gallery-disk-client5.json",
+      "sha256": "4b8ac388118d6ace486fd1c49fd7fa2d8d7a77fae0820e4c3c5064d525c69987"
+    },
+    {
+      "path": "build\\v127-new-gallery-disk-reopen6.json",
+      "sha256": "1b06fb771b6d0b5e9e99fa06def38c67634915297dc71707abe595bd8aa47e3f"
+    },
+    {
+      "path": "build\\v127-new-gallery-production-final.json",
+      "sha256": "25d0127d48e79073ae2598813c8a98d9eb3aef2678dad771e62a929b1fedcbc4"
+    },
+    {
+      "path": "build\\v127-new-gallery-client5-process-memory.json",
+      "sha256": "6dfae282578df9aafa3bee0420db4e025084482c009f0cc541826ca47891aaf6"
+    },
+    {
+      "path": "build\\v127-new-gallery-client6-process-memory.json",
+      "sha256": "2c62a2843a64fe074a0acfed40e73b867f8cd87405b8bb024ab39b06d4923001"
+    },
+    {
+      "path": "build\\v127-new-gallery-pixel-review.json",
+      "sha256": "9ade01966c8955ec7ee1e8bdc0e9ee312c10ad1cb94049b39f03824ad581e6fb"
+    },
+    {
+      "path": "docs\\v12.7-gallery\\black-blocks-diagnosis.json",
+      "sha256": "7390acd4be6a1b22491a0c103d6e0a550308dd9073862ba218c84b5697b248b8"
+    },
+    {
+      "path": "docs\\v12.7-gallery\\BLACK-BLOCKS-DIAGNOSIS.txt",
+      "sha256": "40ba59fb511d2fd335bb3c29be35d4c7cfa2db1d114db151c555a78670a3a72f"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\v127-gallery-benchmark.json",
+      "sha256": "80002c9b08282380b433d066e4fe2f338fc8d07e950b18f1b55e01ac0a66dfc0"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\v127-gallery-benchmark.json",
+      "sha256": "ba9a7090034a8aa5e78131185511b06fde952b8b52815a60c6b349e1dbdd0290"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\launch-console.log",
+      "sha256": "a6819f23347fb1a73b095d43faf7a2f426d5ac9a1530bcfd8b394580d6f94e8b"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\launch-console.log",
+      "sha256": "921278b5e1b9156b5a7f96cd300b6aa51b89a759fc970d190e458142127463d8"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-01.png",
+      "sha256": "a639aa4a5a89cbf3cfb873978dcc7b1868c5a86a2f766c8f7c0ccd2358582983"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-02.png",
+      "sha256": "45d6ee57e311642a9b82d8989255880e22413c47ac2fa32f46eb4b90af9d17ae"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-03.png",
+      "sha256": "06102335ad877497cc573c349f3e44e71acc64619867ff07e7d7864a3c5d1891"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-04.png",
+      "sha256": "cec7684bdb69050582ce9cf608edf5b2d71e8a2afafdaab10efed907effadac4"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-05.png",
+      "sha256": "485b1a36f2d63af6674efc97b9fefeabe5b73711786208763eec1bea499fd75a"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-06.png",
+      "sha256": "c0126e606f722e5a2c8380e8ba3b4d2401859513ba5df37e41ba423a45e6fab7"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-07.png",
+      "sha256": "bdb3e98a2e94970e7f3c1d023db6f1070d67c48d3c4b063855fd1913bf19734d"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-08.png",
+      "sha256": "b77b5467fd421b9b58c83181e84905700eca781076e674ab53770ae967094d16"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-09.png",
+      "sha256": "9a6aec3e38485445d1ae7c04b8faeb9d2200d69854c59074cd8e7ea4ef0c6144"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-10.png",
+      "sha256": "41f7671da60159fd90820bb72cd65a3253f6a1cfe42424e01cdea522194e47e4"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\screenshots\\v127-new-gallery-11.png",
+      "sha256": "0679d3185c715118f550085da7090c21648a40fd6da14588d0df5647adb4abf7"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-01.png",
+      "sha256": "df96e917e6d0a3becd6ac4bb58b3baeaeef694c607091e8339423f7df97e0e6a"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-02.png",
+      "sha256": "08bbf957c5f75da29062173cecb31b949698113c7e87445e21662132f11aa4e7"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-03.png",
+      "sha256": "d5c34ad97481f3f8786832522992f87e2e99f02ac4f21930b1c51e4da3d0d2f7"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-04.png",
+      "sha256": "f83850c611eef98125bfa78df00424e8930fe503d933e3a6548cce3fc0fc3782"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-05.png",
+      "sha256": "457da573652dd33824f646c688fead1c013e4b3143e92ba9546ecfca4d342efa"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-06.png",
+      "sha256": "20ab8cbbcf96af4d9649e0ab3a4ca3bba3637bba77d773ae6b412d8595e61506"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-07.png",
+      "sha256": "99ab5d04ebcc4dd9a9bf9910d040193ded289cfdef449f22366cb72e2ee1b494"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-08.png",
+      "sha256": "e5a35e5913f14a2c0f1f3dd7bf45ad15aa25f8cb24750be2a55b4f541c5aa53a"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-09.png",
+      "sha256": "3b9696ba507da2a6fdb81aac20b85fd101afd1185d332454349ce4bdfb062693"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-10.png",
+      "sha256": "02768015197389469c2b5c646c84d6b194913f7af13fb8c6b2465408bc067527"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client6-reopen\\screenshots\\v127-new-gallery-11.png",
+      "sha256": "b6308f1000b6ab0ffb399b6e04a7d3036f3c1c5704d882fbc2f9e9620c7666c4"
+    },
+    {
+      "path": "build\\runtime-client-v127-new-gallery-client5\\saves\\prototype-fixture\\gallery-worldedit-qa.json",
+      "sha256": "e4e93eb62be9fe74ea0f8137d8ab410c416e3f82afc93a717e9aea8db7e9e831"
+    }
+  ]
+}

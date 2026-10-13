@@ -1,0 +1,160 @@
+{
+  "schema": "dreamwalker-v11-server-v1",
+  "status": "PASS",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar",
+  "artifact_sha256": "7c35beddb8cd7d6b33e3b583282f4e69a18e512f1bec92ba22fd964bcb398a36",
+  "minecraft": "1.20.1",
+  "loader": "0.16.10",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "modset": [
+    {
+      "path": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc.fabric-api\\fabric-api\\0.92.9+1.20.1\\89c79de1c8e17f3d34fded3a2fe401e7e60a707d\\fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\software.bernie.geckolib\\geckolib-fabric-1.20.1\\4.4.9\\8a9b951935224f32c1ae51ca349aa3dcecd8e8da\\geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib-fabric-1.20.1",
+      "version": "4.4.9"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-collision-audit-1.0.0.jar",
+      "sha256": "33a934dc15e32f7fe9ba142a94d43650169e1811a100bad051b61392d492b84c",
+      "id": "dreamwalker_collision_audit",
+      "version": "1.0.0",
+      "extra_mod": true
+    }
+  ],
+  "extraMods": [
+    {
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-collision-audit-1.0.0.jar",
+      "id": "dreamwalker_collision_audit",
+      "version": "1.0.0",
+      "metadata": {
+        "schemaVersion": 1,
+        "id": "dreamwalker_collision_audit",
+        "version": "1.0.0",
+        "name": "Dreamwalker NEW simple collision audit",
+        "environment": "server",
+        "entrypoints": {
+          "main": [
+            "dev.dreamwalker.bloodbornedw.collisionqa.SimpleCollisionRuntimeAudit"
+          ]
+        },
+        "depends": {
+          "minecraft": "1.20.1",
+          "java": ">=17",
+          "fabricloader": ">=0.16.10",
+          "fabric-api": "*",
+          "bloodborne_dw": "*"
+        }
+      },
+      "sha256": "33a934dc15e32f7fe9ba142a94d43650169e1811a100bad051b61392d492b84c",
+      "bytes": 36603,
+      "runtimePath": "mods/dreamwalker-collision-audit-1.0.0.jar",
+      "copyByteVerification": "PASS",
+      "copiedSha256": "33a934dc15e32f7fe9ba142a94d43650169e1811a100bad051b61392d492b84c"
+    }
+  ],
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.16.10/server/json",
+  "loader_metadata_sha256": "643d49263e5ea81c48c432effce64b8794bd3aebdcfc1aea1dac39cfa4189aa7",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.7.1",
+      "path": "libraries/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+      "sha256": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm\\9.7.1\\f0ed132a49244b042cd0e15702ab9f2ce3cc8436\\asm-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.7.1/asm-analysis-9.7.1.jar",
+      "sha256": "85b29371884ba31bb76edf22323c2c24e172c3267a67152eba3d1ccc2e041ef2",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-analysis\\9.7.1\\f97a3b319f0ed6a8cd944dc79060d3912a28985f\\asm-analysis-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.7.1/asm-commons-9.7.1.jar",
+      "sha256": "9a579b54d292ad9be171d4313fd4739c635592c2b5ac3a459bbd1049cddec6a0",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-commons\\9.7.1\\406c6a2225cfe1819f102a161e54cc16a5c24f75\\asm-commons-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar",
+      "sha256": "9929881f59eb6b840e86d54570c77b59ce721d104e6dfd7a40978991c2d3b41f",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-tree\\9.7.1\\3a53139787663b139de76b627fca0084ab60d32c\\asm-tree-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.7.1/asm-util-9.7.1.jar",
+      "sha256": "f885be71b5c90556f5f1ad1c4f9276b29b96057c497d46666fe4ddbec3cb43c6",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-util\\9.7.1\\9e23359b598ec6b74b23e53110dd5c577adf2243\\asm-util-9.7.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/sponge-mixin-0.15.4+mixin.0.8.7.jar",
+      "sha256": "4631f67da980ae2ac9e6e285a7df4680645e2f37a6a14acc775f97982162c2a2",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\sponge-mixin\\0.15.4+mixin.0.8.7\\6a12aacc794f1078458433116e9ed42c1cc98096\\sponge-mixin-0.15.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.16.10",
+      "path": "libraries/net/fabricmc/fabric-loader/0.16.10/fabric-loader-0.16.10.jar",
+      "sha256": "23557a7d6da3db971a6f9620cb62e7b6e6d1509f5138ebb87529877d2400e568",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\fabric-loader\\0.16.10\\dbd932c2a3641d2c41cf9abfe47e140a5753fa86\\fabric-loader-0.16.10.jar"
+    }
+  ],
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "53943",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false",
+    "gamemode": "creative",
+    "op-permission-level": "4",
+    "difficulty": "normal",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":126},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}"
+  },
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\gametest-v12\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3",
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\org\\ow2\\asm\\asm\\9.7.1\\asm-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\org\\ow2\\asm\\asm-analysis\\9.7.1\\asm-analysis-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\org\\ow2\\asm\\asm-commons\\9.7.1\\asm-commons-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\org\\ow2\\asm\\asm-tree\\9.7.1\\asm-tree-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\org\\ow2\\asm\\asm-util\\9.7.1\\asm-util-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\net\\fabricmc\\sponge-mixin\\0.15.4+mixin.0.8.7\\sponge-mixin-0.15.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\libraries\\net\\fabricmc\\fabric-loader\\0.16.10\\fabric-loader-0.16.10.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "derived_world_copy": null,
+  "actualClientVisualAcceptance": "NOT_RUN",
+  "startup_seconds": 35.156,
+  "commands": [
+    "list"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 78.64,
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-3\\launch-console.log",
+  "console_sha256": "86527b264b227e87125b229d421c1f48424ae927725cbb1c843ae30fd6af4471",
+  "world_startup": "PASS",
+  "errors": [],
+  "expectedWarnings": [
+    "[19:51:09] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "dreamwalker-v122-preservation-contract-audit-v1",
+  "status": "PASS",
+  "baselineCommit": "4bcb19ce6864862e2bca3a3fc4c76b93a34e3544",
+  "protectedV12Commit": "8b770a03de21554a21c91700a1c1c6fe86c894c4",
+  "jar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar",
+  "jarSha256": "ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32",
+  "previousJar": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\releases\\Dreamwalker-BB\\v12.1-resource-transfer\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.1-resource-transfer.jar",
+  "previousJarSha256": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+  "checks": {
+    "shared_runtime_original_body_exact_after_removing_reviewed_new_scoped_hooks": true,
+    "ordinary_legacy_entity_collision_adapter_source_exact": true,
+    "shared_climbing_original_body_exact_after_removing_new_imported_ladder_branch": true,
+    "old_source_shift_path_source_exact": true,
+    "v12_shape_algorithms_methods_source_exact": true,
+    "jar_crc_and_no_duplicate_entries": true,
+    "only_version_changed_in_metadata": true,
+    "protected_v12_rows_exact": true,
+    "v12_aliases_exact": true,
+    "unique_five_digit_numbers": true,
+    "all_other_previous_catalogue_rows_exact": true,
+    "v12_specs_rp_and_vanilla_assets_exact": true,
+    "all_surviving_visual_assets_exact": true,
+    "unregistered_service_source_descriptors_exact": true,
+    "retired_descriptor_absent_source_jungle_trapdoor_bottom": true,
+    "retired_descriptor_absent_source_jungle_trapdoor_open": true,
+    "all_new_nonphysical_fields_exact": true,
+    "all_surviving_new_specs_opt_in": true,
+    "new_aiming_archive_exact_original_lists": true,
+    "new_aiming_archive_exact_schema": true,
+    "previous_classes_exact_except_reviewed_new_opt_in": true,
+    "local_hit_record_bytecode_exact_without_line_tables": true,
+    "collision_parser_provider_byte_exact": true,
+    "rp_all_classes_byte_exact": true,
+    "no_qa_addon_in_production": true
+  },
+  "changedExistingClasses": [
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime$1Hit.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSourceShift.class",
+    "dev/dreamwalker/bloodbornedw/composite/CompositeSpec.class",
+    "dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld.class",
+    "dev/dreamwalker/bloodbornedw/composite/mixin/RpClimbingMixin.class"
+  ],
+  "removedActualRedRegistries": {
+    "source_jungle_trapdoor_bottom": "93148",
+    "source_jungle_trapdoor_open": "93149"
+  },
+  "protectedResourceCount": 749,
+  "visualAssetCount": 6560,
+  "futureAuthorCompatibility": {
+    "status": "PREPARED_EXPORT_NOT_SUPPLIED",
+    "runtimeReplacementApplied": false,
+    "providerConsumer": "NOT_IMPLEMENTED_BY_V12_CONTRACT; future exact player-only consumer is required at actual author import",
+    "allRegistryIds": 1045,
+    "allExactStates": 57664,
+    "file": "new-exact-selectors.jsonl.gz",
+    "fileSha256": "8f632301dc04b135534d62d002adb0088ec0b2b4de32dbab2232a85603d3ca6f",
+    "exportLimits": {
+      "models": 512,
+      "states": 32768
+    },
+    "batches": [
+      {
+        "registryCount": 482,
+        "exactStateCount": 32768
+      },
+      {
+        "registryCount": 512,
+        "exactStateCount": 21440
+      },
+      {
+        "registryCount": 51,
+        "exactStateCount": 3456
+      }
+    ],
+    "batchImportNote": "register(pack) replaces the current project; it does not merge batches. A future reviewed import must explicitly bake/merge validated batches before installing player-only physics.",
+    "selectorNote": "This is an exact current BlockState mapping. An author export may use other primitive types; reconcile it explicitly instead of coercing selector values.",
+    "transforms": "Local physical geometry uses installation root, yaw about [.5,.5,.5], MountY/VerticalMount offset, then rotated SourceShift. Existing selection, origin reservation and UUID remain separate.",
+    "authorOBBNote": "Do not apply this revision AABB simplification to an author export. Its OBB rotations/ZYX, player-only scope, seats and exact state must remain as authored."
+  },
+  "failures": []
+}

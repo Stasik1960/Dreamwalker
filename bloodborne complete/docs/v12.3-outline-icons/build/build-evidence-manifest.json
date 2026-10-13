@@ -1,0 +1,32 @@
+{
+  "schema": "dreamwalker-v123-production-build-evidence-v1",
+  "status": "PASS",
+  "productionBuildStatus": "PASS",
+  "nativeGameTestCount": 63,
+  "nativeGameTestFailures": 0,
+  "nativeGameTestErrors": 0,
+  "files": [
+    {
+      "source": "build/remaining-transfer/v123-main1/result.json",
+      "copy": "docs/v12.3-outline-icons/build/result.json",
+      "bytes": 817,
+      "sha256": "8b756482d911fdcb7e658f639915fbe22e240e9798729186d9a2f2945ac654e2",
+      "byteVerification": "PASS"
+    },
+    {
+      "source": "build/remaining-transfer/v123-main1/gradle.log",
+      "copy": "docs/v12.3-outline-icons/build/gradle.log",
+      "bytes": 121255,
+      "sha256": "8d49eb1d160d1c0344e2d7a22516879fe25cbc75f6f46ae327da3540a07affb5",
+      "byteVerification": "PASS"
+    },
+    {
+      "source": "build/test-results/gametest/TEST-v123-main1.xml",
+      "copy": "docs/v12.3-outline-icons/build/TEST-v123-main1.xml",
+      "bytes": 10014,
+      "sha256": "04e6fecec962f2083a9ffc04f1cc134f2208e0891399bdca0b3e87c68ac3f020",
+      "byteVerification": "PASS"
+    }
+  ],
+  "scope": "Exact copies of the production build result/log and native GameTest XML only; no QA addon evidence is included here."
+}

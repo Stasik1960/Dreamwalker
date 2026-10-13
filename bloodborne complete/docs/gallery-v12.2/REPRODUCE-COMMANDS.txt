@@ -1,0 +1,37 @@
+Final production SHA-256: ab2c7806fe0bfce94cdd081924fe9a643b087caa9b8b1ca7b17fcb35f3874c32
+These are reproduction commands, not a declaration of client PASS.
+Completed client-4 evidence separately confirms capture37/37, saved1905/0diagnostics,
+normal save/stop and individual PNG visual37 PASS. See client-runtime.json,
+visual-review.json and CLIENT-PORTABLE-EVIDENCE.json for exact hashes/limitations.
+All commands run in bloodborne complete through:
+C:\Users\vakir\CodexControl\Guard.ps1 -Mode Operation
+-Executable C:\Users\vakir\miniconda3\python.exe -Arguments "..."
+-WorkingDirectory "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete"
+Use fresh run/output names; never overwrite source worlds or prior runs.
+Minecraft runtimes run serially; root launches the client only after all servers stop.
+
+The completed author-3 used helper 1.2.2 (QA-BUILD.json). The current helper
+source builds 1.2.4, with unchanged author behavior and a capture-only controller.
+QA-CAPTURE-BUILD.json and QA-CAPTURE-CONFIG-PROOF.json bind the fresh helper5.
+The reproduction commands below use that current 1.2.4 helper.
+tools\build_gallery_v122_addon.py --production-jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --output build\gallery-v122-addon-5
+tools\verify_gallery_v122_capture_helper.py --build-report build\gallery-v122-addon-5\build-report.json --report build\gallery-v122-addon-5\config-proof.json
+tools\prepare_gallery_v122_input.py --production-jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --output build\gallery-v122\author-input-3.json
+tools\validate_gallery_v122_plan.py --input build\gallery-v122\author-input-3.json --report docs\gallery-v12.2\PLAN-REVIEW.json
+tools\run_v11_server.py --jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --accepted-eula-file build\gametest-v12\eula.txt --run-name flatgallery-v122-author-3 --report build\gallery-v122\server-author-3.json --extra-mod build\libs\dreamwalker-flat-gallery-v122-author-1.2.4.jar --gallery-input build\gallery-v122\author-input-3.json --gallery-timeout 300 --startup-timeout 600 --shutdown-timeout 180
+Native copy of author-3 raw catalogue-gallery-output.json to build\gallery-v122\gallery-manifest-3.json.
+tools\finalize_gallery_v122_world.py --world build\runtime-server-flatgallery-v122-author-3\isolated-smoke-world --manifest build\gallery-v122\gallery-manifest-3.json
+tools\verify_gallery_v122.py --world build\runtime-server-flatgallery-v122-author-3\isolated-smoke-world --manifest build\gallery-v122\gallery-manifest-3.json --production-jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --report build\gallery-v122\disk-before-3.json
+tools\validate_gallery_v122_labels.py --manifest build\gallery-v122\gallery-manifest-3.json --report docs\gallery-v12.2\LABEL-PREAUTHOR-PROOF.json
+tools\run_v11_server.py --jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --accepted-eula-file build\gametest-v12\eula.txt --run-name flatgallery-v122-reopen-2 --report build\gallery-v122\server-reopen-2.json --world-copy build\runtime-server-flatgallery-v122-author-3\isolated-smoke-world --startup-timeout 600 --shutdown-timeout 180
+tools\verify_gallery_v122.py --world build\runtime-server-flatgallery-v122-reopen-2\isolated-smoke-world --manifest build\gallery-v122\gallery-manifest-3.json --production-jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --compare build\gallery-v122\disk-before-3.json --report build\gallery-v122\disk-server-after-2.json
+tools\prepare_gallery_v122_capture.py --manifest build\gallery-v122\gallery-manifest-3.json --production-jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --disk-report build\gallery-v122\disk-before-3.json --output build\gallery-v122\client-capture-input-2.json --samples 32
+The mandatory selection expands the native capture plan to exactly 37 frames.
+
+Root client stage (only after the server/disk stages PASS and no other Minecraft runtime):
+tools\run_v11_client.py --jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --fixture build\runtime-server-flatgallery-v122-reopen-2\isolated-smoke-world --run-name flatgallery-v122-client-4 --report build\gallery-v122\client-profile-4.json --username BBGalleryV122 --quick-play --heap-gb 4 --qa-addon build\libs\dreamwalker-flat-gallery-v122-author-1.2.4.jar --capture-input build\gallery-v122\client-capture-input-2.json --launch
+tools\verify_gallery_v122.py --world build\runtime-client-flatgallery-v122-client-4\saves\prototype-fixture --manifest build\gallery-v122\gallery-manifest-3.json --production-jar build\libs\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.2-simple-collisions.jar --compare build\gallery-v122\disk-before-3.json --report build\gallery-v122\disk-client-after-4.json
+tools\collect_gallery_v122_client.py --client-profile build\gallery-v122\client-profile-4.json --after-snapshot build\gallery-v122\disk-client-after-4.json --output docs\gallery-v12.2\client-runtime.json
+Actual native capture: build\runtime-client-flatgallery-v122-client-4\client-capture-output.json.
+Separately inspect all 37 actual Minecraft screenshots and bind reviewed hashes.
+CAPTURE_COMPLETE alone does not imply visual acceptance.

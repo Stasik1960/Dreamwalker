@@ -62,6 +62,58 @@ def copy_verified(source, destination):
     require(sha(source) == sha(destination), 'Copied file checksum differs: ' + str(source))
 
 
+def extra_mod_inputs(paths, allow_gallery=False):
+    """Explicit regular build JARs only; compatibility inputs cannot replace pinned mods."""
+    build = ROOT / 'build'
+    protected = {'bloodborne_dw', 'bloodborne_rp', 'bloodborne_complete', 'bloodborne_dw_gametest',
+                 'dreamwalker_gallery_author', 'modelpacks_test', 'fabric-api', 'geckolib',
+                 'fabricloader', 'minecraft', 'java'}
+    seen = set(protected)
+    if allow_gallery:
+        seen.remove('dreamwalker_gallery_author')
+    records = []
+    for requested in paths:
+        candidate = Path(os.path.abspath(requested))
+        require(candidate.is_relative_to(build), 'Extra mod must be a file under this project build folder')
+        ordinary(build)
+        current = build
+        for part in candidate.relative_to(build).parts:
+            current = current / part
+            ordinary(current)
+        require(candidate.is_file() and candidate.suffix.lower() == '.jar', 'Extra mod must be a regular JAR file')
+        source_sha = sha(candidate)
+        with zipfile.ZipFile(candidate) as archive:
+            require(archive.namelist().count('fabric.mod.json') == 1, 'Extra mod needs one fabric.mod.json')
+            require(archive.getinfo('fabric.mod.json').file_size <= 1048576, 'Extra mod metadata exceeds1MiB')
+            metadata = json.loads(archive.read('fabric.mod.json'))
+        mod_id, version = metadata.get('id'), metadata.get('version')
+        require(isinstance(mod_id, str) and re.fullmatch(r'[a-z][a-z0-9_-]{1,63}', mod_id), 'Invalid extra mod ID')
+        require(isinstance(version, str) and version, 'Extra mod version is required')
+        aliases = metadata.get('provides', [])
+        require(isinstance(aliases, list) and all(isinstance(a, str) and re.fullmatch(r'[a-z][a-z0-9_-]{1,63}', a)
+                                                for a in aliases), 'Invalid extra mod provided IDs')
+        ids = [mod_id, *aliases]
+        require(not set(aliases).intersection(protected), 'Extra mod cannot provide a pinned or QA mod ID')
+        require(len(ids) == len(set(ids)) and not set(ids).intersection(seen), 'Duplicate/protected extra mod ID: ' + mod_id)
+        if mod_id == 'dreamwalker_gallery_author':
+            require(allow_gallery and candidate.parent == build / 'libs', 'Gallery author is allowed only for explicit authoring')
+        seen.update(ids)
+        require(sha(candidate) == source_sha, 'Extra mod changed while metadata was read')
+        records.append({'source': str(candidate), 'id': mod_id, 'version': version, 'metadata': metadata,
+                        'sha256': source_sha, 'bytes': candidate.stat().st_size,
+                        'runtimePath': 'mods/' + candidate.name})
+    return records
+
+
+def copy_extra_mods(records, mods):
+    for record in records:
+        source = Path(record['source']);destination = mods / source.name
+        require(not destination.exists(), 'Extra mod filename collides: ' + source.name)
+        copy_verified(source, destination)
+        require(sha(destination) == record['sha256'], 'Extra mod changed after validation: ' + source.name)
+    return [dict(record, copyByteVerification='PASS', copiedSha256=record['sha256']) for record in records]
+
+
 def fetch(url):
     parsed = urllib.parse.urlparse(url)
     require(parsed.scheme == 'https' and parsed.hostname in
@@ -117,6 +169,7 @@ def main():
     require(not (args.gallery_input and args.world_copy), 'Fresh gallery authoring and saved-world reopen are separate runs')
     jar = args.jar.resolve();ordinary(jar)
     artifact_sha = sha(jar)
+    extra_inputs = extra_mod_inputs(args.extra_mod, allow_gallery=bool(args.gallery_input))
     eula = args.accepted_eula_file.resolve()
     require(re.search(r'(?m)^\s*eula\s*=\s*true\s*$', eula.read_text(encoding='utf8')), 'Explicit existing eula=true evidence required')
     java = args.java_home.resolve() / 'bin' / ('java.exe' if os.name == 'nt' else 'java')
@@ -133,13 +186,10 @@ def main():
         require(source is not None, 'Exact cached dependency missing: ' + name + ':' + dep_version)
         copy_verified(source, mods / source.name)
         modset.append({'path': str(source), 'sha256': sha(source), 'id': name, 'version': dep_version})
-    for extra in args.extra_mod:
-        extra = extra.resolve()
-        require(not (mods / extra.name).exists(), 'Extra mod filename collides: ' + extra.name)
-        copy_verified(extra, mods / extra.name)
-        with zipfile.ZipFile(extra) as package:
-            metadata = json.loads(package.read('fabric.mod.json'))
-        modset.append({'path': str(extra), 'sha256': sha(extra), 'id': metadata['id'], 'version': metadata['version'], 'extra_mod': True})
+    extra_mods = copy_extra_mods(extra_inputs, mods)
+    for record in extra_mods:
+        modset.append({'path': record['source'], 'sha256': record['sha256'], 'id': record['id'],
+                       'version': record['version'], 'extra_mod': True})
     world_copy = None;source_world = None
     if args.world_copy:
         ordinary(args.world_copy)
@@ -154,7 +204,7 @@ def main():
         world_copy = {'source': str(source_world), 'files': copied, 'omitted_files': ['session.lock'], 'copy_byte_verification': 'PASS'}
     if args.gallery_input:
         marker = json.loads(args.gallery_input.read_text(encoding='utf8'))
-        require(args.extra_mod and marker.get('revision') == 'V11' and
+        require(any(record['id'] == 'dreamwalker_gallery_author' for record in extra_mods) and marker.get('revision') in ('V11', 'V12') and
                 marker.get('guard') == 'FRESH_ISOLATED_CATALOGUE_GALLERY_ONLY' and marker.get('productionJarSha256') == artifact_sha,
                 'Gallery marker must bind this exact production JAR and author add-on')
         copy_verified(args.gallery_input, run / 'catalogue-gallery-input.json')
@@ -197,6 +247,7 @@ def main():
                'net.fabricmc.loader.impl.launch.server.FabricServerLauncher', 'nogui']
     result = {'schema': 'dreamwalker-v11-server-v1', 'status': 'RUNNING', 'artifact': str(jar), 'artifact_sha256': artifact_sha,
               'minecraft': '1.20.1', 'loader': args.loader, 'java_version': version, 'modset': modset,
+              'extraMods': extra_mods,
               'loader_metadata_source': metadata_url, 'loader_metadata_sha256': hashlib.sha256(raw_metadata).hexdigest(),
               'libraries': libraries, 'vanilla_server_sha256': sha(bundled), 'server_properties': properties,
               'eula_evidence': {'path': str(eula), 'sha256': sha(eula)}, 'run_directory': str(run), 'command': command,

@@ -1,0 +1,9 @@
+{
+  "schema": "dreamwalker-v123-native-outline-audit-v1",
+  "productionJarSha256": "34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054",
+  "status": "FAIL",
+  "completedRoots": 1045,
+  "ticks": 378,
+  "failure": "java.lang.AssertionError: Ordinary native ray lost NEW object source_hold_ladder_01 class_2339{x\u003d366, y\u003d128, z\u003d31}",
+  "stackTrace": "java.lang.AssertionError: Ordinary native ray lost NEW object source_hold_ladder_01 class_2339{x\u003d366, y\u003d128, z\u003d31}\r\n\tat knot//dev.dreamwalker.bloodbornedw.v123qa.OutlineNativeAudit.require(OutlineNativeAudit.java:159)\r\n\tat knot//dev.dreamwalker.bloodbornedw.v123qa.OutlineNativeAudit.fixture(OutlineNativeAudit.java:119)\r\n\tat knot//dev.dreamwalker.bloodbornedw.v123qa.OutlineNativeAudit.lambda$onInitialize$4(OutlineNativeAudit.java:65)\r\n\tat knot//net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.lambda$static$2(ServerTickEvents.java:43)\r\n\tat knot//net.minecraft.server.MinecraftServer.handler$zeg000$fabric-lifecycle-events-v1$onEndTick(MinecraftServer.java:2362)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_3748(MinecraftServer.java:847)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29741(MinecraftServer.java:671)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265)\r\n\tat java.base/java.lang.Thread.run(Thread.java:840)\r\n"
+}

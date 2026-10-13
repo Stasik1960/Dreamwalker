@@ -1,0 +1,1464 @@
+{
+  "schema": "dreamwalker-v127-existing-gallery-benchmark-v1",
+  "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+  "gallerySourceZipSha256": "637bcc577592abf9a69b3bc9961054009ad947cf413150e88f33af466ef0c53f",
+  "galleryManifestSha256": "fbea17249c7bd8b009659749b50a13505d95e0666d0094aaea53122718e07cdf",
+  "galleryCreated": false,
+  "blockOrEntityAuthoring": false,
+  "physicalMouseKeyboardInput": "NOT_RUN",
+  "performanceAcceptance": "PENDING_ROOT_REVIEW_RAW_MEASUREMENTS",
+  "method": "Actual world-render END timestamps and integrated server START/END tick timestamps, six native camera command viewpoints of existing gallery/city copy, cold first visits and warmed stationary views; real framebuffer captures and ordinary shutdown save",
+  "stationMeasurements": [
+    {
+      "kind": "COLD_FIRST_VISIT_LOADING_AND_SETTLE",
+      "station": "bloodborne_dw:prototype_wall",
+      "wallSeconds": 5.4730451,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 163,
+        "meanMilliseconds": 32.813136196319014,
+        "p50Milliseconds": 20.4152,
+        "p95Milliseconds": 42.9877,
+        "p99Milliseconds": 80.7069,
+        "maxMilliseconds": 1578.199,
+        "samplesOver50ms": 5,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 5.3485412,
+        "averageObservedFps": 30.475599589660074,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 109,
+        "meanMilliseconds": 5.52128623853211,
+        "p50Milliseconds": 4.5995,
+        "p95Milliseconds": 7.6767,
+        "p99Milliseconds": 28.2115,
+        "maxMilliseconds": 33.8626,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 0.6018202,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 164,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "COLD_FIRST_VISIT_LOADING_AND_SETTLE",
+      "station": "bloodborne_rp:wood_gate",
+      "wallSeconds": 4.5069325,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 187,
+        "meanMilliseconds": 23.983597860962565,
+        "p50Milliseconds": 22.7394,
+        "p95Milliseconds": 31.8174,
+        "p99Milliseconds": 43.9051,
+        "maxMilliseconds": 155.1036,
+        "samplesOver50ms": 1,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 4.4849328,
+        "averageObservedFps": 41.6951620768989,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 90,
+        "meanMilliseconds": 4.356262222222222,
+        "p50Milliseconds": 4.189,
+        "p95Milliseconds": 5.615,
+        "p99Milliseconds": 6.5407,
+        "maxMilliseconds": 6.5407,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 0.3920636,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 188,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "COLD_FIRST_VISIT_LOADING_AND_SETTLE",
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "wallSeconds": 6.1330706,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 108,
+        "meanMilliseconds": 56.5949212962963,
+        "p50Milliseconds": 36.7838,
+        "p95Milliseconds": 49.3933,
+        "p99Milliseconds": 51.9877,
+        "maxMilliseconds": 2153.3713,
+        "samplesOver50ms": 5,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 6.1122515,
+        "averageObservedFps": 17.669429996458753,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 123,
+        "meanMilliseconds": 5.502590243902439,
+        "p50Milliseconds": 4.5065,
+        "p95Milliseconds": 10.4106,
+        "p99Milliseconds": 20.92,
+        "maxMilliseconds": 33.203,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 0.6768186,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 109,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "COLD_FIRST_VISIT_LOADING_AND_SETTLE",
+      "station": "V126-assemblies-93066-pose1-closed",
+      "wallSeconds": 5.1210704,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 45,
+        "meanMilliseconds": 112.98504222222222,
+        "p50Milliseconds": 89.2077,
+        "p95Milliseconds": 111.436,
+        "p99Milliseconds": 1063.2592,
+        "maxMilliseconds": 1063.2592,
+        "samplesOver50ms": 45,
+        "samplesOver100ms": 8,
+        "sampledSeconds": 5.0843269,
+        "averageObservedFps": 8.85072909060981,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 102,
+        "meanMilliseconds": 5.118183333333333,
+        "p50Milliseconds": 4.3303,
+        "p95Milliseconds": 6.4612,
+        "p99Milliseconds": 17.7929,
+        "maxMilliseconds": 51.199,
+        "samplesOver50ms": 1,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 0.5220547,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 46,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "COLD_FIRST_VISIT_LOADING_AND_SETTLE",
+      "station": "CITY-OVERVIEW-1",
+      "wallSeconds": 4.5239695,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 49,
+        "meanMilliseconds": 90.64045102040816,
+        "p50Milliseconds": 86.4359,
+        "p95Milliseconds": 104.1493,
+        "p99Milliseconds": 168.3937,
+        "maxMilliseconds": 168.3937,
+        "samplesOver50ms": 49,
+        "samplesOver100ms": 4,
+        "sampledSeconds": 4.4413821,
+        "averageObservedFps": 11.032601766013332,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 91,
+        "meanMilliseconds": 4.679098901098901,
+        "p50Milliseconds": 4.2007,
+        "p95Milliseconds": 5.3131,
+        "p99Milliseconds": 35.6951,
+        "maxMilliseconds": 35.6951,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 0.425798,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 50,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "COLD_FIRST_VISIT_LOADING_AND_SETTLE",
+      "station": "CITY-DETAIL-1",
+      "wallSeconds": 4.5035525,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 80,
+        "meanMilliseconds": 55.0139475,
+        "p50Milliseconds": 52.8822,
+        "p95Milliseconds": 68.1094,
+        "p99Milliseconds": 103.7512,
+        "maxMilliseconds": 103.7512,
+        "samplesOver50ms": 80,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 4.4011158,
+        "averageObservedFps": 18.177208606962807,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 90,
+        "meanMilliseconds": 4.607974444444444,
+        "p50Milliseconds": 4.2404,
+        "p95Milliseconds": 5.3087,
+        "p99Milliseconds": 19.4641,
+        "maxMilliseconds": 19.4641,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 0.4147177,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 81,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:prototype_wall",
+      "wallSeconds": 20.0008296,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 982,
+        "meanMilliseconds": 20.346362627291242,
+        "p50Milliseconds": 20.0941,
+        "p95Milliseconds": 22.8514,
+        "p99Milliseconds": 28.7706,
+        "maxMilliseconds": 36.1789,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9801281,
+        "averageObservedFps": 49.14883403575376,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.89819025,
+        "p50Milliseconds": 3.8488,
+        "p95Milliseconds": 4.2808,
+        "p99Milliseconds": 4.8622,
+        "maxMilliseconds": 5.6577,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5592761,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 983,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_rp:wood_gate",
+      "wallSeconds": 20.0013141,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 895,
+        "meanMilliseconds": 22.319813296089386,
+        "p50Milliseconds": 22.2808,
+        "p95Milliseconds": 24.7911,
+        "p99Milliseconds": 27.8425,
+        "maxMilliseconds": 35.1373,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9762329,
+        "averageObservedFps": 44.803242156833285,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.9175465,
+        "p50Milliseconds": 3.8551,
+        "p95Milliseconds": 4.3039,
+        "p99Milliseconds": 4.9821,
+        "maxMilliseconds": 7.4278,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5670186,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 896,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "wallSeconds": 20.0003718,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 539,
+        "meanMilliseconds": 37.039870686456396,
+        "p50Milliseconds": 35.6176,
+        "p95Milliseconds": 43.8055,
+        "p99Milliseconds": 60.2952,
+        "maxMilliseconds": 90.6642,
+        "samplesOver50ms": 15,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9644903,
+        "averageObservedFps": 26.9979344276072,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 4.3656155,
+        "p50Milliseconds": 4.1869,
+        "p95Milliseconds": 5.3348,
+        "p99Milliseconds": 6.7332,
+        "maxMilliseconds": 10.0851,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7462462,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 540,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "V126-assemblies-93066-pose1-closed",
+      "wallSeconds": 20.065831,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 228,
+        "meanMilliseconds": 87.62188991228071,
+        "p50Milliseconds": 86.0222,
+        "p95Milliseconds": 96.3244,
+        "p99Milliseconds": 111.227,
+        "maxMilliseconds": 133.6632,
+        "samplesOver50ms": 228,
+        "samplesOver100ms": 6,
+        "sampledSeconds": 19.9777909,
+        "averageObservedFps": 11.412673260085027,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.236551371571072,
+        "p50Milliseconds": 4.1399,
+        "p95Milliseconds": 4.8226,
+        "p99Milliseconds": 6.0158,
+        "maxMilliseconds": 7.5157,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6988571,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 229,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "CITY-OVERVIEW-1",
+      "wallSeconds": 20.0540652,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 226,
+        "meanMilliseconds": 88.3348110619469,
+        "p50Milliseconds": 86.9844,
+        "p95Milliseconds": 96.9141,
+        "p99Milliseconds": 109.0463,
+        "maxMilliseconds": 133.2423,
+        "samplesOver50ms": 226,
+        "samplesOver100ms": 5,
+        "sampledSeconds": 19.9636673,
+        "averageObservedFps": 11.320565335207725,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.163713715710723,
+        "p50Milliseconds": 4.0681,
+        "p95Milliseconds": 4.72,
+        "p99Milliseconds": 5.3747,
+        "maxMilliseconds": 7.8879,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6696492,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 227,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "kind": "WARM_STATIONARY",
+      "station": "CITY-DETAIL-1",
+      "wallSeconds": 20.022961,
+      "actualWorldRenderFrameIntervals": {
+        "sampleCount": 370,
+        "meanMilliseconds": 53.97436891891892,
+        "p50Milliseconds": 52.7763,
+        "p95Milliseconds": 60.4169,
+        "p99Milliseconds": 67.6952,
+        "maxMilliseconds": 75.8371,
+        "samplesOver50ms": 370,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9705165,
+        "averageObservedFps": 18.527312500906024,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualIntegratedServerTickDurations": {
+        "sampleCount": 400,
+        "meanMilliseconds": 4.12072,
+        "p50Milliseconds": 4.0356,
+        "p95Milliseconds": 4.679,
+        "p99Milliseconds": 5.2212,
+        "maxMilliseconds": 6.0223,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.648288,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "actualWindowFocusSamples": {
+        "focusedRenderCallbacks": 371,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    }
+  ],
+  "frames": [
+    {
+      "fileName": "v127-gallery-01.png",
+      "sha256": "a0cf3a52bb3f7ef301f1f7b98e9d7d10ff3d21ee54a02ef162d3c9b590f9ed20",
+      "bytes": 396437,
+      "station": "bloodborne_dw:prototype_wall",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-gallery-02.png",
+      "sha256": "d7e0571c463974e7f77ebdee558d55089f7e0a1e4b4c2b51c566ad82378709b8",
+      "bytes": 725270,
+      "station": "bloodborne_rp:wood_gate",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-gallery-03.png",
+      "sha256": "4396db43cb46f56b3fac862d5c9f294b4a4558fa46749c109a052e51c8b70aac",
+      "bytes": 443647,
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-gallery-04.png",
+      "sha256": "636200817358365140b8c9e81c827e63df103cb61df54939710795c0b2518f16",
+      "bytes": 594756,
+      "station": "V126-assemblies-93066-pose1-closed",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-gallery-05.png",
+      "sha256": "a53a79251d18fa093c1946a26a124e74e3da4edbad409e9e83865a2f11cd86f8",
+      "bytes": 743058,
+      "station": "CITY-OVERVIEW-1",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-gallery-06.png",
+      "sha256": "cbd50cf5cf27a1f3edb39b5dc268455dfc8a3a3dc0db068f305cf3b9a8f7755c",
+      "bytes": 210336,
+      "station": "CITY-DETAIL-1",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    }
+  ],
+  "nativeHeapSnapshots": [
+    {
+      "name": "world_open_before_tour",
+      "usedHeapBytesObserved": 2000212712,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15301,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 477,
+        "cacheLimit": 2048,
+        "cacheHits": 35257,
+        "cacheMisses": 477,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 16040,
+        "distanceCulledNewDraws": 0,
+        "visibleNewDraws": 19694,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 0,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "after_warm_bloodborne_dw:prototype_wall",
+      "usedHeapBytesObserved": 2115094528,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15291,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 15593402,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 880923,
+        "distanceCulledNewDraws": 11897685,
+        "visibleNewDraws": 2815533,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 17167,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "after_warm_bloodborne_rp:wood_gate",
+      "usedHeapBytesObserved": 2042079248,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15291,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 24108182,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 1021388,
+        "distanceCulledNewDraws": 19984492,
+        "visibleNewDraws": 3103041,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 23743,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "after_warm_bloodborne_dw:source_1_spirelamp_001",
+      "usedHeapBytesObserved": 2854363776,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15302,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 31264521,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 1248519,
+        "distanceCulledNewDraws": 24671080,
+        "visibleNewDraws": 5345661,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 24520,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "after_warm_V126-assemblies-93066-pose1-closed",
+      "usedHeapBytesObserved": 2193540392,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15302,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 35815125,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 1709228,
+        "distanceCulledNewDraws": 24712348,
+        "visibleNewDraws": 9394288,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 24528,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "after_warm_CITY-OVERVIEW-1",
+      "usedHeapBytesObserved": 2490593088,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15302,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 40364503,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 1773919,
+        "distanceCulledNewDraws": 24717455,
+        "visibleNewDraws": 13873868,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 24528,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "after_warm_CITY-DETAIL-1",
+      "usedHeapBytesObserved": 2200665880,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15302,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 47510986,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 5198577,
+        "distanceCulledNewDraws": 24729690,
+        "visibleNewDraws": 17583458,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 24528,
+        "frustumFrameActive": false
+      }
+    },
+    {
+      "name": "tour_complete_before_ordinary_save",
+      "usedHeapBytesObserved": 2223734552,
+      "committedHeapBytes": 3288334336,
+      "maximumHeapBytes": 4294967296,
+      "forcedGc": false,
+      "actualWindowFocus": {
+        "focused": true,
+        "iconified": false,
+        "focusControl": false
+      },
+      "publishedOwnerGeometry": {
+        "shapeSnapshotPendingCells": 0,
+        "sourceCarrierLightChecks": 0,
+        "shapeSnapshotScope": "immutable saved owner cells plus attached composite BE metadata; pending revision cells and nested atomic batch depth; no query-created entries",
+        "shapeSnapshotBatchDepth": 0,
+        "shapeSnapshotCells": 15302,
+        "shapeSnapshotChunks": 146
+      },
+      "newSourceVisibility": {
+        "scope": "NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY",
+        "cacheEntries": 739,
+        "cacheLimit": 2048,
+        "cacheHits": 47526723,
+        "cacheMisses": 739,
+        "evictions": 0,
+        "bakeEpochClears": 0,
+        "individualModelChanges": 0,
+        "culledNewDraws": 5206169,
+        "distanceCulledNewDraws": 24729717,
+        "visibleNewDraws": 17591576,
+        "failOpenNewDraws": 0,
+        "originalBypasses": 24528,
+        "frustumFrameActive": false
+      }
+    }
+  ],
+  "actualStationObjects": [
+    {
+      "station": "bloodborne_dw:prototype_wall",
+      "round": "cold",
+      "owners": [
+        {
+          "root": [
+            15,
+            64,
+            1
+          ],
+          "registry": "bloodborne_dw:prototype_wall",
+          "properties": {
+            "connections": "auto",
+            "east": "none",
+            "material": "6",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "7b126845-8752-4ecc-8889-609de9418b15",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall\",root:[I;15,64,1],uuid:[I;2064803909,-2024649012,-2004262755,-381580523]}}"
+        }
+      ]
+    },
+    {
+      "station": "bloodborne_rp:wood_gate",
+      "round": "cold",
+      "owners": [
+        {
+          "entityUuid": "a5152d9d-7ba8-44ab-a805-c71bd998ebbe",
+          "registry": "bloodborne_rp:wood_gate"
+        }
+      ]
+    },
+    {
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "round": "cold",
+      "owners": [
+        {
+          "root": [
+            204,
+            64,
+            171
+          ],
+          "registry": "bloodborne_dw:source_1_spirelamp_001",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          },
+          "ownerUuid": "d10c57a4-277c-494a-9bba-137ad33a8bb2",
+          "typedNativeBlockEntitySnbt": "{owners:[{collision:[[0.0d,0.0d,0.0d,1.0d,1.0d,1.0d]],owner:{id:\"bloodborne_dw:source_1_spirelamp_001\",root:[I;204,64,171],uuid:[I;-787720284,662456650,-1682304134,-751137870]},rootData:{id:\"bloodborne_dw:source_1_spirelamp_001\",payload:[B;10B,0B,0B,3B,0B,19B,73B,109B,112B,111B,114B,116B,101B,100B,84B,121B,112B,101B,86B,101B,114B,115B,105B,111B,110B,0B,0B,0B,1B,9B,0B,11B,83B,111B,117B,114B,99B,101B,83B,104B,105B,102B,116B,6B,0B,0B,0B,3B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,6B,0B,14B,86B,101B,114B,116B,105B,99B,97B,108B,79B,102B,102B,115B,101B,116B,0B,0B,0B,0B,0B,0B,0B,0B,0B],properties:{open:\"false\",profile:\"base\",rotation:\"0\",variant:\"0\"}},selection:[[0.0d,0.0d,0.0d,1.0d,1.0d,1.0d]]}],payload:{ImportedTypeVersion:1,SourceShift:[0.0d,0.0d,0.0d],VerticalOffset:0.0d},resident:{id:\"bloodborne_dw:source_1_spirelamp_001\",root:[I;204,64,171],uuid:[I;-787720284,662456650,-1682304134,-751137870]}}"
+        }
+      ]
+    },
+    {
+      "station": "V126-assemblies-93066-pose1-closed",
+      "round": "cold",
+      "owners": [
+        {
+          "root": [
+            142,
+            64,
+            191
+          ],
+          "registry": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "1"
+          },
+          "ownerUuid": "d2d4c24b-cad9-33ab-9a56-f8ab535d0235",
+          "typedNativeBlockEntitySnbt": "{owners:[{collision:[[0.0d,0.0d,0.0625d,1.0d,1.0d,0.9375d]],owner:{id:\"bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2\",root:[I;142,64,191],uuid:[I;-757808565,-891735125,-1705576277,1398604341]},rootData:{id:\"bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2\",payload:[B;10B,0B,0B,3B,0B,19B,73B,109B,112B,111B,114B,116B,101B,100B,84B,121B,112B,101B,86B,101B,114B,115B,105B,111B,110B,0B,0B,0B,1B,9B,0B,11B,83B,111B,117B,114B,99B,101B,83B,104B,105B,102B,116B,6B,0B,0B,0B,3B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,6B,0B,14B,86B,101B,114B,116B,105B,99B,97B,108B,79B,102B,102B,115B,101B,116B,0B,0B,0B,0B,0B,0B,0B,0B,0B],properties:{open:\"false\",profile:\"base\",rotation:\"0\",variant:\"1\"}},selection:[[0.0d,0.0d,0.0625d,1.0d,1.0d,0.9375d]]}],payload:{ImportedTypeVersion:1,SourceShift:[0.0d,0.0d,0.0d],VerticalOffset:0.0d},resident:{id:\"bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2\",root:[I;142,64,191],uuid:[I;-757808565,-891735125,-1705576277,1398604341]}}"
+        }
+      ]
+    },
+    {
+      "station": "CITY-OVERVIEW-1",
+      "round": "cold",
+      "owners": [
+        {
+          "root": [
+            64,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "b1630309-20fd-589a-a30d-71dc4c4af6f2",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,69,217],uuid:[I;-1318911223,553474202,-1559399972,1279981298]}}"
+        },
+        {
+          "root": [
+            64,
+            70,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "d5ad7bc7-3e59-5e10-984d-3d1131604388",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,70,217],uuid:[I;-710050873,1046044176,-1739768559,828392328]}}"
+        },
+        {
+          "root": [
+            64,
+            71,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "85f37b2d-d5b7-54c8-a968-b95500c51bc7",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,71,217],uuid:[I;-2047640787,-709405496,-1452754603,12917703]}}"
+        },
+        {
+          "root": [
+            64,
+            72,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "13ae8321-79f7-5155-be43-1f45a5cac2d6",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,72,217],uuid:[I;330203937,2046251349,-1102897339,-1513438506]}}"
+        },
+        {
+          "root": [
+            64,
+            73,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "2bbe05da-a486-55a0-889e-a836896c6c0a",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,73,217],uuid:[I;733873626,-1534700128,-2002868170,-1989383158]}}"
+        },
+        {
+          "root": [
+            65,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "f5633c3d-09f2-587a-b3bc-6e2beba7ed71",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;65,69,217],uuid:[I;-178045891,166877306,-1279496661,-341316239]}}"
+        },
+        {
+          "root": [
+            65,
+            74,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "82b82545-4f2a-5833-9928-b4626f1aaf3f",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;65,74,217],uuid:[I;-2101861051,1328175155,-1725385630,1864019775]}}"
+        },
+        {
+          "root": [
+            66,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "fab2c59e-c043-55d7-a64b-94949a1b8470",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;66,69,217],uuid:[I;-88947298,-1069328937,-1504996204,-1709472656]}}"
+        },
+        {
+          "root": [
+            66,
+            74,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "9dcc702f-de7d-5a69-bce6-820a0d61e359",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;66,74,217],uuid:[I;-1647546321,-562210199,-1125744118,224519001]}}"
+        },
+        {
+          "root": [
+            67,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "none",
+            "north": "tall",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "36cb5252-2181-57a1-86d2-11681d6a2fa6",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;67,69,217],uuid:[I;919294546,562124705,-2033053336,493498278]}}"
+        }
+      ]
+    },
+    {
+      "station": "CITY-DETAIL-1",
+      "round": "cold",
+      "owners": [
+        {
+          "root": [
+            54,
+            74,
+            224
+          ],
+          "registry": "bloodborne_dw:source_assembly_brick_wall",
+          "properties": {
+            "art_bank": "7",
+            "compact": "false",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          },
+          "ownerUuid": "4d7209cb-f5ac-54d5-8d48-8dfa24725910",
+          "typedNativeBlockEntitySnbt": "{owners:[{collision:[[0.3125d,0.0d,0.0d,0.6875d,0.875d,1.0d]],owner:{id:\"bloodborne_dw:source_assembly_brick_wall\",root:[I;54,74,224],uuid:[I;1299319243,-173255467,-1924624902,611473680]},rootData:{id:\"bloodborne_dw:source_assembly_brick_wall\",payload:[B;10B,0B,0B,3B,0B,19B,73B,109B,112B,111B,114B,116B,101B,100B,84B,121B,112B,101B,86B,101B,114B,115B,105B,111B,110B,0B,0B,0B,1B,9B,0B,11B,83B,111B,117B,114B,99B,101B,83B,104B,105B,102B,116B,6B,0B,0B,0B,3B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,6B,0B,14B,86B,101B,114B,116B,105B,99B,97B,108B,79B,102B,102B,115B,101B,116B,0B,0B,0B,0B,0B,0B,0B,0B,0B],properties:{art_bank:\"7\",open:\"false\",profile:\"base\",rotation:\"0\",variant:\"0\"}},selection:[[0.3125d,0.0d,0.0d,0.6875d,0.875d,1.0d]]}],payload:{ImportedTypeVersion:1,SourceShift:[0.0d,0.0d,0.0d],VerticalOffset:0.0d},resident:{id:\"bloodborne_dw:source_assembly_brick_wall\",root:[I;54,74,224],uuid:[I;1299319243,-173255467,-1924624902,611473680]}}"
+        }
+      ]
+    },
+    {
+      "station": "bloodborne_dw:prototype_wall",
+      "round": "warm",
+      "owners": [
+        {
+          "root": [
+            15,
+            64,
+            1
+          ],
+          "registry": "bloodborne_dw:prototype_wall",
+          "properties": {
+            "connections": "auto",
+            "east": "none",
+            "material": "6",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "7b126845-8752-4ecc-8889-609de9418b15",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall\",root:[I;15,64,1],uuid:[I;2064803909,-2024649012,-2004262755,-381580523]}}"
+        }
+      ]
+    },
+    {
+      "station": "bloodborne_rp:wood_gate",
+      "round": "warm",
+      "owners": [
+        {
+          "entityUuid": "a5152d9d-7ba8-44ab-a805-c71bd998ebbe",
+          "registry": "bloodborne_rp:wood_gate"
+        }
+      ]
+    },
+    {
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "round": "warm",
+      "owners": [
+        {
+          "root": [
+            204,
+            64,
+            171
+          ],
+          "registry": "bloodborne_dw:source_1_spirelamp_001",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          },
+          "ownerUuid": "d10c57a4-277c-494a-9bba-137ad33a8bb2",
+          "typedNativeBlockEntitySnbt": "{owners:[{collision:[[0.0d,0.0d,0.0d,1.0d,1.0d,1.0d]],owner:{id:\"bloodborne_dw:source_1_spirelamp_001\",root:[I;204,64,171],uuid:[I;-787720284,662456650,-1682304134,-751137870]},rootData:{id:\"bloodborne_dw:source_1_spirelamp_001\",payload:[B;10B,0B,0B,3B,0B,19B,73B,109B,112B,111B,114B,116B,101B,100B,84B,121B,112B,101B,86B,101B,114B,115B,105B,111B,110B,0B,0B,0B,1B,9B,0B,11B,83B,111B,117B,114B,99B,101B,83B,104B,105B,102B,116B,6B,0B,0B,0B,3B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,6B,0B,14B,86B,101B,114B,116B,105B,99B,97B,108B,79B,102B,102B,115B,101B,116B,0B,0B,0B,0B,0B,0B,0B,0B,0B],properties:{open:\"false\",profile:\"base\",rotation:\"0\",variant:\"0\"}},selection:[[0.0d,0.0d,0.0d,1.0d,1.0d,1.0d]]}],payload:{ImportedTypeVersion:1,SourceShift:[0.0d,0.0d,0.0d],VerticalOffset:0.0d},resident:{id:\"bloodborne_dw:source_1_spirelamp_001\",root:[I;204,64,171],uuid:[I;-787720284,662456650,-1682304134,-751137870]}}"
+        }
+      ]
+    },
+    {
+      "station": "V126-assemblies-93066-pose1-closed",
+      "round": "warm",
+      "owners": [
+        {
+          "root": [
+            142,
+            64,
+            191
+          ],
+          "registry": "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "1"
+          },
+          "ownerUuid": "d2d4c24b-cad9-33ab-9a56-f8ab535d0235",
+          "typedNativeBlockEntitySnbt": "{owners:[{collision:[[0.0d,0.0d,0.0625d,1.0d,1.0d,0.9375d]],owner:{id:\"bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2\",root:[I;142,64,191],uuid:[I;-757808565,-891735125,-1705576277,1398604341]},rootData:{id:\"bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2\",payload:[B;10B,0B,0B,3B,0B,19B,73B,109B,112B,111B,114B,116B,101B,100B,84B,121B,112B,101B,86B,101B,114B,115B,105B,111B,110B,0B,0B,0B,1B,9B,0B,11B,83B,111B,117B,114B,99B,101B,83B,104B,105B,102B,116B,6B,0B,0B,0B,3B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,6B,0B,14B,86B,101B,114B,116B,105B,99B,97B,108B,79B,102B,102B,115B,101B,116B,0B,0B,0B,0B,0B,0B,0B,0B,0B],properties:{open:\"false\",profile:\"base\",rotation:\"0\",variant:\"1\"}},selection:[[0.0d,0.0d,0.0625d,1.0d,1.0d,0.9375d]]}],payload:{ImportedTypeVersion:1,SourceShift:[0.0d,0.0d,0.0d],VerticalOffset:0.0d},resident:{id:\"bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2\",root:[I;142,64,191],uuid:[I;-757808565,-891735125,-1705576277,1398604341]}}"
+        }
+      ]
+    },
+    {
+      "station": "CITY-OVERVIEW-1",
+      "round": "warm",
+      "owners": [
+        {
+          "root": [
+            64,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "b1630309-20fd-589a-a30d-71dc4c4af6f2",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,69,217],uuid:[I;-1318911223,553474202,-1559399972,1279981298]}}"
+        },
+        {
+          "root": [
+            64,
+            70,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "d5ad7bc7-3e59-5e10-984d-3d1131604388",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,70,217],uuid:[I;-710050873,1046044176,-1739768559,828392328]}}"
+        },
+        {
+          "root": [
+            64,
+            71,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "85f37b2d-d5b7-54c8-a968-b95500c51bc7",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,71,217],uuid:[I;-2047640787,-709405496,-1452754603,12917703]}}"
+        },
+        {
+          "root": [
+            64,
+            72,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "13ae8321-79f7-5155-be43-1f45a5cac2d6",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,72,217],uuid:[I;330203937,2046251349,-1102897339,-1513438506]}}"
+        },
+        {
+          "root": [
+            64,
+            73,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "low",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "ownerUuid": "2bbe05da-a486-55a0-889e-a836896c6c0a",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;64,73,217],uuid:[I;733873626,-1534700128,-2002868170,-1989383158]}}"
+        },
+        {
+          "root": [
+            65,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "f5633c3d-09f2-587a-b3bc-6e2beba7ed71",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;65,69,217],uuid:[I;-178045891,166877306,-1279496661,-341316239]}}"
+        },
+        {
+          "root": [
+            65,
+            74,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "82b82545-4f2a-5833-9928-b4626f1aaf3f",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;65,74,217],uuid:[I;-2101861051,1328175155,-1725385630,1864019775]}}"
+        },
+        {
+          "root": [
+            66,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "fab2c59e-c043-55d7-a64b-94949a1b8470",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;66,69,217],uuid:[I;-88947298,-1069328937,-1504996204,-1709472656]}}"
+        },
+        {
+          "root": [
+            66,
+            74,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "tall",
+            "north": "none",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "false",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "9dcc702f-de7d-5a69-bce6-820a0d61e359",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;66,74,217],uuid:[I;-1647546321,-562210199,-1125744118,224519001]}}"
+        },
+        {
+          "root": [
+            67,
+            69,
+            217
+          ],
+          "registry": "bloodborne_dw:prototype_wall_skin_0",
+          "properties": {
+            "connections": "manual",
+            "east": "none",
+            "north": "tall",
+            "profile": "base",
+            "rotation": "0",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "tall"
+          },
+          "ownerUuid": "36cb5252-2181-57a1-86d2-11681d6a2fa6",
+          "typedNativeBlockEntitySnbt": "{owners:[],payload:{},resident:{id:\"bloodborne_dw:prototype_wall_skin_0\",root:[I;67,69,217],uuid:[I;919294546,562124705,-2033053336,493498278]}}"
+        }
+      ]
+    },
+    {
+      "station": "CITY-DETAIL-1",
+      "round": "warm",
+      "owners": [
+        {
+          "root": [
+            54,
+            74,
+            224
+          ],
+          "registry": "bloodborne_dw:source_assembly_brick_wall",
+          "properties": {
+            "art_bank": "7",
+            "compact": "false",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          },
+          "ownerUuid": "4d7209cb-f5ac-54d5-8d48-8dfa24725910",
+          "typedNativeBlockEntitySnbt": "{owners:[{collision:[[0.3125d,0.0d,0.0d,0.6875d,0.875d,1.0d]],owner:{id:\"bloodborne_dw:source_assembly_brick_wall\",root:[I;54,74,224],uuid:[I;1299319243,-173255467,-1924624902,611473680]},rootData:{id:\"bloodborne_dw:source_assembly_brick_wall\",payload:[B;10B,0B,0B,3B,0B,19B,73B,109B,112B,111B,114B,116B,101B,100B,84B,121B,112B,101B,86B,101B,114B,115B,105B,111B,110B,0B,0B,0B,1B,9B,0B,11B,83B,111B,117B,114B,99B,101B,83B,104B,105B,102B,116B,6B,0B,0B,0B,3B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,0B,6B,0B,14B,86B,101B,114B,116B,105B,99B,97B,108B,79B,102B,102B,115B,101B,116B,0B,0B,0B,0B,0B,0B,0B,0B,0B],properties:{art_bank:\"7\",open:\"false\",profile:\"base\",rotation:\"0\",variant:\"0\"}},selection:[[0.3125d,0.0d,0.0d,0.6875d,0.875d,1.0d]]}],payload:{ImportedTypeVersion:1,SourceShift:[0.0d,0.0d,0.0d],VerticalOffset:0.0d},resident:{id:\"bloodborne_dw:source_assembly_brick_wall\",root:[I;54,74,224],uuid:[I;1299319243,-173255467,-1924624902,611473680]}}"
+        }
+      ]
+    }
+  ],
+  "status": "PASS_ENGINE_GALLERY_BENCHMARK_REQUIRES_ROOT_REVIEW_AND_SAVE_VERIFICATION",
+  "phase": "QUIT",
+  "stationIndex": 6,
+  "updatedUtc": "2026-10-13T10:42:12.968360500Z",
+  "graphics": {
+    "GLVendor": "NVIDIA Corporation",
+    "GLRendererDevice": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+    "GLVersion": "3.2.0 NVIDIA 616.92",
+    "actualGlViewport": [
+      0,
+      0,
+      1280,
+      720
+    ],
+    "framebufferWidth": 1280,
+    "framebufferHeight": 720,
+    "maxFpsOption": 120,
+    "vsyncOption": true,
+    "renderDistanceChunks": 8,
+    "simulationDistanceChunks": 5,
+    "graphicsMode": "fancy",
+    "actualWindowFocus": {
+      "focused": true,
+      "iconified": false,
+      "focusControl": false
+    },
+    "capturedOnActualWorldRenderEnd": true
+  },
+  "secondsFromAddonInitializationUntilReadyWorld": 203.2569776,
+  "coldStartupScope": "World ready after addon initialization; includes client model loading/world startup, not process launch or uncapped hardware capability",
+  "worldCopyPath": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v127-gallery32-reopen\\saves\\prototype-fixture",
+  "memoryScope": "Observed native client JVM heap includes the integrated server; not process RSS or a full-city RAM estimate",
+  "existingGalleryOpened": "PASS",
+  "sixStationObjectChecks": "PASS",
+  "warmedMeasuredSecondsAtLeast": 120,
+  "serverTimingMethod": "Actual integrated server tick START/END events, no guessed getTickTimes API",
+  "saveAndReopen": "PENDING_NORMAL_SHUTDOWN_AND_SEPARATE_REOPEN",
+  "pixelReview": "NOT_RUN",
+  "normalSaveShutdownRequested": true
+}

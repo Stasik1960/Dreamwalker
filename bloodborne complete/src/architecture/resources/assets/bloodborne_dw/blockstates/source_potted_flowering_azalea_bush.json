@@ -1,0 +1,100 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "compact": "false"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/source_potted_flowering_azalea_bush_empty"
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/potted_flowering_azalea_bush",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_flowering_azalea_bush_x0_y0",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/potted_flowering_azalea_bush",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_flowering_azalea_bush_x0_y0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/potted_flowering_azalea_bush",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_flowering_azalea_bush_x0_y0",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/potted_flowering_azalea_bush",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_flowering_azalea_bush_x0_y0",
+        "y": 270
+      }
+    }
+  ]
+}

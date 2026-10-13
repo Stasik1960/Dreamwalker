@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "scope": "Read-only finalized manifest and reopened-world CSV catalogue review, exact production JAR resources; not a substitute for native world/client QA.",
+  "checks": {
+    "exactProductionJar": "PASS",
+    "completeUniqueCatalogueAndRetainedSourceClassification": "PASS",
+    "disjointSectionCounts": "PASS",
+    "worldCsvCompleteUniqueAndAllVisitFunctionsExist": "PASS",
+    "allExactJarOfferedVariantsPresentOnceAndRetiredHelpersExcluded": "PASS",
+    "realOwnershipUniqueAndDiagnosticsNeverClaimedAsModBlocks": "PASS",
+    "all1942PlatformsDisjointWithMinimumTwoBlockGap": "PASS",
+    "productionServerReopenEvidenceStatusAndArtifact": "PASS"
+  },
+  "sha256": {
+    "catalogue": "7b70cb47e0f6b9d7372c656f68a076b0734c8e723b47097559d02e862d758092",
+    "finalizedGalleryManifest": "35a719ca53f886ca077e96708154ed8fd952ffe25dafa91301377591a0682cf7",
+    "reopenedWorldGalleryIndex": "e139fdfa980ed099d9bb1a59d4bff3fc42539e9ba4b33e77da156abf0216d50d",
+    "productionJar": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+    "reopenedRuntimeJar": "9797fb4bb4b6c4103b60b994fb0c4ad4f88c46bc7a19de42eb596e7f0c57e117",
+    "serverReopenEvidence": "6650af2726b0f30ef1fec0a54f0f2c312bca329409582eeb008123e455679dca"
+  },
+  "sectionCounts": {
+    "v12": 80,
+    "new": 1682,
+    "absent": 120,
+    "error": 60
+  },
+  "summary": {
+    "totalPlatforms": 1942,
+    "realExhibits": 1885,
+    "newCompleteOfferedVariants": 1805,
+    "canonicalV12ArchitectureTypes": 11,
+    "canonicalV12RpObjectTypes": 69,
+    "sourceDiagnosticPlatforms": 57,
+    "validRenderedSourceParticleDefectVariants": 3,
+    "absentOriginalTerrainSourceRows": 115,
+    "absentOfferedVariantTargets": 120
+  },
+  "confirmedLimitations": [
+    "57 diagnostic platforms identify missing/damaged source models or dependencies; they do not contain newly invented author geometry or registered substitute blocks.",
+    "Three source jungle-trapdoor variants render valid visible geometry but retain the confirmed missing unused original particle texture block/texture.",
+    "Absence audit covers stored terrain blockstates and position-selected models in every region of original v16 ZIP; inventories, CIT, entities and ungenerated terrain are outside that audit. RP entity map presence is not classified.",
+    "Gallery shows all complete art variants once in BASE, initially closed; rotations, interactive open/closed poses and ALT are states of those objects, not separate type platforms.",
+    "Native server/client open-save-render acceptance belongs to the separate runtime QA reports; this catalogue review checks their production server PASS evidence and matching artifact only."
+  ]
+}

@@ -60,6 +60,7 @@ public final class ObjectRegistry {
   if(type==null){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("No registered RP placement type: "+id);return rejected(world,id,canonical,cell,stack,"unknown_registered_type");}
   RpObjectEntity entity=type.create(world);if(entity==null){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Registered RP entity factory returned null");return rejected(world,id,canonical,cell,stack,"entity_factory_returned_null");}
   if(stack.hasCustomName())entity.setCustomName(stack.getName());
+  if(stack.hasNbt()&&stack.getNbt().contains("bloodborne_rp_object",net.minecraft.nbt.NbtElement.COMPOUND_TYPE))entity.setAlternateVisual(stack.getNbt().getCompound("bloodborne_rp_object").getBoolean("BbAltVisual"));
   if(stack.hasNbt()&&stack.getNbt().contains("bloodborne_rp_object",net.minecraft.nbt.NbtElement.COMPOUND_TYPE)){
    var state=stack.getNbt().getCompound("bloodborne_rp_object");if(state.contains("Open",net.minecraft.nbt.NbtElement.BYTE_TYPE))entity.setOpen(state.getBoolean("Open"));entity.setLocked(state.getBoolean("Locked"));entity.setObjectScale(state.contains("Scale",net.minecraft.nbt.NbtElement.NUMBER_TYPE)?state.getFloat("Scale"):1f);
    if(state.contains("DogsVisible",net.minecraft.nbt.NbtElement.BYTE_TYPE))entity.setDogsVisible(state.getBoolean("DogsVisible"));

@@ -1,0 +1,154 @@
+{
+  "schema": "dreamwalker-v122-new-physical-adapter-old-path-equivalence-v1",
+  "status": "PASS_STATIC_SOURCE_EQUIVALENCE",
+  "baselineCommit": "4bcb19ce6864862e2bca3a3fc4c76b93a34e3544",
+  "checks": 26,
+  "failures": 0,
+  "sources": {
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRuntime.java": "c0701f9a8f765835fb655a079397a6752c350e43dcf84aef167f9145adcee544",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/FabricCompositeWorld.java": "d353e96230c2265cddab0eb13cf3fe484cbc8d51fdc978969e8cc474f3ec1aac",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedPhysicalShapes.java": "ef8300378aa7ba50e089e46b7b8e025264bdbc00851c03494c242a92089754bd",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedLegacyOutline.java": "ea54db0a7f733818ec7717fa6355ac17c0cb8dd5132815305c616efe071677ae",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeSpec.java": "ed9d9ddee85e9b74ec3a366695119c4f3d578789dba9b39db494a843c259fa29",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeShapes.java": "b4ede040a59b4bd4b0bebbbadfff679a9b737c42fa8a191c796d6ff4bf29f0a6",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeShapeSnapshots.java": "88fe702bbcb6df3063c46c9ff325971cdf89c4771e2acd9aa7ae5c1c5b5144b8",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/mixin/CompositeShapeMixin.java": "aa96bdc1078cfa6323a615cd331a05ecb96bb639429598742809e9f7081e210d",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/PlacementPhysics.java": "b30547af89adec0cb9fe4b70d93242d5b82e88deed4e8623bf26309212edcf85",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/architecture/SourceConversionScope.java": "f32b2f90b396c515ebcfbb5e2976f99447c9cfedb8f96cd45d281d9b6da70054",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRootBlock.java": "291b8bb635c303acbd5b71c1f4855f0a66105314b0ae084a2b4fb666fcf22868",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeCellBlock.java": "2747a04285fedc971f15f39b1941a65ce70591698fa99734501c922b340f0324"
+  },
+  "cases": [
+    {
+      "check": "topHeight_old_branch",
+      "status": "PASS",
+      "evidence": "Replacing the per-contribution NEW dispatcher with its OLD fallback reproduces the entire original method exactly; native shape, center contact and height calculation are unchanged."
+    },
+    {
+      "check": "bottomHeight_old_branch",
+      "status": "PASS",
+      "evidence": "Replacing the per-contribution NEW dispatcher with its OLD fallback reproduces the entire original method exactly; native shape, center contact and height calculation are unchanged."
+    },
+    {
+      "check": "cellShape_selection_and_old_branch",
+      "status": "PASS",
+      "evidence": "The physical hook and original-outline fallback are restricted to newly imported objects; otherwise the entire previous method remains exact."
+    },
+    {
+      "check": "nativeCollision_unchanged",
+      "status": "PASS",
+      "evidence": "Original method source matches HEAD exactly after removing its NEW-only outline early return, where present."
+    },
+    {
+      "check": "contextSelection_unchanged",
+      "status": "PASS",
+      "evidence": "Original method source matches HEAD exactly after removing its NEW-only outline early return, where present."
+    },
+    {
+      "check": "selectionParts_unchanged",
+      "status": "PASS",
+      "evidence": "Original method source matches HEAD exactly after removing its NEW-only outline early return, where present."
+    },
+    {
+      "check": "physicalParts_unchanged",
+      "status": "PASS",
+      "evidence": "Original method source matches HEAD exactly after removing its NEW-only outline early return, where present."
+    },
+    {
+      "check": "shape_unchanged",
+      "status": "PASS",
+      "evidence": "Original method source matches HEAD exactly after removing its NEW-only outline early return, where present."
+    },
+    {
+      "check": "entity_check_old_branch_entire_adapter",
+      "status": "PASS",
+      "evidence": "Sole change is the physical VoxelShape factory. Non-singleton or non-imported incoming owners execute the original factory; entity filtering and world coordinates are unchanged."
+    },
+    {
+      "check": "helper_actual_registered_spec_gate",
+      "status": "PASS",
+      "evidence": "Gate is the registered block descriptor marker, including its constructor namespace/source_ restriction. Carrier block type alone does not activate NEW physics."
+    },
+    {
+      "check": "helper_physical_old_fallback",
+      "status": "PASS",
+      "evidence": "OLD contribution dispatch invokes exactly the unchanged physicalParts and legacy shape factory."
+    },
+    {
+      "check": "helper_mixed_owners_split",
+      "status": "PASS",
+      "evidence": "Legacy owners form one old raster batch; NEW owners form a separate ordinary-cuboid batch. Union does not re-rasterize the new batch."
+    },
+    {
+      "check": "helper_worker_snapshot_gate",
+      "status": "PASS",
+      "evidence": "Worker validity consumes immutable published metadata before any World/chunk/BE access. Registry classification is world-independent."
+    },
+    {
+      "check": "original_outline_is_new_only",
+      "status": "PASS",
+      "evidence": "Every original-outline contribution query rejects non-NEW owners before resolving any state or original data."
+    },
+    {
+      "check": "original_outline_reuses_legacy_geometry",
+      "status": "PASS",
+      "evidence": "A hidden unregistered spec without NEW marker invokes original yaw/mount/source-shift distribution. New simplified physics mathematics never supplies aiming."
+    },
+    {
+      "check": "original_outline_retains_empty_cell_rule",
+      "status": "PASS",
+      "evidence": "Normal bound entries retain the old whole-object passability decision; unbound root fallback retains the old local-cell decision."
+    },
+    {
+      "check": "original_outline_distribute_byte_exact",
+      "status": "PASS",
+      "evidence": "Original distribution/raster/clip method source is exact, without a duplicated geometry algorithm."
+    },
+    {
+      "check": "original_outline_intersects_byte_exact",
+      "status": "PASS",
+      "evidence": "Original distribution/raster/clip method source is exact, without a duplicated geometry algorithm."
+    },
+    {
+      "check": "original_outline_clip_byte_exact",
+      "status": "PASS",
+      "evidence": "Original distribution/raster/clip method source is exact, without a duplicated geometry algorithm."
+    },
+    {
+      "check": "byte_exact_composite/CompositeShapes.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    },
+    {
+      "check": "byte_exact_composite/CompositeShapeSnapshots.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    },
+    {
+      "check": "byte_exact_composite/mixin/CompositeShapeMixin.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    },
+    {
+      "check": "byte_exact_architecture/PlacementPhysics.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    },
+    {
+      "check": "byte_exact_architecture/SourceConversionScope.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    },
+    {
+      "check": "byte_exact_composite/CompositeRootBlock.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    },
+    {
+      "check": "byte_exact_composite/CompositeCellBlock.java",
+      "status": "PASS",
+      "evidence": "Entire source file remains byte-for-byte equal to HEAD; no global shape, placement, source privilege, worker publication or native carrier hook change."
+    }
+  ],
+  "limitations": "Source-path proof only. Actual cuboid movement bounds, mixed owners, foreign/native carriers, worker and occupied-save migration require Minecraft QA."
+}

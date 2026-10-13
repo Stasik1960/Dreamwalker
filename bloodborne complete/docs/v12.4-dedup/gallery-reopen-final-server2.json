@@ -1,0 +1,3667 @@
+{
+  "schema": "dreamwalker-v11-server-v1",
+  "status": "PASS",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.4-dedup.jar",
+  "artifact_sha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+  "minecraft": "1.20.1",
+  "loader": "0.16.10",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "modset": [
+    {
+      "path": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc.fabric-api\\fabric-api\\0.92.9+1.20.1\\89c79de1c8e17f3d34fded3a2fe401e7e60a707d\\fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\software.bernie.geckolib\\geckolib-fabric-1.20.1\\4.4.9\\8a9b951935224f32c1ae51ca349aa3dcecd8e8da\\geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib-fabric-1.20.1",
+      "version": "4.4.9"
+    }
+  ],
+  "extraMods": [],
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.16.10/server/json",
+  "loader_metadata_sha256": "643d49263e5ea81c48c432effce64b8794bd3aebdcfc1aea1dac39cfa4189aa7",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.7.1",
+      "path": "libraries/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+      "sha256": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm\\9.7.1\\f0ed132a49244b042cd0e15702ab9f2ce3cc8436\\asm-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.7.1/asm-analysis-9.7.1.jar",
+      "sha256": "85b29371884ba31bb76edf22323c2c24e172c3267a67152eba3d1ccc2e041ef2",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-analysis\\9.7.1\\f97a3b319f0ed6a8cd944dc79060d3912a28985f\\asm-analysis-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.7.1/asm-commons-9.7.1.jar",
+      "sha256": "9a579b54d292ad9be171d4313fd4739c635592c2b5ac3a459bbd1049cddec6a0",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-commons\\9.7.1\\406c6a2225cfe1819f102a161e54cc16a5c24f75\\asm-commons-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar",
+      "sha256": "9929881f59eb6b840e86d54570c77b59ce721d104e6dfd7a40978991c2d3b41f",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-tree\\9.7.1\\3a53139787663b139de76b627fca0084ab60d32c\\asm-tree-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.7.1/asm-util-9.7.1.jar",
+      "sha256": "f885be71b5c90556f5f1ad1c4f9276b29b96057c497d46666fe4ddbec3cb43c6",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-util\\9.7.1\\9e23359b598ec6b74b23e53110dd5c577adf2243\\asm-util-9.7.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/sponge-mixin-0.15.4+mixin.0.8.7.jar",
+      "sha256": "4631f67da980ae2ac9e6e285a7df4680645e2f37a6a14acc775f97982162c2a2",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\sponge-mixin\\0.15.4+mixin.0.8.7\\6a12aacc794f1078458433116e9ed42c1cc98096\\sponge-mixin-0.15.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.16.10",
+      "path": "libraries/net/fabricmc/fabric-loader/0.16.10/fabric-loader-0.16.10.jar",
+      "sha256": "23557a7d6da3db971a6f9620cb62e7b6e6d1509f5138ebb87529877d2400e568",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\fabric-loader\\0.16.10\\dbd932c2a3641d2c41cf9abfe47e140a5753fa86\\fabric-loader-0.16.10.jar"
+    }
+  ],
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "62042",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false",
+    "gamemode": "creative",
+    "op-permission-level": "4",
+    "difficulty": "normal",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":126},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}"
+  },
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-6\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2",
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\org\\ow2\\asm\\asm\\9.7.1\\asm-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.7.1\\asm-analysis-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-commons\\9.7.1\\asm-commons-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-tree\\9.7.1\\asm-tree-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-util\\9.7.1\\asm-util-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\net\\fabricmc\\sponge-mixin\\0.15.4+mixin.0.8.7\\sponge-mixin-0.15.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\libraries\\net\\fabricmc\\fabric-loader\\0.16.10\\fabric-loader-0.16.10.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "derived_world_copy": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-author-final-2\\isolated-smoke-world",
+    "files": [
+      {
+        "path": "data/bloodborne_dw_composite_owners.dat",
+        "bytes": 646452,
+        "sha256": "d19c2b99a877fc92d7e1239dafa539568bcfe97ead02339bfdd55cfc28e45d9f"
+      },
+      {
+        "path": "data/raids.dat",
+        "bytes": 90,
+        "sha256": "648ac49831f3f3934a638ca255f5f096fb338b4fbc2083192b8cc0cbebd19fb9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/absent.mcfunction",
+        "bytes": 41,
+        "sha256": "5cfa7a1f6ec550852e6a9413b49e501da4763aa24d0b0f4cd89b16a82f2e8f61"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/entry.mcfunction",
+        "bytes": 380,
+        "sha256": "7a6676bae19241d08f05761e8e004c9b8153e110b867bbea17089e18cc07de11"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/help.mcfunction",
+        "bytes": 600,
+        "sha256": "7dcf68d8de924c30cfc6a54b5e42d665df610981227fcdfbac5da3861d291ff5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/items.mcfunction",
+        "bytes": 40,
+        "sha256": "375e5313b2211f1855274f0bf809cb3f53d0954d024a149aaf32a57c11c60b8b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/new.mcfunction",
+        "bytes": 41,
+        "sha256": "014a1319fa3d932426d67dd93ddaf5c66846ccab799e50f9078edd7d704b2f1c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/tool.mcfunction",
+        "bytes": 30,
+        "sha256": "869317af5c2951d1f93037346defb9ca3e71f2cab57f838f46997730939d5fae"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/v12.mcfunction",
+        "bytes": 41,
+        "sha256": "4895235664618125eecd39f745997bbf88cc4595202156a1bc970887cfa12f66"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90001_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "72fe145634b507ee87c22399f420e7f16486aa0598e709ed4dea3f0cdc75ea3a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90002_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "0ed5d93ed381f90654566b99325955ce7a866d13844afd7634e8725c5ed54263"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90003_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "4b54d6ac67b470d4bc52b65ba06be0cde402b324a7fab1e0e23cb6b818fd2125"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90004_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "42a41c91b82db7485d1cb89055fc2b1d6646f77ef37bed51f6140432c7c46930"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90005_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "f55c8e4edc7b3bdc8ec70808b93d737d30e78ea286230327130a699cc4254529"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90006_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "dc3faa0e940aabb2440fa72dde6eaea2430080059f4e9c7efc21461da9ed634c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90007_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "505c0d24a62329f577b0e211e0e990bad5ce54b4d7d49212ab168880f662b080"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90010_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "c3de62a04d12286a5ff2d0d6a7a39bafd61bbafe1a4b2a102094c3cdce08029e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90011_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "7b6cacb9fc4b7733166e158bae84e95f8fadae4e749fe067fdf5bc5be4afd728"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90012_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "d06e2f939d0863cf26b2d02ae34d317c8c8d51de6ad0c9533631b87526dd8e6a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90020_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "7b7d5a97093fe21951a7fdbfaff52286f1bcab0f950a252c738f7f2b3ccfe6ee"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90021_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "f6dd53c57085424d02beaf22700f31204956cebe449a598c0c7ba49932c0ba12"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90022_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "7ebdc75058a41a27d438f7ff3d9ca4c4500c8ece0c0f7c9085bb2376b2646062"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90023_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "0c7b5f6d65be9d042e5773ff7d7e7c5f49593abbc1e20e51064aceaaad880c04"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90024_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "bf31c15f72aee3f57f5d7c894d93613704c60bbfeb45daf5e09ad45f913bd4ab"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90025_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "52833d2c5cdad5a9d9971ec36257fce0134c0b3e8df9467b1fca268e35f3cf3e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90026_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "2fba9621da37a83dc4c7ea641f4524b6a4e13c5b6b80e23b67084bb1e6d89bf9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90028_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "0c245aea5d75102e087ab296d026333d1475d766508cbae6e34ff36514330fbd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90030_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "112655011564ffd766cfe32caf9a3cb06a8b23c57a87fe5cffa0298e62b2dc88"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90031_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "03c225dbb2a8bfc5052257c322d2a0dac2c5afd5d8368d961d108d3129570320"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90032_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "75a9cbb6167e0d115792b5ca397873369d6142e99e34d1aab7945a1073f630e8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90033_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "14a698e02a78af0a9f1f56036f8ada355f2c7c14f72d5ec11fe05e9184aa1af3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90034_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "86c901aad5f9351b0d6694d92f12b603a3770c2803d3d46ef40baef1f6a27e34"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90035_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "7ad9ee1bb27e1e42f53de71495090f4161113e3f99b436d8cb4bb885161b1d26"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90036_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "340540a60a88023cc68ba02e0dbc808b213ae87530f14a61f7f89156a151eed2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90038_v0.mcfunction",
+        "bytes": 156,
+        "sha256": "6de27b000e88b64be06ab56f7608528daa81bda01508d8e7a1730c0a3321931d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90044_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "b958528f5c3ddfd34834825e964922d4cd8062f6561f0e17b5174e7688ad6233"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90046_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "d41e4abe9fd4c602bc40a82143f7052d663dbcde370539f749a0ec47aed066bb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90052_v0.mcfunction",
+        "bytes": 181,
+        "sha256": "6e13fba6c3cbbd12a77c1bdd3b956c77e99264ad909c57563e71f97f3ce7d959"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90055_v0.mcfunction",
+        "bytes": 178,
+        "sha256": "14120dfd19f12bc70cc903dd7f55be7b92a21abda21767426a6dabbee9043891"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90056_v0.mcfunction",
+        "bytes": 240,
+        "sha256": "e617f1e0151f131834a7db1de77f15a2ff87930df9a99221b9201027d3de1794"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90057_v0.mcfunction",
+        "bytes": 190,
+        "sha256": "78e9df50791b9d5dc2e83682467350b18aa8b1652cb0b6447a01dd497ef46569"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90060_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "6bbbf915fb314b7e38ad061d26cf660e32b26b1c060b736452330b2593a5797c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90061_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "88cddfca3b5878d2c04bcedc2b9121e640ce1b7d715fde2f8b6484a74a0c40c5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90062_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "1346e47bd5656b284cc53c1ab17a1e8e66c5ad5104b0fd30243a6ae399569d26"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90063_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "5d5e8d47d7b625d76dcabf4406592c531ef07d1b589709f14e02405dc896bcb8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90064_v0.mcfunction",
+        "bytes": 233,
+        "sha256": "bf5e402ab0bbf49be15aab668ab6a87a58f4fd5b9019662f50afd491fbb3e570"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90065_v0.mcfunction",
+        "bytes": 196,
+        "sha256": "673ea2559c7ddb3a5017b5325f6b22952cf329c6581216cd611b775daa8c01d5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90069_v0.mcfunction",
+        "bytes": 233,
+        "sha256": "9a58763cb4ae5a029b32ce8b6fac38735de4eea4eb2f9a8be7d647d138334017"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90070_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "a58571bdfb2b33992fca82308531788180dc638e85bff44900a7da972d200858"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90071_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "ae49b12e2e9571d98d862f52c111cc375e7ebbb88c5d9547c97081f0f0ae18b5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90078_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "92b8dde4b9e40aba4f7c5420a9a58f2d523b852fbd11d9a6e40abc129789cf4d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90083_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "a4778210279eae02175059109256400fafec8d009d3c0d25ef9266620a66268b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90084_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "902aa6a9cc5cc9a4bacb304cc54071270ed89877d9ef4e862484b407f9a68a6c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90086_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "eef3e2e512dc84e378e3f4bd6c2727f675052d30e4a7d646dcab6c3b805fcf4c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90088_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "218d6d4b9ed50af748e4429f1030c23e816cae64a96bb13472ac8aa74c39dd73"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90092_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "e15d3b2fd8b62bdfa8b2170be3417232ba2e8f467dc1a363b7015fdf049550d9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90093_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "206088d750008fcb70de68789790e9b0820973512f04d3eea58ce47d66d0ec5e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90094_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "f3f6422a59a405996aebd4e5427f05a9787d5389216b72bd7479fda4b0d90ac4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90098_v0.mcfunction",
+        "bytes": 238,
+        "sha256": "499f03d8c6392fe27deec936349a49bb8ec072d7f9c1645239dc6b08c694193a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90099_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "13d99721075a1507950dbcd9ae25354aa71d0a224e20a5fdf4ef83f1e645fc9b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90100_v0.mcfunction",
+        "bytes": 256,
+        "sha256": "4e52da70ac9f32e52046d53a65735de98a4184a250ad6a7bc22a88a1e9f570aa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90118_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "7c0ae3daf25b6bc33033d92ea531d4f6ece8af8d7803079a71164f9ae0b5b645"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90120_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "eadecd06adb755faa6e639db3c0ad7a07c551c0b88211c6ae31bcfdfc45fc6f8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90130_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "76ba79472136a75944ab81aa7b85ad6bd98e3d2ecb8f4a7880f19956cc0c409f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90132_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "4f8c8ec8a0011913400aca43f556b84d754abf4cba2dc0da01d9f009c89a72c8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90133_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "9e2b3f96f425900f03ddeb054bb286e69ac33510b3aaaa3554953c7383052ceb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90142_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "9c4f2412b3127f6547e985e1dc64d23883c21d4e5d357c12718dca696dba1ada"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90143_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "d6d9c22488159c38eefb027f90e3708aa75d8063111c6d86980a82b059c69687"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90144_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "8af47df78e64ed5d41f3b4df88c66edb4a7f1125113f18167dfe48d394a5a7ea"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90145_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "d6eb352b486a02f1a4918e2c7a417335d6473bbd63de0f4bf8b3597cfa6da23e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90146_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "89055c72c58994f67262f791e3a0b2bbd694eabb2ca68ea0ea4b41d68937db8f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90149_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "fb8b02584563752f871f4c2e9409a913249ad4598ee4aae3ffb7075e2a580bf7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90150_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "fa003f04b49482a735cf9400ef3ea2c9bf2c79341aa22ec6114c4a999b518544"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90151_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "5d2a33ce95cfb0f496a8d00af932c94a125b595d8298e4b73c70277406addae2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90152_v0.mcfunction",
+        "bytes": 252,
+        "sha256": "7ec7443d454e58faefeefd174a924afe299c46ca34533e4c71cc28e5d0630a2e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90153_v0.mcfunction",
+        "bytes": 225,
+        "sha256": "50a63c5044da2726ad8535a5447fae8dcb10e1708ac9b07ed8505a36f3d077ae"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90155_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "0ce6b2150d971c830941add660f0f5fc514efcb42ac75afa990f2eedcd2419c9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90157_v0.mcfunction",
+        "bytes": 170,
+        "sha256": "1e76c7db70dbb03b02735ccfc3b2fbb7f00cdd8228bed4eac93bf2e7f79d71a1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90158_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "a0b78752f81638170f46cf8902bd20e973313d958582dddc7d5719ed008b15f4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90159_v0.mcfunction",
+        "bytes": 245,
+        "sha256": "a05e7381d860aaa3900c993fe19f3b0e6aeb5e43b56a0a62cd7615a96420924a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90160_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "d618c5b803a4fcd1da5c38951bde1f6241aae554a8ea486acd262002867ec62d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90162_v0.mcfunction",
+        "bytes": 170,
+        "sha256": "914cbddac48bab3fa10db6f68a8846e3be0062e1a566beeae171870c2374ff12"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90166_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "69b691683957bedd1deca943c7f56ddf3c03e257517c60521f629853e80572fc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90169_v0.mcfunction",
+        "bytes": 175,
+        "sha256": "a408f3f9121a03c3494db735930580db866a15dbcb4832f9d22f1b118dbcf33e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90172_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "54966acb95b6c17239af3a9369948d7e2df1922da2675cc401df0e9472f3e2a5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90173_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "79a1bf1b1cffc76e0f4bbef9a27a8590ff385be33aa997dada07e1cbba9efbfc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90174_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "fe49e14038da8de6f423ddd68505957aa1c2f689e86b34278379f9ca6ebafb7f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90177_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "c006c222a8579923dead0108b79ece702cf002b72fe5357f3c3d46dfec43f124"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90178_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "8eb7faa436aa89952133baeda963503f878bb89a78bc62906d4ac14fb1f9f406"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90179_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "d7029cab50f79edb4e1386d5a33472c82532ac1729f46ef88b1bc5f15b3ab60b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90180_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "a3c58af72d1b69cf15929c199a1c81eefe7175f0601a1b915887cb2a328b92ab"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90181_v0.mcfunction",
+        "bytes": 242,
+        "sha256": "24262f20bc9a977a280c6b3949ddf910a682f85f9943e726c8b492205ccd7c2d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90182_v0.mcfunction",
+        "bytes": 243,
+        "sha256": "fe202fa5bc9669d0e70460ff2420ef4dd7ec6a833ac7b10153ae45b9d522e2f9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90183_v0.mcfunction",
+        "bytes": 242,
+        "sha256": "d63779daac584efc666910b60383b5be39689af47af0bf6ee691010652efaaae"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90186_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "600af54f7d720a6e6b996ec5c51657a0b84b389cb1a38075665bb381d12001dc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90187_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "21132331684c4bad2cf83746dafe048b3b420f35504527935c30d374a4b76463"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90188_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "4f9262251e3446bc8666e1447331e13d8f9df43b0d760e4f32d6c8c13aedaa0c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90190_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "81185fcb394cae5d4f21c8976b11890b5da79a6c4079ff733217f81bc812a3a2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90192_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "fe83c48010766860878587c9abfa9e77496639628b2350bef2f6d29ba94b4d87"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90193_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "7079c7b400ac7e7b367d9e707ebf911b7d2ae378a7f08aafba0270aa4624328c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90195_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "a683e04fb98191827cecbafb76d96bb658074895f4bda5f39e7db604812ae27a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90196_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "78165f4bbb95fe721469d2e511df277e8b0113b7a7cbed64fb5d911ded73bed8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90197_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "9819fc9d2994f24cb3bf7d3ecd7647b59c475b5a34a53c236c787bdb20f069af"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90203_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "31923536f80eebfa47b64b007e466c0ba9e31302e98c176c3aad9247da96c6f2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90212_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "d48f78cbcbe8e8d8d27c2f28a92eea1167a5fad883fe8e9b13c5a0afd8b9ffe4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90213_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "0e7156afafcaa46b156307def7b92738187b6969fc19a061c406316d2b7d4ef8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90215_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "0b857f026d1a4ba531d5a5b2173d8a569ac49d326f625f0f86389d79cd024ac7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90223_v0.mcfunction",
+        "bytes": 181,
+        "sha256": "6ddf9cf624bc766406f4500102a55724a2a08f10335c5281d2ed4cc0c1b6daa3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90224_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "60bff23741bf8571a60b1b499013f2bdb7e57f062040fa058db2efdc07bfaaa7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90226_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "3e2b79cc29f0f2f9cb6845df1e7387247b3b3ab32c6715b7dff47aa766c3dfed"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90229_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "25e149ba9d9e5f2804f9a87785d8eebdf468b944dae645387cd6ab6668d43f6a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90230_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "d084423da88d53389b1d8e2f80f91779706f9aee4d93cbba8b79b539ea827c1f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90231_v0.mcfunction",
+        "bytes": 232,
+        "sha256": "8845d7c771c0ef73cf6d477e016be0e007e149473f2771e249b1538223c57f8a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90232_v0.mcfunction",
+        "bytes": 248,
+        "sha256": "26e594a210f5274a2b2d2d3b2656e6b54352897f69aa45737ec9d2ea09c43510"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90235_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "610b6d206312bc35568b107ca676d921c4b31aa953043ae84a3b1ee4686a45a3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90236_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "971d93a113c3042a2aa6551c61cbbd64364dfb54f830fe670008d4145100721a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90245_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "9bfd723e3167584e4bf4c44e09598471d75b3db44e0d56746f4dc4b15e3559c5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90246_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "7b113554fdf86bfa4a1e0fe8166bdf307e812ece1c37da684561593a989a01e7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90247_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "770124e585eb06f54759793659b0822570edaa5e87a288da7fd44c4c2d231fd4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90249_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "7d031d42b3257231709e0ec7b67e5121dc4b72ea4dcf5af80d496910a147cda3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90251_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "1103dc7be158a0be69fde8c2da8000b657a3168a12d1da0111284c873a9ffaad"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90252_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "5c74d8e575457e4adf701c76be3c973e88d3ef64fbaaa422244af30d4b93723e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90253_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "06caabd4efa44c21e035465c696834107a4446d541427f5cfd7ecfe2d058cad8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90259_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "1c6d08ad177526f6ba4c944be8c4fec696074a387ad083b03a8e4893e0256ed4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90260_v0.mcfunction",
+        "bytes": 230,
+        "sha256": "18fac3b00a8ceef97e8128d4463791ecd0789176c508f8f678b4aa060d37fbfb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90262_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "cbf54c6bf730835fbba59de1043132bd1e864f69672cb88a11b3fc532f67123a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90264_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "fb307baa56cc5aa182f7a4ef634f44a2789511ac846209736d8866665a4bb9ef"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90265_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "d9666136c96cbb08ad3219293cea61443867c0325c8cf1c3348bfc10e1043c4c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90266_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "e642ed30bf6d24fe5e10f10346da382ddccb69148066876eadc171899c8f5732"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90267_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "9deacdae33bd68648c61b3bd52ce7ed44e3043279eb44b7368b9619ba9abf5ef"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90268_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "ed3564afd57e9b31b56263132235278572ccaaa7877054b03e2fd28ae59b3b69"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90269_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "3e6130df388ed6f74ebd4eb602303290f84edc6e4f9436467211cfc6ce38de25"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90270_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "d87a5957b53b9417d56a0fbb1062d57361913118f37290fe97c42da4915b79ec"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90271_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "d48540e5a3b5472864b3d9953767e338a2ec20c5726a044bdc0b41654e24af9c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90275_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "426fd48c9dfa036abd42cc9897a511f5d08ea72bcf9fad4bf93e37db62829928"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90276_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "ceda5e8950d3dd4ac5e81248d117e20446ae7a202cf55e7db621d5077dc2ad23"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90277_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "2e57b0c0465c355d235ebbd6c90ac06a5e553ee9725cb038d0c6b96181783f45"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90278_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "f60f1e535f5d7d88ed77f44cc6de3e613de2c670f434ceec6e2898b85bcbe639"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90279_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "163628505367456cbb217dc7380f91dacac2e9db1e01df9fd38bf8ddbc8fad4b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90281_v0.mcfunction",
+        "bytes": 175,
+        "sha256": "3174b81ff3014762a112a16732ee4ca22cf4caf7d7e78add2e83204e8a3e44c0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90282_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "5c721c009061cc5bac93d3af7a5cfeb98229a2db641c42bd595302ad6e1c3255"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90283_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "bd7ec4dedca55808667202e74436a2afddfe452e6b7ce8916fe520c079d406b9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90284_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "13b3294529f2262358c0220a4f902902494907715db97994fd331660a40fdc5b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90286_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "640e20256e24bedbb1faaa8ab68c6d5081db3aaa490cbd255474b08db9859298"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90287_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "2d02fe3f5c465fcab954246116a6aa3946a451919bff940021fb1fdb73a31b13"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90288_v0.mcfunction",
+        "bytes": 235,
+        "sha256": "a010d11e128bd4250bf5af7ce10e9301a79e4c1e20ec6996807ac89c9bcbbeb7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90289_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "c15a28041d45e9bc3539a7b523ac3333d3d3bd66881284a10495740a08c79ea8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90290_v0.mcfunction",
+        "bytes": 221,
+        "sha256": "c713dcd22453a9a12d4ea6317b55ada1bbd44f3e0fe99fb5fc9b3e51dd321f9b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90296_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "e3c5d1246ee540ac36f24dfe0b98dff067db23fabfd562c6035dc6802a767e2f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90299_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "0818c24f0fe540322d2641f6b8476e20fe4fa511ba058b79c1c7798f13b57320"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90300_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "8f7cc5d5e2340ef6ded2e3dc661348656ceef7009821550ec7144db66b29442b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90301_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "48cdcd4cf4f3a614a075f4b3430bffd9ba51daecc4cd7923bed08aee02ecdddb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90304_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "19e08f7fc919dd933adf9f9ec5239e5a8ceb2fb926cc40527a2780f968c1565c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90305_v0.mcfunction",
+        "bytes": 233,
+        "sha256": "e539a212e4d7b0c008b46c9a6709c89353a6cd94041c5b155d18fe1b499ea0d7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90307_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "0f3a5c29ae45fb57d2b2873aa5c06995e9664a3615f9560ae120fed4a335f0a1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90308_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "78e807d800e6ef51b1fc543d147ac6d2befc03597fcdcba39bf4885ae4e33177"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90312_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "64fffbf1ba0a9825a762bcabed65efa541df0e9126a4277aa7b5980366bc9503"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90317_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "693c9f578439621e14542d23ccaad30f6d79b3497bbe5dc83a1d1bb4d8b5aaeb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90318_v0.mcfunction",
+        "bytes": 196,
+        "sha256": "723249c15a2f56db7bd19bcd1f605b6a840dc787b131292de43f517ca752f85a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90319_v0.mcfunction",
+        "bytes": 155,
+        "sha256": "a068691c4fb7b296fb1dcf29ad43f102409e94c09c02d22a469e43265cb6016c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90320_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "be810ec33211c36973899176926974ecf6177527217a25ae657066871f4c526b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90322_v0.mcfunction",
+        "bytes": 181,
+        "sha256": "8d668ca019427600e33b2f96b2fe15fc2f90f32265c7e50bf4612fa3c13331af"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90327_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "0dff07a80272d64bcab13a862b195586e19619f774be8a08ed1254504c93e918"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90328_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "f721bc23f376d89214537db5c424759ea2f2aad81d672fd4a831340a97e8981f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90329_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "34b6eb6990a5cf60fd629d98f5b962bcad21000db27d7d7abfb40979ad8a9a95"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90333_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "9cec5e907b9306bbb3623e29140a3d16a6181efa7b661bef96986db82b3897f7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90339_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "21274cbfd34f38d78868e3fd39349a2f575c41692931f3d734d6c6dd60803039"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90342_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "eba4c1535e718f85d96646ea94de1a94ad5b028f05d396adfc94474dac024a7a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90351_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "23617e5a71085df17e930b45af96c66e078678c8c575eeabb0affcbf2416e5ae"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90352_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "3602b6afa11cc75afb462d6e2ab311a2d34f9dbe60654bb73e30affd3daea91d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90360_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "b66f7aee00b2d0dbc7746608727eb2eeba8c6ff2f71cfaea9137f226053f4492"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90373_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "3ad9cff2a2e8396b37982ae02417205fbc4cfa5e04407a35614107fe4cdcef73"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90374_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "efe018d57201766e1b43efd06d2dfb868cf8e7e9b3cde7f7b177ba5784889709"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90385_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "3abf9b2a719aba1b332881a9306658027c9ec32f2d456443c5e68376075404a4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90387_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "e253fe37aa0835781b55fc0bcb74b35f511dbdf7e83768a20ef1f3c1b6550865"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90390_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "8980cc0c550090a29ba9c581c318d73f72e5ce08b78519152257b7764ac29af7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90391_v0.mcfunction",
+        "bytes": 243,
+        "sha256": "053d944cbbd194233a13ebde9bf4253e4a8a2d31a637aad563069ed743c0dc66"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90401_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "251da784145800383c0045b10cd8ed75c56c2f12f86293d847f86766f573153f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90402_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "1f448f5b01181a841cdcf4260d2756432dd0c0ec0520421806f70c6714987acc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90404_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "9140f5381e77577d031d448503749fb811ad06e99932c5e64fb29a9e38101827"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90405_v0.mcfunction",
+        "bytes": 253,
+        "sha256": "6771fd80cf2aa81a804eaf8d199e74be381c97623c63acf73983bc818264cec7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90407_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "a3863b94ebb4b38c57c77b5cc677cdf61c21f716ea39a871012a4d7b5c65758e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90408_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "0ede92a11ffcab052f769deef090e72151e85ff507a1b84d19fd4c031ea4592d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90409_v0.mcfunction",
+        "bytes": 181,
+        "sha256": "baef837c0075935a714cf29f77b7fe8d4b82cc48cef6301b25ed497184f8fe78"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90411_v0.mcfunction",
+        "bytes": 188,
+        "sha256": "c5113c149ed78924dbe3b04c9dafb9d3999d4112793e48f37596289cc61cc46c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90412_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "5464de929f010366e8c7385b3b51cd81f1a9742bcc9fcde8cd1360bd7e19f000"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90413_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "f53533bbdf986c0cecbc10ca2fb20018b6ce9e7052cc61bc4b9ac7bf0a8156b8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90415_v0.mcfunction",
+        "bytes": 221,
+        "sha256": "055896453693f25adcb4cafc8b2a02f387a8d621ba3db0a5a53c9fa777a7edb1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90418_v0.mcfunction",
+        "bytes": 225,
+        "sha256": "75e2143d4f1bfe9401b1b029e838f51eaea4bad1db188a9cca799f3a218bef85"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90421_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "12a62a5fd2b1a269085ee0cf3d62232cdd8c244068cdba65e1e3c5eb7e1c9def"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90423_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "e290d7fd1df42ce0af9cc435a04fdad648f33dc6b8fa44e75d65e0a0610cd6d8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90434_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "70c646c806893d625e8e13861d82f374222466469debd70eb0371bc50ddb832a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90435_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "a361efe2ee6108deed6f95d2204b3447e900acbb315772d5fba05e52c94cc1e0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90437_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "62db9daaafc2e27b68d5c07a04d9929400a92cbf2b8f0bbfbbeca7e0161ac7b4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90444_v0.mcfunction",
+        "bytes": 216,
+        "sha256": "94923c50494cc1b432564e82c63e47926ec87f91bf5c7483ff16f86bb8a5f7f8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90445_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "67eb2878e8b906346c211fdd798c787002fba6414f9e754678c332377420c2cf"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90447_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "7095086d989b322177d70ea386632d71adb05a6fe13fc63011d03bb832c5e9af"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90448_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "cc417a788b389a722834550b298a60e8bda5711c0ae7fb1538f03d5999a6f343"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90449_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "a2a07be7d99bd4f82be97f299e83fd333090cc86b621d33c77bb586975c8a756"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90451_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "cdbd6fb3fbe2382fd7acc0bae76640e4b895204363e085ce6ec8b9e6bbdcba20"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90453_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "ff32be2ee2d66d6615f4892a3f06ab70f6edd96d2d0b38f4493e9ee016aeced0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90454_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "859903764de92290208686a603722f14c21b48ffb0feae92aa137121aa8b2ddb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90455_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "b4e68d28baa618adbf0bea4711762f3404d2d216e8a644964c00346396229a27"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90456_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "3cee4c3ec13d3e79c82a9b798d84ec6cc83a8e5cf5816d0758ace39be7a10d26"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90458_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "9e473df5abac7e9c72521f65ef719dc1c36a28aac1e3cc6dff058d75bae45e12"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90462_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "979c40d04840bdc086af06fe2d1952590b5d9a51bae8a724fe3ac18d8bd62085"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90463_v0.mcfunction",
+        "bytes": 230,
+        "sha256": "1baf683131bb7a853ce98192d714df3c149e67a923994dd77dd377d41dc3db47"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90464_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "c070e2df2024011102a54a172b32a2382f75060e65606dcd42b38a0c78a3ebdb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90465_v0.mcfunction",
+        "bytes": 241,
+        "sha256": "ab830ef56f59509c0cf8cbc1ce5821d97836040d5811da3664777b3d9bf52e10"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90466_v0.mcfunction",
+        "bytes": 238,
+        "sha256": "aabc1bb0778b0439327856986aa4a2b10befc791633dbd57f947c4d328cd6a94"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90467_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "530c0a1d5d03b080fc5ef0bc6bfb79b3f462edd8fb90cf4337c01ec9496111f7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90474_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "6ad69ebf64fc4abf947c30bed63ec0bcecd81483c166359a15f719af7b8428da"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90475_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "fd4ed95e5fd0bdf1855ad68007916d2dfb345dc29971a403780fe396cb01bfdc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90476_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "c99f85728c3ebc1dc3fc240c1ab9d9b4aad1de313f9c8de0913d666dcbf4df3a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90477_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "dafb4b4ce0cdf355c3c17428b5bc98e94828f1ce43fb09b0eea2f6f5448c3dae"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90478_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "117f2e698cb2f6a421e935df36f08866183a5dc0eb23400396c7e52408bbf18a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90479_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "5a4cb6f1740c6d157a9ac51310585e72503fb0f29a710d65ccd7d103858a02d8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90480_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "88d8241159d7292f57f4409c8b3a47510a1f43a3b45ec0a4607db562f372957b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90481_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "57ca4b0fbc6c85116776eb1e33fbe089d49404f17d86ae262f1678316c51c61d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90482_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "d6be1f3343a05857afa84509eda8f7fbbb5a3104fcab1694f79d6f5e4b44d6b6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90483_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "2e22228989028c7cbdfa9a9a6d07156b392900d11937d92b806177bf1fb4bb3e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90485_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "5b8b26ffdb0d876f7a829bf1d5ee76dccf9a61fb74270f530cb87c3d95879074"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90486_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "a5115fcb1c164e8a6957eece61ae88f21e7228662c2e4dd278696dadd81271e1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90489_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "742a95d7bfa29bb0b2158fc1ad36ab77a463b3697d986cb0bebdb2d06dab6549"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90490_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "edb700d1fedb12ad51c889f4a1ce420f1e80e58ed797a0bd9362fbbda53e127f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90491_v0.mcfunction",
+        "bytes": 186,
+        "sha256": "76ba5b641cc9a0ff889c786ecdb7412e2520b733bea57de0a861861d7eac3d67"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90493_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "c3d8dbe98416a89c7c615b84ccfbd0e775e77ec333f2a16febf57649510d92f9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90499_v0.mcfunction",
+        "bytes": 181,
+        "sha256": "a476efe05f3f1d036f575a6cd19626011234fbdf159b3ac754f8603243baf11c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90500_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "95bfd3f729c39df1acd94c486452b96685bd7ce511cd91aff0152ef006ff24ae"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90501_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "0d673fb7364a4bfe24a1c175a78a9b43992bda43ac976e1ed63d3b05116578c3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90503_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "9376abbdab51f609f36862dfd68213ae642eecdef54699c8f9699c97c4f81e9b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90504_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "9455ab4e28ce3155ad81676f6a99c52080e2467ea3641808d2d0ad35e38d13f8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90507_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "f12e9f7ac11eaa444a236f2ec51a3796bc98895dfb8307459c846dbd4f5723a9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90508_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "01c6842bb6509b116a10b787cfde33805f995769ece5ba8c3f8adf4d8aeb5eb6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90509_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "12337e63e2213e4b14f03e9f0dd11fa8e57df6eceed307d67986aba5e290c7bf"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90513_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "ae9d8be2933c05f55a470b2e115c614348ef2e6ed5a9a31e591c196130ae9c01"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90514_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "a4fe17fdc2711134788530e3e15db600cf08b79bf69ca21c21d971ead8a25c1f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90516_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "d63167405e70dd64c301839f8fcc3181ab34032eaf23fce64b8418ee41da49dc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90517_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "8003f733b9ad9a083cb6c16398de931d4520216bbebde2ef27516ae737f245fa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90519_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "55987b24c8e5382591ea644e23289dec504c079c80f0d78f5463fcf6e53a3e0c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90520_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "27827b89de296abbaa3c653b6f379577f355e3f2ce8e4cc74b24eac71755e881"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90521_v0.mcfunction",
+        "bytes": 186,
+        "sha256": "46b3f7011311c46a4087970595464febbfdbea98cb15f553b84d9a182c727913"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90523_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "f245591d738317f817eff0b5df022af2cbfa9d5b5022e92d56424d041a7758dd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90530_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "29f5be32763985d2800e7c4e4b3d28064f6a3b1ee40857043cfb46936b5c63f5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90531_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "9de2957674bc3cb01ad4f53b548733f6c1648852421d5292221d6be6c0ee4afc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90532_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "9519347dc948042f51bd5d2392d2f8de209d0e3b20aa40d1b034d4ae063696c4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90533_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "e4d022a98d218ea8184650930d16887c708e4c26c08cfe4bd74929cbdfadc739"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90534_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "e828cdccfd0264624e203aa982d6095ff96e1ffc2b410781167ec1be196ef298"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90536_v0.mcfunction",
+        "bytes": 221,
+        "sha256": "bdad2ab1e5f5bc685d7e004437d4658b56d18d56e3213d1804601d77a70091f9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90545_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "16c92f4e83a609be74011f27015b1b3ef7a47cb3d6c3fcb07aa1f9413c791640"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90546_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "c48e55afba950fd9dfd98f7e85ed857abccd17791fbc3d5abb2a0958b46d43b1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90547_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "2af37578857338e7abdbdec7b48e4eb23b2277638578ce191db6cffac8ff23c3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90548_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "972c05d86de9982f0963917d367480692737fd222c739b66ae3e350ae4c288d9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90550_v0.mcfunction",
+        "bytes": 221,
+        "sha256": "c858de4463738996fed0e5579939880285c7d6e440fcfa74ba6173bfde1cb96e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90556_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "bf8338d6407dda24aa5f0073bab8f99bb7e9a16d8c1b8fefb23f6102b54e2fbe"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90557_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "ae82c33059e5844b58ec8013ee33b51b95ade789a8205fedf6a4c7d9f4f488f4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90558_v0.mcfunction",
+        "bytes": 179,
+        "sha256": "acd3ec874ac58144efbbcf5630ecfc1dae23c5b5342e46e41e9bd0ad4faa4a0e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90559_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "292d0c22f8074d8b9663ae3ddbb3924f665121697c78fdb68ed5431a0ad9e891"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90565_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "ad7fa8731841a2dbffdc79ac3ea2b2845ca8c6a8b5c4790f8df4cd6ac49b0ad2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90566_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "b26e5e24d080cb98268f24f6cdb8f5416e7333d0b74564100ca0209cac3dadc7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90567_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "845355de121308b90349ab87510ec1f9b9978fc2178fd3d714bc5168c30323d4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90568_v0.mcfunction",
+        "bytes": 237,
+        "sha256": "5783b960f9bdbe0043e9c14667f2ac47b3ad3694dacbfe57cbccfcbbc5f0433f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90569_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "c02904b2721b9369ad52d9c73a606bbd1010df680f56c614c70262254a28290f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90575_v0.mcfunction",
+        "bytes": 229,
+        "sha256": "c8ebc55c813572370f51fabbb80915b7b17d2f6971e42f9edf40b77f65d5a1b6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90576_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "d29024d2fa6810ff305d8acfa30f65ea49610d5056570bd0f9588883496a6d23"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90577_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "6145a74a4ed270183e7738d976fbbb496618aa905d1815fcb549a660969c47d4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90578_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "78a323174c2e616636fc7815574d8f8411d9e36d3acae13e62ec1ccd361a029c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90579_v0.mcfunction",
+        "bytes": 160,
+        "sha256": "9d9c43b68f273569b72ed692e82123d1cb37bb0b9498d90b3325dbf55ef83111"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90581_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "29226c83e14fda48c3d5002243256d3239bd586c32185e1e78eae173b439ede7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90582_v0.mcfunction",
+        "bytes": 181,
+        "sha256": "64c073ce60626540f932f88d8a38aff3f91d0481f51dc63f5c550ca10d96bae1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90586_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "8f0389fabaa5b03a4752252e7e00552f5d29b33c30d7247a0917ba112b4192f7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90588_v0.mcfunction",
+        "bytes": 163,
+        "sha256": "e12ba070c847ae7c285d63ad1925c5734d13b61f0714103db04c130e99463415"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90589_v0.mcfunction",
+        "bytes": 195,
+        "sha256": "908041add0083e83a44a160fb85ae4e400f7d057ee9f1093330c627e8e4e5fbf"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90590_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "00b70b265d90be73c19410cf3bfd70ea4887e1b27e42484ef1b61609c1a5b708"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90595_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "582ff8c1a548cadeb7ffacf827fb8b60bfa9517d176962447bc4e9ac602566fe"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90597_v0.mcfunction",
+        "bytes": 188,
+        "sha256": "5fe1563cb5e6a289f107f0466fffd705c70cc7b62e0ed63d06a951e5ff08514b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90598_v0.mcfunction",
+        "bytes": 188,
+        "sha256": "3c9d62699fd89a41b2db6b94d498afd9365af33acf603d1bd579a37028762ca0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90599_v0.mcfunction",
+        "bytes": 188,
+        "sha256": "7468976b7917269982bd08b59d840ec51dbb166f7c70f961dd7283d17ef129a4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90600_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "4bbbde6bc8e222c34fb660a9b84cfe953370c2f35385ab7fdda8c9cf5d51ce30"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90603_v0.mcfunction",
+        "bytes": 190,
+        "sha256": "5cfefb3125ef93df86bd324a27955a8e8921f7af696463e46af039bf52560528"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90606_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "6bf40bba2d95bb5b0ba1ff75ceae13c7bad7a1ca8da342b3a2a80d4eed9159ba"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90607_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "507835520cd9fe892e7ec32a9918da9bf18e11c24fcb3c2ad48fc3e03c9fa296"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90617_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "4f9675d94ca039b723c1529e160004b13c792e0ad662333c5b11805cd687be29"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90619_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "137026c7fff58bfd1b500ad5b51eca0a6569bd8105ac90a1dc1a23fbcc7dea01"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90620_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "a0f56eb35f8f6e9708317e517912486fd12457307462ee7eac14fbc243597c75"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90623_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "d6173e725ee6fdbf1a1f40a5af223b9f5dea4846c04530e1dbab4d08302df56f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90624_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "b1d628ff09e24029da42edaaec3ebb6fe20ba733c0426c58c193d2eaa73f0850"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90625_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "29672930456280e8cbc67e3c12c273aa01aa287bd85266309067ed45f4cca6ea"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90627_v0.mcfunction",
+        "bytes": 186,
+        "sha256": "6f05dbfe7ae24a51d6039be5ee0022c83d1f9d8056fc30bafb7a309173919217"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90631_v0.mcfunction",
+        "bytes": 157,
+        "sha256": "c1748bd7c109330365bf1c9a28779270b9cce7451a319e6f16987452229d2c23"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90634_v0.mcfunction",
+        "bytes": 216,
+        "sha256": "0f50d909b1d546a539e30df68071708bf399321e79654a6e5d330488ea82790c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90635_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "eb2582fa5a26185b73430f72715a16b6de6090d2c8ab176151b90fa8e413dd51"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90637_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "6940d9396f4fa799894c3fc2cfcc7cecbac742b4a957bcc00f1edf358dc499d4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90639_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "046f6a77f8480c112d96db16459b88e2fd21f4009fe482fe8aefb06b9929f85a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90640_v0.mcfunction",
+        "bytes": 237,
+        "sha256": "a3351b85cdf45306e177378d0fe5a2b52e6c26dfaa62285354137b96ba4e798d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90641_v0.mcfunction",
+        "bytes": 243,
+        "sha256": "7970162a351b5b1aac954c83fc40dbc5f9f72eae9b795fbf87428a20bff94975"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90643_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "655318032446f374ce5bbc208896d8e1d1cfcd61d1616a1ddb2863bea6af7ab0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90649_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "c772e6e1032cbf54c26d8512b0a201088a14d248de2410b85557c68f63781df9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90650_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "815d8bf7a17e708bc31e1273b654dd3c609cb8eedfc5c47511762f8d3f9f611c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90651_v0.mcfunction",
+        "bytes": 252,
+        "sha256": "6e66c55356baae9f4c7125fb355559f81209fb2178b735622c30fd24c0b8cdeb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90652_v0.mcfunction",
+        "bytes": 235,
+        "sha256": "f4a586e03554c4050cb1baa9c4f769c5ac71d27789e5e492d7f2c29507b18031"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90659_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "497fc45f608280652a5f40173b45ba254efaddac78f5bc05b5aab8607f487c33"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90660_v0.mcfunction",
+        "bytes": 242,
+        "sha256": "337b6fa375f32523e35d70b2be3aed360bf4bd0abfa95e6d3ebbd3fc4c0ea00b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90661_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "4491eaf1481af23b5ce3a4c4888c2f8292a589f460d65cd91ed202bb973f5ff2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90664_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "04d2596670ac6f9c269fa7989707de78951066c6c005a93f4d4679ec19a9ed5e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90672_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "8f9b452e6f7844f6a44687f6fff4b3b69211550c6c5fe274474a1af13c4ba684"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90673_v0.mcfunction",
+        "bytes": 195,
+        "sha256": "3d6773b5e9bd6789c3489a536f40c0aeb98ac3f2b0e0030f1886efba78336831"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90674_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "0a726283c76f0660118141cc72afa90f96e805aa26ffd2733d1e7a999bd90ff7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90675_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "b5125187dfffe8a320369f353752f8e293778d6e335234f4d81d237c3a77af13"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90676_v0.mcfunction",
+        "bytes": 225,
+        "sha256": "41a4d739c420ac59030b2c8b594cfcc87f37350fbc5f65ccbd11ffff12610e40"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90679_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "af4b385dcca3932a1fea235f74cc5e13b4610f7be5bc8d3726b34eea902cfd19"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90685_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "989b6c08daf2b711bf8f1ae1adb8f97e577eca76a3f3f71330b0e1ba45167788"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90686_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "9951fdd944a53f3ee257033b6104f9a182b49aea9c2442b19733f5aed2744bba"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90687_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "d715bd03055f13b3e055c2830ea0a55f137cc78dcda7cc498c67590f960f29ce"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90689_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "2ce6b780a62e53d796365c9c2867ed2500807ce7c076eb8ba5eba1b011218b2b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90690_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "dd38d9744079a64a4d3969a944f3810255f44315b05c789c789ef56352801968"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90692_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "9400730a1bb1fba7c233a02f97748b0e3c1b06f57c34efd5b3272728bbdf24d3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90698_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "29a8d0977101fa339ccd22741e47d6ea1051ff45810295201a64c473fda0c66c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90701_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "f883a8299487c356c5c53d0ffaf36f24693c04c61491606db1e38bcf525b6daf"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90703_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "cc67eebb678d034abd9e695ff412caae3f34a3347d7ba9d7eb0e761aa42df8f6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90706_v0.mcfunction",
+        "bytes": 182,
+        "sha256": "cb66fd5ab7e5a912bf9faecd62df54ad9c88978b3a34d539b8b4d1d09238e0be"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90709_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "9e86eb2fcb972c50bec3bdb3219724fa5afdf6a575cfbba26ccc8e8ec69d5ba3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90712_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "614a9cf431a9c83e49fe98cc12c41b2c45eadb2c62efb6d6acff066428c8dc4f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90719_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "ee1e86dde445b288ebf21c4668cb46a42495fbf7251bbedce14096e0cc31940e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90721_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "598eb0919728c65ce9fd44c339d694185afbc68a1a44fe8718fb344b48e5fced"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90724_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "c3a5afe92ea6cd1cf62ac9f0c3acb18871307a82eb849e77dedf038eeaf3e89c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90725_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "002895d512d93b590b2cbde6d12b04222bc905e817a2ef201074c00743dd37f6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90726_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "e119b3a1ed14117e5d2d248628a0f76f2bd0aad7aa6dbce905e10c8fd899675f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90727_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "7d1db07bfc2ec4c0a4289088737848325fb6b09280a8e8bce8f1dd2335097da9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90736_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "fbe2de711a63d539066a82e5436442f26ba30fe8e28cefa597d8736371cc84db"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90737_v0.mcfunction",
+        "bytes": 234,
+        "sha256": "ac71caed371b9053e3c4127269a9d01ed9ab11deb8e7e37d478cf2ed2540eb3e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90743_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "901385fa689d17bdc451c978e36c014ac3806bb63e3584e08e412e846ff65af9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90744_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "2ad0cec04d1ad544bc53fc8cb088c183e4e3aeeed6096a2cea306b45c5c94806"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90747_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "33bfc711ce58add14e9ab2bb3409f6eb8d65fb389b410d73aa9f545d4305167b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90755_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "c339f10adaef8fa845b1bdf33ab64836d2a1b12793353f2b26a439b0c1a0dd27"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90756_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "11fc7e2ada4bbb9d74ae40773d4577babd6f15e5826d828acbd0de16ab4c1a3f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90757_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "cd169e33502a65ee0a1c590d7d17c36ed94c41c25027e7d9b06de4ba55ed737c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90758_v0.mcfunction",
+        "bytes": 194,
+        "sha256": "94a2b3e7243515ccd357f4d2cea2b89b609d1865d4950daa633cf6937f955dfd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90760_v0.mcfunction",
+        "bytes": 221,
+        "sha256": "30929ae140b9127a8c1f69df68fb591175d1c07a8657a39c83cbb5ea2daf4989"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90763_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "9d7498514bedbd1edd661aaa732dda5d7c04815742dfbf9c060cdb2b520c01e2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90764_v0.mcfunction",
+        "bytes": 216,
+        "sha256": "2b7aa82a15767837cf4272a3a0f6b052987d4065d09b3bfe3d6482a9d3926946"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90765_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "3d91ee91403175eb73a83df83e16dcfe77901af562234faaddec0ba9fac343f3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90766_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "145ee2dd77483becf8f45e58f12f3bb2f2e91c16c5d2deea67674f71b4b93075"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90768_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "734c687bee6688bcdbb42998fbdb5976c95672326fa7f6a4c7a8a67a7837ed25"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90772_v0.mcfunction",
+        "bytes": 229,
+        "sha256": "5fcf577879a872cec473687448086df6729137bf1e1d9abfbdffd1208c5a67ce"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90773_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "8ae0f97e2288e1b86a8caeb458aca07f5be18c06fff6456d751dbeb028ec7cdc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90774_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "0bee84ff53c86be06b74dcace0bcbc177f10553a306ca7e73f064061ecc19a20"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90776_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "fa2213278794e18ecfc1afc92b6b410bee0a163a9d62416c339dbbf832fed646"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90777_v0.mcfunction",
+        "bytes": 192,
+        "sha256": "f717dbb961961ae46879534e59e4be1c9d0c8708f1b147fa8e2848dd477ca3df"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90778_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "d8581e6cfe418dd614ccee10245b9d540bf4aeb92273ba58ae7742ba8dbd5804"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90782_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "c30d17873ee8defe57eefbdd3abc857464a2529c78d20730c33530d3465b22ed"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90783_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "669ea0526b526f7fd4f302b2fad2bb82b62fee569a4792698155aca2a7807ae0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90784_v0.mcfunction",
+        "bytes": 177,
+        "sha256": "5c4508891c1c56d5935677e8278cf9636d9043ad2864cf85ea83de4343d78513"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90785_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "95329e1e00eba3c82ea84ae1baaea04de463417ed738b77e40b24af92cd32c19"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90786_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "f943bd1ac553deba599e1d8e606b0b155d36c4b4f9ff01ea9c44fa2876c97b9b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90788_v0.mcfunction",
+        "bytes": 238,
+        "sha256": "61e1d7c0281fc8ced7108dab43ac3bde2149bdd2bdc7ce4418e457bc60eaeedb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90789_v0.mcfunction",
+        "bytes": 249,
+        "sha256": "334536d1b009f786669445aaa608b798519c006309b7b9dad6d828ca5573b10d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90793_v0.mcfunction",
+        "bytes": 270,
+        "sha256": "684a7a7f39ae31dca68ee322f4ef5270f8a138aa377e37a90c5d5f3b8866979a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90795_v0.mcfunction",
+        "bytes": 270,
+        "sha256": "862056e84430317b9e7e820882b141f8d11eaab096f55fd717329203fe0fcd9a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90797_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "ee868549be3c380bbef6ab25ad1b64f98458e546c1ef51e7e15790519aca9df8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90799_v0.mcfunction",
+        "bytes": 230,
+        "sha256": "7c636b1042cb8395fa54e5063581c035f975532f8a354d9ab4a77efb824743a8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90801_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "2defb9d786be7f4227641cd12af1c6a00d22a81846dd7ce4aecbea56e52d0966"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90802_v0.mcfunction",
+        "bytes": 186,
+        "sha256": "2be6a2a6f272ea9e87cf7ad1d0e01be4bfe9e1e5dbc3245acbdc9a12b33a9e85"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90804_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "585f47e0ff2d1ffacbb6aeb46961a2923a098e6729305ee45062bf299ea602c8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90811_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "81874d03345a0edc3c5cca7e571b8b276c3458d9511e29c60f6ebdba366f6615"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90812_v0.mcfunction",
+        "bytes": 245,
+        "sha256": "faeb3765ca82868d5f949cfd5aca8eb72dfd7dc0422adbab311aa58ffbdd9d8b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90813_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "7ffa5cd3e038236f376ed1428983b9f055edc0dc181c6f93689f328aa4f878fd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90818_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "aa62face08c611d4e6ff1681ea21f0ec5c640183926df14d480df79ff9d7c686"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90819_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "3646848b38e36ef0e38eac1b4c935eaab0d5986babed7dbc911074c60443af80"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90821_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "bd68ff623217d21466d67d1feb323274dd2777f6b8d2bd5ba71eb17bc3012bc2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90823_v0.mcfunction",
+        "bytes": 196,
+        "sha256": "f83212d9a1c38588bf045250e47f9a278b541e12a081ffcd9b8ffa3072e9bad7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90826_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "53ed342362475cb28f5a4d8f4d5e8586980c5d28c39ff5cf5aafa573328a3a35"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90827_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "77b986748cb02587cdd3b95878dbc350782cea1f50442df2d1c9e90e1bb3149b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90828_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "891e601b4f425627308184cdea375cff25727996e59ee9faf36c61750aedfb51"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90829_v0.mcfunction",
+        "bytes": 208,
+        "sha256": "16190f83dabf0c0db46090cd5bc56e8bbbf9e4c4ddc9c4fbc483d3a7253fffc1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90830_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "9df957063dbf8afeb30ce60534c74f5e40c2f338fdd4e2c92a7ad6a515493997"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90832_v0.mcfunction",
+        "bytes": 242,
+        "sha256": "2545538694e9667fa403647ded29311b259401c73e93fe581de92568525afdba"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90836_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "9147df90661ed3ab75380a3331342f67893f3a5189449c370dd8e3daebc9878d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90837_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "2f4319b53047faac8dbc69fcce0c32c4054528ac631c09b53d5362de17a85e6b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90838_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "af51a8832cd0b7bee1c0e336e4c3c63537ef07776cc8e5db9abe24dbc0684edc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90839_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "47929b78e21c0b43e0532c5bdccfef6acdd7fac12225b8a80d20af3dde76e85f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90840_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "f2b7c28cc1e892cbb50fe83a4bc0aa7910441d2222b3ea5c8ff492384c49cf4e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90841_v0.mcfunction",
+        "bytes": 158,
+        "sha256": "d24d174e6a158b2e8f3226373db4a82a1b2fc80c963b84cfa1834e451e35b5f9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90842_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "deb020a5096437e8836ac128cf60dc2a28036f0bb934d53f572c077af60651ef"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90843_v0.mcfunction",
+        "bytes": 180,
+        "sha256": "2a3a03146c5eae0f97b8c1109d662bf456d4926e75665350c1ccd2144b248df9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90844_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "188b4b9399521144605c6c69523ca60f9f5992bd0987da8364cb27ce6f12950e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90845_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "92e2c8d37ffc91d4da9c2ead1602ae3d262e861c4bd453e10e60a01aa63754a8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90851_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "67b0eadd06569a07847b2adfb7f0355e4fc9089fad09970991a23431155766c2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90853_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "52318b8ff16c099662569a3350d44b3e1621f789bb7a618619c1ce7496e4c1bc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90859_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "45f59bf7db758b0bc69eb7b268822903a38220b12e74067ebc49ffcac867c29f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90860_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "927ff11e99ef126d251183aebfd4e33b6d3deab607b12f74268874d95bae3050"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90861_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "44b9180b94e3a17d80fe912fcfe17f47f855b6fc3653104a673cf7f654002450"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90862_v0.mcfunction",
+        "bytes": 230,
+        "sha256": "cdded135fa622f3dded4b3083853306e730277db2231cbabd0d50a0fb737ff79"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90868_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "8b084b37cfac5e75c9cb3210db14562d6539a792cb4f5c47c3e6fce70abc669e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90869_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "bd41e28fd2107eee7848479c5e9019b569aa7d42874271aaeef0be1484589250"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90870_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "05d3ed9112d0f621f7095611fbf6d8711cbc930b0094955c50baaed3f4e4fa01"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90871_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "0da5ee13449e451ef19e4e894886dcf2e1e6fbad930e8da36331181253a20c92"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90873_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "14450ea7f0ee25859b2f7243ecfb1d7821ab950e0a26ac37bcf4c46cd04e3b2c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90875_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "cbce267dde4f4d271ce3d0d55fa1923424764f4412d41840c161930d29d75d9a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90876_v0.mcfunction",
+        "bytes": 203,
+        "sha256": "dd5069f309b5fb10ca99ce8853bd7e547c4565e23b5d716434c739e5fa656f1b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90877_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "4f8549359437456166337ed3a2cb99ac5eceee13e7a313c7d47bbeb5f34b8225"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90878_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "497e9a11c6f2f35dad0c1e3371dd1c12e87e69c6d3dedfa4965f3ece030e22a2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90879_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "ec4eeb8bd28290e097a9b0a4dceada661ff6e43d89d54d4c57c98d70d600b9e0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90881_v0.mcfunction",
+        "bytes": 186,
+        "sha256": "7d01bfb321bf8101bc6f2694cd1c9fc7a2621f00b04215591622701ac67e7c5e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90899_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "210e6f6ae64696b7365ae4c1d05402d67b1a87a00617705e92e39cc0310579cc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90903_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "9cd21187787a7fa884eccad4503509256021d16e64f1cd73d1af31f63a32cd4c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90910_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "2f794c3886d068acbe6db33a86a1aa89c212a257b09ddc4679bb4f456002e309"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90912_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "0fe79ed9842e5914bddbce67712bb1d303821125edbde076a2b0ef96f50c6de0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90915_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "4f791a1b3f90b8ac7fef9782b88e9d00a877c750fa253c18033abdc7faf13399"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90917_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "1d3114e0eda3f50b4d32b93b849d9795c594684eb1e44b44b11de3c44b4f7281"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90918_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "219833953f382f9dfea59182b27db2fff4079f6bb2a15faf76bee2819a6e6908"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90919_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "099df713cc2f487464dee915b6295656c0f86280cd3442b45119eac843b8601e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90920_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "0e77cd9d4518e363f29024fa7226349e3f4f8e063144ec041e8ab5803daf8d86"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90921_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "2ecd457a313eb195c1a1ef446a563762dd391beb36b4631f65326c8ff87b75af"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90923_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "418923a993e00e154caa5ffb8bdb4186e27b9f7fe3d4872a7fcf3997174175e5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90924_v0.mcfunction",
+        "bytes": 252,
+        "sha256": "f16c8cfaea5b58e7e665589aff73c6737a3c19b7468b92cae0b4b8dec7c2e2a8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90929_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "fd22a45a7fa33b0b2336bb38a2dad17ebec5fba83ae12273572e02324310c2fe"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90930_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "1fcfa07cda82b1c8fc2d8091913215732ca397ec63e8149dca888d9a7c19f4ce"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90932_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "fe740870653b61202c90b17f2695cc8a8652d750d226f16511aec7cebcb627b1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90933_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "de5d67cbaec38fa7d3394a57df2a80af93cf53454fe234162ed2f6f8b9ff1ca7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90934_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "f99094c0b670e420f5f4ebccc609ec492e452364aa95ab644cc32a7a1d60681e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90935_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "0d2319350282b403bd18eeb2e04bcdbb724d290769fbf6aee5671d22dd53b318"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90937_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "2a020d20862d6bc616c800f6f3e48a4cef11969d62301a2a436b3ef7539ffe36"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90940_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "52eb9664e6ca42dc87688c49950e361368d434d7de7735a429266014c960242c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90941_v0.mcfunction",
+        "bytes": 159,
+        "sha256": "4d7ab79d383d03f23fd9df36c74e0e85f056a16239bdc783096f28ee68164736"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90942_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "84b7451c386d08b228e9abceec664ee6f16a8f47b7f096a1466dcaa3c4123259"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90943_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "e77d0207895a9c1813e763deab0d92f326ea0053db26e11f83ea6b57e6a486cc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90946_v0.mcfunction",
+        "bytes": 175,
+        "sha256": "6ff66b9cc1b7c6a40497312febae0ccd5c5866d79c42f788b982144aed804891"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90947_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "462ef6999975bcf49e0b306ce436c8bd5d03f26c304089475534bd3236d11230"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90948_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "db309c592f69aa3cb644920617b72d567de0d7ffecdcc49d2a524c0334a18e9c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90949_v0.mcfunction",
+        "bytes": 216,
+        "sha256": "667669c5649046c47472bfc86cd4d1a3b97a9501786cb2ffb24ea1f1861f1120"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90951_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "a0b1ae20e7e12d26b803113c8f09279772fb9b65b17cb0dae59f7ca031b0cfe0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90952_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "3721fd41a69e865a51732f0998e06547f30cb5380faa749a0eadc504f874751d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90954_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "f74517aec4bf885e4653ecb54d95d10c895b365ea8a311261190b7eb579e2bb1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90956_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "e3f6eeabbe6f4116839481f6acb4fba8cad87786258398b05ce0052eaa307ee6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90957_v0.mcfunction",
+        "bytes": 232,
+        "sha256": "0a3ee2e9d90a6a74b972b51625bdf28eba30c60c30909396b1a516b284000506"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90959_v0.mcfunction",
+        "bytes": 234,
+        "sha256": "131327a0acd275d71971a6adeeb3d2a3a4c60b6e66a72a3628a9850b89504f1b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90960_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "5778195d0d054bf15163e98cedf5d09c66dd26978494c3751e80c7c913c8cce8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90961_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "01829b6b7445b1194f8093a485a379aa3369eb5afe12505372f08ed1937d00a9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90962_v0.mcfunction",
+        "bytes": 268,
+        "sha256": "eeda291574454a0ab4029be636f1ec20562e93726d4e90bafff67d9c8d968ebc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90963_v0.mcfunction",
+        "bytes": 228,
+        "sha256": "cdd2b4d28579b3f25a02b531f1761b30f7bf5ccb86edc898f5e7914537bf7884"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90964_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "c7567d1234abb92c4721ffa964e5136190c90d1314fe1355964b43877ad5317b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90965_v0.mcfunction",
+        "bytes": 253,
+        "sha256": "258f4c1b109a8735598ea3e35fdd854494b1710fd1de34b3ce28e6fa96d440fb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90966_v0.mcfunction",
+        "bytes": 256,
+        "sha256": "6a00979921ae3465a1f56b80f93c6b084c8648388dcc475547dbe4b3de33f77d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90967_v0.mcfunction",
+        "bytes": 233,
+        "sha256": "4e01d19fa4584ef4fe52d4ea60782a17c8920f97df7fa297681ac5933284bafb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90968_v0.mcfunction",
+        "bytes": 227,
+        "sha256": "ce5e42ff7cf69d888a5374a2afd05fc83c7bb21e4c0bf0da670e0b513c43a223"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90969_v0.mcfunction",
+        "bytes": 253,
+        "sha256": "e292faee973f74f013a7498d2b6aa662c2890e8b24c62392c9457f2c5291335a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90972_v0.mcfunction",
+        "bytes": 236,
+        "sha256": "5cc8d0eab2b7671880c356aba9d81f71c7654cbc281a1c3703ddf9f424c98c53"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90978_v0.mcfunction",
+        "bytes": 231,
+        "sha256": "51516d8a3d9be7ef1254bffaf6adea4079ec83e9c6b4939553928eab179f5044"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90979_v0.mcfunction",
+        "bytes": 225,
+        "sha256": "1b220ae60a223238178146725569bc9791d682f5a8ddb47652b8ec541409feda"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90981_v0.mcfunction",
+        "bytes": 257,
+        "sha256": "5050848f539091b526e5a9634b5cf42193be02a271d1d4c0baaf611c17139f55"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90982_v0.mcfunction",
+        "bytes": 255,
+        "sha256": "09bee224cb94d8db42cec624f1336bc156ef3944f86fe28b25fbdcda0a3c2b1e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90983_v0.mcfunction",
+        "bytes": 279,
+        "sha256": "c51a9957a0478a9bdacca059b6aecb7417ec28297c802d9d9cbfa8714a993878"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90984_v0.mcfunction",
+        "bytes": 280,
+        "sha256": "8850b5b61d64562f93b2bd0e44c55e90e9fd5301376f5febc59bee1dd3eaee5c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90986_v0.mcfunction",
+        "bytes": 262,
+        "sha256": "41c702f368149b126b066620cba84e1aeff689e6de186028e53f471d6047686c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90987_v0.mcfunction",
+        "bytes": 259,
+        "sha256": "aef33817cadf04df31df7d56b1f5ed8333c24b9b3a13b080cded458c0caeefb3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90988_v0.mcfunction",
+        "bytes": 279,
+        "sha256": "818967454a4f637969fcca6a3f50730eb0882b6aaa1837170060c4fc467cb38b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90990_v0.mcfunction",
+        "bytes": 255,
+        "sha256": "50fd2599d6fc18682f917a41bb21e5c3177b67fc068e026daf81e6970f81894b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90993_v0.mcfunction",
+        "bytes": 274,
+        "sha256": "d8f20c75e473edc9a23123135ecd8320c9ed466755eaf37ec3ff73c6b98b5113"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90997_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "07b587e9438e6a3d90d26a784fd786b4ba25091bbc44dc44bd0cda589cef516f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90998_v0.mcfunction",
+        "bytes": 256,
+        "sha256": "1aa0a4913072dc526eaa5b48422099c8ee066cb7a7986ddf50470e0b34815eac"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_90999_v0.mcfunction",
+        "bytes": 250,
+        "sha256": "c205b55e56e5c2d8e2e2a9c8059fec00a8549afe615a43f88cc1f95e2018d8ad"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93001_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "6960afbf1ff78f0a77c70164fbc503c1f33505597c8836c4d9929dbebe912101"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93002_v0.mcfunction",
+        "bytes": 250,
+        "sha256": "7095a61c2e6ecc0121a81fba6c6348050e4e49205876c000ecef848c70910cee"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93003_v0.mcfunction",
+        "bytes": 228,
+        "sha256": "447ff8c398249a3958a232109b4707925023cc1d56e3f54731c288d075082ab6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93004_v0.mcfunction",
+        "bytes": 236,
+        "sha256": "e62fd5c0f182197cd5bb9944ee3b02f031ce743dd2ddb4ab6d747bde09952726"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93005_v0.mcfunction",
+        "bytes": 229,
+        "sha256": "640e26d6919146defef0f6f16eacef74ce0e1a54218422038f14f1fc6606d28e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93006_v0.mcfunction",
+        "bytes": 229,
+        "sha256": "9cde5b88b6f3e041e6b3f5af7faa3bc5d61e9c66ac031520240836b92a926eeb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93008_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "82748d45eb89e43b0e7911c6852aa8a995fc1a9eb2d01441de3000aa8315d79c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93009_v0.mcfunction",
+        "bytes": 207,
+        "sha256": "4a3e8e6997af40dda85d3aef9ab01b02f724e3c3a76dfa0e4b891bcf0fc14bd8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93010_v0.mcfunction",
+        "bytes": 210,
+        "sha256": "cef92e5cb1c8cafcf8d84275ace119f4e43a7f5a4e27f609c339447138da2299"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93011_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "646c25c51374e58f4ed334060967a9bede9122dbaf9ff9bb7afbc3c72ccc4468"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93012_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "3b6f98c07ff9d39c7e2bf24f83e9c444fc5821bfbbe16b1c40210741c2e272d2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93013_v0.mcfunction",
+        "bytes": 243,
+        "sha256": "d073d37ea20b9eae455c9ffdfa1d17f2a05cf96a031fb6aabb4b728138ddb48e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93014_v0.mcfunction",
+        "bytes": 244,
+        "sha256": "5f804feabce4ac7476c3e7273458326767944d8d2d1018eab8066ef8abfe9317"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93017_v0.mcfunction",
+        "bytes": 229,
+        "sha256": "523f8d50ab28fafc303bbb97a1f3d1ab674b045c577457a91b1bccf60b7ebdb5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93019_v0.mcfunction",
+        "bytes": 268,
+        "sha256": "a05d790ec8b99b7d406a14292981ee24509272b1b656047aae07457073110fad"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93023_v0.mcfunction",
+        "bytes": 267,
+        "sha256": "c474e810141ea05c043439091eb648f1ff2cdf4e17d574bfe32890591f1cfae0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93024_v0.mcfunction",
+        "bytes": 262,
+        "sha256": "dd574adad5deb471b0263a685461c9ef1f0a2f7646a174e0bc7ba527af7fa7ba"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93025_v0.mcfunction",
+        "bytes": 266,
+        "sha256": "281ed13d31ca9732c234bf6a79dbe0d43744bd5357d796606f83c7af050544bb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93026_v0.mcfunction",
+        "bytes": 259,
+        "sha256": "95116812f3412c954e0ff43b9a801b1b2d9dc385301a58d3e12c197556738215"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93027_v0.mcfunction",
+        "bytes": 260,
+        "sha256": "b99414e2764305453774541a9e1b1289d552500c201d1da113ea1276a4f96122"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93028_v0.mcfunction",
+        "bytes": 236,
+        "sha256": "5e0a47efbca09f033f8d9881498e38c80a4988a0fd714752148046276ca25cf7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93030_v0.mcfunction",
+        "bytes": 238,
+        "sha256": "ae11cc29aade47ceb991678248472cc9dd28a286b231b406da30abc32c42dea2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93031_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "7bb58e14cd23defe53dd86c601a19d2b8acf82d3699f10eccd7e20daee583683"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93033_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "d98f14661bb63ed9cd8f158edaf962fe4c615e3de162ad75d437ce516e767f12"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93034_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "113ad8b1a584d9ab0c34596da6319fcbdcb0c055fa65c9d592c9ea6d727dc734"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93035_v0.mcfunction",
+        "bytes": 239,
+        "sha256": "f3aa4fcf72352f8e983ee1a4d59c17961a93c762127646a2e4e6835e03064831"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93038_v0.mcfunction",
+        "bytes": 257,
+        "sha256": "fc6d39b8846065411f9959dea6775054722335082735fe427ac4012194615757"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93040_v0.mcfunction",
+        "bytes": 256,
+        "sha256": "16e744fdc77ec84f17098df4753abc440d29faddca889e2815b3d7964e0e3966"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93042_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "23557d3cee9604d441e113fe7ba9fe37311f00bb8d195195f33d698e5fc7d0bb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93044_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "06f46506a1099c25efcaf5cc696c0bcfaea722a81c0fc0d60fb25958f1951b1f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93046_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "b042d912208390683cb6546817902f32287d082f5d7b2dadfff44b7471c943e6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93047_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "8f23869a385eec237b22600e1be1037677327a7ba5a7d2538e740c769485b9a6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93053_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "498f67a34182b100d0591dd3425703b0bfcfaaeb60d041c7c6a8d602d784ec43"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93055_v0.mcfunction",
+        "bytes": 191,
+        "sha256": "5b54ce04202bcd591792d62b6abf0787461b68c54da9ab2b4e0bdfde4ae564f5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93057_v0.mcfunction",
+        "bytes": 267,
+        "sha256": "f90793d6726b322b1598090b8e7ac5e01c9e65337140be7da93502fc72a482e7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93058_v0.mcfunction",
+        "bytes": 268,
+        "sha256": "5eaa723877b9ddf0a6e9b36445882e4373ec193e46ce15b5f8e1c04ec31356a6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93059_v0.mcfunction",
+        "bytes": 267,
+        "sha256": "fec0c8ea84817e1e76401e34fad2f0df1a68db7b50cff33fe54e1175c950e6d4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93060_v0.mcfunction",
+        "bytes": 277,
+        "sha256": "b033f12e923463c39300096741523615ad089d174a12e149f772e730742c37e0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93062_v0.mcfunction",
+        "bytes": 267,
+        "sha256": "8cc21954e15c3a26e67891244815738b969193a47aed41466415558d2d018df8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93063_v0.mcfunction",
+        "bytes": 266,
+        "sha256": "711f2736596bfef61a9520819c6913f7915613682b5aeb9dcc7d1da5532bfffa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93064_v0.mcfunction",
+        "bytes": 270,
+        "sha256": "8bc8c89eed1e6112ae3447a0465cc8a1d819f61f2639d92f80fdc03ae2192764"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93065_v0.mcfunction",
+        "bytes": 288,
+        "sha256": "6d195cec2aa0165e217465d6d380c878342026a8b01a842b7c2538a79ee4d694"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93066_v0.mcfunction",
+        "bytes": 285,
+        "sha256": "7659e461910716775caaba2a6878348a58359d3c8ea9ea2e9d581dfedb9050fa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93067_v0.mcfunction",
+        "bytes": 273,
+        "sha256": "f004d3334a4cb5f3295acbf400773111735a369087c35d5347a4aa478fa85804"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93068_v0.mcfunction",
+        "bytes": 291,
+        "sha256": "566d8c5cd00494c6207a25ab60dba389ff96b994dd983fac8063069a582e7a93"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93069_v0.mcfunction",
+        "bytes": 289,
+        "sha256": "556ba895918c6a7c9ea641cef1efb660e7047e34cd7670063bdceb72f41dc2a0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93070_v0.mcfunction",
+        "bytes": 263,
+        "sha256": "73cacf08c704b2bfec58cb8ff066b41079c7a6d02f6b1fc9baffd88aaea75890"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93071_v0.mcfunction",
+        "bytes": 265,
+        "sha256": "23b4b3bc7d9ff1a66916c9deb04ca18fa8ebd7b2d11d64a870e6ae1ca8198eba"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93072_v0.mcfunction",
+        "bytes": 268,
+        "sha256": "c91534d7e7b4591b4a11f00b49288aaec9cd272bf51acbf962dbd133d6a78f8d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93073_v0.mcfunction",
+        "bytes": 267,
+        "sha256": "48d01f008a34f1915cec307e16baee3ef7fcc251dc7d9ba684ceb4d1b7727d00"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93074_v0.mcfunction",
+        "bytes": 246,
+        "sha256": "e5584f74ba294228f46d4d9af0f3f62751476e776525d4b17b1a793069a23cb7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93075_v0.mcfunction",
+        "bytes": 260,
+        "sha256": "f9472693b5c27f9cac2e04f7a9a05afc27541afd29e2457c787cec48972cf922"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93076_v0.mcfunction",
+        "bytes": 261,
+        "sha256": "caf01d3c7ea4587e96202f1bb8a9290938c5455825ce8543c732ef4ea02a2641"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93077_v0.mcfunction",
+        "bytes": 262,
+        "sha256": "7317bdf54ac5ac246e1c8cc1854da4d4c0cedd0ebf4b63ab4ce589220ca24ec4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93079_v0.mcfunction",
+        "bytes": 182,
+        "sha256": "d5ded21a9338d9d2f4d376e21f72ee8a8b07ad5671f6b8206075606db66246dd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93081_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "5e760c63d334144a20a2fe60a33e03fa2e9d0239381121be62f23a2fed8dc138"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93088_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "b55fc14a97ca74ccdfa878a8b62025a5086a70e8b74112e9addbbc38116e3b89"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93090_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "da9c998a5ac71f00a6e1c5960f566230b6a7895826c72e6e4924417ffc942ab8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93094_v0.mcfunction",
+        "bytes": 195,
+        "sha256": "2e409fe23e5fe7d35a694ccce934bbb391a3909627d62be4fb11b6074666290a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93098_v0.mcfunction",
+        "bytes": 187,
+        "sha256": "d1b1ba25bccb4b3dc78d58922fcdbd13dad6d0fd85bde67bb4b534e7cf9a0675"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93101_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "fd204b3b65f105c0fe947139f9ec68dc089e433a7ce5562bf63c644fc0bd2cf7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93102_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "f720349418b1a0cee21a691400b10ec6d4091b4ccb04dd493a6cc66bc3f1ba22"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93103_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "9b1a1d1fe39f700cc6172ac1736f5348f698c01a09a0d475fb7d8b3e05c8201c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93104_v0.mcfunction",
+        "bytes": 193,
+        "sha256": "0f93faeb2043ed1ca00bc033e9b643ed520378892e3505673b7354cb3de90082"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93105_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "c5f48bb90f668be0532ded932af588928e53ea53171ec9cd1b7ff7eb4e372444"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93107_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "66c4020f274d38098dd054bfb4097f77beaa7aebcd81a05e34f73390255f3de4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93112_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "9d5a6773449c976eea820f446aa40a52db9a93b483d415cf7cbbc4b73cd995cb"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93113_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "8c06266681d6cd4d1070f62e7397061df2f36d8bfac5c168e651a6f0cb600f1e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93114_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "15010eb6bd4dfcab385d60ef3268b2cf52c8e7e9716c4c5d212e02c18484efe8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93115_v0.mcfunction",
+        "bytes": 225,
+        "sha256": "9dd7324fafdb868a33d8ab9bafe00f748806c2c43502e26a0c55b83a6f77ba63"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93116_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "c635b08d8f0e6c074c6c54e77f0fde6677f5a2b70f3caa83ce2c51655e3e0da9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93117_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "3f47933ff8237ee1ab2ea169645760c8f64eb1a683fb15b1f160f540c7cb5b3e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93118_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "d7aaef934ffb3e31a90eb46df64e1bf73775188857fa49df03930fa3f6a51e63"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93120_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "80313f1e1fb774f1a5ec4f38d8f0568a56988dbbbed5b1a469fdba06909d2fc4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93121_v0.mcfunction",
+        "bytes": 216,
+        "sha256": "ceba23671200828073deb7c9cbd520b78126c010241b4f8a5f37049af10e518f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93122_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "6d7dd98eed9c15bdd21d6758e136c8e92f0b1297194c8b424558031273a335f0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93123_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "c788fed8071fdf6cfd857129b5ceabdf29d24d26d34d24a4b8a4282a2d17b151"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93125_v0.mcfunction",
+        "bytes": 209,
+        "sha256": "998652ea9d945b33796bf4214939d9297a044d13dbe2bfce73853d1fdf1865c1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93131_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "6cbf00e85c6b18ec0ca7ef397c49347d48848c44426d613daf851c329eef3270"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93140_v0.mcfunction",
+        "bytes": 196,
+        "sha256": "31bd10fde38d565f591f56516a12d200bb1cd9726fecb24bd686239ff6fe8ac0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93141_v0.mcfunction",
+        "bytes": 206,
+        "sha256": "3e3c6e2f1401c48e32d358ea8fa09da28c9979a09a9011d01f28c7d124d47e58"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93142_v0.mcfunction",
+        "bytes": 177,
+        "sha256": "39beff2a9f567cd85e60c2c11a09e05a081482f6166b8788d311a2a837665755"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93146_v0.mcfunction",
+        "bytes": 229,
+        "sha256": "d53a9a3cda281b0ed8b72e833117a41498e6f6964d51bab9f3e49b31d5e35c7c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93147_v0.mcfunction",
+        "bytes": 190,
+        "sha256": "f32554fa8288a0383b66944f24f56e47c547755df184d789de4795243ff16f95"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93150_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "b61b8d1515c4b38ea9b98956323646381b00f75f8c24dd4e2421f4bc22ed064c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93151_v0.mcfunction",
+        "bytes": 242,
+        "sha256": "aedd818319cda4fd3d8659ce942722607e6579631317a26d39d1f690ab095a6d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93152_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "c73fea9573ff15c1796a12079add76502a70a9c75b88e14a721eab89d7567b34"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93153_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "198660f907b105e56c9b22afb45c94f8380d4d666b60fc71cfaf864f9e20a31c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93154_v0.mcfunction",
+        "bytes": 215,
+        "sha256": "da24e3fe5c59e5f40f50d43097ff2dc59d799a30cefef294dadad29fa492863d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93156_v0.mcfunction",
+        "bytes": 204,
+        "sha256": "e1233b7368e90f606e83f17c34a407d33a0eb085775b03c6ab1dcf448f6441a0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93157_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "74eed83b6843f820fdb72cef81cfc0732d40092a2a07430dc4a249a3919b61b7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93159_v0.mcfunction",
+        "bytes": 197,
+        "sha256": "2d984941763c7ae67655c7320c806c2e07b0ca8cfe06c33ae51ce398885952d3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93160_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "75bfde56ea68abf2550a0d35d5d2b3570f058a8d8c07d0d43943aad13a9999b3"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93161_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "b66cdab53c302b6dd8a5922a842f4d332c435077bc4644dba04b1d1b16096809"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93162_v0.mcfunction",
+        "bytes": 211,
+        "sha256": "199a63f6a6fcce8b4bf4993e04fef8e61d786aaff7caa216a892c3481a76a264"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93163_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "39e5ea60a40a2643159f87c0cf82d4c3876c0b55517cfee138742f253ac5c641"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93164_v0.mcfunction",
+        "bytes": 216,
+        "sha256": "cdd46cef36b3147a1113a43f5c229444543251321c98c9a6853021615a23ddfa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93165_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "640803b41690f95242f997b2941ef8ab7f140713175ff9b3faf7731ca5f14a5d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93166_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "e861fd75af0ab53a8c180a9d46496123ab8a028512950328ae5b1a85c0ba3378"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93167_v0.mcfunction",
+        "bytes": 199,
+        "sha256": "60cbdc2d03c8deaf3f16473e953ed6f511c9f2c72a6a113efedbc08a6c4f2212"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93180_v0.mcfunction",
+        "bytes": 237,
+        "sha256": "dcb99e45c4702a53a0cfe9c2e0a8cd56428d40ad658ed70c52305ff139e9fee6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93181_v0.mcfunction",
+        "bytes": 225,
+        "sha256": "77f1d420df59c57fa5be37d6549c2a45b6203ecaeb7362bb2b2a902cdfad02bd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93183_v0.mcfunction",
+        "bytes": 200,
+        "sha256": "e59e28b5edce034fe835b2dcbf5fd1b87bf078fd0c6170a849f1d34ba6b567e4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93184_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "26fb26c1f01afed257fa25ce5754fa1acdcf5026032c8fda55809ad425639986"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93185_v0.mcfunction",
+        "bytes": 222,
+        "sha256": "bca3f793a2740b9eb8706043acec6686a4caa801c01aa40286e87ada46aaf4f2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93186_v0.mcfunction",
+        "bytes": 228,
+        "sha256": "c420aa472af9b1bafe3730540592838f053d817dfdef05f9cb8537669cab6229"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93187_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "49cc42595f7e761eae4874b86c4de66eac838faad629514671c1336f2c2f7da4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93189_v0.mcfunction",
+        "bytes": 212,
+        "sha256": "2176a3e90052fc5bf2e08075858a024029a6022d01d2a07530d3e99f40c0293e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93193_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "c0b8c361bd6a449783ccc14d74feb319a3f3f1de439b7655d0742230aba1e610"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93194_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "03442be2f33163d52967290d0200e6830c28a0db69419530f589d1392f5690b2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93195_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "b4047c06e4527e635c063d50f0efa0cfa4864a82cf30ea057d456d2813d67a17"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93200_v0.mcfunction",
+        "bytes": 228,
+        "sha256": "d13e48612f064c16decdc4e3ac8b3e432f1ba63eef02e3700990ce017c3cf6a6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93201_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "c754848dc57f8932a095b8ed9ea42f4eb228d90e205173e43ba528b727c04f93"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93203_v0.mcfunction",
+        "bytes": 223,
+        "sha256": "dcb66bffc607d35d2214e7fe418a1e618f196ac8075f1fc3fdab7be8682576e4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93205_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "80eb551d93745c2bb2772db2d9e83f0a0ad93492e7c1a7e471b4261d748eed8f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93206_v0.mcfunction",
+        "bytes": 202,
+        "sha256": "793049c8337d23062d3d44e4f9611622de364f6ff8070cc2b8a8140d2ff5f2aa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93207_v0.mcfunction",
+        "bytes": 244,
+        "sha256": "8f35863c217035f86cfd13d03c79bf6932c758e9a8ba85b07a236b183a3e83da"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93208_v0.mcfunction",
+        "bytes": 201,
+        "sha256": "da055d102ce97768a48d97e41a7d5be4d7a7a38cf870bcd33a22fa1b13efa6fc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93209_v0.mcfunction",
+        "bytes": 205,
+        "sha256": "e13b74d577bdc46fdf948244bc79e518f0e9cfc50067eb786f4f997079d7c43d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93213_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "05b12d749bf2521b3938c2367e003ed145c33eac4616d350e5a3aaf4910903e9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93214_v0.mcfunction",
+        "bytes": 224,
+        "sha256": "764f7a943fe65dd63fe9b7c07d2c9cb3d7775241d9d1da61bcc528d3fb43efa4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93217_v0.mcfunction",
+        "bytes": 220,
+        "sha256": "16d08371196c9505c01e525721728b66ecdc7c70ec61b65f887d366a75d5be2c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93218_v0.mcfunction",
+        "bytes": 219,
+        "sha256": "e8e38136d9167e33f0ddd07c8d42cf4360dcd4450accb80b4d22063f0a907f51"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93219_v0.mcfunction",
+        "bytes": 226,
+        "sha256": "7fec71470b7e3ea4fd75e889b06f9bacabb0855d0eb3618655b0132096e20b75"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93220_v0.mcfunction",
+        "bytes": 218,
+        "sha256": "86798f5dbbf4eec1f0b072946ce4fc3df447d617967006e90f4294c313b00011"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93222_v0.mcfunction",
+        "bytes": 217,
+        "sha256": "e6c5a099b1a950bafdf584cb7563908d7a2b00b0b51455ae5ca89e2cef623c4d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93224_v0.mcfunction",
+        "bytes": 228,
+        "sha256": "825ae32061c9a893cf1529ee4abb7775880cc1c5a00c3dfb5b1cc4bc8149a75f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93225_v0.mcfunction",
+        "bytes": 213,
+        "sha256": "5e40858597e66a8015650ee8b055bf85cfe6e719badd6c64b86865f7866ca021"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93226_v0.mcfunction",
+        "bytes": 230,
+        "sha256": "b048a76136bc6a838630a2d42073e1a859e1b1e7f506ca1eb4d8fbaa0bd5f411"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/block_93227_v0.mcfunction",
+        "bytes": 198,
+        "sha256": "317122f8eb507e49c3494c005f3c942961f511915ccbd139a51ee0df58e36232"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91002_v0.mcfunction",
+        "bytes": 182,
+        "sha256": "d65ffde3eabd22a69887a5cb40fcef72dc386f602bfe48609287a06d7dd3f9f6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91004_v0.mcfunction",
+        "bytes": 166,
+        "sha256": "0c0db1abccf46df62fd698e43375685278df1a2ac7459af513bf04478784de29"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91011_v0.mcfunction",
+        "bytes": 168,
+        "sha256": "c46d5a074f34727d19fff93a3be7c6ba65420c5ff00f32e156389db679fa9b33"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91016_v0.mcfunction",
+        "bytes": 168,
+        "sha256": "5e6be6058dbac8cbfaefc87acf0c08b40791f5552af956961b9da95c5b99a39a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91038_v0.mcfunction",
+        "bytes": 166,
+        "sha256": "0695db2c213649b19d70ba31f383d957961e00bb0768680c6b7a27c78eb68eca"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91059_v0.mcfunction",
+        "bytes": 162,
+        "sha256": "b4a7149231ca65bd4f9a5669ae6d3f8e60d0e468a98a0294f0cc86754f936106"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91064_v0.mcfunction",
+        "bytes": 164,
+        "sha256": "a8fb4b1007b0d6205ab2596f2653ba54e5e78589553f0a6b785bdf669d5d3919"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91065_v0.mcfunction",
+        "bytes": 164,
+        "sha256": "1f907bcfb7e6ddd828bafbaccbac26317fd1c2c688ab48d0f9f59a45c3e0619e"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91066_v0.mcfunction",
+        "bytes": 164,
+        "sha256": "606df6d5f1cf10874b65727dd479d8f3f8604a7d55b712169c6ee68abc355072"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91067_v0.mcfunction",
+        "bytes": 164,
+        "sha256": "0f493a16eaf0c00f37768dfd83cb94dc7254cff9ccd1f2248b311e6b8d3888a4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91068_v0.mcfunction",
+        "bytes": 182,
+        "sha256": "5650ed3336b64153830d5596c28d6be51152b5b6ffd9a0efd396ac94f42a28aa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91071_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "447b13582a6c8e221f2b5e243a2f0ac2b87576000314731eaa316096272067a2"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91076_v0.mcfunction",
+        "bytes": 169,
+        "sha256": "a8e363dc7adecd9b4d33e03f223c76a4db63a38d191721ddecf4a549f4c044b6"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91079_v0.mcfunction",
+        "bytes": 161,
+        "sha256": "6eaf81d1941dac64e06c2dd0bc3f0497871587884f64778e636e5b3e736657dc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91081_v0.mcfunction",
+        "bytes": 170,
+        "sha256": "ad0b33f272bfd4542ee700550ec7c6f7cb975fda32d74b135b104b28cc075310"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91082_v0.mcfunction",
+        "bytes": 170,
+        "sha256": "fa0da905ffbc6aff9505a4861ac693baf0afe5df63c6c6fb9fab3f60c5411c79"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91084_v0.mcfunction",
+        "bytes": 162,
+        "sha256": "98c4f161a2477c25a85dd9a45cba3ac34b4359ba616a08b7c9d5103f2f154da9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_91092_v0.mcfunction",
+        "bytes": 168,
+        "sha256": "176aba98468cb2ced1596e41fadd1ec55e95eab68303534a345d77ecf84bb62f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_92001_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "f5a7764fceb0ebd065b935e9565be26f926e4cc4b7effa2eaf63142c831088ed"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_92002_v0.mcfunction",
+        "bytes": 155,
+        "sha256": "b79da2991a9a99fef822be11f9ad83d64c746b0961f2596dade2dcca0c2d80e5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_92003_v0.mcfunction",
+        "bytes": 156,
+        "sha256": "42c6a59281da266e70cce8419e8945e30ac68345dd69e502163f38efe97de693"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_92004_v0.mcfunction",
+        "bytes": 152,
+        "sha256": "21e04b853e27425fc15448729d9920df9e3420492c781cc667a10bc779db7835"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/item_unassigned_bb_tool_v0.mcfunction",
+        "bytes": 214,
+        "sha256": "ab1fa553de0be45b359169b1032a4241996f89e81f5f7179c8cfde4ff5b22651"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91001_v0.mcfunction",
+        "bytes": 166,
+        "sha256": "fe6460f5f91337e6a95b96ab64aa637278523ef4c0e6a3e27979478923e68de5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91003_v0.mcfunction",
+        "bytes": 146,
+        "sha256": "a639628e1457caa1e5cb0c8446c7aa2bab551c6c2d11801093df334c1e76877a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91005_v0.mcfunction",
+        "bytes": 183,
+        "sha256": "da80fb86ce1ea4e1479c374df2821d793e847ce47b81e5fe1881be31a1a4424c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91006_v0.mcfunction",
+        "bytes": 179,
+        "sha256": "6261283310168aa8961e98612ded26978aa302b57c8582209a6d7e7a0d4c39be"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91007_v0.mcfunction",
+        "bytes": 174,
+        "sha256": "d42685037d05c5ee32a46dc7d52bd7c2993b32eead3974475bd40fa0b7ce2e35"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91008_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "86d2ee4f4c7a0a8d2f057316052fd15fbe57f2a0e630e3032a3750255224d62c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91009_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "abfabd3e93d97a502ba7bebcd49deb9d3be035b75f58733529365d3a0a7f73b8"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91010_v0.mcfunction",
+        "bytes": 149,
+        "sha256": "d9c1b7d924e02d78561f8cf0ebaad4d9356b29955a0aa9170382f5314770d6b4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91012_v0.mcfunction",
+        "bytes": 140,
+        "sha256": "e25a2601c408fe5f0f2cd806bf04948082e120e34fdbfe2421a7e58dcdb0363b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91013_v0.mcfunction",
+        "bytes": 171,
+        "sha256": "249f2a624ce1d4f73dc388bd18618fb2a5951d5a658cb49decca863b42a0a3c7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91014_v0.mcfunction",
+        "bytes": 165,
+        "sha256": "9bbbee7f18dcca2e407932867ccc8fc9b044bb4d57c5cd1c4e39d2682f35ac2b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91015_v0.mcfunction",
+        "bytes": 143,
+        "sha256": "d45a4d9e4bb859239123fdf21c56fc6cff31ce683c8cf36dd96dadd8fdc2346f"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91017_v0.mcfunction",
+        "bytes": 164,
+        "sha256": "99d3a39ff18cf6fcae454893fe184eeb13eb8fece4f54750d7b60c9e867ce682"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91018_v0.mcfunction",
+        "bytes": 165,
+        "sha256": "0e3b099e33da5db90b9b28c28fb8d4c6678ea9eeeeee4e20bfe30f769262622b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91019_v0.mcfunction",
+        "bytes": 165,
+        "sha256": "8bc0cb6095c091370cafa1a2579eba6b77e278baf85a7ee6560794343e528e70"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91020_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "d876bb23fc94cc90bcd35bd411e67b136d4430daa93dda71e667a51d27ee5fcc"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91021_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "36ff721bf28e4b7ac67853caa6cf2e4c608cc19b7999bcda808137f0c5f93d21"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91022_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "aee4d913d2ebb66948a3383cbc15337ee92692f8ddd931cad955b4ffb92a3262"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91023_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "8bf62b3b3d0ebced475adc55705a83467638ddd462b7400965ff13f536ddc418"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91024_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "8ca94617e5b720e5dc96dcb30716224c8af91d96a07c8932e760e55d86313d50"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91025_v0.mcfunction",
+        "bytes": 184,
+        "sha256": "51afb928b2fbbe35227401b82cdda04575d04f0a75ce4008e6604c3b81165f94"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91026_v0.mcfunction",
+        "bytes": 175,
+        "sha256": "5bbce6081a72e9d7eff374c3a77509eeddcf702f800e4e67f78df7829eedf14a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91027_v0.mcfunction",
+        "bytes": 174,
+        "sha256": "138ca7f22e48090da4edb50621a88ccd58bc792cf49794d624836a3eb023612d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91028_v0.mcfunction",
+        "bytes": 150,
+        "sha256": "30eed4da2eec75d557f3c50047e8c6922a2423fa1fbfc6d0eb74afd80cb8a301"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91029_v0.mcfunction",
+        "bytes": 171,
+        "sha256": "f19f19178c27529028f23ba4169913fe1a667015c460b613fd8e180313c3bd56"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91030_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "f7bb02ab3a16712fd032f5b6a4bbff3ee9b24af004a1755467f780ea8066dd34"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91031_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "9c92395af606e6d477e6ed85c671a2bdb76eebf39650d06a73ea28679b8fec30"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91032_v0.mcfunction",
+        "bytes": 185,
+        "sha256": "0d35865ef88a291cae244d0feb7ba318ab919da2ab9a19197e97f26dd165c1f7"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91033_v0.mcfunction",
+        "bytes": 189,
+        "sha256": "daeae75007ad27f237e1781d9a9a1992b695a2c84123d01331b5e1a4af028e4a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91034_v0.mcfunction",
+        "bytes": 171,
+        "sha256": "90bcaa502f0a6922cb9b628d058d930a59ae05adb9a1fe451b4a3fc83a92c8be"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91035_v0.mcfunction",
+        "bytes": 171,
+        "sha256": "734159241afca44f66043bf4576d0ed7c7801e6787cd88bda95d6f040e854592"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91036_v0.mcfunction",
+        "bytes": 178,
+        "sha256": "8cdeb3480777607ee2dd2ab1a18503cc0dc809ee4342d5eeb0fc2f3e02b2ac4d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91037_v0.mcfunction",
+        "bytes": 147,
+        "sha256": "d5638487d3a79dc4db3a9c3708a143bf275caa70e0a03093e3b56fbcab15f7e4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91039_v0.mcfunction",
+        "bytes": 174,
+        "sha256": "f36fd19a9fe56676ef400a9a5524828ac1939d447b6cc9a504c0cac4b608bf3b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91040_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "932b277210a02a72504a29474c099593cf1851ba1f5d93d040db00946609d86c"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91041_v0.mcfunction",
+        "bytes": 177,
+        "sha256": "0cd3232799e63ece785c9f0a2bc78c4bdaa1a1e28b6e4221c3cbe16c1b653f23"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91042_v0.mcfunction",
+        "bytes": 174,
+        "sha256": "c4973389bac0c0e0f2a008ef83a34bec8dfc98fcb0b9a1f653d9052810b15f2d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91043_v0.mcfunction",
+        "bytes": 179,
+        "sha256": "62a792600737d42b5f47643c376ab28cd5631e4514a4eea15e9f8c980510a2a4"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91044_v0.mcfunction",
+        "bytes": 178,
+        "sha256": "88363ae33a276df51d6ccce01d82b6d63d4667e7a942626aeec0cca866b0f21b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91045_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "5d51df8df22da60c942573ac22500756c7036d73ff7367e09fd701073166892b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91046_v0.mcfunction",
+        "bytes": 177,
+        "sha256": "a853bee8ccc2c227d3b455aac83d7e420a8155484dff579cbba7ead354dc5c66"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91047_v0.mcfunction",
+        "bytes": 172,
+        "sha256": "2a6e13bcaf9b308ae839d0f31cb28b3fe02e0e3bdeaa565d85e613178cf32022"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91055_v0.mcfunction",
+        "bytes": 177,
+        "sha256": "ede5c51882d932634ba64ea3242a01d2b3c0cc5b5c849ed1605189302b8eaabd"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91056_v0.mcfunction",
+        "bytes": 179,
+        "sha256": "17c806f2c8b0333638cc0715b73f456b8e1e73857d693e48495ceb44ae7d8f81"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91057_v0.mcfunction",
+        "bytes": 176,
+        "sha256": "d797f3b17ab08984f1ce3d02626de8861eb175f3857006d1e5b703c665f9acb9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91058_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "8c4f8d18f5475de47a85826367ead489e390a80a9c0caa2bbf146c2a00f52ed0"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91060_v0.mcfunction",
+        "bytes": 156,
+        "sha256": "ec941a888c53f026d5ed323b6dc417e04922eb90c580d56c127140f60cfb3895"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91061_v0.mcfunction",
+        "bytes": 142,
+        "sha256": "81f7572b45fd74aef2162f4c92af2331d4b9c7efdf06a4e58a955fbeef3f8dee"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91062_v0.mcfunction",
+        "bytes": 165,
+        "sha256": "4e0f3bc7e693abe5117413930dcea1538006ce5bb8c1d2fecfea27da9a2e86ea"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91063_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "7e141152d33d8d1582c94ccffa0b8ebe3eafb1437b1ee74dcd4a3d3c88c481d5"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91069_v0.mcfunction",
+        "bytes": 156,
+        "sha256": "a7d2dfe4d9275eae93120eb9e74312d999b271d23600be7a7183d234838225af"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91070_v0.mcfunction",
+        "bytes": 150,
+        "sha256": "883f49c2f091222edcf2498d36018d4a75dab33b071a4543034e53af3964993b"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91072_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "cfd9e86da4030be2a7840839a136e38f747fad1fa9e10fd2a6c29fbc3ae5e775"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91073_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "fd4c98cc0a0eef7462eedd173a8c7e6402c7575b840007a585e814952b12b6c1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91074_v0.mcfunction",
+        "bytes": 166,
+        "sha256": "e8608c9152e6f951382961b51512cf817ea67885a286a26d4e77fd8a07a1a030"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91075_v0.mcfunction",
+        "bytes": 168,
+        "sha256": "2d80812a03875373ac220b0d667cc429d248b5b9fb2b169358cbed0f711e2625"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91077_v0.mcfunction",
+        "bytes": 155,
+        "sha256": "504cd661115c852466ebdf84174d59858e8ee3a5a16defe3d2b425a238f64421"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91078_v0.mcfunction",
+        "bytes": 165,
+        "sha256": "9106a466437783be02b18f946039fa8339c36b7d895ab9ef635b61c9991e03af"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91080_v0.mcfunction",
+        "bytes": 152,
+        "sha256": "7a800bae6d4aa2773e6d0c9c41e253535377b79a75185ec20e1a97a9856fea29"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91083_v0.mcfunction",
+        "bytes": 160,
+        "sha256": "ca94736c4f5d37737260b3a1d100f8a710b3ac252cfdfe52deeff0c87e211b22"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91085_v0.mcfunction",
+        "bytes": 163,
+        "sha256": "af3da6f2367425ef101d1913087206f964381db9e0969d04654c6e41adecae8a"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91086_v0.mcfunction",
+        "bytes": 166,
+        "sha256": "c620320788fdf41e44ae6ae9b6e12160eee257bd75b6bd0253231d5d63123da9"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91087_v0.mcfunction",
+        "bytes": 175,
+        "sha256": "3620b1f2b7f88c00421788f1c48f1863c085eed2e44ab768d7f8c33d73619126"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91088_v0.mcfunction",
+        "bytes": 146,
+        "sha256": "158630ba721545fbe03baab823fae3c0b60f5f2fd1633b1a8deac3319476227d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91089_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "7042555a090527deddd2707620158ff74c747adecee7b4d136ec3c3126bd3d14"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91090_v0.mcfunction",
+        "bytes": 174,
+        "sha256": "9ac520a04dbb8326e156f7589def61bede210543c6cca59414d8c9891118edaa"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91091_v0.mcfunction",
+        "bytes": 174,
+        "sha256": "80625009dea6637c55573ec2cf99057694b88830881c3f29b7c2dd3985746ab1"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91093_v0.mcfunction",
+        "bytes": 167,
+        "sha256": "7b3e03381fe7ca608dea6ee0001ec3c30bbb14cb4e851303fb2f082e98c04521"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/dw_gallery/functions/visit/rp_91094_v0.mcfunction",
+        "bytes": 173,
+        "sha256": "b11f5f139a3ae9b65bc2e2dfbca3f9d67cfd0da5d95b93ecd029235d7c0c355d"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/data/minecraft/tags/functions/tick.json",
+        "bytes": 45,
+        "sha256": "8ad91f304a042f513fcbadb8c6b1ff096a9476e8ce8a9ba381a2cc80728df458"
+      },
+      {
+        "path": "datapacks/dw_gallery_entry/pack.mcmeta",
+        "bytes": 152,
+        "sha256": "89a652dd9c8c4991da6b720d582725fc312a83e77d8728095bce1eac89208fcb"
+      },
+      {
+        "path": "DIM-1/data/raids.dat",
+        "bytes": 90,
+        "sha256": "648ac49831f3f3934a638ca255f5f096fb338b4fbc2083192b8cc0cbebd19fb9"
+      },
+      {
+        "path": "DIM1/data/raids_end.dat",
+        "bytes": 90,
+        "sha256": "648ac49831f3f3934a638ca255f5f096fb338b4fbc2083192b8cc0cbebd19fb9"
+      },
+      {
+        "path": "entities/r.-1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.-1.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.-1.1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.0.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.0.0.mca",
+        "bytes": 143360,
+        "sha256": "7c8705c089bbe4d402edd7bf918f522f1a25364dd2ca7536a8202eb0aa896526"
+      },
+      {
+        "path": "entities/r.0.1.mca",
+        "bytes": 40960,
+        "sha256": "c203d4d14f19cab0da5aef857303a6bf44fa9ec0410b167e753f5acca5cc481a"
+      },
+      {
+        "path": "GALLERY-INDEX.csv",
+        "bytes": 145150,
+        "sha256": "30c88df5a3bb7fb99c80d4be1c31ec3bb3b076ab42a2a8a852276db94bc5e0b1"
+      },
+      {
+        "path": "gallery-manifest.json",
+        "bytes": 3882924,
+        "sha256": "4758dd9a3323356622c4df82df1b0630b78c3f2c23d97c0400925dea056bee0e"
+      },
+      {
+        "path": "level.dat",
+        "bytes": 1540,
+        "sha256": "d00bf643731b3d8034cad10f581132e0db67384459774be4df8f40956d9926cc"
+      },
+      {
+        "path": "level.dat_old",
+        "bytes": 1490,
+        "sha256": "7e4a31c63c7da6cec458ee54ac92e22f86995cbdba63ea32a12b568542d47899"
+      },
+      {
+        "path": "README-RU.txt",
+        "bytes": 4948,
+        "sha256": "9a5d85bb6c01d116d5ef7f6b1ce38a62be84c0159408bdca32609dfd76e95a2f"
+      },
+      {
+        "path": "region/r.-1.-1.mca",
+        "bytes": 2080768,
+        "sha256": "f9f5db350b726bf81a1baebb20c6ca6dc4e45441dfef250e190a798e7b0e6369"
+      },
+      {
+        "path": "region/r.-1.0.mca",
+        "bytes": 2596864,
+        "sha256": "2504757664ec2418f06ac5229a8ddade491c5d63904b1a15bae31de83b32a1b6"
+      },
+      {
+        "path": "region/r.-1.1.mca",
+        "bytes": 1843200,
+        "sha256": "f83192d289a007970d5436de8ea3af5a4587284ee2ad161ca17d80a4deaa1ea8"
+      },
+      {
+        "path": "region/r.-1.2.mca",
+        "bytes": 65536,
+        "sha256": "2570f8576884b0585a498fd87d2fa1213a88bfcead9300176299d62651be22ad"
+      },
+      {
+        "path": "region/r.0.-1.mca",
+        "bytes": 2174976,
+        "sha256": "f8425b7d52db1d6aa0d82cd3336636910c82969b43eeb1140dc0894dbd95dea9"
+      },
+      {
+        "path": "region/r.0.0.mca",
+        "bytes": 3112960,
+        "sha256": "ef2bacff26fe9553c966e250c6e5fc6e3685b300374aa86b06cd0f9033545a57"
+      },
+      {
+        "path": "region/r.0.1.mca",
+        "bytes": 3100672,
+        "sha256": "9c230686932b1fdb532904c720d4c0f1e0e182b9ecf8d7d54074a62a56ca5bfb"
+      },
+      {
+        "path": "region/r.0.2.mca",
+        "bytes": 86016,
+        "sha256": "80731a52589b42a54c780a3327fcef1169bfff485fe41dc787777f05485d02e8"
+      }
+    ],
+    "omitted_files": [
+      "session.lock"
+    ],
+    "copy_byte_verification": "PASS",
+    "source_unchanged_after_run": true
+  },
+  "actualClientVisualAcceptance": "NOT_RUN",
+  "startup_seconds": 39.281,
+  "commands": [
+    "list"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 43.562,
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-flatgallery-reopen-final-2\\launch-console.log",
+  "console_sha256": "aace531de03b3f54e239a649ee0a2f177ef59c87dc356e5b99649e0775d1028c",
+  "world_startup": "PASS",
+  "errors": [],
+  "expectedWarnings": [
+    "[03:25:24] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+  ]
+}

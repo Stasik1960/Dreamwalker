@@ -24,13 +24,25 @@ public final class CompositeClient {
     private static boolean initialized;
     public static void initialize() {
         if(initialized)return; initialized=true;
+        CompositeVisualBoundsV127.initialize();
+        RemainingSourceTint.initialize();
+        ImportedCompactClient.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
-        ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}context.addModels(models);});
+        dev.dreamwalker.bloodbornedw.tool.NativeAlternateVisualClient.initialize();
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents.CHUNK_UNLOAD.register((world,chunk)->CompositeLedger.forgetClientChunk(world,chunk.getPos()));
+        ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}models.addAll(ImportedStairLegacyArt.models());context.addModels(models);});
         BlockEntityRendererRegistry.register(CompositeArchitecture.CELL_ENTITY, context->new BlockEntityRenderer<CompositeBlockEntity>(){
             @Override public void render(CompositeBlockEntity entity,float tickDelta,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay){
                 if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(entity.getCachedState())){dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.render(entity,matrices,consumers,light,overlay);return;}
                 if(entity.resident()==null||!(entity.getCachedState().getBlock() instanceof CompositeRootBlock block))return;
-                var shift=CompositeSourceShift.world(entity.getCachedState(),entity.payload());matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,entity.getCachedState(),matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos());matrices.pop();
+                BlockState renderedState=entity.getCachedState();NbtCompound renderedPayload=CompositeVisualBoundsV127.supports(block)?entity.sourceRenderPayload():entity.payload();
+                // A saved NEW root may be visible before its distant helper chunk.
+                // Resolve legacy art locally while the atomic server migration waits.
+                if(block.spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(renderedState,renderedPayload)){
+                    renderedPayload=ImportedTypeAliases.transformPayload(renderedState,renderedPayload);renderedState=ImportedTypeAliases.target(renderedState);block=(CompositeRootBlock)renderedState.getBlock();
+                }
+                if(!CompositeVisualBoundsV127.visible(entity,block,renderedState,renderedPayload))return;
+                var shift=CompositeSourceShift.world(renderedState,renderedPayload);matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,renderedState,matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos(),renderedPayload);matrices.pop();
             }
             @Override public boolean rendersOutsideBoundingBox(CompositeBlockEntity entity){return true;}
             @Override public int getRenderDistance(){return 1024;}
@@ -39,8 +51,9 @@ public final class CompositeClient {
             CompositeRootBlock rendered=block instanceof ThinWindowRootBlock?GlazingTypes.itemTarget(block,stack):block;
             BlockState state=rendered instanceof ThinWindowRootBlock?GlazingTypes.itemState(block,stack):rendered.getDefaultState();NbtCompound art=stack.getSubNbt("BlockStateTag");
             if(!(rendered instanceof ThinWindowRootBlock)&&art!=null){try{int v=Integer.parseInt(art.getString("variant"));if(v>=0&&v<rendered.spec.variants.size())state=state.with(CompositeRootBlock.VARIANT,v);}catch(NumberFormatException ignored){}state=state.with(CompositeRootBlock.PROFILE,"alt".equals(art.getString("profile"))?CompositeRootBlock.Profile.ALT:CompositeRootBlock.Profile.BASE).with(CompositeRootBlock.OPEN,"true".equals(art.getString("open")));}
+            if(rendered.spec.simplePhysicalCollision&&art!=null)for(var property:state.getBlock().getStateManager().getProperties())if(!Set.of("rotation","variant","profile","open").contains(property.getName())&&art.contains(property.getName(),8))state=itemArt(state,property,art.getString(property.getName()));
             double[] bounds=visualBounds(rendered,state);double span=Math.max(bounds[3]-bounds[0],Math.max(bounds[4]-bounds[1],bounds[5]-bounds[2]));float scale=(float)(.85/Math.max(1,span));
-            matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null);matrices.pop();
+            matrices.push();matrices.translate(.5,.5,.5);matrices.scale(scale,scale,scale);matrices.translate(-(bounds[0]+bounds[3])/2,-(bounds[1]+bounds[4])/2,-(bounds[2]+bounds[5])/2);renderParts(rendered,state,matrices,consumers,light,overlay,null,null,stack.getNbt());matrices.pop();
         });
         ClientPickBlockGatherCallback.EVENT.register((player,hit)->{if(hit instanceof BlockHitResult blockHit){var owner=CompositeRuntime.target(player.getWorld(),blockHit.getBlockPos(),player);if(owner!=null)return CompositeRuntime.pick(player.getWorld(),owner);}return net.minecraft.item.ItemStack.EMPTY;});
         ClientPlayNetworking.registerGlobalReceiver(CompositeNetworking.OWNERS,(client,handler,buffer,response)->{
@@ -48,37 +61,38 @@ public final class CompositeClient {
             SyncContext context=new SyncContext(CompositeNetworking.OWNERS);
             try{
                 OwnersPacket packet=decodeOwners(buffer,context);
-                client.execute(()->{if(client.world!=null&&client.world.getRegistryKey().getValue().equals(packet.dimension()))for(var value:packet.values().entrySet()){
+                client.execute(()->{if(client.world!=null&&client.world.getRegistryKey().getValue().equals(packet.dimension())){if(packet.sharded())CompositeLedger.markClientSharded(client.world);for(var value:packet.values().entrySet()){
                     CompositeLedger.get(client.world).put(value.getKey(),value.getValue());
                     for(var entry:value.getValue())if(entry.owner().root().equals(value.getKey())&&client.world.getBlockEntity(CompositeData.pos(value.getKey())) instanceof CompositeBlockEntity own&&(!(own instanceof dev.dreamwalker.bloodbornedw.architecture.ladder_source.SourceLadderBlockEntity)||entry.owner().equals(own.resident())))own.set(entry.owner(),value.getValue(),CompositeData.nbt(entry.rootData().blockEntityNbt()));
                     var pos=CompositeData.pos(value.getKey());var state=client.world.getBlockState(pos);client.world.updateListeners(pos,state,state,net.minecraft.block.Block.NOTIFY_LISTENERS);
                     // Offset is BE data, not a Cartesian blockstate property;
                     // invalidate the old chunk mesh even when state == state.
                     client.worldRenderer.scheduleBlockRenders(pos.getX()-1,pos.getY()-1,pos.getZ()-1,pos.getX()+1,pos.getY()+1,pos.getZ()+1);
-                }});
+                }}});
             }catch(RuntimeException failure){context.error(failure);}
         });
 
     }
-    private record OwnersPacket(Identifier dimension,Map<Cell,List<CompositeData.Contribution>> values){}
+    private record OwnersPacket(Identifier dimension,Map<Cell,List<CompositeData.Contribution>> values,boolean sharded){}
     /** Decode the complete packet before scheduling any mutation. Limits match the server's
      * 64-cell batch and vanilla's 1 MiB custom S2C payload ceiling; NBT retains its reader limit. */
     private static OwnersPacket decodeOwners(PacketByteBuf buffer,SyncContext context){
         context.stage="packet-length";checkPacketLength(buffer);
         context.stage="dimension-id";Identifier dimension=buffer.readIdentifier();
         context.stage="cell-count";int count=buffer.readVarInt();if(count<0||count>64)throw new IllegalArgumentException("Invalid owner cell count");
-        Map<Cell,List<CompositeData.Contribution>> values=new LinkedHashMap<>();
+        Map<Cell,List<CompositeData.Contribution>> values=new LinkedHashMap<>();boolean sharded=false;
         for(int i=0;i<count;i++){
             context.stage="cell-position";context.root=buffer.readBlockPos();Cell cell=CompositeData.cell(context.root);
             context.instanceId="";context.registry=null;
             if(values.containsKey(cell))throw new IllegalArgumentException("Duplicate owner cell");
             context.stage="owners-nbt";NbtCompound tag=buffer.readNbt();
+            if(tag!=null&&tag.getBoolean("OwnerShardClient"))sharded=true;
             // A null tag formerly cleared this cell, and remains a valid empty update.
             List<CompositeData.Contribution> entries=tag==null?List.of():decodeContributions(tag,context);
             values.put(cell,entries);
         }
         context.stage="trailing-bytes";if(buffer.isReadable())throw new IllegalArgumentException("Trailing owner packet bytes");
-        return new OwnersPacket(dimension,Collections.unmodifiableMap(values));
+        return new OwnersPacket(dimension,Collections.unmodifiableMap(values),sharded);
     }
 
     private static void checkPacketLength(PacketByteBuf buffer){if(buffer.readableBytes()<=0||buffer.readableBytes()>1_048_576)throw new IllegalArgumentException("Invalid custom S2C payload length");}
@@ -121,23 +135,50 @@ public final class CompositeClient {
     }
     }
     private static void renderParts(CompositeRootBlock block,BlockState state,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay,String instanceId,net.minecraft.util.math.BlockPos root){
+        renderParts(block,state,matrices,consumers,light,overlay,instanceId,root,null);
+    }
+    private static void renderParts(CompositeRootBlock block,BlockState state,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay,String instanceId,net.minecraft.util.math.BlockPos root,NbtCompound payload){
         MinecraftClient client=MinecraftClient.getInstance();VertexConsumer consumer=consumers.getBuffer(block.spec.translucent?RenderLayer.getTranslucent():RenderLayer.getCutout());
+        int sourceTint=RemainingSourceTint.color(block,client,root);float red=((sourceTint>>16)&255)/255f,green=((sourceTint>>8)&255)/255f,blue=(sourceTint&255)/255f;
         matrices.push();rotate(matrices,.5,.5,.5,-state.get(CompositeRootBlock.ROTATION)*45,false);
         if(ThinWindowRootBlock.mount(state)!=ThinWindowRootBlock.Mount.VERTICAL){
             rotate(matrices,.5,.5,.5,ThinWindowRootBlock.mount(state)==ThinWindowRootBlock.Mount.FLOOR?90:-90,true);
             rotate(matrices,.5,.5,.5,block.spec.variant(state).mountAlignmentYaw(),false);
         }
-        for(var part:block.spec.pose(state).parts()){
+        var selectedParts=ImportedStairLegacyArt.selectedParts(block,state,payload);
+        boolean generatedAlt=dev.dreamwalker.bloodbornedw.tool.BbAlternateService.generatedAlternate(block,state,selectedParts);
+        // Native model rendering applies its RGB arguments only to tinted quads.
+        // Tone every emitted face for generated NEW alternates, after source tint.
+        if(generatedAlt)consumer=generatedAlternateConsumer(consumer);
+        for(var part:selectedParts){
             matrices.push();matrices.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.yaw(),false);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.pitch(),true);
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
             var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
-            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,1,1,1,light,overlay);matrices.pop();
+            boolean sourceEmissive=block.spec.id.getPath().startsWith("source_")&&selectedModel.getPath().startsWith("remaining/source_emissive/");
+            client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,red,green,blue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
         }matrices.pop();
     }
+    /** Uniform generated-ALT tone. The native quad tint, alpha, UV and lighting remain intact. */
+    private static VertexConsumer generatedAlternateConsumer(VertexConsumer target){return new GeneratedAlternateConsumer(target);}
+    private static final class GeneratedAlternateConsumer implements VertexConsumer {
+        private final VertexConsumer target;
+        GeneratedAlternateConsumer(VertexConsumer target){this.target=target;}
+        @Override public VertexConsumer vertex(double x,double y,double z){target.vertex(x,y,z);return this;}
+        @Override public VertexConsumer color(int red,int green,int blue,int alpha){target.color(Math.round(red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED),Math.round(green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN),Math.round(blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE),alpha);return this;}
+        @Override public VertexConsumer texture(float u,float v){target.texture(u,v);return this;}
+        @Override public VertexConsumer overlay(int u,int v){target.overlay(u,v);return this;}
+        @Override public VertexConsumer light(int u,int v){target.light(u,v);return this;}
+        @Override public VertexConsumer normal(float x,float y,float z){target.normal(x,y,z);return this;}
+        @Override public void next(){target.next();}
+        @Override public void fixedColor(int red,int green,int blue,int alpha){target.fixedColor(Math.round(red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED),Math.round(green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN),Math.round(blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE),alpha);}
+        @Override public void unfixColor(){target.unfixColor();}
+        @Override public void vertex(float x,float y,float z,float red,float green,float blue,float alpha,float u,float v,int overlay,int light,float normalX,float normalY,float normalZ){target.vertex(x,y,z,red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED,green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN,blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE,alpha,u,v,overlay,light,normalX,normalY,normalZ);}
+    }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
+    private static <T extends Comparable<T>> BlockState itemArt(BlockState state,net.minecraft.state.property.Property<T> property,String value){return property.parse(value).map(v->state.with(property,v)).orElse(state);}
     private static double[] visualBounds(CompositeRootBlock block,BlockState state){double[] result={0,0,0,1,1,1};for(var bounds:block.spec.pose(state).selection()){result[0]=Math.min(result[0],bounds.from().x()/16);result[1]=Math.min(result[1],bounds.from().y()/16);result[2]=Math.min(result[2],bounds.from().z()/16);result[3]=Math.max(result[3],bounds.to().x()/16);result[4]=Math.max(result[4],bounds.to().y()/16);result[5]=Math.max(result[5],bounds.to().z()/16);}return result;}
     private CompositeClient(){}
 }

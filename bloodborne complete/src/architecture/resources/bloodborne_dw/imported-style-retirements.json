@@ -1,0 +1,1278 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "653ae307ba4c44392ee08969f3890321e95659bb",
+  "scope": "POST_ORIGINAL_V12_ONLY",
+  "status": "REVIEWED_ALL572_NATIVE_INSTALLED_STYLE",
+  "workingTypeCountBefore": 572,
+  "workingTypeCountAfterConfirmedRetirements": 551,
+  "registrationsAndNumericReservations": "PRESERVED_COMPATIBILITY_ONLY_NOT_OFFERED",
+  "protectedOriginalRegistryIds": [
+    "bloodborne_dw:prototype_double_door",
+    "bloodborne_dw:prototype_glass_window_02",
+    "bloodborne_dw:prototype_glass_window_03",
+    "bloodborne_dw:prototype_ladder",
+    "bloodborne_dw:prototype_ladder_art_1",
+    "bloodborne_dw:prototype_ladder_art_2",
+    "bloodborne_dw:prototype_roof",
+    "bloodborne_dw:prototype_thin_window",
+    "bloodborne_dw:prototype_tree",
+    "bloodborne_dw:prototype_wall",
+    "bloodborne_dw:prototype_wall_skin_0",
+    "bloodborne_dw:prototype_wall_skin_1",
+    "bloodborne_dw:prototype_wall_skin_2",
+    "bloodborne_dw:prototype_wall_skin_3",
+    "bloodborne_dw:prototype_wall_skin_4",
+    "bloodborne_dw:prototype_wall_skin_5",
+    "bloodborne_dw:prototype_wall_skin_7",
+    "bloodborne_dw:prototype_wood_window",
+    "bloodborne_rp:babycart",
+    "bloodborne_rp:blood_starved_beast",
+    "bloodborne_rp:blood_vial",
+    "bloodborne_rp:boat",
+    "bloodborne_rp:boom_hammer",
+    "bloodborne_rp:brick_troll",
+    "bloodborne_rp:cabriolet_closed",
+    "bloodborne_rp:cabriolet_open",
+    "bloodborne_rp:cage_obj_1",
+    "bloodborne_rp:cage_obj_2",
+    "bloodborne_rp:cage_obj_3",
+    "bloodborne_rp:carriage",
+    "bloodborne_rp:carrion_crow",
+    "bloodborne_rp:chair",
+    "bloodborne_rp:chandelier_large",
+    "bloodborne_rp:chandelier_small",
+    "bloodborne_rp:chest",
+    "bloodborne_rp:cleric_beast",
+    "bloodborne_rp:coffin_1",
+    "bloodborne_rp:coffin_2",
+    "bloodborne_rp:coffin_3",
+    "bloodborne_rp:coffin_stand",
+    "bloodborne_rp:coffins_1",
+    "bloodborne_rp:coffins_2",
+    "bloodborne_rp:coffins_3",
+    "bloodborne_rp:coffins_4",
+    "bloodborne_rp:coffins_5",
+    "bloodborne_rp:cross_beast",
+    "bloodborne_rp:curtain_half",
+    "bloodborne_rp:curtains",
+    "bloodborne_rp:curtainsmall",
+    "bloodborne_rp:dog_cage",
+    "bloodborne_rp:dog_cage1",
+    "bloodborne_rp:dog_cage2",
+    "bloodborne_rp:dog_cage3",
+    "bloodborne_rp:door_1",
+    "bloodborne_rp:door_2",
+    "bloodborne_rp:door_empty",
+    "bloodborne_rp:elevator",
+    "bloodborne_rp:executioner",
+    "bloodborne_rp:furniture_1",
+    "bloodborne_rp:furniture_10",
+    "bloodborne_rp:furniture_11",
+    "bloodborne_rp:furniture_12",
+    "bloodborne_rp:furniture_13",
+    "bloodborne_rp:furniture_14",
+    "bloodborne_rp:furniture_15",
+    "bloodborne_rp:furniture_16",
+    "bloodborne_rp:furniture_2",
+    "bloodborne_rp:furniture_3",
+    "bloodborne_rp:furniture_4",
+    "bloodborne_rp:furniture_5",
+    "bloodborne_rp:furniture_6",
+    "bloodborne_rp:furniture_7",
+    "bloodborne_rp:furniture_8",
+    "bloodborne_rp:furniture_9",
+    "bloodborne_rp:furniture_books",
+    "bloodborne_rp:furniture_cabinet_pantry",
+    "bloodborne_rp:furniture_pantry",
+    "bloodborne_rp:gate_empty",
+    "bloodborne_rp:giant_rat",
+    "bloodborne_rp:hearse",
+    "bloodborne_rp:hook",
+    "bloodborne_rp:horse_carcass",
+    "bloodborne_rp:hunterlamp",
+    "bloodborne_rp:huntsman_a",
+    "bloodborne_rp:huntsman_b",
+    "bloodborne_rp:huntsman_c",
+    "bloodborne_rp:huntsman_d",
+    "bloodborne_rp:huntsman_wheelchair",
+    "bloodborne_rp:ladder",
+    "bloodborne_rp:lamp_npc",
+    "bloodborne_rp:large_huntsman",
+    "bloodborne_rp:lever_1",
+    "bloodborne_rp:lever_2",
+    "bloodborne_rp:long_table",
+    "bloodborne_rp:main_gate",
+    "bloodborne_rp:maneater_boar",
+    "bloodborne_rp:npc_window",
+    "bloodborne_rp:odeon_tomb",
+    "bloodborne_rp:rabid_dog",
+    "bloodborne_rp:ropes",
+    "bloodborne_rp:rotted_corpse",
+    "bloodborne_rp:saw_cleaver",
+    "bloodborne_rp:saw_spear",
+    "bloodborne_rp:scourge_beast",
+    "bloodborne_rp:small_gate",
+    "bloodborne_rp:small_rat",
+    "bloodborne_rp:smallcross",
+    "bloodborne_rp:stairs",
+    "bloodborne_rp:statue_1",
+    "bloodborne_rp:trapdoor",
+    "bloodborne_rp:tree1",
+    "bloodborne_rp:tree2",
+    "bloodborne_rp:tree3",
+    "bloodborne_rp:vicar_amelia",
+    "bloodborne_rp:wheelchair",
+    "bloodborne_rp:wood_gate"
+  ],
+  "retirements": [
+    {
+      "registryId": "bloodborne_dw:source_andesite",
+      "numericId": "90269",
+      "name": "Плита из серого зернистого камня",
+      "reason": "Практически обычный зернистый серый камень Minecraft: куб и простые объёмные позы с серыми пятнами, без заметной готической резьбы или авторского силуэта. Небольшая переработка andesite-текстуры в v15 не меняет установленный вид обычного андезитового строительного блока.",
+      "aliases": [
+        "bloodborne_dw:source_andesite",
+        "bloodborne_dw:source_bricks_stone_0",
+        "bloodborne_dw:source_bricks_stone_6"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-019.png",
+          "sha256": "f2d3bdf212f83278bc1384814a74243564d16ac98f8500ede65343f56fbbf0df",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.0,
+        "defaultVanillaVisibleSurfaceFraction": 0.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/andesite",
+            "sourceModel": "minecraft:block/andesite",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/bricks/stone_0",
+            "sourceModel": "minecraft:block/bricks/stone_0",
+            "sourcePackContainsModel": true,
+            "sourceModelSha256": "01e48148f5b4f4547869a6cbd0c9880681635d49a3ccb01c82c5b537827db497"
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/bricks/stone_6",
+            "sourceModel": "minecraft:block/bricks/stone_6",
+            "sourcePackContainsModel": true,
+            "sourceModelSha256": "63734da86773695d4f8762b9d7f1e0feebec428b1ca64743080386f5e1836c49"
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_andesite_slab_top",
+      "numericId": "90270",
+      "name": "Архитектурная плита · верхняя",
+      "reason": "Практически обычные серые андезитовые кубы, плиты и простые стеновые соединения Minecraft. Доминирует зернистая сероватая поверхность без заметной BB резьбы; варианты положения и простых соединений не меняют ванильную стилистику всей группы.",
+      "aliases": [
+        "bloodborne_dw:source_andesite_slab_top",
+        "bloodborne_dw:source_chiseled_red_sandstone",
+        "bloodborne_dw:source_cobbled_deepslate",
+        "bloodborne_dw:source_diorite",
+        "bloodborne_dw:source_assembly_cobbled_deepslate_wall"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-020.png",
+          "sha256": "0d76275452e426f3cc38105e98b993339bddd873ddd9fa9a718a46e1e068c6ef",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.0,
+        "defaultVanillaVisibleSurfaceFraction": 0.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/andesite_slab_top",
+            "sourceModel": "minecraft:block/andesite_slab_top",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/chiseled_red_sandstone",
+            "sourceModel": "minecraft:block/chiseled_red_sandstone",
+            "sourcePackContainsModel": true,
+            "sourceModelSha256": "b0e5b137470925556892463e4dc2938b87c63736e143799203946af5df6613eb"
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/cobbled_deepslate",
+            "sourceModel": "minecraft:block/cobbled_deepslate",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/diorite",
+            "sourceModel": "minecraft:block/diorite",
+            "sourcePackContainsModel": true,
+            "sourceModelSha256": "8f4e40708cea712a278efb16c33be3447135e9b3d0ffb472359dfb815bafcadc"
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/cobbled_deepslate_wall_post",
+            "sourceModel": "minecraft:block/cobbled_deepslate_wall_post",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/cobbled_deepslate_wall_side",
+            "sourceModel": "minecraft:block/cobbled_deepslate_wall_side",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/cobbled_deepslate_wall_side_tall",
+            "sourceModel": "minecraft:block/cobbled_deepslate_wall_side_tall",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_tall_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_tall_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_tall_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_tall_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_tall_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cobbled_deepslate_wall_side_tall_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_bamboo_mosaic_stairs",
+      "numericId": "90275",
+      "name": "Бамбуковая мозаичная лестница",
+      "reason": "Обычная жёлтая бамбуковая мозаичная лестница Minecraft: стандартный ступенчатый корпус и неизменённый клетчатый бамбук на всей поверхности.",
+      "aliases": [
+        "bloodborne_dw:source_bamboo_mosaic_stairs"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-081.png",
+          "sha256": "7d403ba7fabd84acc1eaaf270e2ed03344fa098c36bb59195fb2253c4032c59e",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 1.0,
+        "defaultVanillaVisibleSurfaceFraction": 1.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/bamboo_mosaic_stairs",
+            "sourceModel": "minecraft:block/bamboo_mosaic_stairs",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90275/inner_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90275/inner_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90275/inner_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90275/inner_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90275/outer_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90275/outer_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90275/outer_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90275/outer_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_mosaic_stairs_x180_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_bamboo_stairs",
+      "numericId": "90276",
+      "name": "Бамбуковая лестница",
+      "reason": "Обычная жёлтая бамбуковая лестница Minecraft: стандартные ступени и неизменённые параллельные бамбуковые доски, без готической отделки.",
+      "aliases": [
+        "bloodborne_dw:source_bamboo_stairs"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-082.png",
+          "sha256": "b18ba5c9c20ae47783a6063d166c7442ad3c46b1096f69eff5dcdc8c79daf6af",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 1.0,
+        "defaultVanillaVisibleSurfaceFraction": 1.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/bamboo_stairs",
+            "sourceModel": "minecraft:block/bamboo_stairs",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90276/inner_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90276/inner_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90276/inner_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90276/inner_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90276/outer_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90276/outer_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90276/outer_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90276/outer_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/bamboo_stairs_x180_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_beacon",
+      "numericId": "90278",
+      "name": "Бирюзовый светильник на основании",
+      "reason": "Узнаваемый обычный маяк Minecraft: яркий бирюзовый светящийся куб и стандартный силуэт. Замена нижнего обсидианового основания серой отделкой не меняет доминирующий вид маяка.",
+      "aliases": [
+        "bloodborne_dw:source_beacon"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-112.png",
+          "sha256": "54e12f52a407b0f0699d9a0cd7bb960a74954d7dd4339b2efd66191a64d4d4f5",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.5997,
+        "defaultVanillaVisibleSurfaceFraction": 0.5997,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/beacon",
+            "sourceModel": "minecraft:block/beacon",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_cherry_stairs",
+      "numericId": "90409",
+      "name": "Вишнёвая лестница",
+      "reason": "Обычные розовые вишнёвые ступени Minecraft: вся поверхность использует неизменённые cherry_planks; стандартный ступенчатый силуэт выбивается из серой городской архитектуры.",
+      "aliases": [
+        "bloodborne_dw:source_cherry_stairs"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-084.png",
+          "sha256": "66cd882e462cba6b29fcd9a77e9a4bb6708020196b0c036d78763207acf297fb",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 1.0,
+        "defaultVanillaVisibleSurfaceFraction": 1.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/cherry_stairs",
+            "sourceModel": "minecraft:block/cherry_stairs",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90409/inner_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90409/inner_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90409/inner_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90409/inner_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90409/outer_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90409/outer_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90409/outer_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90409/outer_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/cherry_stairs_x180_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_farmland_moist",
+      "numericId": "90533",
+      "name": "Влажная грядка · текстура BB",
+      "reason": "Узнаваемая обычная грядка Minecraft: низкий прямоугольный корпус и типичная коричневая влажная поверхность с параллельными бороздами. BB-каменная отделка боков не меняет основной вид обычной сельскохозяйственной грядки.",
+      "aliases": [
+        "bloodborne_dw:source_farmland_moist"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-117.png",
+          "sha256": "51c6c4e2d2975d39ea76adcb839788d0bcbefbeef9f562281be4554ebc162ebe",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.17391,
+        "defaultVanillaVisibleSurfaceFraction": 0.17391,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/farmland_moist",
+            "sourceModel": "minecraft:block/farmland_moist",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_grass_block_snow",
+      "numericId": "90557",
+      "name": "Пучок травы",
+      "reason": "Обычный куб снежной травы Minecraft: белая полоса со светло-голубой кромкой и коричневая земля на большей части боков. Небольшая замена верхней/нижней поверхности не меняет узнаваемый снежный блок.",
+      "aliases": [
+        "bloodborne_dw:source_grass_block_snow"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-118.png",
+          "sha256": "f1c3265bbdb064f423d92dca09910985b55595b8431c663605c0c60085b03379",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.83333,
+        "defaultVanillaVisibleSurfaceFraction": 0.83333,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/grass_block_snow",
+            "sourceModel": "minecraft:block/grass_block_snow",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_grindstone",
+      "numericId": "90577",
+      "name": "Объёмная декоративная деталь",
+      "reason": "Узнаваемое ванильное точило Minecraft: крупный круглый каменный механизм, стандартные боковины/ось и деревянные подпорки. Изменение материала подпорок не меняет вид обычного точила.",
+      "aliases": [
+        "bloodborne_dw:source_grindstone"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-118.png",
+          "sha256": "f1c3265bbdb064f423d92dca09910985b55595b8431c663605c0c60085b03379",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.82031,
+        "defaultVanillaVisibleSurfaceFraction": 0.82031,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/grindstone",
+            "sourceModel": "minecraft:block/grindstone",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_lever",
+      "numericId": "90637",
+      "name": "Рычаг на каменном основании",
+      "reason": "Узнаваемый ванильный рычаг Minecraft с той же короткой деревянной рукоятью и малым прямоугольным каменным основанием. Другой рисунок основания и способы монтажа не создают готический городской объект.",
+      "aliases": [
+        "bloodborne_dw:source_lever",
+        "bloodborne_dw:source_lever_on"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-038.png",
+          "sha256": "7c93f4f4c248878e1bca2dc9fcc5cbb83df2f8cc64bca95abb4168f6d38c04cc",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.31818,
+        "defaultVanillaVisibleSurfaceFraction": 0.31818,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/lever",
+            "sourceModel": "minecraft:block/lever",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/lever_on",
+            "sourceModel": "minecraft:block/lever_on",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_mangrove_stairs",
+      "numericId": "90686",
+      "name": "Мангровая лестница",
+      "reason": "Обычные красноватые мангровые ступени Minecraft: стандартная форма и неизменённые mangrove_planks на всех гранях.",
+      "aliases": [
+        "bloodborne_dw:source_mangrove_stairs"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-095.png",
+          "sha256": "8e37697618c370882d66086f824bf120410eed8010e78a077aec10fb6e66530c",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 1.0,
+        "defaultVanillaVisibleSurfaceFraction": 1.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mangrove_stairs",
+            "sourceModel": "minecraft:block/mangrove_stairs",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90686/inner_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90686/inner_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90686/inner_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90686/inner_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90686/outer_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90686/outer_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90686/outer_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90686/outer_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mangrove_stairs_x180_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_mossy_cobblestone_slab",
+      "numericId": "90690",
+      "name": "Архитектурная плита · с мхом",
+      "reason": "Практически обычный серый пятнистый куб и плита Minecraft: редкие крупные серые пятна на ровных гранях, без мха и заметной BB резьбы в установленном виде. Название замшелого носителя не соответствует внешности; авторская замена bitmap сохраняет обычную ванильную стилистику простого камня.",
+      "aliases": [
+        "bloodborne_dw:source_mossy_cobblestone_slab",
+        "bloodborne_dw:source_mossy_cobblestone_slab_top"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-040.png",
+          "sha256": "1ff79997eb6940026c6ef9eb1c23c1d2704dd28cd263e3c64a0c1041c2f287b9",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.0,
+        "defaultVanillaVisibleSurfaceFraction": 0.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mossy_cobblestone_slab",
+            "sourceModel": "minecraft:block/mossy_cobblestone_slab",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mossy_cobblestone_slab_top",
+            "sourceModel": "minecraft:block/mossy_cobblestone_slab_top",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_mud_brick_stairs",
+      "numericId": "90701",
+      "name": "Лестница из коричневого кирпича",
+      "reason": "Обычные ступени из грязевого кирпича Minecraft: стандартная геометрия и неизменённый крупный коричнево-оранжевый рисунок mud_bricks на всей поверхности.",
+      "aliases": [
+        "bloodborne_dw:source_mud_brick_stairs"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-098.png",
+          "sha256": "e2ceebcb7c1aadc512b8cb1c1e6160f3a14d36d6c26dcd54fe88625e9ffe1674",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 1.0,
+        "defaultVanillaVisibleSurfaceFraction": 1.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mud_brick_stairs",
+            "sourceModel": "minecraft:block/mud_brick_stairs",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90701/inner_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90701/inner_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90701/inner_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90701/inner_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90701/outer_left",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90701/outer_left",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:block/imported_stairs/90701/outer_right",
+            "sourceModel": "bloodborne_dw:block/imported_stairs/90701/outer_right",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mud_brick_stairs_x180_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_potted_azalea_bush",
+      "numericId": "90784",
+      "name": "Куст в горшке",
+      "reason": "Узнаваемая обычная азалия Minecraft в горшке: кубическая ярко-зелёная листва и стандартный терракотовый горшок; небольшие светящиеся отметки не меняют основной вид. Цветущий вариант относится к тому же типу.",
+      "aliases": [
+        "bloodborne_dw:source_potted_azalea_bush",
+        "bloodborne_dw:source_potted_flowering_azalea_bush"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-041.png",
+          "sha256": "26292ca6a98c2a8c122e80ecfae9f76c4004be8d1390d8d137062cd693327ea2",
+          "kind": "MIGRATION",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.96775,
+        "defaultVanillaVisibleSurfaceFraction": 0.96775,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/potted_azalea_bush",
+            "sourceModel": "minecraft:block/potted_azalea_bush",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_azalea_bush_x0_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_azalea_bush_x0_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/potted_flowering_azalea_bush",
+            "sourceModel": "minecraft:block/potted_flowering_azalea_bush",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_flowering_azalea_bush_x0_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_flowering_azalea_bush_x0_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_potted_bamboo",
+      "numericId": "90785",
+      "name": "Бамбук в декоративной подставке",
+      "reason": "Узнаваемый обычный бамбук Minecraft в стандартном горшке: сегментированный зелёный стебель с одиночным листом, обычный терракотовый корпус; небольшое свечение корпуса недостаточно для отдельного BB-объекта.",
+      "aliases": [
+        "bloodborne_dw:source_potted_bamboo"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-124.png",
+          "sha256": "6acd38586b3526e3b3b0427159c1cf2e71ee9590e176e135be6adb75980dd64d",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.9292,
+        "defaultVanillaVisibleSurfaceFraction": 0.9292,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/potted_bamboo",
+            "sourceModel": "minecraft:block/potted_bamboo",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_bamboo_x0_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_bamboo_x0_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_potted_fern",
+      "numericId": "90786",
+      "name": "Каменный крест в декоративной подставке",
+      "reason": "Обычный горшок с папоротником Minecraft по стандартной форме листьев и корпуса, даже при затемнённом окрашивании листьев. Не является самостоятельным каменным крестом; небольшое свечение горшка не меняет узнаваемый ванильный предмет.",
+      "aliases": [
+        "bloodborne_dw:source_potted_fern"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-124.png",
+          "sha256": "6acd38586b3526e3b3b0427159c1cf2e71ee9590e176e135be6adb75980dd64d",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.93173,
+        "defaultVanillaVisibleSurfaceFraction": 0.93173,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/potted_fern",
+            "sourceModel": "minecraft:block/potted_fern",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_fern_x0_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_fern_x0_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_potted_mangrove_propagule",
+      "numericId": "90788",
+      "name": "Мангровый росток в декоративной подставке",
+      "reason": "Обычный мангровый росток Minecraft в стандартном горшке: типичные широкие зелёные листья и терракотовый корпус. Добавленные светящиеся отметки не меняют доминирующий ванильный вид.",
+      "aliases": [
+        "bloodborne_dw:source_potted_mangrove_propagule"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-124.png",
+          "sha256": "6acd38586b3526e3b3b0427159c1cf2e71ee9590e176e135be6adb75980dd64d",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.93175,
+        "defaultVanillaVisibleSurfaceFraction": 0.93175,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/potted_mangrove_propagule",
+            "sourceModel": "minecraft:block/potted_mangrove_propagule",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_mangrove_propagule_x0_y0",
+            "sourceModel": "bloodborne_dw:remaining/source_emissive/minecraft/block/potted_mangrove_propagule_x0_y0",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_soul_lantern",
+      "numericId": "90941",
+      "name": "Фонарь",
+      "reason": "Практически обычный фонарь Minecraft: неизменённые компактные пропорции квадратного корпуса, ступенчатой крышки и верхней ручки. Ровные белые окна и тёмно-серая рамка заменяют цвет, но не добавляют BB орнамента или вытянутой готической формы; узнаваемый стандартный силуэт сохраняется.",
+      "aliases": [
+        "bloodborne_dw:source_soul_lantern"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-127.png",
+          "sha256": "5607c2a0a7c13a66bbc78e030d0c4c26c6be6320c01b4cceab9dc6f0116b381e",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.0,
+        "defaultVanillaVisibleSurfaceFraction": 0.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/soul_lantern",
+            "sourceModel": "minecraft:block/soul_lantern",
+            "sourcePackContainsModel": true,
+            "sourceModelSha256": "5c4a454f5cd51dc7d29069f235fc8a861586d0c4302bcc93fe452292f94ee770"
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_warped_stem",
+      "numericId": "93112",
+      "name": "Каменный блок с бирюзовой верхней панелью",
+      "reason": "Обычный куб с узнаваемым ярким бирюзово-пурпурным торцом искажённого стебля Minecraft. Хотя боковые грани заменены серыми полосами, типичный цветной рисунок торца остаётся главным отличительным признаком и выбивается из городской палитры.",
+      "aliases": [
+        "bloodborne_dw:source_warped_stem"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-134.png",
+          "sha256": "6ccd0da1e657cb04a6989b176de357965d90bc053906672b21a2c11a22f06d96",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.33333,
+        "defaultVanillaVisibleSurfaceFraction": 0.33333,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/warped_stem",
+            "sourceModel": "minecraft:block/warped_stem",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_weathered_cut_copper",
+      "numericId": "93121",
+      "name": "Плита с зелёной медной облицовкой",
+      "reason": "Практически обычный серый андезитовый куб Minecraft: зернистые пятна на всех гранях, без зелёной медной облицовки или заметного готического декора в установленном виде. Название и исходный медный носитель не соответствуют видимой модели и не служат основанием её сохранять.",
+      "aliases": [
+        "bloodborne_dw:source_weathered_cut_copper"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-134.png",
+          "sha256": "6ccd0da1e657cb04a6989b176de357965d90bc053906672b21a2c11a22f06d96",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.0,
+        "defaultVanillaVisibleSurfaceFraction": 0.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/weathered_cut_copper",
+            "sourceModel": "minecraft:block/weathered_cut_copper",
+            "sourcePackContainsModel": true,
+            "sourceModelSha256": "e9981db8b5123424aa849bac12fccbb33699e252a7b10618a191f6fb87fc9ecc"
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
+      "numericId": "93205",
+      "name": "Гладкий каменный столб с рамкой",
+      "reason": "Практически обычная серая пятнистая каменная стена Minecraft: простой пост и прямые/угловые стеновые соединения с той же крупнопятнистой поверхностью, что у90690. Заметной рамки или готической резьбы в native-модели нет; высота поста и форма соединения не меняют узнаваемый ванильный строительный вид.",
+      "aliases": [
+        "bloodborne_dw:source_assembly_mossy_cobblestone_wall"
+      ],
+      "evidence": {
+        "nativeFrame": {
+          "fileName": "v124-type-comparison-144.png",
+          "sha256": "cdc7eefd2d8b39f11a714d3d6d4f5588365610d214c8ce0cfd670f08f5e74a32",
+          "kind": "SOURCE_CATALOGUE_REVIEW",
+          "oldVariant": 0,
+          "productionJarSha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640"
+        },
+        "maxVanillaVisibleSurfaceFraction": 0.0,
+        "defaultVanillaVisibleSurfaceFraction": 0.0,
+        "sourceModels": [
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mossy_cobblestone_wall_post",
+            "sourceModel": "minecraft:block/mossy_cobblestone_wall_post",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mossy_cobblestone_wall_side",
+            "sourceModel": "minecraft:block/mossy_cobblestone_wall_side",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source/minecraft/block/mossy_cobblestone_wall_side_tall",
+            "sourceModel": "minecraft:block/mossy_cobblestone_wall_side_tall",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_tall_x0_y180",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_tall_x0_y180",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_tall_x0_y90",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_tall_x0_y90",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          },
+          {
+            "model": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_tall_x0_y270",
+            "sourceModel": "bloodborne_dw:remaining/source_uvlock/minecraft/block/mossy_cobblestone_wall_side_tall_x0_y270",
+            "sourcePackContainsModel": false,
+            "sourceModelSha256": null
+          }
+        ],
+        "sourceResourcePackSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+        "decodedSurfaceInventory": "docs/v12.5-city-review/style-inventory.json"
+      }
+    }
+  ]
+}

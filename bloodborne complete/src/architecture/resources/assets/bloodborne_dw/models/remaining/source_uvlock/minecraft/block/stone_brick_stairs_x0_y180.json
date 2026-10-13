@@ -1,0 +1,158 @@
+{
+  "parent": "bloodborne_dw:remaining/source/minecraft/block/stone_brick_stairs",
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "down",
+          "rotation": 180
+        },
+        "up": {
+          "uv": [
+            -0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "rotation": 180
+        },
+        "north": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "north",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "south",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "west",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "east",
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            -0.0,
+            0.0,
+            8.0,
+            16.0
+          ],
+          "texture": "#side",
+          "cullface": "up",
+          "rotation": 180
+        },
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "north",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "south",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "texture": "#side",
+          "cullface": "east",
+          "rotation": 0
+        }
+      }
+    }
+  ],
+  "sourceUvlockApplication": {
+    "x": 0,
+    "y": 180,
+    "uvlock": true
+  },
+  "sourceUvlockPolicy": "Private face UV/rotation wrapper; original source elements and PNG bytes remain preserved in parent."
+}

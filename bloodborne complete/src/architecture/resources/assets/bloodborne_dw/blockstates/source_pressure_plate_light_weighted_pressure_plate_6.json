@@ -1,0 +1,100 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "compact": "false"
+      },
+      "apply": {
+        "model": "bloodborne_dw:block/source_pressure_plate_light_weighted_pressure_plate_6_empty"
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_6",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "0",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "0"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_7",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "2"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "4"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "compact": "true",
+        "variant": "1",
+        "rotation": "6"
+      },
+      "apply": {
+        "model": "bloodborne_dw:remaining/source/minecraft/block/pressure_plate/light_weighted_pressure_plate_7",
+        "y": 270
+      }
+    }
+  ]
+}

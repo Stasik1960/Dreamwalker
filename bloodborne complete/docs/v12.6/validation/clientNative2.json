@@ -1,0 +1,277 @@
+{
+  "schema": "dreamwalker-flat-gallery-v126-native-client-verification",
+  "status": "PASS",
+  "productionJarSha256": "f5a4238d1ea241067e163c2e89f66f3133def211ab53b05d21db1375c96030d6",
+  "minecraft": "1.20.1",
+  "fabricLoader": "0.16.10",
+  "actualIntegratedWorldOpened": "PASS",
+  "nativeFramebufferImages": 19,
+  "livePersistedRootStateAndUuidChecks": 55,
+  "livePersistedEntityUuidChecks": 0,
+  "sectionsRendered": [
+    "absent",
+    "city",
+    "doors"
+  ],
+  "normalClientShutdownAndWorldSave": "PASS",
+  "allSavedObjectDataUnchangedAfterClientReopen": "PASS",
+  "verifiedSavedObjects": 8740,
+  "verifiedDiagnosticPlatforms": 0,
+  "newCanonicalWorkingTypes": 544,
+  "capturedNativeStairMaterials": 0,
+  "capturedCanonicalRungLadders": 0,
+  "nativeStairHalfShapeEncoding": "VARIANT0..4 bottom,5..9 top; straight/inner_left/inner_right/outer_left/outer_right",
+  "sourceGalleryUnchangedAfterClientRun": true,
+  "offlineAuthentication": {
+    "status": "EXPECTED_DUMMY_LEGACY_TOKEN_401",
+    "errors": [
+      "[20:47:26] [Render thread/ERROR]: Failed to verify authentication"
+    ],
+    "scope": "Explicit isolated offline identity with accessToken=0; no online account authentication was requested."
+  },
+  "knownWarnings": [
+    "[20:47:19] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)",
+    "[20:47:44] [Worker-Main-1/WARN]: Texture bloodborne_dw:block/remaining/source/minecraft/block/addon/spirelamp_0084 with size 500x500 limits mip level from 4 to 2",
+    "[20:47:44] [Worker-Main-1/WARN]: minecraft:textures/atlas/blocks.png: dropping miplevel from 4 to 2, because of minimum power of two: 4",
+    "[20:47:55] [Render thread/WARN]: Missing sound for event: minecraft:item.goat_horn.play",
+    "[20:47:55] [Render thread/WARN]: Missing sound for event: minecraft:entity.goat.screaming.horn_break",
+    "[20:47:56] [Render thread/WARN]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program."
+  ],
+  "localModWorldErrors": [],
+  "physicalMouseKeyboard": "NOT_RUN",
+  "visualReview": "PENDING_SEPARATE_PIXEL_REVIEW",
+  "frames": [
+    {
+      "fileName": "v126s-001-bloodborne_dw_source_ywlloe_stained_glass_pane_noside_alt.png",
+      "key": "SUPPLEMENT-bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+      "section": "absent",
+      "name": "93151 · лицевая сторона тонкой детали",
+      "sha256": "9d323104df2eba54ef1427892ed29d3bbfa4286fde18d7796ec0967839dfd43d",
+      "bytes": 398007,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-002-V126-doors-90031-pose1-open.png",
+      "key": "SUPPLEMENT-V126-doors-90031-pose1-open",
+      "section": "doors",
+      "name": "90031 · открытые створки с обратной стороны",
+      "sha256": "495f7cd52afdb5c0390e014a021af910c151a52215d463dd5f83bafbb8fa95f7",
+      "bytes": 636448,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-003-V126-doors-90031-pose1-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-90031-pose1-open",
+      "section": "doors",
+      "name": "90031 · открытые створки с правого бока",
+      "sha256": "785679d01324cfc93763b1d39736fbe55bf8417bcd957f59fd46819545e737f6",
+      "bytes": 734496,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-004-V126-doors-93160-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-93160-pose0-open",
+      "section": "doors",
+      "name": "93160 · открытые створки с обратной стороны",
+      "sha256": "2f6c25134023317acd25a3c39e798cef0d2fadad79ecba61eea1eed8ac919573",
+      "bytes": 648613,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-005-V126-doors-90266-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-90266-pose0-open",
+      "section": "doors",
+      "name": "90266 · открытые створки с обратной стороны",
+      "sha256": "5e6f3d2d5600d6bd62ab5dc3f242c94131ace09f9c7b6eb1d84e38d19583c9b3",
+      "bytes": 777228,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-006-V126-doors-90266-pose0-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-90266-pose0-open",
+      "section": "doors",
+      "name": "90266 · открытые створки с правого бока",
+      "sha256": "dd4e54dcf3092d4cfa30a8b3f914ebbc9a2e5d35eb5f7f6db344078ae317771a",
+      "bytes": 878788,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-007-V126-doors-93152-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-93152-pose0-open",
+      "section": "doors",
+      "name": "93152 · открытые створки с обратной стороны",
+      "sha256": "8750bb1acb0e233a8202c122fd4804e6f5c065a5033724559a914924edabd5a1",
+      "bytes": 640597,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-008-V126-doors-93152-pose0-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-93152-pose0-open",
+      "section": "doors",
+      "name": "93152 · открытые створки с правого бока",
+      "sha256": "d43930e18b2522a942b3e6a4e1eabd12813ffb24deaec37f0ffb92ddb63f0025",
+      "bytes": 755938,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-009-V126-doors-90458-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-90458-pose0-open",
+      "section": "doors",
+      "name": "90458 · открытые створки с обратной стороны",
+      "sha256": "64ec4098525cdcc02f7748c3766efe99584c617147fa0cc7adf27a38eaac7259",
+      "bytes": 503621,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-010-V126-doors-93153-pose0-open.png",
+      "key": "SUPPLEMENT-V126-doors-93153-pose0-open",
+      "section": "doors",
+      "name": "93153 · открытые створки с обратной стороны",
+      "sha256": "af5471dc2fbff16474616440d8415e0e510cd7dbe91437b596e48a71feb89710",
+      "bytes": 564751,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-011-V126-doors-93153-pose0-open.png",
+      "key": "SUPPLEMENT-RIGHT-SIDE-V126-doors-93153-pose0-open",
+      "section": "doors",
+      "name": "93153 · открытые створки с правого бока",
+      "sha256": "ec99ea5636249a8f73b9cd8823fcda29d5d53083134938a20cddd2853f20d6bb",
+      "bytes": 588319,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-012-V126-doors-90923-pose1-open.png",
+      "key": "SUPPLEMENT-V126-doors-90923-pose1-open",
+      "section": "doors",
+      "name": "90923 · открытые створки с обратной стороны",
+      "sha256": "53c97e05e5ee8c5a1e906a296187bbbdff90492d6c0a21d00de16ed383f165e9",
+      "bytes": 608402,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-013-V126-doors-90923-pose2-open.png",
+      "key": "SUPPLEMENT-V126-doors-90923-pose2-open",
+      "section": "doors",
+      "name": "90923 · открытые створки с обратной стороны",
+      "sha256": "91fe6ecad72648cf610bc854407f54b4b8c8667859a0ffbb3c9621024aafcc88",
+      "bytes": 561762,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-014-CITY-OVERVIEW-1.png",
+      "key": "SUPPLEMENT-CITY-OVERVIEW-1",
+      "section": "city",
+      "name": "Город · полный дальний обзор 1",
+      "sha256": "1a68bed19088e6df37511d5fbdee5a01b697f4cf89df7d3b7a6be74962f11359",
+      "bytes": 780057,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-015-CITY-OVERVIEW-2.png",
+      "key": "SUPPLEMENT-CITY-OVERVIEW-2",
+      "section": "city",
+      "name": "Город · полный дальний обзор 2",
+      "sha256": "bb316405ace85cbcf3a0b9313000d42ecbd68d7b674548779bac06e7e42516d8",
+      "bytes": 780962,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-016-CITY-OVERVIEW-3.png",
+      "key": "SUPPLEMENT-CITY-OVERVIEW-3",
+      "section": "city",
+      "name": "Город · полный дальний обзор 3",
+      "sha256": "49a0cd4cde86939db5787743147e754e73a192f2cd87df2db52731fdb6a30e6d",
+      "bytes": 715411,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-017-CITY-OVERVIEW-4.png",
+      "key": "SUPPLEMENT-CITY-OVERVIEW-4",
+      "section": "city",
+      "name": "Город · полный дальний обзор 4",
+      "sha256": "a93d4e617d05f532cc81200336c9c9f2e5f23011ed3c71c7f9508bd0465a8aa1",
+      "bytes": 797937,
+      "liveRootChecks": 10,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-018-CITY-DETAIL-1.png",
+      "key": "SUPPLEMENT-CITY-DETAIL-1",
+      "section": "city",
+      "name": "Город · наружный фасад у проверяемой кладки 1",
+      "sha256": "82574322736c0e85357d01162f025e95650e485ce582521ed51beb5b3732540a",
+      "bytes": 801431,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    },
+    {
+      "fileName": "v126s-019-CITY-DETAIL-2.png",
+      "key": "SUPPLEMENT-CITY-DETAIL-2",
+      "section": "city",
+      "name": "Город · наружный фасад у проверяемой кладки 2",
+      "sha256": "da6c7ddd363505aff70566006aa2aedd6ee1e3f8c265c2054c75a07fd08f54b1",
+      "bytes": 756893,
+      "liveRootChecks": 1,
+      "liveEntityChecks": 0,
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "clientProfile": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.6\\validation\\clientProfile2.json",
+      "sha256": "4067db9280121777c2c4d821f707af1e54dcc40a444eccc60cbd68a9fcadf072"
+    },
+    "nativeCapture": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\client-capture-output.json",
+      "sha256": "4737b1ae4cc71376b27db21e743350250318921599e197fad5d1f3b7991cd5b3"
+    },
+    "captureMarker": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\client-capture-input.json",
+      "sha256": "09442537c6ab4a6423ff908289b428f27d7f21f6efae141cf29ea33d0e0f8894",
+      "manifestSha256": "9657f3a34f2c8175a378e37dead92832f58c6e629114c40da84584095a5c70f7"
+    },
+    "clientLog": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-client-v126-flatgallery-native-supplement-2\\launch-console.log",
+      "sha256": "a2d5310e1b8755e7f7d01bd4c08d7cb718ca1ea97a4bf9fe07ac32cc3c28088e"
+    },
+    "savedNbtAfterClient": {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\docs\\v12.6\\validation\\savedClient2.json",
+      "sha256": "b980f94dd5b07ed8d4d33493a8a83e72eacde103aa8325e1353186ceb9f17d41"
+    }
+  }
+}

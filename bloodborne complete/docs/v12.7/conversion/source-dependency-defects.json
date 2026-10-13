@@ -1,0 +1,35 @@
+{
+  "status": "CONFIRMED_SOURCE_AUTHOR_DEFECTS_NOT_GUESSED",
+  "rows": [
+    {
+      "registryId": "bloodborne_dw:source_assembly_diorite_wall",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/diorite_wall_post"
+        },
+        {
+          "model": "minecraft:block/diorite_wall_side_tall",
+          "uvlock": true
+        }
+      ],
+      "sourceStates": [
+        {
+          "carrier": "minecraft:diorite_wall",
+          "properties": {
+            "east": "none",
+            "north": "tall",
+            "south": "none",
+            "up": "true",
+            "waterlogged": "false",
+            "west": "none"
+          },
+          "yaw": 0,
+          "count": 1
+        }
+      ],
+      "sourceCellOccurrences": 1,
+      "status": "REMOVE_MISSING_AUTHORED_SOURCE_DEPENDENCY",
+      "reason": "Missing source dependency: assets/minecraft/models/block/template_wall_tall.json"
+    }
+  ]
+}

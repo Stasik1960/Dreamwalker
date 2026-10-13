@@ -1,0 +1,131 @@
+{
+  "status": "PASS_ACTUAL_STARTUP_RETAINED_HEAP_COMPARISON",
+  "before": {
+    "path": "build/v127-validation/tests5/startup-retained-heap-histogram.txt",
+    "sha256": "21342e931ce6f2af839fbb850f6fb7a0d36f12c49466980b54d79a8b917eef3c",
+    "instances": 54409222,
+    "bytes": 2124878384
+  },
+  "after": {
+    "path": "build/v127-validation/tests6/startup-retained-heap-histogram.txt",
+    "sha256": "1c8c9181fc20d76d4d8789481df27210c182454f71465f8c7223569af18514d7",
+    "instances": 20419450,
+    "bytes": 860859008
+  },
+  "retainedBytesReduction": 1264019376,
+  "retainedGiBReduction": 1.1772097796201706,
+  "retainedPercentReduction": 59.48666923800755,
+  "instancesReduction": 33989772,
+  "selectedClasses": [
+    {
+      "class": "com.google.common.collect.ArrayTable",
+      "before": {
+        "instances": 975122,
+        "bytes": 46805856
+      },
+      "after": {
+        "instances": 23822,
+        "bytes": 1143456
+      },
+      "bytesReduction": 45662400
+    },
+    {
+      "class": "dev.dreamwalker.bloodbornedw.composite.CompactStateTransitions",
+      "before": {
+        "instances": 0,
+        "bytes": 0
+      },
+      "after": {
+        "instances": 951812,
+        "bytes": 30457984
+      },
+      "bytesReduction": -30457984
+    },
+    {
+      "class": "net.minecraft.block.BlockState",
+      "before": {
+        "instances": 975450,
+        "bytes": 93643200
+      },
+      "after": {
+        "instances": 975962,
+        "bytes": 93692352
+      },
+      "bytesReduction": -49152
+    },
+    {
+      "class": "[Ljava.lang.Object; (java.base@17.0.15)",
+      "before": {
+        "instances": 7282618,
+        "bytes": 598757864
+      },
+      "after": {
+        "instances": 1181167,
+        "bytes": 173506960
+      },
+      "bytesReduction": 425250904
+    },
+    {
+      "class": "[[Ljava.lang.Object; (java.base@17.0.15)",
+      "before": {
+        "instances": 975133,
+        "bytes": 38186240
+      },
+      "after": {
+        "instances": 23833,
+        "bytes": 843936
+      },
+      "bytesReduction": 37342304
+    },
+    {
+      "class": "com.google.common.collect.ImmutableMapEntry",
+      "before": {
+        "instances": 21023852,
+        "bytes": 504572448
+      },
+      "after": {
+        "instances": 4369649,
+        "bytes": 104871576
+      },
+      "bytesReduction": 399700872
+    },
+    {
+      "class": "com.google.common.collect.ImmutableMapEntry$NonTerminalImmutableMapEntry",
+      "before": {
+        "instances": 6473127,
+        "bytes": 155355048
+      },
+      "after": {
+        "instances": 1282373,
+        "bytes": 30776952
+      },
+      "bytesReduction": 124578096
+    },
+    {
+      "class": "[Lcom.google.common.collect.ImmutableMapEntry;",
+      "before": {
+        "instances": 3490212,
+        "bytes": 190607736
+      },
+      "after": {
+        "instances": 1588138,
+        "bytes": 70560384
+      },
+      "bytesReduction": 120047352
+    },
+    {
+      "class": "com.google.common.collect.RegularImmutableMap",
+      "before": {
+        "instances": 2924046,
+        "bytes": 116961840
+      },
+      "after": {
+        "instances": 1021969,
+        "bytes": 40878760
+      },
+      "bytesReduction": 76083080
+    }
+  ],
+  "scope": "Actual entire JVM retained startup heaps after GC, captured by the parent in independent native server runs. Spawn progress, timing and source checkpoint differ slightly. Counts are not byte attribution to this mod alone and do not prove the complete QA suite passed.",
+  "suiteStatus": "SEE_ROOT_NATIVE_REPORT; tests6 subsequently logged heap exhaustion after the game test server started."
+}

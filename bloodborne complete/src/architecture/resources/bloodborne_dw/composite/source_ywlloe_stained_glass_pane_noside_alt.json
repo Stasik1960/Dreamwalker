@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+  "displayName": "Декоративная стойка",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/ywlloe_stained_glass_pane_noside_alt",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                7.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                9.0,
+                32.0,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                7.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                9.0,
+                32.0,
+                9.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  7.0,
+                  0.0,
+                  7.0
+                ],
+                "to": [
+                  9.0,
+                  32.0,
+                  9.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.58578644,
+                  0.0,
+                  6.58578644
+                ],
+                "to": [
+                  9.41421356,
+                  32.0,
+                  9.41421356
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  7.0,
+                  0.0,
+                  7.0
+                ],
+                "to": [
+                  9.0,
+                  32.0,
+                  9.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.58578644,
+                  0.0,
+                  6.58578644
+                ],
+                "to": [
+                  9.41421356,
+                  32.0,
+                  9.41421356
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  7.0,
+                  0.0,
+                  7.0
+                ],
+                "to": [
+                  9.0,
+                  32.0,
+                  9.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.58578644,
+                  0.0,
+                  6.58578644
+                ],
+                "to": [
+                  9.41421356,
+                  32.0,
+                  9.41421356
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  7.0,
+                  0.0,
+                  7.0
+                ],
+                "to": [
+                  9.0,
+                  32.0,
+                  9.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.58578644,
+                  0.0,
+                  6.58578644
+                ],
+                "to": [
+                  9.41421356,
+                  32.0,
+                  9.41421356
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          7.0,
+          0.0,
+          7.0
+        ],
+        "to": [
+          9.0,
+          32.0,
+          9.0
+        ]
+      },
+      "sourceVariant": "Высокая декоративная стойка · секция",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/ywlloe_stained_glass_pane_noside_alt"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

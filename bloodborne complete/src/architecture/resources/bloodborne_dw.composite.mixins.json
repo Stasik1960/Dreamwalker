@@ -9,6 +9,7 @@
     "DiagonalPostFenceMixin",
     "DiagonalPostPaneMixin",
     "CompositeBreakMixin",
+    "ToolBlockReplacementMixin",
     "RpPhysicalCollisionMixin",
     "RpMovementCollisionMixin",
     "RpClimbingMixin",
@@ -16,12 +17,28 @@
     "RpServerInteractionMixin",
     "RpPartRaycastMixin",
     "RpReachAttributesCompatibilityMixin",
-    "RpBlockPlacementCollisionMixin"
+    "RpBlockPlacementCollisionMixin",
+    "NoCollideBlockItemMixin",
+    "NoCollideInventoryMixin",
+    "BbChunkFutureInvoker",
+    "BbServerEntityManagerAccess",
+    "ShardedLedgerSaveMixin",
+    "ShardedLedgerTrackingMixin",
+    "CompactBlockStateMixin",
+    "NewStateStorageMixin",
+    "StateTransitionAccess",
+    "StateEntriesStorageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "RpBlockItemUseMixin"
+    "RpBlockItemUseMixin",
+    "RemainingSourceGrassCacheMixin",
+    "DwMarkerParticleMixin",
+    "MultipartPredicateCacheMixin",
+    "MultipartBuilderDataMixin",
+    "MultipartStateCacheMixin",
+    "MultipartModelCoreMixin"
   ]
 }

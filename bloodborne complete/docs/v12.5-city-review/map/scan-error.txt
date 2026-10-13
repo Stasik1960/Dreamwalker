@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\v125_map_index.py", line 118, in <module>
+    try:main()
+        ^^^^^^
+  File "C:\Users\vakir\.codex\worktrees\3f07\DW\bloodborne complete\tools\v125_map_index.py", line 108, in main
+    assert dict(modelcounts)=={k:v['count'] for k,v in previous['direct_models'].items()}, 'Exact weighted application counts must equal independent validated scan'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exact weighted application counts must equal independent validated scan

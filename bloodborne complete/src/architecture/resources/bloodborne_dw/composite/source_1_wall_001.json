@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_1_wall_001",
+  "displayName": "Консоль с подвесками",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/1_wall_001",
+              "offset": [
+                0,
+                15.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                15.0,
+                -4.0
+              ],
+              "to": [
+                16.0,
+                31.0,
+                10.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.9375
+              ],
+              "to": [
+                16.0,
+                16.0,
+                1.0625
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                15.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                31.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                23.0,
+                -4.0
+              ],
+              "to": [
+                16.0,
+                31.0,
+                0.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  15.0,
+                  -4.0
+                ],
+                "to": [
+                  16.0,
+                  31.0,
+                  10.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.92893219,
+                  15.0,
+                  -6.14213562
+                ],
+                "to": [
+                  22.14213562,
+                  31.0,
+                  15.07106781
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.0,
+                  15.0,
+                  0.0
+                ],
+                "to": [
+                  20.0,
+                  31.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.92893219,
+                  15.0,
+                  0.92893219
+                ],
+                "to": [
+                  22.14213562,
+                  31.0,
+                  22.14213562
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  15.0,
+                  6.0
+                ],
+                "to": [
+                  16.0,
+                  31.0,
+                  20.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -6.14213562,
+                  15.0,
+                  0.92893219
+                ],
+                "to": [
+                  15.07106781,
+                  31.0,
+                  22.14213562
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.0,
+                  15.0,
+                  0.0
+                ],
+                "to": [
+                  10.0,
+                  31.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -6.14213562,
+                  15.0,
+                  -6.14213562
+                ],
+                "to": [
+                  15.07106781,
+                  31.0,
+                  15.07106781
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          -4.0
+        ],
+        "to": [
+          16.0,
+          31.0,
+          10.0
+        ]
+      },
+      "sourceVariant": "Объёмная декоративная деталь · вариант 2",
+      "sourcePlacementOffset": [
+        0,
+        15.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        15.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/1_wall_001"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

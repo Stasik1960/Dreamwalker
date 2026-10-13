@@ -1,0 +1,24 @@
+{
+  "schema": "dreamwalker-v123-native-outline-audit-v1",
+  "productionJarSha256": "34efa3a0f8a1506c97a754fb5c887db977ca489b3cc514c84748de07e3688054",
+  "status": "FAIL",
+  "completedRoots": 1045,
+  "ticks": 378,
+  "rayDiagnostic": {
+    "role": "90086",
+    "expectedOwner": "Owner[instanceId\u003db73f45ef-1f3c-4aa0-8fe0-b5161a9d6ba4, registryId\u003dbloodborne_dw:source_addon_chain_2, root\u003dCell[x\u003d128, y\u003d128, z\u003d32]]",
+    "actualOwner": "null",
+    "hitType": "BLOCK",
+    "hit": "(127.90625, 128.15625, 32.0)",
+    "hitCell": "class_2339{x\u003d127, y\u003d128, z\u003d32}",
+    "probeCell": "class_2338{x\u003d127, y\u003d128, z\u003d32}",
+    "probeBox": "Box[minX\u003d0.8125, minY\u003d0.0, minZ\u003d0.0, maxX\u003d1.0, maxY\u003d0.3125, maxZ\u003d1.0]",
+    "eye": "(127.90625, 128.15625, 30.0)",
+    "rotation": "(-0.10230976343154907, -0.0, 0.994742751121521)",
+    "carrier": "Block{bloodborne_dw:composite_cell}",
+    "actualNativeOutline": "[AABB[0.8125, 0.0, 0.0] -\u003e [1.0, 0.3125, 1.0]]",
+    "contributions": "[Contribution[owner\u003dOwner[instanceId\u003db73f45ef-1f3c-4aa0-8fe0-b5161a9d6ba4, registryId\u003dbloodborne_dw:source_addon_chain_2, root\u003dCell[x\u003d128, y\u003d128, z\u003d32]], rootData\u003dbloodborne_dw:source_addon_chain_2{open\u003dfalse, profile\u003dbase, rotation\u003d0, variant\u003d0} [BE bytes\u003d4], shape\u003dFootprint[collision\u003d[], selection\u003d[Box[minX\u003d0.8125, minY\u003d0.15234375, minZ\u003d0.75, maxX\u003d1.0, maxY\u003d0.16015625, maxZ\u003d0.8125], Box[minX\u003d0.8125, minY\u003d0.15234375, minZ\u003d0.8125, maxX\u003d1.0, maxY\u003d0.16015625, maxZ\u003d0.875], Box[minX\u003d0.8125, minY\u003d0.15234375, minZ\u003d0.875, maxX\u003d1.0, maxY\u003d0.16015625, maxZ\u003d0.9375], Box[minX\u003d0.875, minY\u003d0.15234375, minZ\u003d0.6875, maxX\u003d1.0, maxY\u003d0.16015625, maxZ\u003d0.75], Box[minX\u003d0.875, minY\u003d0.15234375, minZ\u003d0.9375, maxX\u003d1.0, maxY\u003d0.16015625, maxZ\u003d1.0], Box[minX\u003d0.9375, minY\u003d0.15234375, minZ\u003d0.625, maxX\u003d1.0, maxY\u003d0.16015625, maxZ\u003d0.6875]]]]]"
+  },
+  "failure": "java.lang.AssertionError: Ordinary native ray lost NEW object 90086 class_2339{x\u003d127, y\u003d128, z\u003d32}",
+  "stackTrace": "java.lang.AssertionError: Ordinary native ray lost NEW object 90086 class_2339{x\u003d127, y\u003d128, z\u003d32}\r\n\tat knot//dev.dreamwalker.bloodbornedw.v123qa.OutlineNativeAudit.require(OutlineNativeAudit.java:175)\r\n\tat knot//dev.dreamwalker.bloodbornedw.v123qa.OutlineNativeAudit.fixture(OutlineNativeAudit.java:123)\r\n\tat knot//dev.dreamwalker.bloodbornedw.v123qa.OutlineNativeAudit.lambda$onInitialize$4(OutlineNativeAudit.java:61)\r\n\tat knot//net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.lambda$static$2(ServerTickEvents.java:43)\r\n\tat knot//net.minecraft.server.MinecraftServer.handler$zeg000$fabric-lifecycle-events-v1$onEndTick(MinecraftServer.java:2362)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_3748(MinecraftServer.java:847)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29741(MinecraftServer.java:671)\r\n\tat knot//net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:265)\r\n\tat java.base/java.lang.Thread.run(Thread.java:840)\r\n"
+}

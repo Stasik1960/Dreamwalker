@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_iron_bars_post_ends",
+  "displayName": "Тонкая металлическая стойка на основании · столб",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/iron_bars_post_ends",
+              "offset": [
+                0,
+                -0.001,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                7.0,
+                -0.0625,
+                7.0
+              ],
+              "to": [
+                9.0,
+                0.0625,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                15.9355,
+                7.0
+              ],
+              "to": [
+                9.0,
+                16.060499999999998,
+                9.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          7.0,
+          -0.0625,
+          7.0
+        ],
+        "to": [
+          9.0,
+          16.0605,
+          9.0
+        ]
+      },
+      "sourceVariant": "Тонкая металлическая стойка на основании · столб",
+      "sourcePlacementOffset": [
+        0,
+        -0.001,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.001,
+        0
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "New-object default per-element boxes; rotated source elements use SAT-filtered one-model-pixel voxels (bounded coarse raster only for exceptional huge elements). Visible zero-thickness planes are selection-only. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped."
+}

@@ -1,0 +1,173 @@
+{
+  "status": "PASS_CAUSE_LOCALIZED_CODE_AND_SAVED_LIGHT",
+  "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+  "diagnosticScope": "Read-only native bytecode, source history, saved light arrays, original pixels and prior native gallery frames. No production patch, source-world edits, gallery packaging or publication.",
+  "cause": "V12.7 copied native source-carrier opacity into NEW roots. A fully opaque carrier has no light inside its root cell. The vanilla BER dispatcher samples that cell; CompositeClient.renderParts applies the one dark packed light to every face of the entire external model.",
+  "regressionCommit": "a1ceb186db8e35103c238118ba7f3aaf89725749",
+  "sourceCode": [
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeRootBlock.java:32",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/ImportedSourceLightingV127.java",
+    "src/architecture/java/dev/dreamwalker/bloodbornedw/composite/CompositeClient.java:161"
+  ],
+  "savedMainPlatformCounts": {
+    "('V12', 15)": 11,
+    "('NEW', 15)": 366,
+    "('NEW', 0)": 169,
+    "('NEW', 14)": 4
+  },
+  "savedCase90247": {
+    "id": "90247",
+    "registry": "bloodborne_dw:source_addon_wall_deco_3",
+    "origin": "NEW",
+    "root": [
+      169,
+      64,
+      59
+    ],
+    "state": {
+      "open": "false",
+      "profile": "base",
+      "rotation": "0",
+      "variant": "0"
+    },
+    "savedRootLight": {
+      "sky": 0,
+      "block": null
+    },
+    "neighborLight": {
+      "up": {
+        "sky": 15,
+        "block": null
+      },
+      "north": {
+        "sky": 15,
+        "block": null
+      },
+      "south": {
+        "sky": 15,
+        "block": null
+      },
+      "west": {
+        "sky": 15,
+        "block": null
+      },
+      "east": {
+        "sky": 15,
+        "block": null
+      }
+    },
+    "sourceOpticsStates": [
+      {
+        "sourceState": "minecraft:stripped_oak_log[axis=x]",
+        "occurrences": 11,
+        "caseIds": [
+          4078
+        ]
+      },
+      {
+        "sourceState": "minecraft:stripped_oak_log[axis=z]",
+        "occurrences": 32,
+        "caseIds": [
+          2789
+        ]
+      }
+    ]
+  },
+  "sourceTextureComparison": {
+    "status": "PASS_READ_ONLY_RESOURCES_AND_NATIVE_CODE",
+    "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+    "sourceZipSha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36",
+    "comparedOriginalTextures": 236,
+    "identicalOriginalTextures": 236,
+    "differentOriginalTextures": [],
+    "nativeBytecodeEvidence": "build/v127-black-blocks-native-light-bytecode.txt"
+  },
+  "previousNativeGalleryFrames": [
+    {
+      "fileName": "v127-new-gallery-01.png",
+      "sha256": "df96e917e6d0a3becd6ac4bb58b3baeaeef694c607091e8339423f7df97e0e6a",
+      "bytes": 405190,
+      "station": "bloodborne_dw:prototype_wall",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-02.png",
+      "sha256": "08bbf957c5f75da29062173cecb31b949698113c7e87445e21662132f11aa4e7",
+      "bytes": 383328,
+      "station": "bloodborne_dw:source_addon_cases_0",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-03.png",
+      "sha256": "d5c34ad97481f3f8786832522992f87e2e99f02ac4f21930b1c51e4da3d0d2f7",
+      "bytes": 406351,
+      "station": "bloodborne_dw:source_hold_ladder_02",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-04.png",
+      "sha256": "f83850c611eef98125bfa78df00424e8930fe503d933e3a6548cce3fc0fc3782",
+      "bytes": 801394,
+      "station": "bloodborne_dw:source_original_tree",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-05.png",
+      "sha256": "457da573652dd33824f646c688fead1c013e4b3143e92ba9546ecfca4d342efa",
+      "bytes": 460460,
+      "station": "bloodborne_dw:source_door_fragment",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-06.png",
+      "sha256": "20ab8cbbcf96af4d9649e0ab3a4ca3bba3637bba77d773ae6b412d8595e61506",
+      "bytes": 479493,
+      "station": "bloodborne_dw:dw_barrier",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-07.png",
+      "sha256": "99ab5d04ebcc4dd9a9bf9910d040193ded289cfdef449f22366cb72e2ee1b494",
+      "bytes": 518176,
+      "station": "bloodborne_dw:dw_light",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-08.png",
+      "sha256": "e5a35e5913f14a2c0f1f3dd7bf45ad15aa25f8cb24750be2a55b4f541c5aa53a",
+      "bytes": 739022,
+      "station": "bloodborne_rp:wood_gate",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-09.png",
+      "sha256": "3b9696ba507da2a6fdb81aac20b85fd101afd1185d332454349ce4bdfb062693",
+      "bytes": 519383,
+      "station": "V127-doors-90031-pose1-closed",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-10.png",
+      "sha256": "02768015197389469c2b5c646c84d6b194913f7af13fb8c6b2465408bc067527",
+      "bytes": 735961,
+      "station": "CITY-OVERVIEW",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    },
+    {
+      "fileName": "v127-new-gallery-11.png",
+      "sha256": "b6308f1000b6ab0ffb399b6e04a7d3036f3c1c5704d882fbc2f9e9620c7666c4",
+      "bytes": 211611,
+      "station": "CITY-DETAIL",
+      "status": "PASS_CAPTURE_PIXEL_REVIEW_REQUIRED"
+    }
+  ],
+  "additionalLightOnlyAB": "NOT_RUN",
+  "diagnosticAddonLaunch": "FAIL_QA_ADDON_INJECTION_REQUIREMENT_1_OF_2_BEFORE_WORLD_OPEN",
+  "qaFailureEvidence": "build\\runtime-client-v127-black-blocks-probe\\crash-reports\\crash-2026-10-13_19.50.32-client.txt",
+  "requiredCorrection": "Sample world light at visible model surfaces/parts for NEW objects instead of the opaque root interior. Preserve night/dark rooms, torch lighting, source emission/opacity, geometry/UV/collisions, all original V12 behavior. Do not fix by unconditional full-bright or by deleting all opacity.",
+  "originalV12Modified": false,
+  "productionModified": false,
+  "worldPackaged": false,
+  "githubPublished": false,
+  "pixelReview": "Root reviewed the previously completed native gallery captures. No diagnostic after-image exists; do not claim a visually tested production fix."
+}

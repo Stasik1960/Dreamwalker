@@ -1,0 +1,378 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_acacia_pressure_plate",
+  "displayName": "Двустворчатая деревянная дверь в каменной арке",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_pressure_plate",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -15.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                31.0,
+                48.0,
+                13.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -15.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                -9.0,
+                48.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                -9.0,
+                1.0,
+                6.0
+              ],
+              "to": [
+                25.0,
+                48.0,
+                10.0
+              ]
+            },
+            {
+              "from": [
+                25.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                31.0,
+                48.0,
+                13.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -15.0,
+                  0.0,
+                  3.0
+                ],
+                "to": [
+                  31.0,
+                  48.0,
+                  13.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -11.79898987,
+                  0.0,
+                  -11.79898987
+                ],
+                "to": [
+                  27.79898987,
+                  48.0,
+                  27.79898987
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.0,
+                  0.0,
+                  -15.0
+                ],
+                "to": [
+                  13.0,
+                  48.0,
+                  31.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -11.79898987,
+                  0.0,
+                  -11.79898987
+                ],
+                "to": [
+                  27.79898987,
+                  48.0,
+                  27.79898987
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.0,
+                  0.0,
+                  3.0
+                ],
+                "to": [
+                  31.0,
+                  48.0,
+                  13.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -11.79898987,
+                  0.0,
+                  -11.79898987
+                ],
+                "to": [
+                  27.79898987,
+                  48.0,
+                  27.79898987
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.0,
+                  0.0,
+                  -15.0
+                ],
+                "to": [
+                  13.0,
+                  48.0,
+                  31.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -11.79898987,
+                  0.0,
+                  -11.79898987
+                ],
+                "to": [
+                  27.79898987,
+                  48.0,
+                  27.79898987
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -15.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          31.0,
+          48.0,
+          13.0
+        ]
+      },
+      "sourceVariant": "Объёмная декоративная деталь",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/acacia_pressure_plate"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:acacia_pressure_plate[variant:powered=false]",
+        "minecraft:acacia_pressure_plate[variant:powered=true]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_pressure_plate",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/jungle_pressure_plate",
+              "offset": [
+                0.0,
+                48.0,
+                0.0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -15.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                -9.25,
+                73.0,
+                6.33333333
+              ]
+            },
+            {
+              "from": [
+                -15.0,
+                0.0,
+                9.66666667
+              ],
+              "to": [
+                -9.25,
+                73.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                -15.0,
+                2.0,
+                6.33333333
+              ],
+              "to": [
+                31.0,
+                73.0,
+                9.66666667
+              ]
+            },
+            {
+              "from": [
+                25.25,
+                0.0,
+                3.0
+              ],
+              "to": [
+                31.0,
+                73.0,
+                6.33333333
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -15.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                -9.25,
+                73.0,
+                6.33333333
+              ]
+            },
+            {
+              "from": [
+                -15.0,
+                0.0,
+                9.66666667
+              ],
+              "to": [
+                -9.25,
+                73.0,
+                13.0
+              ]
+            },
+            {
+              "from": [
+                -15.0,
+                2.0,
+                6.33333333
+              ],
+              "to": [
+                31.0,
+                73.0,
+                9.66666667
+              ]
+            },
+            {
+              "from": [
+                25.25,
+                0.0,
+                3.0
+              ],
+              "to": [
+                31.0,
+                73.0,
+                6.33333333
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -15.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          31.0,
+          73.0,
+          13.0
+        ]
+      }
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true,
+  "v126AssemblyPolicy": "Completed installation pose appended after all unchanged old indices. Creative, placement and art cycling expose only completed pose; old fragment poses remain hidden compatibility states. Root runtime performs neighborhood recognition and preserves unmatched fragments.",
+  "v126DefaultPhysicsStatus": "STAGED_COMPONENT_UNION_REQUIRES_ROOT_FINAL_FITTED_PHYSICS_AND_NATIVE_TESTS"
+}

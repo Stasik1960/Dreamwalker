@@ -1,0 +1,416 @@
+{
+  "schema": "dreamwalker-v11-server-v1",
+  "status": "PASS",
+  "artifact": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.4-dedup.jar",
+  "artifact_sha256": "4c9e202cff6ae5acd17386a30547726948a0d0d9babf4e529c84ec5c51b0c640",
+  "minecraft": "1.20.1",
+  "loader": "0.16.10",
+  "java_version": "openjdk version \"17.0.15\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369865 (build 17.0.15+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369865 (build 17.0.15+6-LTS, mixed mode)",
+  "modset": [
+    {
+      "path": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc.fabric-api\\fabric-api\\0.92.9+1.20.1\\89c79de1c8e17f3d34fded3a2fe401e7e60a707d\\fabric-api-0.92.9+1.20.1.jar",
+      "sha256": "4056979ccaa1012354dfff14f39fdb085aefb3f1e0224ff45c3af41e4ffed5fd",
+      "id": "fabric-api",
+      "version": "0.92.9+1.20.1"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\software.bernie.geckolib\\geckolib-fabric-1.20.1\\4.4.9\\8a9b951935224f32c1ae51ca349aa3dcecd8e8da\\geckolib-fabric-1.20.1-4.4.9.jar",
+      "sha256": "36d567615f7a81c265f96edd30e9534ed679d8da2a8774866f8ed09d9347e218",
+      "id": "geckolib-fabric-1.20.1",
+      "version": "4.4.9"
+    },
+    {
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-v124-qa-1.0.0.jar",
+      "sha256": "8d3168241a03add3368ebab6ee576c7dc863cf25abb8cc1954640e61ae29776d",
+      "id": "dreamwalker_v124_qa",
+      "version": "1.0.0",
+      "extra_mod": true
+    }
+  ],
+  "extraMods": [
+    {
+      "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\libs\\dreamwalker-v124-qa-1.0.0.jar",
+      "id": "dreamwalker_v124_qa",
+      "version": "1.0.0",
+      "metadata": {
+        "schemaVersion": 1,
+        "id": "dreamwalker_v124_qa",
+        "version": "1.0.0",
+        "environment": "*",
+        "entrypoints": {
+          "main": [
+            "dev.dreamwalker.bloodbornedw.v124qa.TypeNativeAudit"
+          ],
+          "client": [
+            "dev.dreamwalker.bloodbornedw.v124qa.TypeComparisonClientAudit"
+          ]
+        },
+        "depends": {
+          "minecraft": "1.20.1",
+          "java": ">=17",
+          "fabricloader": ">=0.16.10",
+          "fabric-api": "*",
+          "bloodborne_dw": "*"
+        }
+      },
+      "sha256": "8d3168241a03add3368ebab6ee576c7dc863cf25abb8cc1954640e61ae29776d",
+      "bytes": 1126394,
+      "runtimePath": "mods/dreamwalker-v124-qa-1.0.0.jar",
+      "copyByteVerification": "PASS",
+      "copiedSha256": "8d3168241a03add3368ebab6ee576c7dc863cf25abb8cc1954640e61ae29776d"
+    }
+  ],
+  "loader_metadata_source": "https://meta.fabricmc.net/v2/versions/loader/1.20.1/0.16.10/server/json",
+  "loader_metadata_sha256": "643d49263e5ea81c48c432effce64b8794bd3aebdcfc1aea1dac39cfa4189aa7",
+  "libraries": [
+    {
+      "coordinate": "org.ow2.asm:asm:9.7.1",
+      "path": "libraries/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+      "sha256": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm\\9.7.1\\f0ed132a49244b042cd0e15702ab9f2ce3cc8436\\asm-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-analysis:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-analysis/9.7.1/asm-analysis-9.7.1.jar",
+      "sha256": "85b29371884ba31bb76edf22323c2c24e172c3267a67152eba3d1ccc2e041ef2",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-analysis\\9.7.1\\f97a3b319f0ed6a8cd944dc79060d3912a28985f\\asm-analysis-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-commons/9.7.1/asm-commons-9.7.1.jar",
+      "sha256": "9a579b54d292ad9be171d4313fd4739c635592c2b5ac3a459bbd1049cddec6a0",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-commons\\9.7.1\\406c6a2225cfe1819f102a161e54cc16a5c24f75\\asm-commons-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar",
+      "sha256": "9929881f59eb6b840e86d54570c77b59ce721d104e6dfd7a40978991c2d3b41f",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-tree\\9.7.1\\3a53139787663b139de76b627fca0084ab60d32c\\asm-tree-9.7.1.jar"
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-util:9.7.1",
+      "path": "libraries/org/ow2/asm/asm-util/9.7.1/asm-util-9.7.1.jar",
+      "sha256": "f885be71b5c90556f5f1ad1c4f9276b29b96057c497d46666fe4ddbec3cb43c6",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-util\\9.7.1\\9e23359b598ec6b74b23e53110dd5c577adf2243\\asm-util-9.7.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7",
+      "path": "libraries/net/fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/sponge-mixin-0.15.4+mixin.0.8.7.jar",
+      "sha256": "4631f67da980ae2ac9e6e285a7df4680645e2f37a6a14acc775f97982162c2a2",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\sponge-mixin\\0.15.4+mixin.0.8.7\\6a12aacc794f1078458433116e9ed42c1cc98096\\sponge-mixin-0.15.4+mixin.0.8.7.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:intermediary:1.20.1",
+      "path": "libraries/net/fabricmc/intermediary/1.20.1/intermediary-1.20.1.jar",
+      "sha256": "caa3fd87dd353fc826a109a2d16f886d6519b47422e3a77cfa0ba8be5829a21e",
+      "source": "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar"
+    },
+    {
+      "coordinate": "net.fabricmc:fabric-loader:0.16.10",
+      "path": "libraries/net/fabricmc/fabric-loader/0.16.10/fabric-loader-0.16.10.jar",
+      "sha256": "23557a7d6da3db971a6f9620cb62e7b6e6d1509f5138ebb87529877d2400e568",
+      "source": "C:\\Users\\vakir\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\fabric-loader\\0.16.10\\dbd932c2a3641d2c41cf9abfe47e140a5753fa86\\fabric-loader-0.16.10.jar"
+    }
+  ],
+  "vanilla_server_sha256": "3af73a9dc5a102e38147946360dd27d4d70bae7055bf91cf2151cd5d121b79e0",
+  "server_properties": {
+    "server-ip": "127.0.0.1",
+    "server-port": "61740",
+    "online-mode": "false",
+    "spawn-protection": "0",
+    "level-name": "isolated-smoke-world",
+    "level-type": "minecraft:flat",
+    "generate-structures": "false",
+    "view-distance": "2",
+    "simulation-distance": "2",
+    "max-players": "2",
+    "enable-query": "false",
+    "enable-rcon": "false",
+    "gamemode": "creative",
+    "op-permission-level": "4",
+    "difficulty": "normal",
+    "generator-settings": "{\"biome\":\"minecraft:plains\",\"layers\":[{\"block\":\"minecraft:bedrock\",\"height\":1},{\"block\":\"minecraft:dirt\",\"height\":126},{\"block\":\"minecraft:grass_block\",\"height\":1}],\"lakes\":false,\"features\":false,\"structure_overrides\":[]}"
+  },
+  "eula_evidence": {
+    "path": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v122-collision-6\\eula.txt",
+    "sha256": "e4db182aa77b5e31657f4b83f8973c79a8c65217a4383200f9f59f7c94752fad"
+  },
+  "run_directory": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2",
+  "command": [
+    "C:\\Users\\vakir\\AppData\\Roaming\\.minecraft\\runtime\\java-runtime-gamma\\windows\\java-runtime-gamma\\bin\\java.exe",
+    "-Xmx3G",
+    "-cp",
+    "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\org\\ow2\\asm\\asm\\9.7.1\\asm-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-analysis\\9.7.1\\asm-analysis-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-commons\\9.7.1\\asm-commons-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-tree\\9.7.1\\asm-tree-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\org\\ow2\\asm\\asm-util\\9.7.1\\asm-util-9.7.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\net\\fabricmc\\sponge-mixin\\0.15.4+mixin.0.8.7\\sponge-mixin-0.15.4+mixin.0.8.7.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\net\\fabricmc\\intermediary\\1.20.1\\intermediary-1.20.1.jar;C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\libraries\\net\\fabricmc\\fabric-loader\\0.16.10\\fabric-loader-0.16.10.jar",
+    "net.fabricmc.loader.impl.launch.server.FabricServerLauncher",
+    "nogui"
+  ],
+  "derived_world_copy": {
+    "source": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-final-3\\isolated-smoke-world",
+    "files": [
+      {
+        "path": "data/bloodborne_dw_composite_owners.dat",
+        "bytes": 855942,
+        "sha256": "e202ed3dd8f5635499582086bd2451cf44b5863d74234826224410c5236e5fd9"
+      },
+      {
+        "path": "data/bloodborne_dw_mechanism_links.dat",
+        "bytes": 58812,
+        "sha256": "cc2081bc9b020d567e3ff7f664357a34dff2606c8da87c947f25e24c572a902a"
+      },
+      {
+        "path": "data/bloodborne_dw_mechanism_rules.dat",
+        "bytes": 116,
+        "sha256": "0a7bc8c1c03de838391000bf4ead4f2ba315c3e3acbdf4ba6912da4af303d815"
+      },
+      {
+        "path": "data/bloodborne_dw_tool_commands.dat",
+        "bytes": 708,
+        "sha256": "01e405279c2dc304befda055c299eb31e67577dfcac2228bd49fa877dd058699"
+      },
+      {
+        "path": "data/raids.dat",
+        "bytes": 90,
+        "sha256": "fe9e30899ce1607d91a4fb407d8bd07d6eea45f3c7c933310c512683a20244a3"
+      },
+      {
+        "path": "data/scoreboard.dat",
+        "bytes": 169,
+        "sha256": "0177f8a2a4476561e1254cdfb28fe006e0fc6ad843635d624311800581915593"
+      },
+      {
+        "path": "DIM-1/data/raids.dat",
+        "bytes": 90,
+        "sha256": "fe9e30899ce1607d91a4fb407d8bd07d6eea45f3c7c933310c512683a20244a3"
+      },
+      {
+        "path": "DIM1/data/raids_end.dat",
+        "bytes": 90,
+        "sha256": "fe9e30899ce1607d91a4fb407d8bd07d6eea45f3c7c933310c512683a20244a3"
+      },
+      {
+        "path": "entities/r.-1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.-1.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.0.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.0.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.1.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.2.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.2.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.3.3.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.3.4.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.4.3.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "entities/r.4.4.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "level.dat",
+        "bytes": 1496,
+        "sha256": "96b6c639533de52ae2022f3ede056cdc2908a3f1c89992b96b7db745c603f39f"
+      },
+      {
+        "path": "level.dat_old",
+        "bytes": 1492,
+        "sha256": "ab58cf9a81c0c4fca12ea5f766cafce8ed139022d1edb97bdad3425be37d99f1"
+      },
+      {
+        "path": "poi/r.-1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.-1.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.-1.1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.0.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.0.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.0.1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.1.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.1.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.2.-1.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "poi/r.2.0.mca",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "region/r.-1.-1.mca",
+        "bytes": 1994752,
+        "sha256": "1bdb9dfbf60e34897660539ef19ee93da31a9a0e0781cd13220c7e0860987d66"
+      },
+      {
+        "path": "region/r.-1.0.mca",
+        "bytes": 2527232,
+        "sha256": "0fbe685721bfaa1102947686520e47885c05b7f5476954ad0ff924833f53a3b6"
+      },
+      {
+        "path": "region/r.-1.1.mca",
+        "bytes": 208896,
+        "sha256": "b665871f59c2cf2328ea4304aff0665be1ee5b6feedfae3cc2429bd2d60c62bd"
+      },
+      {
+        "path": "region/r.0.-1.mca",
+        "bytes": 2527232,
+        "sha256": "9a52b2223da424c014564f5dc5e44de7cc833f6873af70266a9d1575cfdfea97"
+      },
+      {
+        "path": "region/r.0.0.mca",
+        "bytes": 4390912,
+        "sha256": "05cc5eae8d197a02fb8d425fbcce81e0d57e50fe9ee2bd9f343c6cb513dfe7a0"
+      },
+      {
+        "path": "region/r.0.1.mca",
+        "bytes": 536576,
+        "sha256": "f81280887736cc97d58c2d9deb7af5fcfdecc873e68921807d912c647d4a4905"
+      },
+      {
+        "path": "region/r.1.-1.mca",
+        "bytes": 1585152,
+        "sha256": "3dc0819a3f54417ed5ee43d9910499ea7ce3da1fec40be5847b1efc5c6eff46c"
+      },
+      {
+        "path": "region/r.1.0.mca",
+        "bytes": 4399104,
+        "sha256": "0416f69cf9989ded7a27b1fa869ec90fb416b8f259fafbac9c8c608f0b1cc42b"
+      },
+      {
+        "path": "region/r.1.1.mca",
+        "bytes": 499712,
+        "sha256": "4f6ccf2df7683a2d6a9199cf81ba7cbf796947f2f79216dafd9036c1aac2d8e0"
+      },
+      {
+        "path": "region/r.2.-1.mca",
+        "bytes": 651264,
+        "sha256": "890a385de9d5e600ecf72cacd4c3ef914eb1136026d5264b927f7782a2480a4c"
+      },
+      {
+        "path": "region/r.2.0.mca",
+        "bytes": 1716224,
+        "sha256": "f75915a7890367d4550936816f3d7e482a3b3e859fb3cd1275f1469ff2f18c7a"
+      },
+      {
+        "path": "region/r.2.1.mca",
+        "bytes": 167936,
+        "sha256": "3b0f5ee64299215476bd2cbbd94429915cb1a1eb3b1d8d01d028d166a07068d9"
+      },
+      {
+        "path": "region/r.3.3.mca",
+        "bytes": 811008,
+        "sha256": "b096c8497eaedfda06b02a69fcf0892070ebd279afc5042057653ee14e0b0db8"
+      },
+      {
+        "path": "region/r.3.4.mca",
+        "bytes": 811008,
+        "sha256": "ef9d1afb7a9752ec6ea2fca85e6025da513960aee24cd2a165c36b20dc2307a3"
+      },
+      {
+        "path": "region/r.4.3.mca",
+        "bytes": 811008,
+        "sha256": "d4c4705ef3075b94130590b41f2fb43bc686e8bf5b5da2f568ede4110043d166"
+      },
+      {
+        "path": "region/r.4.4.mca",
+        "bytes": 811008,
+        "sha256": "58828fd827cdc28974305eac5605d45544b67fc57eab00392aab3ad48c45d3b2"
+      },
+      {
+        "path": "v124-fixture.json",
+        "bytes": 3300504,
+        "sha256": "da8e562a317c9d508feb1986162ac048735ff3f6ca0bbb49a332d279d5a47061"
+      }
+    ],
+    "omitted_files": [
+      "session.lock"
+    ],
+    "copy_byte_verification": "PASS",
+    "source_unchanged_after_run": true
+  },
+  "actualClientVisualAcceptance": "NOT_RUN",
+  "startup_seconds": 37.156,
+  "commands": [
+    "list"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 111.391,
+  "evidence": "C:\\Users\\vakir\\.codex\\worktrees\\3f07\\DW\\bloodborne complete\\build\\runtime-server-v124-audit-reopen-final-2\\launch-console.log",
+  "console_sha256": "1d5e4c74801718247eda5603e0222256bde5d276b06b02a55f1dcfd742dcbb9e",
+  "world_startup": "PASS",
+  "errors": [],
+  "expectedWarnings": [
+    "[03:10:33] [main/WARN]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes)"
+  ]
+}

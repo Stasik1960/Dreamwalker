@@ -1,0 +1,2157 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_assembly_red_sandstone_wall",
+  "displayName": "Резная стена с карнизом",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 270
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                15.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                1.0,
+                0.0,
+                -0.0
+              ],
+              "to": [
+                15.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                2.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                5.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                29.0,
+                -0.0
+              ],
+              "to": [
+                14.0,
+                32.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                12.0,
+                29.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  1.0,
+                  0.0,
+                  -0.0
+                ],
+                "to": [
+                  15.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  15.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  1.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  15.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.0,
+                  0.0,
+                  1.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  15.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          15.0,
+          32.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Прямая · высокий",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 270
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                16.0,
+                2.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                5.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                5.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                4.0
+              ],
+              "to": [
+                16.0,
+                29.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                28.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                29.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                31.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                15.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                2.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                5.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                29.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                32.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                12.0,
+                29.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          32.0625,
+          16.0
+        ]
+      },
+      "sourceVariant": "Угол · высокий",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                16.0,
+                2.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                5.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                5.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                4.0
+              ],
+              "to": [
+                16.0,
+                29.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                28.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                29.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                31.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                15.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                2.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                5.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                29.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                32.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                12.0,
+                29.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  -0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          32.0625,
+          16.0
+        ]
+      },
+      "sourceVariant": "Тройник · высокий",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 90
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 270
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 180
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "to": [
+                16.0,
+                2.0,
+                15.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                2.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                5.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                4.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                5.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                5.0,
+                4.0
+              ],
+              "to": [
+                16.0,
+                29.0,
+                12.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                28.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                29.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            },
+            {
+              "from": [
+                0.0,
+                31.9375,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0625,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                15.0,
+                2.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                2.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                5.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                2.0,
+                29.0,
+                0.0
+              ],
+              "to": [
+                14.0,
+                32.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                4.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                12.0,
+                29.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  -0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.0,
+                  0.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.60660172,
+                  0.0,
+                  -2.60660172
+                ],
+                "to": [
+                  18.60660172,
+                  32.0,
+                  18.60660172
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          32.0625,
+          16.0
+        ]
+      },
+      "sourceVariant": "Крест · высокий",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 0
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ]
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_all",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                5.0,
+                0.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  5.0,
+                  0.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.34314575,
+                  5.0,
+                  2.34314575
+                ],
+                "to": [
+                  13.65685425,
+                  32.0,
+                  13.65685425
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Исходное соединение 5",
+      "sourcePlacementOffset": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "localOrigin": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_all",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:red_sandstone_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,west=tall]",
+        "minecraft:red_sandstone_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,west=tall]"
+      ],
+      "v127FullSourceSingleCell": true
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 270,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 90,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  29.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  29.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  29.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  29.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 270,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 90,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/red_sandstone_wall_side",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                0.0,
+                29.0,
+                2.0
+              ],
+              "to": [
+                16.0,
+                32.0,
+                14.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  0.0,
+                  29.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  29.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.0,
+                  29.0,
+                  2.0
+                ],
+                "to": [
+                  16.0,
+                  32.0,
+                  14.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  2.0,
+                  29.0,
+                  0.0
+                ],
+                "to": [
+                  14.0,
+                  32.0,
+                  16.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.75735931,
+                  29.0,
+                  3.75735931
+                ],
+                "to": [
+                  12.24264069,
+                  32.0,
+                  12.24264069
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          16.0,
+          32.0,
+          16.0
+        ]
+      },
+      "sourceVariant": "Исходное соединение 6",
+      "sourcePlacementOffset": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "localOrigin": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 180
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 270
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side",
+          "y": 90
+        },
+        {
+          "model": "minecraft:block/addon/red_sandstone_wall_side"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:red_sandstone_wall[east=tall,north=tall,south=tall,up=false,waterlogged=false,west=tall]"
+      ],
+      "v127FullSourceSingleCell": true
+    }
+  ],
+  "source": {
+    "kind": "EXACT_MULTIPART_CONDITION_UNIONS",
+    "carrier": "minecraft:red_sandstone_wall",
+    "profileModel": null,
+    "weightedPolicy": "Every authored weighted option retained as a deterministic offered profile; random Cartesian products are compositions, not independent authored artworks"
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

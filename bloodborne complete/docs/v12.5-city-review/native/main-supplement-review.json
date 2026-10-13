@@ -1,0 +1,56 @@
+{
+  "schema": "dreamwalker-v125-main-native-supplement-review-v1",
+  "status": "PASS_SOURCE_FACE_CONFIRMED",
+  "productionJarSha256": "76690ecea281ecd5ac59d9b00493546af1978b0819bb2923da977b176f16b845",
+  "captureSha256": "2dbd63963de1cb5bea3c1a1989ed4675f45bc372b39326da0fdbfcb9277526dc",
+  "captureStatus": "CAPTURE_COMPLETE",
+  "frames": [
+    {
+      "fileName": "v125-flat-93151-west.png",
+      "key": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+      "sha256": "85df030aa15ae1ddfd293f2aedf3528022beafbf18a69934fb9a23dd29921508",
+      "camera": [
+        124.75,
+        64.18,
+        191.5,
+        -90,
+        19.5731
+      ],
+      "status": "PASS_VISIBLE_SOURCE_FACE",
+      "observation": "WEST face действительно видна: несколько узких серых поперечных участков с прозрачными промежутками. Рисунок соответствует единственной авторской WEST грани и её UV/alpha; нет missing texture или полной невидимости объекта.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    },
+    {
+      "fileName": "v125-flat-93151-west-oblique.png",
+      "key": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+      "sha256": "73a8631a8d33caf56766e262367c2d642b75314eb371d8220c86f4c6da248f61",
+      "camera": [
+        124.75,
+        64.18,
+        190.75,
+        -71.5651,
+        18.6404
+      ],
+      "status": "PASS_VISIBLE_SOURCE_FACE",
+      "observation": "Косой WEST ракурс также показывает узкие серые участки исходной грани. Цвет, полосы и прозрачные разрывы сохранены; противоположный исходный кадр006 был culled, а не повреждённой моделью.",
+      "method": "Actual unmodified raw ScreenshotRecorder PNG inspected with view_image"
+    }
+  ],
+  "resolvedObjectAcceptance": {
+    "registryId": "bloodborne_dw:source_ywlloe_stained_glass_pane_noside_alt",
+    "numericId": "93151",
+    "status": "PASS_VISIBLE_SOURCE_FACE",
+    "acceptedByTwoActuallyViewedWestFrames": true,
+    "initialFrame006": "NOT_ACCEPTED_BACKFACE_CULLED_PRESERVED_IN_main-visual-review.json",
+    "initialDiagnosis": "Author model contains one WEST face only; initial camera is EAST. Exact original texture has intentional alpha gaps. No production changes were necessary."
+  },
+  "initialReviewFile": "docs/v12.5-city-review/native/main-visual-review.json",
+  "originalMainReviewRemainsUnchanged": true,
+  "effectiveMainAcceptance": {
+    "assignedMainFrames": 26,
+    "ordinaryVisibleAccepted": 25,
+    "oneSidedObjectAcceptedThroughSupplement": 1,
+    "visibleModelFailures": 0
+  },
+  "scope": "Visible original source content verified. This does not invent a solid completed column or claim player collision/movement tests from screenshots."
+}
