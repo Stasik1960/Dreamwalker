@@ -1,0 +1,130 @@
+{
+  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS17",
+  "sourceCheckpointAtRun": "7be6a98655bb01801350db7154877921124ca3a9",
+  "productionJarSha256AtRun": "800a54032ffcea371bf1aa8de791c9ac789b8c6c7296384f3b370e61ab4236de",
+  "allNativeXmlCases": 123,
+  "failures": 0,
+  "skipped": 0,
+  "realWorldEditApiCases": [
+    {
+      "name": "worldeditrpv127gametests.numericrpclipboardandselectivedeleteundokeeptypedsettingsandcounters",
+      "status": "PASS",
+      "seconds": "0.235"
+    },
+    {
+      "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
+      "status": "PASS",
+      "seconds": "0.088"
+    },
+    {
+      "name": "worldeditv127gametests.clipboardlinkedownersremaponlyactuallycopiedmembersandkeeponependingevent",
+      "status": "PASS",
+      "seconds": "0.069"
+    }
+  ],
+  "worldEditVersion": "7.2.15+6463-5ca4dff",
+  "officialOptionalJarSha256": "17db6b3e94f52d25426684663e1e1846823cbb7907f1c365ac329e5bc7bfaf2c",
+  "nativeRuntime": {
+    "java": 17,
+    "minecraft": "1.20.1",
+    "loader": "Fabric",
+    "heapGiB": 3,
+    "activeProcessors": 4
+  },
+  "stateGraph": {
+    "nativeStates": 972375,
+    "blockTypes": 1071,
+    "avoidedNeighborCells": 25243220,
+    "vanillaGuavaOrderedViews": "PASS",
+    "exactPublicStateIdentity": "PASS"
+  },
+  "verified": [
+    "Five-digit owned-block and RP patterns use the real Fabric parser and Actor",
+    "Numeric mask selects complete owned objects through a touched helper cell",
+    "Typed owner/RP settings and personal/global command counters survive actual delete/undo",
+    "EditSession.getFullBlock clipboard makes one independent owner or RP UUID",
+    "Native compact cells remain editable without a block entity",
+    "Copied linked component retains existing external UUIDs until its other members are actually copied",
+    "Two copied owners and one copied RP lever resolve internal links exclusively to their copied UUIDs",
+    "Original connected component remains unchanged",
+    "One copied pending event retains a stable sequence Number across later member and helper writes"
+  ],
+  "rpTypedProof": {
+    "status": "PASS_REAL_OPTIONAL_WORLDEDIT_RP_ROUNDTRIP",
+    "worldEditVersion": "7.2.15+6463-5ca4dff",
+    "fiveDigitId": "91029",
+    "sourceUuid": "57113459-eff8-4bb9-b315-585da040fc00",
+    "copiedUuid": "5bd7aa55-5397-4e1c-8066-93bae0cb72b4",
+    "parserAndActor": "ACTUAL_FABRIC_ADAPTER",
+    "numericPlacement": "PASS",
+    "actualEditSessionGetFullBlock": "PASS",
+    "exactTypedSettingsAndSourcePayload": "PASS",
+    "independentCopiedUuidAndRemappedCounters": "PASS",
+    "selectiveNumericMaskAirRemoval": "PASS",
+    "unrelatedNativeOwnerPreserved": "PASS",
+    "actualUndoOriginalUuidAndCounters": "PASS",
+    "commandsExecuted": 0
+  },
+  "linkedComponentProof": {
+    "status": "PASS_REAL_WORLDEDIT_LINKED_COMPONENT_COPY",
+    "worldEditVersion": "7.2.15+6463-5ca4dff",
+    "ownedMembers": 2,
+    "rpMembers": 1,
+    "partialCopyExternalReferences": "PRESERVED_ACTUAL_UUIDS",
+    "wholeCopyInternalReferences": "COPIED_UUIDS_ONLY",
+    "originalComponentUnchanged": true,
+    "copiedPendingEvents": 1,
+    "stableCopiedEventNumber": 24,
+    "repeatedHelperWrites": "NO_EXTRA_EVENTS_OR_COUNTER_RESET",
+    "commandsExecuted": 0
+  },
+  "copyLifetime": "Session-local aggregate per paste delta; only meaningful reference metadata retained; no static global reference cache",
+  "partialCopyPolicy": "Existing external references remain real; within the same EditSession, later actually copied members replace those links in the copied component. Closing the session retains intentional external references for uncopied members",
+  "baselineRegressionEvidence": "worldedit-linked-baseline.json",
+  "sourceModelsOrPhysicsChangedByLinkedFix": false,
+  "sourcePlanSha256": "270292357105bdcfe9a38dd931bb9a0b28f4eb11d36a74644a390dfb81a07d29",
+  "fullOriginalWorldConverted": false,
+  "galleryCreated": false,
+  "evidence": [
+    {
+      "path": "build/test-results/gametest/TEST-tests17.xml",
+      "bytes": 20001,
+      "sha256": "63fd88ae64c2c8451ea8827cd11925b7d2971918e0fffb597c7b6ed6c77e55f8"
+    },
+    {
+      "path": "build/v127-validation/tests17/result.json",
+      "bytes": 827,
+      "sha256": "20cd14973e7eccbdf106c920e589a2e25f6ce210ff28079dfc355c117b96f4df"
+    },
+    {
+      "path": "build/v127-validation/tests17/gradle.log",
+      "bytes": 293634,
+      "sha256": "eb2cc6fced3ff78b6ce3335dd195d771eb71896212a82b1d50dd60c9aa6b3373"
+    },
+    {
+      "path": "build/gametest-tests17/world/v127-worldedit-rp-native-proof.json",
+      "bytes": 621,
+      "sha256": "50e6d3d1fd108647463c7ae6114b383ded11f064f803aff56e68812c2e883338"
+    },
+    {
+      "path": "build/gametest-tests17/world/v127-worldedit-linked-native-proof.json",
+      "bytes": 444,
+      "sha256": "87d7a1518f94fca11d53488810ffb595f42eb62a6ddb50d89b019d05fd4fa846"
+    },
+    {
+      "path": "build/gametest-tests17/world/v127-source-model-offset-native-proof.json",
+      "bytes": 32876,
+      "sha256": "bac1e9ffaaec6dceed1a84bc310f119031116bfd7ee917a57958815f0fc4351d"
+    },
+    {
+      "path": "build/gametest-tests17/world/v127-source-lighting-native-proof.json",
+      "bytes": 8001961,
+      "sha256": "58f64d52d13faa31a4942d2a25b23c784f943eecd07629954599a89ea6fa8cec"
+    },
+    {
+      "path": "build/v127-runtime-conversion-final2/manifest.json",
+      "bytes": 32109,
+      "sha256": "af4853248d1ee116101110f3eedcaf7528fb9b1bb2e9fe26e3bf6b0ec3cebbd7"
+    }
+  ]
+}

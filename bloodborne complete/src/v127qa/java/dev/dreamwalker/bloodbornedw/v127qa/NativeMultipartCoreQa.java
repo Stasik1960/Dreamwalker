@@ -15,6 +15,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.*;
+import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.client.render.model.json.*;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.registry.Registries;
