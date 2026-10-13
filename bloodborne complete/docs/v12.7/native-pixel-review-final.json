@@ -1,0 +1,206 @@
+{
+  "status": "PASS_ACTUAL_FINAL_NATIVE_PIXEL_REVIEW",
+  "productionJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+  "sourceCheckpoint": "935f099c1cbac00a6c49da0391a81adfbd40aea0",
+  "method": "Root independently viewed every listed raw ScreenshotRecorder PNG with view_image; no image transformation or synthetic preview.",
+  "captureFramesReviewed": 17,
+  "reopenFramesReviewed": 11,
+  "frames": [
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-base-wall.png",
+      "sha256": "e5134376975233f814659a9c382854c43e379f61a2581286a7440fce56dd723a",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "BASE and ALT show the same original wall silhouette, stone UV and simple selection; ALT is visibly darker/cooler."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-base-ladder.png",
+      "sha256": "345f3e0aa1644958fe98b10c185fc33f09339021484e537db86b2da99d71f7ef",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "BASE and ALT preserve the original V12 ladder model and mount; ALT visibly changes vertex colour."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-base-barrel.png",
+      "sha256": "a586bef8cfcb5ad90a07edbe4280414c070ebf15a5cd0dbb31f290ff2ee0bfcb",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "NEW source barrel has visible dark/cool ALT on its untinted faces; silhouette, UV seams and selection remain aligned."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-base-curtain.png",
+      "sha256": "26bfff4155e43f38c47dbf5d8488a146f5e00a76af00f63b72537625e9c393c7",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Actual RP curtain is viewed edge-on and clipped above the frame; visible edge colour changes with synchronized ALT. This does not prove its entire front-facing model."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-base-compact.png",
+      "sha256": "ab63b1d21a1f1075af5ddca9013160fd75814b54f3ea26e9b1a01919cf590ca3",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Native compact source cube preserves face texture placement; ALT is visibly darker/cooler."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-base-grass.png",
+      "sha256": "77e77fdeeab969053cc7439e31d156792142475782936fade7f21a7322a95c3a",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Authored source grass cube and its biome tint render without missing textures or resolver crash; ALT visibly changes its faces."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-alt-wall.png",
+      "sha256": "1244dc8b0f658db18d349e721b173fb58364b48abaa006ed713fb0af02dc22c5",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "BASE and ALT show the same original wall silhouette, stone UV and simple selection; ALT is visibly darker/cooler."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-alt-ladder.png",
+      "sha256": "9c6bdb48cf027539cd99c363ce90cb56f4c856921a6c1572b37f2de7d2f54627",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "BASE and ALT preserve the original V12 ladder model and mount; ALT visibly changes vertex colour."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-alt-barrel.png",
+      "sha256": "e239483416ea35cc5de364c35fd4d697100e7f4ee7aebda6649fd50f291c02c5",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "NEW source barrel has visible dark/cool ALT on its untinted faces; silhouette, UV seams and selection remain aligned."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-alt-curtain.png",
+      "sha256": "8f71eb5e0ed052766c79bf546abe7a3a78c25fc41d3fea07f1293ce9845eac36",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Actual RP curtain is viewed edge-on and clipped above the frame; visible edge colour changes with synchronized ALT. This does not prove its entire front-facing model."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-alt-compact.png",
+      "sha256": "b081083e5ffb101c461fa12349f051410c41bc0f43d978f1985f6a27906e6c73",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Native compact source cube preserves face texture placement; ALT is visibly darker/cooler."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-alt-grass.png",
+      "sha256": "63014fe19d26be9a4e68bf5a5c95081c3ec3f7b149cc091a05e3ffd60e624845",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Authored source grass cube and its biome tint render without missing textures or resolver crash; ALT visibly changes its faces."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-dw-barrier-yellow-held.png",
+      "sha256": "1abad56357cc966e8f5e13b7f15c7ab8c0c5ecb4c7b74c75806757e555f89f6f",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "The held DW item and its placed marker use a yellow barrier symbol."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-vanilla-barrier-red-held.png",
+      "sha256": "471996f7a65e6f7630e6b21d0b4eea99e09b847e2e97ba72bee8c896d4ce08f0",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "The held ordinary vanilla barrier and its placed marker remain red. A prior yellow particle may linger for its ordinary lifetime."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-dw-barrier-empty-hidden.png",
+      "sha256": "f31113dda1b6c0908b52feca7320733f459c8296c6e27f438c50002987d37032",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "After 100 settling ticks with empty hand no placed barrier marker pixels remain; the ordinary aiming outline remains."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-dw-light-held-marker.png",
+      "sha256": "e60bfda9869d6ad50ffd167672addab2f1fe9aa0a7a7966fa4efc50b231be155",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "The held light and placed marker show the simple yellow light symbol. Surrounding ground is illuminated at night."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-capture/screenshots/v127-dw-light-empty-hidden-light14.png",
+      "sha256": "f31e6b21ea65c1d09011eeb4af1e83b0228aed4a8880c7cd621357b82828a614",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "After 100 settling ticks the light marker is invisible and surrounding ground remains illuminated; actual server level14 is verified independently."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-alt-wall.png",
+      "sha256": "92cd6d9e389dfc95af0806ff7924eea763488c3c2da8136a81eeca02f550e051",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "BASE and ALT show the same original wall silhouette, stone UV and simple selection; ALT is visibly darker/cooler."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-alt-ladder.png",
+      "sha256": "4b87081ea6d979e8dca6b362178cb86377ea6ab135c21194b1ef5d2abdf0e651",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "BASE and ALT preserve the original V12 ladder model and mount; ALT visibly changes vertex colour."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-alt-barrel.png",
+      "sha256": "416efc33b830fc526a38c2f6868292e21e9a703564365ffd6825d2a38e905af5",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "NEW source barrel has visible dark/cool ALT on its untinted faces; silhouette, UV seams and selection remain aligned."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-alt-curtain.png",
+      "sha256": "ccad1173a48e18fb5c9935114d42c0824a142a9b6e30e404d1f94be1b4cef7be",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Actual RP curtain is viewed edge-on and clipped above the frame; visible edge colour changes with synchronized ALT. This does not prove its entire front-facing model."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-alt-compact.png",
+      "sha256": "de40c0bb5308a1ed052f99dd61ac3f3384d74f624379b4a28abd7d1192c0e12c",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Native compact source cube preserves face texture placement; ALT is visibly darker/cooler."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-alt-grass.png",
+      "sha256": "0331ad6bdec8c1cc44aa35f915a128b194e3ee87807875f54147131f33171814",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "Authored source grass cube and its biome tint render without missing textures or resolver crash; ALT visibly changes its faces."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-dw-barrier-yellow-held.png",
+      "sha256": "4cfd6d2f36990007547b30fdfbc95845df1b1fb764180a2aa32e5b4c8581ec9d",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "The held DW item and its placed marker use a yellow barrier symbol."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-vanilla-barrier-red-held.png",
+      "sha256": "13c0b724688fcdecb77284ddd37696e9317341109b63bb7dd3e017d95ab476ba",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "The held ordinary vanilla barrier and its placed marker remain red. A prior yellow particle may linger for its ordinary lifetime."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-dw-barrier-empty-hidden.png",
+      "sha256": "429dc25fcb62721ba3f2feb98121cecf27b635cc5d95190f6cc0b1e5b6c59c76",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "After 100 settling ticks with empty hand no placed barrier marker pixels remain; the ordinary aiming outline remains."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-dw-light-held-marker.png",
+      "sha256": "080a71620b9eb129a78bb1e96db16d877da9cf02e55f31fa45cfea76a154ace1",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "The held light and placed marker show the simple yellow light symbol. Surrounding ground is illuminated at night."
+    },
+    {
+      "path": "build/runtime-client-v127-final25-reopen/screenshots/v127-dw-light-empty-hidden-light14.png",
+      "sha256": "ebb882de4bce9b187fded81d15375ecf651c65096f90bc28c669f9d1ad80ca91",
+      "status": "PASS_ROOT_PIXEL_REVIEW",
+      "observation": "After 100 settling ticks the light marker is invisible and surrounding ground remains illuminated; actual server level14 is verified independently."
+    }
+  ],
+  "sourceGeneratedAlternateRenderProof": {
+    "cases": [
+      {
+        "id": "source_addon_barrel_0",
+        "nativeTintedQuads": 0,
+        "nativeUntintedQuads": 12,
+        "emittedVertices": 48,
+        "onceTonedVertices": 48,
+        "geometryUvAlphaLightOverlayNormals": "EXACT_UNCHANGED",
+        "status": "PASS_ACTUAL_PRODUCTION_RENDER_PATH"
+      },
+      {
+        "id": "source_grass_block",
+        "nativeTintedQuads": 5,
+        "nativeUntintedQuads": 5,
+        "emittedVertices": 40,
+        "onceTonedVertices": 40,
+        "geometryUvAlphaLightOverlayNormals": "EXACT_UNCHANGED",
+        "status": "PASS_ACTUAL_PRODUCTION_RENDER_PATH"
+      }
+    ],
+    "status": "PASS_NATIVE_SOURCE_GENERATED_ALT_ALL_FACES_ONCE",
+    "method": "Private production CompositeClient.renderParts with actual baked source models, native BlockModelRenderer and recording VertexConsumer; independent RGB factors .60/.67/.72"
+  },
+  "physicalMouseKeyboardInput": "NOT_RUN",
+  "blockbenchGUIOpen": "NOT_RUN",
+  "fullOriginalCityPixels": "NOT_RUN",
+  "scope": "Six representative BASE/ALT families plus held/empty utility markers and saved reopen. Entire catalogue model/UV dependency audits and native placements are separate evidence."
+}

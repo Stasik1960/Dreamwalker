@@ -69,7 +69,12 @@ def snapshot(world, fixture):
     result['compact'] = state
     wanted = {row['instanceUuid']: row for row in fixture['entities']}
     for region in sorted((world / 'entities').glob('*.mca')):
-        for chunk in RegionFile(region.read_bytes()).chunks():
+        data = region.read_bytes()
+        # Native RegionFile can create an empty file before its first save.
+        # Only exact EOF is empty; any nonempty short/corrupt header still fails.
+        if not data:
+            continue
+        for chunk in RegionFile(data).chunks():
             root = compound(chunk.nbt().root)
             for entity in root.get('Entities', Tag(9, [], 10)).value:
                 values = compound(entity)
