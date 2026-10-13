@@ -357,7 +357,9 @@ public final class CompositeRuntime {
     public static void cleanupNow(ServerWorld world,BlockPos pos){for(var entry:List.copyOf(contributions(world,pos))){BlockState state=CompositeData.state(entry.rootData());if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state))continue;NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());for(Cell offset:instance(world,CompositeData.pos(entry.owner().root()),state,entry.owner().instanceId(),payload).cells().keySet()){Cell cell=entry.owner().root().add(offset);if(world.isChunkLoaded(CompositeData.pos(cell))){FabricCompositeWorld access=new FabricCompositeWorld(world,Map.of());execute(access,core().pruneStale(access,cell));}}}}
     public static void refreshNative(ServerWorld world,BlockPos pos){queue(world,"native-mounted-refresh:"+pos.asLong(),()->{if(!world.isChunkLoaded(pos)||!(world.getBlockEntity(pos) instanceof CompositeBlockEntity own)||own.resident()==null||own.contributions().isEmpty()||!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(world.getBlockState(pos)))return;BlockState state=world.getBlockState(pos);NbtCompound next=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.nativePayload(world,pos,state,own.payload());if(next.equals(own.payload())&&own.contributions().stream().filter(entry->entry.owner().equals(own.resident())).allMatch(entry->entry.rootData().properties().equals(CompositeData.data(state,next).properties())))return;transitionPayload(world,own.resident(),state,next,null);});}
     public static void scheduleCleanup(ServerWorld world,BlockPos pos){
-        List<CompositeData.Contribution> entries=List.copyOf(contributions(world,pos));for(var entry:entries)queue(world,"cleanup:"+entry.owner().instanceId(),()->{
+        scheduleCleanup(world,List.copyOf(contributions(world,pos)));
+    }
+    private static void scheduleCleanup(ServerWorld world,List<CompositeData.Contribution> entries){for(var entry:entries)queue(world,"cleanup:"+entry.owner().instanceId(),()->{
             if(ImportedCollisionMigration.pending(world,entry.owner()))return;
             BlockState rootState=CompositeData.state(entry.rootData());if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(rootState))return;
             NbtCompound payload=CompositeData.nbt(entry.rootData().blockEntityNbt());
@@ -373,18 +375,18 @@ public final class CompositeRuntime {
     public static void drain(ServerWorld world){
         Map<String,Runnable> tasks=PENDING.remove(world);if(tasks!=null)for(Runnable task:tasks.values())task.run();
     }
-    public static void chunkLoaded(ServerWorld world,ChunkPos chunk){
-        CompositeLedger.get(world).prepareChunk(chunk);
+    public static void chunkLoaded(ServerWorld world,net.minecraft.world.chunk.WorldChunk actualChunk){
+        ChunkPos chunk=actualChunk.getPos();var entries=CompositeLedger.get(world).loadedChunkEntries(actualChunk);
         queue(world,"imported-type-migration-chunk:"+chunk.toLong(),()->ImportedTypeMigration.loadedChunk(world,chunk));
         queue(world,"catalogue-migration-chunk:"+chunk.toLong(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedChunk(world,chunk));
         queue(world,"imported-physical-migration-chunk:"+chunk.toLong(),()->ImportedCollisionMigration.loadedChunk(world,chunk));
         queue(world,"v126-approved-assembly-migration-chunk:"+chunk.toLong(),()->ImportedAssemblyV126.loadedChunk(world,chunk));
-        CompositeLedger ledger=CompositeLedger.get(world);for(Cell cell:ledger.sharded()?ledger.chunkCells(chunk):ledger.cells())if((cell.x()>>4)==chunk.x&&(cell.z()>>4)==chunk.z){
-        BlockPos pos=CompositeData.pos(cell);scheduleCleanup(world,pos);
+        for(var row:entries.entrySet()){
+        scheduleCleanup(world,row.getValue());
         // CHUNK_LOAD runs before this chunk's FULL future has completed. Never
         // ask World for a BE here: that would wait recursively for the same
         // future. Helper chunks retry the same owner when the assembly loads.
-        for(var contribution:ledger.at(cell)){Owner owner=contribution.owner();
+        for(var contribution:row.getValue()){Owner owner=contribution.owner();
             if(owner.registryId().startsWith("bloodborne_dw:prototype_wall")||owner.registryId().startsWith("bloodborne_dw:prototype_ladder"))
                 queue(world,"catalogue-migration-root:"+owner.instanceId(),()->dev.dreamwalker.bloodbornedw.architecture.CatalogueMigration.loadedRoot(world,CompositeData.pos(owner.root())));
             if(!owner.registryId().equals("bloodborne_dw:prototype_tree"))continue;

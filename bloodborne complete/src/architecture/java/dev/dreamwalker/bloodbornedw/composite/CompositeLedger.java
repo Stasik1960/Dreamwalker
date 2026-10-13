@@ -34,6 +34,12 @@ public final class CompositeLedger extends PersistentState {
     public static void forgetClientChunk(World world,net.minecraft.util.math.ChunkPos chunk){var ledger=get(world);if(!ledger.clientSharded)return;for(var cell:ledger.clientChunks.getOrDefault(chunk.toLong(),Set.of()))ledger.cells.remove(cell);ledger.clientChunks.remove(chunk.toLong());CompositeShapeSnapshots.forgetChunk(world,chunk.toLong());}
     public boolean sharded(){return sharded;}
     public void prepareChunk(net.minecraft.util.math.ChunkPos chunk){if(sharded)shards.prepare(chunk);}
+    /** The chunk-load event owns this actual chunk even before the FULL lookup is available. */
+    public Map<Cell,List<CompositeData.Contribution>> loadedChunkEntries(net.minecraft.world.chunk.WorldChunk actualChunk){
+        World world=boundWorld.get();if(actualChunk==null||actualChunk.getWorld()!=world)throw new IllegalArgumentException("Owner load callback chunk belongs to a different world");
+        if(sharded)return shards.loadedChunkEntries(actualChunk);var chunk=actualChunk.getPos();Map<Cell,List<CompositeData.Contribution>> result=new TreeMap<>();
+        for(var row:cells.entrySet())if((row.getKey().x()>>4)==chunk.x&&(row.getKey().z()>>4)==chunk.z)result.put(row.getKey(),row.getValue());return Map.copyOf(result);
+    }
     public void flushShards(){if(sharded)shards.flush();}
     public Set<Long> knownShardChunks(){return sharded?shards.knownChunks():Set.of();}
     public Map<String,Object> shardMetrics(){return sharded?shards.metrics():Map.of("shardedOwnerMode",false,"globalOwnerCells",cells.size());}

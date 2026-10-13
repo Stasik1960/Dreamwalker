@@ -90,6 +90,12 @@ public final class ShardedCompositeLedger {
         return next;
     }
     public void prepare(ChunkPos pos){mainThread();long key=pos.toLong();if(known.contains(key))cached(key);}
+    /** Fabric supplies the actual FULL chunk before its manager future is published.
+     * Do not look that same future up again or read the shard separately per cell. */
+    public Map<Cell,List<CompositeData.Contribution>> loadedChunkEntries(net.minecraft.world.chunk.WorldChunk actualChunk){
+        mainThread();if(actualChunk==null||actualChunk.getWorld()!=world)throw new IllegalArgumentException("Owner load callback requires the supplied chunk from this world");
+        long key=actualChunk.getPos().toLong();return known.contains(key)?Map.copyOf(cached(key).cells):Map.of();
+    }
     public List<CompositeData.Contribution> at(Cell cell) {
         mainThread();long key=chunk(cell);
         // Unloaded inspection is a transient bounded read; it never publishes

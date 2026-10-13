@@ -2,7 +2,7 @@
 
 Minecraft **1.20.1**, Fabric Loader **0.16.10**, Java **17**.
 Текущая ревизия объединяет Dreamwalker BB и Bloodborne RP в один combined JAR.
-Установка: [INSTALL-RU.md](docs/v12.7/INSTALL-RU.md). Продолжение полной конвертации
+Установка: [INSTALL-RU.txt](docs/v12.7/INSTALL-RU.txt). Продолжение полной конвертации
 с другого устройства: [HANDOFF-RU.md](docs/v12.7/HANDOFF-RU.md).
 
 В V12.7 расширены инструмент BB и BASE/ALT, добавлены `/bb no-collide`,

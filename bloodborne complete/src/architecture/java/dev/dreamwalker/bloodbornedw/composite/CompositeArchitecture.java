@@ -32,7 +32,7 @@ public final class CompositeArchitecture {
         PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->{if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){if(world instanceof ServerWorld server)dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.remove(server,pos,player);return false;}var owner=CompositeRuntime.target(world,pos,player);if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,pos);if(owner==null)return !(state.getBlock() instanceof CompositeRootBlock||state.isOf(CELL))||CompositeRuntime.contributions(world,pos).isEmpty();if(world instanceof ServerWorld server)CompositeRuntime.remove(server,owner,player,!player.getAbilities().creativeMode);return false;});
         UseBlockCallback.EVENT.register((player,world,hand,hit)->{if(world.getBlockState(hit.getBlockPos()).getBlock() instanceof CompositeRootBlock||world.getBlockState(hit.getBlockPos()).isOf(CELL))return ActionResult.PASS;return CompositeRuntime.use(world,hit.getBlockPos(),player);});
         ServerTickEvents.END_WORLD_TICK.register(CompositeRuntime::drain);
-        ServerChunkEvents.CHUNK_LOAD.register((world,chunk)->CompositeRuntime.chunkLoaded(world,chunk.getPos()));
+        ServerChunkEvents.CHUNK_LOAD.register(CompositeRuntime::chunkLoaded);
         // Publish saved membership before prepareStartRegion starts asynchronous lighting.
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.LOAD.register((server,world)->CompositeLedger.get(world));
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.UNLOAD.register((server,world)->CompositeShapeSnapshots.forget(world));
