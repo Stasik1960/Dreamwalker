@@ -157,13 +157,16 @@ public final class ImportedTypeAliases {
     public static Optional<Mapping> mapping(String registry, int variant) { return Optional.ofNullable(CATALOGUE.mappings.get(new Key(registry, variant))); }
     public static List<Mapping> mappings() { return List.copyOf(CATALOGUE.mappings.values()); }
     public static Optional<Mapping> mapping(BlockState state) {
-        if (!(state.getBlock() instanceof CompositeRootBlock block) || !imported(block.spec.id.toString())) return Optional.empty();
+        if (!(state.getBlock() instanceof CompositeRootBlock block)) return Optional.empty();
+        String registry=block.spec.id.toString();if(!imported(registry))return Optional.empty();
         // Historic pre-V12.4 source selectors had only bank0. Nonzero banks
         // are already current canonical art; looking up their low four bits
         // would accidentally reinterpret an exact city pose as old pose0..15.
-        if(canonicalRegistry(block.spec.id.toString()).equals(block.spec.id.toString()))for(var entry:state.getEntries().entrySet())
-            if(entry.getKey().getName().equals("art_bank")&&entry.getValue() instanceof Integer bank&&bank>0)return Optional.empty();
-        return mapping(block.spec.id.toString(), state.get(CompositeRootBlock.VARIANT));
+        if(canonicalRegistry(registry).equals(registry)){
+            Property<?> property=state.getBlock().getStateManager().getProperty("art_bank");
+            if(property!=null&&state.contains(property)&&state.get(property) instanceof Integer bank&&bank>0)return Optional.empty();
+        }
+        return mapping(registry, state.get(CompositeRootBlock.VARIANT));
     }
     public static boolean needsMigration(BlockState state, NbtCompound payload) {
         Optional<Mapping> mapped = mapping(state);

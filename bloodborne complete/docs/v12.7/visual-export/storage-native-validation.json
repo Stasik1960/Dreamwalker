@@ -1,72 +1,72 @@
 {
   "status": "PASS_FINAL_OWNED_STORAGE_ALIAS_AND_ACTUAL_WORLDEDIT_SUITE",
-  "sourceCommit": "935f099c1cbac00a6c49da0391a81adfbd40aea0",
-  "nativeRun": "tests25 WITH actual optional WorldEdit",
+  "sourceCommit": "36d2baee167c5f5e5ec8b92bd87705c60dfbd419",
+  "nativeRun": "tests26 WITH actual optional WorldEdit",
   "wholeSuiteStatus": "PASS",
   "finalAcceptance": true,
   "passedCases": [
     {
       "name": "compactstatetransitionsv127gametests.nativeguavatableviewsnullcellsorderandmutationcontractsmatch",
-      "seconds": 0.183
+      "seconds": 0.101
     },
     {
       "name": "compactstatetransitionsv127gametests.everyownednativestateandpropertytransitionpreservesexactidentity",
-      "seconds": 51.344
+      "seconds": 43.651
     },
     {
       "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
-      "seconds": 0.121
+      "seconds": 0.092
     },
     {
       "name": "ownedstateentriesv127gametests.ownedimmutableentriesshareonlyexactidentitymapsandpreserveeverystateowner",
-      "seconds": 0.81
-    },
-    {
-      "name": "importedfollowupv127gametests.nativesavedcurrentaliasesreopenwithuuidsettingsandownedcellspreserved",
-      "seconds": 0.023
-    },
-    {
-      "name": "importedfollowupv127gametests.everycurrentversiononealiaskeepsnativeitemandeveryyawfittedphysics",
-      "seconds": 0.025
+      "seconds": 0.778
     },
     {
       "name": "importedfollowupv127gametests.currentbankedartcannotbereinterpretedashistoriclowvariantbits",
-      "seconds": 0.022
+      "seconds": 0.013
     },
     {
-      "name": "shardedledgerv127gametests.legacyledgernbtremainsexactandmixedmodeisrejected",
+      "name": "importedfollowupv127gametests.everycurrentversiononealiaskeepsnativeitemandeveryyawfittedphysics",
+      "seconds": 0.016
+    },
+    {
+      "name": "importedfollowupv127gametests.nativesavedcurrentaliasesreopenwithuuidsettingsandownedcellspreserved",
       "seconds": 0.02
     },
     {
-      "name": "shardedledgerv127gametests.repeatedtypedpayloadsdecodeassharedobjectsanddictionarybytes",
-      "seconds": 0.029
+      "name": "shardedledgerv127gametests.nativeshardflushevictreopenretainscrosschunkmembershipandrollback",
+      "seconds": 0.042
     },
     {
       "name": "shardedledgerv127gametests.thousandnativetransientshardreadshavenoresidentorsnapshotgrowth",
-      "seconds": 6.362
+      "seconds": 6.386
     },
     {
-      "name": "shardedledgerv127gametests.nativeshardflushevictreopenretainscrosschunkmembershipandrollback",
-      "seconds": 6.377
+      "name": "shardedledgerv127gametests.repeatedtypedpayloadsdecodeassharedobjectsanddictionarybytes",
+      "seconds": 6.403
+    },
+    {
+      "name": "shardedledgerv127gametests.legacyledgernbtremainsexactandmixedmodeisrejected",
+      "seconds": 6.403
     }
   ],
-  "xmlSha256": "9903b8ae1692bf19eed6655be12b69bb1a7c40d2561ea697eb148bd2a58bc9c4",
-  "stateProofSha256": "541e59c7faae852940be50391d0dc90acb912c91feb92dcb882a867516969c61",
+  "xmlSha256": "ffbf7d6e55cc9c5140ce7ea75bf443722dd0f7033bab5117f56e35088d92526a",
+  "stateProofSha256": "552e4dabcd98e6b8ff17f43dbb03c36f657484ab2480b7ab238592fa0c689ad4",
   "nativeStateProof": {
     "status": "PASS_EXHAUSTIVE_NATIVE_STATE_IDENTITIES",
     "ownedStates": 972295,
     "originalCompositePrototypeStates": 6656,
     "independentPropertyTransitions": 30555272,
     "storageMetrics": {
-      "initiallyIneligibleClassTables": 24184,
       "oldCartesianReferenceSlots": 91244201,
-      "convertedOwnModStateTables": 972293,
-      "metricScope": "Actual own-mod table/reference-slot counts, not total JVM heap or mod byte attribution",
-      "sharedRowLayouts": 14,
-      "compactPropertyReferenceSlots": 30555302,
-      "sharedColumnLayouts": 11890,
+      "initiallyIneligibleClassTables": 24184,
+      "guardedFallbackTables": 3,
       "originalV12MemoryOptimizationAuthorized": true,
-      "guardedFallbackTables": 3
+      "sharedColumnLayouts": 11890,
+      "compactPropertyReferenceSlots": 30555302,
+      "sharedRowLayouts": 14,
+      "metricScope": "Actual own-mod table/reference-slot counts, not total JVM heap or mod byte attribution",
+      "convertedOwnModStateTables": 972293
     }
   },
   "entriesProofSha256": "07086a1e248f54e79b03f34e515340bfc4812846511646e14957627987a65cdd",
@@ -91,12 +91,12 @@
     }
   },
   "startupRetainedHeap": {
-    "objects": 11040032,
-    "bytes": 593439456,
-    "histogramSha256": "3f9da38d353b0a193aa55ac66d7040315af149b2dc5108025a5e1330f3fbc61a",
+    "objects": 12099741,
+    "bytes": 630851800,
+    "histogramSha256": "5997032b41739bd57dbcc6d9f5b8531788080402573706eacfc8790d0f0c9be4",
     "scope": "Actual whole-process live histogram after explicit startup GC; timing, spawn and source revision may differ from older baselines. This is not a claim of memory attributed solely to the mod."
   },
-  "worldEditTransitionMetricsLine": "[11:33:45] [Server thread/INFO] (Minecraft) [STDOUT]: V127 WorldEdit shared state transitions: PASS {states=972375, types=1071, avoidedNeighborCells=25243220}",
+  "worldEditTransitionMetricsLine": "[11:44:35] [Server thread/INFO] (Minecraft) [STDOUT]: V127 WorldEdit shared state transitions: PASS {avoidedNeighborCells=25243220, types=1071, states=972375}",
   "actualWorldEditNativeOperationsPassed": true,
   "referenceSlotsReduction": 60688899,
   "referenceSlotsPercentReduction": 66.51260938763659,
