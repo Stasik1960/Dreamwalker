@@ -5,8 +5,12 @@ from package_v127_release import ROOT,REPO,archive,files,sha,read,ordinary
 p=argparse.ArgumentParser()
 for name in ('world','capture-run','reopen-run','disk-before','disk-capture','disk-reopen','server-report','memory-report','reopen-memory-report','pixel-review','destination'):
     p.add_argument('--'+name,type=Path,required=True)
+p.add_argument('--resume',action='store_true',help='Recover the one partial world ZIP after an interrupted first packaging attempt')
 a=p.parse_args();world=a.world.resolve();dest=a.destination.resolve()
-assert world.is_relative_to(ROOT/'build') and dest.is_relative_to(REPO/'releases/Dreamwalker-BB') and not dest.exists()
+for key,value in vars(a).items():
+    if isinstance(value,Path):setattr(a,key,value.resolve())
+assert world.is_relative_to(ROOT/'build') and dest.is_relative_to(REPO/'releases/Dreamwalker-BB')
+if dest.exists():assert a.resume and {p.name for p in dest.iterdir()}=={'Dreamwalker-BB-V12.7-Compact-Gallery.zip'}
 assert ordinary(world) and ordinary(dest)
 production=ROOT/'build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7-final.jar';digest=sha(production)
 assert digest=='b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850'
@@ -31,7 +35,7 @@ for row in warm:
     assert row['wallSeconds']>=20 and row['actualWorldRenderFrameIntervals']['sampleCount']>=10
     assert row['actualWindowFocusSamples']['unfocusedRenderCallbacks']==0 and row['actualWindowFocusSamples']['iconifiedRenderCallbacks']==0
 assert subprocess.run(['git','diff','--quiet','f1000f341b19279251df45a3c82f517e0c6b6c2d','HEAD','--','bloodborne complete/src','bloodborne complete/build.gradle','bloodborne complete/gradle.properties','bloodborne complete/settings.gradle'],cwd=REPO).returncode==0
-dest.mkdir(parents=True)
+dest.mkdir(parents=True,exist_ok=a.resume)
 zipname='Dreamwalker-BB-V12.7-Compact-Gallery.zip'
 entries=[(path,'Dreamwalker-BB-V12.7-Compact-Gallery/'+path.relative_to(world).as_posix()) for path in files(world) if path.name!='session.lock']
 galleryaudit=archive(dest/zipname,entries)
