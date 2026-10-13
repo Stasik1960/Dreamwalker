@@ -36,11 +36,21 @@ public final class RemainingSourceTint {
         return biome.getEffects().getGrassColorModifier().getModifiedGrassColor(x, z, base);
     };
 
+    /** One stable resolver identity, registered in each native client world's
+     * own color cache before chunk mesh workers can query the NEW artworks. */
+    public static ColorResolver grassResolver() { return GRASS; }
+
     static void initialize() {
         if(initialized)return;initialized=true;
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override public Identifier getFabricId() { return new Identifier("bloodborne_dw", "remaining_source_grass_palette"); }
-            @Override public void reload(ResourceManager manager) { load(manager); }
+            @Override public void reload(ResourceManager manager) {
+                load(manager);
+                var world=MinecraftClient.getInstance().world;
+                // Native lifecycle reset covers all registered resolver caches;
+                // no old palette result survives a resource reload.
+                if(world!=null)world.reloadColor();
+            }
         });
         // The compact/native renderer asks Minecraft's actual color registry.
         // Register only these exact NEW source artworks; all vanilla and V12

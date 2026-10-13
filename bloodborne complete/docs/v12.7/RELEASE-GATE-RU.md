@@ -92,8 +92,8 @@ Runtime plan требует `PASS_COMPLETE_SOURCE_PLAN`, ноль известн
 релизы и промежуточная папка после ошибки не перезаписываются и не удаляются.
 
 ```text
-python tools/package_v127_release.py --validate-only
-python tools/package_v127_release.py
+python tools/package_v127_release.py --runtime-plan build/v127-runtime-conversion-final2 --source-plan build/v127-full-conversion-first.sqlite --validate-only
+python tools/package_v127_release.py --runtime-plan build/v127-runtime-conversion-final2 --source-plan build/v127-full-conversion-first.sqlite
 python tools/publish_v127_release.py
 ```
 
