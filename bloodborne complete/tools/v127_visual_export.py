@@ -158,7 +158,7 @@ def make_bbmodel(art,quads,key,name,tint=None):
             if texture!=identifier:continue
             keys=[f'v{j}_{i}' for i in range(4)]
             for k,p in zip(keys,points):vertices[k]=[float(v) for v in p]
-            faces['f'+str(j)]={'vertices':keys,'uv':{k:[float(v) for v in p] for k,p in zip(keys,uv)},'texture':texture_index}
+            faces['f'+str(j)]={'vertices':keys,'uv':{k:[float(v) for v in p] for k,p in zip(keys,uv)},'texture':texture_index,'dreamwalker_sourceTintIndex':source_tint_index}
         elements.append({'name':identifier.rsplit('/',1)[-1],'type':'mesh','uuid':uid(key+'/mesh/'+identifier),
             'origin':[0,0,0],'rotation':[0,0,0],'visibility':True,'export':True,'vertices':vertices,'faces':faces})
     return {'meta':{'format_version':'4.10','model_format':'free','box_uv':False},'name':name,
@@ -173,9 +173,9 @@ def verify_bbmodel(art,quads,project):
     restored=[];textures=project['textures']
     for mesh in project['elements']:
         for face in mesh['faces'].values():
-            keys=face['vertices'];restored.append((np.array([mesh['vertices'][k] for k in keys]),np.array([face['uv'][k] for k in keys]),textures[face['texture']]['name']))
-    expected=sorted(digest(p.astype('<f8').tobytes()+u.astype('<f8').tobytes()+t.encode()) for p,u,t,_ in quads)
-    actual=sorted(digest(p.astype('<f8').tobytes()+u.astype('<f8').tobytes()+t.encode()) for p,u,t in restored)
+            keys=face['vertices'];restored.append((np.array([mesh['vertices'][k] for k in keys]),np.array([face['uv'][k] for k in keys]),textures[face['texture']]['name'],face['dreamwalker_sourceTintIndex']))
+    expected=sorted(digest(p.astype('<f8').tobytes()+u.astype('<f8').tobytes()+t.encode()+str(index).encode()) for p,u,t,index in quads)
+    actual=sorted(digest(p.astype('<f8').tobytes()+u.astype('<f8').tobytes()+t.encode()+str(index).encode()) for p,u,t,index in restored)
     assert actual==expected,'BBMODEL quad vertex/UV roundtrip mismatch'
     for texture in textures:
         blob=base64.b64decode(texture['source'].split(',',1)[1]);tint=texture.get('dreamwalker_runtimeALTPreviewTint')
@@ -315,10 +315,12 @@ def export_pass(args,rows,art):
                 quads=art.quads({'model':identifier});key=f'{number}/pose-000/closed-{profile}';project=make_bbmodel(art,quads,key,label);checked+=verify_bbmodel(art,quads,project)
                 relative='editable/'+key+'.bbmodel';blob=json.dumps(project,ensure_ascii=False,separators=(',',':')).encode('utf-8');z.writestr(relative,blob)
                 utility.append({'id':number,'registryId':'bloodborne_dw:'+path,'name':label,'profile':profile,'project':relative,'sourceModels':models,'textures':sorted(tex),'worldRenderPolicy':'Hidden in world; held-item marker appearance retained, project shows editable textured cube.'})
+        grass_palette='assets/bloodborne_dw/textures/remaining/colormap/grass.png';palette=art.optional(grass_palette);assert palette is not None;closure_textures[grass_palette]=palette
         for path,blob in {**closure_models,**closure_textures}.items():z.writestr('source-java/'+path,blob)
         document={'schemaVersion':1,'status':'PASS_EXACT_MODEL_UV_TEXTURE_ROUNDTRIP','objects':index,
             'summary':{'workingNewTypes':len(index)+2,'compositeWorkingNewTypes':len(index),'newUtilityTypes':2,'hiddenCompatibilitySourceTypes':len(compatibility),'hiddenMapUsedSourceTypes':sum(bool(r['editableProjects']) for r in compatibility),'hiddenMapEditableProjects':sum(len(r['editableProjects']) for r in compatibility),'projects':sum(len(r['editableProjects']) for r in index)+sum(len(r['editableProjects']) for r in compatibility)+len(utility),'nativeQuadVertexUVRoundtrips':checked,'sourceJavaModelDependencies':len(closure_models),'pngTextureDependencies':sum(p.endswith('.png') for p in closure_textures),'animationMetadataDependencies':sum(p.endswith('.mcmeta') for p in closure_textures)},
             'fullSourcePlanCoordinateRunSha256':plan_coordinate_sha,
+            'sourceBiomeTint':{'faceMetadata':'dreamwalker_sourceTintIndex','palette':grass_palette,'paletteSha256':digest(palette),'sourceTypes':['bloodborne_dw:source_grass_block','bloodborne_dw:source_bricks_grass_block_0','bloodborne_dw:source_potted_fern'],'previewPolicy':'Generic model previews preserve original PNGs; biome-dependent face vertex tint is runtime data, not an authored texture replacement.'},
             'utilityObjects':utility,'compatibilityObjects':compatibility,
             'formatSources':['https://blockbench.net/wiki/docs/bbmodel/','https://github.com/JannisX11/blockbench/blob/master/js/formats/bbmodel.js']}
         z.writestr('INDEX.json',json.dumps(document,ensure_ascii=False,indent=2).encode('utf-8'))
@@ -341,6 +343,8 @@ def export_pass(args,rows,art):
 editable-hidden-map содержит отдельные .bbmodel для всех скрытых NEW-поз, реально используемых подготовленным планом исходной карты. Они отмечены hidden-map-compatibility в INDEX-RU.tsv и не входят в количество рабочих типов Creative. Для остальных исторических скрытых состояний сохранены исходные Java JSON, полное замыкание PNG и точный compatibility-descriptor. SHA256 списка координат плана, по которому выбраны эти позы, записан в INDEX.json.
 
 ALT с авторской альтернативной моделью сохраняется с её исходными PNG. Если у всей позы нет авторского ALT, игра умножает RGB вершин на (0.60, 0.67, 0.72). Только в editable/*-alt.bbmodel этот множитель запечён в копию PNG для удобного просмотра; alpha, UV и геометрия сохранены. Исходный PNG в source-java не меняется. INDEX и проект явно указывают runtimeALTVertexMultiplierPreview и SHA256 исходного PNG.
+
+У травы цвет отдельных граней дополнительно зависит от биома. PNG сохранены исходными; tintindex оставлен в source-java JSON и в поле dreamwalker_sourceTintIndex каждой грани .bbmodel. Точная авторская палитра сохранена в source-java/assets/bloodborne_dw/textures/remaining/colormap/grass.png. Generic-просмотр не симулирует конкретный биом карты; эти данные перечислены в INDEX.json -> sourceBiomeTint.
 
 Анимированные PNG сохранены целыми полосами кадров вместе с .mcmeta. Generic-просмотр показывает первый кадр, не проигрывает Minecraft-анимацию. UV-канва текстуры масштабирована по размеру кадра, чтобы исходные UV не показывали всю полосу на одной грани. Метаданные анимации и номер кадра указаны в проекте.
 

@@ -71,7 +71,7 @@ public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="z_v127_whole_source_optics",tickLimit=300)
     public void nativeCarrierShardReopenRetainsContextAndIndependentOriginalOwner(TestContext t)throws Exception{
-        var world=t.getWorld();var root=new Cell(24000008,90,-24000008);var cell=root.add(new Cell(0,3,0));var owner=new Owner(UUID.randomUUID(),"bloodborne_dw:source_original_tree",root);
+        var world=t.getWorld();var absolute=t.getAbsolutePos(new BlockPos(256,140,256));UtilityV127GameTests.load(world,absolute,4);var root=CompositeData.cell(absolute);var cell=root.add(new Cell(0,3,0));var owner=new Owner(UUID.randomUUID(),"bloodborne_dw:source_original_tree",root);
         var state=CompositeArchitecture.kindBlock("source_original_tree").getDefaultState().with(CompositeRootBlock.VARIANT,0).with(CompositeRootBlock.ROTATION,0);var data=CompositeData.data(state,payload(-1,true));
         var original=new Owner(UUID.randomUUID(),"bloodborne_dw:prototype_double_door",root.add(new Cell(1,0,0)));var oldData=CompositeData.data(CompositeArchitecture.kindBlock("prototype_double_door").getDefaultState(),payload(-1,true));
         var newEntry=new CompositeData.Contribution(owner,data,Footprint.EMPTY);var oldEntry=new CompositeData.Contribution(original,oldData,Footprint.EMPTY);
@@ -81,7 +81,7 @@ public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
             store.put(cell,List.of(oldEntry,newEntry));t.assertTrue(CompositeShapeSnapshots.sourceCarrierOpacity(world,CompositeData.pos(cell))==15,"NEW guest publishes the source shadow without changing original ownership");
             store.flush();store.unload(chunk);t.assertTrue(CompositeShapeSnapshots.sourceCarrierOpacity(world,CompositeData.pos(cell))==0,"Unload discards the published shadow scalar with its shard");
             var reopened=new ShardedCompositeLedger(world,directory,new TreeSet<>(keys),()->{});reopened.prepare(chunk);var saved=reopened.at(cell);
-            t.assertTrue(saved.equals(List.of(oldEntry,newEntry))&&CompositeData.nbt(saved.get(1).rootData().blockEntityNbt()).getInt(ImportedWholeSourceOpticsV127.CONTEXT)==1,"Actual compressed shard reopening retains typed context, UUID and exact empty shape");
+            t.assertTrue(saved.equals(List.of(oldEntry,newEntry))&&CompositeData.nbt(saved.stream().filter(entry->entry.owner().equals(owner)).findFirst().orElseThrow().rootData().blockEntityNbt()).getInt(ImportedWholeSourceOpticsV127.CONTEXT)==1,"Actual compressed shard reopening retains typed context, UUID and exact empty shape");
             long reads=(long)reopened.metrics().get("ownerShardReads");t.assertTrue(CompletableFuture.supplyAsync(()->CompositeShapeSnapshots.sourceCarrierOpacity(world,CompositeData.pos(cell))).join()==15&&(long)reopened.metrics().get("ownerShardReads")==reads,"Reopened lighting worker reads zero native disk IO");
             reopened.put(cell,List.of(oldEntry));t.assertTrue(CompositeShapeSnapshots.sourceCarrierOpacity(world,CompositeData.pos(cell))==0&&reopened.at(cell).equals(List.of(oldEntry)),"Removing NEW source guest restores the exact unrelated original membership");reopened.flush();reopened.unload(chunk);
         }finally{store.unload(chunk);CompositeShapeSnapshots.forgetChunk(world,chunk.toLong());}

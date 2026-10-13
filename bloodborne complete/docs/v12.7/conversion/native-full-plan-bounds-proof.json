@@ -1,0 +1,42 @@
+{
+  "status": "PASS_NATIVE_ALL_SOURCE_OWNER_WHOLE_HEIGHT_BORDER_AND_TICKET_BOUNDS",
+  "sourcePlanSha256": "270292357105bdcfe9a38dd931bb9a0b28f4eb11d36a74644a390dfb81a07d29",
+  "sourceHashes": {
+    "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+  },
+  "nativeFootprintProofSha256": "d550439c7ba8977878b6450e9d5290d2d7e11e375a1ee4b59dc8415674eac009",
+  "nativeOffsetProofSha256": "bac1e9ffaaec6dceed1a84bc310f119031116bfd7ee917a57958815f0fc4351d",
+  "nativeHeightConflicts": 0,
+  "nativeBaseWorstTickets": 16,
+  "conservativeWorstTicketsIncludingExactSourceModelOffsets": 16,
+  "authorTicketLimit": 256,
+  "nativeOwnerAndWholeStateGroups": 2737,
+  "nativeOffsetExpandedGroups": 23,
+  "offsetCells": 64,
+  "offsetMaximumHorizontal": 0.25,
+  "offsetVertical": 0,
+  "dimensions": [
+    {
+      "dimension": "minecraft:overworld",
+      "conservativeOccupiedX": [
+        -1479,
+        1972
+      ],
+      "conservativeOccupiedZ": [
+        -16405,
+        1096
+      ],
+      "worldBorderContainsAllOwnerAndWholeOccupiedCells": true
+    }
+  ],
+  "sourceWorldBorder": {
+    "BorderCenterX": 0.0,
+    "BorderCenterZ": 0.0,
+    "BorderSize": 59999968.0,
+    "BorderSizeLerpTarget": 59999968.0,
+    "BorderSizeLerpTime": 0
+  },
+  "scope": "All actual native OWNER/WHOLE memberships, including source shift, rotation, mount and empty source-carrier shadows. Full original entity authoring and full-map launch remain NOT_RUN by user request. Source model offsets use a conservative one-cell horizontal expansion and actual native zero Y.",
+  "originalWorldWritten": false
+}

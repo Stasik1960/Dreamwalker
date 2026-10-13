@@ -5,10 +5,9 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--run-name',required=True);parser.add_argument('--final',action='store_true');args=parser.parse_args()
     run=ROOT/f'build/v127-validation/{args.run_name}';result=json.loads((run/'result.json').read_text(encoding='utf-8'))
     native=ROOT/f'build/gametest-{args.run_name}/world/v127-source-lighting-native-proof.json';proof=json.loads(native.read_text(encoding='utf-8'))
-    cases=[]
-    for path in (ROOT/f'build/gametest-{args.run_name}').rglob('*.xml'):
-        for case in ET.parse(path).getroot().iter('testcase'):
-            if 'sourcewholeopticsv127gametests.' in case.attrib.get('name','').lower():cases.append((case,path))
+    path=ROOT/f'build/test-results/gametest/TEST-{args.run_name}.xml';cases=[]
+    for case in ET.parse(path).getroot().iter('testcase'):
+        if 'sourcewholeopticsv127gametests.' in case.attrib.get('name','').lower():cases.append((case,path))
     assert len(cases)==2 and all(c.find('failure') is None and c.find('error') is None and c.find('skipped') is None for c,p in cases)
     assert proof['status'].startswith('PASS_NATIVE_NEW_SOURCE') and proof['newWholeConsumedHelperOpacityDifferenceOccurrences']==0 and proof['potentialOwnerChunkTicketLimitConflictCases']==0
     table=json.loads((RES/'bloodborne_dw/imported-whole-source-optics-v127.json').read_text(encoding='utf-8'))
