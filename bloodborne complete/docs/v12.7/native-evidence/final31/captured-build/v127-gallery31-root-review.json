@@ -1,0 +1,79 @@
+{
+  "status": "PASS_ROOT_INDEPENDENT_GALLERY_REVIEW",
+  "sourceCheckpoint": "f1000f341b19279251df45a3c82f517e0c6b6c2d",
+  "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+  "pixelReview": "PASS_ROOT_REVIEWED_NATIVE_FRAMES",
+  "performanceAcceptance": "PASS_ROOT_REVIEWED_NATIVE_MEASUREMENTS",
+  "method": "Root viewed all twelve unmodified native PNG files with view_image, plus historical gallery27 overview to confirm pre-existing city cut faces and separated spire tip.",
+  "practicalDecision": "Accept this frozen revision with the demonstrated ordinary-gallery improvement and bounded caches. First three warmed stations measure 27–55 FPS across two actual runs versus about17–22 in the earlier focused run. The dense city-facing/window and city views remain about11–21 FPS; their cost is disclosed and this acceptance does not assert universal60 FPS or fully optimized full-city rendering. User explicitly asked to finish this build without further implementation expansion.",
+  "limitations": [
+    "Dense city-facing and city stations remain approximately11–21 FPS on this RTX3070 Laptop,1280x720,Fancy,view8/simulation5,VSync on,max120 setup; no universal60 FPS claim.",
+    "Client resource/world startup takes roughly3–4 minutes; exact times are in raw reports. Full original city is only prepared, not runtime-converted or performance-tested.",
+    "Observed heap covers the complete JVM and integrated server without forced GC; not mod-only retained memory or process RSS.",
+    "Historical/final runs have different eligible intervals and cache histories. Per-station raw measurements are retained; no isolated causal benchmark claim.",
+    "Native camera commands and ScreenshotRecorder were used. Physical mouse/keyboard NOT_RUN. Gallery RP checks prove UUID/registry/pixels; typed RP preservation is a separate native function reopen proof.",
+    "The existing gallery has historical hidden/retired exhibits and old signs. It was copied for testing; no new gallery/catalogue restoration or original-map change."
+  ],
+  "frames": [
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-01.png",
+      "sha256": "2550df4dbcaa553ff1afcc9d1076ce956580efd02d4cdce341722796a68feed4",
+      "station": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-02.png",
+      "sha256": "20e8086f2a8136fc1167b85c5ab744b0b9958721a81b2aa5bfacb77fa2ae9312",
+      "station": "bloodborne_rp:wood_gate"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-03.png",
+      "sha256": "d9bb2c222b5f6ccb9279aa6ceade5d392cbd49a617a5d168e5d922e0342c30aa",
+      "station": "bloodborne_dw:source_1_spirelamp_001"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-04.png",
+      "sha256": "04478c2b96e4b6b996ba82a072de4f7cc2f7dcd624b393c03f828b8ee1455b80",
+      "station": "V126-assemblies-93066-pose1-closed"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-05.png",
+      "sha256": "5943a1ed1289b005b4e92fb8c2a0db4245fbd154d9d5077c537399446412d4da",
+      "station": "CITY-OVERVIEW-1"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-06.png",
+      "sha256": "dfb11ba306a3a7e6b11a9a6b8f48a949ecf1d4329c4931ba7c80eec5a5cc2ffe",
+      "station": "CITY-DETAIL-1"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-01.png",
+      "sha256": "a0cf3a52bb3f7ef301f1f7b98e9d7d10ff3d21ee54a02ef162d3c9b590f9ed20",
+      "station": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-02.png",
+      "sha256": "d7e0571c463974e7f77ebdee558d55089f7e0a1e4b4c2b51c566ad82378709b8",
+      "station": "bloodborne_rp:wood_gate"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-03.png",
+      "sha256": "4396db43cb46f56b3fac862d5c9f294b4a4558fa46749c109a052e51c8b70aac",
+      "station": "bloodborne_dw:source_1_spirelamp_001"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-04.png",
+      "sha256": "636200817358365140b8c9e81c827e63df103cb61df54939710795c0b2518f16",
+      "station": "V126-assemblies-93066-pose1-closed"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-05.png",
+      "sha256": "a53a79251d18fa093c1946a26a124e74e3da4edbad409e9e83865a2f11cd86f8",
+      "station": "CITY-OVERVIEW-1"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-06.png",
+      "sha256": "cbd50cf5cf27a1f3edb39b5dc268455dfc8a3a3dc0db068f305cf3b9a8f7755c",
+      "station": "CITY-DETAIL-1"
+    }
+  ]
+}

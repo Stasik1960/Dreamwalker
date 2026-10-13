@@ -1,0 +1,771 @@
+{
+  "schema": "dreamwalker-v127-existing-gallery-final-validation-v1",
+  "status": "PASS_ACTUAL_EXISTING_GALLERY_PERFORMANCE_AND_REOPEN",
+  "sourceCheckpoint": "f1000f341b19279251df45a3c82f517e0c6b6c2d",
+  "productionJarSha256": "b98c752b797ef07c5acf1d4852bda83eec52717fed798d4ec76860b4f6972850",
+  "gallerySourceZipSha256": "637bcc577592abf9a69b3bc9961054009ad947cf413150e88f33af466ef0c53f",
+  "galleryManifestSha256": "fbea17249c7bd8b009659749b50a13505d95e0666d0094aaea53122718e07cdf",
+  "galleryCreated": false,
+  "blockOrEntityAuthoring": false,
+  "fullOriginalWorldConverted": false,
+  "performanceAcceptance": "PASS_ROOT_REVIEWED_NATIVE_MEASUREMENTS",
+  "normalSaveAndReopen": "PASS_ACTUAL_NATIVE_SAVE_AND_REOPEN",
+  "pixelReview": "PASS_ROOT_REVIEWED_NATIVE_FRAMES",
+  "practicalDecision": "Accept this frozen revision with the demonstrated ordinary-gallery improvement and bounded caches. First three warmed stations measure 27–55 FPS across two actual runs versus about17–22 in the earlier focused run. The dense city-facing/window and city views remain about11–21 FPS; their cost is disclosed and this acceptance does not assert universal60 FPS or fully optimized full-city rendering. User explicitly asked to finish this build without further implementation expansion.",
+  "limitations": [
+    "Dense city-facing and city stations remain approximately11–21 FPS on this RTX3070 Laptop,1280x720,Fancy,view8/simulation5,VSync on,max120 setup; no universal60 FPS claim.",
+    "Client resource/world startup takes roughly3–4 minutes; exact times are in raw reports. Full original city is only prepared, not runtime-converted or performance-tested.",
+    "Observed heap covers the complete JVM and integrated server without forced GC; not mod-only retained memory or process RSS.",
+    "Historical/final runs have different eligible intervals and cache histories. Per-station raw measurements are retained; no isolated causal benchmark claim.",
+    "Native camera commands and ScreenshotRecorder were used. Physical mouse/keyboard NOT_RUN. Gallery RP checks prove UUID/registry/pixels; typed RP preservation is a separate native function reopen proof.",
+    "The existing gallery has historical hidden/retired exhibits and old signs. It was copied for testing; no new gallery/catalogue restoration or original-map change."
+  ],
+  "sixStationObjectSaveReopen": "PASS_EXACT_BB_UUID_REGISTRY_STATE_TYPED_NBT_AND_RP_UUID_REGISTRY",
+  "rpTypedPayloadPreservationScope": "Separate final31 native function save/reopen; gallery observer proves RP UUID/registry and reviewed pixels",
+  "benchmark": {
+    "path": "build/runtime-client-v127-gallery31-final/v127-gallery-benchmark.json",
+    "sha256": "226ba550c555da70cc3f1cdaf535c44762add5b79de170a5b76d346c09e5d3bb"
+  },
+  "reopenBenchmark": {
+    "path": "build/runtime-client-v127-gallery32-reopen/v127-gallery-benchmark.json",
+    "sha256": "83aa4530e5b17e50d710da7e6ea4a3c9d6d4d22498196a72cdb2e0d256d8fd5f"
+  },
+  "pixelReviewReport": {
+    "path": "build/v127-gallery31-root-review.json",
+    "sha256": "ebec495dcff55d9233621c3e70130af08f76a0e1b5903129c91412f67ee8df22"
+  },
+  "nativeFunctionReopen": {
+    "path": "build/runtime-client-v127-final31-reopen/v127-native-client-qa.json",
+    "sha256": "4f5a78694b6dc178f6b131b16a9bb6d6c97158f7a8555f26b0ec69c030bf5570"
+  },
+  "normalShutdownLogs": [
+    {
+      "path": "build/runtime-client-v127-gallery31-final/logs/latest.log",
+      "sha256": "5a7d0d636dcdd365027f8bfda682fc57098c2976b3bd25bc7e8ce8bf89d635ef"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/logs/latest.log",
+      "sha256": "538e1e6b62ce5792c321922cee81b11e2eb9e41503f0de3b3179298306fd1984"
+    }
+  ],
+  "frames": [
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-01.png",
+      "sha256": "2550df4dbcaa553ff1afcc9d1076ce956580efd02d4cdce341722796a68feed4",
+      "station": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-02.png",
+      "sha256": "20e8086f2a8136fc1167b85c5ab744b0b9958721a81b2aa5bfacb77fa2ae9312",
+      "station": "bloodborne_rp:wood_gate"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-03.png",
+      "sha256": "d9bb2c222b5f6ccb9279aa6ceade5d392cbd49a617a5d168e5d922e0342c30aa",
+      "station": "bloodborne_dw:source_1_spirelamp_001"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-04.png",
+      "sha256": "04478c2b96e4b6b996ba82a072de4f7cc2f7dcd624b393c03f828b8ee1455b80",
+      "station": "V126-assemblies-93066-pose1-closed"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-05.png",
+      "sha256": "5943a1ed1289b005b4e92fb8c2a0db4245fbd154d9d5077c537399446412d4da",
+      "station": "CITY-OVERVIEW-1"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery31-final/screenshots/v127-gallery-06.png",
+      "sha256": "dfb11ba306a3a7e6b11a9a6b8f48a949ecf1d4329c4931ba7c80eec5a5cc2ffe",
+      "station": "CITY-DETAIL-1"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-01.png",
+      "sha256": "a0cf3a52bb3f7ef301f1f7b98e9d7d10ff3d21ee54a02ef162d3c9b590f9ed20",
+      "station": "bloodborne_dw:prototype_wall"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-02.png",
+      "sha256": "d7e0571c463974e7f77ebdee558d55089f7e0a1e4b4c2b51c566ad82378709b8",
+      "station": "bloodborne_rp:wood_gate"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-03.png",
+      "sha256": "4396db43cb46f56b3fac862d5c9f294b4a4558fa46749c109a052e51c8b70aac",
+      "station": "bloodborne_dw:source_1_spirelamp_001"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-04.png",
+      "sha256": "636200817358365140b8c9e81c827e63df103cb61df54939710795c0b2518f16",
+      "station": "V126-assemblies-93066-pose1-closed"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-05.png",
+      "sha256": "a53a79251d18fa093c1946a26a124e74e3da4edbad409e9e83865a2f11cd86f8",
+      "station": "CITY-OVERVIEW-1"
+    },
+    {
+      "path": "build/runtime-client-v127-gallery32-reopen/screenshots/v127-gallery-06.png",
+      "sha256": "cbd50cf5cf27a1f3edb39b5dc268455dfc8a3a3dc0db068f305cf3b9a8f7755c",
+      "station": "CITY-DETAIL-1"
+    }
+  ],
+  "graphics": {
+    "GLVendor": "NVIDIA Corporation",
+    "GLRendererDevice": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+    "GLVersion": "3.2.0 NVIDIA 616.92",
+    "actualGlViewport": [
+      0,
+      0,
+      1280,
+      720
+    ],
+    "framebufferWidth": 1280,
+    "framebufferHeight": 720,
+    "maxFpsOption": 120,
+    "vsyncOption": true,
+    "renderDistanceChunks": 8,
+    "simulationDistanceChunks": 5,
+    "graphicsMode": "fancy",
+    "actualWindowFocus": {
+      "focused": true,
+      "iconified": false,
+      "focusControl": false
+    },
+    "capturedOnActualWorldRenderEnd": true
+  },
+  "reopenGraphics": {
+    "GLVendor": "NVIDIA Corporation",
+    "GLRendererDevice": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+    "GLVersion": "3.2.0 NVIDIA 616.92",
+    "actualGlViewport": [
+      0,
+      0,
+      1280,
+      720
+    ],
+    "framebufferWidth": 1280,
+    "framebufferHeight": 720,
+    "maxFpsOption": 120,
+    "vsyncOption": true,
+    "renderDistanceChunks": 8,
+    "simulationDistanceChunks": 5,
+    "graphicsMode": "fancy",
+    "actualWindowFocus": {
+      "focused": true,
+      "iconified": false,
+      "focusControl": false
+    },
+    "capturedOnActualWorldRenderEnd": true
+  },
+  "captureWarmMeasurements": [
+    {
+      "station": "bloodborne_dw:prototype_wall",
+      "render": {
+        "sampleCount": 1107,
+        "meanMilliseconds": 18.057319241192413,
+        "p50Milliseconds": 17.5339,
+        "p95Milliseconds": 22.5845,
+        "p99Milliseconds": 27.6693,
+        "maxMilliseconds": 41.3037,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9894524,
+        "averageObservedFps": 55.379205885599944,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 401,
+        "meanMilliseconds": 3.679931421446384,
+        "p50Milliseconds": 3.5823,
+        "p95Milliseconds": 4.2412,
+        "p99Milliseconds": 4.6712,
+        "maxMilliseconds": 10.7558,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.4756525,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 1108,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "bloodborne_rp:wood_gate",
+      "render": {
+        "sampleCount": 971,
+        "meanMilliseconds": 20.583663130793,
+        "p50Milliseconds": 20.2613,
+        "p95Milliseconds": 26.4497,
+        "p99Milliseconds": 31.9995,
+        "maxMilliseconds": 45.9721,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9867369,
+        "averageObservedFps": 48.58221754047305,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.81500375,
+        "p50Milliseconds": 3.7004,
+        "p95Milliseconds": 4.4301,
+        "p99Milliseconds": 5.8675,
+        "maxMilliseconds": 9.1778,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5260015,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 972,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "render": {
+        "sampleCount": 615,
+        "meanMilliseconds": 32.5411962601626,
+        "p50Milliseconds": 31.7707,
+        "p95Milliseconds": 37.3535,
+        "p99Milliseconds": 47.1843,
+        "maxMilliseconds": 77.2917,
+        "samplesOver50ms": 4,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 20.0128357,
+        "averageObservedFps": 30.730277768682225,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.081602743142144,
+        "p50Milliseconds": 3.985,
+        "p95Milliseconds": 4.6415,
+        "p99Milliseconds": 6.1045,
+        "maxMilliseconds": 12.2768,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6367227,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 616,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "V126-assemblies-93066-pose1-closed",
+      "render": {
+        "sampleCount": 272,
+        "meanMilliseconds": 73.38666102941177,
+        "p50Milliseconds": 71.3961,
+        "p95Milliseconds": 84.2072,
+        "p99Milliseconds": 98.7555,
+        "maxMilliseconds": 103.4415,
+        "samplesOver50ms": 272,
+        "samplesOver100ms": 2,
+        "sampledSeconds": 19.9611718,
+        "averageObservedFps": 13.626454535098986,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.049128678304239,
+        "p50Milliseconds": 3.9577,
+        "p95Milliseconds": 4.6914,
+        "p99Milliseconds": 5.3077,
+        "maxMilliseconds": 6.5912,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6237006,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 273,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "CITY-OVERVIEW-1",
+      "render": {
+        "sampleCount": 261,
+        "meanMilliseconds": 76.58159846743294,
+        "p50Milliseconds": 73.5557,
+        "p95Milliseconds": 97.4887,
+        "p99Milliseconds": 119.6333,
+        "maxMilliseconds": 126.4359,
+        "samplesOver50ms": 261,
+        "samplesOver100ms": 12,
+        "sampledSeconds": 19.9877972,
+        "averageObservedFps": 13.057967188100147,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.056679800498753,
+        "p50Milliseconds": 3.9129,
+        "p95Milliseconds": 4.92,
+        "p99Milliseconds": 6.4003,
+        "maxMilliseconds": 9.9107,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6267286,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 262,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "CITY-DETAIL-1",
+      "render": {
+        "sampleCount": 420,
+        "meanMilliseconds": 47.54435261904762,
+        "p50Milliseconds": 46.4334,
+        "p95Milliseconds": 53.9575,
+        "p99Milliseconds": 61.683,
+        "maxMilliseconds": 91.331,
+        "samplesOver50ms": 56,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9686281,
+        "averageObservedFps": 21.032992246472855,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.84295125,
+        "p50Milliseconds": 3.7667,
+        "p95Milliseconds": 4.292,
+        "p99Milliseconds": 4.8035,
+        "maxMilliseconds": 5.4708,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5371805,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 421,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    }
+  ],
+  "reopenWarmMeasurements": [
+    {
+      "station": "bloodborne_dw:prototype_wall",
+      "render": {
+        "sampleCount": 982,
+        "meanMilliseconds": 20.346362627291242,
+        "p50Milliseconds": 20.0941,
+        "p95Milliseconds": 22.8514,
+        "p99Milliseconds": 28.7706,
+        "maxMilliseconds": 36.1789,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9801281,
+        "averageObservedFps": 49.14883403575376,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.89819025,
+        "p50Milliseconds": 3.8488,
+        "p95Milliseconds": 4.2808,
+        "p99Milliseconds": 4.8622,
+        "maxMilliseconds": 5.6577,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5592761,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 983,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "bloodborne_rp:wood_gate",
+      "render": {
+        "sampleCount": 895,
+        "meanMilliseconds": 22.319813296089386,
+        "p50Milliseconds": 22.2808,
+        "p95Milliseconds": 24.7911,
+        "p99Milliseconds": 27.8425,
+        "maxMilliseconds": 35.1373,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9762329,
+        "averageObservedFps": 44.803242156833285,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 400,
+        "meanMilliseconds": 3.9175465,
+        "p50Milliseconds": 3.8551,
+        "p95Milliseconds": 4.3039,
+        "p99Milliseconds": 4.9821,
+        "maxMilliseconds": 7.4278,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.5670186,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 896,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "render": {
+        "sampleCount": 539,
+        "meanMilliseconds": 37.039870686456396,
+        "p50Milliseconds": 35.6176,
+        "p95Milliseconds": 43.8055,
+        "p99Milliseconds": 60.2952,
+        "maxMilliseconds": 90.6642,
+        "samplesOver50ms": 15,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9644903,
+        "averageObservedFps": 26.9979344276072,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 400,
+        "meanMilliseconds": 4.3656155,
+        "p50Milliseconds": 4.1869,
+        "p95Milliseconds": 5.3348,
+        "p99Milliseconds": 6.7332,
+        "maxMilliseconds": 10.0851,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.7462462,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 540,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "V126-assemblies-93066-pose1-closed",
+      "render": {
+        "sampleCount": 228,
+        "meanMilliseconds": 87.62188991228071,
+        "p50Milliseconds": 86.0222,
+        "p95Milliseconds": 96.3244,
+        "p99Milliseconds": 111.227,
+        "maxMilliseconds": 133.6632,
+        "samplesOver50ms": 228,
+        "samplesOver100ms": 6,
+        "sampledSeconds": 19.9777909,
+        "averageObservedFps": 11.412673260085027,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.236551371571072,
+        "p50Milliseconds": 4.1399,
+        "p95Milliseconds": 4.8226,
+        "p99Milliseconds": 6.0158,
+        "maxMilliseconds": 7.5157,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6988571,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 229,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "CITY-OVERVIEW-1",
+      "render": {
+        "sampleCount": 226,
+        "meanMilliseconds": 88.3348110619469,
+        "p50Milliseconds": 86.9844,
+        "p95Milliseconds": 96.9141,
+        "p99Milliseconds": 109.0463,
+        "maxMilliseconds": 133.2423,
+        "samplesOver50ms": 226,
+        "samplesOver100ms": 5,
+        "sampledSeconds": 19.9636673,
+        "averageObservedFps": 11.320565335207725,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 401,
+        "meanMilliseconds": 4.163713715710723,
+        "p50Milliseconds": 4.0681,
+        "p95Milliseconds": 4.72,
+        "p99Milliseconds": 5.3747,
+        "maxMilliseconds": 7.8879,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.6696492,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 227,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    },
+    {
+      "station": "CITY-DETAIL-1",
+      "render": {
+        "sampleCount": 370,
+        "meanMilliseconds": 53.97436891891892,
+        "p50Milliseconds": 52.7763,
+        "p95Milliseconds": 60.4169,
+        "p99Milliseconds": 67.6952,
+        "maxMilliseconds": 75.8371,
+        "samplesOver50ms": 370,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9705165,
+        "averageObservedFps": 18.527312500906024,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "server": {
+        "sampleCount": 400,
+        "meanMilliseconds": 4.12072,
+        "p50Milliseconds": 4.0356,
+        "p95Milliseconds": 4.679,
+        "p99Milliseconds": 5.2212,
+        "maxMilliseconds": 6.0223,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 1.648288,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "focus": {
+        "focusedRenderCallbacks": 371,
+        "unfocusedRenderCallbacks": 0,
+        "iconifiedRenderCallbacks": 0,
+        "method": "Actual GLFW_FOCUSED and GLFW_ICONIFIED queried on the render thread for each sampled render callback; observation only, no focus control"
+      }
+    }
+  ],
+  "coldStartupSecondsAfterAddonInitialization": 198.2084188,
+  "actualCaptureWarmSampledSeconds": 119.90662209999999,
+  "actualReopenWarmSampledSeconds": 119.832826,
+  "measurementWindow": "Each warmed wall window is at least20 seconds; actual eligible intervals exclude the first callback and final partial interval. Exact sampledSeconds is reported per station; no claim of20 sampled seconds per station.",
+  "historicalMeasuredComparison": [
+    {
+      "station": "bloodborne_dw:prototype_wall",
+      "oldJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+      "oldRender": {
+        "sampleCount": 663,
+        "meanMilliseconds": 45.16798808446456,
+        "p50Milliseconds": 44.6273,
+        "p95Milliseconds": 48.5406,
+        "p99Milliseconds": 55.7084,
+        "maxMilliseconds": 64.7651,
+        "samplesOver50ms": 17,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 29.9463761,
+        "averageObservedFps": 22.13957367616177,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "finalRender": {
+        "sampleCount": 1107,
+        "meanMilliseconds": 18.057319241192413,
+        "p50Milliseconds": 17.5339,
+        "p95Milliseconds": 22.5845,
+        "p99Milliseconds": 27.6693,
+        "maxMilliseconds": 41.3037,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9894524,
+        "averageObservedFps": 55.379205885599944,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "interpretation": "Separate actual runs; unequal sample durations and warmed caches are disclosed. No isolated causal or absolute hardware performance claim."
+    },
+    {
+      "station": "bloodborne_rp:wood_gate",
+      "oldJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+      "oldRender": {
+        "sampleCount": 642,
+        "meanMilliseconds": 46.72204018691589,
+        "p50Milliseconds": 46.0719,
+        "p95Milliseconds": 50.5278,
+        "p99Milliseconds": 56.0526,
+        "maxMilliseconds": 90.7319,
+        "samplesOver50ms": 49,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 29.9955498,
+        "averageObservedFps": 21.403174946971635,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "finalRender": {
+        "sampleCount": 971,
+        "meanMilliseconds": 20.583663130793,
+        "p50Milliseconds": 20.2613,
+        "p95Milliseconds": 26.4497,
+        "p99Milliseconds": 31.9995,
+        "maxMilliseconds": 45.9721,
+        "samplesOver50ms": 0,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9867369,
+        "averageObservedFps": 48.58221754047305,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "interpretation": "Separate actual runs; unequal sample durations and warmed caches are disclosed. No isolated causal or absolute hardware performance claim."
+    },
+    {
+      "station": "bloodborne_dw:source_1_spirelamp_001",
+      "oldJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+      "oldRender": {
+        "sampleCount": 513,
+        "meanMilliseconds": 58.36984074074074,
+        "p50Milliseconds": 57.4083,
+        "p95Milliseconds": 64.2341,
+        "p99Milliseconds": 70.0068,
+        "maxMilliseconds": 85.2303,
+        "samplesOver50ms": 513,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 29.9437283,
+        "averageObservedFps": 17.1321351456425,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "finalRender": {
+        "sampleCount": 615,
+        "meanMilliseconds": 32.5411962601626,
+        "p50Milliseconds": 31.7707,
+        "p95Milliseconds": 37.3535,
+        "p99Milliseconds": 47.1843,
+        "maxMilliseconds": 77.2917,
+        "samplesOver50ms": 4,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 20.0128357,
+        "averageObservedFps": 30.730277768682225,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "interpretation": "Separate actual runs; unequal sample durations and warmed caches are disclosed. No isolated causal or absolute hardware performance claim."
+    },
+    {
+      "station": "V126-assemblies-93066-pose1-closed",
+      "oldJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+      "oldRender": {
+        "sampleCount": 383,
+        "meanMilliseconds": 78.28761671018277,
+        "p50Milliseconds": 76.1683,
+        "p95Milliseconds": 91.1283,
+        "p99Milliseconds": 111.4003,
+        "maxMilliseconds": 121.4267,
+        "samplesOver50ms": 383,
+        "samplesOver100ms": 12,
+        "sampledSeconds": 29.9841572,
+        "averageObservedFps": 12.773412220504234,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "finalRender": {
+        "sampleCount": 272,
+        "meanMilliseconds": 73.38666102941177,
+        "p50Milliseconds": 71.3961,
+        "p95Milliseconds": 84.2072,
+        "p99Milliseconds": 98.7555,
+        "maxMilliseconds": 103.4415,
+        "samplesOver50ms": 272,
+        "samplesOver100ms": 2,
+        "sampledSeconds": 19.9611718,
+        "averageObservedFps": 13.626454535098986,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "interpretation": "Separate actual runs; unequal sample durations and warmed caches are disclosed. No isolated causal or absolute hardware performance claim."
+    },
+    {
+      "station": "CITY-OVERVIEW-1",
+      "oldJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+      "oldRender": {
+        "sampleCount": 402,
+        "meanMilliseconds": 74.50296542288557,
+        "p50Milliseconds": 73.4861,
+        "p95Milliseconds": 80.3246,
+        "p99Milliseconds": 86.0701,
+        "maxMilliseconds": 94.4219,
+        "samplesOver50ms": 402,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 29.9501921,
+        "averageObservedFps": 13.422284526849495,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "finalRender": {
+        "sampleCount": 261,
+        "meanMilliseconds": 76.58159846743294,
+        "p50Milliseconds": 73.5557,
+        "p95Milliseconds": 97.4887,
+        "p99Milliseconds": 119.6333,
+        "maxMilliseconds": 126.4359,
+        "samplesOver50ms": 261,
+        "samplesOver100ms": 12,
+        "sampledSeconds": 19.9877972,
+        "averageObservedFps": 13.057967188100147,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "interpretation": "Separate actual runs; unequal sample durations and warmed caches are disclosed. No isolated causal or absolute hardware performance claim."
+    },
+    {
+      "station": "CITY-DETAIL-1",
+      "oldJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+      "oldRender": {
+        "sampleCount": 407,
+        "meanMilliseconds": 73.57415601965602,
+        "p50Milliseconds": 72.7594,
+        "p95Milliseconds": 78.8688,
+        "p99Milliseconds": 84.9928,
+        "maxMilliseconds": 122.1821,
+        "samplesOver50ms": 407,
+        "samplesOver100ms": 1,
+        "sampledSeconds": 29.9446815,
+        "averageObservedFps": 13.591729135606268,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "finalRender": {
+        "sampleCount": 420,
+        "meanMilliseconds": 47.54435261904762,
+        "p50Milliseconds": 46.4334,
+        "p95Milliseconds": 53.9575,
+        "p99Milliseconds": 61.683,
+        "maxMilliseconds": 91.331,
+        "samplesOver50ms": 56,
+        "samplesOver100ms": 0,
+        "sampledSeconds": 19.9686281,
+        "averageObservedFps": 21.032992246472855,
+        "status": "ACTUAL_NATIVE_MEASUREMENTS_REQUIRE_REVIEW"
+      },
+      "interpretation": "Separate actual runs; unequal sample durations and warmed caches are disclosed. No isolated causal or absolute hardware performance claim."
+    }
+  ],
+  "historicalComparisonEvidence": {
+    "path": "build/runtime-client-v127-gallery29-profile/v127-gallery-benchmark.json",
+    "sha256": "457b04586a6f7ae47f638ea8f21c9f5e9472b2d2542c930801caf71f59624e46"
+  },
+  "physicalMouseKeyboardInput": "NOT_RUN",
+  "javaLaunchedByRecorder": false
+}
