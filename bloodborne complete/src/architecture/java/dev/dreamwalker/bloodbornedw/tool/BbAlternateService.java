@@ -118,8 +118,23 @@ public final class BbAlternateService {
     }
     /** Package-private seam uses actual chunk/profile transactions without scanning other concurrently running test fixtures. */
     static boolean startVisits(ServerPlayerEntity player,String requested,List<Visit> visits){var server=player.getServer();if(JOBS.containsKey(server))return false;JOBS.put(server,new Job(player,requested,-1,CompletableFuture.completedFuture(List.copyOf(visits))));return true;}
+    /** Actual saved-header discovery, isolated from unrelated concurrent test worlds. */
+    static List<Visit> discoverDirectory(ServerWorld world,Path path,Set<Long> loaded){return discover(List.of(new Directory(world,path,Set.copyOf(loaded))));}
     private static List<Visit> discover(List<Directory> dirs){var result=new ArrayList<Visit>();for(var dir:dirs){Set<Long> positions=new TreeSet<>(dir.loaded);for(String folder:List.of("region","entities")){Path path=dir.path.resolve(folder);if(!Files.isDirectory(path,LinkOption.NOFOLLOW_LINKS))continue;try(var files=Files.newDirectoryStream(path,"r.*.*.mca")){for(var file:files){if(!Files.isRegularFile(file,LinkOption.NOFOLLOW_LINKS))continue;positions.addAll(savedChunks(file));}}catch(IOException failure){throw new UncheckedIOException("Cannot enumerate saved BB profile chunks: "+path,failure);}}for(long pos:positions)result.add(new Visit(dir.world,new ChunkPos(pos)));}return List.copyOf(result);}
-    static Set<Long> savedChunks(Path file)throws IOException{var match=REGION.matcher(file.getFileName().toString());if(!match.matches())return Set.of();int rx=Integer.parseInt(match.group(1)),rz=Integer.parseInt(match.group(2));byte[] header;try(var input=Files.newInputStream(file)){header=input.readNBytes(4096);}if(header.length!=4096)throw new IOException("Truncated region header: "+file);Set<Long> chunks=new HashSet<>();for(int i=0;i<1024;i++){int p=i*4,sector=((header[p]&255)<<16)|((header[p+1]&255)<<8)|(header[p+2]&255);if(sector>=2&&(header[p+3]&255)>0)chunks.add(ChunkPos.toLong(rx*32+(i&31),rz*32+(i>>5)));}return chunks;}
+    static Set<Long> savedChunks(Path file)throws IOException{
+        var match=REGION.matcher(file.getFileName().toString());if(!match.matches())return Set.of();int rx=Integer.parseInt(match.group(1)),rz=Integer.parseInt(match.group(2));
+        byte[] header;try(var input=Files.newInputStream(file)){header=input.readNBytes(4096);}
+        // Native RegionFile opens CREATE/READ/WRITE even for a read of an
+        // absent entity chunk. Its empty file stays at zero bytes until the
+        // first actual save writes the header; waiting for a flush cannot fix
+        // that legitimate state. Loaded native/RP chunks are unioned by
+        // discover independently, so the empty disk index loses no live owner.
+        // Recheck size: a nonzero partial write or truncated cold header must
+        // still fail explicitly, rather than silently losing saved targets.
+        if(header.length==0&&Files.size(file)==0)return Set.of();
+        if(header.length!=4096)throw new IOException("Truncated region header: "+file);
+        Set<Long> chunks=new HashSet<>();for(int i=0;i<1024;i++){int p=i*4,sector=((header[p]&255)<<16)|((header[p+1]&255)<<8)|(header[p+2]&255);if(sector>=2&&(header[p+3]&255)>0)chunks.add(ChunkPos.toLong(rx*32+(i&31),rz*32+(i>>5)));}return chunks;
+    }
     public static Status status(MinecraftServer server){var job=JOBS.get(server);return job==null?LAST.getOrDefault(server,new Status(false,0,0,0,0)):new Status(true,job.changed,job.failed,job.index,job.visits==null?0:job.visits.size());}
     public static boolean cancel(MinecraftServer server){var job=JOBS.remove(server);if(job==null)return false;release(job);LAST.put(server,new Status(false,job.changed,job.failed,job.index,job.visits==null?0:job.visits.size()));return true;}
     private static void request(Job job,ChunkPos chunk){if(job.requested.containsKey(chunk))return;var manager=job.current.world.getChunkManager();manager.addTicket(TICKET,chunk,2,chunk);job.requested.put(chunk,((dev.dreamwalker.bloodbornedw.composite.mixin.BbChunkFutureInvoker)manager).bloodborneDw$profileChunkFuture(chunk.x,chunk.z,ChunkStatus.FULL,true));}

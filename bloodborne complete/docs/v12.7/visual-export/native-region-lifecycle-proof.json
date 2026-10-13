@@ -1,0 +1,1532 @@
+{
+  "status": "PASS_READ_ONLY_PINNED_NATIVE_REGION_LIFECYCLE",
+  "jar": "C:\\Users\\vakir\\.gradle\\caches\\fabric-loom\\minecraftMaven\\net\\minecraft\\minecraft-merged\\1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2\\minecraft-merged-1.20.1-net.fabricmc.yarn.1_20_1.1.20.1+build.10-v2.jar",
+  "classSha256": "ed1cadab02738191c4245475738e7ceaf7d86ef6b2176a30f764419c2e9e8c56",
+  "methods": [
+    {
+      "method": "<init>",
+      "descriptor": "(Ljava/nio/file/Path;Ljava/nio/file/Path;Z)V",
+      "codeSha256": "96e7aaeaec6ac0630858d16b751dde81b12d45a3aa9777a309d7f217e2f1d9ac",
+      "references": [
+        {
+          "offset": 3,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.DEFLATELnet/minecraft/world/storage/ChunkStreamVersion;"
+        },
+        {
+          "offset": 7,
+          "opcode": "0xb7",
+          "reference": "net/minecraft/world/storage/RegionFile.<init>(Ljava/nio/file/Path;Ljava/nio/file/Path;Lnet/minecraft/world/storage/ChunkStreamVersion;Z)V"
+        }
+      ]
+    },
+    {
+      "method": "<init>",
+      "descriptor": "(Ljava/nio/file/Path;Ljava/nio/file/Path;Lnet/minecraft/world/storage/ChunkStreamVersion;Z)V",
+      "codeSha256": "60629a13359d81d0388512abaa09022a38005178c2fcae125f4f029bdf1f38ff",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb7",
+          "reference": "java/lang/Object.<init>()V"
+        },
+        {
+          "offset": 8,
+          "opcode": "0xb8",
+          "reference": "java/nio/ByteBuffer.allocateDirect(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 11,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 15,
+          "opcode": "0xbb",
+          "reference": "net/minecraft/world/storage/SectorMap"
+        },
+        {
+          "offset": 19,
+          "opcode": "0xb7",
+          "reference": "net/minecraft/world/storage/SectorMap.<init>()V"
+        },
+        {
+          "offset": 22,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 27,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.outputChunkStreamVersionLnet/minecraft/world/storage/ChunkStreamVersion;"
+        },
+        {
+          "offset": 32,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/LinkOption"
+        },
+        {
+          "offset": 35,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.isDirectory(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z"
+        },
+        {
+          "offset": 41,
+          "opcode": "0xbb",
+          "reference": "java/lang/IllegalArgumentException"
+        },
+        {
+          "offset": 46,
+          "opcode": "0xb9",
+          "reference": "java/nio/file/Path.toAbsolutePath()Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 56,
+          "opcode": "0xb7",
+          "reference": "java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V"
+        },
+        {
+          "offset": 62,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.directoryLjava/nio/file/Path;"
+        },
+        {
+          "offset": 67,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 70,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.asIntBuffer()Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 73,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 77,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 83,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.limit(I)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 88,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 94,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.position(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 100,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 103,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.asIntBuffer()Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 106,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.saveTimesLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 117,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/OpenOption"
+        },
+        {
+          "offset": 122,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.CREATELjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 128,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.READLjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 134,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.WRITELjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 140,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.DSYNCLjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 144,
+          "opcode": "0xb8",
+          "reference": "java/nio/channels/FileChannel.open(Ljava/nio/file/Path;[Ljava/nio/file/OpenOption;)Ljava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 147,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 156,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/OpenOption"
+        },
+        {
+          "offset": 161,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.CREATELjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 167,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.READLjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 173,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.WRITELjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 177,
+          "opcode": "0xb8",
+          "reference": "java/nio/channels/FileChannel.open(Ljava/nio/file/Path;[Ljava/nio/file/OpenOption;)Ljava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 180,
+          "opcode": "0xb5",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 184,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 189,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/SectorMap.allocate(II)V"
+        },
+        {
+          "offset": 193,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 197,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.position(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 202,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 206,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 210,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.read(Ljava/nio/ByteBuffer;J)I"
+        },
+        {
+          "offset": 229,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 237,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 240,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 246,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.size(Ljava/nio/file/Path;)J"
+        },
+        {
+          "offset": 263,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 268,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.get(I)I"
+        },
+        {
+          "offset": 280,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getOffset(I)I"
+        },
+        {
+          "offset": 287,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSize(I)I"
+        },
+        {
+          "offset": 298,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 304,
+          "opcode": "0xbd",
+          "reference": "java/lang/Object"
+        },
+        {
+          "offset": 315,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 323,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 327,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;[Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 333,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 339,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 351,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 359,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 362,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 368,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 374,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 394,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 400,
+          "opcode": "0xbd",
+          "reference": "java/lang/Object"
+        },
+        {
+          "offset": 411,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 419,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 423,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;[Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 429,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 435,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 443,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 450,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/SectorMap.allocate(II)V"
+        }
+      ]
+    },
+    {
+      "method": "getExternalChunkPath",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)Ljava/nio/file/Path;",
+      "codeSha256": "d2bb2f07d729f8a609102d3041efa6d9ac83936f108af5f913bc9cfed6872782",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/util/math/ChunkPos.xI"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/util/math/ChunkPos.zI"
+        },
+        {
+          "offset": 15,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.directoryLjava/nio/file/Path;"
+        },
+        {
+          "offset": 19,
+          "opcode": "0xb9",
+          "reference": "java/nio/file/Path.resolve(Ljava/lang/String;)Ljava/nio/file/Path;"
+        }
+      ]
+    },
+    {
+      "method": "getChunkInputStream",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)Ljava/io/DataInputStream;",
+      "codeSha256": "1fcb353ee4058099feee6542f82cccc54f72658f0b5d3a955eb4a22ff903afa7",
+      "references": [
+        {
+          "offset": 2,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getSectorData(Lnet/minecraft/util/math/ChunkPos;)I"
+        },
+        {
+          "offset": 13,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getOffset(I)I"
+        },
+        {
+          "offset": 18,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSize(I)I"
+        },
+        {
+          "offset": 33,
+          "opcode": "0xb8",
+          "reference": "java/nio/ByteBuffer.allocate(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 39,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 50,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.read(Ljava/nio/ByteBuffer;J)I"
+        },
+        {
+          "offset": 56,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.flip()Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 62,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.remaining()I"
+        },
+        {
+          "offset": 69,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 76,
+          "opcode": "0xbd",
+          "reference": "java/lang/Object"
+        },
+        {
+          "offset": 87,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 95,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.remaining()I"
+        },
+        {
+          "offset": 98,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 102,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.error(Ljava/lang/String;[Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 111,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.getInt()I"
+        },
+        {
+          "offset": 118,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.get()B"
+        },
+        {
+          "offset": 128,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 135,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 150,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.hasChunkStreamVersionId(B)Z"
+        },
+        {
+          "offset": 161,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 167,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;)V"
+        },
+        {
+          "offset": 176,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getChunkStreamVersionId(B)B"
+        },
+        {
+          "offset": 179,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getInputStream(Lnet/minecraft/util/math/ChunkPos;B)Ljava/io/DataInputStream;"
+        },
+        {
+          "offset": 187,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.remaining()I"
+        },
+        {
+          "offset": 193,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 200,
+          "opcode": "0xbd",
+          "reference": "java/lang/Object"
+        },
+        {
+          "offset": 211,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 219,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.remaining()I"
+        },
+        {
+          "offset": 222,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 226,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.error(Ljava/lang/String;[Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 238,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 246,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 250,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 265,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getInputStream(Ljava/nio/ByteBuffer;I)Ljava/io/ByteArrayInputStream;"
+        },
+        {
+          "offset": 268,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.decompress(Lnet/minecraft/util/math/ChunkPos;BLjava/io/InputStream;)Ljava/io/DataInputStream;"
+        }
+      ]
+    },
+    {
+      "method": "getEpochTimeSeconds",
+      "descriptor": "()I",
+      "codeSha256": "721bde710b1da25d72952ae44811d6804ca42161457f9f1b68ce356d32c00912",
+      "references": [
+        {
+          "offset": 0,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/util/Util.getEpochTimeMs()J"
+        }
+      ]
+    },
+    {
+      "method": "hasChunkStreamVersionId",
+      "descriptor": "(B)Z",
+      "codeSha256": "56efdc480439120d8b57fe118542e03d6067e3e80c7b3670bee543d241cb4f20",
+      "references": []
+    },
+    {
+      "method": "getChunkStreamVersionId",
+      "descriptor": "(B)B",
+      "codeSha256": "dd4c90f485a58fc1ff279f6de6c9252c66a10a3d0229701d9bc05350d89911f9",
+      "references": []
+    },
+    {
+      "method": "decompress",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;BLjava/io/InputStream;)Ljava/io/DataInputStream;",
+      "codeSha256": "51eb4b5f5cf11cbfaec7653f3dea9915983d0e9bc51fcd6e98cf9da5195d52d7",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.get(I)Lnet/minecraft/world/storage/ChunkStreamVersion;"
+        },
+        {
+          "offset": 11,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 19,
+          "opcode": "0xb8",
+          "reference": "java/lang/Byte.valueOf(B)Ljava/lang/Byte;"
+        },
+        {
+          "offset": 22,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.error(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 29,
+          "opcode": "0xbb",
+          "reference": "java/io/DataInputStream"
+        },
+        {
+          "offset": 36,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.wrap(Ljava/io/InputStream;)Ljava/io/InputStream;"
+        },
+        {
+          "offset": 39,
+          "opcode": "0xb7",
+          "reference": "java/io/DataInputStream.<init>(Ljava/io/InputStream;)V"
+        }
+      ]
+    },
+    {
+      "method": "getInputStream",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;B)Ljava/io/DataInputStream;",
+      "codeSha256": "24ef1be0b7c3ae8dd7f37dc4a6e9c5b0bea0b691237db7957f572a2c65093d2f",
+      "references": [
+        {
+          "offset": 2,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getExternalChunkPath(Lnet/minecraft/util/math/ChunkPos;)Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 8,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/LinkOption"
+        },
+        {
+          "offset": 11,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.isRegularFile(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z"
+        },
+        {
+          "offset": 17,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 24,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.error(Ljava/lang/String;Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 36,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/OpenOption"
+        },
+        {
+          "offset": 39,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.newInputStream(Ljava/nio/file/Path;[Ljava/nio/file/OpenOption;)Ljava/io/InputStream;"
+        },
+        {
+          "offset": 42,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.decompress(Lnet/minecraft/util/math/ChunkPos;BLjava/io/InputStream;)Ljava/io/DataInputStream;"
+        }
+      ]
+    },
+    {
+      "method": "getInputStream",
+      "descriptor": "(Ljava/nio/ByteBuffer;I)Ljava/io/ByteArrayInputStream;",
+      "codeSha256": "58c7d03054d44d2783bf5faed5fa7b87e145daffe210adfc2f19c898f2828f1f",
+      "references": [
+        {
+          "offset": 0,
+          "opcode": "0xbb",
+          "reference": "java/io/ByteArrayInputStream"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.array()[B"
+        },
+        {
+          "offset": 9,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.position()I"
+        },
+        {
+          "offset": 13,
+          "opcode": "0xb7",
+          "reference": "java/io/ByteArrayInputStream.<init>([BII)V"
+        }
+      ]
+    },
+    {
+      "method": "packSectorData",
+      "descriptor": "(II)I",
+      "codeSha256": "ecc51d6d340976885a779f7422ab7e421e38861b6f9aea15bf34cf2abf35869d",
+      "references": []
+    },
+    {
+      "method": "getSize",
+      "descriptor": "(I)I",
+      "codeSha256": "8fa1d0cedf5ac26de18e143993f80c5aeb2f6ed71f98d1b985c7721f27a0c581",
+      "references": []
+    },
+    {
+      "method": "getOffset",
+      "descriptor": "(I)I",
+      "codeSha256": "3b9d5cbb39518c8dd647c06b6af456f4663ffbbe94af73f2d681bdc8159cfd07",
+      "references": []
+    },
+    {
+      "method": "getSectorCount",
+      "descriptor": "(I)I",
+      "codeSha256": "ed5830f396dc2672d40ab3e7ee25ea8b2705efba4e26846cb6c4709509a7c492",
+      "references": []
+    },
+    {
+      "method": "isChunkValid",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)Z",
+      "codeSha256": "b594aec129425b05acac9b57950c16742a1ce34e6d598287c13d76c6aa0a6a1d",
+      "references": [
+        {
+          "offset": 2,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getSectorData(Lnet/minecraft/util/math/ChunkPos;)I"
+        },
+        {
+          "offset": 13,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getOffset(I)I"
+        },
+        {
+          "offset": 18,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSize(I)I"
+        },
+        {
+          "offset": 24,
+          "opcode": "0xb8",
+          "reference": "java/nio/ByteBuffer.allocate(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 30,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 41,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.read(Ljava/nio/ByteBuffer;J)I"
+        },
+        {
+          "offset": 47,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.flip()Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 53,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.remaining()I"
+        },
+        {
+          "offset": 64,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.getInt()I"
+        },
+        {
+          "offset": 71,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.get()B"
+        },
+        {
+          "offset": 78,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.hasChunkStreamVersionId(B)Z"
+        },
+        {
+          "offset": 86,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getChunkStreamVersionId(B)B"
+        },
+        {
+          "offset": 89,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.exists(I)Z"
+        },
+        {
+          "offset": 99,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getExternalChunkPath(Lnet/minecraft/util/math/ChunkPos;)Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 103,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/LinkOption"
+        },
+        {
+          "offset": 106,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.isRegularFile(Ljava/nio/file/Path;[Ljava/nio/file/LinkOption;)Z"
+        },
+        {
+          "offset": 116,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.exists(I)Z"
+        }
+      ]
+    },
+    {
+      "method": "getChunkOutputStream",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)Ljava/io/DataOutputStream;",
+      "codeSha256": "633e6b8fc0ed9e6ecbe4101cc7c16432acd1c4423ae81de2b0c0ba6e1ad3b087",
+      "references": [
+        {
+          "offset": 0,
+          "opcode": "0xbb",
+          "reference": "java/io/DataOutputStream"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.outputChunkStreamVersionLnet/minecraft/world/storage/ChunkStreamVersion;"
+        },
+        {
+          "offset": 8,
+          "opcode": "0xbb",
+          "reference": "net/minecraft/world/storage/RegionFile$ChunkBuffer"
+        },
+        {
+          "offset": 14,
+          "opcode": "0xb7",
+          "reference": "net/minecraft/world/storage/RegionFile$ChunkBuffer.<init>(Lnet/minecraft/world/storage/RegionFile;Lnet/minecraft/util/math/ChunkPos;)V"
+        },
+        {
+          "offset": 17,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.wrap(Ljava/io/OutputStream;)Ljava/io/OutputStream;"
+        },
+        {
+          "offset": 20,
+          "opcode": "0xb7",
+          "reference": "java/io/DataOutputStream.<init>(Ljava/io/OutputStream;)V"
+        }
+      ]
+    },
+    {
+      "method": "sync",
+      "descriptor": "()V",
+      "codeSha256": "a95f5cc06f1b8c55d6d57ae045a6eec7ba619a523c0d92f3f16c31f167fe1300",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.force(Z)V"
+        }
+      ]
+    },
+    {
+      "method": "delete",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)V",
+      "codeSha256": "20de995256684cf6bba6497fb0435a71ea1538ac489f27f401df5b67209f1f05",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getIndex(Lnet/minecraft/util/math/ChunkPos;)I"
+        },
+        {
+          "offset": 6,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 10,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.get(I)I"
+        },
+        {
+          "offset": 20,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 25,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 30,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.saveTimesLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 34,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getEpochTimeSeconds()I"
+        },
+        {
+          "offset": 37,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 42,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.writeHeader()V"
+        },
+        {
+          "offset": 47,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getExternalChunkPath(Lnet/minecraft/util/math/ChunkPos;)Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 50,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.deleteIfExists(Ljava/nio/file/Path;)Z"
+        },
+        {
+          "offset": 55,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 59,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getOffset(I)I"
+        },
+        {
+          "offset": 63,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSize(I)I"
+        },
+        {
+          "offset": 66,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/SectorMap.free(II)V"
+        }
+      ]
+    },
+    {
+      "method": "writeChunk",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;Ljava/nio/ByteBuffer;)V",
+      "codeSha256": "43b29155c8b3bd45bd186288a4bc7bf1915670822df5e2d1e3e398b66a892fd2",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getIndex(Lnet/minecraft/util/math/ChunkPos;)I"
+        },
+        {
+          "offset": 6,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 10,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.get(I)I"
+        },
+        {
+          "offset": 17,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getOffset(I)I"
+        },
+        {
+          "offset": 24,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSize(I)I"
+        },
+        {
+          "offset": 30,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.remaining()I"
+        },
+        {
+          "offset": 37,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSectorCount(I)I"
+        },
+        {
+          "offset": 52,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getExternalChunkPath(Lnet/minecraft/util/math/ChunkPos;)Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 57,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 64,
+          "opcode": "0xbd",
+          "reference": "java/lang/Object"
+        },
+        {
+          "offset": 75,
+          "opcode": "0xb8",
+          "reference": "java/lang/Integer.valueOf(I)Ljava/lang/Integer;"
+        },
+        {
+          "offset": 84,
+          "opcode": "0xb9",
+          "reference": "org/slf4j/Logger.warn(Ljava/lang/String;[Ljava/lang/Object;)V"
+        },
+        {
+          "offset": 93,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 98,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/SectorMap.allocate(I)I"
+        },
+        {
+          "offset": 107,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.writeSafely(Ljava/nio/file/Path;Ljava/nio/ByteBuffer;)Lnet/minecraft/world/storage/RegionFile$OutputAction;"
+        },
+        {
+          "offset": 113,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getHeaderBuf()Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 119,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 131,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.write(Ljava/nio/ByteBuffer;J)I"
+        },
+        {
+          "offset": 139,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 144,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/SectorMap.allocate(I)I"
+        },
+        {
+          "offset": 159,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 170,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.write(Ljava/nio/ByteBuffer;J)I"
+        },
+        {
+          "offset": 175,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 184,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.packSectorData(II)I"
+        },
+        {
+          "offset": 187,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 192,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.saveTimesLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 196,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getEpochTimeSeconds()I"
+        },
+        {
+          "offset": 199,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.put(II)Ljava/nio/IntBuffer;"
+        },
+        {
+          "offset": 204,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.writeHeader()V"
+        },
+        {
+          "offset": 209,
+          "opcode": "0xb9",
+          "reference": "net/minecraft/world/storage/RegionFile$OutputAction.run()V"
+        },
+        {
+          "offset": 220,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorsLnet/minecraft/world/storage/SectorMap;"
+        },
+        {
+          "offset": 227,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/SectorMap.free(II)V"
+        }
+      ]
+    },
+    {
+      "method": "getHeaderBuf",
+      "descriptor": "()Ljava/nio/ByteBuffer;",
+      "codeSha256": "b76e94a81f639463e4583a6f8eb45a32a82e4ca2e284b9dda0b064e8648c15e2",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb8",
+          "reference": "java/nio/ByteBuffer.allocate(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 7,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.putInt(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 13,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.outputChunkStreamVersionLnet/minecraft/world/storage/ChunkStreamVersion;"
+        },
+        {
+          "offset": 16,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/ChunkStreamVersion.getId()I"
+        },
+        {
+          "offset": 24,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.put(B)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 29,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.flip()Ljava/nio/ByteBuffer;"
+        }
+      ]
+    },
+    {
+      "method": "writeSafely",
+      "descriptor": "(Ljava/nio/file/Path;Ljava/nio/ByteBuffer;)Lnet/minecraft/world/storage/RegionFile$OutputAction;",
+      "codeSha256": "5419726ab52b6fc13f02fa445fb897e5d7f9a66b33fc12e14514127284f888c8",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.directoryLjava/nio/file/Path;"
+        },
+        {
+          "offset": 9,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/attribute/FileAttribute"
+        },
+        {
+          "offset": 12,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.createTempFile(Ljava/nio/file/Path;Ljava/lang/String;Ljava/lang/String;[Ljava/nio/file/attribute/FileAttribute;)Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 18,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/OpenOption"
+        },
+        {
+          "offset": 23,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.CREATELjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 29,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardOpenOption.WRITELjava/nio/file/StandardOpenOption;"
+        },
+        {
+          "offset": 33,
+          "opcode": "0xb8",
+          "reference": "java/nio/channels/FileChannel.open(Ljava/nio/file/Path;[Ljava/nio/file/OpenOption;)Ljava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 40,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.position(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 47,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.write(Ljava/nio/ByteBuffer;)I"
+        },
+        {
+          "offset": 58,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.close()V"
+        },
+        {
+          "offset": 73,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.close()V"
+        },
+        {
+          "offset": 85,
+          "opcode": "0xb6",
+          "reference": "java/lang/Throwable.addSuppressed(Ljava/lang/Throwable;)V"
+        }
+      ]
+    },
+    {
+      "method": "writeHeader",
+      "descriptor": "()V",
+      "codeSha256": "2967708f648a9696477755e6224ccb9e7c19a881009baf476906c838e850b229",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.position(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 10,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 14,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.headerLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 18,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.write(Ljava/nio/ByteBuffer;J)I"
+        }
+      ]
+    },
+    {
+      "method": "getSectorData",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)I",
+      "codeSha256": "4df7f5d3eee78bbc798e88184757747d885ea65f2d54583cde1079ac762a8415",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.sectorDataLjava/nio/IntBuffer;"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getIndex(Lnet/minecraft/util/math/ChunkPos;)I"
+        },
+        {
+          "offset": 8,
+          "opcode": "0xb6",
+          "reference": "java/nio/IntBuffer.get(I)I"
+        }
+      ]
+    },
+    {
+      "method": "hasChunk",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)Z",
+      "codeSha256": "38a179280f3580cea60f6cca9f134c1a1e1df5075ca5551d29815f7e0754cf26",
+      "references": [
+        {
+          "offset": 2,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getSectorData(Lnet/minecraft/util/math/ChunkPos;)I"
+        }
+      ]
+    },
+    {
+      "method": "getIndex",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)I",
+      "codeSha256": "ac88245acd7265a690f628e92a5ebe58417b28b805e903f93bc743cb96d72b50",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/util/math/ChunkPos.getRegionRelativeX()I"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/util/math/ChunkPos.getRegionRelativeZ()I"
+        }
+      ]
+    },
+    {
+      "method": "close",
+      "descriptor": "()V",
+      "codeSha256": "150a9264258dd38663a65f330d866df2fde9b711b4ca99000c6b38525e540464",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.fillLastSector()V"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 9,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.force(Z)V"
+        },
+        {
+          "offset": 13,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 16,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.close()V"
+        },
+        {
+          "offset": 24,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 27,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.close()V"
+        },
+        {
+          "offset": 37,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 41,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.force(Z)V"
+        },
+        {
+          "offset": 45,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 48,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.close()V"
+        },
+        {
+          "offset": 56,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 59,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.close()V"
+        }
+      ]
+    },
+    {
+      "method": "fillLastSector",
+      "descriptor": "()V",
+      "codeSha256": "4fbef3ae6a00a45fa4e3fad3e6d15f9c381a4cd66d023fcb01c22dfe3c9dc9c6",
+      "references": [
+        {
+          "offset": 1,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 4,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.size()J"
+        },
+        {
+          "offset": 10,
+          "opcode": "0xb8",
+          "reference": "net/minecraft/world/storage/RegionFile.getSectorCount(I)I"
+        },
+        {
+          "offset": 23,
+          "opcode": "0xb2",
+          "reference": "net/minecraft/world/storage/RegionFile.ZEROLjava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 26,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.duplicate()Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 32,
+          "opcode": "0xb6",
+          "reference": "java/nio/ByteBuffer.position(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 37,
+          "opcode": "0xb4",
+          "reference": "net/minecraft/world/storage/RegionFile.channelLjava/nio/channels/FileChannel;"
+        },
+        {
+          "offset": 45,
+          "opcode": "0xb6",
+          "reference": "java/nio/channels/FileChannel.write(Ljava/nio/ByteBuffer;J)I"
+        }
+      ]
+    },
+    {
+      "method": "method_22411",
+      "descriptor": "(Ljava/nio/file/Path;Ljava/nio/file/Path;)V",
+      "codeSha256": "429f46e8e18158f0926b4a7d3590166149608e209bf31c7955c22be2c9db8823",
+      "references": [
+        {
+          "offset": 3,
+          "opcode": "0xbd",
+          "reference": "java/nio/file/CopyOption"
+        },
+        {
+          "offset": 8,
+          "opcode": "0xb2",
+          "reference": "java/nio/file/StandardCopyOption.REPLACE_EXISTINGLjava/nio/file/StandardCopyOption;"
+        },
+        {
+          "offset": 12,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.move(Ljava/nio/file/Path;Ljava/nio/file/Path;[Ljava/nio/file/CopyOption;)Ljava/nio/file/Path;"
+        }
+      ]
+    },
+    {
+      "method": "method_22414",
+      "descriptor": "(Lnet/minecraft/util/math/ChunkPos;)V",
+      "codeSha256": "a598e010ff2030f339d070d32f8e6b1b934b101761d41849b9641011e46caa95",
+      "references": [
+        {
+          "offset": 2,
+          "opcode": "0xb6",
+          "reference": "net/minecraft/world/storage/RegionFile.getExternalChunkPath(Lnet/minecraft/util/math/ChunkPos;)Ljava/nio/file/Path;"
+        },
+        {
+          "offset": 5,
+          "opcode": "0xb8",
+          "reference": "java/nio/file/Files.deleteIfExists(Ljava/nio/file/Path;)Z"
+        }
+      ]
+    },
+    {
+      "method": "<clinit>",
+      "descriptor": "()V",
+      "codeSha256": "e2dbb033bc1ccc604935ef86bbe9c444e42272b4fe0f4044c7b99000d490b663",
+      "references": [
+        {
+          "offset": 0,
+          "opcode": "0xb8",
+          "reference": "com/mojang/logging/LogUtils.getLogger()Lorg/slf4j/Logger;"
+        },
+        {
+          "offset": 3,
+          "opcode": "0xb3",
+          "reference": "net/minecraft/world/storage/RegionFile.LOGGERLorg/slf4j/Logger;"
+        },
+        {
+          "offset": 7,
+          "opcode": "0xb8",
+          "reference": "java/nio/ByteBuffer.allocateDirect(I)Ljava/nio/ByteBuffer;"
+        },
+        {
+          "offset": 10,
+          "opcode": "0xb3",
+          "reference": "net/minecraft/world/storage/RegionFile.ZEROLjava/nio/ByteBuffer;"
+        }
+      ]
+    }
+  ],
+  "javaLaunched": false
+}
