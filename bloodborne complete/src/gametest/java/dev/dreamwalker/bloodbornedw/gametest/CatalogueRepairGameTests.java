@@ -157,7 +157,8 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void realServerPacketRejectsWrongAimAndAcceptsPhysicalDoorPart(TestContext t) {
         var w=t.getWorld();var door=ObjectRegistry.TYPES.get("door_1").create(w);
-        BlockPos root=t.getAbsolutePos(new BlockPos(3,4,3));door.setPosition(Vec3d.ofCenter(root));w.spawnEntity(door);
+        BlockPos root=t.getAbsolutePos(new BlockPos(3,4,3));door.setPosition(Vec3d.ofCenter(root));
+        var chunk=new ChunkPos(root);boolean wasForced=w.getForcedChunks().contains(chunk.toLong());w.setChunkForced(chunk.x,chunk.z,true);w.getChunk(chunk.x,chunk.z);
         // The GameTest mock overrides rotation/interaction; use the genuine packet handler.
         var p=new net.minecraft.server.network.ServerPlayerEntity(w.getServer(),w,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"RpPacketProbe"));
         var connection=new net.minecraft.network.ClientConnection(net.minecraft.network.NetworkSide.SERVERBOUND) {
@@ -165,7 +166,13 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
             @Override public void send(net.minecraft.network.packet.Packet<?> packet,net.minecraft.network.PacketCallbacks callbacks) {}
         };
         p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);
-        p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;w.spawnEntity(p);
+        p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;p.setPosition(Vec3d.ofCenter(root));
+        Runnable cleanup=()->{door.discard();p.discard();if(!wasForced)w.setChunkForced(chunk.x,chunk.z,false);};
+        // Native RP indexing starts on ENTITY_LOAD. Wait for the real entity
+        // chunk before spawning and sending packets; an untracked entity made
+        // the old wrong-aim rejection vacuously pass and valid packet flaky.
+        awaitTrackedRpFixture(t,chunk,t.getTick()+100,()->{try{
+        t.assertTrue(w.spawnEntity(door)&&w.getEntityById(door.getId())==door,"Door is actually spawned and visible to the genuine native packet resolver");w.spawnEntity(p);
         var box=door.activePhysicalBoxes().stream().min(java.util.Comparator.comparingDouble(b->b.minZ)).orElseThrow();var center=box.getCenter();
         p.setPosition(center.x,center.y-p.getStandingEyeHeight(),box.minZ-2);p.setPitch(0);p.setYaw(180);
         var wrong=RpObjectSelection.playerTarget(p,6);
@@ -173,9 +180,11 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
         var packet=net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.interact(door,false,Hand.MAIN_HAND);
         p.networkHandler.onPlayerInteractEntity(packet);
         t.assertTrue(!door.isOpen(),"forged UUID packet aimed away cannot use visual AABB as permission");
-        p.setYaw(0);p.networkHandler.onPlayerInteractEntity(packet);
+        p.setYaw(0);var right=RpObjectSelection.playerTarget(p,RpObjectSelection.entityReach(p));
+        t.assertTrue(right!=null&&right.getEntity()==door,"Correct-aim fixture reaches the tracked physical door before the genuine packet: eye="+p.getEyePos()+" box="+box+" selected="+(right==null?"none":right.getEntity().getUuid()));p.networkHandler.onPlayerInteractEntity(packet);
         t.assertTrue(door.isOpen(),"real server packet on physical part within Creative reach is accepted");
-        door.discard();p.discard();t.complete();
+        t.complete();
+        }finally{cleanup.run();}},cleanup);
     }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="catalogue_repair")
     public void sourceLadderVariantMigrationKeepsBothPrivateRolesAndOriginalNbt(TestContext t) {
