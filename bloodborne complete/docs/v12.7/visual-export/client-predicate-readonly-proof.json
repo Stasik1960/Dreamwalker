@@ -1,0 +1,3732 @@
+{
+  "status": "PASS_READ_ONLY_PINNED_CLIENT_PREDICATE_PATH",
+  "classes": {
+    "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.class": {
+      "classSha256": "7911a3d410921d4b6ae8bdf428df7a7d45771f4d81cafdd1af6e8f44953daaf0",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "()V",
+          "codeSha256": "27752947d9209fda809a8fbf664c9e668287eaf0348eef8ecfbeead18478d14d",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/MultipartModelComponent;",
+          "codeSha256": "75e630d716e2b06910eaa6d36e5071e3382ebb318f4505f29db919465a131247",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsJsonObject()Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.deserializeSelectorOrDefault(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            },
+            {
+              "offset": 21,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.get(Ljava/lang/String;)Lcom/google/gson/JsonElement;"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xb9",
+              "reference": "com/google/gson/JsonDeserializationContext.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 31,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.<init>(Lnet/minecraft/client/render/model/json/MultipartModelSelector;Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;)V"
+            }
+          ]
+        },
+        {
+          "method": "deserializeSelectorOrDefault",
+          "descriptor": "(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;",
+          "codeSha256": "8dc2178eef80ca9f1da0c4dd62dccf877aa5a94561f7dd7c52c26b95999b9a5b",
+          "references": [
+            {
+              "offset": 3,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.has(Ljava/lang/String;)Z"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getObject(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.deserializeSelector(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            },
+            {
+              "offset": 19,
+              "opcode": "0xb2",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelSelector.TRUELnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            }
+          ]
+        },
+        {
+          "method": "deserializeSelector",
+          "descriptor": "(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;",
+          "codeSha256": "e054f1d02bb831f024e88e50b891dad76f2f92ee296ba328f5f7f688cdd9db1c",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.entrySet()Ljava/util/Set;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.isEmpty()Z"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xbb",
+              "reference": "com/google/gson/JsonParseException"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb7",
+              "reference": "com/google/gson/JsonParseException.<init>(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.size()I"
+            },
+            {
+              "offset": 37,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.has(Ljava/lang/String;)Z"
+            },
+            {
+              "offset": 46,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getArray(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lcom/google/gson/JsonArray;"
+            },
+            {
+              "offset": 49,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Streams.stream(Ljava/lang/Iterable;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 57,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 62,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 65,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 70,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            },
+            {
+              "offset": 74,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/OrMultipartModelSelector"
+            },
+            {
+              "offset": 79,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/OrMultipartModelSelector.<init>(Ljava/lang/Iterable;)V"
+            },
+            {
+              "offset": 86,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.has(Ljava/lang/String;)Z"
+            },
+            {
+              "offset": 95,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getArray(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lcom/google/gson/JsonArray;"
+            },
+            {
+              "offset": 98,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Streams.stream(Ljava/lang/Iterable;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 106,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 111,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 114,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 119,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            },
+            {
+              "offset": 123,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/AndMultipartModelSelector"
+            },
+            {
+              "offset": 128,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/AndMultipartModelSelector.<init>(Ljava/lang/Iterable;)V"
+            },
+            {
+              "offset": 133,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 138,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 143,
+              "opcode": "0xc0",
+              "reference": "java/util/Map$Entry"
+            },
+            {
+              "offset": 146,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.createStatePropertySelector(Ljava/util/Map$Entry;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            },
+            {
+              "offset": 150,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/AndMultipartModelSelector"
+            },
+            {
+              "offset": 155,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 165,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 170,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 173,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 178,
+              "opcode": "0xc0",
+              "reference": "java/lang/Iterable"
+            },
+            {
+              "offset": 181,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/AndMultipartModelSelector.<init>(Ljava/lang/Iterable;)V"
+            }
+          ]
+        },
+        {
+          "method": "createStatePropertySelector",
+          "descriptor": "(Ljava/util/Map$Entry;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;",
+          "codeSha256": "6ec82e97bd5b39ce1530b60ea4ca3222aa8f9aad0ca0d755fe6e4f6a9316e889",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb9",
+              "reference": "java/util/Map$Entry.getKey()Ljava/lang/Object;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xc0",
+              "reference": "java/lang/String"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb9",
+              "reference": "java/util/Map$Entry.getValue()Ljava/lang/Object;"
+            },
+            {
+              "offset": 19,
+              "opcode": "0xc0",
+              "reference": "com/google/gson/JsonElement"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsString()Ljava/lang/String;"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.<init>(Ljava/lang/String;Ljava/lang/String;)V"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;",
+          "codeSha256": "e3df02aaa4ef72105bcdb4e28a70d3473c32a1a177d8a2e676f72dff1e0405a4",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/MultipartModelComponent;"
+            }
+          ]
+        },
+        {
+          "method": "method_3537",
+          "descriptor": "(Lcom/google/gson/JsonElement;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;",
+          "codeSha256": "270b59e9c3330b8e9fec59353bca2c5e5e4fa0931a2894b6742c6f65879628d9",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsJsonObject()Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.deserializeSelector(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            }
+          ]
+        },
+        {
+          "method": "method_3534",
+          "descriptor": "(Lcom/google/gson/JsonElement;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;",
+          "codeSha256": "270b59e9c3330b8e9fec59353bca2c5e5e4fa0931a2894b6742c6f65879628d9",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsJsonObject()Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.deserializeSelector(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelVariantMap.class": {
+      "classSha256": "3ea88fcad5abcd9925e471ce1bf0b8f39e0f50c2a916efd67d2b1c07893bc90f",
+      "methods": [
+        {
+          "method": "fromJson",
+          "descriptor": "(Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;Ljava/io/Reader;)Lnet/minecraft/client/render/model/json/ModelVariantMap;",
+          "codeSha256": "cf0e410aa58897d0787095027b15fb6ea97ab46e75d7be7cb594a1c5d4d477bf",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.gsonLcom/google/gson/Gson;"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.deserialize(Lcom/google/gson/Gson;Ljava/io/Reader;Ljava/lang/Class;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap"
+            }
+          ]
+        },
+        {
+          "method": "fromJson",
+          "descriptor": "(Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;Lcom/google/gson/JsonElement;)Lnet/minecraft/client/render/model/json/ModelVariantMap;",
+          "codeSha256": "71f5f0df9542d95f24d14c2f16be563c49f1a60fde1faeeaa73e8087155b1e22",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.gsonLcom/google/gson/Gson;"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/Gson.fromJson(Lcom/google/gson/JsonElement;Ljava/lang/Class;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap"
+            }
+          ]
+        },
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/util/Map;Lnet/minecraft/client/render/model/MultipartUnbakedModel;)V",
+          "codeSha256": "309f0ba7a6ef0e3f68a8cf9404651c1ccb7d1b09d43b6a3412c6ae205e193f00",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Maps.newLinkedHashMap()Ljava/util/LinkedHashMap;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 21,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.putAll(Ljava/util/Map;)V"
+            }
+          ]
+        },
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/util/List;)V",
+          "codeSha256": "c885b2d8a9d3c6b202b1d4dfa48b061ba64041f1bda12663a795be96008e6206",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Maps.newLinkedHashMap()Ljava/util/LinkedHashMap;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb9",
+              "reference": "java/util/List.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 21,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.hasNext()Z"
+            },
+            {
+              "offset": 30,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 35,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap"
+            },
+            {
+              "offset": 42,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.hasMultipartModel()Z"
+            },
+            {
+              "offset": 49,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 52,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.clear()V"
+            },
+            {
+              "offset": 61,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 66,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 69,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.putAll(Ljava/util/Map;)V"
+            },
+            {
+              "offset": 83,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 86,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            }
+          ]
+        },
+        {
+          "method": "containsVariant",
+          "descriptor": "(Ljava/lang/String;)Z",
+          "codeSha256": "743bb380ceca10d69d155765cd5b1b4dd5d8d18c09054eb0a2b28432878ad9e6",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;"
+            }
+          ]
+        },
+        {
+          "method": "getVariant",
+          "descriptor": "(Ljava/lang/String;)Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;",
+          "codeSha256": "595cfd92e5741bae6e589ed6495558705cd9e0e4f3505d42094a37b65d9a874b",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$VariantAbsentException"
+            },
+            {
+              "offset": 23,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$VariantAbsentException.<init>(Lnet/minecraft/client/render/model/json/ModelVariantMap;)V"
+            }
+          ]
+        },
+        {
+          "method": "equals",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "codeSha256": "ed2ed3276d0eea677a2b49901e80a770144bf483ca7b2cf470755f4ff4fb2fcc",
+          "references": [
+            {
+              "offset": 8,
+              "opcode": "0xc1",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.equals(Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 36,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.hasMultipartModel()Z"
+            },
+            {
+              "offset": 43,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 47,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 50,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.equals(Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 57,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.hasMultipartModel()Z"
+            }
+          ]
+        },
+        {
+          "method": "hashCode",
+          "descriptor": "()I",
+          "codeSha256": "2263982c3cfdf98c0c782b143df518fef813302849d8aba1208c80078da738d6",
+          "references": [
+            {
+              "offset": 3,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.hashCode()I"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.hasMultipartModel()Z"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 23,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.hashCode()I"
+            }
+          ]
+        },
+        {
+          "method": "getVariantMap",
+          "descriptor": "()Ljava/util/Map;",
+          "codeSha256": "5145c5ffc5fe542a91648db2a2131b4f4236e4aab74fa075fe55d0fff1f650d0",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            }
+          ]
+        },
+        {
+          "method": "getAllModels",
+          "descriptor": "()Ljava/util/Set;",
+          "codeSha256": "49cc3f9d8e6a9919680cffcdf32b8b366f4d0f3e45dc86031464e432c0da46af",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.variantMapLjava/util/Map;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.values()Ljava/util/Collection;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Sets.newHashSet(Ljava/lang/Iterable;)Ljava/util/HashSet;"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.hasMultipartModel()Z"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.getModels()Ljava/util/Set;"
+            },
+            {
+              "offset": 28,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.addAll(Ljava/util/Collection;)Z"
+            }
+          ]
+        },
+        {
+          "method": "hasMultipartModel",
+          "descriptor": "()Z",
+          "codeSha256": "b7b040e8d8f4aed3a376e99273c357be971ed71e47bbe3e27915d8b5a59dfdd6",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            }
+          ]
+        },
+        {
+          "method": "getMultipartModel",
+          "descriptor": "()Lnet/minecraft/client/render/model/MultipartUnbakedModel;",
+          "codeSha256": "7e2a9c6163dcaed1bbb8ef0ff4e9d4cd4b91b857ead5241e30be924fb548ce62",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.multipartModelLnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/AndMultipartModelSelector.class": {
+      "classSha256": "26a51d26d7a27e45d9e4cdea3866e5f451c29b8aeee990beb9aee95099d12e03",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/lang/Iterable;)V",
+          "codeSha256": "f123125a8359d16f0f9687f2b68d942b7eca397f4d7fcf8c2a4cb29ba4bdf95c",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/AndMultipartModelSelector.selectorsLjava/lang/Iterable;"
+            }
+          ]
+        },
+        {
+          "method": "getPredicate",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;",
+          "codeSha256": "74ac515ae8e332909cd9f5da3d32db88d9e8e08ec3c2dae7e6a51f9eec229576",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/AndMultipartModelSelector.selectorsLjava/lang/Iterable;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Streams.stream(Ljava/lang/Iterable;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 21,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            }
+          ]
+        },
+        {
+          "method": "method_3506",
+          "descriptor": "(Ljava/util/List;Lnet/minecraft/block/BlockState;)Z",
+          "codeSha256": "92e609b11967af5063bd78cef969e896105259f1dbb8dfda5751fc2f537479bc",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb9",
+              "reference": "java/util/List.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.allMatch(Ljava/util/function/Predicate;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3507",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Ljava/util/function/Predicate;)Z",
+          "codeSha256": "f0948770579abfcdb17faf50743c40778457eb1b5d6500eaee0f5d9bca7ee2c9",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb9",
+              "reference": "java/util/function/Predicate.test(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3508",
+          "descriptor": "(Lnet/minecraft/state/StateManager;Lnet/minecraft/client/render/model/json/MultipartModelSelector;)Ljava/util/function/Predicate;",
+          "codeSha256": "186c4dc113fb3bb53e2f54f53024ddd5aa22f7c93bcf9c90fa0a3fd9c205998e",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelSelector.getPredicate(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/MultipartModelSelector.class": {
+      "classSha256": "b60ba0d3485cc012456cf2ece67597a636cc8dc58f71888dc4c250c8e4a7f4e5",
+      "methods": [
+        {
+          "method": "method_16810",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;",
+          "codeSha256": "8e7800f0a146735f91dd2f6e620e2c4f43446ff75dae18b4d7e79c426bf60f7a",
+          "references": []
+        },
+        {
+          "method": "method_16811",
+          "descriptor": "(Lnet/minecraft/block/BlockState;)Z",
+          "codeSha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+          "references": []
+        },
+        {
+          "method": "method_16808",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;",
+          "codeSha256": "3fae324785c1d796274a76f3d696223b190f4b41ab6ea459005f6b6275965c1e",
+          "references": []
+        },
+        {
+          "method": "method_16809",
+          "descriptor": "(Lnet/minecraft/block/BlockState;)Z",
+          "codeSha256": "95ef737cd8a13db65e3eb3c18e8816a5179dcbdf341309522ab00e95d5aae6d2",
+          "references": []
+        },
+        {
+          "method": "<clinit>",
+          "descriptor": "()V",
+          "codeSha256": "a927238aa118b6f11496b02446bbe069d2002e50ec331e0d6607941e3df41cba",
+          "references": [
+            {
+              "offset": 5,
+              "opcode": "0xb3",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelSelector.TRUELnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb3",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelSelector.FALSELnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelVariant.class": {
+      "classSha256": "b063c306aed0fd87fd4f32f5b10d14751df1b99f844b20c42df7f91465da57f2",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/AffineTransformation;ZI)V",
+          "codeSha256": "8c5f34c73eaa5755eb0816133e9f5619f2ed589f21a41724e06d612d2cfdac15",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.locationLnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.rotationLnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 16,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.uvLockZ"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.weightI"
+            }
+          ]
+        },
+        {
+          "method": "getLocation",
+          "descriptor": "()Lnet/minecraft/util/Identifier;",
+          "codeSha256": "e8601800eb43540de362cdc4aa29dbee7b5cd554372a13598386fdb5d27d73f3",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.locationLnet/minecraft/util/Identifier;"
+            }
+          ]
+        },
+        {
+          "method": "getRotation",
+          "descriptor": "()Lnet/minecraft/util/math/AffineTransformation;",
+          "codeSha256": "b64aa21a12b270e8b7fae93584980bed7c72a118612ceffe40dbf3cefc15e979",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.rotationLnet/minecraft/util/math/AffineTransformation;"
+            }
+          ]
+        },
+        {
+          "method": "isUvLocked",
+          "descriptor": "()Z",
+          "codeSha256": "1b413329f5bd676d1fe6027f75ef0c03553f45f54b35607ecc5d492f5c28d47b",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.uvLockZ"
+            }
+          ]
+        },
+        {
+          "method": "getWeight",
+          "descriptor": "()I",
+          "codeSha256": "9a7f60f5afa3912c3113bc0080645f9568c53c3a41835eefec3699516021a6ea",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.weightI"
+            }
+          ]
+        },
+        {
+          "method": "toString",
+          "descriptor": "()Ljava/lang/String;",
+          "codeSha256": "5e11501df06cb3acf1d10bbcd750a5be598902fb32826f3bf26c8ca2f61fdd1d",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.locationLnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.rotationLnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.uvLockZ"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.weightI"
+            }
+          ]
+        },
+        {
+          "method": "equals",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "codeSha256": "fa6a99f623ff6f0e8e0355fa13627698cd64dd57228aaa3373965561a92d974a",
+          "references": [
+            {
+              "offset": 8,
+              "opcode": "0xc1",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.locationLnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.locationLnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/util/Identifier.equals(Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.rotationLnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.rotationLnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 41,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.equals(Ljava/lang/Object;Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 48,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.uvLockZ"
+            },
+            {
+              "offset": 52,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.uvLockZ"
+            },
+            {
+              "offset": 59,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.weightI"
+            },
+            {
+              "offset": 63,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.weightI"
+            }
+          ]
+        },
+        {
+          "method": "hashCode",
+          "descriptor": "()I",
+          "codeSha256": "c9d1ad864c0644dc73d52d3a481d3b0a47d83c703c782b1c0b638d8ecc54148e",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.locationLnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/util/Identifier.hashCode()I"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.rotationLnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 16,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/util/math/AffineTransformation.hashCode()I"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.uvLockZ"
+            },
+            {
+              "offset": 29,
+              "opcode": "0xb8",
+              "reference": "java/lang/Boolean.valueOf(Z)Ljava/lang/Boolean;"
+            },
+            {
+              "offset": 32,
+              "opcode": "0xb6",
+              "reference": "java/lang/Boolean.hashCode()I"
+            },
+            {
+              "offset": 42,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.weightI"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/MultipartModelComponent.class": {
+      "classSha256": "a62517e47970076e1c864368fca5535067f0e97fcfc3b27325d2057b634d5e50",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/client/render/model/json/MultipartModelSelector;Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;)V",
+          "codeSha256": "88ae86dc9bbf5178dfc6cce01530306da48523684f5705534846fe62541399d5",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xbb",
+              "reference": "java/lang/IllegalArgumentException"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb7",
+              "reference": "java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xbb",
+              "reference": "java/lang/IllegalArgumentException"
+            },
+            {
+              "offset": 28,
+              "opcode": "0xb7",
+              "reference": "java/lang/IllegalArgumentException.<init>(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.selectorLnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            },
+            {
+              "offset": 39,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.modelLnet/minecraft/client/render/model/json/WeightedUnbakedModel;"
+            }
+          ]
+        },
+        {
+          "method": "getModel",
+          "descriptor": "()Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;",
+          "codeSha256": "99ee2c946de8deff46ea17ef2200f200bb9e2c92f3460cbd065b5438043c4f2f",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.modelLnet/minecraft/client/render/model/json/WeightedUnbakedModel;"
+            }
+          ]
+        },
+        {
+          "method": "getPredicate",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;",
+          "codeSha256": "421520646e7330467991e26e41e638df0f5595bc7ae33f339a70f7b6b12ff903",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.selectorLnet/minecraft/client/render/model/json/MultipartModelSelector;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelSelector.getPredicate(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;"
+            }
+          ]
+        },
+        {
+          "method": "equals",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "codeSha256": "6f4ab84da0bfe8296d0e96049fa49bc522abb0378607879a3bd0fbfc1322f067",
+          "references": []
+        },
+        {
+          "method": "hashCode",
+          "descriptor": "()I",
+          "codeSha256": "53a2e4d9546c4756645f18adecf728deb4c53a21d5a8cda75a6a48f5e134614f",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb8",
+              "reference": "java/lang/System.identityHashCode(Ljava/lang/Object;)I"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.class": {
+      "classSha256": "5501ca91b93cf015e76ba73d8eaaf088cc3dde7b5989b72966cc992a99922697",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "codeSha256": "3c23ec65bda07fbb2f1d8015d5c2e150a16d3d3c397d1ae4523eb60e257d7709",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.keyLjava/lang/String;"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.valueStringLjava/lang/String;"
+            }
+          ]
+        },
+        {
+          "method": "getPredicate",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;",
+          "codeSha256": "576b549f6915cc8ae23e698d78c98837a3ce23edcc19c57cd630c816c8bb49fb",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.keyLjava/lang/String;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/state/StateManager.getProperty(Ljava/lang/String;)Lnet/minecraft/state/property/Property;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xbb",
+              "reference": "java/lang/RuntimeException"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb2",
+              "reference": "java/util/Locale.ROOTLjava/util/Locale;"
+            },
+            {
+              "offset": 23,
+              "opcode": "0xbd",
+              "reference": "java/lang/Object"
+            },
+            {
+              "offset": 29,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.keyLjava/lang/String;"
+            },
+            {
+              "offset": 36,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/state/StateManager.getOwner()Ljava/lang/Object;"
+            },
+            {
+              "offset": 40,
+              "opcode": "0xb8",
+              "reference": "java/lang/String.format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"
+            },
+            {
+              "offset": 43,
+              "opcode": "0xb7",
+              "reference": "java/lang/RuntimeException.<init>(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 48,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.valueStringLjava/lang/String;"
+            },
+            {
+              "offset": 53,
+              "opcode": "0xb6",
+              "reference": "java/lang/String.isEmpty()Z"
+            },
+            {
+              "offset": 61,
+              "opcode": "0xb6",
+              "reference": "java/lang/String.charAt(I)C"
+            },
+            {
+              "offset": 83,
+              "opcode": "0xb6",
+              "reference": "java/lang/String.substring(I)Ljava/lang/String;"
+            },
+            {
+              "offset": 87,
+              "opcode": "0xb2",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.VALUE_SPLITTERLcom/google/common/base/Splitter;"
+            },
+            {
+              "offset": 91,
+              "opcode": "0xb6",
+              "reference": "com/google/common/base/Splitter.splitToList(Ljava/lang/CharSequence;)Ljava/util/List;"
+            },
+            {
+              "offset": 98,
+              "opcode": "0xb9",
+              "reference": "java/util/List.isEmpty()Z"
+            },
+            {
+              "offset": 106,
+              "opcode": "0xbb",
+              "reference": "java/lang/RuntimeException"
+            },
+            {
+              "offset": 110,
+              "opcode": "0xb2",
+              "reference": "java/util/Locale.ROOTLjava/util/Locale;"
+            },
+            {
+              "offset": 116,
+              "opcode": "0xbd",
+              "reference": "java/lang/Object"
+            },
+            {
+              "offset": 122,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.valueStringLjava/lang/String;"
+            },
+            {
+              "offset": 129,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.keyLjava/lang/String;"
+            },
+            {
+              "offset": 136,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/state/StateManager.getOwner()Ljava/lang/Object;"
+            },
+            {
+              "offset": 140,
+              "opcode": "0xb8",
+              "reference": "java/lang/String.format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"
+            },
+            {
+              "offset": 143,
+              "opcode": "0xb7",
+              "reference": "java/lang/RuntimeException.<init>(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 149,
+              "opcode": "0xb9",
+              "reference": "java/util/List.size()I"
+            },
+            {
+              "offset": 162,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.createPredicate(Lnet/minecraft/state/StateManager;Lnet/minecraft/state/property/Property;Ljava/lang/String;)Ljava/util/function/Predicate;"
+            },
+            {
+              "offset": 172,
+              "opcode": "0xb9",
+              "reference": "java/util/List.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 185,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 190,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 193,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 198,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            },
+            {
+              "offset": 219,
+              "opcode": "0xb9",
+              "reference": "java/util/function/Predicate.negate()Ljava/util/function/Predicate;"
+            }
+          ]
+        },
+        {
+          "method": "createPredicate",
+          "descriptor": "(Lnet/minecraft/state/StateManager;Lnet/minecraft/state/property/Property;Ljava/lang/String;)Ljava/util/function/Predicate;",
+          "codeSha256": "5aa5e3f206560a55c36a5a793826359c0678ab93b6e37ca101e1159e6eaab78e",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/state/property/Property.parse(Ljava/lang/String;)Ljava/util/Optional;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb6",
+              "reference": "java/util/Optional.isPresent()Z"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xbb",
+              "reference": "java/lang/RuntimeException"
+            },
+            {
+              "offset": 19,
+              "opcode": "0xb2",
+              "reference": "java/util/Locale.ROOTLjava/util/Locale;"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xbd",
+              "reference": "java/lang/Object"
+            },
+            {
+              "offset": 35,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.keyLjava/lang/String;"
+            },
+            {
+              "offset": 42,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/state/StateManager.getOwner()Ljava/lang/Object;"
+            },
+            {
+              "offset": 49,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.valueStringLjava/lang/String;"
+            },
+            {
+              "offset": 53,
+              "opcode": "0xb8",
+              "reference": "java/lang/String.format(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;"
+            },
+            {
+              "offset": 56,
+              "opcode": "0xb7",
+              "reference": "java/lang/RuntimeException.<init>(Ljava/lang/String;)V"
+            }
+          ]
+        },
+        {
+          "method": "toString",
+          "descriptor": "()Ljava/lang/String;",
+          "codeSha256": "50bf9ae292e2077176aab3f21d2a22aeac588681c0f92db81512ad1324dc1d7b",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb8",
+              "reference": "com/google/common/base/MoreObjects.toStringHelper(Ljava/lang/Object;)Lcom/google/common/base/MoreObjects$ToStringHelper;"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.keyLjava/lang/String;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xb6",
+              "reference": "com/google/common/base/MoreObjects$ToStringHelper.add(Ljava/lang/String;Ljava/lang/Object;)Lcom/google/common/base/MoreObjects$ToStringHelper;"
+            },
+            {
+              "offset": 16,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.valueStringLjava/lang/String;"
+            },
+            {
+              "offset": 19,
+              "opcode": "0xb6",
+              "reference": "com/google/common/base/MoreObjects$ToStringHelper.add(Ljava/lang/String;Ljava/lang/Object;)Lcom/google/common/base/MoreObjects$ToStringHelper;"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb6",
+              "reference": "com/google/common/base/MoreObjects$ToStringHelper.toString()Ljava/lang/String;"
+            }
+          ]
+        },
+        {
+          "method": "method_3528",
+          "descriptor": "(Lnet/minecraft/state/property/Property;Ljava/util/Optional;Lnet/minecraft/block/BlockState;)Z",
+          "codeSha256": "d4ad85bbbb13b1fdedc098f92b351c9975afc9efc0802316d12b13d9b277b60b",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/block/BlockState.get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb6",
+              "reference": "java/util/Optional.get()Ljava/lang/Object;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb6",
+              "reference": "java/lang/Object.equals(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3524",
+          "descriptor": "(Ljava/util/List;Lnet/minecraft/block/BlockState;)Z",
+          "codeSha256": "a2fb53837d06b58e6dd7153c93d20bcf73f93fea1c595e601d579c79dd045ac3",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb9",
+              "reference": "java/util/List.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.anyMatch(Ljava/util/function/Predicate;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3527",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Ljava/util/function/Predicate;)Z",
+          "codeSha256": "25242abe7f1bce72ea457c2fda81af57ff60573094d400b84248b6487a4a46d6",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb9",
+              "reference": "java/util/function/Predicate.test(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3526",
+          "descriptor": "(Lnet/minecraft/state/StateManager;Lnet/minecraft/state/property/Property;Ljava/lang/String;)Ljava/util/function/Predicate;",
+          "codeSha256": "7bd796e0fb6fea4543ce126cd78a838bf443cac44620e524ceee98c29506b2d2",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.createPredicate(Lnet/minecraft/state/StateManager;Lnet/minecraft/state/property/Property;Ljava/lang/String;)Ljava/util/function/Predicate;"
+            }
+          ]
+        },
+        {
+          "method": "<clinit>",
+          "descriptor": "()V",
+          "codeSha256": "43774950d5191791ff763fa53746ff2a1c9c0a9151e4bf5f7d682095bcb2089b",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb8",
+              "reference": "com/google/common/base/Splitter.on(C)Lcom/google/common/base/Splitter;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb6",
+              "reference": "com/google/common/base/Splitter.omitEmptyStrings()Lcom/google/common/base/Splitter;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb3",
+              "reference": "net/minecraft/client/render/model/json/SimpleMultipartModelSelector.VALUE_SPLITTERLcom/google/common/base/Splitter;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/MultipartUnbakedModel.class": {
+      "classSha256": "9b244112ce160b009c0b733e2055c847d8cd4e723f070bf291c65c04f570d594",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/state/StateManager;Ljava/util/List;)V",
+          "codeSha256": "f4bbbda843dab579f7790619c3e8a162e8ea9aabf049225ac108666abd30d2aa",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.stateFactoryLnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.componentsLjava/util/List;"
+            }
+          ]
+        },
+        {
+          "method": "getComponents",
+          "descriptor": "()Ljava/util/List;",
+          "codeSha256": "bc149cd245ca2c98020664c7cf3a3b0f9c0927b50df6a56a8d67de1a7e037964",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.componentsLjava/util/List;"
+            }
+          ]
+        },
+        {
+          "method": "getModels",
+          "descriptor": "()Ljava/util/Set;",
+          "codeSha256": "3b91517b2a718bcba0b79b0898b62998dd1e24c7d40359a1440f1e7da8e9497e",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Sets.newHashSet()Ljava/util/HashSet;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb9",
+              "reference": "java/util/List.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.hasNext()Z"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 29,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent"
+            },
+            {
+              "offset": 35,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.getModel()Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.add(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "equals",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "codeSha256": "09fdf25b53c1f6f7067d738e11720402b8434e4fe7691a6034855ff0e8bb4cb4",
+          "references": [
+            {
+              "offset": 8,
+              "opcode": "0xc1",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.stateFactoryLnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.stateFactoryLnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.equals(Ljava/lang/Object;Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 41,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.equals(Ljava/lang/Object;Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "hashCode",
+          "descriptor": "()I",
+          "codeSha256": "24a3671950ed2eeae42a4483e69727be2a72b332ce18ea720c67cfc66d01958f",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xbd",
+              "reference": "java/lang/Object"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.stateFactoryLnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.hash([Ljava/lang/Object;)I"
+            }
+          ]
+        },
+        {
+          "method": "getModelDependencies",
+          "descriptor": "()Ljava/util/Collection;",
+          "codeSha256": "6f1567485d3b6c41001bd7cc66722214d9922d0221af49113c1f8c26b8b453bd",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.getComponents()Ljava/util/List;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb9",
+              "reference": "java/util/List.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.flatMap(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 19,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toSet()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xc0",
+              "reference": "java/util/Collection"
+            }
+          ]
+        },
+        {
+          "method": "setParents",
+          "descriptor": "(Ljava/util/function/Function;)V",
+          "codeSha256": "f8c1c77bd19a8e1f480adc29156a9e4e10f4804e99d9267c4372eda69da3e34b",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.getComponents()Ljava/util/List;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xb9",
+              "reference": "java/util/List.forEach(Ljava/util/function/Consumer;)V"
+            }
+          ]
+        },
+        {
+          "method": "bake",
+          "descriptor": "(Lnet/minecraft/client/render/model/Baker;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/BakedModel;",
+          "codeSha256": "85c7a2346ef1f602e926d4d178da704d650d4866809d9a02cd9971f42fcc4639",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder.<init>()V"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.getComponents()Ljava/util/List;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb9",
+              "reference": "java/util/List.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.hasNext()Z"
+            },
+            {
+              "offset": 32,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 37,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent"
+            },
+            {
+              "offset": 44,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.getModel()Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;"
+            },
+            {
+              "offset": 52,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel.bake(Lnet/minecraft/client/render/model/Baker;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/BakedModel;"
+            },
+            {
+              "offset": 67,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.stateFactoryLnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 70,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.getPredicate(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;"
+            },
+            {
+              "offset": 75,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder.addComponent(Ljava/util/function/Predicate;Lnet/minecraft/client/render/model/BakedModel;)V"
+            },
+            {
+              "offset": 83,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder.build()Lnet/minecraft/client/render/model/BakedModel;"
+            }
+          ]
+        },
+        {
+          "method": "method_45789",
+          "descriptor": "(Ljava/util/function/Function;Lnet/minecraft/client/render/model/json/MultipartModelComponent;)V",
+          "codeSha256": "1aba62d28366eccc94db41e14ba26cc6aca2ab824545a36a7dcfdab0a0f64c28",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.getModel()Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel.setParents(Ljava/util/function/Function;)V"
+            }
+          ]
+        },
+        {
+          "method": "method_3518",
+          "descriptor": "(Lnet/minecraft/client/render/model/json/MultipartModelComponent;)Ljava/util/stream/Stream;",
+          "codeSha256": "edd803c8b1b56256e0c3fda8f1c3999f05ceeca99e4cdb8dc00d8d1573f4d0d8",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.getModel()Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel.getModelDependencies()Ljava/util/Collection;"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb9",
+              "reference": "java/util/Collection.stream()Ljava/util/stream/Stream;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/OrMultipartModelSelector.class": {
+      "classSha256": "bf5e39599c8af8ab2c8ca77f45e513657db1b07559fd9b533e29eed443fa3993",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/lang/Iterable;)V",
+          "codeSha256": "f123125a8359d16f0f9687f2b68d942b7eca397f4d7fcf8c2a4cb29ba4bdf95c",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/OrMultipartModelSelector.selectorsLjava/lang/Iterable;"
+            }
+          ]
+        },
+        {
+          "method": "getPredicate",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;",
+          "codeSha256": "74ac515ae8e332909cd9f5da3d32db88d9e8e08ec3c2dae7e6a51f9eec229576",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/OrMultipartModelSelector.selectorsLjava/lang/Iterable;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Streams.stream(Ljava/lang/Iterable;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xb8",
+              "reference": "java/util/stream/Collectors.toList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 21,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            }
+          ]
+        },
+        {
+          "method": "method_3538",
+          "descriptor": "(Ljava/util/List;Lnet/minecraft/block/BlockState;)Z",
+          "codeSha256": "92e609b11967af5063bd78cef969e896105259f1dbb8dfda5751fc2f537479bc",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb9",
+              "reference": "java/util/List.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.anyMatch(Ljava/util/function/Predicate;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3539",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Ljava/util/function/Predicate;)Z",
+          "codeSha256": "f0948770579abfcdb17faf50743c40778457eb1b5d6500eaee0f5d9bca7ee2c9",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb9",
+              "reference": "java/util/function/Predicate.test(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "method_3540",
+          "descriptor": "(Lnet/minecraft/state/StateManager;Lnet/minecraft/client/render/model/json/MultipartModelSelector;)Ljava/util/function/Predicate;",
+          "codeSha256": "186c4dc113fb3bb53e2f54f53024ddd5aa22f7c93bcf9c90fa0a3fd9c205998e",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelSelector.getPredicate(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelVariantMap$VariantAbsentException.class": {
+      "classSha256": "3053567744da20786d2e21a750534af9b5540e8c9235485b1e2440789bfb440f",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/client/render/model/json/ModelVariantMap;)V",
+          "codeSha256": "759fff65e631b462ff67ce76278fd934e0c923a7c9d316ac04bddb47a63b7c9b",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$VariantAbsentException.field_32795Lnet/minecraft/client/render/model/json/ModelVariantMap;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb7",
+              "reference": "java/lang/RuntimeException.<init>()V"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelVariantMap$Deserializer.class": {
+      "classSha256": "1795d4a220caf69143dcf4ee80d831926005ff49b0d0f69aeedcae3005c80ab7",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "()V",
+          "codeSha256": "d5e08a8a6865eeae910f9132af43e91406f3828b3915607fef82ad68d817519f",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/ModelVariantMap;",
+          "codeSha256": "f742af9fc91da5f7d54c452eaf5a04e1e0a14e65bef77b760140411cc61bcc9c",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsJsonObject()Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$Deserializer.variantsFromJson(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/Map;"
+            },
+            {
+              "offset": 19,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$Deserializer.multipartFromJson(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.isEmpty()Z"
+            },
+            {
+              "offset": 41,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.getModels()Ljava/util/Set;"
+            },
+            {
+              "offset": 44,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.isEmpty()Z"
+            },
+            {
+              "offset": 52,
+              "opcode": "0xbb",
+              "reference": "com/google/gson/JsonParseException"
+            },
+            {
+              "offset": 58,
+              "opcode": "0xb7",
+              "reference": "com/google/gson/JsonParseException.<init>(Ljava/lang/String;)V"
+            },
+            {
+              "offset": 62,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap"
+            },
+            {
+              "offset": 70,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap.<init>(Ljava/util/Map;Lnet/minecraft/client/render/model/MultipartUnbakedModel;)V"
+            }
+          ]
+        },
+        {
+          "method": "variantsFromJson",
+          "descriptor": "(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/Map;",
+          "codeSha256": "97a4dd8625966731d3820de0ec0d5d60950601c42a5037b126f2145b2de3ea93",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Maps.newHashMap()Ljava/util/HashMap;"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.has(Ljava/lang/String;)Z"
+            },
+            {
+              "offset": 16,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getObject(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 23,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.entrySet()Ljava/util/Set;"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xb9",
+              "reference": "java/util/Set.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 35,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.hasNext()Z"
+            },
+            {
+              "offset": 45,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 50,
+              "opcode": "0xc0",
+              "reference": "java/util/Map$Entry"
+            },
+            {
+              "offset": 58,
+              "opcode": "0xb9",
+              "reference": "java/util/Map$Entry.getKey()Ljava/lang/Object;"
+            },
+            {
+              "offset": 63,
+              "opcode": "0xc0",
+              "reference": "java/lang/String"
+            },
+            {
+              "offset": 69,
+              "opcode": "0xb9",
+              "reference": "java/util/Map$Entry.getValue()Ljava/lang/Object;"
+            },
+            {
+              "offset": 74,
+              "opcode": "0xc0",
+              "reference": "com/google/gson/JsonElement"
+            },
+            {
+              "offset": 79,
+              "opcode": "0xb9",
+              "reference": "com/google/gson/JsonDeserializationContext.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 84,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel"
+            },
+            {
+              "offset": 87,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+            }
+          ]
+        },
+        {
+          "method": "multipartFromJson",
+          "descriptor": "(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/MultipartUnbakedModel;",
+          "codeSha256": "fe08231e6d93906b54ac8a9f55f062f39307286d0b4f038bf53fb2ea3c8009cf",
+          "references": [
+            {
+              "offset": 3,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonObject.has(Ljava/lang/String;)Z"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getArray(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lcom/google/gson/JsonArray;"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb9",
+              "reference": "com/google/gson/JsonDeserializationContext.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;",
+          "codeSha256": "398ead86b8625719990d6246cebfe0e21fb0ba0ac6b59f07a4042c81c43af03b",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$Deserializer.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/ModelVariantMap;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.class": {
+      "classSha256": "54a00b58d2a24878720a7fc98d785beac530802f8b0ee9ac9e2a1fb2394a4382",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "()V",
+          "codeSha256": "709a23c7b6812bef8b2ab975436c0b0f496cc5c8da5d9ce1579c0aab1d3ba63b",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xbb",
+              "reference": "com/google/gson/GsonBuilder"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb7",
+              "reference": "com/google/gson/GsonBuilder.<init>()V"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$Deserializer"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$Deserializer.<init>()V"
+            },
+            {
+              "offset": 21,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/GsonBuilder.registerTypeAdapter(Ljava/lang/reflect/Type;Ljava/lang/Object;)Lcom/google/gson/GsonBuilder;"
+            },
+            {
+              "offset": 26,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer"
+            },
+            {
+              "offset": 30,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer.<init>()V"
+            },
+            {
+              "offset": 33,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/GsonBuilder.registerTypeAdapter(Ljava/lang/reflect/Type;Ljava/lang/Object;)Lcom/google/gson/GsonBuilder;"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel$Deserializer"
+            },
+            {
+              "offset": 42,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/WeightedUnbakedModel$Deserializer.<init>()V"
+            },
+            {
+              "offset": 45,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/GsonBuilder.registerTypeAdapter(Ljava/lang/reflect/Type;Ljava/lang/Object;)Lcom/google/gson/GsonBuilder;"
+            },
+            {
+              "offset": 50,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer"
+            },
+            {
+              "offset": 55,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer.<init>(Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;)V"
+            },
+            {
+              "offset": 58,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/GsonBuilder.registerTypeAdapter(Ljava/lang/reflect/Type;Ljava/lang/Object;)Lcom/google/gson/GsonBuilder;"
+            },
+            {
+              "offset": 63,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer"
+            },
+            {
+              "offset": 67,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent$Deserializer.<init>()V"
+            },
+            {
+              "offset": 70,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/GsonBuilder.registerTypeAdapter(Ljava/lang/reflect/Type;Ljava/lang/Object;)Lcom/google/gson/GsonBuilder;"
+            },
+            {
+              "offset": 73,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/GsonBuilder.create()Lcom/google/gson/Gson;"
+            },
+            {
+              "offset": 76,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.gsonLcom/google/gson/Gson;"
+            }
+          ]
+        },
+        {
+          "method": "getStateFactory",
+          "descriptor": "()Lnet/minecraft/state/StateManager;",
+          "codeSha256": "99cfba35079b9990b9949457f390ef813ad4ecf3e330fac2a8ac55031a005050",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.stateFactoryLnet/minecraft/state/StateManager;"
+            }
+          ]
+        },
+        {
+          "method": "setStateFactory",
+          "descriptor": "(Lnet/minecraft/state/StateManager;)V",
+          "codeSha256": "ead9eef531bda6c39f7dcd8eb9ee94a13038fffb298a2fe2da4e8cf97168cb46",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.stateFactoryLnet/minecraft/state/StateManager;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/MultipartBakedModel.class": {
+      "classSha256": "2c7a4055d7193aebe1089cbb6511127922009e8dd4d51d0599c0df92b89ecacf",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/util/List;)V",
+          "codeSha256": "59d7629739239e309a65451b48c7999b865a73470e76f11c7c9b0c47cbcd2da7",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xbb",
+              "reference": "it/unimi/dsi/fastutil/objects/Object2ObjectOpenCustomHashMap"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/Util.identityHashStrategy()Lit/unimi/dsi/fastutil/Hash$Strategy;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb7",
+              "reference": "it/unimi/dsi/fastutil/objects/Object2ObjectOpenCustomHashMap.<init>(Lit/unimi/dsi/fastutil/Hash$Strategy;)V"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.stateCacheLjava/util/Map;"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb9",
+              "reference": "java/util/List.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 29,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xc0",
+              "reference": "org/apache/commons/lang3/tuple/Pair"
+            },
+            {
+              "offset": 37,
+              "opcode": "0xb6",
+              "reference": "org/apache/commons/lang3/tuple/Pair.getRight()Ljava/lang/Object;"
+            },
+            {
+              "offset": 40,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/BakedModel"
+            },
+            {
+              "offset": 46,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.useAmbientOcclusion()Z"
+            },
+            {
+              "offset": 51,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.ambientOcclusionZ"
+            },
+            {
+              "offset": 56,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.hasDepth()Z"
+            },
+            {
+              "offset": 61,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.depthGuiZ"
+            },
+            {
+              "offset": 66,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.isSideLit()Z"
+            },
+            {
+              "offset": 71,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.sideLitZ"
+            },
+            {
+              "offset": 76,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.getParticleSprite()Lnet/minecraft/client/texture/Sprite;"
+            },
+            {
+              "offset": 81,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.spriteLnet/minecraft/client/texture/Sprite;"
+            },
+            {
+              "offset": 86,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.getTransformation()Lnet/minecraft/client/render/model/json/ModelTransformation;"
+            },
+            {
+              "offset": 91,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.transformationsLnet/minecraft/client/render/model/json/ModelTransformation;"
+            },
+            {
+              "offset": 96,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.getOverrides()Lnet/minecraft/client/render/model/json/ModelOverrideList;"
+            },
+            {
+              "offset": 101,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.itemPropertyOverridesLnet/minecraft/client/render/model/json/ModelOverrideList;"
+            }
+          ]
+        },
+        {
+          "method": "getQuads",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/random/Random;)Ljava/util/List;",
+          "codeSha256": "3763798fd573a7feee0c22ba7e66dac2d4bad5a04b310c14812677718841f11f",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "java/util/Collections.emptyList()Ljava/util/List;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.stateCacheLjava/util/Map;"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xc0",
+              "reference": "java/util/BitSet"
+            },
+            {
+              "offset": 28,
+              "opcode": "0xbb",
+              "reference": "java/util/BitSet"
+            },
+            {
+              "offset": 32,
+              "opcode": "0xb7",
+              "reference": "java/util/BitSet.<init>()V"
+            },
+            {
+              "offset": 43,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 46,
+              "opcode": "0xb9",
+              "reference": "java/util/List.size()I"
+            },
+            {
+              "offset": 55,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 60,
+              "opcode": "0xb9",
+              "reference": "java/util/List.get(I)Ljava/lang/Object;"
+            },
+            {
+              "offset": 65,
+              "opcode": "0xc0",
+              "reference": "org/apache/commons/lang3/tuple/Pair"
+            },
+            {
+              "offset": 72,
+              "opcode": "0xb6",
+              "reference": "org/apache/commons/lang3/tuple/Pair.getLeft()Ljava/lang/Object;"
+            },
+            {
+              "offset": 75,
+              "opcode": "0xc0",
+              "reference": "java/util/function/Predicate"
+            },
+            {
+              "offset": 79,
+              "opcode": "0xb9",
+              "reference": "java/util/function/Predicate.test(Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 91,
+              "opcode": "0xb6",
+              "reference": "java/util/BitSet.set(I)V"
+            },
+            {
+              "offset": 101,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.stateCacheLjava/util/Map;"
+            },
+            {
+              "offset": 107,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 113,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Lists.newArrayList()Ljava/util/ArrayList;"
+            },
+            {
+              "offset": 119,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/util/math/random/Random.nextLong()J"
+            },
+            {
+              "offset": 133,
+              "opcode": "0xb6",
+              "reference": "java/util/BitSet.length()I"
+            },
+            {
+              "offset": 143,
+              "opcode": "0xb6",
+              "reference": "java/util/BitSet.get(I)Z"
+            },
+            {
+              "offset": 152,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.componentsLjava/util/List;"
+            },
+            {
+              "offset": 157,
+              "opcode": "0xb9",
+              "reference": "java/util/List.get(I)Ljava/lang/Object;"
+            },
+            {
+              "offset": 162,
+              "opcode": "0xc0",
+              "reference": "org/apache/commons/lang3/tuple/Pair"
+            },
+            {
+              "offset": 165,
+              "opcode": "0xb6",
+              "reference": "org/apache/commons/lang3/tuple/Pair.getRight()Ljava/lang/Object;"
+            },
+            {
+              "offset": 168,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/BakedModel"
+            },
+            {
+              "offset": 175,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/math/random/Random.create(J)Lnet/minecraft/util/math/random/Random;"
+            },
+            {
+              "offset": 178,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/BakedModel.getQuads(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/random/Random;)Ljava/util/List;"
+            },
+            {
+              "offset": 183,
+              "opcode": "0xb9",
+              "reference": "java/util/List.addAll(Ljava/util/Collection;)Z"
+            }
+          ]
+        },
+        {
+          "method": "useAmbientOcclusion",
+          "descriptor": "()Z",
+          "codeSha256": "3e6a77d0cad5b8f37787edc45bf8bf12f630604c13c4af10d333255caef767eb",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.ambientOcclusionZ"
+            }
+          ]
+        },
+        {
+          "method": "hasDepth",
+          "descriptor": "()Z",
+          "codeSha256": "30f1c585ea99fac1633463174fcd43e856016741f2183d8ae28192bee0ed8712",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.depthGuiZ"
+            }
+          ]
+        },
+        {
+          "method": "isSideLit",
+          "descriptor": "()Z",
+          "codeSha256": "1f16271eac72cc996cf01c683e8378df647fb4d60a772a374d0c079f34cb2ff2",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.sideLitZ"
+            }
+          ]
+        },
+        {
+          "method": "isBuiltin",
+          "descriptor": "()Z",
+          "codeSha256": "42ca1f85243342bd41983ab86f2235408fa46ded7466d4525196f66b9dbb5f3e",
+          "references": []
+        },
+        {
+          "method": "getParticleSprite",
+          "descriptor": "()Lnet/minecraft/client/texture/Sprite;",
+          "codeSha256": "9077d296d10447ff6163e33ee0f794879ed585500074cbb2812a9a8b053c528f",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.spriteLnet/minecraft/client/texture/Sprite;"
+            }
+          ]
+        },
+        {
+          "method": "getTransformation",
+          "descriptor": "()Lnet/minecraft/client/render/model/json/ModelTransformation;",
+          "codeSha256": "a4cf324b81813ee3ff66fedb91533ecb08995a084689f8c9efee44c7eb3383c9",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.transformationsLnet/minecraft/client/render/model/json/ModelTransformation;"
+            }
+          ]
+        },
+        {
+          "method": "getOverrides",
+          "descriptor": "()Lnet/minecraft/client/render/model/json/ModelOverrideList;",
+          "codeSha256": "f8ff1fbc746972d3914feba05af9f5f2852f539916ed3b618d1fa3c41bb2e6f0",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.itemPropertyOverridesLnet/minecraft/client/render/model/json/ModelOverrideList;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer.class": {
+      "classSha256": "7b53633e47f41b5791f196a402caf1aa14e027f2f96be65ff4b1ca122fc66e0c",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;)V",
+          "codeSha256": "1749b7ed01b0cea8ba1d98c597d1297d898047dde3c2f25bd79c177f272809e5",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer.contextLnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/MultipartUnbakedModel;",
+          "codeSha256": "117dde3809db9525c5261ac143ba4256bd55160b2a3b264a2704f4e7c21f61ae",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer.contextLnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.getStateFactory()Lnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 14,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsJsonArray()Lcom/google/gson/JsonArray;"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer.deserializeComponents(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonArray;)Ljava/util/List;"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.<init>(Lnet/minecraft/state/StateManager;Ljava/util/List;)V"
+            }
+          ]
+        },
+        {
+          "method": "deserializeComponents",
+          "descriptor": "(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonArray;)Ljava/util/List;",
+          "codeSha256": "1bea65bcb66816874d39415f369d058e0fe89aa93cc8a43a757309c317911d45",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Lists.newArrayList()Ljava/util/ArrayList;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonArray.iterator()Ljava/util/Iterator;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.hasNext()Z"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb9",
+              "reference": "java/util/Iterator.next()Ljava/lang/Object;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xc0",
+              "reference": "com/google/gson/JsonElement"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xb9",
+              "reference": "com/google/gson/JsonDeserializationContext.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 43,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent"
+            },
+            {
+              "offset": 46,
+              "opcode": "0xb9",
+              "reference": "java/util/List.add(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;",
+          "codeSha256": "7bd796e0fb6fea4543ce126cd78a838bf443cac44620e524ceee98c29506b2d2",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel$Deserializer.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/MultipartUnbakedModel;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/MultipartBakedModel$Builder.class": {
+      "classSha256": "27723bad8252e013da038996064953025cee41833e4a57c53b9c5590070681df",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "()V",
+          "codeSha256": "ed3597e33f01a2d7ea6535d89fd3051aa556767b6c1972bb35cbacd6deccf972",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/Lists.newArrayList()Ljava/util/ArrayList;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder.componentsLjava/util/List;"
+            }
+          ]
+        },
+        {
+          "method": "addComponent",
+          "descriptor": "(Ljava/util/function/Predicate;Lnet/minecraft/client/render/model/BakedModel;)V",
+          "codeSha256": "1f2d029283d1a785c7a71d4c501f8200a5e6851b69b6762801695d5b4fd31413",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder.componentsLjava/util/List;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb8",
+              "reference": "org/apache/commons/lang3/tuple/Pair.of(Ljava/lang/Object;Ljava/lang/Object;)Lorg/apache/commons/lang3/tuple/Pair;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb9",
+              "reference": "java/util/List.add(Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "build",
+          "descriptor": "()Lnet/minecraft/client/render/model/BakedModel;",
+          "codeSha256": "715041905eb1399caf7cfa4d5d90e888f479156163358f2e0a787eb0919ca765",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel$Builder.componentsLjava/util/List;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/MultipartBakedModel.<init>(Ljava/util/List;)V"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelOverride$Condition.class": {
+      "classSha256": "9bc4cd30ef1a09e3cbb66750c8bd8400b1822d240c0cbf73dd1406c8f63014da",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/util/Identifier;F)V",
+          "codeSha256": "5b74d34aac1717d930e559341324cd95447f20234222d3a71d20e40822371f0e",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelOverride$Condition.typeLnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelOverride$Condition.thresholdF"
+            }
+          ]
+        },
+        {
+          "method": "getType",
+          "descriptor": "()Lnet/minecraft/util/Identifier;",
+          "codeSha256": "8d2aec6788db2b05a70890264c04f2cdb831396ab355947b95b7e2e0e5946927",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelOverride$Condition.typeLnet/minecraft/util/Identifier;"
+            }
+          ]
+        },
+        {
+          "method": "getThreshold",
+          "descriptor": "()F",
+          "codeSha256": "c957fceceb625adecd8993a36722190f48f2ca0a97a3b83667a0c849e204b914",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/json/ModelOverride$Condition.thresholdF"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelOverrideList$InlinedCondition.class": {
+      "classSha256": "aef8fb3eff60f7355feca175346abcb64b0d4ac3fb37e4c6dabe5d60bd9e97d4",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(IF)V",
+          "codeSha256": "525e3dc1c5988a12c98960ae52d8fb9d8a93447dc5dffa2b7cc0ef3f79e46555",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelOverrideList$InlinedCondition.indexI"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/json/ModelOverrideList$InlinedCondition.thresholdF"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/json/ModelVariant$Deserializer.class": {
+      "classSha256": "c768a2fa6aa787844446077f0234113d9d1eb5cd1602f87fc881caa12ae4ff3f",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "()V",
+          "codeSha256": "33916b80d60652642de7b755b56363d094875ec08724021a822a6188c255b107",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/ModelVariant;",
+          "codeSha256": "a55f825c5486aad16c8003d38539db82d924eb8f5d233ae4b54614269da23349",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "com/google/gson/JsonElement.getAsJsonObject()Lcom/google/gson/JsonObject;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer.deserializeModel(Lcom/google/gson/JsonObject;)Lnet/minecraft/util/Identifier;"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer.deserializeRotation(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/ModelRotation;"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer.deserializeUvLock(Lcom/google/gson/JsonObject;)Z"
+            },
+            {
+              "offset": 33,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer.deserializeWeight(Lcom/google/gson/JsonObject;)I"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant"
+            },
+            {
+              "offset": 46,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/ModelRotation.getRotation()Lnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 53,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant.<init>(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/AffineTransformation;ZI)V"
+            }
+          ]
+        },
+        {
+          "method": "deserializeUvLock",
+          "descriptor": "(Lcom/google/gson/JsonObject;)Z",
+          "codeSha256": "4a00e468ffefe137a80d2be7f6890bcec9cabd7b88a6da76f02c2f8e5b0d59e5",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getBoolean(Lcom/google/gson/JsonObject;Ljava/lang/String;Z)Z"
+            }
+          ]
+        },
+        {
+          "method": "deserializeRotation",
+          "descriptor": "(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/ModelRotation;",
+          "codeSha256": "d5466d03285f27eee005970bee97e564218f1662d78d60a68f6238322664a758",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getInt(Lcom/google/gson/JsonObject;Ljava/lang/String;I)I"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getInt(Lcom/google/gson/JsonObject;Ljava/lang/String;I)I"
+            },
+            {
+              "offset": 18,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/ModelRotation.get(II)Lnet/minecraft/client/render/model/ModelRotation;"
+            },
+            {
+              "offset": 28,
+              "opcode": "0xbb",
+              "reference": "com/google/gson/JsonParseException"
+            },
+            {
+              "offset": 39,
+              "opcode": "0xb7",
+              "reference": "com/google/gson/JsonParseException.<init>(Ljava/lang/String;)V"
+            }
+          ]
+        },
+        {
+          "method": "deserializeModel",
+          "descriptor": "(Lcom/google/gson/JsonObject;)Lnet/minecraft/util/Identifier;",
+          "codeSha256": "ad30c937aec869f22bebc889db5be6eb0101d32a601c6e4b21b2ea261fb76f81",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/util/Identifier"
+            },
+            {
+              "offset": 7,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getString(Lcom/google/gson/JsonObject;Ljava/lang/String;)Ljava/lang/String;"
+            },
+            {
+              "offset": 10,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/util/Identifier.<init>(Ljava/lang/String;)V"
+            }
+          ]
+        },
+        {
+          "method": "deserializeWeight",
+          "descriptor": "(Lcom/google/gson/JsonObject;)I",
+          "codeSha256": "3d8e09c51278b46b6b05c4c0de2bcf209b6761bfe1dd296bca06d66cea254fda",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/util/JsonHelper.getInt(Lcom/google/gson/JsonObject;Ljava/lang/String;I)I"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xbb",
+              "reference": "com/google/gson/JsonParseException"
+            },
+            {
+              "offset": 23,
+              "opcode": "0xb7",
+              "reference": "com/google/gson/JsonParseException.<init>(Ljava/lang/String;)V"
+            }
+          ]
+        },
+        {
+          "method": "deserialize",
+          "descriptor": "(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;",
+          "codeSha256": "d45385b7875e7b89d19113369d4609e69b817d1545bd8912318126b1ec572d0b",
+          "references": [
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ModelVariant$Deserializer.deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/ModelVariant;"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/ModelLoader$ModelDefinition.class": {
+      "classSha256": "ed117802e6e5708a8a24d96aa27512e67f8199e57aca1d71eda854cbcf15d553",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Ljava/util/List;Ljava/util/List;)V",
+          "codeSha256": "d3e81a30153582d38673bed2d645e6ce62a60058498bfe341c7931f7a0891b5b",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.componentsLjava/util/List;"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.valuesLjava/util/List;"
+            }
+          ]
+        },
+        {
+          "method": "equals",
+          "descriptor": "(Ljava/lang/Object;)Z",
+          "codeSha256": "d2a7c6e1d0db883363394d2f148487f0162eba7437707e37e876afb2ad7df098",
+          "references": [
+            {
+              "offset": 8,
+              "opcode": "0xc1",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition"
+            },
+            {
+              "offset": 20,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.componentsLjava/util/List;"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.componentsLjava/util/List;"
+            },
+            {
+              "offset": 27,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.equals(Ljava/lang/Object;Ljava/lang/Object;)Z"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.valuesLjava/util/List;"
+            },
+            {
+              "offset": 38,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.valuesLjava/util/List;"
+            },
+            {
+              "offset": 41,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.equals(Ljava/lang/Object;Ljava/lang/Object;)Z"
+            }
+          ]
+        },
+        {
+          "method": "hashCode",
+          "descriptor": "()I",
+          "codeSha256": "2bad6052d05dd1e53cbdc1e3317305c8dcf7884cbd8f18339b8f51a7f0c9ef7e",
+          "references": [
+            {
+              "offset": 3,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.componentsLjava/util/List;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb9",
+              "reference": "java/util/List.hashCode()I"
+            },
+            {
+              "offset": 13,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.valuesLjava/util/List;"
+            },
+            {
+              "offset": 16,
+              "opcode": "0xb9",
+              "reference": "java/util/List.hashCode()I"
+            }
+          ]
+        },
+        {
+          "method": "create",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/MultipartUnbakedModel;Ljava/util/Collection;)Lnet/minecraft/client/render/model/ModelLoader$ModelDefinition;",
+          "codeSha256": "324247f9daa81df1f49e2a9f40c6772c63c80662df526c0aadfc631186ce1106",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/block/BlockState.getBlock()Lnet/minecraft/block/Block;"
+            },
+            {
+              "offset": 4,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/block/Block.getStateManager()Lnet/minecraft/state/StateManager;"
+            },
+            {
+              "offset": 9,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/MultipartUnbakedModel.getComponents()Ljava/util/List;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb9",
+              "reference": "java/util/List.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 24,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.filter(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 39,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/ImmutableList.toImmutableList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 42,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 47,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            },
+            {
+              "offset": 54,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.getStateValues(Lnet/minecraft/block/BlockState;Ljava/util/Collection;)Ljava/util/List;"
+            },
+            {
+              "offset": 59,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition"
+            },
+            {
+              "offset": 67,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.<init>(Ljava/util/List;Ljava/util/List;)V"
+            }
+          ]
+        },
+        {
+          "method": "create",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/UnbakedModel;Ljava/util/Collection;)Lnet/minecraft/client/render/model/ModelLoader$ModelDefinition;",
+          "codeSha256": "16296c9abb31f32fd5b5beb5793279d741a2a90a0c6c80bc21b1d0ef72a1cb68",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb8",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.getStateValues(Lnet/minecraft/block/BlockState;Ljava/util/Collection;)Ljava/util/List;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition"
+            },
+            {
+              "offset": 11,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/ImmutableList.of(Ljava/lang/Object;)Lcom/google/common/collect/ImmutableList;"
+            },
+            {
+              "offset": 15,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/ModelLoader$ModelDefinition.<init>(Ljava/util/List;Ljava/util/List;)V"
+            }
+          ]
+        },
+        {
+          "method": "getStateValues",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Ljava/util/Collection;)Ljava/util/List;",
+          "codeSha256": "4576e09d704ac9d777461d45f65b60e4a31a5379cf21fb339377d5ab0ffc4047",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb9",
+              "reference": "java/util/Collection.stream()Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xb8",
+              "reference": "java/util/Objects.requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.map(Ljava/util/function/Function;)Ljava/util/stream/Stream;"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb8",
+              "reference": "com/google/common/collect/ImmutableList.toImmutableList()Ljava/util/stream/Collector;"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xb9",
+              "reference": "java/util/stream/Stream.collect(Ljava/util/stream/Collector;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 30,
+              "opcode": "0xc0",
+              "reference": "java/util/List"
+            }
+          ]
+        },
+        {
+          "method": "method_21610",
+          "descriptor": "(Lnet/minecraft/state/StateManager;Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/json/MultipartModelComponent;)Z",
+          "codeSha256": "6195b1a9f74d03f3298c5def72a3de606cd8a8120e504b8389cc02c7a378256b",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/MultipartModelComponent.getPredicate(Lnet/minecraft/state/StateManager;)Ljava/util/function/Predicate;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb9",
+              "reference": "java/util/function/Predicate.test(Ljava/lang/Object;)Z"
+            }
+          ]
+        }
+      ]
+    },
+    "net/minecraft/client/render/model/ModelLoader$BakerImpl.class": {
+      "classSha256": "1cfe530abc11fe3284141e73b6c72ccf199af3899af80cfacfc9f0e31106a957",
+      "methods": [
+        {
+          "method": "<init>",
+          "descriptor": "(Lnet/minecraft/client/render/model/ModelLoader;Ljava/util/function/BiFunction;Lnet/minecraft/util/Identifier;)V",
+          "codeSha256": "afbdac53303cc891ead4ce0943f9a9c276bf8d10e4fc8e77204495488c9d19dd",
+          "references": [
+            {
+              "offset": 2,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.field_40571Lnet/minecraft/client/render/model/ModelLoader;"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb7",
+              "reference": "java/lang/Object.<init>()V"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb5",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.textureGetterLjava/util/function/Function;"
+            }
+          ]
+        },
+        {
+          "method": "getOrLoadModel",
+          "descriptor": "(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/UnbakedModel;",
+          "codeSha256": "e1196d39a116e56b2af914fd6f09679677e1466f8fd1111c2e32a0a18d583b06",
+          "references": [
+            {
+              "offset": 1,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.field_40571Lnet/minecraft/client/render/model/ModelLoader;"
+            },
+            {
+              "offset": 5,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/ModelLoader.getOrLoadModel(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/UnbakedModel;"
+            }
+          ]
+        },
+        {
+          "method": "bake",
+          "descriptor": "(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/model/ModelBakeSettings;)Lnet/minecraft/client/render/model/BakedModel;",
+          "codeSha256": "5ffff3ff299006681c8feab1c7fb98e036649181b3586d0c55d84b77eff371da",
+          "references": [
+            {
+              "offset": 0,
+              "opcode": "0xbb",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakedModelCacheKey"
+            },
+            {
+              "offset": 6,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/ModelBakeSettings.getRotation()Lnet/minecraft/util/math/AffineTransformation;"
+            },
+            {
+              "offset": 12,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/ModelBakeSettings.isUvLocked()Z"
+            },
+            {
+              "offset": 17,
+              "opcode": "0xb7",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakedModelCacheKey.<init>(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/AffineTransformation;Z)V"
+            },
+            {
+              "offset": 22,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.field_40571Lnet/minecraft/client/render/model/ModelLoader;"
+            },
+            {
+              "offset": 25,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader.bakedModelCacheLjava/util/Map;"
+            },
+            {
+              "offset": 29,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.get(Ljava/lang/Object;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 34,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/BakedModel"
+            },
+            {
+              "offset": 49,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.getOrLoadModel(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/UnbakedModel;"
+            },
+            {
+              "offset": 56,
+              "opcode": "0xc1",
+              "reference": "net/minecraft/client/render/model/json/JsonUnbakedModel"
+            },
+            {
+              "offset": 64,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/render/model/json/JsonUnbakedModel"
+            },
+            {
+              "offset": 71,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/JsonUnbakedModel.getRootModel()Lnet/minecraft/client/render/model/json/JsonUnbakedModel;"
+            },
+            {
+              "offset": 74,
+              "opcode": "0xb2",
+              "reference": "net/minecraft/client/render/model/ModelLoader.GENERATION_MARKERLnet/minecraft/client/render/model/json/JsonUnbakedModel;"
+            },
+            {
+              "offset": 80,
+              "opcode": "0xb2",
+              "reference": "net/minecraft/client/render/model/ModelLoader.ITEM_MODEL_GENERATORLnet/minecraft/client/render/model/json/ItemModelGenerator;"
+            },
+            {
+              "offset": 84,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.textureGetterLjava/util/function/Function;"
+            },
+            {
+              "offset": 89,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/ItemModelGenerator.create(Ljava/util/function/Function;Lnet/minecraft/client/render/model/json/JsonUnbakedModel;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;"
+            },
+            {
+              "offset": 96,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.textureGetterLjava/util/function/Function;"
+            },
+            {
+              "offset": 102,
+              "opcode": "0xb6",
+              "reference": "net/minecraft/client/render/model/json/JsonUnbakedModel.bake(Lnet/minecraft/client/render/model/Baker;Lnet/minecraft/client/render/model/json/JsonUnbakedModel;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;Z)Lnet/minecraft/client/render/model/BakedModel;"
+            },
+            {
+              "offset": 110,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.textureGetterLjava/util/function/Function;"
+            },
+            {
+              "offset": 115,
+              "opcode": "0xb9",
+              "reference": "net/minecraft/client/render/model/UnbakedModel.bake(Lnet/minecraft/client/render/model/Baker;Ljava/util/function/Function;Lnet/minecraft/client/render/model/ModelBakeSettings;Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/BakedModel;"
+            },
+            {
+              "offset": 123,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader$BakerImpl.field_40571Lnet/minecraft/client/render/model/ModelLoader;"
+            },
+            {
+              "offset": 126,
+              "opcode": "0xb4",
+              "reference": "net/minecraft/client/render/model/ModelLoader.bakedModelCacheLjava/util/Map;"
+            },
+            {
+              "offset": 132,
+              "opcode": "0xb9",
+              "reference": "java/util/Map.put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+            }
+          ]
+        },
+        {
+          "method": "method_45878",
+          "descriptor": "(Ljava/util/function/BiFunction;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/util/SpriteIdentifier;)Lnet/minecraft/client/texture/Sprite;",
+          "codeSha256": "9884fc3cdaab4b2dc8a552867951ad2a7d7e8278dca48dabb621cbd5b2b0718a",
+          "references": [
+            {
+              "offset": 3,
+              "opcode": "0xb9",
+              "reference": "java/util/function/BiFunction.apply(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+            },
+            {
+              "offset": 8,
+              "opcode": "0xc0",
+              "reference": "net/minecraft/client/texture/Sprite"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "multipartResources": 256,
+  "allComponents": 24904,
+  "allConditionLeaves": 92472,
+  "heaviestResources": [
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall",
+      "components": 6645,
+      "conditionLeaves": 26577,
+      "bytes": 1753039
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_deepslate_brick_wall",
+      "components": 1973,
+      "conditionLeaves": 7889,
+      "bytes": 547769
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_stone_brick_wall",
+      "components": 1721,
+      "conditionLeaves": 6881,
+      "bytes": 481298
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_mossy_cobblestone_wall",
+      "components": 1349,
+      "conditionLeaves": 5393,
+      "bytes": 384367
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_prismarine_wall",
+      "components": 1289,
+      "conditionLeaves": 5153,
+      "bytes": 358037
+    },
+    {
+      "registryId": "bloodborne_dw:source_andesite_slab_top",
+      "components": 1261,
+      "conditionLeaves": 5041,
+      "bytes": 358943
+    },
+    {
+      "registryId": "bloodborne_dw:source_cut_copper",
+      "components": 1157,
+      "conditionLeaves": 4625,
+      "bytes": 326902
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_cobblestone_wall",
+      "components": 981,
+      "conditionLeaves": 3921,
+      "bytes": 273177
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_orange_stained_glass_pane",
+      "components": 961,
+      "conditionLeaves": 3841,
+      "bytes": 267745
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_light_blue_stained_glass_pane",
+      "components": 681,
+      "conditionLeaves": 2721,
+      "bytes": 192231
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_black_stained_glass_pane",
+      "components": 321,
+      "conditionLeaves": 961,
+      "bytes": 81488
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brown_stained_glass_pane",
+      "components": 321,
+      "conditionLeaves": 961,
+      "bytes": 81488
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_green_stained_glass_pane",
+      "components": 321,
+      "conditionLeaves": 961,
+      "bytes": 81488
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_nether_brick_fence",
+      "components": 193,
+      "conditionLeaves": 577,
+      "bytes": 48774
+    },
+    {
+      "registryId": "bloodborne_dw:source_red_nether_brick_wall_side_tall",
+      "components": 137,
+      "conditionLeaves": 545,
+      "bytes": 38796
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_acacia_fence",
+      "components": 181,
+      "conditionLeaves": 541,
+      "bytes": 43329
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_spruce_fence",
+      "components": 161,
+      "conditionLeaves": 481,
+      "bytes": 37716
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_post_0",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35533
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_post_1",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35533
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_post_2",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35533
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_side_0",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35525
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_side_1",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35525
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_side_2",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35525
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_side_tall_0",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35514
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_brick_wall_bricks_side_tall_1",
+      "components": 149,
+      "conditionLeaves": 445,
+      "bytes": 35514
+    }
+  ]
+}

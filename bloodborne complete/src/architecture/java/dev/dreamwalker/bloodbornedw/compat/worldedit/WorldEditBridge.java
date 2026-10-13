@@ -214,7 +214,63 @@ public final class WorldEditBridge {
         private final ServerWorld world;private final boolean outsideHistory;
         private record CopyKey(String family,UUID source,BlockPos delta) {}
         private final Map<CopyKey,UUID> copiedIds=new HashMap<>();
-        private final Set<String> restoredCopies=new HashSet<>();
+        private final Map<BlockPos,CopyReferences> referenceCopies=new HashMap<>();
+        /** At most the existing persistent-family row limits are retained for
+         * a paste delta. Empty object metadata never enters this cache. */
+        private static final class CopyReferences {
+            NbtCompound saved=new NbtCompound();
+            final Map<UUID,UUID> objects=new LinkedHashMap<>();
+            final Map<UUID,List<UUID>> rpLinks=new LinkedHashMap<>();
+            WorldEditReferenceSnapshot.CopyOrdering ordering=new WorldEditReferenceSnapshot.CopyOrdering();
+            CopyReferences copy(){var copy=new CopyReferences();copy.saved=saved.copy();copy.objects.putAll(objects);copy.rpLinks.putAll(rpLinks);copy.ordering=ordering.copy();return copy;}
+            void include(NbtCompound references,Map<UUID,UUID> actual,NbtList rp){
+                mergeCaptured(saved,references);objects.putAll(actual);
+                for(var raw:rp){var row=(NbtCompound)raw;var links=uuids(row.getList("Links",11));if(!links.isEmpty())rpLinks.put(row.getUuid("UUID"),List.copyOf(links));}
+            }
+            boolean same(CopyReferences old){return old!=null&&saved.equals(old.saved)&&objects.equals(old.objects)&&rpLinks.equals(old.rpLinks);}
+            Set<UUID> sourceObjects(){var refs=new LinkedHashMap<UUID,NbtCompound>();collectReferences(saved,refs);return refs.keySet();}
+            NbtCompound incoming(){
+                var copy=saved.copy();var refs=new LinkedHashMap<UUID,NbtCompound>();collectReferences(saved,refs);var selected=new NbtList();refs.forEach((id,ref)->{if(objects.containsKey(id))selected.add(ref.copy());});copy.put("Selected",selected);
+                // Connected external references can remain in a copied rule,
+                // but their original lever/flag/settings rows must not change.
+                filter(copy.getCompound("Links"),"Targets",r->objects.containsKey(MechanismLinks.TargetRef.read(r.getCompound("Ref")).instance()));
+                filter(copy.getCompound("Links"),"Levers",r->objects.containsKey(r.getUuid("Id")));
+                filter(copy.getCompound("Rules"),"Flags",r->objects.containsKey(r.getUuid("Id")));
+                var imported=new NbtList();for(var raw:copy.getCompound("Rules").getList("Imported",11))if(objects.containsKey(NbtHelper.toUuid(raw)))imported.add(raw.copy());copy.getCompound("Rules").put("Imported",imported);
+                filter(copy.getCompound("Policies"),"Entries",r->objects.containsKey(MechanismLinks.TargetRef.read(r.getCompound("Ref")).instance()));
+                filter(copy.getCompound("Commands"),"Entries",r->{var target=ToolTarget.read(r.getCompound("Target"));return target.kind()==ToolTarget.Kind.BLOCK||objects.containsKey(target.uuid());});
+                return copy;
+            }
+        }
+        private static void filter(NbtCompound parent,String field,java.util.function.Predicate<NbtCompound> keep){var result=new NbtList();for(var raw:parent.getList(field,10)){var row=(NbtCompound)raw;if(keep.test(row))result.add(row.copy());}parent.put(field,result);}
+        private static boolean meaningful(NbtCompound references){for(String family:List.of("Links","Rules","Groups","Policies","Commands"))for(String key:references.getCompound(family).getKeys())if(references.getCompound(family).get(key) instanceof NbtList list&&!list.isEmpty())return true;return false;}
+        private static void collectReferences(NbtCompound row,Map<UUID,NbtCompound> refs){
+            if(row.containsUuid("Instance")&&row.contains("Kind",8)&&row.contains("Dimension",8)&&row.contains("Root",4))refs.put(row.getUuid("Instance"),row.copy());
+            for(String key:row.getKeys()){var raw=row.get(key);if(raw instanceof NbtCompound child)collectReferences(child,refs);if(raw instanceof NbtList list)for(var item:list)if(item instanceof NbtCompound child)collectReferences(child,refs);}
+        }
+        private static String captureKey(NbtCompound row,String family,String field){
+            if(field.equals("Selected"))return MechanismLinks.TargetRef.read(row).key();if(field.equals("Native"))return ToolTarget.read(row).key();
+            if(family.equals("Links")&&field.equals("Targets"))return MechanismLinks.TargetRef.read(row.getCompound("Ref")).key();
+            if(family.equals("Policies"))return row.contains("AssemblyStorageKey",8)?row.getString("AssemblyStorageKey"):MechanismLinks.TargetRef.read(row.getCompound("Ref")).key();
+            if(family.equals("Commands"))return row.contains("AssemblyStorageKey",8)?row.getString("AssemblyStorageKey"):ToolTarget.read(row.getCompound("Target")).key();
+            if(field.equals("Queue"))return row.getUuid("Rule")+"|"+row.getLong("Number");return row.getUuid("Id").toString();
+        }
+        private static void mergeCaptured(NbtCompound target,NbtCompound incoming){
+            for(String key:incoming.getKeys()){
+                var value=incoming.get(key);if(value instanceof NbtCompound child){var prior=target.getCompound(key);mergeCapturedFamily(prior,child,key);target.put(key,prior);}else if(value instanceof NbtList list)mergeCapturedList(target,key,list,"");else target.put(key,value.copy());
+            }
+        }
+        private static void mergeCapturedFamily(NbtCompound target,NbtCompound incoming,String family){for(String key:incoming.getKeys()){var value=incoming.get(key);if(value instanceof NbtList list)mergeCapturedList(target,key,list,family);else target.put(key,value.copy());}}
+        private static void mergeCapturedList(NbtCompound target,String field,NbtList incoming,String family){
+            if(incoming.isEmpty()){if(!target.contains(field))target.put(field,incoming.copy());return;}
+            if(incoming.getHeldType()!=10){var values=new LinkedHashSet<NbtElement>();var previous=target.get(field);if(previous instanceof NbtList list)values.addAll(list);values.addAll(incoming);if(values.size()>4096)throw new IllegalStateException("WorldEdit reference capacity exceeded: "+family+"/"+field);var result=new NbtList();values.forEach(v->result.add(v.copy()));target.put(field,result);return;}
+            var rows=new LinkedHashMap<String,NbtCompound>();for(var raw:target.getList(field,10)){var row=(NbtCompound)raw;rows.put(captureKey(row,family,field),row.copy());}
+            for(var raw:incoming){var row=((NbtCompound)raw).copy();String key=captureKey(row,family,field);if(family.equals("Links")&&field.equals("Levers")&&rows.containsKey(key)){var old=rows.get(key);var values=new LinkedHashSet<NbtElement>();values.addAll(old.getList("Targets",8));values.addAll(row.getList("Targets",8));var keys=new NbtList();values.forEach(v->keys.add(v.copy()));row.put("Targets",keys);row.putBoolean("WorldEditFullLever",old.getBoolean("WorldEditFullLever")||row.getBoolean("WorldEditFullLever"));}rows.put(key,row);}
+            int limit=field.equals("Selected")?4096*64:4096;if(rows.size()>limit)throw new IllegalStateException("WorldEdit reference capacity exceeded: "+family+"/"+field);var result=new NbtList();rows.values().forEach(result::add);target.put(field,result);
+        }
+        private void reconcileRpLinks(CopyReferences copy){
+            for(var entry:copy.rpLinks.entrySet()){UUID source=copy.objects.get(entry.getKey());if(source==null||!(world.getEntity(source) instanceof RpObjectEntity entity)||!entity.isMechanism())continue;var desired=new LinkedHashSet<UUID>();entry.getValue().forEach(id->desired.add(copy.objects.getOrDefault(id,id)));for(UUID id:entity.links())if(!desired.contains(id))entity.removeLink(id);for(UUID id:desired)if(!entity.links().contains(id)&&world.getEntity(id) instanceof RpObjectEntity target)entity.addLink(target);}
+        }
         private UUID copied(String family,UUID source,BlockPos delta){return copiedIds.computeIfAbsent(new CopyKey(family,source,delta.toImmutable()),key->UUID.randomUUID());}
         public ObjectExtent(Extent extent,ServerWorld world){this(extent,world,false);}
         public ObjectExtent(Extent extent,ServerWorld world,boolean outsideHistory){super(extent);this.world=world;this.outsideHistory=outsideHistory;}
@@ -257,12 +313,22 @@ public final class WorldEditBridge {
                 else {for(Owner owner:remove)if(CompositeRuntime.remove(world,owner,null,false).outcome()!=TransactionCore.Outcome.COMMITTED)throw new InputParseException("Cannot remove BB owner");for(RpObjectEntity e:rp)e.removeObject();return super.setBlock(v,value);}
             }
             List<MechanismLinks.TargetRef> removedRefs=new ArrayList<>();remove.forEach(o->removedRefs.add(CompositeMechanismBridge.reference(world,o)));rp.forEach(e->removedRefs.add(MechanismLinks.TargetRef.rp(e)));List<ToolTarget> nativeRefs=new ArrayList<>();var nativeState=world.getBlockState(p);if(ImportedCompactBlock.compact(nativeState)||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(nativeState))nativeRefs.add(new ToolTarget(ToolTarget.Kind.BLOCK,world.getRegistryKey().getValue().toString(),null,p.asLong(),Registries.BLOCK.getId(nativeState.getBlock()).toString()));
-            WorldEditReferenceSnapshot.Prepared references=null;String referenceCopy=null;if(old!=null&&old.contains("References",10)){BlockPos copiedDelta=delta;referenceCopy=old.getCompound("References").toString()+"|"+delta;if(delta.equals(BlockPos.ORIGIN)||!restoredCopies.contains(referenceCopy))try{references=WorldEditReferenceSnapshot.prepare(world.getServer(),old.getCompound("References"),objectIds,delta,(family,uuid)->copied(family,uuid,copiedDelta),removedRefs,nativeRefs);}catch(IllegalStateException full){throw new InputParseException(full.getMessage());}}
+            WorldEditReferenceSnapshot.Prepared references=null;CopyReferences pendingCopy=null;
+            if(old!=null&&old.contains("References",10))try{
+                BlockPos copiedDelta=delta;var captured=old.getCompound("References");
+                if(delta.equals(BlockPos.ORIGIN))references=WorldEditReferenceSnapshot.prepare(world.getServer(),captured,objectIds,delta,(family,uuid)->copied(family,uuid,copiedDelta),removedRefs,nativeRefs);
+                else if(meaningful(captured)){
+                    var prior=referenceCopies.get(delta);var candidate=prior==null?new CopyReferences():prior.copy();candidate.include(captured,objectIds,old.getList("Rp",10));
+                    if(!candidate.same(prior)){var sourceObjects=candidate.sourceObjects();references=WorldEditReferenceSnapshot.prepare(world.getServer(),candidate.incoming(),candidate.objects,delta,(family,uuid)->copied(family.equals("rule")&&sourceObjects.contains(uuid)?"object":family,uuid,copiedDelta),removedRefs,nativeRefs,candidate.ordering);pendingCopy=candidate;}
+                }
+            }catch(IllegalStateException full){throw new InputParseException(full.getMessage());}
             var result=WorldEditObjectTransactions.replace(world,remove,add,nativeChanges);
             if(result.outcome()!=TransactionCore.Outcome.COMMITTED)throw new InputParseException("BB whole-object edit rejected: "+result.reason());
             for(RpObjectEntity entity:rp)entity.removeObject();
             for(NbtCompound data:rpAdd)net.minecraft.entity.EntityType.loadEntityWithPassengers(data,world,e->{world.spawnEntity(e);return e;});
-            if(references!=null){references.apply();if(!delta.equals(BlockPos.ORIGIN))restoredCopies.add(referenceCopy);}
+            if(pendingCopy!=null)reconcileRpLinks(pendingCopy);
+            if(references!=null)references.apply();
+            if(pendingCopy!=null)referenceCopies.put(delta.toImmutable(),pendingCopy);
             if(old!=null||!add.isEmpty()||!rpAdd.isEmpty()||id.equals("minecraft:air"))return true;
             return super.setBlock(v,value);
         }

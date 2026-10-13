@@ -1,66 +1,104 @@
 {
-  "status": "PASS_OWNED_STORAGE_AND_ALIAS_NATIVE_CASES",
-  "sourceCommit": "94681f4faf83db187689f67e4a852e5b4d71a7f4",
-  "nativeRun": "tests7 WITHOUT optional WorldEdit",
-  "wholeSuiteStatus": "FAIL",
+  "status": "PASS_FINAL_OWNED_STORAGE_ALIAS_AND_ACTUAL_WORLDEDIT_SUITE",
+  "sourceCommit": "339b36a5a2c919154de948523f6e5912eba434e8",
+  "nativeRun": "tests15 WITH actual optional WorldEdit",
+  "wholeSuiteStatus": "PASS",
+  "finalAcceptance": true,
   "passedCases": [
     {
       "name": "compactstatetransitionsv127gametests.nativeguavatableviewsnullcellsorderandmutationcontractsmatch",
-      "seconds": 0.182
+      "seconds": 0.087
     },
     {
       "name": "compactstatetransitionsv127gametests.everyownednativestateandpropertytransitionpreservesexactidentity",
-      "seconds": 46.176
+      "seconds": 46.055
     },
     {
-      "name": "importedfollowupv127gametests.nativesavedcurrentaliasesreopenwithuuidsettingsandownedcellspreserved",
-      "seconds": 0.031
+      "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
+      "seconds": 0.062
+    },
+    {
+      "name": "ownedstateentriesv127gametests.ownedimmutableentriesshareonlyexactidentitymapsandpreserveeverystateowner",
+      "seconds": 0.719
     },
     {
       "name": "importedfollowupv127gametests.everycurrentversiononealiaskeepsnativeitemandeveryyawfittedphysics",
-      "seconds": 0.034
+      "seconds": 0.021
     },
     {
       "name": "importedfollowupv127gametests.currentbankedartcannotbereinterpretedashistoriclowvariantbits",
-      "seconds": 0.031
+      "seconds": 0.018
     },
     {
-      "name": "shardedledgerv127gametests.legacyledgernbtremainsexactandmixedmodeisrejected",
-      "seconds": 0.025
-    },
-    {
-      "name": "shardedledgerv127gametests.repeatedtypedpayloadsdecodeassharedobjectsanddictionarybytes",
-      "seconds": 0.064
+      "name": "importedfollowupv127gametests.nativesavedcurrentaliasesreopenwithuuidsettingsandownedcellspreserved",
+      "seconds": 0.023
     },
     {
       "name": "shardedledgerv127gametests.thousandnativetransientshardreadshavenoresidentorsnapshotgrowth",
-      "seconds": 6.267
+      "seconds": 7.087
+    },
+    {
+      "name": "shardedledgerv127gametests.repeatedtypedpayloadsdecodeassharedobjectsanddictionarybytes",
+      "seconds": 7.093
     },
     {
       "name": "shardedledgerv127gametests.nativeshardflushevictreopenretainscrosschunkmembershipandrollback",
-      "seconds": 6.282
+      "seconds": 7.108
+    },
+    {
+      "name": "shardedledgerv127gametests.legacyledgernbtremainsexactandmixedmodeisrejected",
+      "seconds": 7.107
     }
   ],
-  "xmlSha256": "cde10fe96b9f543bbc23f7145373558fc42c4bf0dccc6798c1598740f4110ea9",
-  "stateProofSha256": "4d900f43aad97548c2318422c2dbfb30b715ea9a881d05617be4163fddef79cb",
+  "xmlSha256": "2ac29220452323b4da724ed06a78cfdd76e6cd6d42eae02636d7eda91770f8db",
+  "stateProofSha256": "64da7fbafed429710a1415f94729de2ad0e7e68303a8854e76eda5a984e2b0bf",
   "nativeStateProof": {
     "status": "PASS_EXHAUSTIVE_NATIVE_STATE_IDENTITIES",
-    "ownedStates": 951815,
+    "ownedStates": 972295,
     "originalCompositePrototypeStates": 6656,
-    "independentPropertyTransitions": 29805704,
+    "independentPropertyTransitions": 30555272,
     "storageMetrics": {
-      "convertedOwnModStateTables": 951813,
-      "oldCartesianReferenceSlots": 88760457,
-      "initiallyIneligibleClassTables": 24184,
-      "guardedFallbackTables": 3,
+      "sharedRowLayouts": 14,
+      "compactPropertyReferenceSlots": 30555302,
+      "sharedColumnLayouts": 11890,
       "originalV12MemoryOptimizationAuthorized": true,
-      "sharedColumnLayouts": 9970,
-      "compactPropertyReferenceSlots": 29805734,
-      "sharedRowLayouts": 13,
+      "guardedFallbackTables": 3,
+      "initiallyIneligibleClassTables": 24184,
+      "oldCartesianReferenceSlots": 91244201,
+      "convertedOwnModStateTables": 972293,
       "metricScope": "Actual own-mod table/reference-slot counts, not total JVM heap or mod byte attribution"
     }
   },
-  "referenceSlotsReduction": 58954723,
-  "referenceSlotsPercentReduction": 66.42003093787586,
-  "limitations": "PASS applies only to the nine named actual native cases and source checkpoint. The suite had other failures; WorldEdit optional integration and later metadata need their own final run. The detached Table contract copy adds one to converted-table/reference-slot metrics; actual startup histogram showed951812 attached compact tables."
+  "entriesProofSha256": "07086a1e248f54e79b03f34e515340bfc4812846511646e14957627987a65cdd",
+  "nativeEntriesProof": {
+    "status": "PASS_EXHAUSTIVE_NATIVE_PROPERTY_MAP_IDENTITIES",
+    "ownedStates": 972295,
+    "declaredPropertyKeyAndValueIdentityChecks": 5312772,
+    "sharedRegistryDefaults": 1050,
+    "foreignMapReferencesVerifiedOnRepeat": 113,
+    "idempotentRepeat": true,
+    "startupStorageMetrics": {
+      "ownedStatesVisited": 972295,
+      "mapsReplaced": 816130,
+      "valueSlotsEliminated": 4018178,
+      "identityCellsVerified": 4018178,
+      "cachedMaps": 27138,
+      "sharedLayouts": 9,
+      "unshareableStates": 129027,
+      "boundedFallbackStates": 0,
+      "foreignSampleStatesVerified": 113,
+      "temporaryCacheReleased": true
+    }
+  },
+  "startupRetainedHeap": {
+    "objects": 10498315,
+    "bytes": 572742560,
+    "histogramSha256": "8d5470d2336645d2288c1951b16175937bebb31010a09c5952d95edc81f992d4",
+    "scope": "Actual whole-process live histogram after explicit startup GC; timing, spawn and source revision may differ from older baselines. This is not a claim of memory attributed solely to the mod."
+  },
+  "worldEditTransitionMetricsLine": "[03:32:48] [Server thread/INFO] (Minecraft) [STDOUT]: V127 WorldEdit shared state transitions: PASS {types=1071, avoidedNeighborCells=25243220, states=972375}",
+  "actualWorldEditNativeOperationsPassed": true,
+  "referenceSlotsReduction": 60688899,
+  "referenceSlotsPercentReduction": 66.51260938763659,
+  "limitations": "The eleven named cases cover owned/OriginalV12 table contracts and exhaustive transitions, immutable property-map interning, sharded disk/eviction/cache bounds, exact alias saved data, and actual WorldEdit table/parser/delete/undo/clipboard/compact behavior. Final acceptance additionally requires the complete suite PASS with WorldEdit present and the current same source checkpoint. Later code/resource edits invalidate final evidence until rerun. The detached Table contract copy adds one to converted-table/reference-slot metrics."
 }

@@ -1,0 +1,46 @@
+{
+  "status": "FAIL_MEASURED_BASELINE_LINKED_CLIPBOARD_REMAP",
+  "tests": 123,
+  "failures": 1,
+  "skipped": 0,
+  "worldEditVersion": "7.2.15+6463-5ca4dff",
+  "actualNativeMutationPath": "Real Fabric Adapter, Parser, EditSession.setBlock and EditSession.getFullBlock",
+  "fixture": "worldeditv127gametests.clipboardlinkedownersremaponlyactuallycopiedmembersandkeeponependingevent",
+  "sourceCheckpointAtRun": "339b36a5a2c919154de948523f6e5912eba434e8",
+  "scope": "Two real owned doors and one actual RP lever, public ALL-rule links, typed command counters, one saved undelivered event",
+  "actualFailure": "Final copied rule retained the original RP source and original first owner while its second target used the copied UUID",
+  "sourceUuids": [
+    "fb6ab446-d615-44ac-b41f-a821b1c26c72",
+    "6071d20b-186a-4dcd-bc2d-77c652cdf468",
+    "21023527-cdbf-47d4-99b0-d7c0d92b6d8c"
+  ],
+  "copiedUuids": [
+    "59fd6293-8672-4b1f-a8df-da924ac92f3e",
+    "adbaef7a-b02b-4436-88f1-fedcdd6d4aef",
+    "9dc043bd-e7d8-4cfd-80e3-7b66b87a7639"
+  ],
+  "rootCause": "Captured reference components span multiple source objects, but the prior clipboard writer remapped only objects in the current cell snapshot",
+  "fixScope": [
+    "WorldEditBridge session-local aggregate of meaningful reference metadata and actual copied UUIDs",
+    "WorldEditReferenceSnapshot session-local stable rule order and queued-event identity",
+    "One focused native GameTest in the existing WorldEditV127GameTests"
+  ],
+  "fixValidation": "PENDING_NEXT_NATIVE_RUN",
+  "sourceModelsOrPhysicsChanged": false,
+  "fullOriginalWorldConverted": false,
+  "galleryCreated": false,
+  "evidence": [
+    {
+      "path": "build/v127-validation/tests16-linked-baseline/result.json",
+      "sha256": "36e33858dee9075dad1ca5444742a09f4e8203696aa5ae7ea2485dd28f261877"
+    },
+    {
+      "path": "build/test-results/gametest/TEST-tests16-linked-baseline.xml",
+      "sha256": "47dd493fd3fbfe7f01e1f5f79cad8fc25534db9fd31b5a3cd4652faee6fd0b41"
+    },
+    {
+      "path": "build/v127-validation/tests16-linked-baseline/gradle.log",
+      "sha256": "8a92f6fa654722cc7e07e0e9d94a264d3cf64eb27c513c6d90f158dab046cb4a"
+    }
+  ]
+}

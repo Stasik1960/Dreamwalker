@@ -30,7 +30,9 @@ def main():
     metadata = {'schemaVersion': 1, 'id': 'dreamwalker_gallery_author', 'version': '1.2.7-functions',
                 'name': 'Dreamwalker isolated V12.7 function QA (no gallery)', 'environment': '*',
                 'entrypoints': {'main': ['dev.dreamwalker.bloodbornedw.v127qa.NativeV127Fixture'],
-                                'client': ['dev.dreamwalker.bloodbornedw.v127qa.NativeV127ClientQa']},
+                                'client': ['dev.dreamwalker.bloodbornedw.v127qa.NativeMultipartPredicateQa',
+                                           'dev.dreamwalker.bloodbornedw.v127qa.NativeMultipartCoreQa',
+                                           'dev.dreamwalker.bloodbornedw.v127qa.NativeV127ClientQa']},
                 'depends': {'minecraft': '1.20.1', 'java': '>=17', 'fabricloader': '>=0.16.10', 'fabric-api': '*', 'bloodborne_dw': '*'}}
     write(resources / 'fabric.mod.json', metadata)
     # Existing runner validates this historical QA add-on id; it does not author any gallery.
