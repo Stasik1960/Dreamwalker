@@ -2,7 +2,6 @@ package dev.dreamwalker.bloodbornedw.v127qa;
 
 import com.google.gson.*;
 import dev.dreamwalker.bloodbornedw.composite.*;
-import java.lang.reflect.Proxy;
 import java.nio.file.*;
 import java.security.MessageDigest;
 import java.util.*;
@@ -17,6 +16,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.client.render.model.json.*;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.*;
@@ -30,8 +30,16 @@ public final class NativeMultipartCoreQa implements ClientModInitializer {
     private static void require(boolean value,String label){if(!value)throw new IllegalStateException(label);}
     private static BakedModel child(int color){
         int[] vertices=new int[32];vertices[3]=color;var quad=new BakedQuad(vertices,-1,Direction.UP,null,true);
-        return (BakedModel)Proxy.newProxyInstance(BakedModel.class.getClassLoader(),new Class<?>[]{BakedModel.class},(proxy,method,args)->switch(method.getName()){
-            case "getQuads"->args[1]==null?List.of(quad):List.of();case "getParticleSprite"->null;case "getTransformation"->ModelTransformation.NONE;case "getOverrides"->ModelOverrideList.EMPTY;case "isBuiltin"->false;case "hashCode"->System.identityHashCode(proxy);case "equals"->proxy==args[0];case "toString"->"NativeQaChild"+color;default->true;});
+        return new BakedModel(){
+            @Override public List<BakedQuad> getQuads(BlockState state,Direction face,Random random){return face==null?List.of(quad):List.of();}
+            @Override public boolean useAmbientOcclusion(){return true;}
+            @Override public boolean hasDepth(){return true;}
+            @Override public boolean isSideLit(){return true;}
+            @Override public boolean isBuiltin(){return false;}
+            @Override public Sprite getParticleSprite(){return null;}
+            @Override public ModelTransformation getTransformation(){return ModelTransformation.NONE;}
+            @Override public ModelOverrideList getOverrides(){return ModelOverrideList.EMPTY;}
+        };
     }
     private static MultipartModelComponent component(String model,String property,String value){return new MultipartModelComponent(new SimpleMultipartModelSelector(property,value),new WeightedUnbakedModel(List.of(new ModelVariant(new Identifier("bloodborne_dw:block/"+model),AffineTransformation.identity(),false,1))));}
     private static final class Spy implements Baker {
