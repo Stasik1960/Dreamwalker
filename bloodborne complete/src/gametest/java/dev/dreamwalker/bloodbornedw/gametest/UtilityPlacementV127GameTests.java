@@ -21,7 +21,6 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.GameTest;
@@ -77,10 +76,10 @@ public final class UtilityPlacementV127GameTests implements FabricGameTest {
                 try {
                     c.assertTrue(world.getBlockState(first).equals(rootState)&&world.getBlockEntity(first) instanceof CompositeBlockEntity be&&owners[0].equals(be.resident())&&rootData.equals(be.createNbtWithIdentifyingData()),"Barrier installation and scheduled cleanup preserve original BB UUID, state and exact typed root data");
                     c.assertTrue(world.getBlockState(firstGuest).isOf(DwUtilityBlocks.BARRIER)&&CompositeRuntime.contributions(world,firstGuest).equals(before),"First barrier and physical BB guests survive actual queued lifecycle processing");
-                    c.assertTrue(world.getBlockState(secondGuest).equals(markerState)&&world.getBlockEntity(secondGuest) instanceof CompositeBlockEntity&&stableMarker(markerData).equals(stableMarker(world.getBlockEntity(secondGuest).createNbtWithIdentifyingData())),"Reverse atomic BB handler retains exact marker state, payload, resident, ID and coordinates; only guest owners may be added");
+                    c.assertTrue(world.getBlockState(secondGuest).equals(markerState)&&world.getBlockEntity(secondGuest) instanceof CompositeBlockEntity&&markerData.equals(world.getBlockEntity(secondGuest).createNbtWithIdentifyingData()),"Reverse atomic BB handler retains the exact foreign marker state and all typed native NBT; guest membership lives in the separate owner ledger");
                     var added=CompositeRuntime.contributions(world,secondGuest);
                     c.assertTrue(added.size()==1&&added.get(0).owner().equals(owners[1])&&!added.get(0).shape().collision().isEmpty(),"Reverse barrier cell receives exactly the new BB object's physical guest contribution");
-                    c.assertTrue(((CompositeBlockEntity)world.getBlockEntity(secondGuest)).contributions().equals(added),"Marker's typed owner records agree with the independently read guest ledger");
+                    c.assertTrue(dev.dreamwalker.bloodbornedw.composite.CompositeShapeSnapshots.contributions(world,secondGuest).equals(added),"Published immutable worker geometry contains the exact authoritative physical guest ledger while the foreign marker NBT remains intact");
                     c.assertTrue(!owners[0].instanceId().equals(owners[1].instanceId())&&!NoCollidePlacement.armed(player)&&!NoCollidePlacement.ignoringBlocks(),"Both ordinary installations retain independent identity and no privilege state");
                     proof(c,"v127-utility-overlap-native-proof.json","PASS_ORDINARY_UTILITY_INSTALLATION_BOTH_ORDERS");c.complete();
                 }catch(Exception failure){throw new IllegalStateException(failure);}finally{cleanup.run();}
@@ -114,7 +113,6 @@ public final class UtilityPlacementV127GameTests implements FabricGameTest {
         }
     }
     private static Vec3d top(BlockPos pos){return new Vec3d(pos.getX()+.5,pos.getY()+1,pos.getZ()+.5);}
-    private static NbtCompound stableMarker(NbtCompound source){var stable=source.copy();stable.remove("owners");return stable;}
     private static ActionResult use(ServerWorld world,ServerPlayerEntity player,ItemStack stack,BlockPos clicked,Direction face,Vec3d point){
         NoCollidePlacement.invalidate(player);player.setStackInHand(Hand.MAIN_HAND,stack);player.refreshPositionAndAngles(point.x,point.y+1,point.z-4,0,0);
         return stack.useOnBlock(new ItemUsageContext(player,Hand.MAIN_HAND,new BlockHitResult(point,face,clicked,false)));
