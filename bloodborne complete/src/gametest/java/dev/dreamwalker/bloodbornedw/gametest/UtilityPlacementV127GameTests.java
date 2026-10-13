@@ -42,7 +42,7 @@ public final class UtilityPlacementV127GameTests implements FabricGameTest {
     public void ordinaryBarrierAndBbItemsOverlapGuestCollisionInBothInstallationOrders(TestContext c)throws Exception {
         var world=c.getWorld();var player=UtilityV127GameTests.player(world);
         var first=c.getAbsolutePos(new BlockPos(3,20,3));var second=first.east(8);
-        var forced=load(world,List.of(first,second));var block=CompositeArchitecture.kindBlock("source_addon_barrel_0");
+        var forced=load(world,List.of(first,second));var block=CompositeArchitecture.kindBlock("source_1_spirelamp_001");
         Owner[] owners=new Owner[2];var firstGuest=first.up();var secondGuest=second.up();
         Runnable cleanup=()->{
             for(var guest:List.of(firstGuest,secondGuest))if(DwUtilityBlocks.marker(world.getBlockState(guest)))DwUtilityBlocks.remove(world,guest,player);
@@ -53,7 +53,7 @@ public final class UtilityPlacementV127GameTests implements FabricGameTest {
         };
         try {
             world.setBlockState(first.down(),Blocks.STONE.getDefaultState());
-            c.assertTrue(use(world,player,new ItemStack(block.asItem()),first.down(),Direction.UP,top(first.down())).isAccepted(),"Ordinary registered BB barrel item places the source object");
+            c.assertTrue(use(world,player,new ItemStack(block.asItem()),first.down(),Direction.UP,top(first.down())).isAccepted(),"Ordinary registered NEW wide masonry item places the source object");
             c.assertTrue(world.getBlockEntity(first) instanceof CompositeBlockEntity,"Actual normal BB item creates an owned root");
             var root=(CompositeBlockEntity)world.getBlockEntity(first);owners[0]=root.resident();var rootData=root.createNbtWithIdentifyingData();var rootState=world.getBlockState(first);
             var before=List.copyOf(CompositeRuntime.contributions(world,firstGuest));
