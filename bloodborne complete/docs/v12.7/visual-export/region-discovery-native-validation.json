@@ -1,18 +1,18 @@
 {
   "status": "PASS_FINAL_NATIVE_REGION_DISCOVERY",
-  "nativeRun": "tests26 WITH actual WorldEdit",
-  "sourceCommit": "36d2baee167c5f5e5ec8b92bd87705c60dfbd419",
-  "productionJarSha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+  "nativeRun": "tests27 WITH actual WorldEdit",
+  "sourceCommit": "2ae0712b507f29dfbd6d2ed76e5b45d05f210e52",
+  "productionJarSha256": "c3e9183dc1de039afba0b935b15959a18cafdb4d1e17e211c4849d2f017b50cc",
   "nativeTestcases": [
-    "bbregiondiscoveryv127gametests.nonzeropartialcoldheadersfailinsteadofsilentlyskippingsavedtargets",
-    "bbregiondiscoveryv127gametests.nativeemptyregionstubkeepsloadedunionandindexesthefirstrealsave"
+    "bbregiondiscoveryv127gametests.nativeemptyregionstubkeepsloadedunionandindexesthefirstrealsave",
+    "bbregiondiscoveryv127gametests.nonzeropartialcoldheadersfailinsteadofsilentlyskippingsavedtargets"
   ],
-  "nativeProofSha256": "02e7162ac2ffce256e51ccbae1c93b61bbb0bc189d6c46d565e37b69b1b0bc62",
+  "nativeProofSha256": "5c7e9ce0a2d36bb2543e0a57492b695814785642c161f8d149aaa8cb779f58d6",
   "nativeProof": {
     "status": "PASS_NATIVE_EMPTY_REGION_FIRST_SAVE_AND_LOADED_UNION",
     "nativeConstructorInitialBytes": 0,
     "nativeFirstSaveBytes": 8209,
-    "loadedChunk": 4294967312,
+    "loadedChunk": 4294967311,
     "savedChunk": 416611827648,
     "diskAndLoadedUnion": true
   },

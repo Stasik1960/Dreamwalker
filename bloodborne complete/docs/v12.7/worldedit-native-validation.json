@@ -1,7 +1,7 @@
 {
-  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS26",
-  "sourceCheckpointAtRun": "36d2baee167c5f5e5ec8b92bd87705c60dfbd419",
-  "productionJarSha256AtRun": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1",
+  "status": "PASS_REAL_OPTIONAL_WORLDEDIT_TESTS27",
+  "sourceCheckpointAtRun": "2ae0712b507f29dfbd6d2ed76e5b45d05f210e52",
+  "productionJarSha256AtRun": "c3e9183dc1de039afba0b935b15959a18cafdb4d1e17e211c4849d2f017b50cc",
   "allNativeXmlCases": 129,
   "failures": 0,
   "skipped": 0,
@@ -11,17 +11,17 @@
     {
       "name": "worldeditrpv127gametests.numericrpclipboardandselectivedeleteundokeeptypedsettingsandcounters",
       "status": "PASS",
-      "seconds": "0.281"
+      "seconds": "0.314"
     },
     {
       "name": "worldeditv127gametests.numericwholeobjectdeleteundocopyandcompact",
       "status": "PASS",
-      "seconds": "0.092"
+      "seconds": "0.087"
     },
     {
       "name": "worldeditv127gametests.clipboardlinkedownersremaponlyactuallycopiedmembersandkeeponependingevent",
       "status": "PASS",
-      "seconds": "0.076"
+      "seconds": "0.061"
     }
   ],
   "nativeRuntime": {
@@ -34,8 +34,8 @@
     "status": "PASS_REAL_OPTIONAL_WORLDEDIT_RP_ROUNDTRIP",
     "worldEditVersion": "7.2.15+6463-5ca4dff",
     "fiveDigitId": "91029",
-    "sourceUuid": "1d7a3b6f-1d42-4bd6-b7c2-2770208725e9",
-    "copiedUuid": "47eb4eb9-dc44-4748-9814-bd1f7cca2de9",
+    "sourceUuid": "d5ebca4a-987c-436e-a9b6-e178e510cce7",
+    "copiedUuid": "a0088e81-f52f-4658-99b6-e180dc1de20c",
     "parserAndActor": "ACTUAL_FABRIC_ADAPTER",
     "numericPlacement": "PASS",
     "actualEditSessionGetFullBlock": "PASS",
@@ -63,37 +63,37 @@
   "galleryCreated": false,
   "evidence": [
     {
-      "path": "build/test-results/gametest/TEST-tests26.xml",
-      "sha256": "ffbf7d6e55cc9c5140ce7ea75bf443722dd0f7033bab5117f56e35088d92526a"
+      "path": "build/test-results/gametest/TEST-tests27.xml",
+      "sha256": "d0448947f905b46c5aaa4666ccd5995950dbac495e150de0590166a998a78188"
     },
     {
-      "path": "build/v127-validation/tests26/result.json",
-      "sha256": "9226a3ee023b68518c0c7e90a5cfc0632da15789720870bbdc5866abd462a150"
+      "path": "build/v127-validation/tests27/result.json",
+      "sha256": "15b1652f8bba645ca217bf0a013df12dbc0a13090045ea7379da4dd211d6fe01"
     },
     {
-      "path": "build/v127-validation/tests26/gradle.log",
-      "sha256": "c68aa3ac0e4081179280c00bad5443c4aabea71f7a6eb17ff64cd64a722c5c1c"
+      "path": "build/v127-validation/tests27/gradle.log",
+      "sha256": "f2859f62358e3e0aa471e156ab4a489e124393dd45df2bdd5c7b93652365334b"
     },
     {
-      "path": "build/gametest-tests26/world/v127-worldedit-rp-native-proof.json",
-      "sha256": "1f54f2ed1ab130136e8cae797772bd1fc7b99eaca925d7d99f7e814c8a73d722"
+      "path": "build/gametest-tests27/world/v127-worldedit-rp-native-proof.json",
+      "sha256": "dabd89266d16e0b8f26d3aaaa8cc386bafe2a6fd62017bca7d253d7e1f2ba9b5"
     },
     {
-      "path": "build/gametest-tests26/world/v127-worldedit-linked-native-proof.json",
+      "path": "build/gametest-tests27/world/v127-worldedit-linked-native-proof.json",
       "sha256": "87d7a1518f94fca11d53488810ffb595f42eb62a6ddb50d89b019d05fd4fa846"
     },
     {
-      "path": "build/gametest-tests26/world/v127-source-model-offset-native-proof.json",
+      "path": "build/gametest-tests27/world/v127-source-model-offset-native-proof.json",
       "sha256": "bac1e9ffaaec6dceed1a84bc310f119031116bfd7ee917a57958815f0fc4351d"
     },
     {
-      "path": "build/gametest-tests26/world/v127-source-lighting-native-proof.json",
+      "path": "build/gametest-tests27/world/v127-source-lighting-native-proof.json",
       "sha256": "d550439c7ba8977878b6450e9d5290d2d7e11e375a1ee4b59dc8415674eac009"
     },
     {
       "path": "build/libs/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7-final.jar",
-      "sha256": "956ef2f9f2d125da3aac8cae378a3a39a1f93660522f6371bf183d5bedca22e1"
+      "sha256": "c3e9183dc1de039afba0b935b15959a18cafdb4d1e17e211c4849d2f017b50cc"
     }
   ],
-  "historicalNativeValidation": "worldedit-native-validation-tests25.json"
+  "historicalNativeValidation": "worldedit-native-validation-tests26.json"
 }
