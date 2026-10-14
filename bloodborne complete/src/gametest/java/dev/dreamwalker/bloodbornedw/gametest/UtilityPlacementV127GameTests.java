@@ -112,6 +112,25 @@ public final class UtilityPlacementV127GameTests implements FabricGameTest {
             CompositeRuntime.drain(world);player.discard();release(world,forced);
         }
     }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="v1273_light_installation",tickLimit=100)
+    public void ordinaryLightItemOverlapsPhysicalGuestInBothOrdersWithoutACommand(TestContext c){
+        var world=c.getWorld();var player=UtilityV127GameTests.player(world);var root=c.getAbsolutePos(new BlockPos(3,20,3));var guest=root.up();var forced=load(world,List.of(root));var block=CompositeArchitecture.kindBlock("source_1_spirelamp_001");
+        try{
+            for(boolean lightFirst:List.of(false,true)){
+                world.setBlockState(root.down(),Blocks.STONE.getDefaultState());
+                if(lightFirst){world.setBlockState(guest.down(),Blocks.STONE.getDefaultState());c.assertTrue(use(world,player,new ItemStack(DwUtilityBlocks.LIGHT_ITEM),guest.down(),Direction.UP,top(guest.down())).isAccepted(),"Real light item installs before architecture");world.setBlockState(root,Blocks.AIR.getDefaultState());}
+                c.assertTrue(use(world,player,new ItemStack(block.asItem()),root.down(),Direction.UP,top(root.down())).isAccepted(),"Ordinary architecture installs through a light's guest cell");
+                var entity=(CompositeBlockEntity)world.getBlockEntity(root);var owner=entity.resident();var rootData=entity.createNbtWithIdentifyingData();var contributions=List.copyOf(CompositeRuntime.contributions(world,guest));
+                c.assertTrue(!contributions.isEmpty()&&contributions.stream().anyMatch(e->!e.shape().collision().isEmpty()),"The test cell has genuine independently owned physical collision");
+                if(!lightFirst)c.assertTrue(use(world,player,new ItemStack(DwUtilityBlocks.LIGHT_ITEM),guest,Direction.UP,Vec3d.ofCenter(guest)).isAccepted(),"Real native context places light into the selected physical helper");
+                CompositeRuntime.drain(world);
+                c.assertTrue(world.getBlockState(guest).isOf(DwUtilityBlocks.LIGHT)&&world.getBlockState(guest).getLuminance()==14&&CompositeRuntime.contributions(world,guest).equals(contributions),"Light keeps brightness14 and exact independent guest geometry in both orders");
+                c.assertTrue(rootData.equals(world.getBlockEntity(root).createNbtWithIdentifyingData())&&!NoCollidePlacement.armed(player),"The source root UUID/typed data are unchanged and no command privilege is used");
+                DwUtilityBlocks.remove(world,guest,player);CompositeRuntime.remove(world,owner,player,false);CompositeRuntime.drain(world);world.setBlockState(root.down(),Blocks.AIR.getDefaultState());
+            }
+            c.complete();
+        }finally{player.discard();release(world,forced);}
+    }
     private static Vec3d top(BlockPos pos){return new Vec3d(pos.getX()+.5,pos.getY()+1,pos.getZ()+.5);}
     private static ActionResult use(ServerWorld world,ServerPlayerEntity player,ItemStack stack,BlockPos clicked,Direction face,Vec3d point){
         NoCollidePlacement.invalidate(player);player.setStackInHand(Hand.MAIN_HAND,stack);player.refreshPositionAndAngles(point.x,point.y+1,point.z-4,0,0);

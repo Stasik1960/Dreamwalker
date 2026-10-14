@@ -24,7 +24,9 @@ public final class CompositeCellBlock extends BlockWithEntity {
     @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}
     @Override public boolean canReplace(BlockState state,net.minecraft.item.ItemPlacementContext context) {
         if(context.getStack().getItem() instanceof dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.MarkerItem
-                ||dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.ignoringBlocks()&&dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.isModPlacement(context.getStack()))return true;
+                ||(dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.ignoringBlocks()
+                    ||dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.armed(context.getPlayer()))
+                    &&dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.isModPlacement(context.getStack()))return true;
         var entries=CompositeRuntime.contributions(context.getWorld(),context.getBlockPos());
         if(ImportedWholeSourceOpticsV127.emptyReplaceable(CompositeData.cell(context.getBlockPos()),entries))return true;
         return !entries.isEmpty()&&entries.stream().allMatch(entry->entry.owner().registryId().equals("bloodborne_dw:prototype_roof")

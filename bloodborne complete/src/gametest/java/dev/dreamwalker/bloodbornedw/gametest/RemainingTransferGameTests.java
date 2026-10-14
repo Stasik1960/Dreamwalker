@@ -233,7 +233,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
             t.assertTrue(entry.temporaryId().matches("[0-9]{5}")&&(number>=90021&&number<=90999||number>=93001)&&numbers.add(entry.temporaryId()),"new architecture uses a free unique five-digit number outside reserved RP/retired ranges");
             t.assertTrue(entry.name().matches(".*[А-Яа-яЁё].*"),"new object has Russian name "+block.spec.id);
             t.assertTrue(Registries.ITEM.get(block.spec.id)==block.asItem(),"new object has its registered item");
-            long expected=ImportedStyleRetirements.retired(block.spec.id)?0:1;
+            long expected=ImportedStyleRetirements.retired(block.spec.id)||CatalogueCohortV127.requestedDuplicateClones().contains(block.spec.id.toString())?0:1;
             t.assertTrue(stacks.stream().filter(stack->stack.isOf(block.asItem())).count()==expected,"reviewed NEW style catalogue has "+expected+" installation items for "+block.spec.id);
         });
         eachTick(t,null,cases);
@@ -275,6 +275,8 @@ public final class RemainingTransferGameTests implements FabricGameTest {
                 retiredRegistrations++;
                 t.assertTrue(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.creativeVariants(new ItemStack(block.asItem())).isEmpty(),"retired main or alias produces no placing stack "+registry);
                 t.assertTrue(stacks.stream().noneMatch(stack->stack.isOf(block.asItem())),"retired main or alias is hidden in unified Creative "+registry);
+            } else if(CatalogueCohortV127.requestedDuplicateClones().contains(registry)){
+                t.assertTrue(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.creativeVariants(new ItemStack(block.asItem())).isEmpty()&&stacks.stream().noneMatch(stack->stack.isOf(block.asItem())),"Only the explicitly requested duplicate installers are hidden; their registrations and saved art remain exact");
             } else if(ImportedTypeAliases.canonicalRegistry(registry).equals(registry)&&!ImportedAssemblyV126.hidden(block.spec.id.getPath())) active.add(registry);
         }
         Set<String> offered=new HashSet<>();
@@ -291,7 +293,7 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         Set<String> expectedRegistered=new HashSet<>(frozen);expectedRegistered.addAll(additions);expectedRegistered.addAll(conversionOnly);
         t.assertTrue(registered==1048&&registeredIds.equals(expectedRegistered)&&retiredRegistrations==31,"all1045 exact saved NEW registrations and30 style-retired registrations remain; tree, door-fragment and one hidden source-only family are appended");
         t.assertTrue(CatalogueCohortV127.working().size()==544&&CatalogueCohortV127.hiddenClones().equals(Set.of("bloodborne_dw:source_bricks_bricks_0","bloodborne_dw:source_polished_granite_slab","bloodborne_dw:source_snow_height8","bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04","bloodborne_dw:source_nether_brick_slab","bloodborne_dw:source_polished_andesite_slab","bloodborne_dw:source_red_tulip_2")),"frozen544 working V12.6 types lose only the seven explicitly reviewed practical clones");
-        t.assertTrue(active.size()==539&&active.equals(CatalogueCohortV127.expectedWorking())&&offered.equals(active),"Creative has exactly the frozen544 types minus7 reviewed clones plus2 approved source families, with one installer each");
+        t.assertTrue(active.size()==537&&active.equals(CatalogueCohortV127.expectedWorking())&&offered.equals(active),"Creative excludes precisely the seven reviewed old clones and two user-specified duplicates, while all old saved registrations remain");
         t.complete();
     }
 

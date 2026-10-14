@@ -68,6 +68,7 @@ public class CompositeItem extends BlockItem {
                 payload.put("SourceShift",stack.getNbt().get("ImportedArtShift").copy());CompositeSourceShift.local(payload);
             }
         }
+        var surface=CompositeSurfacePlacement.align(root.spec,state,payload,context);state=surface.state();payload=surface.payload();
         if(context.getWorld().isClient)return ActionResult.SUCCESS;
         UUID placementId=UUID.randomUUID();final BlockState placedState=state;final NbtCompound placedPayload=payload;
         var result=dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.forOwner(placementId,()->CompositeRuntime.place((ServerWorld)context.getWorld(),context.getBlockPos(),placedState,placementId,context.getPlayer(),placedPayload));

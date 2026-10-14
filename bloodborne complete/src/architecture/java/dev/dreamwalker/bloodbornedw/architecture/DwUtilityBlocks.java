@@ -68,13 +68,21 @@ public final class DwUtilityBlocks {
         @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new CompositeBlockEntity(pos,state);}
         @Override public BlockRenderType getRenderType(BlockState state){return BlockRenderType.INVISIBLE;}
         @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){
-            return !light&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity?VoxelShapes.fullCube():VoxelShapes.empty();
+            // Replacing a helper keeps its independently owned architecture.
+            // Only the marker's own volume is player-only (or empty for light).
+            var guests=CompositeRuntime.cellShape(world,pos,true,state,context);
+            return !light&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity?VoxelShapes.union(guests,VoxelShapes.fullCube()):guests;
         }
         @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return !light||context.isHolding(asItem())||dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM!=null&&context.isHolding(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM)?VoxelShapes.fullCube():VoxelShapes.empty();}
         @Override public VoxelShape getSidesShape(BlockState state,BlockView world,BlockPos pos){return light?VoxelShapes.empty():VoxelShapes.fullCube();}
         @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
         @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return 0;}
         @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}
+        @Override public boolean canReplace(BlockState state,ItemPlacementContext context){
+            if(light)return super.canReplace(state,context);
+            return context.getStack().getItem() instanceof BlockItem item
+                &&!(item instanceof MarkerItem)&&!item.getBlock().equals(Blocks.BARRIER);
+        }
         @Override public boolean canPathfindThrough(BlockState state,BlockView world,BlockPos pos,NavigationType type){return true;}
         @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){var stack=new ItemStack(asItem());stack.getOrCreateSubNbt("BlockStateTag").putString("profile",state.get(CompositeRootBlock.PROFILE).asString());return stack;}
         @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){
@@ -85,7 +93,7 @@ public final class DwUtilityBlocks {
     public static final class MarkerItem extends BlockItem {
         private final MarkerBlock block;
         MarkerItem(MarkerBlock block){super(block,new Item.Settings());this.block=block;}
-        @Override public ActionResult place(ItemPlacementContext context){return NoCollidePlacement.place(context,()->placeMarker(context));}
+        @Override public ActionResult place(ItemPlacementContext context){return placeMarker(context);}
         private ActionResult placeMarker(ItemPlacementContext context){
             var world=context.getWorld();var player=context.getPlayer();if(player==null)return ActionResult.FAIL;
             BlockPos pos=context.getBlockPos();

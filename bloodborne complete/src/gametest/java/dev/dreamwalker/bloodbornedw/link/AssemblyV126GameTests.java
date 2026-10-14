@@ -273,7 +273,7 @@ public final class AssemblyV126GameTests implements FabricGameTest {
             if(stack.getItem() instanceof BlockItem item&&item.getBlock() instanceof CompositeRootBlock block&&ImportedAssemblyV126.installationPose(id.getPath())>0)t.assertTrue(stack.getSubNbt("BlockStateTag")!=null&&stack.getSubNbt("BlockStateTag").getString("variant").equals(Integer.toString(ImportedAssemblyV126.installationPose(id.getPath())%16)),"one Creative item chooses the completed whole state "+row.temporaryId());
             newTypes++;
         }
-        t.assertTrue(newTypes==539&&workingRegistries.equals(CatalogueCohortV127.expectedWorking()),"frozen544 working NEW types lose exactly7 reviewed practical clones and gain only tree/door-fragment families");
+        t.assertTrue(newTypes==537&&workingRegistries.equals(CatalogueCohortV127.expectedWorking()),"Only the two requested duplicate catalogue entries are additionally hidden; saved IDs and assembly aliases remain exact");
         HIDDEN.forEach((oldNumber,mainNumber)->{
             var old=new ItemStack(Registries.ITEM.get(new Identifier(registry(oldNumber))),7);old.setCustomName(Text.literal("старый предмет"));old.getOrCreateNbt().putLong("OpaqueLong",Long.MIN_VALUE);var art=old.getOrCreateSubNbt("BlockStateTag");art.putString("rotation","3");art.putString("profile","alt");
             var next=ImportedAssemblyV126.canonicalStack(old);

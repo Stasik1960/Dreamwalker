@@ -17,12 +17,15 @@ public final class CompositeSpec {
     public record Bounds(Vec from, Vec to) {}
     public record Pose(List<Part> parts, List<Bounds> collision, List<Bounds> selection) {}
     public record Variant(Pose closed, Pose open, Bounds visible, Bounds mountedPlane, double mountAlignmentYaw) {}
+    public record SurfaceDecal(int axis,double value,int normal) {}
     public final Identifier id;
     public final String displayName;
     public final boolean translucent;
     public final List<Variant> variants;
     public final boolean openable, requiredSupport;
     public final boolean simplePhysicalCollision;
+    public final boolean functionalDoorPhysics;
+    public final Map<Integer,SurfaceDecal> surfaceDecals;
     public final Bounds importedClimbingBounds;
     public final Cell supportOffset;
     public final Set<Cell> essential;
@@ -32,6 +35,8 @@ public final class CompositeSpec {
         if (document.get("schemaVersion").getAsInt() != 1 || document.get("units").getAsInt() != 16) throw new IllegalArgumentException("Unsupported composite geometry schema");
         id = new Identifier(document.get("id").getAsString()); displayName = document.has("displayName") ? document.get("displayName").getAsString() : id.getPath();
         simplePhysicalCollision = document.has("simplePhysicalCollision") && document.get("simplePhysicalCollision").getAsBoolean();
+        functionalDoorPhysics = document.has("functionalDoorPhysics") && document.get("functionalDoorPhysics").getAsBoolean();
+        if(functionalDoorPhysics && !id.toString().equals("bloodborne_dw:source_stairs_andesite_stairs_top"))throw new IllegalArgumentException("Unreviewed functional door physics");
         if (simplePhysicalCollision && (!id.getNamespace().equals("bloodborne_dw") || !id.getPath().startsWith("source_"))) throw new IllegalArgumentException("Simple collision is restricted to newly imported objects: " + id);
         importedClimbingBounds = document.has("importedClimbingBounds") ? bound(document.getAsJsonObject("importedClimbingBounds")) : null;
         if (importedClimbingBounds != null && (!simplePhysicalCollision || !Set.of("source_hold_ladder_02","source_hold_ladder_03").contains(id.getPath()))) throw new IllegalArgumentException("Unreviewed imported climbing zone: " + id);
@@ -58,6 +63,12 @@ public final class CompositeSpec {
         }
         if (parsed.isEmpty() || parsed.size() > (ImportedArtworkBlock.isBankedPath(id.getPath())?ImportedArtworkBlock.variantBudget(id.getPath()):id.getPath().equals("source_stairs_polished_deepslate_stairs_bottom")?20:16)) throw new IllegalArgumentException("Composite variant budget: " + id);
         variants = List.copyOf(parsed);
+        Map<Integer,SurfaceDecal> decals=new HashMap<>();
+        if(document.has("surfaceDecals"))for(var raw:document.getAsJsonArray("surfaceDecals")){
+            var row=raw.getAsJsonObject();int variant=row.get("variant").getAsInt(),axis=row.get("axis").getAsInt(),normal=row.get("normal").getAsInt();double value=row.get("value").getAsDouble();
+            if(!simplePhysicalCollision||variant<0||variant>=variants.size()||axis<0||axis>2||Math.abs(normal)!=1||!Double.isFinite(value)||Math.abs(value)>32||decals.put(variant,new SurfaceDecal(axis,value,normal))!=null)throw new IllegalArgumentException("Unreviewed surface decal: "+id);
+        }
+        surfaceDecals=Map.copyOf(decals);
     }
     public static CompositeSpec load(String path) {
         try (InputStream input = CompositeSpec.class.getResourceAsStream("/bloodborne_dw/composite/" + path + ".json")) {
@@ -97,8 +108,8 @@ public final class CompositeSpec {
                 if (simplePhysicalCollision) {
                     collision.putAll(simplePhysicalFootprint(state,mountY,0,0,0));
                 }
-                else for (Bounds bounds : pose.collision) distribute(bounds, physicalYaw, mountY, collision);
-                for (Bounds bounds : pose.selection) distribute(bounds, state.get(CompositeRootBlock.ROTATION), mountY, selection);
+                else for (Bounds bounds : pose.collision) distribute(bounds, physicalYaw, mountY, collision,functionalDoorPhysics?16:4);
+                for (Bounds bounds : pose.selection) distribute(bounds, state.get(CompositeRootBlock.ROTATION), mountY, selection,functionalDoorPhysics?16:4);
             }
             TreeSet<Cell> cells = new TreeSet<>(collision.keySet()); cells.addAll(selection.keySet()); cells.add(Cell.ORIGIN);
             if (cells.size() > 4096) throw new IllegalArgumentException("Composite cell budget: " + id);
@@ -172,13 +183,15 @@ public final class CompositeSpec {
     }
     /** Existing V12 physical shapes and all outline shapes retain their raster. */
     private static void distribute(Bounds bounds,int rotation,double mountY,Map<Cell,List<Box>> result) {
+        distribute(bounds,rotation,mountY,result,4);
+    }
+    private static void distribute(Bounds bounds,int rotation,double mountY,Map<Cell,List<Box>> result,int grid) {
         double minY=bounds.from.y/16+mountY,maxY=bounds.to.y/16+mountY;
         double[][] polygon=new double[4][2]; double angle=Math.toRadians(rotation*45),c=Math.cos(angle),s=Math.sin(angle);
         double[][] corners={{bounds.from.x/16,bounds.from.z/16},{bounds.to.x/16,bounds.from.z/16},{bounds.to.x/16,bounds.to.z/16},{bounds.from.x/16,bounds.to.z/16}};
         double minX=Double.POSITIVE_INFINITY,minZ=minX,maxX=Double.NEGATIVE_INFINITY,maxZ=maxX;
         for(int i=0;i<4;i++){double x=corners[i][0]-.5,z=corners[i][1]-.5;polygon[i][0]=.5+c*x-s*z;polygon[i][1]=.5+s*x+c*z;minX=Math.min(minX,polygon[i][0]);maxX=Math.max(maxX,polygon[i][0]);minZ=Math.min(minZ,polygon[i][1]);maxZ=Math.max(maxZ,polygon[i][1]);}
         if(rotation%2==0){clip(minX,minY,minZ,maxX,maxY,maxZ,result);return;}
-        final int grid=4;
         int firstX=(int)Math.floor(minX*grid),lastX=(int)Math.ceil(maxX*grid),firstZ=(int)Math.floor(minZ*grid),lastZ=(int)Math.ceil(maxZ*grid);
         for(int z=firstZ;z<lastZ;z++) { int start=Integer.MIN_VALUE;
             for(int x=firstX;x<=lastX;x++) { boolean occupied=x<lastX&&intersects(polygon,x/(double)grid,z/(double)grid,(x+1)/(double)grid,(z+1)/(double)grid);

@@ -23,6 +23,11 @@ import org.joml.*;
  */
 public final class CompositeWorldMesh {
     private static final long MAX_BYTES=96L*1024*1024;
+    // These reviewed source models occupy many physical helper cells, while
+    // the resource pack had only one native carrier. Helpers are not extra
+    // opaque blocks for their own AO. World light, neighbouring objects and
+    // native directional shade remain unchanged.
+    private static final Set<String> SINGLE_SOURCE_AO=Set.of("source_green_stained_glass","source_purple_concrete","source_light_gray_concrete","source_light_blue_concrete","source_magenta_concrete");
     private static final AtomicLong LIGHT_REVISION=new AtomicLong();
     private static final AtomicLong SECTION_SEQUENCE=new AtomicLong();
     private static final java.util.concurrent.ConcurrentHashMap<Long,Long> SECTIONS=new java.util.concurrent.ConcurrentHashMap<>();
@@ -81,17 +86,25 @@ public final class CompositeWorldMesh {
         var consumer=consumers.getBuffer(block.spec.translucent?RenderLayer.getTranslucent():RenderLayer.getCutout());
         var position=matrices.peek().getPositionMatrix();var normal=matrices.peek().getNormalMatrix();
         float[] v=known.mesh.vertices;int[] lights=known.mesh.lights;
+        float lastNx=Float.NaN,lastNy=Float.NaN,lastNz=Float.NaN,transformedNx=0,transformedNy=0,transformedNz=0;
         // Positions are relative to the owner cell. Camera translation is applied
         // once here; neither geometry nor lighting depends on the camera.
         for(int n=0,i=0;n<v.length;n+=12,i++){
             float x=v[n],y=v[n+1],z=v[n+2],nx=v[n+9],ny=v[n+10],nz=v[n+11];
+            // Baked face vertices share a normal. The matrix stays fixed for
+            // this owner draw; varying/custom normals still take the exact
+            // original transform. No geometry, culling or lighting is changed.
+            if(nx!=lastNx||ny!=lastNy||nz!=lastNz){
+                transformedNx=normal.m00()*nx+normal.m10()*ny+normal.m20()*nz;
+                transformedNy=normal.m01()*nx+normal.m11()*ny+normal.m21()*nz;
+                transformedNz=normal.m02()*nx+normal.m12()*ny+normal.m22()*nz;
+                lastNx=nx;lastNy=ny;lastNz=nz;
+            }
             consumer.vertex(position.m00()*x+position.m10()*y+position.m20()*z+position.m30(),
                             position.m01()*x+position.m11()*y+position.m21()*z+position.m31(),
                             position.m02()*x+position.m12()*y+position.m22()*z+position.m32(),
                             v[n+3],v[n+4],v[n+5],v[n+6],v[n+7],v[n+8],overlay,lights[i],
-                            normal.m00()*nx+normal.m10()*ny+normal.m20()*nz,
-                            normal.m01()*nx+normal.m11()*ny+normal.m21()*nz,
-                            normal.m02()*nx+normal.m12()*ny+normal.m22()*nz);
+                            transformedNx,transformedNy,transformedNz);
         }
     }
     private static Mesh bake(MinecraftClient client,CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload,int overlay,Map<Long,Long> dependencies){
@@ -113,11 +126,11 @@ public final class CompositeWorldMesh {
                 int tint=RemainingSourceTint.color(block,client,entity.getPos());
                 client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),recorded,state,model,((tint>>16)&255)/255f,((tint>>8)&255)/255f,(tint&255)/255f,LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay);
             }else{
-                var view=new PartView(client.world,entity.getPos(),matrices.peek(),dependencies);
+                var carrier=ImportedSourceLightingV127.renderCarrier(block.spec,state);
+                var view=new PartView(client.world,entity.getPos(),matrices.peek(),dependencies,SINGLE_SOURCE_AO.contains(block.spec.id.getPath())?entity.resident():null,carrier);
                 // The model's axes must also rotate its neighbour/light queries.
                 // Keeping a world-space matrix but unrotated lighting breaks doors
                 // and mounted panes. Culling is intentionally false for BER parts.
-                var carrier=ImportedSourceLightingV127.renderCarrier(block.spec,state);
                 // Native source offsets were already preserved in SourceShift.
                 // Cancel the renderer's automatic offset, avoiding a second move.
                 matrices.push();var offset=carrier.getModelOffset(view,BlockPos.ORIGIN);matrices.translate(-offset.x,-offset.y,-offset.z);
@@ -132,13 +145,24 @@ public final class CompositeWorldMesh {
     /** A source part's local block neighbourhood, projected onto real world axes. */
     private static final class PartView implements BlockRenderView,ProjectedBlockView {
         private final ClientWorld delegate;private final BlockPos root;private final Matrix4f transform;private final Matrix3f normals;private final Map<Long,Long> dependencies;
-        PartView(ClientWorld delegate,BlockPos root,MatrixStack.Entry matrix,Map<Long,Long> dependencies){this.delegate=delegate;this.root=root;this.dependencies=dependencies;transform=new Matrix4f(matrix.getPositionMatrix());normals=new Matrix3f(matrix.getNormalMatrix());}
+        private final dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner singleSourceOwner;private final BlockState sourceCarrier;private final BlockPos sourceOrigin;
+        PartView(ClientWorld delegate,BlockPos root,MatrixStack.Entry matrix,Map<Long,Long> dependencies,dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner singleSourceOwner,BlockState sourceCarrier){this.delegate=delegate;this.root=root;this.dependencies=dependencies;this.singleSourceOwner=singleSourceOwner;this.sourceCarrier=sourceCarrier;transform=new Matrix4f(matrix.getPositionMatrix());normals=new Matrix3f(matrix.getNormalMatrix());sourceOrigin=singleSourceOwner==null?null:at(BlockPos.ORIGIN);}
         @Override public World backingWorld(){return delegate;}
         @Override public BlockPos worldPosition(BlockPos pos){return at(pos);}
         private BlockPos at(BlockPos pos){var point=new Vector3f(pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f);transform.transformPosition(point);var result=BlockPos.ofFloored(root.getX()+point.x,root.getY()+point.y,root.getZ()+point.z);long section=ChunkSectionPos.from(result).asLong();dependencies.putIfAbsent(section,SECTIONS.getOrDefault(section,0L));return result;}
         @Override public BlockEntity getBlockEntity(BlockPos pos){return delegate.getBlockEntity(at(pos));}
         @Override public BlockState getBlockState(BlockPos pos){
             var point=at(pos);var actual=delegate.getBlockState(point);
+            if(singleSourceOwner!=null){
+                if(point.equals(sourceOrigin))return sourceCarrier;
+                // A source helper can share a real neighbouring native/root
+                // block. Preserve that block's shadow; ignore only our own
+                // synthetic carrier, never another object's resident root.
+                if(actual.getBlock() instanceof CompositeCellBlock
+                    ||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(actual)
+                    ||point.equals(CompositeData.pos(singleSourceOwner.root())))
+                    for(var contribution:CompositeShapeSnapshots.contributions(delegate,point))if(contribution.owner().equals(singleSourceOwner))return net.minecraft.block.Blocks.AIR.getDefaultState();
+            }
             if(actual.getBlock() instanceof CompositeCellBlock&&CompositeShapeSnapshots.sourceCarrierOpacity(delegate,point)==15){
                 var carrier=ImportedWholeSourceOpticsV127.opaqueRenderCarrier();if(carrier!=null)return carrier;
             }

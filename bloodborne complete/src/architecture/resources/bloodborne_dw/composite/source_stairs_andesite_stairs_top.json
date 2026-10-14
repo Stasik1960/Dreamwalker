@@ -3,7 +3,7 @@
   "units": 16,
   "id": "bloodborne_dw:source_stairs_andesite_stairs_top",
   "displayName": "Деревянная дверь в кладке",
-  "openable": false,
+  "openable": true,
   "layer": "translucent",
   "support": {
     "required": false
@@ -21,7 +21,15 @@
         "closed": {
           "parts": [
             {
-              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/andesite_stairs_top",
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_frame",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_leaf",
               "offset": [
                 0,
                 16.0,
@@ -32,288 +40,180 @@
           "collision": [
             {
               "from": [
-                -8.0,
-                0.0,
-                1.0
+                -8,
+                0,
+                1
               ],
               "to": [
-                24.0,
-                48.0,
-                15.0
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -5,
+                1,
+                7
+              ],
+              "to": [
+                21,
+                48,
+                9
               ]
             }
           ],
           "selection": [
             {
               "from": [
-                -8.0,
-                0.0,
-                1.0
+                -8,
+                0,
+                1
               ],
               "to": [
-                -2.0,
-                2.0,
-                15.0
+                -2,
+                48,
+                15
               ]
             },
             {
               "from": [
-                -8.0,
-                2.0,
-                2.0
+                18,
+                0,
+                1
               ],
               "to": [
-                -3.0,
-                13.0,
-                14.0
+                24,
+                48,
+                15
               ]
             },
             {
               "from": [
-                -8.0,
-                6.0,
-                1.0
+                -5,
+                1,
+                7
               ],
               "to": [
-                -2.0,
-                8.0,
-                15.0
+                21,
+                48,
+                9
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_frame",
+              "offset": [
+                0,
+                16.0,
+                0
               ]
             },
             {
-              "from": [
-                -8.0,
-                13.0,
-                1.0
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_leaf",
+              "offset": [
+                0,
+                16.0,
+                0
               ],
-              "to": [
-                -2.0,
-                15.0,
-                15.0
-              ]
-            },
-            {
-              "from": [
-                -8.0,
-                15.0,
-                3.0
-              ],
-              "to": [
-                -3.0,
-                48.0,
-                13.0
-              ]
-            },
-            {
-              "from": [
-                -8.0,
-                24.0,
-                2.0
-              ],
-              "to": [
-                -2.0,
-                48.0,
-                14.0
-              ]
-            },
-            {
-              "from": [
-                -5.0,
-                1.0,
-                7.0
-              ],
-              "to": [
-                21.0,
-                48.0,
-                9.0
-              ]
-            },
-            {
-              "from": [
-                18.0,
-                0.0,
-                1.0
-              ],
-              "to": [
-                24.0,
-                2.0,
-                15.0
-              ]
-            },
-            {
-              "from": [
-                18.0,
-                6.0,
-                1.0
-              ],
-              "to": [
-                24.0,
-                8.0,
-                15.0
-              ]
-            },
-            {
-              "from": [
-                18.0,
-                13.0,
-                1.0
-              ],
-              "to": [
-                24.0,
-                15.0,
-                15.0
-              ]
-            },
-            {
-              "from": [
-                18.0,
-                24.0,
-                2.0
-              ],
-              "to": [
-                24.0,
-                48.0,
-                14.0
-              ]
-            },
-            {
-              "from": [
-                19.0,
-                2.0,
-                2.0
-              ],
-              "to": [
-                24.0,
-                13.0,
-                14.0
-              ]
-            },
-            {
-              "from": [
-                19.0,
-                15.0,
-                3.0
-              ],
-              "to": [
-                24.0,
-                48.0,
-                13.0
+              "yaw": 90,
+              "pivot": [
+                -5,
+                0,
+                8
               ]
             }
           ],
-          "simpleCollisionByRotation": [
-            [
-              {
-                "from": [
-                  -8.0,
-                  0.0,
-                  1.0
-                ],
-                "to": [
-                  24.0,
-                  48.0,
-                  15.0
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  -8.26345597,
-                  0.0,
-                  -8.26345597
-                ],
-                "to": [
-                  24.26345597,
-                  48.0,
-                  24.26345597
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  1.0,
-                  0.0,
-                  -8.0
-                ],
-                "to": [
-                  15.0,
-                  48.0,
-                  24.0
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  -8.26345597,
-                  0.0,
-                  -8.26345597
-                ],
-                "to": [
-                  24.26345597,
-                  48.0,
-                  24.26345597
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  -8.0,
-                  0.0,
-                  1.0
-                ],
-                "to": [
-                  24.0,
-                  48.0,
-                  15.0
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  -8.26345597,
-                  0.0,
-                  -8.26345597
-                ],
-                "to": [
-                  24.26345597,
-                  48.0,
-                  24.26345597
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  1.0,
-                  0.0,
-                  -8.0
-                ],
-                "to": [
-                  15.0,
-                  48.0,
-                  24.0
-                ]
-              }
-            ],
-            [
-              {
-                "from": [
-                  -8.26345597,
-                  0.0,
-                  -8.26345597
-                ],
-                "to": [
-                  24.26345597,
-                  48.0,
-                  24.26345597
-                ]
-              }
-            ]
+          "collision": [
+            {
+              "from": [
+                -8,
+                0,
+                1
+              ],
+              "to": [
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -6,
+                1,
+                8
+              ],
+              "to": [
+                -4,
+                48,
+                34
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8,
+                0,
+                1
+              ],
+              "to": [
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -6,
+                1,
+                8
+              ],
+              "to": [
+                -4,
+                48,
+                34
+              ]
+            }
           ]
         }
       },
@@ -356,7 +256,8 @@
   ],
   "source": {},
   "anchorPolicy": "floor",
-  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "collisionPolicy": "User90960: two fixed ordinary frame columns and one hinged wooden leaf; same simple boxes for physical collision and aim. Closed source geometry/offset preserved; only the leaf opens90 degrees.",
   "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
-  "simplePhysicalCollision": true
+  "simplePhysicalCollision": false,
+  "functionalDoorPhysics": true
 }

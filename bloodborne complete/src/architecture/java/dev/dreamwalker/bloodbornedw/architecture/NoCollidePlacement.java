@@ -26,6 +26,9 @@ public final class NoCollidePlacement {
         CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(literal("bb").requires(source->source.getEntity() instanceof ServerPlayerEntity player&&BuildPermissions.canEdit(player))
             .then(literal("no-collide").requires(source->source.hasPermissionLevel(2)).executes(context->{
                 ServerPlayerEntity player=context.getSource().getPlayerOrThrow();
+                if(player.getMainHandStack().getItem() instanceof DwUtilityBlocks.MarkerItem){
+                    invalidate(player);context.getSource().sendError(Text.literal("DW-барьер и DW-свет всегда игнорируют пересечения при установке; команда для них не используется."));return 0;
+                }
                 if(!arm(player)){context.getSource().sendError(Text.literal("Нужен размещаемый блок Dreamwalker BB в основной руке."));return 0;}
                 context.getSource().sendFeedback(()->Text.literal("Следующая установка этого предмета разрешает пересечение блоков. Перемещение предмета сбросит разрешение."),false);return 1;
             }))));
@@ -36,7 +39,7 @@ public final class NoCollidePlacement {
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.SERVER_STOPPED.register(server->LEASES.clear());
     }
     public static boolean isModPlacement(ItemStack stack){
-        if(stack.isEmpty())return false;
+        if(stack.isEmpty()||stack.getItem() instanceof DwUtilityBlocks.MarkerItem)return false;
         var id=net.minecraft.registry.Registries.ITEM.getId(stack.getItem());
         if(!Set.of("bloodborne_dw","bloodborne_rp").contains(id.getNamespace()))return false;
         return stack.getItem() instanceof BlockItem||ObjectRegistry.isPlacementItem(stack);

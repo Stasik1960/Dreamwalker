@@ -248,6 +248,24 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         }finally{player.discard();}
         t.complete();
     }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v1273_single_door")
+    public void door90960KeepsItsFrameAndBlocksOnlyWhenClosedAtAllEightYaws(TestContext t){
+        var reference=JsonParser.parseString("{\"passage\":{\"footCentreUnits\":[8,1,8],\"normal\":[0,0,1],\"crossingDistanceUnits\":64}}").getAsJsonObject();
+        var door=new Door("90960","bloodborne_dw:source_stairs_andesite_stairs_top",0,1,reference);
+        var spec=block(door).spec;
+        t.assertTrue(spec.openable&&spec.functionalDoorPhysics,"90960 is an explicitly reviewed functional single door");
+        t.assertTrue(spec.variants.get(0).closed().parts().get(0).equals(spec.variants.get(0).open().parts().get(0)),"The entire stone frame remains fixed while the wooden leaf rotates");
+        var world=t.getWorld();var player=player(world);var root=t.getAbsolutePos(new BlockPos(16640,96,64));List<Runnable> cases=new ArrayList<>();
+        for(int yaw=0;yaw<8;yaw++){final int rotation=yaw;cases.add(()->{
+            var closed=place(t,player,root,door,rotation,null);outline(t,closed);movement(t,player,root,door,rotation,false);
+            use(t,player,closed);var opened=instance(world,root);
+            t.assertTrue(world.getBlockState(root).get(CompositeRootBlock.OPEN)&&closed.owner().equals(opened.owner()),"Native RMB opens the same single door owner");
+            outline(t,opened);movement(t,player,root,door,rotation,true);
+            use(t,player,opened);var restored=instance(world,root);
+            t.assertTrue(!world.getBlockState(root).get(CompositeRootBlock.OPEN)&&closed.cells().equals(restored.cells()),"Second RMB exactly restores closed aim and collision geometry");remove(t,restored);
+        });}
+        eachTick(t,player,cases);
+    }
     private static boolean close(CompositeSpec.Vec value,Vec3d expected){return Math.abs(value.x()-expected.x)<1e-8&&Math.abs(value.y()-expected.y)<1e-8&&Math.abs(value.z()-expected.z)<1e-8;}
     private static void assertPart(TestContext t,CompositeSpec.Part actual,JsonObject expected,String message) {
         t.assertTrue(actual.model().toString().equals(expected.get("model").getAsString()),message+" model");

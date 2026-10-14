@@ -29,7 +29,7 @@ public final class ImportedCollisionV125 {
     private ImportedCollisionV125() {}
 
     public static boolean supports(CompositeSpec spec) {
-        return spec.simplePhysicalCollision && TABLES.objects.containsKey(spec.id.toString());
+        return spec.simplePhysicalCollision && !spec.functionalDoorPhysics && TABLES.objects.containsKey(spec.id.toString());
     }
 
     private static JsonObject document(String path) {

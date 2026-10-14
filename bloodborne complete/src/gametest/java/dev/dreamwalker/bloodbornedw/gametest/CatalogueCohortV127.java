@@ -24,7 +24,8 @@ public final class CatalogueCohortV127 {
     public static Set<String> working(){return strings("frozenV126WorkingSourceTypes");}
     public static Set<String> newSources(){return strings("approvedV127AdditionalSourceTypes");}
     public static Set<String> hiddenClones(){return strings("approvedV127HiddenCloneTypes");}
-    public static Set<String> expectedWorking(){Set<String> result=new TreeSet<>(working());result.removeAll(hiddenClones());result.addAll(newSources());return Set.copyOf(result);}
+    public static Set<String> requestedDuplicateClones(){return Set.of("bloodborne_dw:source__wall_dec_top","bloodborne_dw:source_hold_wall_lantern_4");}
+    public static Set<String> expectedWorking(){Set<String> result=new TreeSet<>(working());result.removeAll(hiddenClones());result.addAll(newSources());result.removeAll(requestedDuplicateClones());return Set.copyOf(result);}
     public static Map<String,String> oldNumbers(){return numbers("frozenV126ReservedNumbers");}
     public static Map<String,String> newNumbers(){return numbers("approvedV127AdditionalReservedNumbers");}
     private CatalogueCohortV127(){}

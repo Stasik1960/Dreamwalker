@@ -32,7 +32,7 @@ public final class ImportedFullMapCollisionV127 {
             return Map.copyOf(result);
         }catch(IOException failure){throw new IllegalStateException("Cannot read full-source collision metadata",failure);}
     }
-    public static boolean supports(CompositeSpec spec,BlockState state){return spec.simplePhysicalCollision&&TABLES.containsKey(new Pose(spec.id.toString(),CompositeSpec.poseVariant(state)));}
+    public static boolean supports(CompositeSpec spec,BlockState state){return spec.simplePhysicalCollision&&!spec.functionalDoorPhysics&&TABLES.containsKey(new Pose(spec.id.toString(),CompositeSpec.poseVariant(state)));}
     public static Map<Cell,Footprint> footprint(CompositeSpec spec,BlockState state,double mount,double x,double y,double z) {
         Key key=new Key(new Pose(spec.id.toString(),CompositeSpec.poseVariant(state)),state.get(CompositeRootBlock.ROTATION),mount,x,y,z);var known=CACHE.get(key);if(known!=null)return known;
         Rotation rotation=TABLES.get(key.pose).get(key.yaw);TreeMap<Cell,List<Box>> physical=new TreeMap<>(),aim=new TreeMap<>();
