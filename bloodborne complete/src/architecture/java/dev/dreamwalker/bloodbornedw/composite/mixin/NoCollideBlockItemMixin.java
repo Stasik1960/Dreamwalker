@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockItem.class)
 public abstract class NoCollideBlockItemMixin {
     @Unique private final ThreadLocal<java.util.ArrayDeque<Boolean>> dreamwalker$leases=ThreadLocal.withInitial(java.util.ArrayDeque::new);
+    @ModifyVariable(method="place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",at=@At("HEAD"),argsOnly=true)
+    private ItemPlacementContext dreamwalker$alignNativeAnchor(ItemPlacementContext context){return NoCollidePlacement.surfaceContext(context);}
     @Inject(method="place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",at=@At("HEAD"))
     private void dreamwalker$beginNoCollide(ItemPlacementContext context,CallbackInfoReturnable<ActionResult> result){dreamwalker$leases.get().push(context.getHand()==net.minecraft.util.Hand.MAIN_HAND&&NoCollidePlacement.enter(context.getPlayer()));}
     @Inject(method="place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",at=@At("RETURN"))

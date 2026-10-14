@@ -19,6 +19,14 @@ import org.slf4j.LoggerFactory;
  * Dynamic bounds preserve runtime opacity dispatch. State construction reads
  * no unfinished owner StateManager; old V12 settings and optics stay exact. */
 public final class ImportedSourceLightingV127 {
+    /** Instance-only optics for newly placed owned decoration. Existing source
+     * conversions never gain this flag from absence of another payload key. */
+    public static final String DECORATIVE_PLACEMENT="DecorativePlacementOptics";
+    public static net.minecraft.nbt.NbtCompound manualPlacementPayload(CompositeSpec spec,BlockState state,net.minecraft.nbt.NbtCompound payload){
+        if(id(spec)==null||ImportedCompactBlock.compact(state))return payload;
+        if(payload==null)payload=new net.minecraft.nbt.NbtCompound();
+        payload.putInt(DECORATIVE_PLACEMENT,1);return payload;
+    }
     private record Optics(int[] light,int[] opacity,FluidState[] fluid,BlockState[] renderCarrier){}
     private record Values(int emission,int opacity,FluidState fluid,BlockState renderCarrier){}
     private record Loaded(Map<Identifier,Optics> optics,Set<Identifier> emitting,JsonArray conflicts,JsonArray opacityConflicts,JsonArray fluidConflicts,int groups,int sources){}

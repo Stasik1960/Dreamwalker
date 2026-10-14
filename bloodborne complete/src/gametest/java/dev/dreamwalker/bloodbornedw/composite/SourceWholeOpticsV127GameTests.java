@@ -70,6 +70,7 @@ public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
                 t.assertTrue(placement.getBlockPos().equals(replacement)&&placement.canPlace(),"Real hand context selects the empty shadow helper itself instead of an adjacent cell");
                 t.assertTrue(hand.useOnBlock(usage).isAccepted()&&world.getBlockState(replacement).isOf(inserted),"An ordinary mod block can be placed by hand into zero-physics source-shadow membership");
                 t.assertTrue(CompositeRuntime.contributions(world,replacement).stream().anyMatch(entry->entry.owner().equals(owner)),"Hand placement keeps the original tree's guest binding for independent removal");
+                t.assertTrue(CompositeShapeSnapshots.decorativePlacement(world,replacement)&&CompositeShapeSnapshots.sourceCarrierOpacity(world,replacement)==15&&world.getBlockState(replacement).getOpacity(world,replacement)==15,"Manual root clears only its own source opacity; the independent converted whole source retains its exact published shadow15 in the shared cell");
             }
             if(path.equals("source_large_grille_gate")){
                 var offset=carriers.keySet().iterator().next();var pos=CompositeData.pos(owner.root().add(offset));var helperState=world.getBlockState(pos);long prior=((Number)CompositeShapeSnapshots.metrics(world).get("sourceCarrierLightChecks")).longValue();

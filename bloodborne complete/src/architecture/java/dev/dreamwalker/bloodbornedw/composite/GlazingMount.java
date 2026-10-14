@@ -20,10 +20,22 @@ public final class GlazingMount {
     }
     public static NbtCompound placementPayload(ItemPlacementContext context,NbtCompound supplied) {
         NbtCompound payload=supplied==null?new NbtCompound():supplied.copy();
-        payload.remove("MountY");payload.remove("SourceShift");payload.remove("GlazingSurfaceY");
+        payload.remove("MountY");payload.remove("SourceShift");payload.remove("GlazingSurfaceY");payload.remove("GlazingWallSurface");
         payload.putBoolean("GlazingMounted",true);payload.putBoolean("GlazingFreshPlacement",true);
         payload.putDouble("GlazingClickY",context.getHitPos().y-context.getBlockPos().getY());
-        payload.putString("MountFace",context.getSide().asString());return payload;
+        payload.putString("MountFace",context.getSide().asString());
+        if(dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.armed(context.getPlayer())){
+            // Store the clicked geometry, not the permission. A helper may have a
+            // higher unrelated prism; its bounding top must not replace this ray hit.
+            payload.putDouble("GlazingSurfaceY",context.getSide().getAxis()==Direction.Axis.Y?payload.getDouble("GlazingClickY"):0);
+            payload.remove("GlazingFreshPlacement");payload.remove("GlazingClickY");
+            if(context.getSide().getAxis().isHorizontal()){
+                int yaw=switch(context.getSide()){case NORTH->0;case EAST->2;case SOUTH->4;case WEST->6;default->0;};
+                var hit=context.getHitPos();var root=context.getBlockPos();var local=new CompositeSourceShift.Shift(hit.x-root.getX()-.5,0,hit.z-root.getZ()-.5).rotate(-yaw);
+                payload.putDouble("GlazingWallSurface",local.z()+.5);
+            }
+        }
+        return payload;
     }
     public static void rememberAnchor(BlockState before,NbtCompound payload) {
         if(!payload.getBoolean("GlazingMounted")||payload.contains("GlazingSurfaceY",99)||payload.getBoolean("GlazingFreshPlacement"))return;
@@ -53,7 +65,8 @@ public final class GlazingMount {
         payload.putDouble("MountY",surface-(mode==ThinWindowRootBlock.Mount.CEILING?b.to().y():b.from().y())/16);
         payload.remove("SourceShift");
         if(mode==ThinWindowRootBlock.Mount.VERTICAL&&face.getAxis().isHorizontal()){
-            NbtList shift=new NbtList();shift.add(NbtDouble.of(0));shift.add(NbtDouble.of(0));shift.add(NbtDouble.of(1-b.to().z()/16));payload.put("SourceShift",shift);
+            double wallSurface=payload.contains("GlazingWallSurface",99)?payload.getDouble("GlazingWallSurface"):1;
+            NbtList shift=new NbtList();shift.add(NbtDouble.of(0));shift.add(NbtDouble.of(0));shift.add(NbtDouble.of(wallSurface-b.to().z()/16));payload.put("SourceShift",shift);
         }
         return true;
     }

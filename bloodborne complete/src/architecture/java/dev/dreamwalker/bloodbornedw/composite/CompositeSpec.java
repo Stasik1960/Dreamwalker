@@ -36,7 +36,7 @@ public final class CompositeSpec {
         id = new Identifier(document.get("id").getAsString()); displayName = document.has("displayName") ? document.get("displayName").getAsString() : id.getPath();
         simplePhysicalCollision = document.has("simplePhysicalCollision") && document.get("simplePhysicalCollision").getAsBoolean();
         functionalDoorPhysics = document.has("functionalDoorPhysics") && document.get("functionalDoorPhysics").getAsBoolean();
-        if(functionalDoorPhysics && !id.toString().equals("bloodborne_dw:source_stairs_andesite_stairs_top"))throw new IllegalArgumentException("Unreviewed functional door physics");
+        if(functionalDoorPhysics && !Set.of("bloodborne_dw:source_stairs_andesite_stairs_top","bloodborne_dw:source_stairs_dark_prismarine_stairs_inner_right").contains(id.toString()))throw new IllegalArgumentException("Unreviewed functional door physics");
         if (simplePhysicalCollision && (!id.getNamespace().equals("bloodborne_dw") || !id.getPath().startsWith("source_"))) throw new IllegalArgumentException("Simple collision is restricted to newly imported objects: " + id);
         importedClimbingBounds = document.has("importedClimbingBounds") ? bound(document.getAsJsonObject("importedClimbingBounds")) : null;
         if (importedClimbingBounds != null && (!simplePhysicalCollision || !Set.of("source_hold_ladder_02","source_hold_ladder_03").contains(id.getPath()))) throw new IllegalArgumentException("Unreviewed imported climbing zone: " + id);

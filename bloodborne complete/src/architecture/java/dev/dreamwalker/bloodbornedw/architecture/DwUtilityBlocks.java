@@ -96,7 +96,9 @@ public final class DwUtilityBlocks {
         @Override public ActionResult place(ItemPlacementContext context){return placeMarker(context);}
         private ActionResult placeMarker(ItemPlacementContext context){
             var world=context.getWorld();var player=context.getPlayer();if(player==null)return ActionResult.FAIL;
-            BlockPos pos=context.getBlockPos();
+            // The helper may be replaceable but its carrier is not the aimed surface.
+            // Use the actual ray boundary; marker palettes remain native whole cells.
+            BlockPos pos=NoCollidePlacement.surfaceAnchor(context);
             var existing=world.getBlockState(pos);
             if(!(existing.isAir()||existing.isOf(CompositeArchitecture.CELL)||existing.canReplace(context)||light(existing)))return ActionResult.FAIL;
             if(barrier(existing))return ActionResult.FAIL;

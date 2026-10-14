@@ -14,7 +14,8 @@ public class CompositeItem extends BlockItem {
     /** Invoke vanilla placement on this registered item; never allocate an unregistered Item helper. */
     protected final ActionResult placeNative(ItemPlacementContext context){return super.place(context);}
     @Override public ActionResult place(ItemPlacementContext context){
-        return dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.place(context,()->placeInternal(context));
+        var aligned=dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.surfaceContext(context);
+        return dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.place(aligned,()->placeInternal(aligned));
     }
     private ActionResult placeInternal(ItemPlacementContext context){
         if(context.getPlayer()==null||!context.getWorld().isChunkLoaded(context.getBlockPos()))return ActionResult.FAIL;
@@ -68,7 +69,9 @@ public class CompositeItem extends BlockItem {
                 payload.put("SourceShift",stack.getNbt().get("ImportedArtShift").copy());CompositeSourceShift.local(payload);
             }
         }
+        if(root.spec.functionalDoorPhysics&&root.spec.id.getPath().startsWith("source_"))payload=ImportedTypeAliases.markPayload(payload);
         var surface=CompositeSurfacePlacement.align(root.spec,state,payload,context);state=surface.state();payload=surface.payload();
+        payload=ImportedSourceLightingV127.manualPlacementPayload(root.spec,state,payload);
         if(context.getWorld().isClient)return ActionResult.SUCCESS;
         UUID placementId=UUID.randomUUID();final BlockState placedState=state;final NbtCompound placedPayload=payload;
         var result=dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.forOwner(placementId,()->CompositeRuntime.place((ServerWorld)context.getWorld(),context.getBlockPos(),placedState,placementId,context.getPlayer(),placedPayload));

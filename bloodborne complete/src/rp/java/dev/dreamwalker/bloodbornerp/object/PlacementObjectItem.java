@@ -25,7 +25,7 @@ final class PlacementObjectItem extends Item {
    if(!ObjectRegistry.placeOnSurface(player,objectId,context.getHitPos(),context.getSide(),context.getPlayerYaw(),context.getStack()))return ActionResult.FAIL;
    if(!player.isCreative())context.getStack().decrement(1);return ActionResult.CONSUME;
   }
-  var placement=new net.minecraft.item.ItemPlacementContext(context);
+  var placement=dev.dreamwalker.bloodbornedw.architecture.NoCollidePlacement.surfaceContext(new net.minecraft.item.ItemPlacementContext(context));
   // RP is an entity: no native carrier is replaced, so canPlace() is not an occupancy gate.
   if(!ObjectRegistry.place(player,objectId,placement.getBlockPos(),context.getPlayerYaw(),context.getStack()))return ActionResult.FAIL;
   if(!player.isCreative())context.getStack().decrement(1);

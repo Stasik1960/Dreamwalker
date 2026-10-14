@@ -29,7 +29,7 @@ public class CompositeRootBlock extends BlockWithEntity {
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,true,state,context);}
     @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,false,state,context);}
     @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
-    @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return ImportedSourceLightingV127.opacity(spec,state,0);}
+    @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return spec.id.getPath().startsWith("source_")&&CompositeShapeSnapshots.decorativePlacement(world,pos)?CompositeShapeSnapshots.sourceCarrierOpacity(world,pos):ImportedSourceLightingV127.opacity(spec,state,0);}
     @Override public net.minecraft.fluid.FluidState getFluidState(BlockState state){return ImportedSourceLightingV127.fluid(spec,state,super.getFluidState(state));}
     @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}
     @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){return CompositeRuntime.defaultPick(world,pos,state);}

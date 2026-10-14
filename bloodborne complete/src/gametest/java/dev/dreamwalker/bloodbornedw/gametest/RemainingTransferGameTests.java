@@ -166,16 +166,19 @@ public final class RemainingTransferGameTests implements FabricGameTest {
             cases.add(()->{
                 var profile=block.spec.variants.get(selected).closed().parts().stream().anyMatch(part->!part.model().equals(part.altModel()))?CompositeRootBlock.Profile.ALT:CompositeRootBlock.Profile.BASE;
                 var owner=place(t,player,root,block,selected,2,art(block,selected,profile));
-                var entity=(CompositeBlockEntity)world.getBlockEntity(root);var payload=entity.payload();payload.putLong("TransferOpaqueLong",Long.MIN_VALUE);payload.putString("TransferOpaqueText","сохранено");entity.set(owner,entity.contributions(),payload);
+                var entity=(CompositeBlockEntity)world.getBlockEntity(root);var payload=entity.payload();payload.putLong("TransferOpaqueLong",Long.MIN_VALUE);payload.putString("TransferOpaqueText","сохранено");payload.putInt(ImportedSourceLightingV127.DECORATIVE_PLACEMENT,17);entity.set(owner,entity.contributions(),payload);
                 var saved=entity.createNbt();var loaded=new CompositeBlockEntity(root,world.getBlockState(root));loaded.readNbt(saved);
                 t.assertTrue(loaded.resident().equals(owner)&&loaded.payload().equals(payload)&&loaded.contributions().equals(entity.contributions()),"typed owner/payload/contributions round-trip exactly: "+block.spec.id);
                 var picked=CompositeRuntime.pick(world,owner);var art=picked.getSubNbt("BlockStateTag");
                 t.assertTrue(picked.isOf(block.asItem())&&art!=null&&Integer.parseInt(art.getString("variant"))+(block instanceof ImportedArtworkBlock&&ImportedArtworkBlock.bankProperty(block.getDefaultState())!=null?16*Integer.parseInt(art.getString("art_bank")):0)==selected&&art.getString("profile").equals(profile.asString()),"pick retains exact new artistic pose/profile");
                 t.assertTrue(picked.getSubNbt("CompositePayload")==null&&picked.getSubNbt("BlockEntityTag")==null,"pick does not carry owner UUID, typed payload or mechanisms");
+                t.assertTrue(!picked.getOrCreateNbt().contains(ImportedSourceLightingV127.DECORATIVE_PLACEMENT),"Pick does not copy the installation's deliberately poisoned private optics flag17");
                 removed(t,player,owner);
                 var copy=place(t,player,root,block,selected,6,picked);
                 var copied=(CompositeBlockEntity)world.getBlockEntity(root);
                 var copyPayload=copied.payload();
+                t.assertTrue(copyPayload.contains(ImportedSourceLightingV127.DECORATIVE_PLACEMENT,3)&&copyPayload.getInt(ImportedSourceLightingV127.DECORATIVE_PLACEMENT)==1,"The new manual installation creates its own typed optics INT1, rather than copying the original INT17");
+                copyPayload.remove(ImportedSourceLightingV127.DECORATIVE_PLACEMENT);
                 t.assertTrue(!copy.instanceId().equals(owner.instanceId())&&copyPayload.getInt("ImportedTypeVersion")==1
                         &&copyPayload.getKeys().stream().allMatch(key->key.equals("ImportedTypeVersion")||key.equals("SourceShift")),
                         "copied art has independent UUID, a current type marker and no private instance settings");

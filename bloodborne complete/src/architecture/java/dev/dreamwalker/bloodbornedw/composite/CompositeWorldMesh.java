@@ -23,11 +23,9 @@ import org.joml.*;
  */
 public final class CompositeWorldMesh {
     private static final long MAX_BYTES=96L*1024*1024;
-    // These reviewed source models occupy many physical helper cells, while
-    // the resource pack had only one native carrier. Helpers are not extra
-    // opaque blocks for their own AO. World light, neighbouring objects and
-    // native directional shade remain unchanged.
-    private static final Set<String> SINGLE_SOURCE_AO=Set.of("source_green_stained_glass","source_purple_concrete","source_light_gray_concrete","source_light_blue_concrete","source_magenta_concrete");
+    // A logical root/helper is ownership metadata, not another opaque cube
+    // inside its own custom model. Real neighbouring blocks still shade it.
+    // Converted whole assemblies retain their explicit native shadow cells.
     private static final AtomicLong LIGHT_REVISION=new AtomicLong();
     private static final AtomicLong SECTION_SEQUENCE=new AtomicLong();
     private static final java.util.concurrent.ConcurrentHashMap<Long,Long> SECTIONS=new java.util.concurrent.ConcurrentHashMap<>();
@@ -127,7 +125,8 @@ public final class CompositeWorldMesh {
                 client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),recorded,state,model,((tint>>16)&255)/255f,((tint>>8)&255)/255f,(tint&255)/255f,LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay);
             }else{
                 var carrier=ImportedSourceLightingV127.renderCarrier(block.spec,state);
-                var view=new PartView(client.world,entity.getPos(),matrices.peek(),dependencies,SINGLE_SOURCE_AO.contains(block.spec.id.getPath())?entity.resident():null,carrier);
+                var view=new PartView(client.world,entity.getPos(),matrices.peek(),dependencies,
+                    block.spec.id.getPath().startsWith("source_")&&payload.getInt(ImportedWholeSourceOpticsV127.CONTEXT)!=1?entity.resident():null);
                 // The model's axes must also rotate its neighbour/light queries.
                 // Keeping a world-space matrix but unrotated lighting breaks doors
                 // and mounted panes. Culling is intentionally false for BER parts.
@@ -145,16 +144,21 @@ public final class CompositeWorldMesh {
     /** A source part's local block neighbourhood, projected onto real world axes. */
     private static final class PartView implements BlockRenderView,ProjectedBlockView {
         private final ClientWorld delegate;private final BlockPos root;private final Matrix4f transform;private final Matrix3f normals;private final Map<Long,Long> dependencies;
-        private final dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner singleSourceOwner;private final BlockState sourceCarrier;private final BlockPos sourceOrigin;
-        PartView(ClientWorld delegate,BlockPos root,MatrixStack.Entry matrix,Map<Long,Long> dependencies,dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner singleSourceOwner,BlockState sourceCarrier){this.delegate=delegate;this.root=root;this.dependencies=dependencies;this.singleSourceOwner=singleSourceOwner;this.sourceCarrier=sourceCarrier;transform=new Matrix4f(matrix.getPositionMatrix());normals=new Matrix3f(matrix.getNormalMatrix());sourceOrigin=singleSourceOwner==null?null:at(BlockPos.ORIGIN);}
+        private final dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner singleSourceOwner;
+        PartView(ClientWorld delegate,BlockPos root,MatrixStack.Entry matrix,Map<Long,Long> dependencies,dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner singleSourceOwner){this.delegate=delegate;this.root=root;this.dependencies=dependencies;this.singleSourceOwner=singleSourceOwner;transform=new Matrix4f(matrix.getPositionMatrix());normals=new Matrix3f(matrix.getNormalMatrix());}
         @Override public World backingWorld(){return delegate;}
         @Override public BlockPos worldPosition(BlockPos pos){return at(pos);}
         private BlockPos at(BlockPos pos){var point=new Vector3f(pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f);transform.transformPosition(point);var result=BlockPos.ofFloored(root.getX()+point.x,root.getY()+point.y,root.getZ()+point.z);long section=ChunkSectionPos.from(result).asLong();dependencies.putIfAbsent(section,SECTIONS.getOrDefault(section,0L));return result;}
         @Override public BlockEntity getBlockEntity(BlockPos pos){return delegate.getBlockEntity(at(pos));}
         @Override public BlockState getBlockState(BlockPos pos){
             var point=at(pos);var actual=delegate.getBlockState(point);
+            // Self masking is disabled for owners with explicit whole-source
+            // optics. Any published opaque helper here therefore also belongs
+            // to a foreign whole assembly, whose real shadow must survive.
+            if(actual.getBlock() instanceof CompositeCellBlock&&CompositeShapeSnapshots.sourceCarrierOpacity(delegate,point)==15){
+                var carrier=ImportedWholeSourceOpticsV127.opaqueRenderCarrier();if(carrier!=null)return carrier;
+            }
             if(singleSourceOwner!=null){
-                if(point.equals(sourceOrigin))return sourceCarrier;
                 // A source helper can share a real neighbouring native/root
                 // block. Preserve that block's shadow; ignore only our own
                 // synthetic carrier, never another object's resident root.
@@ -162,9 +166,6 @@ public final class CompositeWorldMesh {
                     ||dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(actual)
                     ||point.equals(CompositeData.pos(singleSourceOwner.root())))
                     for(var contribution:CompositeShapeSnapshots.contributions(delegate,point))if(contribution.owner().equals(singleSourceOwner))return net.minecraft.block.Blocks.AIR.getDefaultState();
-            }
-            if(actual.getBlock() instanceof CompositeCellBlock&&CompositeShapeSnapshots.sourceCarrierOpacity(delegate,point)==15){
-                var carrier=ImportedWholeSourceOpticsV127.opaqueRenderCarrier();if(carrier!=null)return carrier;
             }
             if(actual.getBlock() instanceof InvisibleSourceCarrierV127)return InvisibleSourceCarrierV127.source(actual);
             if(actual.getBlock() instanceof SourceFallbackCarrierV1271)return SourceFallbackCarrierV1271.source(actual);

@@ -101,7 +101,7 @@ public final class ImportedCollisionMigration {
             state.done(owner); return;
         }
         BlockState current = rootChunk.getBlockState(root);
-        if (!(current.getBlock() instanceof CompositeRootBlock block) || !block.spec.simplePhysicalCollision || !block.spec.id.toString().equals(owner.registryId())) {
+        if (!(current.getBlock() instanceof CompositeRootBlock block) || !(block.spec.simplePhysicalCollision || block.spec.functionalDoorPhysics) || !block.spec.id.toString().equals(owner.registryId())) {
             state.done(owner); return;
         }
         var payload = cached.payload();

@@ -3,6 +3,7 @@ package dev.dreamwalker.bloodbornedw.gametest;
 import com.google.gson.*;
 import com.mojang.authlib.GameProfile;
 import dev.dreamwalker.bloodbornedw.architecture.PlacementPhysics;
+import dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope;
 import dev.dreamwalker.bloodbornedw.composite.*;
 import dev.dreamwalker.bloodbornedw.debug.DebugCatalogue;
 import dev.dreamwalker.bloodbornedw.runtime.ObjectInstance;
@@ -12,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
@@ -26,6 +28,7 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.RaycastContext;
 
 /** Native server item/use/movement checks. Client baked geometry is verified
  * separately against source quads and actual client captures. */
@@ -265,6 +268,152 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
             t.assertTrue(!world.getBlockState(root).get(CompositeRootBlock.OPEN)&&closed.cells().equals(restored.cells()),"Second RMB exactly restores closed aim and collision geometry");remove(t,restored);
         });}
         eachTick(t,player,cases);
+    }
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v1274_single_door_90986")
+    public void door90986CentralLeafOpensAndClosesWithFixedSurroundingsAndActualPassageAtAllEightYaws(TestContext t){
+        var reference=JsonParser.parseString("{\"passage\":{\"footCentreUnits\":[8,1,8],\"normal\":[0,0,1],\"crossingDistanceUnits\":64}}").getAsJsonObject();
+        var door=new Door("90986","bloodborne_dw:source_stairs_dark_prismarine_stairs_inner_right",0,1,reference);
+        var spec=block(door).spec;var closedPose=spec.variants.get(0).closed();var openPose=spec.variants.get(0).open();
+        t.assertTrue(spec.openable&&spec.functionalDoorPhysics&&!spec.simplePhysicalCollision,"90986 alone opts into the reviewed single-leaf physics instead of the old entire-bay cuboid");
+        t.assertTrue(closedPose.collision().size()==6&&openPose.collision().size()==6,"five ordinary fixed surrounding boxes and one moving panel define this door");
+        t.assertTrue(closedPose.collision().get(5).from().x()==0&&closedPose.collision().get(5).to().x()==16,"the CLOSED leaf still closes the entire original one-block aperture despite the small stationary-frame walking clearance");
+        t.assertTrue(closedPose.collision().get(5).from().z()==2&&closedPose.collision().get(5).to().z()==14,"closed physical wood spans both source z2/z14 planes, so the rear face is solid too");
+        t.assertTrue(closedPose.collision().subList(0,5).equals(openPose.collision().subList(0,5)),"masonry, side windows and upper arch never move physically");
+        t.assertTrue(closedPose.selection().equals(closedPose.collision())&&openPose.selection().equals(openPose.collision()),"the player's target outline is the real door collision in both states");
+        var world=t.getWorld();var player=player(world);var root=t.getAbsolutePos(new BlockPos(16704,96,64));List<Runnable> cases=new ArrayList<>();
+        for(int yaw=0;yaw<8;yaw++){final int rotation=yaw;cases.add(()->{
+            var closed=place(t,player,root,door,rotation,null);outline(t,closed);leaf90986Contact(t,player,root,rotation);movement(t,player,root,door,rotation,false);movement(t,player,root,reverse(door),rotation,false);
+            use(t,player,closed);var opened=instance(world,root);
+            t.assertTrue(world.getBlockState(root).get(CompositeRootBlock.OPEN)&&opened.owner().equals(closed.owner()),"actual root/helper RMB opens the central leaf without changing instance identity at yaw"+rotation);
+            outline(t,opened);movement(t,player,root,door,rotation,true);movement(t,player,root,reverse(door),rotation,true);
+            var entity=(CompositeBlockEntity)world.getBlockEntity(root);var saved=entity.createNbt();
+            var restored=new CompositeBlockEntity(root,world.getBlockState(root));restored.readNbt(saved);
+            t.assertTrue(restored.resident().equals(entity.resident())&&restored.contributions().equals(entity.contributions())&&restored.payload().equals(entity.payload()),"native saving retains the open central door and all exact fixed/moving helper data at yaw"+rotation);
+            t.assertTrue(CompositeData.state(opened.rootData()).get(CompositeRootBlock.OPEN),"cached root data records the open state at yaw"+rotation);
+            use(t,player,opened);var again=instance(world,root);
+            t.assertTrue(!world.getBlockState(root).get(CompositeRootBlock.OPEN)&&again.owner().equals(closed.owner())&&again.cells().equals(closed.cells()),"second RMB restores exact closed physical and selection occupancy at yaw"+rotation);
+            remove(t,again);
+        });}
+        eachTick(t,player,cases);
+    }
+
+    private static Door reverse(Door door){
+        var reference=door.reference.deepCopy();var normal=reference.getAsJsonObject("passage").getAsJsonArray("normal");
+        for(int i=0;i<normal.size();i++)normal.set(i,new JsonPrimitive(-normal.get(i).getAsDouble()));
+        return new Door(door.number,door.registry,door.pose,door.leaves,reference);
+    }
+    private static void leaf90986Contact(TestContext t,ServerPlayerEntity player,BlockPos root,int yaw){
+        leaf90986Contact(t,player,root,yaw,new NbtCompound());
+    }
+    private static void leaf90986Contact(TestContext t,ServerPlayerEntity player,BlockPos root,int yaw,NbtCompound payload){
+        var shift=CompositeSourceShift.local(payload);double mount=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
+        for(boolean rear:List.of(false,true)){
+            var start=global(new Vec3d(.5+shift.x(),1+shift.y()+mount,(rear?2.5:-1.5)+shift.z()),yaw,root);
+            var end=global(new Vec3d(.5+shift.x(),1+shift.y()+mount,(rear?-1.5:2.5)+shift.z()),yaw,root);
+            var expected=global(new Vec3d(.5+shift.x(),1+shift.y()+mount,(rear?14.:2.)/16+shift.z()),yaw,root);
+            var hit=t.getWorld().raycast(new RaycastContext(start,end,RaycastContext.ShapeType.COLLIDER,RaycastContext.FluidHandling.NONE,player));
+            t.assertTrue(hit.getType()==net.minecraft.util.hit.HitResult.Type.BLOCK&&hit.getPos().distanceTo(expected)<.125,"physical contact reaches the visible "+(rear?"rear":"front")+" wooden face, not an inset front-only collider, at yaw"+yaw+": "+hit.getPos());
+        }
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="v1274_saved_door_90986")
+    public void actualV1273SavedDoor90986RebuildsWholeBayLedgerWithoutGhostsOrForeignDataLoss(TestContext t){
+        var fixture=legacy90986();var sourceRoot=fixture.getIntArray("sourceRoot");
+        var rawRoot=fixture.getCompound("rootBlockEntity").copy();var originalOwner=CompositeData.owner(rawRoot.getCompound("resident"));
+        var world=t.getWorld();var root=t.getAbsolutePos(new BlockPos(16768,96,64));
+        var owner=new dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner(originalOwner.instanceId(),originalOwner.registryId(),CompositeData.cell(root));
+        var rows=fixture.getList("cells",10);var before=new TreeMap<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell,dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Footprint>();
+        dev.dreamwalker.bloodbornedw.runtime.CellSnapshot.BlockData rootData=null;
+        for(int i=0;i<rows.size();i++){
+            var row=rows.getCompound(i);var position=row.getIntArray("pos");var entries=CompositeData.contributions(row.getList("owners",10));
+            t.assertTrue(entries.size()==1&&entries.get(0).owner().equals(originalOwner),"fixture retains only the actual old90986 owner at its saved cell");
+            var entry=entries.get(0);before.put(new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell(position[0]-sourceRoot[0],position[1]-sourceRoot[1],position[2]-sourceRoot[2]),entry.shape());
+            if(rootData==null)rootData=entry.rootData();else t.assertTrue(rootData.equals(entry.rootData()),"the old saved whole bay carries one identical typed root payload");
+        }
+        t.assertTrue(before.size()==24&&rootData!=null,"the test loads the real .3 saved24-cell enclosing bay, not today's door descriptor");
+        var selected=CompositeData.state(rootData);var oldPayload=CompositeData.nbt(rootData.blockEntityNbt());
+        var old=new ObjectInstance(owner,rootData,before);var door=new Door("90986",owner.registryId(),0,1,JsonParser.parseString("{\"passage\":{\"footCentreUnits\":[8,1,8],\"normal\":[0,0,1],\"crossingDistanceUnits\":64}}").getAsJsonObject());
+        var shift=CompositeSourceShift.local(oldPayload);double mount=oldPayload.getDouble("MountY")+oldPayload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
+        var foot=door.reference.getAsJsonObject("passage").getAsJsonArray("footCentreUnits");foot.set(0,new JsonPrimitive(8+16*shift.x()));foot.set(1,new JsonPrimitive(1+16*(shift.y()+mount)));foot.set(2,new JsonPrimitive(8+16*shift.z()));
+        var after=CompositeRuntime.instance(world,root,selected,owner.instanceId(),oldPayload);load(world,root,door,0);
+        for(var cell:before.keySet())world.getChunk(CompositeData.pos(owner.root().add(cell)));
+        var access=new FabricCompositeWorld(world,Map.of(owner,old));
+        t.assertTrue(CompositeRuntime.execute(access,CompositeRuntime.core().placement(access,old,List.of())).outcome()==TransactionCore.Outcome.COMMITTED,"the old native saved footprint is installed unchanged before any migration");
+        rawRoot.putInt("x",root.getX());rawRoot.putInt("y",root.getY());rawRoot.putInt("z",root.getZ());rawRoot.put("resident",CompositeData.owner(owner));
+        rawRoot.put("owners",CompositeData.contributions(CompositeRuntime.contributions(world,root)));
+        ((CompositeBlockEntity)world.getBlockEntity(root)).readNbt(rawRoot);
+        var changed=before.keySet().stream().filter(cell->!cell.equals(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell.ORIGIN)&&!before.get(cell).equals(after.cells().get(cell))).toList();
+        t.assertTrue(changed.size()>=2,"saved helpers contain enclosing-bay physical shapes different from the current fixed frame and moving leaf");
+        var guestRoot=CompositeData.pos(owner.root().add(changed.get(0)));var guestBlock=Registries.BLOCK.get(new Identifier("bloodborne_dw:prototype_glass_window_02"));
+        var guestPayload=new NbtCompound();guestPayload.putString("NeighbourPrivate","retained");guestPayload.putLong("NeighbourLong",Long.MIN_VALUE);
+        var guest=CompositeRuntime.instance(world,guestRoot,guestBlock.getDefaultState(),UUID.randomUUID(),guestPayload);
+        for(var cell:guest.cells().keySet())world.getChunk(CompositeData.pos(guest.owner().root().add(cell)));
+        var guestAccess=new FabricCompositeWorld(world,Map.of(guest.owner(),guest));
+        t.assertTrue(SourceConversionScope.initialInstances(Set.of(guest.owner().instanceId()),()->CompositeRuntime.execute(guestAccess,CompositeRuntime.core().placement(guestAccess,guest,List.of()))).outcome()==TransactionCore.Outcome.COMMITTED,"an independent native owner already shares one of the old bay cells");
+        var chestPosition=changed.stream().map(owner.root()::add).filter(cell->!guest.cells().containsKey(cell.subtract(guest.owner().root()))).map(CompositeData::pos).findFirst().orElseThrow();
+        world.setBlockState(chestPosition,Blocks.CHEST.getDefaultState(),Block.NOTIFY_ALL);var chest=(ChestBlockEntity)world.getBlockEntity(chestPosition);
+        var diamonds=new ItemStack(Items.DIAMOND,7);diamonds.getOrCreateNbt().putLong("ForeignTypedLong",Long.MIN_VALUE);diamonds.getOrCreateNbt().putIntArray("ForeignTypedArray",new int[]{1,-2,17});chest.setStack(0,diamonds);
+        chest.setCustomName(net.minecraft.text.Text.literal("Foreign chest retained"));var chestBefore=chest.createNbt();var chestState=world.getBlockState(chestPosition);
+        var guestBindings=new TreeMap<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell,List<CompositeData.Contribution>>();
+        for(var cell:guest.cells().keySet()){var absolute=guest.owner().root().add(cell);guestBindings.put(absolute,CompositeLedger.get(world).at(absolute).stream().filter(entry->entry.owner().equals(guest.owner())).toList());}
+        ImportedTypeMigration.forget(world);ImportedCollisionMigration.forget(world);ImportedCollisionMigration.loadedChunk(world,new ChunkPos(root));
+        var cached=(CompositeBlockEntity)world.getBlockEntity(root);
+        t.assertTrue(cached.resident().equals(owner)&&cached.payload().equals(oldPayload)&&world.getBlockState(root).equals(selected),"loading migration retains the original .3 UUID, state and exact typed payload");
+        for(var cell:before.keySet()){
+            var entries=CompositeLedger.get(world).at(owner.root().add(cell)).stream().filter(entry->entry.owner().equals(owner)).toList();
+            t.assertTrue(after.cells().containsKey(cell)?entries.size()==1&&entries.get(0).shape().equals(after.cells().get(cell)):entries.isEmpty(),"no whole-bay ghost binding remains after rebuilding saved cell"+cell);
+        }
+        for(var cell:after.cells().entrySet())t.assertTrue(CompositeLedger.get(world).at(owner.root().add(cell.getKey())).stream().anyMatch(entry->entry.owner().equals(owner)&&entry.shape().equals(cell.getValue())),"every current door cell has its correct saved contribution");
+        for(var binding:guestBindings.entrySet())t.assertTrue(CompositeLedger.get(world).at(binding.getKey()).stream().filter(entry->entry.owner().equals(guest.owner())).toList().equals(binding.getValue()),"the neighbouring owner's typed helper binding is untouched");
+        t.assertTrue(world.getBlockState(chestPosition).equals(chestState)&&world.getBlockEntity(chestPosition).createNbt().equals(chestBefore),"foreign chest block, inventory and opaque typed item data survive migration exactly");
+        t.assertTrue(!ImportedCollisionMigration.pending(world,owner)&&!SourceConversionScope.initialInstance(owner.instanceId()),"saved-door migration finishes without a persistent placement privilege");
+        CompositeRuntime.remove(world,guest.owner(),null,false);world.setBlockState(chestPosition,Blocks.AIR.getDefaultState(),Block.NOTIFY_ALL);
+        var player=player(world);
+        try{var closed=instance(world,root);outline(t,closed);leaf90986Contact(t,player,root,0,oldPayload);movement(t,player,root,door,0,false);use(t,player,closed);var opened=instance(world,root);outline(t,opened);movement(t,player,root,door,0,true);movement(t,player,root,reverse(door),0,true);remove(t,opened);}finally{player.discard();}
+        t.complete();
+    }
+
+    private static NbtCompound legacy90986(){
+        var input=FunctionalDoorsV126GameTests.class.getResourceAsStream("/bloodborne_dw/door90986-v1273-saved-owner.nbt");
+        if(input==null)throw new IllegalStateException("Missing actual v12.7.3 saved90986 fixture");
+        try(var source=input){return net.minecraft.nbt.NbtIo.readCompressed(source);}
+        catch(Exception failure){throw new IllegalStateException("Invalid old saved90986 fixture",failure);}
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="v1274_single_door_90986")
+    public void door90986KeepsExactClosedSourceAndOnlyPartitionsTheMarkedLowerCentralLeaf(TestContext t){
+        var spec=CompositeSpec.load("source_stairs_dark_prismarine_stairs_inner_right");
+        var closed=spec.variants.get(0).closed();var opened=spec.variants.get(0).open();
+        t.assertTrue(closed.parts().size()==1&&closed.parts().get(0).model().toString().equals("bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right")&&close(closed.parts().get(0).offset(),new Vec3d(0,16,0)),"closed90986 keeps the original source model and exact installation offset");
+        t.assertTrue(opened.parts().size()==2,"the open pose has exactly one central leaf and one fixed remainder");
+        var moving=opened.parts().get(0);var fixed=opened.parts().get(1);
+        t.assertTrue(moving.model().toString().equals("bloodborne_dw:remaining/final_followups/door_90986_leaf")&&moving.yaw()==90&&moving.pitch()==0&&moving.extraYaw()==0&&close(moving.pivot(),new Vec3d(11./12,0,2))&&close(moving.offset(),new Vec3d(0,16,0)),"only the marked central panel makes one quarter-turn about its edge");
+        t.assertTrue(fixed.model().toString().equals("bloodborne_dw:remaining/final_followups/door_90986_frame")&&fixed.yaw()==0&&fixed.pitch()==0&&fixed.extraYaw()==0&&close(fixed.offset(),new Vec3d(0,16,0)),"all surrounding source architecture retains its original location and orientation");
+        var source=modelResource("remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right").getAsJsonArray("elements");
+        var frame=modelResource("remaining/final_followups/door_90986_frame").getAsJsonArray("elements");
+        var leaf=modelResource("remaining/final_followups/door_90986_leaf").getAsJsonArray("elements");
+        t.assertTrue(source.size()>=75&&frame.size()==source.size()+2&&leaf.size()==2,"exactly two coplanar lower panel layers are partitioned; the other73 old elements and reviewed exposed cap planes stay fixed");
+        int cursor=0,movingIndex=0;
+        for(int index=0;index<source.size();index++){
+            var element=source.get(index).getAsJsonObject();
+            if(index!=0&&index!=3){t.assertTrue(frame.get(cursor++).equals(element),"fixed source geometry/rotation/texture/UV is untouched for element"+index);continue;}
+            var left=frame.get(cursor++).getAsJsonObject();var right=frame.get(cursor++).getAsJsonObject();var centre=leaf.get(movingIndex++).getAsJsonObject();
+            t.assertTrue(left.getAsJsonArray("from").get(0).getAsDouble()==-9&&Math.abs(left.getAsJsonArray("to").get(0).getAsDouble()-11./12)<1e-10&&Math.abs(right.getAsJsonArray("from").get(0).getAsDouble()-181./12)<1e-10&&right.getAsJsonArray("to").get(0).getAsDouble()==25,"fixed side strips meet the exact central texture boundaries for layer"+index);
+            t.assertTrue(Math.abs(centre.getAsJsonArray("from").get(0).getAsDouble()-11./12)<1e-10&&Math.abs(centre.getAsJsonArray("to").get(0).getAsDouble()-181./12)<1e-10,"the moving region is the single marked centre, not the sidelights, for layer"+index);
+            for(String side:List.of("north","south")){
+                var old=element.getAsJsonObject("faces").getAsJsonObject(side);var central=centre.getAsJsonObject("faces").getAsJsonObject(side);
+                t.assertTrue(old.get("texture").equals(central.get("texture"))&&old.getAsJsonArray("uv").get(1).equals(central.getAsJsonArray("uv").get(1))&&old.getAsJsonArray("uv").get(3).equals(central.getAsJsonArray("uv").get(3)),"the source panel texture and complete vertical UV interval survive layer"+index+" face"+side);
+                t.assertTrue(Math.abs(central.getAsJsonArray("uv").get(0).getAsDouble()-1.75)<1e-10&&Math.abs(central.getAsJsonArray("uv").get(2).getAsDouble()-4.25)<1e-10,"the central leaf uses only the original atlas columns14..34 at layer"+index+" face"+side);
+            }
+        }
+        t.complete();
+    }
+
+    private static JsonObject modelResource(String model){
+        var input=FunctionalDoorsV126GameTests.class.getResourceAsStream("/assets/bloodborne_dw/models/"+model+".json");
+        if(input==null)throw new IllegalStateException("Missing door source partition "+model);
+        try(var reader=new InputStreamReader(input,StandardCharsets.UTF_8)){return JsonParser.parseReader(reader).getAsJsonObject();}
+        catch(Exception failure){throw new IllegalStateException("Invalid door source partition "+model,failure);}
     }
     private static boolean close(CompositeSpec.Vec value,Vec3d expected){return Math.abs(value.x()-expected.x)<1e-8&&Math.abs(value.y()-expected.y)<1e-8&&Math.abs(value.z()-expected.z)<1e-8;}
     private static void assertPart(TestContext t,CompositeSpec.Part actual,JsonObject expected,String message) {

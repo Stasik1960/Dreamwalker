@@ -8,6 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.WorldChunk;
 
 /** Published geometry inputs, never a World or BlockEntity reference. Lighting workers
  * must not ask the server to finish the chunk whose lighting they are completing.
@@ -16,7 +17,7 @@ import net.minecraft.world.World;
  * never insert cells, force chunks, inspect world ownership, or queue cleanup. */
 public final class CompositeShapeSnapshots {
     private static final Map<World,Published> WORLDS=new WeakHashMap<>();
-    public record Root(UUID token,Owner resident,double offset,BlockPos sourceRoot) {}
+    public record Root(UUID token,Owner resident,double offset,BlockPos sourceRoot,boolean decorativePlacement) {}
     private record CellData(List<CompositeData.Contribution> ledger,List<CompositeData.Contribution> entity,Root root,int sourceOpacity) {
         private static final CellData EMPTY=new CellData(List.of(),List.of(),null,0);
         List<CompositeData.Contribution> entries(){return ledger.isEmpty()?entity:ledger;}
@@ -47,16 +48,31 @@ public final class CompositeShapeSnapshots {
             Map<Long,Map<Cell,CellData>> changed=new HashMap<>();
             List<Cell> sourceLightChanges=new ArrayList<>();
             for(var row:pending.entrySet()){
-                if(at(row.getKey()).sourceOpacity!=row.getValue().sourceOpacity)sourceLightChanges.add(row.getKey());
+                CellData old=at(row.getKey()),value=row.getValue();
+                if(old.sourceOpacity!=value.sourceOpacity||decorative(old)!=decorative(value))sourceLightChanges.add(row.getKey());
                 long key=chunk(row.getKey());Map<Cell,CellData> cells=changed.computeIfAbsent(key,ignored->new HashMap<>(next.getOrDefault(key,Map.of())));
                 if(row.getValue().empty())cells.remove(row.getKey());else cells.put(row.getKey(),row.getValue());
             }
             for(var row:changed.entrySet())if(row.getValue().isEmpty())next.remove(row.getKey());else next.put(row.getKey(),Map.copyOf(row.getValue()));
             chunks=Map.copyOf(next);pending.clear();
-            // A dynamic helper may retain the identical native block state while
-            // its flagged NEW source opacity changes. Recheck only those cells,
+            // A helper or manual decorative root may retain the identical block
+            // state while its published instance opacity changes. Recheck those cells,
             // after the complete immutable revision is visible to light workers.
-            if(world instanceof ServerWorld server)for(var cell:sourceLightChanges){var pos=CompositeData.pos(cell);if(server.isChunkLoaded(pos)){server.getChunkManager().getLightingProvider().checkBlock(pos);sourceCarrierLightChecks++;}}
+            if(world instanceof ServerWorld server&&!sourceLightChanges.isEmpty()){
+                List<Cell> checks=List.copyOf(sourceLightChanges);
+                Runnable recheck=()->{for(var cell:checks){var pos=CompositeData.pos(cell);if(server.isChunkLoaded(pos)){
+                    var chunk=server.getChunkManager().getWorldChunk(pos.getX()>>4,pos.getZ()>>4);
+                    // getOpacity can change with the identical saved block state.
+                    // Repair only this loaded column's native direct-sky boundary
+                    // before enqueueing ordinary nibble propagation; no full scan.
+                    if(chunk!=null)chunk.getChunkSkyLight().isSkyLightAccessible(chunk,pos.getX()&15,pos.getY(),pos.getZ()&15);
+                    server.getChunkManager().getLightingProvider().checkBlock(pos);synchronized(this){sourceCarrierLightChecks++;}
+                }}};
+                // Chunk BE attachment/deserialization may publish on a worker.
+                // Publish first; defer all loaded-chunk/lighting access without
+                // waiting for the server or forcing the unfinished chunk.
+                if(server.getServer().isOnThread())recheck.run();else server.getServer().execute(recheck);
+            }
         }
         synchronized void begin(){batchDepth++;}
         synchronized void end(World world){if(batchDepth<=0)throw new IllegalStateException("Unbalanced shape publication batch");batchDepth--;flush(world);}
@@ -66,15 +82,28 @@ public final class CompositeShapeSnapshots {
         }
     }
     private static long chunk(Cell cell){return net.minecraft.util.math.ChunkPos.toLong(cell.x()>>4,cell.z()>>4);}
+    private static boolean decorative(CellData data){return data.root!=null&&data.root.decorativePlacement();}
     private static synchronized Published cache(World world,boolean create){return create?WORLDS.computeIfAbsent(world,ignored->new Published()):WORLDS.get(world);}
     public static boolean worker(BlockView view){return view instanceof ServerWorld world&&!world.getServer().isOnThread();}
-    private static CellData data(BlockView view,BlockPos pos){if(!(view instanceof World world)||pos==null)return CellData.EMPTY;Published cache=cache(world,false);return cache==null?CellData.EMPTY:worker(view)?cache.at(CompositeData.cell(pos)):cache.current(CompositeData.cell(pos));}
+    private static CellData data(BlockView view,BlockPos pos){
+        // Vanilla ChunkSkyLight queries its existing WorldChunk with local X/Z.
+        // getWorld/getPos are field getters: resolve the same immutable scalar,
+        // never chunk contents, BE data, disk or an unfinished chunk future.
+        if(pos!=null&&view instanceof WorldChunk chunk)return data(chunk.getWorld(),new BlockPos(chunk.getPos().getStartX()+(pos.getX()&15),pos.getY(),chunk.getPos().getStartZ()+(pos.getZ()&15)));
+        if(!(view instanceof World world)||pos==null)return CellData.EMPTY;Published cache=cache(world,false);return cache==null?CellData.EMPTY:worker(view)?cache.at(CompositeData.cell(pos)):cache.current(CompositeData.cell(pos));
+    }
     public static List<CompositeData.Contribution> contributions(BlockView view,BlockPos pos){return data(view,pos).entries();}
     /** A light worker reads the already published scalar; no owner NBT, registry,
      * chunk, block entity or persistent state is read during this query. */
     public static int sourceCarrierOpacity(BlockView view,BlockPos pos){
         if(pos!=null&&view instanceof ProjectedBlockView projected)return data(projected.backingWorld(),projected.worldPosition(pos)).sourceOpacity;
         return data(view,pos).sourceOpacity;
+    }
+    /** Same scalar-only route as source helpers, including projected native
+     * model views. No NBT/BE reads or query-created cache entries on workers. */
+    public static boolean decorativePlacement(BlockView view,BlockPos pos){
+        if(pos!=null&&view instanceof ProjectedBlockView projected)return decorative(data(projected.backingWorld(),projected.worldPosition(pos)));
+        return decorative(data(view,pos));
     }
     public static Owner owner(BlockView view,BlockPos pos){CellData data=data(view,pos);if(data.root!=null)return data.root.resident();for(var entry:data.entries())if(entry.owner().root().equals(CompositeData.cell(pos)))return entry.owner();return null;}
     /** Existing attached native roots also have owners before their first height edit. */
@@ -88,7 +117,8 @@ public final class CompositeShapeSnapshots {
     public static void ledger(World world,Cell cell,List<CompositeData.Contribution> entries){cache(world,true).change(world,cell,entries,List.of(),null,true,false,CompositeRuntime.writing());}
     public static void ledgerLoaded(World world,Map<Cell,List<CompositeData.Contribution>> cells){Published cache=cache(world,true);synchronized(cache){for(var row:cells.entrySet())cache.change(world,row.getKey(),row.getValue(),List.of(),null,true,false,true);cache.flush(world);}}
     public static void entity(World world,BlockPos pos,UUID token,Owner owner,List<CompositeData.Contribution> entries,NbtCompound payload,BlockPos sourceRoot){
-        if(world==null)return;Root root=new Root(token,owner,payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY),sourceRoot==null?null:sourceRoot.toImmutable());
+        if(world==null)return;boolean decorative=owner!=null&&owner.registryId().startsWith("bloodborne_dw:source_")&&payload.contains(ImportedSourceLightingV127.DECORATIVE_PLACEMENT,3)&&payload.getInt(ImportedSourceLightingV127.DECORATIVE_PLACEMENT)==1;
+        Root root=new Root(token,owner,payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY),sourceRoot==null?null:sourceRoot.toImmutable(),decorative);
         cache(world,true).change(world,CompositeData.cell(pos),List.of(),entries,root,false,true,CompositeRuntime.writing());
     }
     public static void retired(World world,BlockPos pos,UUID token){if(world==null)return;Published cache=cache(world,false);if(cache!=null)cache.retire(world,CompositeData.cell(pos),token,CompositeRuntime.writing());}
