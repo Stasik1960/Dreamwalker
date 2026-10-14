@@ -35,7 +35,8 @@ public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
         var world=t.getWorld();int index=0;
         var sourceCarrier=ImportedWholeSourceOpticsV127.opaqueRenderCarrier();
         t.assertTrue(sourceCarrier!=null&&sourceCarrier.isOpaqueFullCube(net.minecraft.world.EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
-            &&sourceCarrier.getAmbientOcclusionLightLevel(net.minecraft.world.EmptyBlockView.INSTANCE,BlockPos.ORIGIN)==.2F
+            &&sourceCarrier.getAmbientOcclusionLightLevel(net.minecraft.world.EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
+                ==net.minecraft.block.Blocks.STONE.getDefaultState().getAmbientOcclusionLightLevel(net.minecraft.world.EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
             &&sourceCarrier.getLuminance()==0&&sourceCarrier.getFluidState().isEmpty(),"All 17 consumed source offsets share independently validated native opaque-cube renderer semantics");
         for(String path:List.of("source_original_tree","source_large_grille_gate")){
             var block=CompositeArchitecture.kindBlock(path);var state=block.getDefaultState().with(CompositeRootBlock.VARIANT,0).with(CompositeRootBlock.ROTATION,index==0?0:2);

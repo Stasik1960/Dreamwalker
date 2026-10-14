@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EmptyBlockView;
 
@@ -46,8 +46,12 @@ public final class ImportedWholeSourceOpticsV127 {
                         // All reviewed opaque shadow cells are native solid cubes.
                         // This shared carrier is used only for renderer queries;
                         // helper collision/ownership remains unchanged.
+                        // Render mods can transform native AO, even without a
+                        // shader pack (Iris rounds 0.2F through 1-(1-AO)).
+                        // Compare native states in this runtime, not a literal.
                         if(!nativeSource.isOpaqueFullCube(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
-                            ||nativeSource.getAmbientOcclusionLightLevel(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)!=.2F
+                            ||nativeSource.getAmbientOcclusionLightLevel(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
+                                !=Blocks.STONE.getDefaultState().getAmbientOcclusionLightLevel(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
                             ||nativeSource.getLuminance()!=0||!nativeSource.getFluidState().isEmpty()
                             ||nativeSource.hasSidedTransparency())throw new IllegalArgumentException("Opaque whole source render flags require explicit contexts: "+source);
                         if(opaqueCarrier==null)opaqueCarrier=nativeSource;
