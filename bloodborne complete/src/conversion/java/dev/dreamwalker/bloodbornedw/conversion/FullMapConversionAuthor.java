@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.*;
@@ -34,6 +35,7 @@ public final class FullMapConversionAuthor implements ModInitializer {
     private static final String[] PHASES = {"owners.jsonl.gz", "whole-objects.jsonl.gz", "entities.jsonl.gz"};
     private static final int MAX_LINE = 16 * 1024 * 1024;
     private static final String IMPLEMENTED_STYLE = "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA";
+    private static final Set<String> IMPLEMENTED_STYLES=Set.of(IMPLEMENTED_STYLE,"APPROVED_EXACT_VISIBLE_AND_HIDDEN_COMPACT");
     private static final Map<MinecraftServer, Job> JOBS = new WeakHashMap<>();
 
     @Override public void onInitialize() {
@@ -61,6 +63,7 @@ public final class FullMapConversionAuthor implements ModInitializer {
         final String operation, productionSHA, planSHA;
         final boolean fixture;
         final Map<ServerWorld, Rules> rules = new LinkedHashMap<>();
+        final Map<String,NbtList> originalSourceBlockEntities=new HashMap<>();
         BufferedReader stream;
         JsonObject current;
         ServerWorld ticketWorld;
@@ -110,9 +113,10 @@ public final class FullMapConversionAuthor implements ModInitializer {
                 Path policyPath = Path.of(marker.get("sourceStylePolicyPath").getAsString()).toRealPath();
                 String sourceSHA = sha(sourcePlan), policySHA = sha(policyPath);
                 JsonObject policy = parseFile(policyPath);
-                require(policy.get("status").getAsString().equals(IMPLEMENTED_STYLE), "Source-style preservation is not implemented");
-                require(manifest.get("sourceStylePolicy").getAsString().equals(IMPLEMENTED_STYLE)
-                        && marker.get("sourceStylePolicy").getAsString().equals(IMPLEMENTED_STYLE), "Source-style policy mismatch");
+                String style=policy.get("status").getAsString();
+                require(IMPLEMENTED_STYLES.contains(style), "Source-style preservation is not implemented");
+                require(manifest.get("sourceStylePolicy").getAsString().equals(style)
+                        && marker.get("sourceStylePolicy").getAsString().equals(style), "Source-style policy mismatch");
                 require(manifest.get("sourceStylePolicySha256").getAsString().equals(policySHA)
                         && marker.get("sourceStylePolicySha256").getAsString().equals(policySHA), "Stale source-style policy binding");
                 require(manifest.get("sourcePlanSha256").getAsString().equals(sourceSHA)
@@ -123,6 +127,16 @@ public final class FullMapConversionAuthor implements ModInitializer {
             for (String name : PHASES) {
                 require(manifest.getAsJsonObject("runtimeFiles").has(name), "Missing bounded runtime phase " + name);
                 require(sha(plan.resolve(name)).equals(manifest.getAsJsonObject("runtimeFiles").get(name).getAsString()), "Changed runtime phase " + name);
+            }
+            if(manifest.has("originalSourceBlockEntities")){
+                var rows=manifest.getAsJsonArray("originalSourceBlockEntities");require(rows.size()<=1024,"Original source metadata budget");
+                for(var raw:rows){var row=raw.getAsJsonObject();if(!row.get("decisionAction").getAsString().equals("OWNER"))continue;
+                    var p=row.getAsJsonArray("ownerPosition");require(p.size()==3,"Original metadata coordinates");
+                    BlockPos position=new BlockPos(p.get(0).getAsInt(),p.get(1).getAsInt(),p.get(2).getAsInt());
+                    byte[] bytes=Base64.getDecoder().decode(row.get("nbtBase64").getAsString());require(bytes.length<=MAX_LINE,"Original typed metadata budget");
+                    String key=row.get("dimension").getAsString()+"/"+position.asLong();
+                    originalSourceBlockEntities.computeIfAbsent(key,ignored->new NbtList()).add(CompositeData.nbt(bytes));
+                }
             }
             checkpoint = target.resolve("dw-conversion-checkpoint.json"); report = target.resolve("dw-conversion-result.json"); errors = target.resolve("dw-conversion-errors.jsonl");
             JsonObject previous = null;
@@ -227,6 +241,8 @@ public final class FullMapConversionAuthor implements ModInitializer {
             UUID uuid = UUID.fromString(row.get("instanceUuid").getAsString());
             NbtCompound payload = row.has("payloadSnbt") ? parseNbt(row.get("payloadSnbt").getAsString())
                     : row.has("payload") ? parseNbt(row.get("payload").toString()) : new NbtCompound();
+            NbtList originalEntities=originalSourceBlockEntities.get(row.get("dimension").getAsString()+"/"+pos.asLong());
+            if(originalEntities!=null)payload.put("OriginalSourceBlockEntities",originalEntities.copy());
             require(row.has("sourceNativeModelOffsetState") == row.has("sourceNativeModelOffsetPosition"), "Incomplete native model offset annotation");
             if (row.has("sourceNativeModelOffsetState")) {
                 JsonArray original = row.getAsJsonArray("sourceNativeModelOffsetPosition");
@@ -237,9 +253,32 @@ public final class FullMapConversionAuthor implements ModInitializer {
                 payload = SourceNativeModelOffsetV127.apply(state, payload, row.get("sourceNativeModelOffsetState").getAsString(), originalPosition);
             }
             if (world.getBlockEntity(pos) instanceof CompositeBlockEntity saved && saved.resident() != null) {
-                require(saved.resident().instanceId().equals(uuid) && saved.resident().registryId().equals(id.toString()), "Source root already occupied by another owner");
-                require(world.getBlockState(pos).equals(state), "Previously imported source state changed before resume");
-                for (String key : payload.getKeys()) require(Objects.equals(saved.payload().get(key), payload.get(key)), "Previously imported typed payload changed: " + key);
+                // placeInternal canonicalizes a source alias on its FIRST
+                // installation. Replay compares the exact same canonical art
+                // and typed payload, not merely membership of an alias group.
+                BlockState expectedState = state;
+                NbtCompound expectedPayload = payload.copy();
+                if (expectedState.getBlock() instanceof CompositeRootBlock block) {
+                    if (block.spec.id.getPath().equals("prototype_tree"))
+                        expectedState = expectedState.with(CompositeRootBlock.VARIANT, 0);
+                    if (block.spec.id.getPath().startsWith("source_")) {
+                        if (ImportedTypeAliases.needsMigration(expectedState, expectedPayload)) {
+                            expectedPayload = ImportedTypeAliases.transformPayload(expectedState, expectedPayload);
+                            expectedState = ImportedTypeAliases.target(expectedState);
+                        }
+                        expectedState = ImportedStairShapes.normalize(expectedState);
+                        expectedPayload = ImportedTypeAliases.markPayload(expectedPayload);
+                    }
+                    if (!(expectedState.getBlock() instanceof ThinWindowRootBlock)) expectedPayload.remove("MountY");
+                }
+                String expectedRegistry = Registries.BLOCK.getId(expectedState.getBlock()).toString();
+                require(saved.resident().instanceId().equals(uuid) && saved.resident().root().equals(CompositeData.cell(pos))
+                        && saved.resident().registryId().equals(expectedRegistry), "Source root already occupied by another owner");
+                require(world.getBlockState(pos).equals(expectedState), "Previously imported source state changed before resume");
+                NbtCompound actualPayload = saved.payload();
+                Set<String> checkedKeys = new HashSet<>(expectedPayload.getKeys());
+                checkedKeys.addAll(List.of("SourceShift", "MountY", VerticalMount.KEY, ImportedStairLegacyArt.KEY));
+                for (String key : checkedKeys) require(Objects.equals(actualPayload.get(key), expectedPayload.get(key)), "Previously imported typed payload changed: " + key);
                 return true;
             }
             require(world.getBlockState(pos).isAir() || world.getBlockState(pos).isOf(CompositeArchitecture.CELL), "Offline phase did not clear deferred root");

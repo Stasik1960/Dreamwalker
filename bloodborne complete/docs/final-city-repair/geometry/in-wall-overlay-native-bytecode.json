@@ -1,0 +1,214 @@
+{
+  "status": "READ_ONLY_PINNED_MINECRAFT_CLASS_FILE_EVIDENCE",
+  "class": "net.minecraft.client.gui.hud.InGameOverlayRenderer",
+  "source": "fabric-loom pinned Minecraft 1.20.1 Yarn build10 named JAR",
+  "methods": [
+    {
+      "name": "renderOverlays",
+      "desc": "(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V",
+      "access": 9,
+      "code": "2a b4 00 34 4d 2c b4 00 3a 9a 00 1b 2c b8 00 3e 4e 2d c6 00 12 2a b6 00 42 b6 00 48 2d b6 00 4e 2b b8 00 52 2a b4 00 34 b6 00 58 9a 00 24 2a b4 00 34 b2 00 5e b6 00 62 99 00 08 2a 2b b8 00 65 2a b4 00 34 b6 00 68 99 00 08 2a 2b b8 00 6b b1",
+      "refs": [
+        [
+          1,
+          "0xb4",
+          "net/minecraft/client/MinecraftClient:player:Lnet/minecraft/client/network/ClientPlayerEntity;"
+        ],
+        [
+          6,
+          "0xb4",
+          "net/minecraft/entity/player/PlayerEntity:noClip:Z"
+        ],
+        [
+          13,
+          "0xb8",
+          "net/minecraft/client/gui/hud/InGameOverlayRenderer:getInWallBlockState:(Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/block/BlockState;"
+        ],
+        [
+          20,
+          "ldc",
+          "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;"
+        ],
+        [
+          22,
+          "0xb6",
+          "net/minecraft/client/MinecraftClient:getBlockRenderManager:()Lnet/minecraft/client/render/block/BlockRenderManager;"
+        ],
+        [
+          25,
+          "0xb6",
+          "net/minecraft/client/render/block/BlockRenderManager:getModels:()Lnet/minecraft/client/render/block/BlockModels;"
+        ],
+        [
+          29,
+          "0xb6",
+          "net/minecraft/client/render/block/BlockModels:getModelParticleSprite:(Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/texture/Sprite;"
+        ],
+        [
+          33,
+          "0xb8",
+          "net/minecraft/client/gui/hud/InGameOverlayRenderer:renderInWallOverlay:(Lnet/minecraft/client/texture/Sprite;Lnet/minecraft/client/util/math/MatrixStack;)V"
+        ],
+        [
+          37,
+          "0xb4",
+          "net/minecraft/client/MinecraftClient:player:Lnet/minecraft/client/network/ClientPlayerEntity;"
+        ],
+        [
+          40,
+          "0xb6",
+          "net/minecraft/client/network/ClientPlayerEntity:isSpectator:()Z"
+        ],
+        [
+          47,
+          "0xb4",
+          "net/minecraft/client/MinecraftClient:player:Lnet/minecraft/client/network/ClientPlayerEntity;"
+        ],
+        [
+          50,
+          "0xb2",
+          "net/minecraft/registry/tag/FluidTags:WATER:Lnet/minecraft/registry/tag/TagKey;"
+        ],
+        [
+          53,
+          "0xb6",
+          "net/minecraft/client/network/ClientPlayerEntity:isSubmergedIn:(Lnet/minecraft/registry/tag/TagKey;)Z"
+        ],
+        [
+          61,
+          "0xb8",
+          "net/minecraft/client/gui/hud/InGameOverlayRenderer:renderUnderwaterOverlay:(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V"
+        ],
+        [
+          65,
+          "0xb4",
+          "net/minecraft/client/MinecraftClient:player:Lnet/minecraft/client/network/ClientPlayerEntity;"
+        ],
+        [
+          68,
+          "0xb6",
+          "net/minecraft/client/network/ClientPlayerEntity:isOnFire:()Z"
+        ],
+        [
+          76,
+          "0xb8",
+          "net/minecraft/client/gui/hud/InGameOverlayRenderer:renderFireOverlay:(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;)V"
+        ]
+      ]
+    },
+    {
+      "name": "getInWallBlockState",
+      "desc": "(Lnet/minecraft/entity/player/PlayerEntity;)Lnet/minecraft/block/BlockState;",
+      "access": 10,
+      "code": "bb 00 0b 59 b7 00 73 4c 03 3d 1c 10 08 a2 00 7d 2a b6 00 77 1c 03 7a 05 70 86 12 78 66 2a b6 00 7c 6a 12 7d 6a 8d 63 4a 2a b6 00 80 1c 04 7a 05 70 86 12 78 66 12 81 6a 8d 63 39 05 2a b6 00 84 1c 05 7a 05 70 86 12 78 66 2a b6 00 7c 6a 12 7d 6a 8d 63 39 07 2b 29 18 05 18 07 b6 00 88 57 2a b6 00 8c 2b b6 00 92 3a 09 19 09 b6 00 98 b2 00 9e a5 00 13 19 09 2a b6 00 8c 2b b6 00 a2 99 00 06 19 09 b0 84 02 01 a7 ff 83 01 b0",
+      "refs": [
+        [
+          0,
+          "0xbb",
+          "net/minecraft/util/math/BlockPos$Mutable"
+        ],
+        [
+          4,
+          "0xb7",
+          "net/minecraft/util/math/BlockPos$Mutable:<init>:()V"
+        ],
+        [
+          17,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getX:()D"
+        ],
+        [
+          26,
+          "ldc",
+          "(4, 0.5)"
+        ],
+        [
+          30,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getWidth:()F"
+        ],
+        [
+          34,
+          "ldc",
+          "(4, 0.800000011920929)"
+        ],
+        [
+          41,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getEyeY:()D"
+        ],
+        [
+          50,
+          "ldc",
+          "(4, 0.5)"
+        ],
+        [
+          53,
+          "ldc",
+          "(4, 0.10000000149011612)"
+        ],
+        [
+          61,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getZ:()D"
+        ],
+        [
+          70,
+          "ldc",
+          "(4, 0.5)"
+        ],
+        [
+          74,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getWidth:()F"
+        ],
+        [
+          78,
+          "ldc",
+          "(4, 0.800000011920929)"
+        ],
+        [
+          91,
+          "0xb6",
+          "net/minecraft/util/math/BlockPos$Mutable:set:(DDD)Lnet/minecraft/util/math/BlockPos$Mutable;"
+        ],
+        [
+          96,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getWorld:()Lnet/minecraft/world/World;"
+        ],
+        [
+          100,
+          "0xb6",
+          "net/minecraft/world/World:getBlockState:(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/BlockState;"
+        ],
+        [
+          107,
+          "0xb6",
+          "net/minecraft/block/BlockState:getRenderType:()Lnet/minecraft/block/BlockRenderType;"
+        ],
+        [
+          110,
+          "0xb2",
+          "net/minecraft/block/BlockRenderType:INVISIBLE:Lnet/minecraft/block/BlockRenderType;"
+        ],
+        [
+          119,
+          "0xb6",
+          "net/minecraft/entity/player/PlayerEntity:getWorld:()Lnet/minecraft/world/World;"
+        ],
+        [
+          123,
+          "0xb6",
+          "net/minecraft/block/BlockState:shouldBlockVision:(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;)Z"
+        ]
+      ]
+    }
+  ],
+  "observations": {
+    "actualSelectorMethod": "getInWallBlockState(PlayerEntity)",
+    "usesBlockVision": true,
+    "testsPhysicalCollisionShape": false
+  },
+  "sourceDataNotInstructions": true
+}

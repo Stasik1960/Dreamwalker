@@ -159,6 +159,27 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         eachTick(t,player,cases);
     }
 
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=160,batchId="final_door_default")
+    public void ordinaryTallDoorItemUsesExactCityMountingAtEveryYawAndRetainsItThroughOpeningAndSaving(TestContext t) {
+        var world=t.getWorld();var player=player(world);var root=t.getAbsolutePos(new BlockPos(16512,96,64));
+        var door=doors().stream().filter(d->d.number.equals("90923")&&d.pose==2).findFirst().orElseThrow();
+        List<Runnable> cases=new ArrayList<>();
+        for(int yaw=0;yaw<8;yaw++){final int selected=yaw;cases.add(()->{
+            var plain=new ItemStack(block(door).asItem());plain.getOrCreateNbt().putString("DoorCustomText","сохранено");
+            var closed=place(t,player,root,door,selected,plain);
+            t.assertTrue(player.getStackInHand(Hand.MAIN_HAND).getNbt().getString("DoorCustomText").equals("сохранено"),"ordinary canonicalization retains custom item data");
+            use(t,player,closed);var opened=instance(world,root);
+            t.assertTrue(world.getBlockState(root).get(CompositeRootBlock.OPEN)&&CompositeSpec.poseVariant(world.getBlockState(root))==2&&opened.owner().equals(closed.owner()),"opening retains the repaired mounting and instance UUID at yaw"+selected);
+            var entity=(CompositeBlockEntity)world.getBlockEntity(root);var saved=entity.createNbt();
+            var restored=new CompositeBlockEntity(root,world.getBlockState(root));restored.readNbt(saved);
+            t.assertTrue(restored.resident().equals(entity.resident())&&restored.contributions().equals(entity.contributions())&&restored.payload().equals(entity.payload()),"open repaired door survives native NBT roundtrip without spatial or owner changes");
+            use(t,player,opened);var again=instance(world,root);
+            t.assertTrue(again.owner().equals(closed.owner())&&again.cells().equals(closed.cells()),"closing restores the exact city mounting occupancy");
+            remove(t,again);
+        });}
+        eachTick(t,player,cases);
+    }
+
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v126_functional_doors")
     public void openDoorArtCopiesWithNewUuidAndNativeNbtRetainsOpenStateAndPrivateSettings(TestContext t) {
         var world=t.getWorld();var player=player(world);var root=t.getAbsolutePos(new BlockPos(16448,96,64));List<Runnable> cases=new ArrayList<>();

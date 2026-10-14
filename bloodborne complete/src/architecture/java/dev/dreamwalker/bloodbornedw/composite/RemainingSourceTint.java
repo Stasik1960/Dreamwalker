@@ -39,6 +39,7 @@ public final class RemainingSourceTint {
     /** One stable resolver identity, registered in each native client world's
      * own color cache before chunk mesh workers can query the NEW artworks. */
     public static ColorResolver grassResolver() { return GRASS; }
+    public static boolean biomeTinted(CompositeRootBlock block) { return GRASS_ART.contains(block.spec.id.getPath()); }
 
     static void initialize() {
         if(initialized)return;initialized=true;

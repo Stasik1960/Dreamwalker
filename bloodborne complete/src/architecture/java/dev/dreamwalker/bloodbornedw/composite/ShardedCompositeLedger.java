@@ -16,7 +16,7 @@ import net.minecraft.util.math.ChunkPos;
  * Geometry queries on lighting workers still use CompositeShapeSnapshots only.
  * Existing global-ledger worlds never instantiate this backend. */
 public final class ShardedCompositeLedger {
-    public static final int SCHEMA=1,MAX_CACHED_SHARDS=1024;
+    public static final int SCHEMA=1;
     private static final class Shard {
         final Map<Cell,List<CompositeData.Contribution>> cells=new TreeMap<>();boolean dirty;
         final Map<Owner,Map<Cell,Footprint>> membership=new TreeMap<>();
@@ -83,8 +83,9 @@ public final class ShardedCompositeLedger {
     }
     private Shard cached(long key) {
         mainThread();var existing=cached.get(key);if(existing!=null)return existing;
-        trimUnloaded();
-        if(cached.size()>=MAX_CACHED_SHARDS)throw new IllegalStateException("Loaded composite owner shard budget exceeded; reduce simultaneous loaded chunks before continuing conversion");
+        // Live chunk ownership cannot be evicted to satisfy an arbitrary cache
+        // limit: collision and cross-chunk rollback need its authoritative data.
+        // Unload callbacks flush and release it; cold inspections stay transient.
         var next=read(key);cached.put(key,next);CompositeShapeSnapshots.ledgerLoaded(world,next.cells);
         ImportedTypeMigration.shardLoaded(world,next.cells);ImportedCollisionMigration.shardLoaded(world,next.cells);
         return next;
@@ -98,12 +99,17 @@ public final class ShardedCompositeLedger {
     }
     public List<CompositeData.Contribution> at(Cell cell) {
         mainThread();long key=chunk(cell);
+        var existing=cached.get(key);if(existing!=null)return existing.cells.getOrDefault(cell,List.of());
+        // The compact-city majority has no owners. Querying an empty loaded
+        // chunk must not allocate a shard or publish a snapshot for that chunk.
+        if(!known.contains(key))return List.of();
         // Unloaded inspection is a transient bounded read; it never publishes
         // worker geometry for an unloaded chunk or retains a cache entry.
         return (loaded(key)?cached(key):read(key)).cells.getOrDefault(cell,List.of());
     }
     public void put(Cell cell,List<CompositeData.Contribution> values) {
         mainThread();long key=chunk(cell);if(!loaded(key))throw new IllegalStateException("Sharded owner writes require a loaded target chunk");
+        if(values.isEmpty()&&!known.contains(key)&&!cached.containsKey(key)){CompositeShapeSnapshots.ledger(world,cell,values);return;}
         var shard=cached(key);
         var previous=new HashMap<Owner,Footprint>();var next=new HashMap<Owner,Footprint>();
         for(var entry:shard.cells.getOrDefault(cell,List.of()))previous.put(entry.owner(),entry.shape());
@@ -181,7 +187,8 @@ public final class ShardedCompositeLedger {
         for(var shard:cached.values()){members+=shard.membership.values().stream().mapToInt(Map::size).sum();for(var values:shard.cells.values())for(var c:values){uniqueData.add(c.rootData());uniqueOwners.add(c.owner());uniqueShapes.add(c.shape());duplicatedPayloadBytes+=c.rootData().blockEntityNbt().length;refs++;}}
         long sharedPayloadBytes=uniqueData.stream().mapToLong(d->d.blockEntityNbt().length).sum();Map<String,Object> result=new LinkedHashMap<>();
         result.put("shardedOwnerMode",true);result.put("knownOwnerShards",known.size());result.put("cachedOwnerShards",cached.size());result.put("cachedOwnerCells",cached.values().stream().mapToInt(s->s.cells.size()).sum());
-        result.put("ownerShardReads",reads);result.put("ownerShardWrites",writes);result.put("maxCachedOwnerShards",MAX_CACHED_SHARDS);result.put("contributionReferences",refs);result.put("savedMembershipCellReferences",members);
+        result.put("ownerShardReads",reads);result.put("ownerShardWrites",writes);result.put("maxCachedOwnerShards",-1);result.put("contributionReferences",refs);result.put("savedMembershipCellReferences",members);
+        result.put("cachePolicy","Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release");
         result.put("uniqueSharedRootData",uniqueData.size());result.put("uniqueSharedOwners",uniqueOwners.size());result.put("uniqueSharedShapes",uniqueShapes.size());result.put("typedPayloadBytesWithoutSharing",duplicatedPayloadBytes);result.put("typedPayloadBytesWithSharing",sharedPayloadBytes);
         result.put("byteMetricScope","Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately");return Map.copyOf(result);
     }

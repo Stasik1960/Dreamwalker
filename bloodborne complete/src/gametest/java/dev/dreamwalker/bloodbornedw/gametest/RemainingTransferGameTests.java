@@ -242,7 +242,24 @@ public final class RemainingTransferGameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="remaining_transfer_catalogue")
     public void styleRetirementsHideOnlyReviewedNewTypesAndPreserveCompatibilityRegistrations(TestContext t) {
         var stacks=UnifiedCreativeCatalogue.canonicalItems();
-        t.assertTrue(ImportedStyleRetirements.primaryRegistries().size()==21,"the reviewed style retirement cohort has exactly 21 NEW main types");
+        // Keep the original reviewed style cohort exact and independent of
+        // live metadata. The additional family is source-only compatibility,
+        // not another builder style being retired.
+        Set<String> reviewedStyles=Set.of(
+            "bloodborne_dw:source_andesite","bloodborne_dw:source_andesite_slab_top",
+            "bloodborne_dw:source_bamboo_mosaic_stairs","bloodborne_dw:source_bamboo_stairs",
+            "bloodborne_dw:source_beacon","bloodborne_dw:source_cherry_stairs",
+            "bloodborne_dw:source_farmland_moist","bloodborne_dw:source_grass_block_snow",
+            "bloodborne_dw:source_grindstone","bloodborne_dw:source_lever",
+            "bloodborne_dw:source_mangrove_stairs","bloodborne_dw:source_mossy_cobblestone_slab",
+            "bloodborne_dw:source_mud_brick_stairs","bloodborne_dw:source_potted_azalea_bush",
+            "bloodborne_dw:source_potted_bamboo","bloodborne_dw:source_potted_fern",
+            "bloodborne_dw:source_potted_mangrove_propagule","bloodborne_dw:source_soul_lantern",
+            "bloodborne_dw:source_warped_stem","bloodborne_dw:source_weathered_cut_copper",
+            "bloodborne_dw:source_assembly_mossy_cobblestone_wall");
+        Set<String> conversionOnly=Set.of("bloodborne_dw:source_compatibility_fragment");
+        Set<String> expectedRetirements=new HashSet<>(reviewedStyles);expectedRetirements.addAll(conversionOnly);
+        t.assertTrue(reviewedStyles.size()==21&&ImportedStyleRetirements.primaryRegistries().equals(expectedRetirements),"the original21 reviewed styles plus the one explicit source-only compatibility family are hidden");
         Set<String> active=new HashSet<>(),registeredIds=new HashSet<>();int registered=0,retiredRegistrations=0;
         for(var block:CompositeArchitecture.blocks()) {
             String registry=block.spec.id.toString();
@@ -271,8 +288,8 @@ public final class RemainingTransferGameTests implements FabricGameTest {
         }
         var frozen=CatalogueCohortV127.registered();var additions=CatalogueCohortV127.newSources();
         t.assertTrue(frozen.size()==1045&&additions.equals(Set.of("bloodborne_dw:source_original_tree","bloodborne_dw:source_door_fragment")),"independent frozen1045 source cohort has exactly the two approved new source families");
-        Set<String> expectedRegistered=new HashSet<>(frozen);expectedRegistered.addAll(additions);
-        t.assertTrue(registered==1047&&registeredIds.equals(expectedRegistered)&&retiredRegistrations==30,"all1045 exact saved NEW registrations and30 style-retired registrations remain; only tree and door-fragment registrations are appended");
+        Set<String> expectedRegistered=new HashSet<>(frozen);expectedRegistered.addAll(additions);expectedRegistered.addAll(conversionOnly);
+        t.assertTrue(registered==1048&&registeredIds.equals(expectedRegistered)&&retiredRegistrations==31,"all1045 exact saved NEW registrations and30 style-retired registrations remain; tree, door-fragment and one hidden source-only family are appended");
         t.assertTrue(CatalogueCohortV127.working().size()==544&&CatalogueCohortV127.hiddenClones().equals(Set.of("bloodborne_dw:source_bricks_bricks_0","bloodborne_dw:source_polished_granite_slab","bloodborne_dw:source_snow_height8","bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04","bloodborne_dw:source_nether_brick_slab","bloodborne_dw:source_polished_andesite_slab","bloodborne_dw:source_red_tulip_2")),"frozen544 working V12.6 types lose only the seven explicitly reviewed practical clones");
         t.assertTrue(active.size()==539&&active.equals(CatalogueCohortV127.expectedWorking())&&offered.equals(active),"Creative has exactly the frozen544 types minus7 reviewed clones plus2 approved source families, with one installer each");
         t.complete();

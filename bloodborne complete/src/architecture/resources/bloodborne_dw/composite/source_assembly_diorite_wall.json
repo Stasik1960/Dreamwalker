@@ -2563,6 +2563,143 @@
         "minecraft:diorite_wall[east=low,north=none,south=none,up=true,waterlogged=false,west=none]"
       ],
       "v127FullSourceSingleCell": true
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/compatibility/minecraft/block/diorite_wall_post",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/compatibility/minecraft/block/diorite_wall_side_tall",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                3.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                3.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                11.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/compatibility/minecraft/block/diorite_wall_post",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            },
+            {
+              "model": "bloodborne_dw:remaining/compatibility/minecraft/block/diorite_wall_side_tall",
+              "offset": [
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                5.0,
+                3.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                11.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                5.0,
+                3.0,
+                5.0
+              ],
+              "to": [
+                11.0,
+                16.0,
+                11.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          4.0,
+          0.0,
+          4.0
+        ],
+        "to": [
+          12.0,
+          32.0,
+          12.0
+        ]
+      },
+      "sourcePlacementOffset": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/diorite_wall_post"
+        },
+        {
+          "model": "minecraft:block/diorite_wall_side_tall",
+          "uvlock": true
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceVariant": "Исходное высокое соединение",
+      "hiddenSourceCompatibility": true
     }
   ],
   "source": {

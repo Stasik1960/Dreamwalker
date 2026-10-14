@@ -16,6 +16,7 @@ from v127_prepare_full_conversion import export_runtime
 from scan_original_map_states import dimension_for
 from world_io import RegionFile,Tag,NbtFile,compound,encode_nbt,decode_nbt,pack_palette_indices,invalidate_chunk_lighting,TAG_BYTE,TAG_STRING,TAG_COMPOUND,TAG_LIST,TAG_LONG_ARRAY,TAG_INT,NbtError
 O=ROOT/'docs/v12.7/conversion'
+SUPPORTED_STYLE_POLICIES={'APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA','APPROVED_EXACT_VISIBLE_AND_HIDDEN_COMPACT'}
 def state_tag(state):
     d={'Name':Tag(TAG_STRING,state['registryId'])}
     if state['properties']:d['Properties']=Tag(TAG_COMPOUND,{k:Tag(TAG_STRING,str(v)) for k,v in state['properties'].items()})
@@ -50,7 +51,7 @@ def entities_export(dest):
 def runtime_bundle(plan,runtime):
     # Never leave partially rewritten streams looking like an accepted plan.
     with sqlite3.connect(f'file:{plan.resolve()}?mode=ro',uri=True) as con:
-        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(O/'source-style-policy.json'),'Runtime export is blocked unless the finalized visible source-style policy and its SHA match the source plan'
+        summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary.get('sourceStylePolicy') in SUPPORTED_STYLE_POLICIES and summary.get('sourceStylePolicySha256')==sha(O/'source-style-policy.json'),'Runtime export is blocked unless the finalized visible source-style policy and its SHA match the source plan'
     ordinary_ancestors(runtime);runtime=runtime.absolute();assert not runtime.exists(),'Runtime export must use a fresh absent directory'
     temp=runtime.with_name(runtime.name+'.export-'+uuid.uuid4().hex);export_runtime(plan,temp);rows=entities_export(temp);p=temp/'manifest.json';m=json.loads(p.read_text(encoding='utf-8-sig'));m['runtimeFiles']={f.name:sha(f) for f in temp.glob('*.jsonl.gz')};m['deferredEntityCount']=len(rows);m['offlinePhaseRequiredBeforeServer']=True;dump(p,m);os.replace(temp,runtime);return m
 def ordinary_ancestors(path):
@@ -74,15 +75,17 @@ def source_changed(con,decisions,dim,x,y,z):
     return action!='KEEP'
 def stage(plan,runtime,target,execute):
     ordinary_ancestors(plan);ordinary_ancestors(runtime);target=fresh_target(target);plan=plan.resolve();runtime=runtime.resolve();con=sqlite3.connect(f'file:{plan}?mode=ro',uri=True);summary=json.loads(con.execute("SELECT data FROM metadata WHERE key='summary'").fetchone()[0]);assert summary['status']=='PASS_COMPLETE_SOURCE_PLAN',summary['status'];assert summary['sourceHashes']=={'map':sha(MAP),'pack':sha(PACK)},'Original source hashes differ'
-    policy=O/'source-style-policy.json';readyPolicy=summary.get('sourceStylePolicy')=='APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA' and summary.get('sourceStylePolicySha256')==sha(policy)
+    policy=O/'source-style-policy.json';readyPolicy=summary.get('sourceStylePolicy') in SUPPORTED_STYLE_POLICIES and summary.get('sourceStylePolicySha256')==sha(policy)
     bundle=None
     if runtime.exists():
         bundle=json.loads((runtime/'manifest.json').read_text(encoding='utf-8-sig'));assert bundle['status']=='PASS_COMPLETE_SOURCE_PLAN' and bundle['sourcePlanSha256']==sha(plan),'Stale runtime bundle'
         assert bundle.get('sourceStylePolicy')==summary.get('sourceStylePolicy') and bundle.get('sourceStylePolicySha256')==summary.get('sourceStylePolicySha256')==sha(policy),'Runtime bundle source-style policy/status/hash differs'
         assert set(bundle['runtimeFiles'])=={'sections.jsonl.gz','owners.jsonl.gz','whole-objects.jsonl.gz','entities.jsonl.gz'},'Incomplete runtime bundle'
         for name,digest in bundle['runtimeFiles'].items():assert PurePosixPath(name).name==name and sha(runtime/name)==digest,'Runtime stream hash mismatch'
+    blocked=str(summary.get('runtimeExecution','')).startswith(('BLOCKED','PENDING'))
     if not execute:
-        print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if not readyPolicy else 'PASS_READONLY_READY_TO_STAGE' if bundle else 'PASS_READONLY_PLAN_REQUIRES_RUNTIME_EXPORT','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'sourceStylePolicySha256':summary.get('sourceStylePolicySha256'),'runtimeStreamsVerified':bool(bundle),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction'}));con.close();return
+        print(token({'status':'READONLY_SOURCE_STYLE_POLICY_PENDING' if not readyPolicy else 'READONLY_NATIVE_SOURCE_VERIFICATION_PENDING' if blocked else 'PASS_READONLY_READY_TO_STAGE' if bundle else 'PASS_READONLY_PLAN_REQUIRES_RUNTIME_EXPORT','sourceHashes':summary['sourceHashes'],'sourceStylePolicy':summary.get('sourceStylePolicy'),'sourceStylePolicySha256':summary.get('sourceStylePolicySha256'),'runtimeStreamsVerified':bool(bundle),'target':str(target),'planSha256':sha(plan),'worldWritten':False,'executeCommand':'Add --execute only after explicit user full-conversion instruction'}));con.close();return
+    assert not blocked,'Full conversion preparation awaits native source model verification'
     assert summary.get('sourceStylePolicy') not in {'PENDING_USER_DECISION','APPROVED_PENDING_IMPLEMENTATION'},'Full conversion is blocked while the known visible source-style preservation policy awaits a user decision'
     assert readyPolicy,'Final source-style policy/status/hash differs from the complete source plan'
     if bundle is None:bundle=runtime_bundle(plan,runtime)
@@ -131,7 +134,7 @@ def stage(plan,runtime,target,execute):
                                 for pi in np.unique(old[at]):
                                     _,reg,props=sourcepalette[int(pi)];ind[at[old[at]==pi]]=pid({'registryId':reg,'properties':props})
                             else:
-                                assert d['action'] in {'OWNER','COMPACT','CONSUMED','REMOVE'},d
+                                assert d['action'] in {'OWNER','COMPACT','VANILLA','CONSUMED','REMOVE'},d
                                 state={'registryId':d['registryId'],'properties':d['properties']} if d['action'] in {'COMPACT','VANILLA'} else {'registryId':'minecraft:air','properties':{}}
                                 ind[at]=pid(state)
                         bs={'palette':Tag(TAG_LIST,palette,TAG_COMPOUND)}
@@ -139,9 +142,12 @@ def stage(plan,runtime,target,execute):
                         f['block_states']=Tag(TAG_COMPOUND,bs);chunk_changed=True;changed+=1
                     for key in ('block_entities','TileEntities'):
                         if key in root:
+                            retained=[]
                             for be in root[key].value:
-                                fields=compound(be);be_removed.append({'dimension':dim,'position':[fields.get(a,Tag(TAG_INT,0)).value for a in ['x','y','z']],'id':fields.get('id',Tag(TAG_STRING,'missing')).value,'reason':'SOURCE_VANILLA_BLOCK_ENTITY_DATA_REMOVED_BEFORE_MOD_OWNER_INSTALL'})
-                            root[key]=Tag(TAG_LIST,[],TAG_COMPOUND);chunk_changed=True
+                                fields=compound(be);position=[int(fields.get(a,Tag(TAG_INT,0)).value) for a in ['x','y','z']]
+                                if not source_changed(con,decisions,dim,*position):retained.append(be);continue
+                                be_removed.append({'dimension':dim,'position':position,'id':fields.get('id',Tag(TAG_STRING,'missing')).value,'reason':'SOURCE_TYPED_BLOCK_ENTITY_PRESERVED_AS_INERT_OWNER_METADATA_OR_PREPARATION_EVIDENCE_BEFORE_MOD_INSTALL'})
+                            if len(retained)!=len(root[key].value):root[key]=Tag(TAG_LIST,retained,TAG_COMPOUND);chunk_changed=True
                     for key in ('Entities','entities'):
                         if key in root:root[key]=Tag(TAG_LIST,[],TAG_COMPOUND);chunk_changed=True
                     for key in ('block_ticks','fluid_ticks','TileTicks','LiquidTicks'):
@@ -160,6 +166,7 @@ def stage(plan,runtime,target,execute):
                 nbt=decode_nbt(gzip.decompress(raw));fields=compound(nbt.root);data=compound(fields['Data']);scheduled=copy.deepcopy(data.get('ScheduledEvents'));data['ScheduledEvents']=Tag(TAG_LIST,[],TAG_COMPOUND);all_members.append({'member':member,'decision':'REMOVE_SOURCE_SCHEDULED_FUNCTION_CALLBACKS','sourceEventCount':0 if scheduled is None else len(scheduled.value),'typedSourceSha256':None if scheduled is None else __import__('hashlib').sha256(encode_nbt(NbtFile('ScheduledEvents',scheduled))).hexdigest()});previous=copy.deepcopy(data.get('DataPacks'));data['DataPacks']=Tag(TAG_COMPOUND,{'Enabled':Tag(TAG_LIST,[Tag(TAG_STRING,'vanilla'),Tag(TAG_STRING,'fabric')],TAG_STRING),'Disabled':Tag(TAG_LIST,[],TAG_STRING)});destination.write_bytes(gzip.compress(encode_nbt(nbt),mtime=0));all_members.append({'member':member,'decision':'DISABLE_SOURCE_DATAPACKS_BEFORE_DERIVED_LOAD','sourcePackNames':[] if previous is None else [t.value for t in compound(previous).get('Enabled',Tag(TAG_LIST,[],TAG_STRING)).value]})
             elif pp.name in {'session.lock','uid.dat'}:all_members.append({'member':member,'decision':'REMOVE_SOURCE_SESSION_ID'})
             else:destination.write_bytes(raw)
+    if bundle.get('originalSourceBlockEntities'):dump(target/'dw-original-source-block-entities.json',{'schemaVersion':1,'rows':bundle['originalSourceBlockEntities'],'policy':bundle['originalSourceBlockEntityPolicy'],'originalSourceNbtExecuted':False})
     marker={'schemaVersion':1,'status':'PASS_DERIVED_COPY_PREPARED','operationId':operation,'sourceHashes':summary['sourceHashes'],'targetRealPath':str(target),'sourcePlanSha256':sha(plan),'runtimeManifestSha256':sha(runtime/'manifest.json'),'runtimeDirectory':str(runtime),'changedSections':changed,'sourceChunks':chunks,'sourceBlockEntitiesRemoved':be_removed,'sourceMemberActions':all_members,'obsoleteCarrierTicksRemoved':ticks_removed,'fullOwnerAuthoringComplete':False,'nextPhase':'Disabled FullMapConversionAuthor runs only against this explicitly staged copy','originalArchivesModified':False,'elapsedSeconds':round(time.monotonic()-start,2)};dump(target/'dw-derived-copy.json',marker);print(token(marker));con.close()
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--plan',type=Path,default=ROOT/'build/v127-full-conversion-first.sqlite');p.add_argument('--runtime',type=Path,default=ROOT/'build/v127-runtime-conversion');p.add_argument('--output',type=Path,default=ROOT/'build/v127-derived-original');p.add_argument('--execute',action='store_true');p.add_argument('--export-runtime-only',action='store_true');a=p.parse_args()

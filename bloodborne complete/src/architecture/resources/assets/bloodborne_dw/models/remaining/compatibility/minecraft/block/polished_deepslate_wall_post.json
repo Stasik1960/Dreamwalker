@@ -1,0 +1,43 @@
+{
+  "textures": {
+    "particle": "#wall",
+    "wall": "bloodborne_dw:block/remaining/source/minecraft/block/polished_deepslate_wall_1"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "faces": {
+        "down": {
+          "texture": "#wall",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#wall",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#wall"
+        },
+        "south": {
+          "texture": "#wall"
+        },
+        "west": {
+          "texture": "#wall"
+        },
+        "east": {
+          "texture": "#wall"
+        }
+      },
+      "__comment": "Center post"
+    }
+  ]
+}

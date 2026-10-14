@@ -25,24 +25,31 @@ public final class CompositeClient {
     public static void initialize() {
         if(initialized)return; initialized=true;
         CompositeVisualBoundsV127.initialize();
+        net.fabricmc.fabric.api.resource.ResourceManagerHelper.get(net.minecraft.resource.ResourceType.CLIENT_RESOURCES).registerReloadListener(new net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener(){
+            @Override public Identifier getFabricId(){return new Identifier("bloodborne_dw","composite_world_mesh");}
+            @Override public void reload(net.minecraft.resource.ResourceManager manager){CompositeWorldMesh.reload();}
+        });
+        net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler,client)->CompositeWorldMesh.disconnect());
         RemainingSourceTint.initialize();
         ImportedCompactClient.initialize();
+        SourceFallbackCarrierClientV1271.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();
         dev.dreamwalker.bloodbornedw.tool.NativeAlternateVisualClient.initialize();
-        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents.CHUNK_UNLOAD.register((world,chunk)->CompositeLedger.forgetClientChunk(world,chunk.getPos()));
-        ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());models.add(part.altModel());}models.addAll(ImportedStairLegacyArt.models());context.addModels(models);});
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents.CHUNK_LOAD.register((world,chunk)->CompositeWorldMesh.chunkLoaded(world,chunk.getPos()));
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents.CHUNK_UNLOAD.register((world,chunk)->{CompositeLedger.forgetClientChunk(world,chunk.getPos());CompositeWorldMesh.forgetChunk(chunk.getPos());});
+        ModelLoadingPlugin.register(context->{Set<Identifier> models=new LinkedHashSet<>();for(var block:CompositeArchitecture.blocks())for(var variant:block.spec.variants)for(var pose:List.of(variant.closed(),variant.open()))for(var part:pose.parts()){models.add(part.model());}models.addAll(ImportedStairLegacyArt.models());context.addModels(models);});
         BlockEntityRendererRegistry.register(CompositeArchitecture.CELL_ENTITY, context->new BlockEntityRenderer<CompositeBlockEntity>(){
             @Override public void render(CompositeBlockEntity entity,float tickDelta,MatrixStack matrices,VertexConsumerProvider consumers,int light,int overlay){
                 if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(entity.getCachedState())){dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.render(entity,matrices,consumers,light,overlay);return;}
                 if(entity.resident()==null||!(entity.getCachedState().getBlock() instanceof CompositeRootBlock block))return;
-                BlockState renderedState=entity.getCachedState();NbtCompound renderedPayload=CompositeVisualBoundsV127.supports(block)?entity.sourceRenderPayload():entity.payload();
+                BlockState renderedState=entity.getCachedState();NbtCompound renderedPayload=entity.sourceRenderPayload();
                 // A saved NEW root may be visible before its distant helper chunk.
                 // Resolve legacy art locally while the atomic server migration waits.
                 if(block.spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(renderedState,renderedPayload)){
                     renderedPayload=ImportedTypeAliases.transformPayload(renderedState,renderedPayload);renderedState=ImportedTypeAliases.target(renderedState);block=(CompositeRootBlock)renderedState.getBlock();
                 }
                 if(!CompositeVisualBoundsV127.visible(entity,block,renderedState,renderedPayload))return;
-                var shift=CompositeSourceShift.world(renderedState,renderedPayload);matrices.push();matrices.translate(shift.x(),entity.mountY()+shift.y(),shift.z());renderParts(block,renderedState,matrices,consumers,light,overlay,entity.resident().instanceId().toString(),entity.getPos(),renderedPayload);matrices.pop();
+                CompositeWorldMesh.render(entity,block,renderedState,renderedPayload,matrices,consumers,overlay);
             }
             @Override public boolean rendersOutsideBoundingBox(CompositeBlockEntity entity){return true;}
             @Override public int getRenderDistance(){return 1024;}
@@ -146,36 +153,16 @@ public final class CompositeClient {
             rotate(matrices,.5,.5,.5,block.spec.variant(state).mountAlignmentYaw(),false);
         }
         var selectedParts=ImportedStairLegacyArt.selectedParts(block,state,payload);
-        boolean generatedAlt=dev.dreamwalker.bloodbornedw.tool.BbAlternateService.generatedAlternate(block,state,selectedParts);
-        // Native model rendering applies its RGB arguments only to tinted quads.
-        // Tone every emitted face for generated NEW alternates, after source tint.
-        if(generatedAlt)consumer=generatedAlternateConsumer(consumer);
         for(var part:selectedParts){
             matrices.push();matrices.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.yaw(),false);
             rotate(matrices,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.pitch(),true);
             rotate(matrices,part.extraPivot().x()/16,part.extraPivot().y()/16,part.extraPivot().z()/16,part.extraYaw(),false);
-            var selectedModel=state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();
+            var selectedModel=part.model();
             var model=client.getBakedModelManager().getModel(selectedModel);
             boolean sourceEmissive=block.spec.id.getPath().startsWith("source_")&&selectedModel.getPath().startsWith("remaining/source_emissive/");
             client.getBlockRenderManager().getModelRenderer().render(matrices.peek(),consumer,state,model,red,green,blue,sourceEmissive?LightmapTextureManager.MAX_LIGHT_COORDINATE:light,overlay);matrices.pop();
         }matrices.pop();
-    }
-    /** Uniform generated-ALT tone. The native quad tint, alpha, UV and lighting remain intact. */
-    private static VertexConsumer generatedAlternateConsumer(VertexConsumer target){return new GeneratedAlternateConsumer(target);}
-    private static final class GeneratedAlternateConsumer implements VertexConsumer {
-        private final VertexConsumer target;
-        GeneratedAlternateConsumer(VertexConsumer target){this.target=target;}
-        @Override public VertexConsumer vertex(double x,double y,double z){target.vertex(x,y,z);return this;}
-        @Override public VertexConsumer color(int red,int green,int blue,int alpha){target.color(Math.round(red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED),Math.round(green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN),Math.round(blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE),alpha);return this;}
-        @Override public VertexConsumer texture(float u,float v){target.texture(u,v);return this;}
-        @Override public VertexConsumer overlay(int u,int v){target.overlay(u,v);return this;}
-        @Override public VertexConsumer light(int u,int v){target.light(u,v);return this;}
-        @Override public VertexConsumer normal(float x,float y,float z){target.normal(x,y,z);return this;}
-        @Override public void next(){target.next();}
-        @Override public void fixedColor(int red,int green,int blue,int alpha){target.fixedColor(Math.round(red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED),Math.round(green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN),Math.round(blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE),alpha);}
-        @Override public void unfixColor(){target.unfixColor();}
-        @Override public void vertex(float x,float y,float z,float red,float green,float blue,float alpha,float u,float v,int overlay,int light,float normalX,float normalY,float normalZ){target.vertex(x,y,z,red*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_RED,green*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_GREEN,blue*dev.dreamwalker.bloodbornedw.tool.BbAlternateService.ALT_BLUE,alpha,u,v,overlay,light,normalX,normalY,normalZ);}
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
     private static <T extends Comparable<T>> BlockState itemArt(BlockState state,net.minecraft.state.property.Property<T> property,String value){return property.parse(value).map(v->state.with(property,v)).orElse(state);}

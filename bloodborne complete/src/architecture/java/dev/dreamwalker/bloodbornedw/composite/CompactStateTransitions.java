@@ -32,7 +32,9 @@ public final class CompactStateTransitions<V> implements Table<Property<?>,Compa
             for(int r=0;r<keys.size();r++){
                 var property=keys.get(r);if(indexes.put(property,r)!=null)throw new UnsupportedLayout();offsets[r]=count;
                 Map<Object,Integer> domain=new HashMap<>();for(var value:property.getValues())if(domain.put(value,count++)!=null)throw new UnsupportedLayout();
-                if(domain.isEmpty()||domain.size()>64)throw new UnsupportedLayout();domains.add(Map.copyOf(domain));
+                // Hidden native-source palettes can exceed 64 saved choices.
+                // Keep both the per-property and total-layout bounds finite.
+                if(domain.isEmpty()||domain.size()>128)throw new UnsupportedLayout();domains.add(Map.copyOf(domain));
             }
             if(count>256)throw new UnsupportedLayout();slots=count;index=Map.copyOf(indexes);values=List.copyOf(domains);
         }
@@ -45,7 +47,9 @@ public final class CompactStateTransitions<V> implements Table<Property<?>,Compa
     private static final class Columns {
         final List<Comparable<?>> keys;final Set<Comparable<?>> keySet;final Map<Comparable<?>,Integer> index;
         Columns(List<Comparable<?>> supplied,Rows rows){
-            if(supplied.isEmpty()||supplied.size()>64)throw new UnsupportedLayout();keys=List.copyOf(supplied);
+            // The union includes all source indices and PROFILE values. It is
+            // still bounded by the total 256 property slots checked above.
+            if(supplied.isEmpty()||supplied.size()>256)throw new UnsupportedLayout();keys=List.copyOf(supplied);
             Map<Comparable<?>,Integer> indexes=new HashMap<>();
             for(int c=0;c<keys.size();c++){
                 var value=keys.get(c);if(indexes.put(value,c)!=null||rows.values.stream().noneMatch(domain->domain.containsKey(value)))throw new UnsupportedLayout();

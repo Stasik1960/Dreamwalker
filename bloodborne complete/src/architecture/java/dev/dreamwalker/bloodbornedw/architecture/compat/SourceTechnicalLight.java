@@ -5,6 +5,10 @@ import net.minecraft.block.AirBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.state.StateManager;
+import dev.dreamwalker.bloodbornedw.composite.CompositeRootBlock;
 import net.minecraft.util.Identifier;
 
 /** Narrow compatibility for the two original Hunter Lamp technical light cells.
@@ -32,6 +36,8 @@ public final class SourceTechnicalLight {
                 .suffocates((state,world,pos)->false)
                 .blockVision((state,world,pos)->false)
                 .luminance(state->9).dropsNothing());
+            setDefaultState(getDefaultState().with(CompositeRootBlock.PROFILE,CompositeRootBlock.Profile.BASE));
         }
+        @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(CompositeRootBlock.PROFILE);}
     }
 }

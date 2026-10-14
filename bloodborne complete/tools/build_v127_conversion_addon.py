@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--runtime-directory', type=Path)
     parser.add_argument('--prepare-only', action='store_true')
     parser.add_argument('--offline', action='store_true')
+    parser.add_argument('--worldedit-api-jar', type=Path, help='Optional pinned local compile-only WorldEdit API JAR')
     args = parser.parse_args()
     production = args.production_jar.resolve()
     digest = sha(production)
@@ -74,6 +75,9 @@ def main():
         assert java_home, 'Set JAVA_HOME17 or JAVA_HOME to Java 17; this helper never guesses a device path'
         wrapper = ROOT / ('gradlew.bat' if os.name == 'nt' else 'gradlew')
         command = [str(wrapper), '--no-daemon', '-I', str(init), 'remapV127ConversionJar']
+        if args.worldedit_api_jar:
+            assert ordinary(args.worldedit_api_jar) and args.worldedit_api_jar.is_file()
+            command.insert(1, '-Pworldedit_api_jar=' + str(args.worldedit_api_jar.absolute()))
         if args.offline:
             command.insert(1, '--offline')
         with (output / 'build.log').open('wb') as log:

@@ -1,0 +1,1444 @@
+Compiled from "ModelLoader.java"
+public class net.minecraft.client.render.model.ModelLoader {
+  public static final net.minecraft.client.util.SpriteIdentifier FIRE_0;
+
+  public static final net.minecraft.client.util.SpriteIdentifier FIRE_1;
+
+  public static final net.minecraft.client.util.SpriteIdentifier LAVA_FLOW;
+
+  public static final net.minecraft.client.util.SpriteIdentifier WATER_FLOW;
+
+  public static final net.minecraft.client.util.SpriteIdentifier WATER_OVERLAY;
+
+  public static final net.minecraft.client.util.SpriteIdentifier BANNER_BASE;
+
+  public static final net.minecraft.client.util.SpriteIdentifier SHIELD_BASE;
+
+  public static final net.minecraft.client.util.SpriteIdentifier SHIELD_BASE_NO_PATTERN;
+
+  public static final int field_32983;
+
+  public static final java.util.List<net.minecraft.util.Identifier> BLOCK_DESTRUCTION_STAGES;
+
+  public static final java.util.List<net.minecraft.util.Identifier> BLOCK_DESTRUCTION_STAGE_TEXTURES;
+
+  public static final java.util.List<net.minecraft.client.render.RenderLayer> BLOCK_DESTRUCTION_RENDER_LAYERS;
+
+  static final int field_32984;
+
+  private static final int field_32985;
+
+  private static final org.slf4j.Logger LOGGER;
+
+  private static final java.lang.String BUILTIN;
+
+  private static final java.lang.String BUILTIN_GENERATED;
+
+  private static final java.lang.String BUILTIN_ENTITY;
+
+  private static final java.lang.String MISSING;
+
+  public static final net.minecraft.client.util.ModelIdentifier MISSING_ID;
+
+  public static final net.minecraft.resource.ResourceFinder BLOCK_STATES_FINDER;
+
+  public static final net.minecraft.resource.ResourceFinder MODELS_FINDER;
+
+  public static final java.lang.String MISSING_DEFINITION;
+
+  private static final java.util.Map<java.lang.String, java.lang.String> BUILTIN_MODEL_DEFINITIONS;
+
+  private static final com.google.common.base.Splitter COMMA_SPLITTER;
+
+  private static final com.google.common.base.Splitter KEY_VALUE_SPLITTER;
+
+  public static final net.minecraft.client.render.model.json.JsonUnbakedModel GENERATION_MARKER;
+
+  public static final net.minecraft.client.render.model.json.JsonUnbakedModel BLOCK_ENTITY_MARKER;
+
+  private static final net.minecraft.state.StateManager<net.minecraft.block.Block, net.minecraft.block.BlockState> ITEM_FRAME_STATE_FACTORY;
+
+  static final net.minecraft.client.render.model.json.ItemModelGenerator ITEM_MODEL_GENERATOR;
+
+  private static final java.util.Map<net.minecraft.util.Identifier, net.minecraft.state.StateManager<net.minecraft.block.Block, net.minecraft.block.BlockState>> STATIC_DEFINITIONS;
+
+  private final net.minecraft.client.color.block.BlockColors blockColors;
+
+  private final java.util.Map<net.minecraft.util.Identifier, net.minecraft.client.render.model.json.JsonUnbakedModel> jsonUnbakedModels;
+
+  private final java.util.Map<net.minecraft.util.Identifier, java.util.List<net.minecraft.client.render.model.ModelLoader$SourceTrackedData>> blockStates;
+
+  private final java.util.Set<net.minecraft.util.Identifier> modelsToLoad;
+
+  private final net.minecraft.client.render.model.json.ModelVariantMap$DeserializationContext variantMapDeserializationContext;
+
+  private final java.util.Map<net.minecraft.util.Identifier, net.minecraft.client.render.model.UnbakedModel> unbakedModels;
+
+  final java.util.Map<net.minecraft.client.render.model.ModelLoader$BakedModelCacheKey, net.minecraft.client.render.model.BakedModel> bakedModelCache;
+
+  private final java.util.Map<net.minecraft.util.Identifier, net.minecraft.client.render.model.UnbakedModel> modelsToBake;
+
+  private final java.util.Map<net.minecraft.util.Identifier, net.minecraft.client.render.model.BakedModel> bakedModels;
+
+  private int nextStateId;
+
+  private final it.unimi.dsi.fastutil.objects.Object2IntMap<net.minecraft.block.BlockState> stateLookup;
+
+  public net.minecraft.client.render.model.ModelLoader(net.minecraft.client.color.block.BlockColors, net.minecraft.util.profiler.Profiler, java.util.Map<net.minecraft.util.Identifier, net.minecraft.client.render.model.json.JsonUnbakedModel>, java.util.Map<net.minecraft.util.Identifier, java.util.List<net.minecraft.client.render.model.ModelLoader$SourceTrackedData>>);
+    Code:
+       0: aload_0
+       1: invokespecial #138                // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: invokestatic  #144                // Method com/google/common/collect/Sets.newHashSet:()Ljava/util/HashSet;
+       8: putfield      #146                // Field modelsToLoad:Ljava/util/Set;
+      11: aload_0
+      12: new           #21                 // class net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext
+      15: dup
+      16: invokespecial #147                // Method net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext."<init>":()V
+      19: putfield      #149                // Field variantMapDeserializationContext:Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;
+      22: aload_0
+      23: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+      26: putfield      #157                // Field unbakedModels:Ljava/util/Map;
+      29: aload_0
+      30: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+      33: putfield      #159                // Field bakedModelCache:Ljava/util/Map;
+      36: aload_0
+      37: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+      40: putfield      #161                // Field modelsToBake:Ljava/util/Map;
+      43: aload_0
+      44: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+      47: putfield      #163                // Field bakedModels:Ljava/util/Map;
+      50: aload_0
+      51: iconst_1
+      52: putfield      #165                // Field nextStateId:I
+      55: aload_0
+      56: new           #167                // class it/unimi/dsi/fastutil/objects/Object2IntOpenHashMap
+      59: dup
+      60: invokespecial #168                // Method it/unimi/dsi/fastutil/objects/Object2IntOpenHashMap."<init>":()V
+      63: invokedynamic #187,  0            // InvokeDynamic #0:accept:()Ljava/util/function/Consumer;
+      68: invokestatic  #193                // Method net/minecraft/util/Util.make:(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;
+      71: checkcast     #195                // class it/unimi/dsi/fastutil/objects/Object2IntMap
+      74: putfield      #197                // Field stateLookup:Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+      77: aload_0
+      78: aload_1
+      79: putfield      #199                // Field blockColors:Lnet/minecraft/client/color/block/BlockColors;
+      82: aload_0
+      83: aload_3
+      84: putfield      #201                // Field jsonUnbakedModels:Ljava/util/Map;
+      87: aload_0
+      88: aload         4
+      90: putfield      #203                // Field blockStates:Ljava/util/Map;
+      93: aload_2
+      94: ldc           #205                // String missing_model
+      96: invokeinterface #211,  2          // InterfaceMethod net/minecraft/util/profiler/Profiler.push:(Ljava/lang/String;)V
+     101: aload_0
+     102: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+     105: getstatic     #213                // Field MISSING_ID:Lnet/minecraft/client/util/ModelIdentifier;
+     108: aload_0
+     109: getstatic     #213                // Field MISSING_ID:Lnet/minecraft/client/util/ModelIdentifier;
+     112: invokevirtual #217                // Method loadModelFromJson:(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+     115: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     120: pop
+     121: aload_0
+     122: getstatic     #213                // Field MISSING_ID:Lnet/minecraft/client/util/ModelIdentifier;
+     125: invokevirtual #225                // Method addModel:(Lnet/minecraft/client/util/ModelIdentifier;)V
+     128: goto          155
+     131: astore        5
+     133: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+     136: ldc           #229                // String Error loading missing model, should never happen :(
+     138: aload         5
+     140: invokeinterface #235,  3          // InterfaceMethod org/slf4j/Logger.error:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     145: new           #237                // class java/lang/RuntimeException
+     148: dup
+     149: aload         5
+     151: invokespecial #240                // Method java/lang/RuntimeException."<init>":(Ljava/lang/Throwable;)V
+     154: athrow
+     155: aload_2
+     156: ldc           #242                // String static_definitions
+     158: invokeinterface #245,  2          // InterfaceMethod net/minecraft/util/profiler/Profiler.swap:(Ljava/lang/String;)V
+     163: getstatic     #247                // Field STATIC_DEFINITIONS:Ljava/util/Map;
+     166: aload_0
+     167: invokedynamic #258,  0            // InvokeDynamic #1:accept:(Lnet/minecraft/client/render/model/ModelLoader;)Ljava/util/function/BiConsumer;
+     172: invokeinterface #262,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+     177: aload_2
+     178: ldc_w         #264                // String blocks
+     181: invokeinterface #245,  2          // InterfaceMethod net/minecraft/util/profiler/Profiler.swap:(Ljava/lang/String;)V
+     186: getstatic     #270                // Field net/minecraft/registry/Registries.BLOCK:Lnet/minecraft/registry/DefaultedRegistry;
+     189: invokeinterface #276,  1          // InterfaceMethod net/minecraft/registry/DefaultedRegistry.iterator:()Ljava/util/Iterator;
+     194: astore        5
+     196: aload         5
+     198: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     203: ifeq          238
+     206: aload         5
+     208: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     213: checkcast     #288                // class net/minecraft/block/Block
+     216: astore        6
+     218: aload         6
+     220: invokevirtual #292                // Method net/minecraft/block/Block.getStateManager:()Lnet/minecraft/state/StateManager;
+     223: invokevirtual #296                // Method net/minecraft/state/StateManager.getStates:()Lcom/google/common/collect/ImmutableList;
+     226: aload_0
+     227: invokedynamic #305,  0            // InvokeDynamic #2:accept:(Lnet/minecraft/client/render/model/ModelLoader;)Ljava/util/function/Consumer;
+     232: invokevirtual #310                // Method com/google/common/collect/ImmutableList.forEach:(Ljava/util/function/Consumer;)V
+     235: goto          196
+     238: aload_2
+     239: ldc_w         #312                // String items
+     242: invokeinterface #245,  2          // InterfaceMethod net/minecraft/util/profiler/Profiler.swap:(Ljava/lang/String;)V
+     247: getstatic     #315                // Field net/minecraft/registry/Registries.ITEM:Lnet/minecraft/registry/DefaultedRegistry;
+     250: invokeinterface #319,  1          // InterfaceMethod net/minecraft/registry/DefaultedRegistry.getIds:()Ljava/util/Set;
+     255: invokeinterface #322,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+     260: astore        5
+     262: aload         5
+     264: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     269: ifeq          303
+     272: aload         5
+     274: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     279: checkcast     #324                // class net/minecraft/util/Identifier
+     282: astore        6
+     284: aload_0
+     285: new           #326                // class net/minecraft/client/util/ModelIdentifier
+     288: dup
+     289: aload         6
+     291: ldc_w         #328                // String inventory
+     294: invokespecial #331                // Method net/minecraft/client/util/ModelIdentifier."<init>":(Lnet/minecraft/util/Identifier;Ljava/lang/String;)V
+     297: invokevirtual #225                // Method addModel:(Lnet/minecraft/client/util/ModelIdentifier;)V
+     300: goto          262
+     303: aload_2
+     304: ldc_w         #333                // String special
+     307: invokeinterface #245,  2          // InterfaceMethod net/minecraft/util/profiler/Profiler.swap:(Ljava/lang/String;)V
+     312: aload_0
+     313: getstatic     #338                // Field net/minecraft/client/render/item/ItemRenderer.TRIDENT_IN_HAND:Lnet/minecraft/client/util/ModelIdentifier;
+     316: invokevirtual #225                // Method addModel:(Lnet/minecraft/client/util/ModelIdentifier;)V
+     319: aload_0
+     320: getstatic     #341                // Field net/minecraft/client/render/item/ItemRenderer.SPYGLASS_IN_HAND:Lnet/minecraft/client/util/ModelIdentifier;
+     323: invokevirtual #225                // Method addModel:(Lnet/minecraft/client/util/ModelIdentifier;)V
+     326: aload_0
+     327: getfield      #161                // Field modelsToBake:Ljava/util/Map;
+     330: invokeinterface #345,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+     335: aload_0
+     336: invokedynamic #352,  0            // InvokeDynamic #3:accept:(Lnet/minecraft/client/render/model/ModelLoader;)Ljava/util/function/Consumer;
+     341: invokeinterface #355,  2          // InterfaceMethod java/util/Collection.forEach:(Ljava/util/function/Consumer;)V
+     346: aload_2
+     347: invokeinterface #358,  1          // InterfaceMethod net/minecraft/util/profiler/Profiler.pop:()V
+     352: return
+    Exception table:
+       from    to  target type
+         101   128   131   Class java/io/IOException
+
+  public void bake(java.util.function.BiFunction<net.minecraft.util.Identifier, net.minecraft.client.util.SpriteIdentifier, net.minecraft.client.texture.Sprite>);
+    Code:
+       0: aload_0
+       1: getfield      #161                // Field modelsToBake:Ljava/util/Map;
+       4: invokeinterface #374,  1          // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
+       9: aload_0
+      10: aload_1
+      11: invokedynamic #384,  0            // InvokeDynamic #4:accept:(Lnet/minecraft/client/render/model/ModelLoader;Ljava/util/function/BiFunction;)Ljava/util/function/Consumer;
+      16: invokeinterface #385,  2          // InterfaceMethod java/util/Set.forEach:(Ljava/util/function/Consumer;)V
+      21: return
+
+  private static java.util.function.Predicate<net.minecraft.block.BlockState> stateKeyToPredicate(net.minecraft.state.StateManager<net.minecraft.block.Block, net.minecraft.block.BlockState>, java.lang.String);
+    Code:
+       0: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+       3: astore_2
+       4: getstatic     #394                // Field COMMA_SPLITTER:Lcom/google/common/base/Splitter;
+       7: aload_1
+       8: invokevirtual #400                // Method com/google/common/base/Splitter.split:(Ljava/lang/CharSequence;)Ljava/lang/Iterable;
+      11: invokeinterface #403,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+      16: astore_3
+      17: aload_3
+      18: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      23: ifeq          188
+      26: aload_3
+      27: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      32: checkcast     #407                // class java/lang/String
+      35: astore        4
+      37: getstatic     #409                // Field KEY_VALUE_SPLITTER:Lcom/google/common/base/Splitter;
+      40: aload         4
+      42: invokevirtual #400                // Method com/google/common/base/Splitter.split:(Ljava/lang/CharSequence;)Ljava/lang/Iterable;
+      45: invokeinterface #403,  1          // InterfaceMethod java/lang/Iterable.iterator:()Ljava/util/Iterator;
+      50: astore        5
+      52: aload         5
+      54: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      59: ifeq          185
+      62: aload         5
+      64: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      69: checkcast     #407                // class java/lang/String
+      72: astore        6
+      74: aload_0
+      75: aload         6
+      77: invokevirtual #413                // Method net/minecraft/state/StateManager.getProperty:(Ljava/lang/String;)Lnet/minecraft/state/property/Property;
+      80: astore        7
+      82: aload         7
+      84: ifnull        162
+      87: aload         5
+      89: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      94: ifeq          162
+      97: aload         5
+      99: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     104: checkcast     #407                // class java/lang/String
+     107: astore        8
+     109: aload         7
+     111: aload         8
+     113: invokestatic  #417                // Method getPropertyValue:(Lnet/minecraft/state/property/Property;Ljava/lang/String;)Ljava/lang/Comparable;
+     116: astore        9
+     118: aload         9
+     120: ifnull        137
+     123: aload_2
+     124: aload         7
+     126: aload         9
+     128: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     133: pop
+     134: goto          159
+     137: new           #237                // class java/lang/RuntimeException
+     140: dup
+     141: aload         8
+     143: aload         6
+     145: aload         7
+     147: invokevirtual #422                // Method net/minecraft/state/property/Property.getValues:()Ljava/util/Collection;
+     150: invokedynamic #434,  0            // InvokeDynamic #5:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;Ljava/util/Collection;)Ljava/lang/String;
+     155: invokespecial #436                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     158: athrow
+     159: goto          185
+     162: aload         6
+     164: invokevirtual #439                // Method java/lang/String.isEmpty:()Z
+     167: ifne          185
+     170: new           #237                // class java/lang/RuntimeException
+     173: dup
+     174: aload         6
+     176: invokedynamic #444,  0            // InvokeDynamic #6:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     181: invokespecial #436                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     184: athrow
+     185: goto          17
+     188: aload_0
+     189: invokevirtual #447                // Method net/minecraft/state/StateManager.getOwner:()Ljava/lang/Object;
+     192: checkcast     #288                // class net/minecraft/block/Block
+     195: astore_3
+     196: aload_3
+     197: aload_2
+     198: invokedynamic #460,  0            // InvokeDynamic #7:test:(Lnet/minecraft/block/Block;Ljava/util/Map;)Ljava/util/function/Predicate;
+     203: areturn
+
+  static <T extends java.lang.Comparable<T>> T getPropertyValue(net.minecraft.state.property.Property<T>, java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #479                // Method net/minecraft/state/property/Property.parse:(Ljava/lang/String;)Ljava/util/Optional;
+       5: aconst_null
+       6: invokevirtual #485                // Method java/util/Optional.orElse:(Ljava/lang/Object;)Ljava/lang/Object;
+       9: checkcast     #487                // class java/lang/Comparable
+      12: areturn
+
+  public net.minecraft.client.render.model.UnbakedModel getOrLoadModel(net.minecraft.util.Identifier);
+    Code:
+       0: aload_0
+       1: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+       4: aload_1
+       5: invokeinterface #496,  2          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+      10: ifeq          27
+      13: aload_0
+      14: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+      17: aload_1
+      18: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      23: checkcast     #501                // class net/minecraft/client/render/model/UnbakedModel
+      26: areturn
+      27: aload_0
+      28: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+      31: aload_1
+      32: invokeinterface #504,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+      37: ifeq          54
+      40: new           #506                // class java/lang/IllegalStateException
+      43: dup
+      44: aload_1
+      45: invokedynamic #511,  0            // InvokeDynamic #8:makeConcatWithConstants:(Lnet/minecraft/util/Identifier;)Ljava/lang/String;
+      50: invokespecial #512                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      53: athrow
+      54: aload_0
+      55: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+      58: aload_1
+      59: invokeinterface #515,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      64: pop
+      65: aload_0
+      66: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+      69: getstatic     #213                // Field MISSING_ID:Lnet/minecraft/client/util/ModelIdentifier;
+      72: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      77: checkcast     #501                // class net/minecraft/client/render/model/UnbakedModel
+      80: astore_2
+      81: aload_0
+      82: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+      85: invokeinterface #516,  1          // InterfaceMethod java/util/Set.isEmpty:()Z
+      90: ifne          259
+      93: aload_0
+      94: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+      97: invokeinterface #322,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+     102: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     107: checkcast     #324                // class net/minecraft/util/Identifier
+     110: astore_3
+     111: aload_0
+     112: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+     115: aload_3
+     116: invokeinterface #496,  2          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+     121: ifne          129
+     124: aload_0
+     125: aload_3
+     126: invokevirtual #519                // Method loadModel:(Lnet/minecraft/util/Identifier;)V
+     129: aload_0
+     130: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+     133: aload_3
+     134: invokeinterface #522,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
+     139: pop
+     140: goto          256
+     143: astore        4
+     145: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+     148: aload         4
+     150: invokevirtual #526                // Method net/minecraft/client/render/model/ModelLoader$ModelLoaderException.getMessage:()Ljava/lang/String;
+     153: invokeinterface #529,  2          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;)V
+     158: aload_0
+     159: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+     162: aload_3
+     163: aload_2
+     164: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     169: pop
+     170: aload_0
+     171: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+     174: aload_3
+     175: invokeinterface #522,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
+     180: pop
+     181: goto          256
+     184: astore        4
+     186: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+     189: ldc_w         #531                // String Unable to load model: \'{}\' referenced from: {}: {}
+     192: iconst_3
+     193: anewarray     #4                  // class java/lang/Object
+     196: dup
+     197: iconst_0
+     198: aload_3
+     199: aastore
+     200: dup
+     201: iconst_1
+     202: aload_1
+     203: aastore
+     204: dup
+     205: iconst_2
+     206: aload         4
+     208: aastore
+     209: invokeinterface #534,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+     214: aload_0
+     215: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+     218: aload_3
+     219: aload_2
+     220: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     225: pop
+     226: aload_0
+     227: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+     230: aload_3
+     231: invokeinterface #522,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
+     236: pop
+     237: goto          256
+     240: astore        5
+     242: aload_0
+     243: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+     246: aload_3
+     247: invokeinterface #522,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
+     252: pop
+     253: aload         5
+     255: athrow
+     256: goto          81
+     259: aload_0
+     260: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+     263: aload_1
+     264: aload_2
+     265: invokeinterface #539,  3          // InterfaceMethod java/util/Map.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     270: checkcast     #501                // class net/minecraft/client/render/model/UnbakedModel
+     273: areturn
+    Exception table:
+       from    to  target type
+         111   129   143   Class net/minecraft/client/render/model/ModelLoader$ModelLoaderException
+         111   129   184   Class java/lang/Exception
+         111   129   240   any
+         143   170   240   any
+         184   226   240   any
+         240   242   240   any
+
+  private void loadModel(net.minecraft.util.Identifier) throws java.lang.Exception;
+    Code:
+       0: aload_1
+       1: instanceof    #326                // class net/minecraft/client/util/ModelIdentifier
+       4: ifne          18
+       7: aload_0
+       8: aload_1
+       9: aload_0
+      10: aload_1
+      11: invokevirtual #217                // Method loadModelFromJson:(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+      14: invokevirtual #549                // Method putModel:(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/model/UnbakedModel;)V
+      17: return
+      18: aload_1
+      19: checkcast     #326                // class net/minecraft/client/util/ModelIdentifier
+      22: astore_2
+      23: aload_2
+      24: invokevirtual #552                // Method net/minecraft/client/util/ModelIdentifier.getVariant:()Ljava/lang/String;
+      27: ldc_w         #328                // String inventory
+      30: invokestatic  #558                // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+      33: ifeq          74
+      36: aload_1
+      37: ldc_w         #560                // String item/
+      40: invokevirtual #564                // Method net/minecraft/util/Identifier.withPrefixedPath:(Ljava/lang/String;)Lnet/minecraft/util/Identifier;
+      43: astore_3
+      44: aload_0
+      45: aload_3
+      46: invokevirtual #217                // Method loadModelFromJson:(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+      49: astore        4
+      51: aload_0
+      52: aload_2
+      53: aload         4
+      55: invokevirtual #549                // Method putModel:(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/model/UnbakedModel;)V
+      58: aload_0
+      59: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+      62: aload_3
+      63: aload         4
+      65: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      70: pop
+      71: goto          529
+      74: new           #324                // class net/minecraft/util/Identifier
+      77: dup
+      78: aload_1
+      79: invokevirtual #567                // Method net/minecraft/util/Identifier.getNamespace:()Ljava/lang/String;
+      82: aload_1
+      83: invokevirtual #570                // Method net/minecraft/util/Identifier.getPath:()Ljava/lang/String;
+      86: invokespecial #573                // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+      89: astore_3
+      90: getstatic     #247                // Field STATIC_DEFINITIONS:Ljava/util/Map;
+      93: aload_3
+      94: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      99: checkcast     #37                 // class net/minecraft/state/StateManager
+     102: invokestatic  #577                // Method java/util/Optional.ofNullable:(Ljava/lang/Object;)Ljava/util/Optional;
+     105: aload_3
+     106: invokedynamic #587,  0            // InvokeDynamic #9:get:(Lnet/minecraft/util/Identifier;)Ljava/util/function/Supplier;
+     111: invokevirtual #591                // Method java/util/Optional.orElseGet:(Ljava/util/function/Supplier;)Ljava/lang/Object;
+     114: checkcast     #37                 // class net/minecraft/state/StateManager
+     117: astore        4
+     119: aload_0
+     120: getfield      #149                // Field variantMapDeserializationContext:Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;
+     123: aload         4
+     125: invokevirtual #595                // Method net/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext.setStateFactory:(Lnet/minecraft/state/StateManager;)V
+     128: aload_0
+     129: getfield      #199                // Field blockColors:Lnet/minecraft/client/color/block/BlockColors;
+     132: aload         4
+     134: invokevirtual #447                // Method net/minecraft/state/StateManager.getOwner:()Ljava/lang/Object;
+     137: checkcast     #288                // class net/minecraft/block/Block
+     140: invokevirtual #601                // Method net/minecraft/client/color/block/BlockColors.getProperties:(Lnet/minecraft/block/Block;)Ljava/util/Set;
+     143: invokestatic  #605                // Method com/google/common/collect/ImmutableList.copyOf:(Ljava/util/Collection;)Lcom/google/common/collect/ImmutableList;
+     146: astore        5
+     148: aload         4
+     150: invokevirtual #296                // Method net/minecraft/state/StateManager.getStates:()Lcom/google/common/collect/ImmutableList;
+     153: astore        6
+     155: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+     158: astore        7
+     160: aload         6
+     162: aload         7
+     164: aload_3
+     165: invokedynamic #613,  0            // InvokeDynamic #10:accept:(Ljava/util/Map;Lnet/minecraft/util/Identifier;)Ljava/util/function/Consumer;
+     170: invokevirtual #310                // Method com/google/common/collect/ImmutableList.forEach:(Ljava/util/function/Consumer;)V
+     173: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+     176: astore        8
+     178: getstatic     #615                // Field BLOCK_STATES_FINDER:Lnet/minecraft/resource/ResourceFinder;
+     181: aload_1
+     182: invokevirtual #621                // Method net/minecraft/resource/ResourceFinder.toResourcePath:(Lnet/minecraft/util/Identifier;)Lnet/minecraft/util/Identifier;
+     185: astore        9
+     187: aload_0
+     188: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+     191: getstatic     #213                // Field MISSING_ID:Lnet/minecraft/client/util/ModelIdentifier;
+     194: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     199: checkcast     #501                // class net/minecraft/client/render/model/UnbakedModel
+     202: astore        10
+     204: new           #13                 // class net/minecraft/client/render/model/ModelLoader$ModelDefinition
+     207: dup
+     208: aload         10
+     210: invokestatic  #625                // Method com/google/common/collect/ImmutableList.of:(Ljava/lang/Object;)Lcom/google/common/collect/ImmutableList;
+     213: invokestatic  #627                // Method com/google/common/collect/ImmutableList.of:()Lcom/google/common/collect/ImmutableList;
+     216: invokespecial #630                // Method net/minecraft/client/render/model/ModelLoader$ModelDefinition."<init>":(Ljava/util/List;Ljava/util/List;)V
+     219: astore        11
+     221: aload         10
+     223: aload         11
+     225: invokedynamic #640,  0            // InvokeDynamic #11:get:(Lnet/minecraft/client/render/model/ModelLoader$ModelDefinition;)Ljava/util/function/Supplier;
+     230: invokestatic  #645                // Method com/mojang/datafixers/util/Pair.of:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/mojang/datafixers/util/Pair;
+     233: astore        12
+     235: aload_0
+     236: getfield      #203                // Field blockStates:Ljava/util/Map;
+     239: aload         9
+     241: invokestatic  #650                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+     244: invokeinterface #539,  3          // InterfaceMethod java/util/Map.getOrDefault:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     249: checkcast     #647                // class java/util/List
+     252: invokeinterface #654,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+     257: aload_0
+     258: aload         9
+     260: invokedynamic #666,  0            // InvokeDynamic #12:apply:(Lnet/minecraft/client/render/model/ModelLoader;Lnet/minecraft/util/Identifier;)Ljava/util/function/Function;
+     265: invokeinterface #671,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+     270: invokeinterface #674,  1          // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+     275: astore        13
+     277: aload         13
+     279: invokeinterface #675,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     284: astore        14
+     286: aload         14
+     288: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     293: ifeq          405
+     296: aload         14
+     298: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     303: checkcast     #642                // class com/mojang/datafixers/util/Pair
+     306: astore        15
+     308: aload         15
+     310: invokevirtual #678                // Method com/mojang/datafixers/util/Pair.getSecond:()Ljava/lang/Object;
+     313: checkcast     #23                 // class net/minecraft/client/render/model/json/ModelVariantMap
+     316: astore        16
+     318: invokestatic  #682                // Method com/google/common/collect/Maps.newIdentityHashMap:()Ljava/util/IdentityHashMap;
+     321: astore        17
+     323: aload         16
+     325: invokevirtual #685                // Method net/minecraft/client/render/model/json/ModelVariantMap.hasMultipartModel:()Z
+     328: ifeq          357
+     331: aload         16
+     333: invokevirtual #689                // Method net/minecraft/client/render/model/json/ModelVariantMap.getMultipartModel:()Lnet/minecraft/client/render/model/MultipartUnbakedModel;
+     336: astore        18
+     338: aload         6
+     340: aload         17
+     342: aload         18
+     344: aload         5
+     346: invokedynamic #697,  0            // InvokeDynamic #13:accept:(Ljava/util/Map;Lnet/minecraft/client/render/model/MultipartUnbakedModel;Ljava/util/List;)Ljava/util/function/Consumer;
+     351: invokevirtual #310                // Method com/google/common/collect/ImmutableList.forEach:(Ljava/util/function/Consumer;)V
+     354: goto          360
+     357: aconst_null
+     358: astore        18
+     360: aload         16
+     362: invokevirtual #705                // Method net/minecraft/client/render/model/json/ModelVariantMap.getVariantMap:()Ljava/util/Map;
+     365: aload         6
+     367: aload         4
+     369: aload         17
+     371: aload         5
+     373: aload         18
+     375: aload         12
+     377: aload         16
+     379: aload         9
+     381: aload         15
+     383: invokedynamic #715,  0            // InvokeDynamic #14:accept:(Lcom/google/common/collect/ImmutableList;Lnet/minecraft/state/StateManager;Ljava/util/Map;Ljava/util/List;Lnet/minecraft/client/render/model/MultipartUnbakedModel;Lcom/mojang/datafixers/util/Pair;Lnet/minecraft/client/render/model/json/ModelVariantMap;Lnet/minecraft/util/Identifier;Lcom/mojang/datafixers/util/Pair;)Ljava/util/function/BiConsumer;
+     388: invokeinterface #262,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+     393: aload         8
+     395: aload         17
+     397: invokeinterface #719,  2          // InterfaceMethod java/util/Map.putAll:(Ljava/util/Map;)V
+     402: goto          286
+     405: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+     408: astore        13
+     410: aload         7
+     412: aload_0
+     413: aload         8
+     415: aload         9
+     417: aload         12
+     419: aload         13
+     421: invokedynamic #729,  0            // InvokeDynamic #15:accept:(Lnet/minecraft/client/render/model/ModelLoader;Ljava/util/Map;Lnet/minecraft/util/Identifier;Lcom/mojang/datafixers/util/Pair;Ljava/util/Map;)Ljava/util/function/BiConsumer;
+     426: invokeinterface #262,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+     431: aload         13
+     433: aload_0
+     434: invokedynamic #736,  0            // InvokeDynamic #16:accept:(Lnet/minecraft/client/render/model/ModelLoader;)Ljava/util/function/BiConsumer;
+     439: invokeinterface #262,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+     444: goto          529
+     447: astore        13
+     449: aload         13
+     451: athrow
+     452: astore        13
+     454: new           #17                 // class net/minecraft/client/render/model/ModelLoader$ModelLoaderException
+     457: dup
+     458: getstatic     #742                // Field java/util/Locale.ROOT:Ljava/util/Locale;
+     461: ldc_w         #744                // String Exception loading blockstate definition: \'%s\': %s
+     464: iconst_2
+     465: anewarray     #4                  // class java/lang/Object
+     468: dup
+     469: iconst_0
+     470: aload         9
+     472: aastore
+     473: dup
+     474: iconst_1
+     475: aload         13
+     477: aastore
+     478: invokestatic  #748                // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     481: invokespecial #749                // Method net/minecraft/client/render/model/ModelLoader$ModelLoaderException."<init>":(Ljava/lang/String;)V
+     484: athrow
+     485: astore        19
+     487: invokestatic  #155                // Method com/google/common/collect/Maps.newHashMap:()Ljava/util/HashMap;
+     490: astore        20
+     492: aload         7
+     494: aload_0
+     495: aload         8
+     497: aload         9
+     499: aload         12
+     501: aload         20
+     503: invokedynamic #729,  0            // InvokeDynamic #15:accept:(Lnet/minecraft/client/render/model/ModelLoader;Ljava/util/Map;Lnet/minecraft/util/Identifier;Lcom/mojang/datafixers/util/Pair;Ljava/util/Map;)Ljava/util/function/BiConsumer;
+     508: invokeinterface #262,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+     513: aload         20
+     515: aload_0
+     516: invokedynamic #736,  0            // InvokeDynamic #16:accept:(Lnet/minecraft/client/render/model/ModelLoader;)Ljava/util/function/BiConsumer;
+     521: invokeinterface #262,  2          // InterfaceMethod java/util/Map.forEach:(Ljava/util/function/BiConsumer;)V
+     526: aload         19
+     528: athrow
+     529: return
+    Exception table:
+       from    to  target type
+         235   405   447   Class net/minecraft/client/render/model/ModelLoader$ModelLoaderException
+         235   405   452   Class java/lang/Exception
+         235   405   485   any
+         447   487   485   any
+
+  private void putModel(net.minecraft.util.Identifier, net.minecraft.client.render.model.UnbakedModel);
+    Code:
+       0: aload_0
+       1: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+       4: aload_1
+       5: aload_2
+       6: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      11: pop
+      12: aload_0
+      13: getfield      #146                // Field modelsToLoad:Ljava/util/Set;
+      16: aload_2
+      17: invokeinterface #781,  1          // InterfaceMethod net/minecraft/client/render/model/UnbakedModel.getModelDependencies:()Ljava/util/Collection;
+      22: invokeinterface #785,  2          // InterfaceMethod java/util/Set.addAll:(Ljava/util/Collection;)Z
+      27: pop
+      28: return
+
+  private void addModel(net.minecraft.client.util.ModelIdentifier);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #788                // Method getOrLoadModel:(Lnet/minecraft/util/Identifier;)Lnet/minecraft/client/render/model/UnbakedModel;
+       5: astore_2
+       6: aload_0
+       7: getfield      #157                // Field unbakedModels:Ljava/util/Map;
+      10: aload_1
+      11: aload_2
+      12: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      17: pop
+      18: aload_0
+      19: getfield      #161                // Field modelsToBake:Ljava/util/Map;
+      22: aload_1
+      23: aload_2
+      24: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      29: pop
+      30: return
+
+  private void addStates(java.lang.Iterable<net.minecraft.block.BlockState>);
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #165                // Field nextStateId:I
+       5: dup_x1
+       6: iconst_1
+       7: iadd
+       8: putfield      #165                // Field nextStateId:I
+      11: istore_2
+      12: aload_1
+      13: aload_0
+      14: iload_2
+      15: invokedynamic #800,  0            // InvokeDynamic #17:accept:(Lnet/minecraft/client/render/model/ModelLoader;I)Ljava/util/function/Consumer;
+      20: invokeinterface #801,  2          // InterfaceMethod java/lang/Iterable.forEach:(Ljava/util/function/Consumer;)V
+      25: return
+
+  private net.minecraft.client.render.model.json.JsonUnbakedModel loadModelFromJson(net.minecraft.util.Identifier) throws java.io.IOException;
+    Code:
+       0: aload_1
+       1: invokevirtual #570                // Method net/minecraft/util/Identifier.getPath:()Ljava/lang/String;
+       4: astore_2
+       5: ldc           #78                 // String builtin/generated
+       7: aload_2
+       8: invokevirtual #806                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      11: ifeq          18
+      14: getstatic     #808                // Field GENERATION_MARKER:Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+      17: areturn
+      18: ldc           #81                 // String builtin/entity
+      20: aload_2
+      21: invokevirtual #806                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      24: ifeq          31
+      27: getstatic     #810                // Field BLOCK_ENTITY_MARKER:Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+      30: areturn
+      31: aload_2
+      32: ldc           #75                 // String builtin/
+      34: invokevirtual #814                // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+      37: ifeq          111
+      40: aload_2
+      41: ldc           #75                 // String builtin/
+      43: invokevirtual #818                // Method java/lang/String.length:()I
+      46: invokevirtual #822                // Method java/lang/String.substring:(I)Ljava/lang/String;
+      49: astore_3
+      50: getstatic     #824                // Field BUILTIN_MODEL_DEFINITIONS:Ljava/util/Map;
+      53: aload_3
+      54: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      59: checkcast     #407                // class java/lang/String
+      62: astore        4
+      64: aload         4
+      66: ifnonnull     81
+      69: new           #826                // class java/io/FileNotFoundException
+      72: dup
+      73: aload_1
+      74: invokevirtual #829                // Method net/minecraft/util/Identifier.toString:()Ljava/lang/String;
+      77: invokespecial #830                // Method java/io/FileNotFoundException."<init>":(Ljava/lang/String;)V
+      80: athrow
+      81: new           #832                // class java/io/StringReader
+      84: dup
+      85: aload         4
+      87: invokespecial #833                // Method java/io/StringReader."<init>":(Ljava/lang/String;)V
+      90: astore        5
+      92: aload         5
+      94: invokestatic  #839                // Method net/minecraft/client/render/model/json/JsonUnbakedModel.deserialize:(Ljava/io/Reader;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+      97: astore        6
+      99: aload         6
+     101: aload_1
+     102: invokevirtual #829                // Method net/minecraft/util/Identifier.toString:()Ljava/lang/String;
+     105: putfield      #841                // Field net/minecraft/client/render/model/json/JsonUnbakedModel.id:Ljava/lang/String;
+     108: aload         6
+     110: areturn
+     111: getstatic     #843                // Field MODELS_FINDER:Lnet/minecraft/resource/ResourceFinder;
+     114: aload_1
+     115: invokevirtual #621                // Method net/minecraft/resource/ResourceFinder.toResourcePath:(Lnet/minecraft/util/Identifier;)Lnet/minecraft/util/Identifier;
+     118: astore_3
+     119: aload_0
+     120: getfield      #201                // Field jsonUnbakedModels:Ljava/util/Map;
+     123: aload_3
+     124: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     129: checkcast     #835                // class net/minecraft/client/render/model/json/JsonUnbakedModel
+     132: astore        4
+     134: aload         4
+     136: ifnonnull     151
+     139: new           #826                // class java/io/FileNotFoundException
+     142: dup
+     143: aload_3
+     144: invokevirtual #829                // Method net/minecraft/util/Identifier.toString:()Ljava/lang/String;
+     147: invokespecial #830                // Method java/io/FileNotFoundException."<init>":(Ljava/lang/String;)V
+     150: athrow
+     151: aload         4
+     153: aload_1
+     154: invokevirtual #829                // Method net/minecraft/util/Identifier.toString:()Ljava/lang/String;
+     157: putfield      #841                // Field net/minecraft/client/render/model/json/JsonUnbakedModel.id:Ljava/lang/String;
+     160: aload         4
+     162: areturn
+
+  public java.util.Map<net.minecraft.util.Identifier, net.minecraft.client.render.model.BakedModel> getBakedModelMap();
+    Code:
+       0: aload_0
+       1: getfield      #163                // Field bakedModels:Ljava/util/Map;
+       4: areturn
+
+  public it.unimi.dsi.fastutil.objects.Object2IntMap<net.minecraft.block.BlockState> getStateLookup();
+    Code:
+       0: aload_0
+       1: getfield      #197                // Field stateLookup:Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+       4: areturn
+
+  private void method_21597(int, net.minecraft.block.BlockState);
+    Code:
+       0: aload_0
+       1: getfield      #197                // Field stateLookup:Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+       4: aload_2
+       5: iload_1
+       6: invokeinterface #855,  3          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap.put:(Ljava/lang/Object;I)I
+      11: pop
+      12: return
+
+  private void method_21601(net.minecraft.client.render.model.ModelLoader$ModelDefinition, java.util.Set);
+    Code:
+       0: aload_2
+       1: invokeinterface #322,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+       6: astore_3
+       7: aload_3
+       8: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          60
+      16: aload_3
+      17: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #859                // class net/minecraft/block/BlockState
+      25: astore        4
+      27: aload         4
+      29: invokevirtual #863                // Method net/minecraft/block/BlockState.getRenderType:()Lnet/minecraft/block/BlockRenderType;
+      32: getstatic     #869                // Field net/minecraft/block/BlockRenderType.MODEL:Lnet/minecraft/block/BlockRenderType;
+      35: if_acmpeq     57
+      38: aload_3
+      39: invokeinterface #871,  1          // InterfaceMethod java/util/Iterator.remove:()V
+      44: aload_0
+      45: getfield      #197                // Field stateLookup:Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+      48: aload         4
+      50: iconst_0
+      51: invokeinterface #855,  3          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap.put:(Ljava/lang/Object;I)I
+      56: pop
+      57: goto          7
+      60: aload_2
+      61: invokeinterface #874,  1          // InterfaceMethod java/util/Set.size:()I
+      66: iconst_1
+      67: if_icmple     75
+      70: aload_0
+      71: aload_2
+      72: invokevirtual #876                // Method addStates:(Ljava/lang/Iterable;)V
+      75: return
+
+  private void method_21604(java.util.Map, net.minecraft.util.Identifier, com.mojang.datafixers.util.Pair, java.util.Map, net.minecraft.client.util.ModelIdentifier, net.minecraft.block.BlockState);
+    Code:
+       0: aload_1
+       1: aload         6
+       3: invokeinterface #499,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       8: checkcast     #642                // class com/mojang/datafixers/util/Pair
+      11: astore        7
+      13: aload         7
+      15: ifnonnull     35
+      18: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+      21: ldc_w         #880                // String Exception loading blockstate definition: \'{}\' missing model for variant: \'{}\'
+      24: aload_2
+      25: aload         5
+      27: invokeinterface #883,  4          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+      32: aload_3
+      33: astore        7
+      35: aload_0
+      36: aload         5
+      38: aload         7
+      40: invokevirtual #886                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+      43: checkcast     #501                // class net/minecraft/client/render/model/UnbakedModel
+      46: invokevirtual #549                // Method putModel:(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/model/UnbakedModel;)V
+      49: aload         7
+      51: invokevirtual #678                // Method com/mojang/datafixers/util/Pair.getSecond:()Ljava/lang/Object;
+      54: checkcast     #888                // class java/util/function/Supplier
+      57: invokeinterface #890,  1          // InterfaceMethod java/util/function/Supplier.get:()Ljava/lang/Object;
+      62: checkcast     #13                 // class net/minecraft/client/render/model/ModelLoader$ModelDefinition
+      65: astore        8
+      67: aload         4
+      69: aload         8
+      71: invokedynamic #899,  0            // InvokeDynamic #18:apply:()Ljava/util/function/Function;
+      76: invokeinterface #903,  3          // InterfaceMethod java/util/Map.computeIfAbsent:(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;
+      81: checkcast     #321                // class java/util/Set
+      84: aload         6
+      86: invokeinterface #515,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      91: pop
+      92: goto          112
+      95: astore        8
+      97: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+     100: ldc_w         #905                // String Exception evaluating model definition: \'{}\'
+     103: aload         5
+     105: aload         8
+     107: invokeinterface #883,  4          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     112: return
+    Exception table:
+       from    to  target type
+          49    92    95   Class java/lang/Exception
+
+  private static java.util.Set method_21600(net.minecraft.client.render.model.ModelLoader$ModelDefinition);
+    Code:
+       0: invokestatic  #908                // Method com/google/common/collect/Sets.newIdentityHashSet:()Ljava/util/Set;
+       3: areturn
+
+  private static void method_4731(com.google.common.collect.ImmutableList, net.minecraft.state.StateManager, java.util.Map, java.util.List, net.minecraft.client.render.model.MultipartUnbakedModel, com.mojang.datafixers.util.Pair, net.minecraft.client.render.model.json.ModelVariantMap, net.minecraft.util.Identifier, com.mojang.datafixers.util.Pair, java.lang.String, net.minecraft.client.render.model.json.WeightedUnbakedModel);
+    Code:
+       0: aload_0
+       1: invokevirtual #910                // Method com/google/common/collect/ImmutableList.stream:()Ljava/util/stream/Stream;
+       4: aload_1
+       5: aload         9
+       7: invokestatic  #912                // Method stateKeyToPredicate:(Lnet/minecraft/state/StateManager;Ljava/lang/String;)Ljava/util/function/Predicate;
+      10: invokeinterface #916,  2          // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      15: aload_2
+      16: aload         10
+      18: aload_3
+      19: aload         4
+      21: aload         5
+      23: aload         6
+      25: invokedynamic #924,  0            // InvokeDynamic #19:accept:(Ljava/util/Map;Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;Ljava/util/List;Lnet/minecraft/client/render/model/MultipartUnbakedModel;Lcom/mojang/datafixers/util/Pair;Lnet/minecraft/client/render/model/json/ModelVariantMap;)Ljava/util/function/Consumer;
+      30: invokeinterface #925,  2          // InterfaceMethod java/util/stream/Stream.forEach:(Ljava/util/function/Consumer;)V
+      35: goto          81
+      38: astore        11
+      40: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+      43: ldc_w         #927                // String Exception loading blockstate definition: \'{}\' in resourcepack: \'{}\' for variant: \'{}\': {}
+      46: iconst_4
+      47: anewarray     #4                  // class java/lang/Object
+      50: dup
+      51: iconst_0
+      52: aload         7
+      54: aastore
+      55: dup
+      56: iconst_1
+      57: aload         8
+      59: invokevirtual #886                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+      62: aastore
+      63: dup
+      64: iconst_2
+      65: aload         9
+      67: aastore
+      68: dup
+      69: iconst_3
+      70: aload         11
+      72: invokevirtual #928                // Method java/lang/Exception.getMessage:()Ljava/lang/String;
+      75: aastore
+      76: invokeinterface #534,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+      81: return
+    Exception table:
+       from    to  target type
+           0    35    38   Class java/lang/Exception
+
+  private static void method_4722(java.util.Map, net.minecraft.client.render.model.json.WeightedUnbakedModel, java.util.List, net.minecraft.client.render.model.MultipartUnbakedModel, com.mojang.datafixers.util.Pair, net.minecraft.client.render.model.json.ModelVariantMap, net.minecraft.block.BlockState);
+    Code:
+       0: aload_0
+       1: aload         6
+       3: aload_1
+       4: aload         6
+       6: aload_1
+       7: aload_2
+       8: invokedynamic #938,  0            // InvokeDynamic #20:get:(Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/json/WeightedUnbakedModel;Ljava/util/List;)Ljava/util/function/Supplier;
+      13: invokestatic  #645                // Method com/mojang/datafixers/util/Pair.of:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/mojang/datafixers/util/Pair;
+      16: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      21: checkcast     #642                // class com/mojang/datafixers/util/Pair
+      24: astore        7
+      26: aload         7
+      28: ifnull        110
+      31: aload         7
+      33: invokevirtual #886                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+      36: aload_3
+      37: if_acmpeq     110
+      40: aload_0
+      41: aload         6
+      43: aload         4
+      45: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      50: pop
+      51: new           #237                // class java/lang/RuntimeException
+      54: dup
+      55: aload         5
+      57: invokevirtual #705                // Method net/minecraft/client/render/model/json/ModelVariantMap.getVariantMap:()Ljava/util/Map;
+      60: invokeinterface #941,  1          // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+      65: invokeinterface #942,  1          // InterfaceMethod java/util/Set.stream:()Ljava/util/stream/Stream;
+      70: aload         7
+      72: invokedynamic #952,  0            // InvokeDynamic #21:test:(Lcom/mojang/datafixers/util/Pair;)Ljava/util/function/Predicate;
+      77: invokeinterface #916,  2          // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      82: invokeinterface #956,  1          // InterfaceMethod java/util/stream/Stream.findFirst:()Ljava/util/Optional;
+      87: invokevirtual #957                // Method java/util/Optional.get:()Ljava/lang/Object;
+      90: checkcast     #28                 // class java/util/Map$Entry
+      93: invokeinterface #960,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+      98: checkcast     #407                // class java/lang/String
+     101: invokedynamic #963,  0            // InvokeDynamic #22:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     106: invokespecial #436                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     109: athrow
+     110: return
+
+  private static boolean method_4730(com.mojang.datafixers.util.Pair, java.util.Map$Entry);
+    Code:
+       0: aload_1
+       1: invokeinterface #967,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+       6: aload_0
+       7: invokevirtual #886                // Method com/mojang/datafixers/util/Pair.getFirst:()Ljava/lang/Object;
+      10: if_acmpne     17
+      13: iconst_1
+      14: goto          18
+      17: iconst_0
+      18: ireturn
+
+  private static net.minecraft.client.render.model.ModelLoader$ModelDefinition method_21598(net.minecraft.block.BlockState, net.minecraft.client.render.model.json.WeightedUnbakedModel, java.util.List);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokestatic  #972                // Method net/minecraft/client/render/model/ModelLoader$ModelDefinition.create:(Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/UnbakedModel;Ljava/util/Collection;)Lnet/minecraft/client/render/model/ModelLoader$ModelDefinition;
+       6: areturn
+
+  private static void method_4738(java.util.Map, net.minecraft.client.render.model.MultipartUnbakedModel, java.util.List, net.minecraft.block.BlockState);
+    Code:
+       0: aload_0
+       1: aload_3
+       2: aload_1
+       3: aload_3
+       4: aload_1
+       5: aload_2
+       6: invokedynamic #980,  0            // InvokeDynamic #23:get:(Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/MultipartUnbakedModel;Ljava/util/List;)Ljava/util/function/Supplier;
+      11: invokestatic  #645                // Method com/mojang/datafixers/util/Pair.of:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/mojang/datafixers/util/Pair;
+      14: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      19: pop
+      20: return
+
+  private static net.minecraft.client.render.model.ModelLoader$ModelDefinition method_21599(net.minecraft.block.BlockState, net.minecraft.client.render.model.MultipartUnbakedModel, java.util.List);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokestatic  #983                // Method net/minecraft/client/render/model/ModelLoader$ModelDefinition.create:(Lnet/minecraft/block/BlockState;Lnet/minecraft/client/render/model/MultipartUnbakedModel;Ljava/util/Collection;)Lnet/minecraft/client/render/model/ModelLoader$ModelDefinition;
+       6: areturn
+
+  private com.mojang.datafixers.util.Pair method_45874(net.minecraft.util.Identifier, net.minecraft.client.render.model.ModelLoader$SourceTrackedData);
+    Code:
+       0: aload_2
+       1: getfield      #986                // Field net/minecraft/client/render/model/ModelLoader$SourceTrackedData.source:Ljava/lang/String;
+       4: aload_0
+       5: getfield      #149                // Field variantMapDeserializationContext:Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;
+       8: aload_2
+       9: getfield      #990                // Field net/minecraft/client/render/model/ModelLoader$SourceTrackedData.data:Lcom/google/gson/JsonElement;
+      12: invokestatic  #994                // Method net/minecraft/client/render/model/json/ModelVariantMap.fromJson:(Lnet/minecraft/client/render/model/json/ModelVariantMap$DeserializationContext;Lcom/google/gson/JsonElement;)Lnet/minecraft/client/render/model/json/ModelVariantMap;
+      15: invokestatic  #645                // Method com/mojang/datafixers/util/Pair.of:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/mojang/datafixers/util/Pair;
+      18: areturn
+      19: astore_3
+      20: new           #17                 // class net/minecraft/client/render/model/ModelLoader$ModelLoaderException
+      23: dup
+      24: getstatic     #742                // Field java/util/Locale.ROOT:Ljava/util/Locale;
+      27: ldc_w         #996                // String Exception loading blockstate definition: \'%s\' in resourcepack: \'%s\': %s
+      30: iconst_3
+      31: anewarray     #4                  // class java/lang/Object
+      34: dup
+      35: iconst_0
+      36: aload_1
+      37: aastore
+      38: dup
+      39: iconst_1
+      40: aload_2
+      41: getfield      #986                // Field net/minecraft/client/render/model/ModelLoader$SourceTrackedData.source:Ljava/lang/String;
+      44: aastore
+      45: dup
+      46: iconst_2
+      47: aload_3
+      48: invokevirtual #928                // Method java/lang/Exception.getMessage:()Ljava/lang/String;
+      51: aastore
+      52: invokestatic  #748                // Method java/lang/String.format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      55: invokespecial #749                // Method net/minecraft/client/render/model/ModelLoader$ModelLoaderException."<init>":(Ljava/lang/String;)V
+      58: athrow
+    Exception table:
+       from    to  target type
+           0    18    19   Class java/lang/Exception
+
+  private static net.minecraft.client.render.model.ModelLoader$ModelDefinition method_21606(net.minecraft.client.render.model.ModelLoader$ModelDefinition);
+    Code:
+       0: aload_0
+       1: areturn
+
+  private static void method_4720(java.util.Map, net.minecraft.util.Identifier, net.minecraft.block.BlockState);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokestatic  #1003               // Method net/minecraft/client/render/block/BlockModels.getModelId:(Lnet/minecraft/util/Identifier;Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/util/ModelIdentifier;
+       6: aload_2
+       7: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      12: pop
+      13: return
+
+  private static net.minecraft.state.StateManager method_4736(net.minecraft.util.Identifier);
+    Code:
+       0: getstatic     #270                // Field net/minecraft/registry/Registries.BLOCK:Lnet/minecraft/registry/DefaultedRegistry;
+       3: aload_0
+       4: invokeinterface #1006,  2         // InterfaceMethod net/minecraft/registry/DefaultedRegistry.get:(Lnet/minecraft/util/Identifier;)Ljava/lang/Object;
+       9: checkcast     #288                // class net/minecraft/block/Block
+      12: invokevirtual #292                // Method net/minecraft/block/Block.getStateManager:()Lnet/minecraft/state/StateManager;
+      15: areturn
+
+  private static boolean method_4739(net.minecraft.block.Block, java.util.Map, net.minecraft.block.BlockState);
+    Code:
+       0: aload_2
+       1: ifnull        12
+       4: aload_2
+       5: aload_0
+       6: invokevirtual #1010               // Method net/minecraft/block/BlockState.isOf:(Lnet/minecraft/block/Block;)Z
+       9: ifne          14
+      12: iconst_0
+      13: ireturn
+      14: aload_1
+      15: invokeinterface #941,  1          // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+      20: invokeinterface #322,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      25: astore_3
+      26: aload_3
+      27: invokeinterface #282,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      32: ifeq          78
+      35: aload_3
+      36: invokeinterface #286,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      41: checkcast     #28                 // class java/util/Map$Entry
+      44: astore        4
+      46: aload_2
+      47: aload         4
+      49: invokeinterface #960,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+      54: checkcast     #419                // class net/minecraft/state/property/Property
+      57: invokevirtual #1013               // Method net/minecraft/block/BlockState.get:(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;
+      60: aload         4
+      62: invokeinterface #967,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+      67: invokestatic  #558                // Method java/util/Objects.equals:(Ljava/lang/Object;Ljava/lang/Object;)Z
+      70: ifne          75
+      73: iconst_0
+      74: ireturn
+      75: goto          26
+      78: iconst_1
+      79: ireturn
+
+  private void method_45877(java.util.function.BiFunction, net.minecraft.util.Identifier);
+    Code:
+       0: aconst_null
+       1: astore_3
+       2: new           #19                 // class net/minecraft/client/render/model/ModelLoader$BakerImpl
+       5: dup
+       6: aload_0
+       7: aload_1
+       8: aload_2
+       9: invokespecial #1018               // Method net/minecraft/client/render/model/ModelLoader$BakerImpl."<init>":(Lnet/minecraft/client/render/model/ModelLoader;Ljava/util/function/BiFunction;Lnet/minecraft/util/Identifier;)V
+      12: aload_2
+      13: getstatic     #1024               // Field net/minecraft/client/render/model/ModelRotation.X0_Y0:Lnet/minecraft/client/render/model/ModelRotation;
+      16: invokevirtual #1027               // Method net/minecraft/client/render/model/ModelLoader$BakerImpl.bake:(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/model/ModelBakeSettings;)Lnet/minecraft/client/render/model/BakedModel;
+      19: astore_3
+      20: goto          39
+      23: astore        4
+      25: getstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+      28: ldc_w         #1031               // String Unable to bake model: \'{}\': {}
+      31: aload_2
+      32: aload         4
+      34: invokeinterface #883,  4          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+      39: aload_3
+      40: ifnull        55
+      43: aload_0
+      44: getfield      #163                // Field bakedModels:Ljava/util/Map;
+      47: aload_2
+      48: aload_3
+      49: invokeinterface #221,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      54: pop
+      55: return
+    Exception table:
+       from    to  target type
+           2    20    23   Class java/lang/Exception
+
+  private void method_45875(net.minecraft.client.render.model.UnbakedModel);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokedynamic #1038,  0           // InvokeDynamic #24:apply:(Lnet/minecraft/client/render/model/ModelLoader;)Ljava/util/function/Function;
+       7: invokeinterface #1042,  2         // InterfaceMethod net/minecraft/client/render/model/UnbakedModel.setParents:(Ljava/util/function/Function;)V
+      12: return
+
+  private void method_4716(net.minecraft.block.BlockState);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #1045               // Method net/minecraft/client/render/block/BlockModels.getModelId:(Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/util/ModelIdentifier;
+       5: invokevirtual #225                // Method addModel:(Lnet/minecraft/client/util/ModelIdentifier;)V
+       8: return
+
+  private void method_4723(net.minecraft.util.Identifier, net.minecraft.state.StateManager);
+    Code:
+       0: aload_2
+       1: invokevirtual #296                // Method net/minecraft/state/StateManager.getStates:()Lcom/google/common/collect/ImmutableList;
+       4: aload_0
+       5: aload_1
+       6: invokedynamic #1053,  0           // InvokeDynamic #25:accept:(Lnet/minecraft/client/render/model/ModelLoader;Lnet/minecraft/util/Identifier;)Ljava/util/function/Consumer;
+      11: invokevirtual #310                // Method com/google/common/collect/ImmutableList.forEach:(Ljava/util/function/Consumer;)V
+      14: return
+
+  private void method_4717(net.minecraft.util.Identifier, net.minecraft.block.BlockState);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokestatic  #1003               // Method net/minecraft/client/render/block/BlockModels.getModelId:(Lnet/minecraft/util/Identifier;Lnet/minecraft/block/BlockState;)Lnet/minecraft/client/util/ModelIdentifier;
+       6: invokevirtual #225                // Method addModel:(Lnet/minecraft/client/util/ModelIdentifier;)V
+       9: return
+
+  private static void method_21602(it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap);
+    Code:
+       0: aload_0
+       1: iconst_m1
+       2: invokevirtual #1057               // Method it/unimi/dsi/fastutil/objects/Object2IntOpenHashMap.defaultReturnValue:(I)V
+       5: return
+
+  private static void method_4721(net.minecraft.client.render.model.json.JsonUnbakedModel);
+    Code:
+       0: aload_0
+       1: ldc_w         #1062               // String block entity marker
+       4: putfield      #841                // Field net/minecraft/client/render/model/json/JsonUnbakedModel.id:Ljava/lang/String;
+       7: return
+
+  private static void method_4719(net.minecraft.client.render.model.json.JsonUnbakedModel);
+    Code:
+       0: aload_0
+       1: ldc_w         #1065               // String generation marker
+       4: putfield      #841                // Field net/minecraft/client/render/model/json/JsonUnbakedModel.id:Ljava/lang/String;
+       7: return
+
+  private static net.minecraft.util.Identifier method_23216(net.minecraft.util.Identifier);
+    Code:
+       0: new           #324                // class net/minecraft/util/Identifier
+       3: dup
+       4: aload_0
+       5: invokevirtual #570                // Method net/minecraft/util/Identifier.getPath:()Ljava/lang/String;
+       8: invokedynamic #1069,  0           // InvokeDynamic #26:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+      13: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+      16: areturn
+
+  private static net.minecraft.util.Identifier method_22820(int);
+    Code:
+       0: new           #324                // class net/minecraft/util/Identifier
+       3: dup
+       4: iload_0
+       5: invokedynamic #1077,  0           // InvokeDynamic #27:makeConcatWithConstants:(I)Ljava/lang/String;
+      10: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+      13: areturn
+
+  static {};
+    Code:
+       0: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+       3: dup
+       4: getstatic     #1085               // Field net/minecraft/client/texture/SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+       7: new           #324                // class net/minecraft/util/Identifier
+      10: dup
+      11: ldc_w         #1087               // String block/fire_0
+      14: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+      17: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+      20: putstatic     #1092               // Field FIRE_0:Lnet/minecraft/client/util/SpriteIdentifier;
+      23: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+      26: dup
+      27: getstatic     #1085               // Field net/minecraft/client/texture/SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+      30: new           #324                // class net/minecraft/util/Identifier
+      33: dup
+      34: ldc_w         #1094               // String block/fire_1
+      37: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+      40: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+      43: putstatic     #1096               // Field FIRE_1:Lnet/minecraft/client/util/SpriteIdentifier;
+      46: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+      49: dup
+      50: getstatic     #1085               // Field net/minecraft/client/texture/SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+      53: new           #324                // class net/minecraft/util/Identifier
+      56: dup
+      57: ldc_w         #1098               // String block/lava_flow
+      60: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+      63: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+      66: putstatic     #1100               // Field LAVA_FLOW:Lnet/minecraft/client/util/SpriteIdentifier;
+      69: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+      72: dup
+      73: getstatic     #1085               // Field net/minecraft/client/texture/SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+      76: new           #324                // class net/minecraft/util/Identifier
+      79: dup
+      80: ldc_w         #1102               // String block/water_flow
+      83: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+      86: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+      89: putstatic     #1104               // Field WATER_FLOW:Lnet/minecraft/client/util/SpriteIdentifier;
+      92: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+      95: dup
+      96: getstatic     #1085               // Field net/minecraft/client/texture/SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+      99: new           #324                // class net/minecraft/util/Identifier
+     102: dup
+     103: ldc_w         #1106               // String block/water_overlay
+     106: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+     109: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+     112: putstatic     #1108               // Field WATER_OVERLAY:Lnet/minecraft/client/util/SpriteIdentifier;
+     115: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+     118: dup
+     119: getstatic     #1113               // Field net/minecraft/client/render/TexturedRenderLayers.BANNER_PATTERNS_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+     122: new           #324                // class net/minecraft/util/Identifier
+     125: dup
+     126: ldc_w         #1115               // String entity/banner_base
+     129: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+     132: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+     135: putstatic     #1117               // Field BANNER_BASE:Lnet/minecraft/client/util/SpriteIdentifier;
+     138: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+     141: dup
+     142: getstatic     #1120               // Field net/minecraft/client/render/TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+     145: new           #324                // class net/minecraft/util/Identifier
+     148: dup
+     149: ldc_w         #1122               // String entity/shield_base
+     152: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+     155: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+     158: putstatic     #1124               // Field SHIELD_BASE:Lnet/minecraft/client/util/SpriteIdentifier;
+     161: new           #1080               // class net/minecraft/client/util/SpriteIdentifier
+     164: dup
+     165: getstatic     #1120               // Field net/minecraft/client/render/TexturedRenderLayers.SHIELD_PATTERNS_ATLAS_TEXTURE:Lnet/minecraft/util/Identifier;
+     168: new           #324                // class net/minecraft/util/Identifier
+     171: dup
+     172: ldc_w         #1126               // String entity/shield_base_nopattern
+     175: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+     178: invokespecial #1090               // Method net/minecraft/client/util/SpriteIdentifier."<init>":(Lnet/minecraft/util/Identifier;Lnet/minecraft/util/Identifier;)V
+     181: putstatic     #1128               // Field SHIELD_BASE_NO_PATTERN:Lnet/minecraft/client/util/SpriteIdentifier;
+     184: iconst_0
+     185: bipush        10
+     187: invokestatic  #1134               // InterfaceMethod java/util/stream/IntStream.range:(II)Ljava/util/stream/IntStream;
+     190: invokedynamic #1143,  0           // InvokeDynamic #28:apply:()Ljava/util/function/IntFunction;
+     195: invokeinterface #1147,  2         // InterfaceMethod java/util/stream/IntStream.mapToObj:(Ljava/util/function/IntFunction;)Ljava/util/stream/Stream;
+     200: invokestatic  #1152               // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+     203: invokeinterface #1156,  2         // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+     208: checkcast     #647                // class java/util/List
+     211: putstatic     #1158               // Field BLOCK_DESTRUCTION_STAGES:Ljava/util/List;
+     214: getstatic     #1158               // Field BLOCK_DESTRUCTION_STAGES:Ljava/util/List;
+     217: invokeinterface #654,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+     222: invokedynamic #1163,  0           // InvokeDynamic #29:apply:()Ljava/util/function/Function;
+     227: invokeinterface #671,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+     232: invokestatic  #1152               // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+     235: invokeinterface #1156,  2         // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+     240: checkcast     #647                // class java/util/List
+     243: putstatic     #1165               // Field BLOCK_DESTRUCTION_STAGE_TEXTURES:Ljava/util/List;
+     246: getstatic     #1165               // Field BLOCK_DESTRUCTION_STAGE_TEXTURES:Ljava/util/List;
+     249: invokeinterface #654,  1          // InterfaceMethod java/util/List.stream:()Ljava/util/stream/Stream;
+     254: invokedynamic #1174,  0           // InvokeDynamic #30:apply:()Ljava/util/function/Function;
+     259: invokeinterface #671,  2          // InterfaceMethod java/util/stream/Stream.map:(Ljava/util/function/Function;)Ljava/util/stream/Stream;
+     264: invokestatic  #1152               // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+     267: invokeinterface #1156,  2         // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+     272: checkcast     #647                // class java/util/List
+     275: putstatic     #1176               // Field BLOCK_DESTRUCTION_RENDER_LAYERS:Ljava/util/List;
+     278: invokestatic  #1182               // Method com/mojang/logging/LogUtils.getLogger:()Lorg/slf4j/Logger;
+     281: putstatic     #227                // Field LOGGER:Lorg/slf4j/Logger;
+     284: ldc_w         #1184               // String builtin/missing
+     287: ldc           #84                 // String missing
+     289: invokestatic  #1188               // Method net/minecraft/client/util/ModelIdentifier.ofVanilla:(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/client/util/ModelIdentifier;
+     292: putstatic     #213                // Field MISSING_ID:Lnet/minecraft/client/util/ModelIdentifier;
+     295: ldc_w         #1190               // String blockstates
+     298: invokestatic  #1194               // Method net/minecraft/resource/ResourceFinder.json:(Ljava/lang/String;)Lnet/minecraft/resource/ResourceFinder;
+     301: putstatic     #615                // Field BLOCK_STATES_FINDER:Lnet/minecraft/resource/ResourceFinder;
+     304: ldc_w         #1196               // String models
+     307: invokestatic  #1194               // Method net/minecraft/resource/ResourceFinder.json:(Ljava/lang/String;)Lnet/minecraft/resource/ResourceFinder;
+     310: putstatic     #843                // Field MODELS_FINDER:Lnet/minecraft/resource/ResourceFinder;
+     313: invokestatic  #1202               // Method net/minecraft/client/texture/MissingSprite.getMissingSpriteId:()Lnet/minecraft/util/Identifier;
+     316: invokevirtual #570                // Method net/minecraft/util/Identifier.getPath:()Ljava/lang/String;
+     319: invokestatic  #1202               // Method net/minecraft/client/texture/MissingSprite.getMissingSpriteId:()Lnet/minecraft/util/Identifier;
+     322: invokevirtual #570                // Method net/minecraft/util/Identifier.getPath:()Ljava/lang/String;
+     325: invokedynamic #1207,  0           // InvokeDynamic #31:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+     330: bipush        39
+     332: bipush        34
+     334: invokevirtual #1211               // Method java/lang/String.replace:(CC)Ljava/lang/String;
+     337: putstatic     #1213               // Field MISSING_DEFINITION:Ljava/lang/String;
+     340: ldc           #84                 // String missing
+     342: getstatic     #1213               // Field MISSING_DEFINITION:Ljava/lang/String;
+     345: invokestatic  #1218               // Method com/google/common/collect/ImmutableMap.of:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap;
+     348: invokestatic  #1221               // Method com/google/common/collect/Maps.newHashMap:(Ljava/util/Map;)Ljava/util/HashMap;
+     351: putstatic     #824                // Field BUILTIN_MODEL_DEFINITIONS:Ljava/util/Map;
+     354: bipush        44
+     356: invokestatic  #1225               // Method com/google/common/base/Splitter.on:(C)Lcom/google/common/base/Splitter;
+     359: putstatic     #394                // Field COMMA_SPLITTER:Lcom/google/common/base/Splitter;
+     362: bipush        61
+     364: invokestatic  #1225               // Method com/google/common/base/Splitter.on:(C)Lcom/google/common/base/Splitter;
+     367: iconst_2
+     368: invokevirtual #1229               // Method com/google/common/base/Splitter.limit:(I)Lcom/google/common/base/Splitter;
+     371: putstatic     #409                // Field KEY_VALUE_SPLITTER:Lcom/google/common/base/Splitter;
+     374: ldc_w         #1231               // String {\"gui_light\": \"front\"}
+     377: invokestatic  #1234               // Method net/minecraft/client/render/model/json/JsonUnbakedModel.deserialize:(Ljava/lang/String;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+     380: invokedynamic #1239,  0           // InvokeDynamic #32:accept:()Ljava/util/function/Consumer;
+     385: invokestatic  #193                // Method net/minecraft/util/Util.make:(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;
+     388: checkcast     #835                // class net/minecraft/client/render/model/json/JsonUnbakedModel
+     391: putstatic     #808                // Field GENERATION_MARKER:Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+     394: ldc_w         #1241               // String {\"gui_light\": \"side\"}
+     397: invokestatic  #1234               // Method net/minecraft/client/render/model/json/JsonUnbakedModel.deserialize:(Ljava/lang/String;)Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+     400: invokedynamic #1245,  0           // InvokeDynamic #33:accept:()Ljava/util/function/Consumer;
+     405: invokestatic  #193                // Method net/minecraft/util/Util.make:(Ljava/lang/Object;Ljava/util/function/Consumer;)Ljava/lang/Object;
+     408: checkcast     #835                // class net/minecraft/client/render/model/json/JsonUnbakedModel
+     411: putstatic     #810                // Field BLOCK_ENTITY_MARKER:Lnet/minecraft/client/render/model/json/JsonUnbakedModel;
+     414: new           #35                 // class net/minecraft/state/StateManager$Builder
+     417: dup
+     418: getstatic     #1250               // Field net/minecraft/block/Blocks.AIR:Lnet/minecraft/block/Block;
+     421: invokespecial #1252               // Method net/minecraft/state/StateManager$Builder."<init>":(Ljava/lang/Object;)V
+     424: iconst_1
+     425: anewarray     #419                // class net/minecraft/state/property/Property
+     428: dup
+     429: iconst_0
+     430: ldc_w         #1253               // String map
+     433: invokestatic  #1258               // Method net/minecraft/state/property/BooleanProperty.of:(Ljava/lang/String;)Lnet/minecraft/state/property/BooleanProperty;
+     436: aastore
+     437: invokevirtual #1261               // Method net/minecraft/state/StateManager$Builder.add:([Lnet/minecraft/state/property/Property;)Lnet/minecraft/state/StateManager$Builder;
+     440: invokedynamic #1269,  0           // InvokeDynamic #34:apply:()Ljava/util/function/Function;
+     445: invokedynamic #1280,  0           // InvokeDynamic #35:create:()Lnet/minecraft/state/StateManager$Factory;
+     450: invokevirtual #1284               // Method net/minecraft/state/StateManager$Builder.build:(Ljava/util/function/Function;Lnet/minecraft/state/StateManager$Factory;)Lnet/minecraft/state/StateManager;
+     453: putstatic     #1286               // Field ITEM_FRAME_STATE_FACTORY:Lnet/minecraft/state/StateManager;
+     456: new           #1288               // class net/minecraft/client/render/model/json/ItemModelGenerator
+     459: dup
+     460: invokespecial #1289               // Method net/minecraft/client/render/model/json/ItemModelGenerator."<init>":()V
+     463: putstatic     #1291               // Field ITEM_MODEL_GENERATOR:Lnet/minecraft/client/render/model/json/ItemModelGenerator;
+     466: new           #324                // class net/minecraft/util/Identifier
+     469: dup
+     470: ldc_w         #1293               // String item_frame
+     473: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+     476: getstatic     #1286               // Field ITEM_FRAME_STATE_FACTORY:Lnet/minecraft/state/StateManager;
+     479: new           #324                // class net/minecraft/util/Identifier
+     482: dup
+     483: ldc_w         #1295               // String glow_item_frame
+     486: invokespecial #1070               // Method net/minecraft/util/Identifier."<init>":(Ljava/lang/String;)V
+     489: getstatic     #1286               // Field ITEM_FRAME_STATE_FACTORY:Lnet/minecraft/state/StateManager;
+     492: invokestatic  #1298               // Method com/google/common/collect/ImmutableMap.of:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableMap;
+     495: putstatic     #247                // Field STATIC_DEFINITIONS:Ljava/util/Map;
+     498: return
+}

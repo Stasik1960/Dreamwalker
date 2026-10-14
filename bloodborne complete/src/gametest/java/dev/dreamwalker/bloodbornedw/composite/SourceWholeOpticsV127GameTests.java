@@ -18,6 +18,14 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.*;
 
 public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
+    private record LocalView(net.minecraft.world.World backingWorld,BlockPos origin) implements ProjectedBlockView {
+        @Override public BlockPos worldPosition(BlockPos localPosition){return localPosition.add(origin);}
+        @Override public net.minecraft.block.entity.BlockEntity getBlockEntity(BlockPos pos){return backingWorld.getBlockEntity(worldPosition(pos));}
+        @Override public net.minecraft.block.BlockState getBlockState(BlockPos pos){return backingWorld.getBlockState(worldPosition(pos));}
+        @Override public net.minecraft.fluid.FluidState getFluidState(BlockPos pos){return backingWorld.getFluidState(worldPosition(pos));}
+        @Override public int getHeight(){return backingWorld.getHeight();}
+        @Override public int getBottomY(){return backingWorld.getBottomY();}
+    }
     private static NbtCompound payload(double shift,boolean enabled){
         var payload=ImportedTypeAliases.markPayload(null);var list=new NbtList();list.add(NbtDouble.of(0));list.add(NbtDouble.of(shift));list.add(NbtDouble.of(0));payload.put("SourceShift",list);
         if(enabled)payload.putInt(ImportedWholeSourceOpticsV127.CONTEXT,1);return payload;
@@ -25,6 +33,10 @@ public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="z_v127_whole_source_optics",tickLimit=400)
     public void exactConvertedCarrierShadowsPreserveEmptyPhysicsAndHandV12Guard(TestContext t){
         var world=t.getWorld();int index=0;
+        var sourceCarrier=ImportedWholeSourceOpticsV127.opaqueRenderCarrier();
+        t.assertTrue(sourceCarrier!=null&&sourceCarrier.isOpaqueFullCube(net.minecraft.world.EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
+            &&sourceCarrier.getAmbientOcclusionLightLevel(net.minecraft.world.EmptyBlockView.INSTANCE,BlockPos.ORIGIN)==.2F
+            &&sourceCarrier.getLuminance()==0&&sourceCarrier.getFluidState().isEmpty(),"All 17 consumed source offsets share independently validated native opaque-cube renderer semantics");
         for(String path:List.of("source_original_tree","source_large_grille_gate")){
             var block=CompositeArchitecture.kindBlock(path);var state=block.getDefaultState().with(CompositeRootBlock.VARIANT,0).with(CompositeRootBlock.ROTATION,index==0?0:2);
             var root=t.getAbsolutePos(new BlockPos(32+32*index,30,0));UtilityV127GameTests.load(world,root,12);double shift=index++==0?-1:-.8125;
@@ -43,7 +55,10 @@ public final class SourceWholeOpticsV127GameTests implements FabricGameTest {
             for(var entry:carriers.entrySet()){
                 var pos=CompositeData.pos(owner.root().add(entry.getKey()));t.assertTrue(world.getBlockState(pos).isOf(CompositeArchitecture.CELL),"Carrier is a shared helper, not an extra solid cube");
                 t.assertTrue(world.getBlockState(pos).getOpacity(world,pos)==entry.getValue(),"Published real helper opacity equals the exact native source value");
+                var localView=new LocalView(world,root);var localPos=pos.subtract(root);
+                t.assertTrue(localView.getBlockState(localPos).getOpacity(localView,localPos)==entry.getValue(),"Model-local projected view reads the same published source-helper opacity at its actual world position");
                 int worker=CompletableFuture.supplyAsync(()->CompositeArchitecture.CELL.getDefaultState().getOpacity(world,pos)).join();t.assertTrue(worker==entry.getValue(),"Lighting worker reads the immutable already published opacity");
+                int projectedWorker=CompletableFuture.supplyAsync(()->CompositeShapeSnapshots.sourceCarrierOpacity(localView,localPos)).join();t.assertTrue(projectedWorker==entry.getValue(),"Projected worker lookup retains the real world's immutable snapshot without world loading");
             }
             t.assertTrue(!block.art(state,flagged).getOrCreateNbt().contains(ImportedWholeSourceOpticsV127.CONTEXT),"Creative hand art does not acquire a conversion-only carrier context");
             BlockPos replacement=null;CompositeRootBlock inserted=null;

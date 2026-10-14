@@ -48,6 +48,12 @@ public final class SourcePartsV127GameTests implements FabricGameTest {
             c.assertTrue(picked.getSubNbt("CompositePayload")==null&&picked.getSubNbt("BlockEntityTag")==null,"Source UUID and private settings cannot enter the installation item");
             c.assertTrue(CompositeRuntime.remove(world,owner,player,false).outcome()==TransactionCore.Outcome.COMMITTED,"Whole source-only owner removes normally");CompositeRuntime.drain(world);checked++;
         }
-        c.assertTrue(checked==52,"All40 source compatibility states (including measured optics aliases) and12 tree pieces are verified separately");player.discard();c.complete();
+        int declared;
+        try(var reader=new java.io.InputStreamReader(SourcePartsV127GameTests.class.getResourceAsStream("/bloodborne_dw/imported-source-parts-v127.json"),java.nio.charset.StandardCharsets.UTF_8)){
+            var parts=com.google.gson.JsonParser.parseReader(reader).getAsJsonObject().getAsJsonArray("parts");Set<String> unique=new HashSet<>();
+            for(var raw:parts){var row=raw.getAsJsonObject();unique.add(row.get("registryId").getAsString()+"/"+row.get("variant").getAsInt());}
+            c.assertTrue(unique.size()==parts.size(),"No repeated persisted source-part contract");declared=unique.size();
+        }catch(java.io.IOException failure){throw new IllegalStateException(failure);}
+        c.assertTrue(checked==declared+12,"Every declared source compatibility state and12 unchanged tree pieces is verified separately");player.discard();c.complete();
     }
 }

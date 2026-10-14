@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 /** Explicit artworks imported after V12. Existing prototypes retain their own data. */
 public final class RemainingArchitecture {
-    private record Artwork(String path, List<String> names) {}
+    private record Artwork(String path, List<String> names, boolean conversionOnly) {}
     private static final Map<String, Artwork> ARTWORKS = load();
     private RemainingArchitecture() {}
 
@@ -33,7 +33,8 @@ public final class RemainingArchitecture {
                     if (name.isBlank()) throw new IllegalStateException("Empty artwork name " + path);
                     names.add(name);
                 }
-                if (names.isEmpty() || names.size() > (dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.isBankedPath(path)?dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.variantBudget(path):path.equals("source_stairs_polished_deepslate_stairs_bottom")?20:16) || result.putIfAbsent(path, new Artwork(path, List.copyOf(names))) != null)
+                boolean conversionOnly=row.has("conversionOnly")&&row.get("conversionOnly").getAsBoolean();
+                if (names.isEmpty() || names.size() > (dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.isBankedPath(path)?dev.dreamwalker.bloodbornedw.composite.ImportedArtworkBlock.variantBudget(path):path.equals("source_stairs_polished_deepslate_stairs_bottom")?20:16) || result.putIfAbsent(path, new Artwork(path, List.copyOf(names),conversionOnly)) != null)
                     throw new IllegalStateException("Invalid/repeated artwork " + path);
             }
             return Collections.unmodifiableMap(result);
@@ -60,6 +61,7 @@ public final class RemainingArchitecture {
         Identifier id = Registries.ITEM.getId(original.getItem());
         Artwork artwork = id.getNamespace().equals("bloodborne_dw") ? ARTWORKS.get(id.getPath()) : null;
         if (artwork == null) return List.of(original.copy());
+        if (artwork.conversionOnly) return List.of();
         if (dev.dreamwalker.bloodbornedw.composite.ImportedAssemblyV126.hidden(id.getPath())) return List.of();
         if (dev.dreamwalker.bloodbornedw.composite.ImportedStyleRetirements.retired(id)) return List.of();
         if (!dev.dreamwalker.bloodbornedw.composite.ImportedTypeAliases.canonicalRegistry(id.toString()).equals(id.toString())) return List.of();

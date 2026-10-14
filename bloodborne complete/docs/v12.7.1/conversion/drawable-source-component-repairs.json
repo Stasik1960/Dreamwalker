@@ -1,0 +1,157 @@
+{
+  "status": "PASS_OFFLINE_VALID_SOURCE_COMPONENT_RESTORATION",
+  "rows": [
+    {
+      "model": "minecraft:block/dandelion",
+      "repair": "REMOVE_ONLY_ZERO_AREA_UNDEFINED_TEXTURE_FACES",
+      "faces": [
+        {
+          "element": 10,
+          "face": "down",
+          "reference": "#missing",
+          "area": 0.0
+        },
+        {
+          "element": 11,
+          "face": "down",
+          "reference": "#missing",
+          "area": 0.0
+        }
+      ]
+    },
+    {
+      "registryId": "bloodborne_dw:source_compatibility_fragment",
+      "variant": 0,
+      "sourceState": "minecraft:dandelion",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/dandelion"
+        }
+      ],
+      "drawableSourceFaces": 97,
+      "allAuthoredVerticesUvUnchanged": true,
+      "newArtwork": false
+    },
+    {
+      "model": "minecraft:block/dandelion_1",
+      "repair": "REMOVE_ONLY_ZERO_AREA_UNDEFINED_TEXTURE_FACES",
+      "faces": [
+        {
+          "element": 10,
+          "face": "down",
+          "reference": "#missing",
+          "area": 0.0
+        },
+        {
+          "element": 11,
+          "face": "down",
+          "reference": "#missing",
+          "area": 0.0
+        }
+      ]
+    },
+    {
+      "registryId": "bloodborne_dw:source_compatibility_fragment",
+      "variant": 1,
+      "sourceState": "minecraft:dandelion",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/dandelion_1"
+        }
+      ],
+      "drawableSourceFaces": 97,
+      "allAuthoredVerticesUvUnchanged": true,
+      "newArtwork": false
+    },
+    {
+      "model": "minecraft:block/dandelion_3",
+      "repair": "REMOVE_ONLY_ZERO_AREA_UNDEFINED_TEXTURE_FACES",
+      "faces": [
+        {
+          "element": 10,
+          "face": "down",
+          "reference": "#missing",
+          "area": 0.0
+        },
+        {
+          "element": 11,
+          "face": "down",
+          "reference": "#missing",
+          "area": 0.0
+        }
+      ]
+    },
+    {
+      "registryId": "bloodborne_dw:source_compatibility_fragment",
+      "variant": 2,
+      "sourceState": "minecraft:dandelion",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/dandelion_3"
+        }
+      ],
+      "drawableSourceFaces": 97,
+      "allAuthoredVerticesUvUnchanged": true,
+      "newArtwork": false
+    },
+    {
+      "model": "minecraft:block/potted_spruce_sapling",
+      "repair": "RESTORE_TEMPLATE_DIRT_ALIAS_USING_EXISTING_V15_TEXTURE",
+      "texture": "minecraft:block/dirt",
+      "face": "pot interior UP",
+      "authoredGeometryUnchanged": true
+    },
+    {
+      "registryId": "bloodborne_dw:source_compatibility_fragment",
+      "variant": 3,
+      "sourceState": "minecraft:potted_spruce_sapling",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/potted_spruce_sapling"
+        }
+      ],
+      "drawableSourceFaces": 26,
+      "allAuthoredVerticesUvUnchanged": true,
+      "newArtwork": false
+    },
+    {
+      "model": "minecraft:block/diorite_wall_side_tall",
+      "repair": "MISSING_UNUSED_PARENT_WITH_EXPLICIT_ELEMENTS",
+      "parent": "minecraft:block/template_wall_tall"
+    },
+    {
+      "registryId": "bloodborne_dw:source_assembly_diorite_wall",
+      "variant": 7,
+      "sourceState": "minecraft:diorite_wall[east=none,north=tall,south=none,up=true,waterlogged=false,west=none]",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/diorite_wall_post"
+        },
+        {
+          "model": "minecraft:block/diorite_wall_side_tall",
+          "uvlock": true
+        }
+      ],
+      "drawableSourceFaces": 60,
+      "allAuthoredVerticesUvUnchanged": true,
+      "newArtwork": false
+    },
+    {
+      "registryId": "bloodborne_dw:source_door_fragment",
+      "variant": 2,
+      "sourceState": "minecraft:iron_door[facing=west,half=upper,hinge=right,open=false,powered=false]",
+      "sourceApplications": [
+        {
+          "model": "minecraft:block/addon/iron_door_top",
+          "y": 180
+        }
+      ],
+      "drawableSourceFaces": 2,
+      "allAuthoredVerticesUvUnchanged": true,
+      "newArtwork": false
+    }
+  ],
+  "nativeVerification": "PENDING",
+  "sourceArchivesWritten": false,
+  "newTextureArtwork": false
+}

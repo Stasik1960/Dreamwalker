@@ -34,7 +34,10 @@ def assembly_contract(archive):
         defaults.setdefault(registry, pose)
         active.setdefault(registry, []).append(pose)
     assert len(metadata['recipes']) == 9 and len(defaults) == 8
-    assert active['bloodborne_dw:source_smooth_quartz_top'] == [1, 2]
+    # The final repair prefers source-city pose2; archived V12.6/7 chose the
+    # older preview pose1. Read the preference from the packaged contract.
+    assert set(active['bloodborne_dw:source_smooth_quartz_top']) == {1, 2}
+    assert defaults['bloodborne_dw:source_smooth_quartz_top'] == active['bloodborne_dw:source_smooth_quartz_top'][0]
     assert not set(defaults).intersection(metadata['hiddenPartRedirects'])
     return metadata, defaults, active
 

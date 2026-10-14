@@ -12,7 +12,7 @@ public final class SourceLegacyPayload {
         "Health","HurtTime","HurtByTimestamp","DeathTime","AbsorptionAmount","Attributes","ActiveEffects","FallFlying",
         "SleepingX","SleepingY","SleepingZ","Brain","HandItems","HandDropChances","ArmorItems","ArmorDropChances",
         "Leash","PersistenceRequired","CanPickUpLoot","LeftHanded","NoAI","DeathLootTable","DeathLootTableSeed",
-        "Patrolling","PatrolTarget","PatrolLeader","Inventory","AngerTime","AngryAt");
+        "Patrolling","PatrolTarget","PatrolLeader","Inventory","AngerTime","AngryAt","BbAltVisual");
     private SourceLegacyPayload(){}
     /** Validate the persistence envelope without changing the original read/fallback rules. */
     public static NbtCompound read(NbtCompound incoming,net.minecraft.entity.Entity entity){

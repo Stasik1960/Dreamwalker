@@ -241,7 +241,7 @@ public final class AssemblyV126GameTests implements FabricGameTest {
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=120,batchId="v126_90923_city_mounting_state")
     public void actualSourceCityDoorAndRearOffsetCapMergeAsStateTwoInOne90923TypeAtEveryCardinalFacing(TestContext t) {
         var assembly=cityMounting();t.assertTrue(assembly.get("primaryId").getAsString().equals("90923")&&assembly.get("installationPose").getAsInt()==2,"actual rear-offset city cap is an alternate mounting state of the existing90923 family");
-        t.assertTrue(ImportedAssemblyV126.activePoses(assembly.get("primaryRegistryId").getAsString()).equals(List.of(1,2))&&ImportedAssemblyV126.installationPose(assembly.get("primaryRegistryId").getAsString())==1,"the approved preview remains default and the city mounting uses its own working state");
+        t.assertTrue(ImportedAssemblyV126.activePoses(assembly.get("primaryRegistryId").getAsString()).equals(List.of(2,1))&&ImportedAssemblyV126.installationPose(assembly.get("primaryRegistryId").getAsString())==2,"exact source-city rear-cap mounting is the default; the old preview remains compatible without changing its geometry");
         var root=t.getAbsolutePos(new BlockPos(20736,96,64));
         for(int extra:new int[]{0,2,4,6}) {
             var values=before(t,root,assembly,extra,true);installSaved(t,values);
@@ -261,7 +261,10 @@ public final class AssemblyV126GameTests implements FabricGameTest {
         var oldNumbers=CatalogueCohortV127.oldNumbers();var additions=CatalogueCohortV127.newNumbers();
         t.assertTrue(oldNumbers.size()==1322&&additions.equals(Map.of("93230","bloodborne_dw:dw_barrier","93231","bloodborne_dw:dw_light","93232","bloodborne_dw:source_original_tree","93233","bloodborne_dw:source_door_fragment")),"independent original1322 reserved numbers gain exactly the four approved utility/tree/fragment IDs");
         Map<String,String> expectedReserved=new HashMap<>(oldNumbers);expectedReserved.putAll(additions);
-        t.assertTrue(allNumbers.size()==1326&&reserved.equals(expectedReserved),"every original1322 numeric-to-registry reservation remains exact and only93230..93233 are appended");
+        Map<String,String> sourceCompatibility=Map.of("93234","bloodborne_dw:source_compatibility_fragment","93235","bloodborne_dw:source_invisible_carrier","93236","bloodborne_dw:source_invisible_solid_carrier","93237","bloodborne_dw:source_fallback_carrier","93238","bloodborne_dw:source_fallback_translucent_carrier","93239","bloodborne_dw:source_fallback_multipart_carrier","93240","bloodborne_dw:source_fallback_solid_multipart_carrier");
+        expectedReserved.putAll(sourceCompatibility);
+        t.assertTrue(allNumbers.size()==1333&&reserved.equals(expectedReserved),"every original1322 numeric-to-registry reservation remains exact; approved93230..33 and only explicit hidden source93234..40 are appended");
+        for(var registry:sourceCompatibility.values())t.assertTrue(UnifiedCreativeCatalogue.canonicalItems().stream().noneMatch(stack->Registries.ITEM.getId(stack.getItem()).toString().equals(registry)),"hidden source compatibility ID never adds a working Creative item "+registry);
         Set<String> workingNumbers=new HashSet<>(),workingRegistries=new HashSet<>();int newTypes=0;
         for(var stack:UnifiedCreativeCatalogue.canonicalItems()) {
             var id=Registries.ITEM.getId(stack.getItem());if(!id.toString().startsWith("bloodborne_dw:source_"))continue;

@@ -41,16 +41,24 @@ public final class BbToolGameTests implements FabricGameTest {
         t.assertTrue(clone.getPos().equals(rp.getPos())&&clone.verticalOffset()==1,"reloading saved Pos never applies offset twice");
         t.assertTrue(BbToolService.move(p,rpTarget,-1)&&rp.getPos().equals(before),"RP down returns exact original position");rp.removeObject();clone.discard();p.discard();t.complete();
     }
-    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=100,batchId="v12_tool")
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=3000,batchId="v12_tool")
     public void radiusAltChangesOnlySameCatalogueIdAndNoneRestoresSingleSelection(TestContext t){
         var w=t.getWorld();var p=player(t);var root=t.getAbsolutePos(new BlockPos(2,3,2));var near=root.east(3);var far=root.east(16);p.setPosition(root.getX()+.5,root.getY(),root.getZ()+.5);var stack=BbToolService.ITEM.getDefaultStack();stack.getOrCreateNbt().putInt("BBMode",BbToolItem.Mode.SPECIAL.ordinal());p.setStackInHand(Hand.MAIN_HAND,stack);
         var state=PrototypeArchitecture.LADDER.getDefaultState().with(PrototypeLadderBlock.FREESTANDING,true);for(var pos:new BlockPos[]{root,near,far}){w.setBlockState(pos,state,Block.NOTIFY_ALL);VerticalMount.placed(w,pos,state);}
         var owner=VerticalMount.owner(w,root);var target=new ToolTarget(ToolTarget.Kind.ARCHITECTURE,w.getRegistryKey().getValue().toString(),owner.instanceId(),root.asLong(),owner.registryId());
         var source=p.getCommandSource().withLevel(2);t.assertTrue(w.getServer().getCommandManager().executeWithPrefix(source,"bb select 6")==1,"real command selects radius");BbToolService.apply(p,target);
-        t.assertTrue(w.getBlockState(root).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.ALT&&w.getBlockState(near).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.ALT&&w.getBlockState(far).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.BASE,"only same-ID owners in player-centred sphere change");
-        t.assertTrue(w.getServer().getCommandManager().executeWithPrefix(source,"bb none")==1,"real command resets radius");BbToolService.apply(p,target);
-        t.assertTrue(w.getBlockState(root).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.BASE&&w.getBlockState(near).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.ALT,"none affects selected object only");
-        t.assertTrue(VerticalMount.owner(w,root).instanceId().equals(owner.instanceId()),"ALT change retains instance identity");p.discard();t.complete();
+        t.assertTrue(BbAlternateService.status(w.getServer()).running(),"radius apply starts bounded asynchronous job");
+        t.runAtTick(1,()->awaitRadiusJob(t,p,()->{
+            t.assertTrue(w.getBlockState(root).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.ALT&&w.getBlockState(near).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.ALT&&w.getBlockState(far).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.BASE,"only same-ID owners in player-centred sphere change");
+            t.assertTrue(w.getServer().getCommandManager().executeWithPrefix(source,"bb none")==1,"real command resets radius");BbToolService.apply(p,target);
+            t.assertTrue(w.getBlockState(root).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.BASE&&w.getBlockState(near).get(PrototypeLadderBlock.PROFILE)==PrototypeLadderBlock.Profile.ALT,"none affects selected object only");
+            t.assertTrue(VerticalMount.owner(w,root).instanceId().equals(owner.instanceId()),"ALT change retains instance identity");p.discard();t.complete();
+        },1,2500));
+    }
+    private static void awaitRadiusJob(TestContext t,ServerPlayerEntity player,Runnable done,long tick,int remaining){
+        if(!BbAlternateService.status(t.getWorld().getServer()).running()){done.run();return;}
+        if(remaining==0){BbAlternateService.cancel(t.getWorld().getServer());player.discard();t.assertTrue(false,"bounded radius job must complete within test timeout");return;}
+        t.runAtTick(tick+1,()->awaitRadiusJob(t,player,done,tick+1,remaining-1));
     }
     static ServerPlayerEntity player(TestContext t){var w=t.getWorld();var p=new ServerPlayerEntity(w.getServer(),w,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"BBToolTest"));var connection=new net.minecraft.network.ClientConnection(net.minecraft.network.NetworkSide.SERVERBOUND){@Override public void send(net.minecraft.network.packet.Packet<?> packet){}@Override public void send(net.minecraft.network.packet.Packet<?> packet,net.minecraft.network.PacketCallbacks callback){}};p.networkHandler=new net.minecraft.server.network.ServerPlayNetworkHandler(w.getServer(),connection,p);p.changeGameMode(net.minecraft.world.GameMode.CREATIVE);p.getAbilities().allowModifyWorld=true;return p;}
 }

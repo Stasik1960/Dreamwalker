@@ -41,6 +41,8 @@ public final class DreamwalkerBb implements ModInitializer, PreLaunchEntrypoint 
         rejectStandaloneRp();
         LOG.info("Dreamwalker BB V12: simple BB tool, preserved architecture and RP");
         SourceTechnicalLight.initialize();
+        dev.dreamwalker.bloodbornedw.composite.InvisibleSourceCarrierV127.initialize();
+        dev.dreamwalker.bloodbornedw.composite.SourceFallbackCarrierV1271.initialize();
         dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.initialize();
         PrototypeArchitecture.initialize();
         PrototypeWallArchitecture.initialize();

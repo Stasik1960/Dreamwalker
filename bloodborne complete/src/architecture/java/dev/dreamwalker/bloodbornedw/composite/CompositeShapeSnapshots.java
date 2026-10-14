@@ -72,7 +72,10 @@ public final class CompositeShapeSnapshots {
     public static List<CompositeData.Contribution> contributions(BlockView view,BlockPos pos){return data(view,pos).entries();}
     /** A light worker reads the already published scalar; no owner NBT, registry,
      * chunk, block entity or persistent state is read during this query. */
-    public static int sourceCarrierOpacity(BlockView view,BlockPos pos){return data(view,pos).sourceOpacity;}
+    public static int sourceCarrierOpacity(BlockView view,BlockPos pos){
+        if(pos!=null&&view instanceof ProjectedBlockView projected)return data(projected.backingWorld(),projected.worldPosition(pos)).sourceOpacity;
+        return data(view,pos).sourceOpacity;
+    }
     public static Owner owner(BlockView view,BlockPos pos){CellData data=data(view,pos);if(data.root!=null)return data.root.resident();for(var entry:data.entries())if(entry.owner().root().equals(CompositeData.cell(pos)))return entry.owner();return null;}
     /** Existing attached native roots also have owners before their first height edit. */
     public static Set<Owner> attachedOwners(World world){Published published=cache(world,false);if(published==null)return Set.of();Set<Owner> owners=new HashSet<>();for(var cells:published.chunks.values())for(var data:cells.values())if(data.root()!=null&&data.root().resident()!=null)owners.add(data.root().resident());return Set.copyOf(owners);}

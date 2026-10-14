@@ -1,0 +1,549 @@
+{
+  "status": "PASS_FIXED_NATIVE_SOURCE_APPLICATION_OPTICS_DELTA",
+  "appendStates": 14,
+  "finalSourceStates": 77,
+  "cells": 40135,
+  "tintedGlassCells": 18175,
+  "multipartPaneStates": 5,
+  "multipartApplications": 25,
+  "newOwnerRecords": 0,
+  "newBlockEntities": 0,
+  "original63SourcePrefixPreserved": true,
+  "weightedSelectionsRecomputed": false,
+  "sourceWorldRescans": 0,
+  "rows": [
+    {
+      "source": "minecraft:tinted_glass",
+      "count": 18175,
+      "decisions": [
+        {
+          "decisionId": 363,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/tinted_glass"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": 255,
+      "source": "minecraft:white_stained_glass",
+      "target": "bloodborne_dw:source_white_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=0]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 8067,
+      "decisions": [
+        {
+          "decisionId": 746,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/white_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 1355,
+      "source": "minecraft:brown_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "target": "bloodborne_dw:source_assembly_brown_stained_glass_pane[compact=true,open=false,profile=base,rotation=0,variant=5]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 115,
+      "decisions": [
+        {
+          "decisionId": 719,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/brown_stained_glass_pane_post"
+            },
+            {
+              "model": "minecraft:block/brown_stained_glass_pane_side",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/brown_stained_glass_pane_side"
+            },
+            {
+              "model": "minecraft:block/brown_stained_glass_pane_side_alt",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/brown_stained_glass_pane_side_alt"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "5"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 1597,
+      "source": "minecraft:yellow_stained_glass",
+      "target": "bloodborne_dw:source_cyan_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=3]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 4829,
+      "decisions": [
+        {
+          "decisionId": 1885,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/yellow_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "3"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 1603,
+      "source": "minecraft:light_gray_stained_glass",
+      "target": "bloodborne_dw:source_cyan_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=2]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 725,
+      "decisions": [
+        {
+          "decisionId": 238,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/light_gray_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "2"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 1605,
+      "source": "minecraft:cyan_stained_glass",
+      "target": "bloodborne_dw:source_cyan_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=0]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 347,
+      "decisions": [
+        {
+          "decisionId": 1887,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/cyan_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 1652,
+      "source": "minecraft:gray_stained_glass",
+      "target": "bloodborne_dw:source_cyan_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=1]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 5742,
+      "decisions": [
+        {
+          "decisionId": 1884,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/gray_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "1"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 2348,
+      "source": "minecraft:white_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "target": "bloodborne_dw:source_assembly_orange_stained_glass_pane[art_bank=1,compact=true,open=false,profile=base,rotation=0,variant=3]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 50,
+      "decisions": [
+        {
+          "decisionId": 6438,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/white_stained_glass_pane_post"
+            },
+            {
+              "model": "minecraft:block/white_stained_glass_pane_side",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/white_stained_glass_pane_side"
+            },
+            {
+              "model": "minecraft:block/white_stained_glass_pane_side_alt",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/white_stained_glass_pane_side_alt"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "art_bank": "1",
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "3"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 2855,
+      "source": "minecraft:purple_stained_glass",
+      "target": "bloodborne_dw:source_purple_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=0]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 416,
+      "decisions": [
+        {
+          "decisionId": 3309,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/purple_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 2905,
+      "source": "minecraft:black_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "target": "bloodborne_dw:source_assembly_black_stained_glass_pane[compact=true,open=false,profile=base,rotation=0,variant=5]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 109,
+      "decisions": [
+        {
+          "decisionId": 2539,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/black_stained_glass_pane_post"
+            },
+            {
+              "model": "minecraft:block/black_stained_glass_pane_side",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/black_stained_glass_pane_side"
+            },
+            {
+              "model": "minecraft:block/black_stained_glass_pane_side_alt",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/black_stained_glass_pane_side_alt"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "5"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 3219,
+      "source": "minecraft:green_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "target": "bloodborne_dw:source_assembly_green_stained_glass_pane[compact=true,open=false,profile=base,rotation=0,variant=5]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 70,
+      "decisions": [
+        {
+          "decisionId": 2516,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/green_stained_glass_pane_post"
+            },
+            {
+              "model": "minecraft:block/green_stained_glass_pane_side",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/green_stained_glass_pane_side"
+            },
+            {
+              "model": "minecraft:block/green_stained_glass_pane_side_alt",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/green_stained_glass_pane_side_alt"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "5"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 3990,
+      "source": "minecraft:orange_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "target": "bloodborne_dw:source_assembly_orange_stained_glass_pane[art_bank=0,compact=true,open=false,profile=base,rotation=0,variant=5]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 7,
+      "decisions": [
+        {
+          "decisionId": 6984,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/orange_stained_glass_pane_post"
+            },
+            {
+              "model": "minecraft:block/orange_stained_glass_pane_side",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/orange_stained_glass_pane_side"
+            },
+            {
+              "model": "minecraft:block/orange_stained_glass_pane_side_alt",
+              "y": 90
+            },
+            {
+              "model": "minecraft:block/orange_stained_glass_pane_side_alt"
+            }
+          ],
+          "sourceShift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "targetProperties": {
+            "art_bank": "0",
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "5"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 4238,
+      "source": "minecraft:blue_stained_glass",
+      "target": "bloodborne_dw:source_blue_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=0]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 1258,
+      "decisions": [
+        {
+          "decisionId": 3898,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/blue_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          }
+        }
+      ]
+    },
+    {
+      "caseId": 4239,
+      "source": "minecraft:brown_stained_glass",
+      "target": "bloodborne_dw:source_blue_stained_glass[compact=true,open=false,profile=base,rotation=0,variant=1]",
+      "opaque": false,
+      "fullCollider": true,
+      "sourceOpacity": 0,
+      "count": 225,
+      "decisions": [
+        {
+          "decisionId": 3899,
+          "sourceApplications": [
+            {
+              "model": "minecraft:block/brown_stained_glass"
+            }
+          ],
+          "sourceShift": [
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "targetProperties": {
+            "compact": "true",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "1"
+          }
+        }
+      ]
+    }
+  ],
+  "multipartAmbientOcclusionChecks": [
+    {
+      "sourceState": "minecraft:brown_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "postAmbientOcclusion": false,
+      "allPartAmbientOcclusionValues": [
+        false
+      ],
+      "applications": 5
+    },
+    {
+      "sourceState": "minecraft:white_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "postAmbientOcclusion": false,
+      "allPartAmbientOcclusionValues": [
+        false
+      ],
+      "applications": 5
+    },
+    {
+      "sourceState": "minecraft:black_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "postAmbientOcclusion": false,
+      "allPartAmbientOcclusionValues": [
+        false
+      ],
+      "applications": 5
+    },
+    {
+      "sourceState": "minecraft:green_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "postAmbientOcclusion": false,
+      "allPartAmbientOcclusionValues": [
+        false
+      ],
+      "applications": 5
+    },
+    {
+      "sourceState": "minecraft:orange_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]",
+      "postAmbientOcclusion": false,
+      "allPartAmbientOcclusionValues": [
+        false
+      ],
+      "applications": 5
+    }
+  ],
+  "sourcePlanSha256": "b3fe163709161008ee9f0b7a3fe95e5e4a8ad8dabd942416380deba1d5349afb",
+  "runtimeManifestSha256": "b0d90462b1de5039ed8228ba6154f6d777321e910f914cfb72afe08d1f8fed84"
+}

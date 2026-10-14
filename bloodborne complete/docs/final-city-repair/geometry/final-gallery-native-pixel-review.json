@@ -1,0 +1,517 @@
+{
+  "schema": "dreamwalker-final-gallery-independent-native-pixel-review-v1",
+  "status": "PASS_SIX_NATIVE_FINAL_GALLERY_VIEWS_INDEPENDENTLY_REVIEWED",
+  "reviewedUtc": "2026-10-14T05:34:10.363347+00:00",
+  "reviewer": "Independent geometry subagent; all six native PNGs were opened through view_image and visually inspected.",
+  "productionJarSha256": "3c93750d2e74475a111ef36837488adf389d3d848ff160f19b1e0060e20a1da2",
+  "galleryManifestSha256": "266c5578d1a7038e7de69f81298e5ab786f8a53f2ce3cf0f0f10733f0239b382",
+  "actualNativeTour": {
+    "path": "build/runtime-client-final-gallery-visual-final5b/final-gallery-visual-tour.json",
+    "sha256": "a8ac4302f6b43f78399587bc259c1e80a40c43951ad9598ae52eb3e7ed80556d",
+    "status": "PASS_NATIVE_FINAL_GALLERY_TOUR_REQUIRES_PIXEL_REVIEW"
+  },
+  "cameraMarker": {
+    "path": "build/final-city-fixes/final-gallery-visual-tour-input.json",
+    "sha256": "bdd152852bcb0a324ddcd40d2ec89b9de7a908dfb252802660955915f64d7568"
+  },
+  "graphics": {
+    "renderer": "NVIDIA GeForce RTX 3070 Laptop GPU/PCIe/SSE2",
+    "vendor": "NVIDIA Corporation",
+    "width": 1280,
+    "height": 720,
+    "renderDistanceChunks": 8
+  },
+  "scopedConclusion": "All six reviewed native views are rendered and textured. The default90923 repaired source-pair pose2 is saved and visible front/side. The two reproduced reported missing-cell views show restored continuous architectural components. Authored dark-grey detail is preserved; no broad uniform-black mesh failure is visible in these views.",
+  "limits": [
+    "This review covers these six actual saved-gallery camera views, not every hidden face, full-city location, time of day or mod combination.",
+    "Exact source geometry and material fidelity rely additionally on the independent static all-yaw/source proofs and native156-context vertex/UV/RGBA/texture proof; visual inspection does not replace those checks.",
+    "This is the prepared city gallery fragment. The full original city conversion is a separate converter/package operation."
+  ],
+  "productionOrWorldAuthoredByReview": false,
+  "frames": [
+    {
+      "station": "final-main-catalogue-overview",
+      "fileName": "01-final-main-catalogue-overview.png",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\bb-final-city-fixes\\DW\\bloodborne complete\\build\\runtime-client-final-gallery-visual-final5b\\screenshots\\01-final-main-catalogue-overview.png",
+      "sha256": "dbf64741aa3d303d2b670ebb2d8f56170223c13cb738d56518827640bb95d50e",
+      "bytes": 1037428,
+      "camera": [
+        136.964039,
+        85.38,
+        22.041006,
+        9.876666,
+        23.727421
+      ],
+      "nativeWorldRenderCallbacks": 374,
+      "relativePath": "build/runtime-client-final-gallery-visual-final5b/screenshots/01-final-main-catalogue-overview.png",
+      "status": "PASS_SCOPED_NATIVE_PIXEL_REVIEW",
+      "findings": [
+        "The actual main display grid is visible on its green stations, with architectural pieces, fences, reliefs and vegetation rendering as distinct silhouettes and textured objects.",
+        "No broad uniform-black rendering failure or missing-texture checkerboard is visible. Small distant exhibits cannot be judged face by face from this overview."
+      ],
+      "scope": "Main catalogue overview; close inspection of every catalogue face is outside this single camera view.",
+      "coordinateEvidence": {
+        "actualMainGridId": "new/4x4",
+        "actualNeighborhoodBounds": [
+          101.0,
+          64.0,
+          49.04100577655,
+          156.9280776503,
+          68.0,
+          86.93782523875001
+        ]
+      },
+      "actualSavedObjects": [
+        {
+          "root": [
+            113,
+            64,
+            86
+          ],
+          "registry": "bloodborne_dw:source_smooth_quartz_top",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "2"
+          },
+          "uuid": "46adc718-fb08-43fd-97db-0cf7eb04db63",
+          "skyLight": 15,
+          "blockLight": 0
+        }
+      ]
+    },
+    {
+      "station": "repaired-door-90923-front",
+      "fileName": "02-repaired-door-90923-front.png",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\bb-final-city-fixes\\DW\\bloodborne complete\\build\\runtime-client-final-gallery-visual-final5b\\screenshots\\02-repaired-door-90923-front.png",
+      "sha256": "c47dab539c04990b8fc6e2772c71edee099aa3821d6a3575dc42dabdb04a07f0",
+      "bytes": 395316,
+      "camera": [
+        114.0,
+        65.38,
+        81.6,
+        0,
+        12.80427
+      ],
+      "nativeWorldRenderCallbacks": 269,
+      "relativePath": "build/runtime-client-final-gallery-visual-final5b/screenshots/02-repaired-door-90923-front.png",
+      "status": "PASS_SCOPED_NATIVE_PIXEL_REVIEW",
+      "findings": [
+        "Saved label identifies 90923 / variant2. The wooden door, small curved surround, tall stone arch, both supports and bases are textured and visible.",
+        "The upper arch is centered horizontally over the door. Stone retains its authored dark-grey variation and no uniformly black arch/door face is visible."
+      ],
+      "scope": "Closed default installationPose2, rotation0, front view.",
+      "coordinateEvidence": {
+        "savedExhibitRoot": [
+          113,
+          64,
+          86
+        ],
+        "savedPose": 2,
+        "actualBounds": [
+          113.0,
+          64.0,
+          85.3125,
+          115.0,
+          68.0,
+          86.6875
+        ]
+      },
+      "actualSavedObjects": [
+        {
+          "root": [
+            113,
+            64,
+            86
+          ],
+          "registry": "bloodborne_dw:source_smooth_quartz_top",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "2"
+          },
+          "uuid": "46adc718-fb08-43fd-97db-0cf7eb04db63",
+          "skyLight": 15,
+          "blockLight": 0
+        }
+      ]
+    },
+    {
+      "station": "repaired-door-90923-side",
+      "fileName": "03-repaired-door-90923-side.png",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\bb-final-city-fixes\\DW\\bloodborne complete\\build\\runtime-client-final-gallery-visual-final5b\\screenshots\\03-repaired-door-90923-side.png",
+      "sha256": "60236d943549b1753b8c544560e75fc748cb36c3a484578f53e66ee144e26558",
+      "bytes": 491051,
+      "camera": [
+        120.0,
+        65.28,
+        84.5,
+        75.963757,
+        8.279643
+      ],
+      "nativeWorldRenderCallbacks": 410,
+      "relativePath": "build/runtime-client-final-gallery-visual-final5b/screenshots/03-repaired-door-90923-side.png",
+      "status": "PASS_SCOPED_NATIVE_PIXEL_REVIEW",
+      "findings": [
+        "The side view exposes the upper and lower authored planes, instead of concealing their depth relation.",
+        "Their separation is consistent with the repaired source-pair pose2 (upper source-anchor relative offset[0,2,-1]); the QA state/UUID checks confirm the saved object. This is supported by the independent all-yaw geometry proof, not an assertion that both planes should be coplanar.",
+        "The thin textured lower door and upper arch have visible sides without a newly introduced black mesh or detached additional translation."
+      ],
+      "scope": "Closed default installationPose2, rotation0, side view; authored depth is intentionally preserved.",
+      "coordinateEvidence": {
+        "savedExhibitRoot": [
+          113,
+          64,
+          86
+        ],
+        "savedPose": 2,
+        "actualBounds": [
+          113.0,
+          64.0,
+          85.3125,
+          115.0,
+          68.0,
+          86.6875
+        ]
+      },
+      "actualSavedObjects": [
+        {
+          "root": [
+            113,
+            64,
+            86
+          ],
+          "registry": "bloodborne_dw:source_smooth_quartz_top",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "2"
+          },
+          "uuid": "46adc718-fb08-43fd-97db-0cf7eb04db63",
+          "skyLight": 15,
+          "blockLight": 0
+        }
+      ]
+    },
+    {
+      "station": "repaired-city-overview",
+      "fileName": "04-repaired-city-overview.png",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\bb-final-city-fixes\\DW\\bloodborne complete\\build\\runtime-client-final-gallery-visual-final5b\\screenshots\\04-repaired-city-overview.png",
+      "sha256": "3bf8eed05ce5b4eb50a3317d5c5f12035e241cbc9392f60d82c8ad4f478cf3ea",
+      "bytes": 715203,
+      "camera": [
+        199.0,
+        122.38,
+        195.508121,
+        42.742512,
+        23.076108
+      ],
+      "nativeWorldRenderCallbacks": 92,
+      "relativePath": "build/runtime-client-final-gallery-visual-final5b/screenshots/04-repaired-city-overview.png",
+      "status": "PASS_SCOPED_NATIVE_PIXEL_REVIEW",
+      "findings": [
+        "The saved city fragment shows its high spire, turrets, roof surfaces, facade and front stairs/railings as a continuous textured structure.",
+        "Mixed light-grey/dark-grey masonry and cyan accents remain visible. No broad black architecture surface or missing-texture checkerboard is visible."
+      ],
+      "scope": "Authored gallery city fragment overview; distant fine details and occluded interiors are outside this view.",
+      "coordinateEvidence": {
+        "actualCityBounds": [
+          108.3010146135,
+          64.0,
+          224.5081213947,
+          175.0,
+          114.0,
+          290.6213203436
+        ],
+        "translation": [
+          110.0,
+          65.0,
+          226.0
+        ]
+      },
+      "actualSavedObjects": [
+        {
+          "root": [
+            148,
+            86,
+            251
+          ],
+          "registry": "bloodborne_dw:source_gold_block",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "0"
+          },
+          "uuid": "dceb02c7-607a-54b5-a017-5994118bb282",
+          "skyLight": 0,
+          "blockLight": 0
+        },
+        {
+          "root": [
+            148,
+            85,
+            251
+          ],
+          "registry": "bloodborne_dw:source_chiseled_quartz_block",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "2"
+          },
+          "uuid": "8dd54c4b-2cc7-5072-aa98-886d0c008713",
+          "skyLight": 0,
+          "blockLight": 0
+        },
+        {
+          "root": [
+            148,
+            84,
+            251
+          ],
+          "registry": "bloodborne_dw:source_chiseled_quartz_block",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "1"
+          },
+          "uuid": "58d38ef2-ce94-51b9-b361-1def70e9983f",
+          "skyLight": 0,
+          "blockLight": 0
+        }
+      ]
+    },
+    {
+      "station": "repaired-column-user-view",
+      "fileName": "05-repaired-column-user-view.png",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\bb-final-city-fixes\\DW\\bloodborne complete\\build\\runtime-client-final-gallery-visual-final5b\\screenshots\\05-repaired-column-user-view.png",
+      "sha256": "21a0ffe3e4c07347345f99340e8ea26cdbe372c8da74ae6d792cc1c5dd4d8ed6",
+      "bytes": 411965,
+      "camera": [
+        128.54,
+        71.658,
+        234.537,
+        52.4,
+        12.4
+      ],
+      "nativeWorldRenderCallbacks": 173,
+      "relativePath": "build/runtime-client-final-gallery-visual-final5b/screenshots/05-repaired-column-user-view.png",
+      "status": "PASS_SCOPED_NATIVE_PIXEL_REVIEW",
+      "findings": [
+        "The exact camera from the reported missing-column screenshot is reproduced through the verified[69,0,9] gallery translation.",
+        "The center/right column has a connected shaft beneath its capital and continuous bases and surrounding decorative wall trim. The earlier visibly detached column sections are restored in this reproduced area.",
+        "Saved-object checks include the original source_acacia_sapling owner at[124,71,238] and restored hidden source_compatibility_fragment owner at[124,70,238]. Textures retain patterned grey variation; no uniformly black column face is visible."
+      ],
+      "scope": "The first reported missing-column camera, exact historical camera transformed to the finalized gallery.",
+      "coordinateEvidence": {
+        "originalUserScreenshotRoot": [
+          55,
+          71,
+          229
+        ],
+        "originalUserScreenshotCamera": [
+          59.54,
+          71.658,
+          225.537,
+          52.4,
+          12.4
+        ],
+        "historicalGalleryTranslation": [
+          41.0,
+          65.0,
+          217.0
+        ],
+        "finalGalleryTranslation": [
+          110.0,
+          65.0,
+          226.0
+        ],
+        "verifiedTranslationDelta": [
+          69.0,
+          0.0,
+          9.0
+        ],
+        "currentTargetCell": [
+          124.0,
+          71.0,
+          238.0
+        ]
+      },
+      "actualSavedObjects": [
+        {
+          "root": [
+            123,
+            71,
+            237
+          ],
+          "registry": "bloodborne_dw:source_polished_blackstone_brick_stairs_1",
+          "properties": {
+            "open": "false",
+            "profile": "base",
+            "rotation": "2",
+            "variant": "0"
+          },
+          "uuid": "07ff05f7-9f62-5a1d-bdaa-dd528eeb6c51",
+          "skyLight": 15,
+          "blockLight": 0
+        },
+        {
+          "root": [
+            124,
+            71,
+            238
+          ],
+          "registry": "bloodborne_dw:source_acacia_sapling",
+          "properties": {
+            "compact": "false",
+            "open": "false",
+            "profile": "base",
+            "rotation": "2",
+            "variant": "0"
+          },
+          "uuid": "22fc578b-fd30-583d-94ca-3bc4999a3697",
+          "skyLight": 14,
+          "blockLight": 0
+        },
+        {
+          "root": [
+            124,
+            70,
+            238
+          ],
+          "registry": "bloodborne_dw:source_compatibility_fragment",
+          "properties": {
+            "art_bank": "0",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "3"
+          },
+          "uuid": "b23484fa-eaed-59ec-9e99-8500b74df3ad",
+          "skyLight": 14,
+          "blockLight": 0
+        }
+      ]
+    },
+    {
+      "station": "repaired-wall-user-view",
+      "fileName": "06-repaired-wall-user-view.png",
+      "path": "C:\\Users\\vakir\\.codex\\worktrees\\bb-final-city-fixes\\DW\\bloodborne complete\\build\\runtime-client-final-gallery-visual-final5b\\screenshots\\06-repaired-wall-user-view.png",
+      "sha256": "1ef4985d8f27e140f924f28b2a0b10aaf206b4270b2de6f2de2536c194fc66c2",
+      "bytes": 242367,
+      "camera": [
+        149.56,
+        66.0,
+        236.456,
+        15.5,
+        4.5
+      ],
+      "nativeWorldRenderCallbacks": 164,
+      "relativePath": "build/runtime-client-final-gallery-visual-final5b/screenshots/06-repaired-wall-user-view.png",
+      "status": "PASS_SCOPED_NATIVE_PIXEL_REVIEW",
+      "findings": [
+        "The exact camera from the reported wall/helper-cell screenshot is reproduced through the same verified gallery translation.",
+        "The central tall pier, upper/lower decorative blocks and adjacent grilles render continuously in the reproduced area; the previous missing middle architectural components are visible.",
+        "Dark-grey patterned masonry and narrow floor-edge shading remain. These local texture/occlusion details are distinct from a uniform-black mesh failure; no untextured black wall or missing-texture checkerboard is visible."
+      ],
+      "scope": "Reported wall/helper-cell camera; the blue opening belongs to the fragment/window boundary, not a newly inferred removed block.",
+      "coordinateEvidence": {
+        "originalUserScreenshotRoot": [
+          78,
+          67,
+          232
+        ],
+        "originalUserScreenshotCamera": [
+          80.56,
+          66.0,
+          227.456,
+          15.5,
+          4.5
+        ],
+        "historicalGalleryTranslation": [
+          41.0,
+          65.0,
+          217.0
+        ],
+        "finalGalleryTranslation": [
+          110.0,
+          65.0,
+          226.0
+        ],
+        "verifiedTranslationDelta": [
+          69.0,
+          0.0,
+          9.0
+        ],
+        "currentTargetCell": [
+          147.0,
+          67.0,
+          241.0
+        ]
+      },
+      "actualSavedObjects": [
+        {
+          "root": [
+            146,
+            66,
+            241
+          ],
+          "registry": "bloodborne_dw:source_assembly_sandstone_wall",
+          "properties": {
+            "compact": "false",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "2"
+          },
+          "uuid": "cd90d0d8-2b83-5e9b-8a49-3145bc422a93",
+          "skyLight": 15,
+          "blockLight": 0
+        },
+        {
+          "root": [
+            146,
+            67,
+            241
+          ],
+          "registry": "bloodborne_dw:source_red_nether_brick_wall_side_tall",
+          "properties": {
+            "art_bank": "0",
+            "compact": "false",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "4"
+          },
+          "uuid": "d75a747d-dfb2-5797-b99a-84336c026cf2",
+          "skyLight": 15,
+          "blockLight": 0
+        },
+        {
+          "root": [
+            146,
+            67,
+            240
+          ],
+          "registry": "bloodborne_dw:source_red_nether_brick_wall_side_tall",
+          "properties": {
+            "art_bank": "0",
+            "compact": "false",
+            "open": "false",
+            "profile": "base",
+            "rotation": "0",
+            "variant": "3"
+          },
+          "uuid": "483658ce-732c-5102-a373-78b21f2bb2b4",
+          "skyLight": 15,
+          "blockLight": 0
+        }
+      ]
+    }
+  ]
+}

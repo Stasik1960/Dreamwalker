@@ -62,7 +62,7 @@ public final class DwUtilityBlocks {
             Settings settings=Settings.create().nonOpaque().dynamicBounds().strength(-1,3600000).dropsNothing()
                 .solidBlock((s,w,p)->false).suffocates((s,w,p)->false).blockVision((s,w,p)->false)
                 .pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK).luminance(state->light?14:0);
-            return light?settings.replaceable():settings;
+            return light?settings.notSolid().replaceable():settings.solid();
         }
         @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(CompositeRootBlock.PROFILE);}
         @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new CompositeBlockEntity(pos,state);}
@@ -71,6 +71,7 @@ public final class DwUtilityBlocks {
             return !light&&context instanceof EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity?VoxelShapes.fullCube():VoxelShapes.empty();
         }
         @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return !light||context.isHolding(asItem())||dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM!=null&&context.isHolding(dev.dreamwalker.bloodbornedw.tool.BbToolService.ITEM)?VoxelShapes.fullCube():VoxelShapes.empty();}
+        @Override public VoxelShape getSidesShape(BlockState state,BlockView world,BlockPos pos){return light?VoxelShapes.empty():VoxelShapes.fullCube();}
         @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
         @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return 0;}
         @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}

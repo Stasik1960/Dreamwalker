@@ -21,6 +21,7 @@ public abstract class RpClimbingMixin {
         LivingEntity mover=(LivingEntity)(Object)this;
         if(mover.isSpectator())return;
         var nativeState=mover.getWorld().getBlockState(mover.getBlockPos());
+        if(dev.dreamwalker.bloodbornedw.composite.InvisibleSourceCarrierV127.climbing(nativeState)){climbingPos=Optional.of(mover.getBlockPos());cir.setReturnValue(true);return;}
         if(cir.getReturnValue()&&nativeState.getBlock() instanceof dev.dreamwalker.bloodbornedw.architecture.PrototypeLadderBlock&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.offset(mover.getWorld(),mover.getBlockPos())!=0){cir.setReturnValue(false);climbingPos=Optional.empty();}
         var mounted=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.climbing(mover.getWorld(),mover.getBoundingBox());
         if(mounted.isPresent()){climbingPos=mounted;cir.setReturnValue(true);return;}

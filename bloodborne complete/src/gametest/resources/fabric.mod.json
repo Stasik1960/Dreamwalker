@@ -25,8 +25,6 @@
       "dev.dreamwalker.bloodbornedw.gametest.UtilityV127GameTests",
       "dev.dreamwalker.bloodbornedw.gametest.UtilityPlacementV127GameTests",
       "dev.dreamwalker.bloodbornedw.tool.BbAlternateV127GameTests",
-      "dev.dreamwalker.bloodbornedw.tool.BbRegionDiscoveryV127GameTests",
-      "dev.dreamwalker.bloodbornedw.tool.BbColdAlternateV127GameTests",
       "dev.dreamwalker.bloodbornedw.gametest.ManualCatalogueV127GameTests",
       "dev.dreamwalker.bloodbornedw.tool.ImportedFollowupV127GameTests",
       "dev.dreamwalker.bloodbornedw.composite.ShardedLedgerV127GameTests",
@@ -38,10 +36,17 @@
       "dev.dreamwalker.bloodbornedw.composite.OwnedStateEntriesV127GameTests",
       "dev.dreamwalker.bloodbornedw.gametest.SourceLightingV127GameTests",
       "dev.dreamwalker.bloodbornedw.composite.SourceWholeOpticsV127GameTests",
-      "dev.dreamwalker.bloodbornedw.gametest.SourceModelOffsetV127GameTests"
+      "dev.dreamwalker.bloodbornedw.gametest.SourceModelOffsetV127GameTests",
+      "dev.dreamwalker.bloodbornedw.tool.AlternateSelectiveGameTests",
+      "dev.dreamwalker.bloodbornedw.tool.AlternateDiscoveryGameTests",
+      "dev.dreamwalker.bloodbornedw.gametest.HiddenCompatibilityCatalogueGameTests",
+      "dev.dreamwalker.bloodbornedw.composite.CompactSourceOpticsV1271GameTests",
+      "dev.dreamwalker.bloodbornedw.composite.NativeCompatibilityCarriersV1271GameTests"
     ]
   },
-  "mixins": ["bloodborne_dw.v127-test.mixins.json"],
+  "mixins": [
+    "bloodborne_dw.v127-test.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.16.10",
     "fabric-gametest-api-v1": "*",

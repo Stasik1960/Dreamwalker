@@ -22,6 +22,21 @@ import net.minecraft.util.math.*;
 import net.minecraft.world.GameMode;
 
 public final class UtilityV127GameTests implements FabricGameTest {
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="final_utility_water",tickLimit=140)
+    public void playerOnlyBarrierSurvivesRealWaterFlowAndKeepsBlockAttachments(TestContext c){
+        var world=c.getWorld();var root=c.getAbsolutePos(new BlockPos(3,12,3));load(world,root,5);
+        for(int x=-2;x<=2;x++)for(int z=-2;z<=2;z++)world.setBlockState(root.add(x,-1,z),Blocks.STONE.getDefaultState());
+        world.setBlockState(root,DwUtilityBlocks.BARRIER.getDefaultState());
+        var state=world.getBlockState(root);
+        c.assertTrue(state.getSidesShape(world,root).equals(net.minecraft.util.shape.VoxelShapes.fullCube()),"Invisible player barrier keeps native full side support for attachments");
+        c.assertTrue(state.getCollisionShape(world,root,ShapeContext.absent()).isEmpty(),"Fluid solidity does not introduce non-player collision");
+        world.setBlockState(root.up(),Blocks.WATER.getDefaultState());
+        c.runAtTick(100,()->{
+            c.assertTrue(world.getBlockState(root).isOf(DwUtilityBlocks.BARRIER),"Actual scheduled water flow cannot replace the player-only barrier");
+            for(int x=-2;x<=2;x++)for(int y=0;y<=1;y++)for(int z=-2;z<=2;z++)world.removeBlock(root.add(x,y,z),false);
+            c.complete();
+        });
+    }
     public static ServerPlayerEntity player(ServerWorld world){
         var player=new ServerPlayerEntity(world.getServer(),world,new GameProfile(UUID.randomUUID(),"Utility127"));
         var connection=new ClientConnection(NetworkSide.SERVERBOUND){@Override public void send(Packet<?> packet){}@Override public void send(Packet<?> packet,PacketCallbacks callbacks){}};

@@ -1,0 +1,56 @@
+{
+  "status": "PASS_PINNED_NATIVE_BYTECODE_AND_EXECUTED_NATIVE_SODIUM_CACHE_REGRESSIONS",
+  "productionJarSha256": "3c93750d2e74475a111ef36837488adf389d3d848ff160f19b1e0060e20a1da2",
+  "sourcePlanSha256": "384b1dd6548e356dc4b078848443f9df779d9c7e2338c89e183155949d7bfffb",
+  "nativeReference": "Minecraft 1.20.1, Yarn 1.20.1+build.10-v2, pinned fabric-loom named merged JAR",
+  "nativeBytecodeFacts": [
+    "ClientPlayNetworkHandler.updateLighting enqueues native section nibble data and calls ClientWorld.scheduleBlockRenders; it does not call ClientChunkManager.onLightUpdate.",
+    "LightStorage.updateLight puts replacement queued arrays into storage and adds their keys to dirtySections; this replacement path does not add notifySections.",
+    "LightStorage.notifyChanges publishes its copied uncachedStorage at bytecode offset26, clears dirtySections at offset33, and calls ChunkProvider.onLightUpdate only for notifySections.",
+    "ClientChunkManager.loadChunkFromPacket loads section block data directly and resets chunk colors; it bypasses ordinary per-block updateListeners.",
+    "Unloading a section retained by an adjacent loaded section does not guarantee a new light notification. An initial cached section dependency can have version0 after the first renderer world switch clears early stamps. Removing an absent version leaves0 equal to0."
+  ],
+  "appliedRepairs": [
+    {
+      "event": "Actual client light-array publication",
+      "implementation": "CompositeMeshLightStorageMixin injects immediately after notifyChanges assigns uncachedStorage and before dirtySections clears.",
+      "scope": "Only dirty section keys; chunkProvider must be a ClientChunkManager. Integrated-server updates do not invalidate client meshes."
+    },
+    {
+      "event": "Client chunk load",
+      "implementation": "CompositeWorldMesh.chunkLoaded records fresh versions for the loaded column's build-height sections through ClientChunkEvents.CHUNK_LOAD.",
+      "scope": "Loaded x/z column only; previously missing neighbouring dependencies are included."
+    },
+    {
+      "event": "Client chunk unload",
+      "implementation": "forgetChunk evicts owners rooted in that column and any cached mesh whose captured queried-section keys reference it, then removes column versions and old color keys.",
+      "scope": "Actual captured dependencies, independent of their stamp value; no global rebuild or persistent tombstones."
+    }
+  ],
+  "worldInitialization": "First render can clear early chunk/light stamps while adopting its ClientWorld; no mesh from that world was cached before adoption. Later actual publication/load updates provide new stamps, and dependency eviction guarantees unload correctness even for an initial zero stamp.",
+  "reviewedOtherPaths": {
+    "sourceShiftAndModelOffset": "Preserved SourceShift and part matrices translate the geometry once. The native automatic model offset is cancelled within the same matrix stack.",
+    "rotationAndLightingQueries": "PartView projects neighbour/light coordinates and shade directions through the actual part matrices. Source-snow reference orientations match saved prepared directions.",
+    "nativeOpticsAndPhysicalGeometry": "Finite source fallback carriers delegate native light/AO/culling flags while keeping optional static mod collision/selection overrides.",
+    "wallOverlay": "The narrow redirect suppresses only the actual in-wall screen selector for the precomputed partial-collision compatibility cases; it leaves chunk light flags unchanged.",
+    "cacheIdentityAndResources": "Actual state and immutable owned payload identity, resource reload, world switch and captured section revisions invalidate the relevant cached mesh."
+  },
+  "additionalConcreteIntroducedDefectsFound": [],
+  "geometryModelsOrSourceArraysChanged": false,
+  "globalInvalidationAdded": false,
+  "nativeRegressionProbe": {
+    "class": "dev.dreamwalker.bloodbornedw.galleryqa.NativeMeshLightInvalidationProbe",
+    "phase": "After all measured camera stations and captures",
+    "light": "Actual LightingProvider.enqueueSectionData with an exact ChunkNibbleArray.copy, actual doLightUpdates, observed section stamp increase and next-frame owner mesh rebake; global revision stays unchanged. Original native light data is restored.",
+    "unload": "Actual ClientChunkManager.unload for a loaded dependency column distinct from the owner's root; root chunk and BE stay loaded, while its dependent cached mesh is evicted. The saved server world remains untouched.",
+    "executionResult": "PASS in final-native-r3 and final-sodium-r1 on the exact Gold5 production JAR. Both actual light publication rebaked the owner without changing the global revision, restored the source array, and actual neighbour unload evicted the dependent owner while its root chunk remained loaded. The native run explicitly exercised captured dependency stamp0.",
+    "evidenceReports": [
+      "build/runtime-client-comparison-fresh-final-native-r3/v127-gallery-benchmark.json",
+      "build/runtime-client-comparison-fresh-final-sodium-r1/v127-gallery-benchmark.json"
+    ],
+    "nativeZeroStampUnloadExercised": true,
+    "nativeAndSodiumLightPublication": "PASS",
+    "nativeAndSodiumDependentColumnUnload": "PASS"
+  },
+  "sourceDataNotInstructions": true
+}

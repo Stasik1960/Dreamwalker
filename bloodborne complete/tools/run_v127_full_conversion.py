@@ -16,6 +16,7 @@ from package_v127_release import ROOT, files, ordinary, read, sha, SOURCE_HASHES
 from prepare_v127_server_bootstrap import stage_bootstrap
 
 IMPLEMENTED_STYLE = 'APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA'
+IMPLEMENTED_STYLES = {IMPLEMENTED_STYLE, 'APPROVED_EXACT_VISIBLE_AND_HIDDEN_COMPACT'}
 
 
 def validate_full_plan(world, plan, manifest, source_plan, style_policy, fixture_only):
@@ -30,15 +31,15 @@ def validate_full_plan(world, plan, manifest, source_plan, style_policy, fixture
     assert source_plan.is_relative_to(ROOT / 'build') and style_policy.is_relative_to(ROOT)
     assert ordinary(source_plan) and ordinary(style_policy)
     policy = read(style_policy)
-    assert policy.get('status') == IMPLEMENTED_STYLE, 'Approved source-style preservation has not been fully implemented'
-    assert manifest.get('sourceStylePolicy') == IMPLEMENTED_STYLE
+    assert policy.get('status') in IMPLEMENTED_STYLES, 'Approved source-style preservation has not been fully implemented'
+    assert manifest.get('sourceStylePolicy') == policy['status']
     assert manifest.get('sourceStylePolicySha256') == sha(style_policy), 'Stale source-style policy binding'
     assert manifest.get('sourcePlanSha256') == sha(source_plan), 'Stale source SQLite plan binding'
     assert prepared.get('sourcePlanSha256') == manifest['sourcePlanSha256'], 'Derived world was staged from another plan'
     assert prepared.get('runtimeManifestSha256') == sha(plan / 'manifest.json'), 'Derived world was staged against another runtime bundle'
     return {'sourcePlanPath': str(source_plan), 'sourcePlanSha256': manifest['sourcePlanSha256'],
             'sourceStylePolicyPath': str(style_policy), 'sourceStylePolicySha256': manifest['sourceStylePolicySha256'],
-            'sourceStylePolicy': IMPLEMENTED_STYLE}
+            'sourceStylePolicy': policy['status']}
 
 
 def metadata(path):

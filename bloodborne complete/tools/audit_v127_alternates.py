@@ -1,4 +1,4 @@
-"""Read-only authored/generator alternate inventory; never invent source assets."""
+"""Audit the empty ALT profile slot without inventing or loading alternate art."""
 from pathlib import Path
 import csv
 import hashlib
@@ -6,7 +6,7 @@ import json
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / 'src/architecture/resources/bloodborne_dw'
-OUT = ROOT / 'docs/v12.7/tool'
+OUT = ROOT / 'docs/v12.7.1/tool'
 OUT.mkdir(parents=True, exist_ok=True)
 
 def load(path):
@@ -39,17 +39,17 @@ for path in sorted((RES / 'composite').glob('*.json')):
             pose = poses.get(state, poses['closed'])
             parts = pose['parts']
             authored = any(part.get('altModel', part['model']) != part['model'] for part in parts)
-            generated = registry.startswith('bloodborne_dw:source_') and not authored
             rows.append({'id': numbers.get(registry, ''), 'registryId': registry,
                          'offeredType': active, 'variant': variant, 'open': state == 'open',
                          'partCount': len(parts),
-                         'alternate': 'AUTHORED_MODEL_EXACT' if authored else 'GENERATED_VERTEX_TONE' if generated else 'EXISTING_BASE_FALLBACK',
+                         'alternate': 'EMPTY_SLOT_EXACT_BASE_FALLBACK',
+                         'legacyAlternateReferenceIgnored': authored,
                          'baseModels': ';'.join(part['model'] for part in parts),
-                         'altModels': ';'.join(part.get('altModel', part['model']) for part in parts),
+                         'effectiveAltModels': ';'.join(part['model'] for part in parts),
                          'sourceDescriptorSha256': hashlib.sha256(path.read_bytes()).hexdigest()})
 
 active_rows = [row for row in rows if row['offeredType']]
-unavailable = [row for row in active_rows if row['alternate'] == 'EXISTING_BASE_FALLBACK']
+unavailable = [row for row in active_rows if not row['baseModels'] and row['partCount']]
 native_aliases = []
 models = ROOT / 'src/architecture/resources/assets/bloodborne_dw/models'
 for path in sorted((models / 'block/wall/alt').glob('*.json')):
@@ -65,22 +65,25 @@ for path in sorted((models / 'alt/prototype_ladder').glob('*.json')):
                            'baseParent': document['parent'], 'evidence': 'EXACT_BASE_PARENT_NO_OVERRIDES',
                            'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
 report = {'schemaVersion': 1, 'status': 'PASS' if not unavailable else 'FAIL',
+          'evidenceScope': 'Static source descriptor/model alias audit; native profile and vertex QA remain separate required checks',
           'runtimeProfileCoverage': 'VERIFY_WITH_BbAlternateV127GameTests_NOT_STATIC_JSON_PRESENCE',
           'activeCompositeTypeCount': len({row['registryId'] for row in active_rows}),
           'activeCompositePoseCountClosedAndOpen': len(active_rows),
-          'authoredAlternatePosesExact': sum(row['alternate'] == 'AUTHORED_MODEL_EXACT' for row in active_rows),
-          'generatedAlternatePoses': sum(row['alternate'] == 'GENERATED_VERTEX_TONE' for row in active_rows),
+          'authoredAlternatePosesExact': 0,
+          'generatedAlternatePoses': 0,
+          'emptySlotBaseFallbackPoses': len(active_rows),
+          'ignoredLegacyAlternateReferencePoses': sum(row['legacyAlternateReferenceIgnored'] for row in active_rows),
           'missingVisualAlternatePoses': unavailable,
           'originalNativeAlternateModels': native_aliases,
-          'originalNativeAlternatePolicy': 'GENERATED_RGB_TONE_ONLY_ON_ALT_RENDER_WRAPPERS; immutable source model files and BASE quads unchanged; existing states, mounting, physical shape and IDs preserved',
-          'generatedPolicy': {'scope': 'NEW_SOURCE_TYPES_ONLY', 'RGBMultiplier': [.60, .67, .72],
+          'originalNativeAlternatePolicy': 'Exact BASE aliases; no RGB wrapper or alternate art; persisted profile, mounting, physical shape and IDs preserved',
+          'generatedPolicy': {'scope': 'DISABLED', 'RGBMultiplier': [1, 1, 1],
                               'alpha': 'UNCHANGED', 'UV': 'UNCHANGED', 'geometry': 'UNCHANGED',
-                              'physics': 'UNCHANGED', 'authoredAlternates': 'UNCHANGED_ENTIRE_POSE',
+                              'physics': 'UNCHANGED', 'authoredAlternates': 'NOT_LOADED',
                               'sourceArt': 'NO_SOURCE_MODEL_OR_TEXTURE_MUTATIONS'},
           'rpPlacementObjects': {'profileField': 'BbAltVisual', 'nbtType': 'BYTE',
                                  'basePersistence': 'NEW_FIELD_OMITTED_WHEN_BASE',
                                  'physicsSelector': 'EXISTING_TYPED_SELECTOR_UNCHANGED',
-                                 'alternate': 'GENERATED_VERTEX_TONE', 'sameRGBMultiplier': [.60, .67, .72]},
+                                 'alternate': 'EMPTY_SLOT_EXACT_BASE_COLOR', 'sameRGBMultiplier': [1, 1, 1]},
           'nativeUtilityMarkers': {'dw_barrier': 'BASE_OR_ALT_MARKER_ONLY', 'dw_light': 'BASE_OR_ALT_MARKER_ONLY'},
           'scope': 'All offered building blocks and RP placement objects; exclude weapons, ordinary items, mobs and other namespaces'}
 with (OUT / 'ALT-COVERAGE.tsv').open('w', encoding='utf-8-sig', newline='') as file:
@@ -90,4 +93,4 @@ with (OUT / 'ALT-COVERAGE.tsv').open('w', encoding='utf-8-sig', newline='') as f
 (OUT / 'alternate-audit.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 print(json.dumps({key: report[key] for key in ('status','activeCompositeTypeCount','activeCompositePoseCountClosedAndOpen','authoredAlternatePosesExact','generatedAlternatePoses')}, ensure_ascii=False))
 if unavailable:
-    raise SystemExit('Active original composite poses missing source alternate: ' + ','.join(row['registryId'] for row in unavailable))
+    raise SystemExit('Active composite poses lack BASE fallback model: ' + ','.join(row['registryId'] for row in unavailable))

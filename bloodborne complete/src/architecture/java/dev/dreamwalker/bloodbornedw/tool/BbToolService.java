@@ -81,17 +81,11 @@ public final class BbToolService {
             }catch(RuntimeException invalid){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Invalid BB tool command packet rejected");}
         });
         CommandRegistrationCallback.EVENT.register((dispatcher,access,environment)->dispatcher.register(literal("bb").requires(source->source.getEntity() instanceof ServerPlayerEntity player&&canEdit(player))
-            .then(literal("select")
-                .then(literal("all").executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=-1;clearSelection(player);player.sendMessage(Text.literal("BB: особое действие заменит вид всех объектов мода на сохранённой карте. /bb none — один объект."),false);return 1;}))
-                .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=IntegerArgumentType.getInteger(context,"radius");player.sendMessage(Text.literal("BB: замена вида в радиусе "+selection(player).radius+" блоков."),false);return 1;})))
-            .then(literal("alt")
-                .then(literal("all").executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"alt",-1)?1:0))
-                .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"alt",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
-            .then(literal("base")
-                .then(literal("all").executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",-1)?1:0))
-                .then(argument("radius",IntegerArgumentType.integer(1)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
+            .then(literal("select").then(argument("radius",IntegerArgumentType.integer(1,BbAlternateService.MAX_RADIUS)).executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=IntegerArgumentType.getInteger(context,"radius");player.sendMessage(Text.literal("BB: замена вида в радиусе "+selection(player).radius+" блоков."),false);return 1;})))
+            .then(literal("alt").then(argument("radius",IntegerArgumentType.integer(1,BbAlternateService.MAX_RADIUS)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"alt",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
+            .then(literal("base").then(argument("radius",IntegerArgumentType.integer(1,BbAlternateService.MAX_RADIUS)).executes(context->BbAlternateService.start(context.getSource().getPlayerOrThrow(),"base",IntegerArgumentType.getInteger(context,"radius"))?1:0)))
             .then(literal("cancel").executes(context->{var player=context.getSource().getPlayerOrThrow();boolean cancelled=BbAlternateService.cancel(player.getServer());player.sendMessage(Text.literal(cancelled?"BB: замена вида остановлена; уже выполненные изменения сохранены.":"BB: активной замены вида нет."),false);return cancelled?1:0;}))
-            .then(literal("status").executes(context->{var player=context.getSource().getPlayerOrThrow();var status=BbAlternateService.status(player.getServer());player.sendMessage(Text.literal("BB: "+(status.running()?"замена выполняется":"замена не выполняется")+"; изменено "+status.changed()+", отклонено "+status.failed()+", чанки "+status.chunksDone()+" / "+status.chunksTotal()+"."),false);return 1;}))
+            .then(literal("status").executes(context->{var player=context.getSource().getPlayerOrThrow();var status=BbAlternateService.status(player.getServer());String phase=BbAlternateService.discovering(player.getServer())?"поиск сохранённых чанков":status.running()?"переключение профиля выполняется":"переключение профиля не выполняется";player.sendMessage(Text.literal("BB: "+phase+"; изменено "+status.changed()+", отклонено "+status.failed()+", чанки "+status.chunksDone()+" / "+status.chunksTotal()+"."),false);return 1;}))
             .then(literal("none").executes(context->{var player=context.getSource().getPlayerOrThrow();selection(player).radius=0;clearSelection(player);player.sendMessage(Text.literal("BB: выбор одного объекта."),false);return 1;}))));
     }
     public static void apply(ServerPlayerEntity player,ToolTarget target){
@@ -123,7 +117,6 @@ public final class BbToolService {
     }
     public static boolean special(ServerPlayerEntity player,ToolTarget target){
         var select=selection(player);
-        if(select.radius<0){clearSelection(player);return alternate(player,target,-1);}
         if(target.kind()==ToolTarget.Kind.RP&&target.entity(player.getServer()) instanceof RpObjectEntity rp){
             if(rp.isMechanism()){
                 select.lamp=null;
@@ -147,13 +140,13 @@ public final class BbToolService {
     }
     private static String catalogueId(BlockState state){var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(state);return entry==null?Registries.BLOCK.getId(state.getBlock()).toString():entry.temporaryId();}
     public static boolean alternate(ServerPlayerEntity player,ToolTarget target,int radius){
+        if(radius<0||radius>BbAlternateService.MAX_RADIUS)return false;
         String current=BbAlternateService.profile(target,player.getServer());if(current==null){player.sendMessage(Text.literal("Альтернативного вида нет."),true);return false;}
-        String next=current.equals("alt")?"base":"alt";if(radius<0)return BbAlternateService.start(player,next,-1);
-        var targets=radius==0?List.of(target):BbAlternateService.sameTypeNear(player,target,radius);
-        int changed=0;for(var candidate:targets)if(BbAlternateService.change(player,candidate,next))changed++;
-        player.sendMessage(Text.literal("Вид "+next+": изменено объектов — "+changed+(radius>0?" (загруженные объекты в радиусе "+radius+")":"")+"."),false);return changed>0;
+        String next=current.equals("alt")?"base":"alt";if(radius>0)return BbAlternateService.start(player,next,radius,target);
+        boolean changed=BbAlternateService.change(player,target,next);player.sendMessage(Text.literal("Вид "+next+": изменено объектов — "+(changed?1:0)+"."),false);return changed;
     }
     public static boolean clear(ServerPlayerEntity player,ToolTarget target){
+        if(target.kind()==ToolTarget.Kind.BLOCK){var world=target.world(player.getServer());var root=BlockPos.fromLong(target.root());if(DwUtilityBlocks.marker(world.getBlockState(root)))return DwUtilityBlocks.remove(world,root,player);}
         var server=player.getServer();if(target.uuid()!=null){
             MechanismLinks.removeWholeGroup(server,target.uuid());LampService.removeWholeGroup(server,target.uuid());}
         ToolCommands.remove(server,target);

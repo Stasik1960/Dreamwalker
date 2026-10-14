@@ -20,6 +20,27 @@ import net.minecraft.util.math.*;
  * Uses its own fresh QA shard directory; the test world's ordinary global
  * ownership ledger and unrelated working objects are never converted. */
 public final class ShardedLedgerV127GameTests implements FabricGameTest {
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=300,batchId="final_sharded_empty_chunks")
+    public void loadedEmptyChunksDoNotAllocateOwnerCachesOrWriteEmptyShards(TestContext t){
+        var world=t.getWorld();var pos=t.getAbsolutePos(new BlockPos(2048,140,2048));
+        Path directory=world.getServer().getSavePath(WorldSavePath.ROOT).resolve("final-shard-empty-fixtures").resolve(UUID.randomUUID().toString());
+        Set<Long> known=new TreeSet<>();AtomicInteger indexChanges=new AtomicInteger();
+        var store=new ShardedCompositeLedger(world,directory,known,indexChanges::incrementAndGet);
+        int baseX=pos.getX()>>4,baseZ=pos.getZ()>>4;
+        for(int x=0;x<5;x++)for(int z=0;z<5;z++){
+            var chunk=world.getChunk(baseX+x,baseZ+z);
+            t.assertTrue(world.getChunkManager().getWorldChunk(baseX+x,baseZ+z)!=null,"Native fixture chunk is really FULL and loaded");
+            for(int cell=0;cell<4096;cell++){
+                var empty=new Cell((baseX+x)*16+(cell&15),140+(cell>>8),(baseZ+z)*16+((cell>>4)&15));
+                t.assertTrue(store.at(empty).isEmpty(),"An unindexed loaded chunk has no owner contributions");
+            }
+            store.put(new Cell(chunk.getPos().getStartX(),140,chunk.getPos().getStartZ()),List.of());
+        }
+        store.flush();
+        t.assertTrue((int)store.metrics().get("cachedOwnerShards")==0&&known.isEmpty()&&indexChanges.get()==0,"102400 loaded empty-cell reads and25 empty removals allocate no cached/indexed shards");
+        t.assertTrue((long)store.metrics().get("ownerShardReads")==0&&(long)store.metrics().get("ownerShardWrites")==0&&!java.nio.file.Files.exists(directory),"Empty native palette queries perform zero owner disk IO");
+        t.complete();
+    }
     @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,tickLimit=400,batchId="v127_sharded_owner_storage")
     public void nativeShardFlushEvictReopenRetainsCrossChunkMembershipAndRollback(TestContext t) {
         var world=t.getWorld();var absolute=t.getAbsolutePos(new BlockPos(128,140,0));

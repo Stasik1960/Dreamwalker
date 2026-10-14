@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EmptyBlockView;
 
@@ -21,14 +22,16 @@ public final class ImportedWholeSourceOpticsV127 {
     private record Carrier(double x,double y,double z,int opacity){}
     private record Rule(String id,int variant,List<Carrier> carriers){}
     private record Key(String id,int variant,int rotation,double x,double y,double z,double mount){}
-    private static final Map<String,Rule> RULES=load();
+    private record Loaded(Map<String,Rule> rules,BlockState opaqueCarrier){}
+    private static final Loaded TABLES=load();
+    private static final Map<String,Rule> RULES=TABLES.rules;
     private static final Map<Key,Map<Cell,Integer>> CACHE=new ConcurrentHashMap<>();
-    private static Map<String,Rule> load(){
+    private static Loaded load(){
         var input=ImportedWholeSourceOpticsV127.class.getResourceAsStream("/bloodborne_dw/imported-whole-source-optics-v127.json");
         if(input==null)throw new IllegalStateException("Missing reviewed whole source optics");
         try(var reader=new InputStreamReader(input,StandardCharsets.UTF_8)){
             var document=JsonParser.parseReader(reader).getAsJsonObject();if(document.get("schemaVersion").getAsInt()!=1)throw new IllegalArgumentException("Whole source optics schema");
-            Map<String,Rule> rules=new HashMap<>();
+            Map<String,Rule> rules=new HashMap<>();BlockState opaqueCarrier=null;
             for(var raw:document.getAsJsonArray("objects")){
                 var row=raw.getAsJsonObject();String id=row.get("registryId").getAsString();int variant=row.get("variant").getAsInt();
                 if(!Set.of("bloodborne_dw:source_original_tree","bloodborne_dw:source_large_grille_gate").contains(id)||variant!=0)throw new IllegalArgumentException("Unreviewed whole carrier target: "+id);
@@ -36,15 +39,27 @@ public final class ImportedWholeSourceOpticsV127 {
                 int rotation=row.get("referenceRotation").getAsInt();double angle=-rotation*Math.PI/4,c=Math.cos(angle),s=Math.sin(angle);var carriers=new ArrayList<Carrier>();
                 for(var item:row.getAsJsonArray("carriers")){
                     var source=item.getAsJsonObject();var cell=source.getAsJsonArray("relativeCell");double x=cell.get(0).getAsDouble()-sx,z=cell.get(2).getAsDouble()-sz;
-                    int opacity=ImportedSourceLightingV127.source(source.get("sourceState").getAsString()).getOpacity(EmptyBlockView.INSTANCE,BlockPos.ORIGIN);
+                    var nativeSource=ImportedSourceLightingV127.source(source.get("sourceState").getAsString());
+                    int opacity=nativeSource.getOpacity(EmptyBlockView.INSTANCE,BlockPos.ORIGIN);
                     if(opacity!=source.get("nativeOpacity").getAsInt())throw new IllegalArgumentException("Native source carrier opacity changed: "+source);
+                    if(opacity==15){
+                        // All reviewed opaque shadow cells are native solid cubes.
+                        // This shared carrier is used only for renderer queries;
+                        // helper collision/ownership remains unchanged.
+                        if(!nativeSource.isOpaqueFullCube(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)
+                            ||nativeSource.getAmbientOcclusionLightLevel(EmptyBlockView.INSTANCE,BlockPos.ORIGIN)!=.2F
+                            ||nativeSource.getLuminance()!=0||!nativeSource.getFluidState().isEmpty()
+                            ||nativeSource.hasSidedTransparency())throw new IllegalArgumentException("Opaque whole source render flags require explicit contexts: "+source);
+                        if(opaqueCarrier==null)opaqueCarrier=nativeSource;
+                    }
                     carriers.add(new Carrier(x*c-z*s,cell.get(1).getAsDouble()+.5-sy,x*s+z*c,opacity));
                 }
                 if(carriers.isEmpty()||carriers.size()>32||rules.put(id,new Rule(id,variant,List.copyOf(carriers)))!=null)throw new IllegalArgumentException("Repeated/empty/excessive carrier rule");
             }
-            return Map.copyOf(rules);
+            return new Loaded(Map.copyOf(rules),opaqueCarrier);
         }catch(Exception error){throw new IllegalStateException("Invalid exact whole source optics",error);}
     }
+    public static BlockState opaqueRenderCarrier(){return TABLES.opaqueCarrier;}
     private static boolean enabled(NbtCompound payload){return payload.contains(CONTEXT,NbtElement.INT_TYPE)&&payload.getInt(CONTEXT)==1;}
     public static Map<Cell,Integer> carriers(String id,int variant,int rotation,NbtCompound payload){
         if(!enabled(payload))return Map.of();var rule=RULES.get(id);if(rule==null||variant!=rule.variant)return Map.of();
