@@ -135,6 +135,7 @@ class CapsTest(unittest.TestCase):
         edges={side:{'texture':'#own_border','uv':[1,2,3,4]} for side in ('up','down','east','west')}
         frame,leaf,_=door_caps.derive(source,[{'outputElement':75,'sourceElement':0},{'outputElement':76,'sourceElement':19}],edges)
         self.assertIn(fixed_plane,frame['elements']);self.assertNotIn(fixed_plane,leaf['elements'])
+        self.assertIn(source['elements'][3],frame['elements']);self.assertNotIn(source['elements'][3],leaf['elements'])
         self.assertEqual(leaf['elements'][0]['faces']['up'],edges['up'])
         moving_parts=[e for e in frame['elements']+leaf['elements'] if e['from'][1]==18 and e['to'][1]==18]
         self.assertEqual(len(moving_parts),2)

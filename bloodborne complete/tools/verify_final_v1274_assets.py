@@ -9,7 +9,10 @@ def read(path):return json.loads(path.read_text(encoding='utf8'))
 def signature(element,side,face):
     return cap.canonical({'elementMetadata':{k:v for k,v in element.items() if k not in ('faces',)},'side':side,'face':face})
 def main():
-    reports=[read(OUT/'surface-caps/apply-report.json'),read(OUT/'flat-layers/apply-report.json'),read(OUT/'door-90986-caps/report.json')]
+    door_report=read(OUT/'door-90986-caps-r5/report.json')
+    assert door_report['planSha256']=='bfcd14e6aac67ab35899991cd4294aa05c2854dab61ac35bc2f098d8df32f1a7'
+    assert door_report['movingOriginalIndices']==[0] and door_report['originalUpperInfillElement3CompletelyFixed']
+    reports=[read(OUT/'surface-caps/apply-report.json'),read(OUT/'flat-layers/apply-report.json'),door_report]
     boundary=read(OUT/'flat-boundary/apply-report.json')
     assert boundary['planSha256']=='8116ed141f5fe63741890154353b18e93101bba58efbe09c9b82de73ed07c550'
     assert boundary['previousEpsPlanSha256']==reports[1]['planSha256']
@@ -111,6 +114,7 @@ def main():
             'originalVolumeElementsUnchanged':volume_elements,'implicitUvMappingsVerified':default_uv,
             'allAssetJsonFilesCheckedAgainstNativeElementLimits':native_model_count,'nativeOutOfRangeFromToCoordinates':0,
             'boundaryCorrectionPlanSha256':boundary['planSha256'],'approvedBoundaryInwardDirections':boundary['normalDirectionsReversed'],
+            'doorR5DerivativePlanSha256':door_report['planSha256'],'doorR5OnlyLowerElement0MovesAndOriginalUpper3Fixed':True,
             'allProductionPngsByteIdenticalToV1273':png_count,'importedSourcePngsByteIdenticalToOriginalV15':rp_count,
             'sourcePngsWithoutV15Entry':unmapped,'barrel90308AllTwelveInventedCapsRemovedAndModelEqualsPreV1273':True,
             'door90986RebuiltOpenModelHashesMatchReviewedDerivatives':True,'models':model_proofs,

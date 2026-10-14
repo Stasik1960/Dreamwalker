@@ -276,16 +276,19 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         var spec=block(door).spec;var closedPose=spec.variants.get(0).closed();var openPose=spec.variants.get(0).open();
         t.assertTrue(spec.openable&&spec.functionalDoorPhysics&&!spec.simplePhysicalCollision,"90986 alone opts into the reviewed single-leaf physics instead of the old entire-bay cuboid");
         t.assertTrue(closedPose.collision().size()==6&&openPose.collision().size()==6,"five ordinary fixed surrounding boxes and one moving panel define this door");
-        t.assertTrue(closedPose.collision().get(5).from().x()==0&&closedPose.collision().get(5).to().x()==16,"the CLOSED leaf still closes the entire original one-block aperture despite the small stationary-frame walking clearance");
+        double nativeLeft=8+(11./12-8)*Math.sqrt(2),nativeRight=8+(181./12-8)*Math.sqrt(2),nativeTop=34*Math.sqrt(2);
+        t.assertTrue(close(closedPose.collision().get(5).from(),new Vec3d(nativeLeft,0,2))&&close(closedPose.collision().get(5).to(),new Vec3d(nativeRight,nativeTop,14)),"the CLOSED leaf spans its actual native-rescaled width and full visible height");
         t.assertTrue(closedPose.collision().get(5).from().z()==2&&closedPose.collision().get(5).to().z()==14,"closed physical wood spans both source z2/z14 planes, so the rear face is solid too");
         t.assertTrue(closedPose.collision().subList(0,5).equals(openPose.collision().subList(0,5)),"masonry, side windows and upper arch never move physically");
         t.assertTrue(closedPose.selection().equals(closedPose.collision())&&openPose.selection().equals(openPose.collision()),"the player's target outline is the real door collision in both states");
         var world=t.getWorld();var player=player(world);var root=t.getAbsolutePos(new BlockPos(16704,96,64));List<Runnable> cases=new ArrayList<>();
         for(int yaw=0;yaw<8;yaw++){final int rotation=yaw;cases.add(()->{
             var closed=place(t,player,root,door,rotation,null);outline(t,closed);leaf90986Contact(t,player,root,rotation);movement(t,player,root,door,rotation,false);movement(t,player,root,reverse(door),rotation,false);
+            movement(t,player,root,raised90986(door),rotation,false);movement(t,player,root,reverse(raised90986(door)),rotation,false);
             use(t,player,closed);var opened=instance(world,root);
             t.assertTrue(world.getBlockState(root).get(CompositeRootBlock.OPEN)&&opened.owner().equals(closed.owner()),"actual root/helper RMB opens the central leaf without changing instance identity at yaw"+rotation);
             outline(t,opened);movement(t,player,root,door,rotation,true);movement(t,player,root,reverse(door),rotation,true);
+            movement(t,player,root,raised90986(door),rotation,true);movement(t,player,root,reverse(raised90986(door)),rotation,true);
             var entity=(CompositeBlockEntity)world.getBlockEntity(root);var saved=entity.createNbt();
             var restored=new CompositeBlockEntity(root,world.getBlockState(root));restored.readNbt(saved);
             t.assertTrue(restored.resident().equals(entity.resident())&&restored.contributions().equals(entity.contributions())&&restored.payload().equals(entity.payload()),"native saving retains the open central door and all exact fixed/moving helper data at yaw"+rotation);
@@ -302,17 +305,21 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         for(int i=0;i<normal.size();i++)normal.set(i,new JsonPrimitive(-normal.get(i).getAsDouble()));
         return new Door(door.number,door.registry,door.pose,door.leaves,reference);
     }
+    private static Door raised90986(Door door){
+        var reference=door.reference.deepCopy();reference.getAsJsonObject("passage").getAsJsonArray("footCentreUnits").set(1,new JsonPrimitive(17));
+        return new Door(door.number,door.registry,door.pose,door.leaves,reference);
+    }
     private static void leaf90986Contact(TestContext t,ServerPlayerEntity player,BlockPos root,int yaw){
         leaf90986Contact(t,player,root,yaw,new NbtCompound());
     }
     private static void leaf90986Contact(TestContext t,ServerPlayerEntity player,BlockPos root,int yaw,NbtCompound payload){
         var shift=CompositeSourceShift.local(payload);double mount=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
-        for(boolean rear:List.of(false,true)){
-            var start=global(new Vec3d(.5+shift.x(),1+shift.y()+mount,(rear?2.5:-1.5)+shift.z()),yaw,root);
-            var end=global(new Vec3d(.5+shift.x(),1+shift.y()+mount,(rear?-1.5:2.5)+shift.z()),yaw,root);
-            var expected=global(new Vec3d(.5+shift.x(),1+shift.y()+mount,(rear?14.:2.)/16+shift.z()),yaw,root);
+        for(double height:List.of(1.,34*Math.sqrt(2)/16-.25))for(boolean rear:List.of(false,true)){
+            var start=global(new Vec3d(.5+shift.x(),height+shift.y()+mount,(rear?2.5:-1.5)+shift.z()),yaw,root);
+            var end=global(new Vec3d(.5+shift.x(),height+shift.y()+mount,(rear?-1.5:2.5)+shift.z()),yaw,root);
+            var expected=global(new Vec3d(.5+shift.x(),height+shift.y()+mount,(rear?14.:2.)/16+shift.z()),yaw,root);
             var hit=t.getWorld().raycast(new RaycastContext(start,end,RaycastContext.ShapeType.COLLIDER,RaycastContext.FluidHandling.NONE,player));
-            t.assertTrue(hit.getType()==net.minecraft.util.hit.HitResult.Type.BLOCK&&hit.getPos().distanceTo(expected)<.125,"physical contact reaches the visible "+(rear?"rear":"front")+" wooden face, not an inset front-only collider, at yaw"+yaw+": "+hit.getPos());
+            t.assertTrue(hit.getType()==net.minecraft.util.hit.HitResult.Type.BLOCK&&hit.getPos().distanceTo(expected)<.125,"physical contact reaches the visible "+(rear?"rear":"front")+" wooden face at ordinary and near-top height, not a low leaf/static-header obstruction, at yaw"+yaw+" y="+height+": "+hit.getPos());
         }
     }
 
@@ -387,16 +394,17 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
         t.assertTrue(closed.parts().size()==1&&closed.parts().get(0).model().toString().equals("bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right")&&close(closed.parts().get(0).offset(),new Vec3d(0,16,0)),"closed90986 keeps the original source model and exact installation offset");
         t.assertTrue(opened.parts().size()==2,"the open pose has exactly one central leaf and one fixed remainder");
         var moving=opened.parts().get(0);var fixed=opened.parts().get(1);
-        t.assertTrue(moving.model().toString().equals("bloodborne_dw:remaining/final_followups/door_90986_leaf")&&moving.yaw()==90&&moving.pitch()==0&&moving.extraYaw()==0&&close(moving.pivot(),new Vec3d(11./12,0,2))&&close(moving.offset(),new Vec3d(0,16,0)),"only the marked central panel makes one quarter-turn about its edge");
+        double nativeLeft=8+(11./12-8)*Math.sqrt(2);
+        t.assertTrue(moving.model().toString().equals("bloodborne_dw:remaining/final_followups/door_90986_leaf")&&moving.yaw()==90&&moving.pitch()==0&&moving.extraYaw()==0&&close(moving.pivot(),new Vec3d(nativeLeft,0,2))&&close(moving.offset(),new Vec3d(0,16,0)),"only the marked central panel makes one quarter-turn about its actual native-rescaled left edge");
         t.assertTrue(fixed.model().toString().equals("bloodborne_dw:remaining/final_followups/door_90986_frame")&&fixed.yaw()==0&&fixed.pitch()==0&&fixed.extraYaw()==0&&close(fixed.offset(),new Vec3d(0,16,0)),"all surrounding source architecture retains its original location and orientation");
         var source=modelResource("remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right").getAsJsonArray("elements");
         var frame=modelResource("remaining/final_followups/door_90986_frame").getAsJsonArray("elements");
         var leaf=modelResource("remaining/final_followups/door_90986_leaf").getAsJsonArray("elements");
-        t.assertTrue(source.size()>=75&&frame.size()==source.size()+2&&leaf.size()==2,"exactly two coplanar lower panel layers are partitioned; the other73 old elements and reviewed exposed cap planes stay fixed");
+        t.assertTrue(source.size()>=75&&frame.size()==source.size()+1&&leaf.size()==1,"only the lower marked source panel is partitioned; all74 other old elements and reviewed cap planes stay fixed");
         int cursor=0,movingIndex=0;
         for(int index=0;index<source.size();index++){
             var element=source.get(index).getAsJsonObject();
-            if(index!=0&&index!=3){t.assertTrue(frame.get(cursor++).equals(element),"fixed source geometry/rotation/texture/UV is untouched for element"+index);continue;}
+            if(index!=0){t.assertTrue(frame.get(cursor++).equals(element),"fixed source geometry/rotation/texture/UV is untouched for element"+index);continue;}
             var left=frame.get(cursor++).getAsJsonObject();var right=frame.get(cursor++).getAsJsonObject();var centre=leaf.get(movingIndex++).getAsJsonObject();
             t.assertTrue(left.getAsJsonArray("from").get(0).getAsDouble()==-9&&Math.abs(left.getAsJsonArray("to").get(0).getAsDouble()-11./12)<1e-10&&Math.abs(right.getAsJsonArray("from").get(0).getAsDouble()-181./12)<1e-10&&right.getAsJsonArray("to").get(0).getAsDouble()==25,"fixed side strips meet the exact central texture boundaries for layer"+index);
             t.assertTrue(Math.abs(centre.getAsJsonArray("from").get(0).getAsDouble()-11./12)<1e-10&&Math.abs(centre.getAsJsonArray("to").get(0).getAsDouble()-181./12)<1e-10,"the moving region is the single marked centre, not the sidelights, for layer"+index);
@@ -407,6 +415,32 @@ public final class FunctionalDoorsV126GameTests implements FabricGameTest {
             }
         }
         t.complete();
+    }
+
+    @GameTest(templateName=FabricGameTest.EMPTY_STRUCTURE,batchId="v1274_single_door_90986")
+    public void door90986UpperWoodenArchInfillStaysWholeAboveTheMarkedLowerLeafAndNeverFollowsItsHinge(TestContext t){
+        var spec=CompositeSpec.load("source_stairs_dark_prismarine_stairs_inner_right");
+        var source=modelResource("remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right").getAsJsonArray("elements");
+        var upper=source.get(3).getAsJsonObject();var lower=source.get(0).getAsJsonObject();
+        var ur=upper.getAsJsonObject("rotation");var lr=lower.getAsJsonObject("rotation");
+        t.assertTrue(ur.get("angle").getAsDouble()==0&&lr.get("angle").getAsDouble()==0&&ur.get("rescale").getAsBoolean()&&lr.get("rescale").getAsBoolean()&&ur.get("axis").getAsString().equals("z")&&lr.get("axis").getAsString().equals("z"),"the source's authored zero-angle rescale uses native sqrt2 in X/Y; raw overlap cannot classify the upper infill as a lower layer");
+        double lowerTop=nativeRescaledDoorY(lower,lower.getAsJsonArray("to").get(1).getAsDouble());
+        double upperBottom=nativeRescaledDoorY(upper,upper.getAsJsonArray("from").get(1).getAsDouble());
+        double upperTop=nativeRescaledDoorY(upper,upper.getAsJsonArray("to").get(1).getAsDouble());
+        t.assertTrue(lowerTop>3&&lowerTop<3.01&&upperBottom>3.15&&upperTop>5.10&&upperBottom>lowerTop,"the independently classified original upper fan is visibly above the entire lower red-marked door, despite overlapping raw coordinates");
+        var frame=modelResource("remaining/final_followups/door_90986_frame").getAsJsonArray("elements");var leaf=modelResource("remaining/final_followups/door_90986_leaf").getAsJsonArray("elements");
+        int fullUpper=0;for(var element:frame)if(element.equals(upper))fullUpper++;
+        t.assertTrue(fullUpper==1,"OPEN retains the complete old upper infill, including its centre, UV, native rescale origin and all original faces exactly once in the fixed model");
+        for(var value:leaf){var faces=value.getAsJsonObject().getAsJsonObject("faces");for(String side:List.of("north","south")){
+            var uv=faces.getAsJsonObject(side).getAsJsonArray("uv");
+            t.assertTrue(uv.get(1).getAsDouble()==10&&uv.get(3).getAsDouble()==16,"the moving panel contains only the lower source atlas row; the upper fan's UV rows2..6 cannot rotate or leave a hole");
+        }}
+        var fixed=spec.variants.get(0).open().parts().get(1);
+        t.assertTrue(fixed.yaw()==0&&fixed.pitch()==0&&fixed.extraYaw()==0&&fixed.offset().equals(spec.variants.get(0).closed().parts().get(0).offset()),"the whole upper infill's CLOSED and OPEN spatial transforms are identical");
+        t.complete();
+    }
+    private static double nativeRescaledDoorY(JsonObject element,double rawY){
+        double origin=element.getAsJsonObject("rotation").getAsJsonArray("origin").get(1).getAsDouble();return (origin+(rawY-origin)*Math.sqrt(2)+16)/16;
     }
 
     private static JsonObject modelResource(String model){

@@ -10,7 +10,7 @@ import final_v1274_surface_caps as cap
 SOURCE=cap.PREFIX+'bloodborne_dw/models/remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right.json'
 FRAME=cap.PREFIX+'bloodborne_dw/models/remaining/final_followups/door_90986_frame.json'
 LEAF=cap.PREFIX+'bloodborne_dw/models/remaining/final_followups/door_90986_leaf.json'
-LEFT=11/12;RIGHT=181/12;MOVING={0,3}
+LEFT=11/12;RIGHT=181/12;MOVING={0}
 
 def slice_x(element,low,high):
     """Keep the same authored surfaces on the selected X interval."""
@@ -52,7 +52,8 @@ def derive(source,provenance,edge_faces):
         if central is not None:leaf['elements'].append(central)
         partitions.append({'sourceElement':index,'originalOrigin':origin,'sourceInterval':[a,b],
                            'movingInterval':[max(a,LEFT),min(b,RIGHT)]})
-    if len(leaf['elements'])<2:raise ValueError('Both original wooden face layers must remain in the moving leaf')
+    if not leaf['elements']:raise ValueError('Original lower wooden leaf must remain in the moving leaf')
+    if source['elements'][3] not in frame['elements']:raise ValueError('Original upper wooden infill must remain completely fixed')
     leaf['elements'][0]['faces'].update(copy.deepcopy(edge_faces))
     return frame,leaf,partitions
 
@@ -86,7 +87,8 @@ def main():
     for row in plans:(out/Path(row['path']).name).write_bytes(row['output'])
     result={'status':'APPLIED_OPEN_DERIVATIVES_PENDING_NATIVE_CHECK' if args.apply else 'AUDIT_ONLY_NO_PRODUCTION_CHANGES',
             'planSha256':plan_sha,'sourceCapPlanSha256':report['planSha256'],'sourceExpectedSha256':source_plan['outputSha256'],
-            'closedSourceReferenceSpecPhysicsAndPngChanged':False,'movingOriginalIndices':[0,3],
+            'closedSourceReferenceSpecPhysicsAndPngChanged':False,'movingOriginalIndices':sorted(MOVING),
+            'originalUpperInfillElement3CompletelyFixed':True,
             'fixedRepairedCapsAndPlanesPreserved':True,'newLeafEdgesPreservedFromDoorAuthor':True,'partitions':partitions,'plans':public}
     (out/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 

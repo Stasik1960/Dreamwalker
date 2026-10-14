@@ -10,6 +10,7 @@ from fractions import Fraction
 import copy
 import hashlib
 import json
+import math
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +48,15 @@ def main():
     # of the48-column lower panel. Convert the edges by the exact source UV map.
     left = float(Fraction(11, 12))
     right = float(Fraction(181, 12))
+    # Native FaceBakery selects the45 rescale factor for authored angle0.
+    # e0 originY=-16 is the lower leaf; e3 originY=-138 renders ABOVE it.
+    # Raw coordinate overlap does not make e3 another layer of that leaf.
+    scale = math.sqrt(2)
+    native_left = 8 + (left - 8) * scale
+    native_right = 8 + (right - 8) * scale
+    native_top = 34 * scale
+    upper_bottom = -122 + 122 * scale
+    upper_top = -122 + 144 * scale
     frame = copy.deepcopy(original)
     leaf = copy.deepcopy(original)
     frame.pop("groups", None)
@@ -71,11 +81,11 @@ def main():
         return item
 
     for index, element in enumerate(original["elements"]):
-        if index not in (0, 3):
+        if index != 0:
             frame["elements"].append(copy.deepcopy(element))
             continue
         assert element["from"] == [-9, -16, 2]
-        assert element["to"] == [25, 18 if index == 0 else 6, 14]
+        assert element["to"] == [25, 18, 14]
         assert set(element["faces"]) == {"north", "south"}
         sides = [clip(element, -9, left), clip(element, right, 25)]
         central = clip(element, left, right)
@@ -94,8 +104,8 @@ def main():
                       "leafBounds": [central["from"], central["to"]], "oldFacesAndUvTiledExactly": True})
 
     # Only the moving solid wooden leaf needs its newly exposed narrow edges.
-    # Sample its own border pixels; the overlapping source overlay is retained
-    # with its two old faces and receives no duplicate caps.
+    # Sample its own border pixels. The upper e3 infill remains in the fixed
+    # model with its full old faces, rotation origin and UV interval.
     panel = leaf["elements"][0]
     texture = panel["faces"]["north"]["texture"]
     for side, uv in {"west": [1.75, 10, 1.875, 16], "east": [4.125, 10, 4.25, 16],
@@ -104,45 +114,47 @@ def main():
     write(RES / "assets/bloodborne_dw/models/remaining/final_followups/door_90986_frame.json", frame)
     write(RES / "assets/bloodborne_dw/models/remaining/final_followups/door_90986_leaf.json", leaf)
 
-    # A one-model-unit physical clearance on both sides keeps the real0.6
-    # player free through the conservative1/16 diagonal raster and ordinary
-    # axis-separated walking steps. The same fixed frame serves both poses.
-    # CLOSED still spans the entire ordinary aperture and both wood planes.
+    # Exact native lower-leaf width is about1.252blocks, already sufficient
+    # for the1/16 diagonal raster and ordinary axis-separated player steps.
+    # No extra clearance is required. The same frame/infill serves both poses.
     fixed = [
-        {"from": [-16, 0, -3], "to": [-1, 51, 19]},
-        {"from": [17, 0, -3], "to": [32, 51, 19]},
-        {"from": [0, 34, -3], "to": [16, 51, 19]},
+        {"from": [-16, 0, -3], "to": [native_left, upper_top, 19]},
+        {"from": [native_right, 0, -3], "to": [32, upper_top, 19]},
+        {"from": [native_left, native_top, -3], "to": [native_right, upper_top, 19]},
         {"from": [-36, 0, -9.5], "to": [-16, 48.34823587, 25.5]},
         {"from": [32, 0, -9.5], "to": [52, 48.34823587, 25.5]},
     ]
-    closed_panel = {"from": [0, 0, 2], "to": [16, 34, 14]}
-    open_panel = {"from": [-12, 0, 2], "to": [-1, 34, 18]}
+    closed_panel = {"from": [native_left, 0, 2], "to": [native_right, native_top, 14]}
+    open_panel = {"from": [native_left - 12, 0, 2], "to": [native_left, native_top, 2 + native_right - native_left]}
     closed_geometry = copy.deepcopy(fixed) + [closed_panel]
     open_geometry = copy.deepcopy(fixed) + [open_panel]
     variant["poses"]["closed"] = {"parts": closed_source, "collision": closed_geometry,
                                    "selection": copy.deepcopy(closed_geometry)}
-    # Source elements0/3 share coplanar faces. Preserve their source ordering
-    # within the moving leaf; fixed side strips cannot overlap those faces.
+    # Only e0 is the marked lower leaf. e3's native rescale origin puts the
+    # complete wooden fan above it and it never follows the hinge.
     variant["poses"]["open"] = {
-        "parts": [{"model": LEAF_MODEL, "offset": [0, 16.0, 0], "yaw": 90, "pivot": [left, 0, 2]},
+        "parts": [{"model": LEAF_MODEL, "offset": [0, 16.0, 0], "yaw": 90, "pivot": [native_left, 0, 2]},
                   {"model": FRAME_MODEL, "offset": [0, 16.0, 0]}],
         "collision": open_geometry, "selection": copy.deepcopy(open_geometry),
     }
     spec["openable"] = True
     spec["functionalDoorPhysics"] = True
     spec["simplePhysicalCollision"] = False
-    spec["collisionPolicy"] = "User90986: one central hinged door leaf, stationary masonry/side windows/upper arch, one-model-unit aperture clearance for conservative diagonal raster and ordinary axis-separated player steps. CLOSED wooden panel retains full x0..16 aperture and original z2/z14 faces. Selection equals collision at all eight instance yaws; source closed model and placement preserved."
+    spec["collisionPolicy"] = "User90986: only the lower e0 central wooden leaf rotates; native angle0/rescale:true uses sqrt2 about the authored origin. Upper wooden e3 infill and masonry stay fixed. Hinge and CLOSED/OPEN collision/selection follow the actual native lower-leaf envelope, including its full height and z2/z14 thickness. Actual aperture width needs no artificial raster gap. Original CLOSED source model, UVs, PNGs and placement preserved."
     write(SPEC_PATH, spec)
     report = {"status": "PASS_SOURCE_PARTITIONS_PENDING_NATIVE_DOOR_TEST", "numericId": "90986",
               "registryId": spec["id"], "sourceReference": SOURCE_REF,
               "sourceModelSha256": hashlib.sha256(original_bytes).hexdigest(),
               "closedSourceModelReferenceAndOffsetUnchanged": True,
               "originalModelAndAllPngUntouchedByThisTool": True,
-              "movingLeafSourceElements": [0, 3], "stationarySourceElements": 73,
-              "fixedLowerSideStrips": 4, "newLeafEdgeFaces": ["west", "east", "up", "down"],
-              "partitions": proof, "visualHingeSourcePivot": [left, 0, 2], "leafYaw": 90,
-              "physicalApertureClearanceUnits": 1,
-              "physicalClearanceReason": "Native r2 yaw1 regression reproduced by SAT1/16 plus vanilla X/Z clipping. A single physical model unit on both fixed inner edges and OPEN leaf tip is the minimum passing all8yaws, both directions and both axis orders. CLOSED wood, models, UVs, PNGs and the32-step native passage test are unchanged.",
+              "movingLeafSourceElements": [0], "stationarySourceElements": 74,
+              "fixedLowerSideStrips": 2, "newLeafEdgeFaces": ["west", "east", "up", "down"],
+              "partitions": proof, "visualHingeSourcePivot": [native_left, 0, 2], "leafYaw": 90,
+              "nativeRescaleFactorForAuthoredAngleZero": scale,
+              "fixedUpperInfillSourceElement": 3, "fixedUpperInfillNativeYModelUnits": [upper_bottom, upper_top],
+              "nativeLowerLeafEnvelopeModelUnits": closed_panel,
+              "physicalApertureClearanceUnits": 0,
+              "physicalClearanceReason": "The correctly native-rescaled1.252-block aperture passes64 SAT/vanilla axis-step cases at all8yaws, both directions/orders and zero/old-gallery source shifts. No artificial gap is needed. Native32-step baseline and additional near-top/raised-body tests remain strict.",
               "fixedPhysicsBoxes": fixed, "closedPanel": closed_panel, "openPanel": open_panel}
     write(OUT / "source-partition-proof.json", report)
     print(json.dumps({k: v for k, v in report.items() if k != "partitions"}, ensure_ascii=False))
