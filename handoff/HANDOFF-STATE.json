@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "status": "STOPPED_HANDOFF_SNAPSHOT_READY_FOR_PUBLICATION",
+  "handoffDate": "2026-10-17",
+  "language": "ru",
+  "workStoppedByExplicitUserRequest": true,
+  "currentObjective": "Передать переносимый комплект; не продолжать исправления, исследования, игру или статическую миграцию на текущем ПК.",
+  "completed": [
+    "Полная исходная конвертация: phase=3 line=0, все три потока; штатное сохранение; генератор восстановлен.",
+    "Сохранены bounded lifecycle и точный типизированный rollback NBT.",
+    "Реализовано OwnerDataV1 в .5; старая схема читается; full rollback сохраняет точный NBT.",
+    "29 чистых тестов и 4 нативных GameTest завершились успешно.",
+    "Пилот и полный проход упаковки завершены; 39 485 чанков, BlockEntity неизменны.",
+    "Свежая диагностика исходной полной сборки сохранена; упаковка не названа статической оптимизацией."
+  ],
+  "worlds": {
+    "completedOriginal": {
+      "path": "project/build/v1274-city-completion-20261016/empty-flat-compatibility-01/world",
+      "sha256Manifest": "manifest-world-completed.json",
+      "sha256ManifestDigest": "cf3450bdc33a67325a27087068d5c9260d06e4b85c95af0dde5603c3cf11c3e0",
+      "canonicalTreeDigest": "741a780c3606acdae52b230583a4cc348742b6444218b587c8b4cd11a2ec18fc",
+      "compatibilityJarSha256": "1805b3e922ad246b4f5222aaf83ae0527c458d1624cfaa12e02b139d00faa4e1",
+      "conversionCompleted": true,
+      "generatorRestored": true,
+      "fullProfilePlayabilityAccepted": false,
+      "knownLimitations": [
+        "Старая ограниченная проверка не охватывала полный профиль; задержки и недоставка третьего района.",
+        "Свежая полная сборка 10 ГБ 12/12 вошла в повторный FullGC у лимита heap до HUD."
+      ],
+      "mutateOriginal": false,
+      "checkpoint": {
+        "conversionCheckpointSha256": "ca75f39f2885d4109876f0f249f2eabdb214e947555bef9031019f2a73e4521c",
+        "conversionResultSha256": "6318573044e11a232276bdf93a1c8e7817c87d686158c0c1973348165dfcba00"
+      }
+    },
+    "packedWorking": {
+      "path": "project/build/handoff-worlds/packed-working",
+      "sha256Manifest": "manifest-world-packed.json",
+      "sha256ManifestDigest": "0ba3b3aa43c9ed4cf4dfd15681ffef524ef66bc0153839755878fba41880cdc4",
+      "canonicalTreeDigest": "49818662c9259ff605c23aac9e54bb3dffd986c0b9bbbbdbf0139d9f3427f796",
+      "compatibilityJarSha256": "fea4d4942e666ce5c42957a7790e42c82dfb52c7cb8fa508add108d345559a11",
+      "packedKey": "OwnerDataV1",
+      "packedAllVisitedChunks": true,
+      "staticOptimization": false,
+      "fullProfilePlayabilityAccepted": false,
+      "ordinarySaveAndReopenConfirmed": false,
+      "normalLastShutdownConfirmed": false,
+      "lastObservedNativeLoadingPercent": 100,
+      "lastNativeLoadingScreenshotLocalTime": "2026-10-16T11:09:11+03:00",
+      "hudConfirmed": false,
+      "movementConfirmed": false,
+      "shapeOrLightingChangedByPacker": false,
+      "ledgerChangedByPacker": false,
+      "blockEntitiesBefore": 4040007,
+      "blockEntitiesAfter": 4040007,
+      "chunksVisited": 39485,
+      "chunksChanged": 25016,
+      "pilotPreviouslyPacked": 2539,
+      "ownerFieldsPackedInFullPass": 4037465,
+      "structuralNbtTagsRemovedEstimate": 255083435,
+      "typedNamedOwnerBytesBefore": 3839920088,
+      "typedNamedOwnerBytesAfter": 3928744318,
+      "sourceLevelUnchangedByPacker": true,
+      "exactRawNbtReverseVerifiedForEveryChangedChunk": true,
+      "packingSeconds": 761.468,
+      "packingResult": "evidence/playability-20261016/owner-pack-full-01/result.json",
+      "reverseBackups": [
+        "evidence/playability-20261016/owner-pack-pilot-01/region-backups",
+        "evidence/playability-20261016/owner-pack-full-01/region-backups"
+      ],
+      "doNotOpenWithGame4": true,
+      "lastRunFailure": "CONFIRMED_JAVA_HEAP_SPACE_OOM_AND_INCOMPLETE_UNCONFIRMED_SERVER_SAVE",
+      "lastRunTimelineLocal": {
+        "date": "2026-10-16",
+        "timezone": "Europe/Sofia",
+        "oomObserved": "11:24:51",
+        "stoppingServer": "11:25:07",
+        "savingWorlds": "11:25:38",
+        "exceptionStoppingServerOutOfMemory": "11:26:11",
+        "stoppingClient": "11:51:12",
+        "allDimensionsSavedObserved": false,
+        "firstOomObserved": "11:19:03"
+      },
+      "integrityCaveat": "Current working world is preserved post-OOM; partial save possible. Packer exact-reverse PASS predates this failed game run and does not prove current files still match packed receipts. Check raw-chunk/region receipts and retained backups before opening a disposable independent copy. Do not overwrite either preserved world or blindly rerun full packing."
+    }
+  },
+  "gameArtifacts": [
+    {
+      "role": "completedOriginal",
+      "path": "project/build/v1274-static-architecture-20261015/artifacts/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-rollback-static-architecture.4.jar",
+      "bytes": 42259264,
+      "sha256": "1805b3e922ad246b4f5222aaf83ae0527c458d1624cfaa12e02b139d00faa4e1",
+      "sources": "project/build/v1274-static-architecture-20261015/artifacts/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-rollback-static-architecture.4-sources.jar",
+      "sourcesBytes": 9382387,
+      "sourcesSha256": "1b3de53e878a7da095838a4a84f15d86f6ee8ece24aa83481b37d1b56c5ea2ed"
+    },
+    {
+      "role": "packedWorkingAndCurrentSource",
+      "path": "artifacts/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-rollback-static-architecture.5-packed-owner-nbt.1.jar",
+      "bytes": 42261383,
+      "sha256": "fea4d4942e666ce5c42957a7790e42c82dfb52c7cb8fa508add108d345559a11",
+      "sources": "artifacts/dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-rollback-static-architecture.5-packed-owner-nbt.1-sources.jar",
+      "sourcesBytes": 9506452,
+      "sourcesSha256": "888e1d20ae4129c07bad7de47bfc2edafaea59d62d3c85181d1892c537efff14"
+    }
+  ],
+  "requirements": {
+    "minecraft": "1.20.1",
+    "javaMajor": 17,
+    "actualInstalledFabricLoader": "0.20.0",
+    "sourceBuildFabricLoader": "0.16.10",
+    "fabricApi": "0.92.9+1.20.1",
+    "geckoLib": "4.4.9",
+    "mclib": 20,
+    "worldEditCompileOnly": "7.2.15",
+    "gradleWrapper": "8.8",
+    "fabricLoom": "1.6.12",
+    "yarn": "1.20.1+build.10",
+    "heapMaximumBytes": 10737418240,
+    "heapMaximumArgument": "-Xmx10240M",
+    "renderDistance": 12,
+    "simulationDistance": 12,
+    "profileModJarCount": 110,
+    "modList": "handoff/LIMACINA-MODS-SAFE.json",
+    "settings": "handoff/LIMACINA-SETTINGS-SAFE.json",
+    "converterInOrdinaryGame": false,
+    "secretLauncherFilesIncluded": false
+  },
+  "preparation": {
+    "path": "project/build/v1271-city-preparation",
+    "sourcePlan": "project/build/v1271-city-preparation/source-plan.sqlite",
+    "sourcePlanSha256": "384b1dd6548e356dc4b078848443f9df779d9c7e2338c89e183155949d7bfffb",
+    "runtimeManifest": "project/build/v1271-city-preparation/runtime/manifest.json",
+    "runtimeManifestSha256": "6da6ba36e8ccc8981483821755f688adf331b5e305f78c187863bb7936a0121f",
+    "sourceStylePolicy": "project/docs/v12.7.1/conversion/source-style-policy.json",
+    "sourceStylePolicySha256": "71e32a40f95ae3984e2b98fc58b8e2f17986aea0a2c54c409c27fbee7b2b8bc7",
+    "recreateForbidden": true
+  },
+  "originalInputs": [
+    {
+      "path": "original-inputs/bbmc_v16_map.zip",
+      "sha256": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08"
+    },
+    {
+      "path": "original-inputs/bbmc_v15_resource.zip",
+      "sha256": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+    }
+  ],
+  "latestOperation": {
+    "description": "Обычный полный клиент .5: выбор карты 08:07:53Z, нативные 100% загрузки; затем Java heap space OOM 11:24:51 местного времени, остановка сервера с повторным OOM 11:26:11, успешное завершение сохранения не подтверждено; клиент остановился 11:51:12. Рабочий мир сохранён как пост-OOM артефакт, не как чистый чекпоинт.",
+    "worldSelectedUtc": "2026-10-16T08:07:53Z",
+    "lastCompletedToolOperation": "Упаковка owner NBT всей карты: PASS_ALL_CITY_OWNER_NBT_PACKED_EXACT_REVERSE_ORDINARY_REOPEN_REQUIRED",
+    "memorySamplerLastUtc": "2026-10-16T08:51:20.156766Z",
+    "memorySamplerTargetState": "EXITED",
+    "processStopVerification": "STOPPED_WORLD_UNLOCKED_NO_NEW_GAME_RUN; full manifests completed, no game or conversion worker running"
+  },
+  "lastMeasuredPackedRun": {
+    "samples": 636,
+    "errors": 0,
+    "forcedGcBySampler": false,
+    "maximumHeapUsedBytes": 10730436608,
+    "heapCommittedBytes": 10737418240,
+    "osLifetimePeakRssBytes": 11740454912,
+    "osLifetimePeakPrivateCommitBytes": 19124367360,
+    "minimumSystemAvailablePhysicalBytes": 12599296,
+    "physicalRamBytes": 17024741376,
+    "source": "evidence/memory/city-installed-packed-20261016-02/summary.json",
+    "limitations": "These are observed process/heap peaks across resource/world load. They are not retained memory after forced GC, not continuous movement, and not proof of improvement."
+  },
+  "unverified": [
+    "Загрузка до игрового HUD в packed-02.",
+    "Маршрут через все основные/плотные районы, переходы и третий проблемный район.",
+    "Отзывчивость, доставка чанков и устранение повторных многосекундных зависаний.",
+    "Обычный полный клиент: внешний вид, UV/оттенки/свет, коллизии, разрушение, двери и лестницы.",
+    "Штатное сохранение и повторное открытие упакованной карты.",
+    "Доказанное уменьшение retained heap после GC и пикового RSS."
+  ],
+  "nextConcreteStep": "После восстановления и проверки SHA сначала сопоставить пост-OOM packed-working с сохранёнными receipts/результатами/резервными регионами, не изменяя оригиналы; затем только на независимой рабочей копии коротко проверить точный .5 с полным профилем 10ГБ/12/12 без конвертера. Никакой подтверждённой играбельности/успешного save нет; не повторять всю упаковку без конкретной необходимости. При сохраняющемся тяжёлом представлении следовать CONTINUE-RU: неизменяемый чекпоинт завершённой исходной карты+.4+исходники+SHA, затем существующий статический механизм.",
+  "staticMechanism": {
+    "present": true,
+    "fullCityMigrationCompleted": false,
+    "catalogSha256": "8d50359d45015b84205bb33cf95031b6268dee2ef681e84f89c14601943b62bd",
+    "pilotSourceChunks": 4,
+    "pilotConvertedRoots": 755,
+    "pilotConvertedHelperCells": 305,
+    "pilotCells": 1060,
+    "pilotBlockEntitiesBefore": 4686,
+    "pilotBlockEntitiesAfter": 3626,
+    "fullCityOomEliminationProven": false,
+    "primaryReport": "project/build/v1274-static-architecture-20261015/REPORT-RU.md",
+    "primaryResult": "project/build/v1274-static-architecture-20261015/RESULT.json",
+    "resumeInstructions": "project/build/v1274-city-completion-20261015/FULL-STATIC-RESUME.md",
+    "legacyExecutionCaveat": "Historical controllers/approval gates may be pinned to .4 and old host paths. Use portable config; adapt/rebind existing tools explicitly for .5 after small check, do not blindly run historical commands. Functional/unsupported combinations remain in working representation."
+  },
+  "evidence": [
+    {
+      "path": "evidence/playability-20261016/owner-pack-selfcheck.json",
+      "bytes": 529,
+      "sha256": "0784f558a350618874a263140e487028c602a0995a8c887eace04ca7265c8d57"
+    },
+    {
+      "path": "evidence/playability-20261016/owner-pack-pilot-01/result.json",
+      "bytes": 3441,
+      "sha256": "69dbc99ed43060ae97577a4ddc9bbda012b392727e21ca5ab292c72a2b476486"
+    },
+    {
+      "path": "evidence/playability-20261016/owner-pack-full-01/result.json",
+      "bytes": 24626,
+      "sha256": "6bb5bf6f67ba5b1f38dc2e9371f54415155f97558417a5fa9d50c15211d4a740"
+    },
+    {
+      "path": "evidence/playability-20261016/build-packed-owner-nbt-2/result.json",
+      "bytes": 2957,
+      "sha256": "bb10a25b3502886f7fbab68a5ad5ab161297f313a7ee74bf01d475f7b87ec55e"
+    },
+    {
+      "path": "evidence/playability-20261016/packed-game-jar-delta.json",
+      "bytes": 612,
+      "sha256": "70ad384c34890d92c4fb591bc8947784fa76e807070c60d3f1c6b9e25c62159c"
+    },
+    {
+      "path": "evidence/playability-20261016/baseline-failure.json",
+      "bytes": 780,
+      "sha256": "34877e16cb7cc50549d597109a1489528dec8b578c7b4d0e86f3fdd592c1c384"
+    },
+    {
+      "path": "evidence/playability-20261016/baseline-world-analysis.json",
+      "bytes": 299910,
+      "sha256": "30ade468a00fe7201aa2636b7326fa1fb24ddaf84302eb87f9e4845801014397"
+    },
+    {
+      "path": "evidence/playability-20261016/baseline-world-pre-first-fullgc.json",
+      "bytes": 34846,
+      "sha256": "8758086143b0e2cb591aa9a581ca22cca83cc5a4af7c6e28b38dd99b3de31ebf"
+    },
+    {
+      "path": "evidence/playability-20261016/baseline-resource-path-summary.json",
+      "bytes": 3232,
+      "sha256": "70de7af1ce2d3e3a39d71b7d044382c055a44b72728824fc9ca2f1c51dbb46c0"
+    },
+    {
+      "path": "evidence/jfr/baseline-resource-loading.jfr",
+      "bytes": 12104975,
+      "sha256": "6ad820d4083b3c5b607dc6450386f1bde69a12f11167c071c1514080e1ccd92b"
+    },
+    {
+      "path": "evidence/jfr/baseline-world-recovered.jfr",
+      "bytes": 3890730,
+      "sha256": "5a4f93a94fcf8cee7f606c5e76691cabf69b2cb7ad37b9091ff935c5e42f17a1"
+    },
+    {
+      "path": "evidence/playability-20261016/packed-world-open-02.json",
+      "bytes": 387,
+      "sha256": "83d74d659b10fcc648c3ee7d5b6b600607aac9636010e7b120f30eae7b9c95d6"
+    }
+  ],
+  "portability": {
+    "packageRootRelativePaths": true,
+    "oldHostControlBindingsIncluded": false,
+    "existingWorldOverwriteAllowed": false,
+    "worldHardlinksAllowed": false,
+    "oldAbsolutePathsAreHistoricalProvenanceOnly": true,
+    "accountOrTokenRequiredFromOldHost": false
+  },
+  "publication": {
+    "repository": "Stasik1960/Dreamwalker",
+    "tag": "dw-city-handoff-20261017",
+    "fixedCommit": {
+      "jsonPointer": "/commit",
+      "manifest": "MANIFEST.json",
+      "reason": "The immutable source commit is pinned by the release manifest; embedding a commit into its own Git content would be circular."
+    },
+    "releaseUrl": "https://github.com/Stasik1960/Dreamwalker/releases/tag/dw-city-handoff-20261017",
+    "manifest": "MANIFEST.json",
+    "fixedCommitFrom": "MANIFEST.json#/commit"
+  },
+  "processStopReceipt": "process-stop-receipt.json",
+  "freshPackedJfr": {
+    "bytes": 78505368,
+    "path": "evidence/jfr/dw-city-packed-02.jfr",
+    "privacyReport": "evidence/jfr/privacy-report.json",
+    "sha256": "367c669e61affce59d1f9354436ea088ce38a98c9494719dc78a549634f618eb"
+  },
+  "processStopReceiptSha256": "77414ddbe6aa9c4f5cb399abd31e4c2739c6bc8ca9ef50570fdb1c6cce31c62c"
+}

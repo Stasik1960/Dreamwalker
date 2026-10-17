@@ -36,7 +36,7 @@ public final class TransactionCore {
         String dimensionKey();
         boolean isLoaded(Cell cell);
         boolean inBounds(Cell cell);
-        /** Must not load a chunk or return a mutable view. */
+        /** Read current logical state; must not load a chunk, stage rollback data, or return a mutable view. */
         CellSnapshot read(Cell cell);
         /** Reconstruct exact catalog geometry from a loaded resident root and its functional state. */
         Optional<ObjectInstance> describeRoot(Owner owner, CellSnapshot root);
@@ -49,6 +49,12 @@ public final class TransactionCore {
         boolean writeSilently(Cell cell, CellSnapshot next);
         /** Cached shape/art data can change while the carrier's logical snapshot stays identical. */
         default boolean needsRefresh(Cell cell, CellSnapshot before, CellSnapshot next) { return false; }
+        /** After every precondition passes, capture complete adapter rollback data for each write cell once.
+         * No writes or callbacks are allowed here. The immutable map contains the freshly revalidated
+         * previous logical state, including cells whose adapter data needs a refresh. */
+        default void prepareRollback(Map<Cell, CellSnapshot> expectedWrites) {}
+        /** Release staged adapter snapshots after commit, rollback, or failed snapshot acquisition; must not throw. */
+        default void releaseRollback() {}
         /** Restore captured adapter metadata as well as the logical snapshot. */
         default boolean restoreSilently(Cell cell, CellSnapshot previous) { return writeSilently(cell, previous); }
         /** Queue client updates and neighbor notifications after a stable commit. */
@@ -273,6 +279,11 @@ public final class TransactionCore {
         List<Cell> attempted = new ArrayList<>();
         executing = true;
         try {
+            if (!plan.writes().isEmpty()) {
+                TreeMap<Cell, CellSnapshot> rollback = new TreeMap<>();
+                for (Cell cell : plan.writes().keySet()) rollback.put(cell, plan.expected().get(cell));
+                world.prepareRollback(Collections.unmodifiableMap(rollback));
+            }
             for (var write : plan.writes().entrySet()) {
                 attempted.add(write.getKey());
                 if (!world.writeSilently(write.getKey(), write.getValue())) throw new IllegalStateException("write_rejected:" + write.getKey());
@@ -283,6 +294,7 @@ public final class TransactionCore {
             if (!attempted.isEmpty()) world.publishCommitted(List.copyOf(attempted));
             return new Result(Outcome.COMMITTED, attempted.size(), null);
         } catch (RuntimeException failure) {
+            if (attempted.isEmpty()) return new Result(Outcome.REJECTED, 0, "rollback_capture_failed:" + failure.getMessage());
             List<String> restorationFailures = new ArrayList<>();
             for (int index = attempted.size() - 1; index >= 0; index--) {
                 Cell cell = attempted.get(index);
@@ -297,7 +309,10 @@ public final class TransactionCore {
             }
             return new Result(restorationFailures.isEmpty() ? Outcome.ROLLED_BACK : Outcome.ROLLBACK_FAILED, 0,
                     failure.getMessage() + (restorationFailures.isEmpty() ? "" : ";restore_failed=" + restorationFailures));
-        } finally { executing = false; }
+        } finally {
+            try { world.releaseRollback(); }
+            finally { executing = false; }
+        }
     }
     private static Rejected rejected(String message) { return new Rejected(message); }
     private static final class Rejected extends RuntimeException { private Rejected(String message) { super(message); } }

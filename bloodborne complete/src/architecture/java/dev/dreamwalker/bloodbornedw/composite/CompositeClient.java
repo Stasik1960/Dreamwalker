@@ -31,6 +31,8 @@ public final class CompositeClient {
         });
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler,client)->CompositeWorldMesh.disconnect());
         RemainingSourceTint.initialize();
+        StaticGrassMasonryClient.initialize();
+        StaticArchitectureClient.initialize();
         ImportedCompactClient.initialize();
         SourceFallbackCarrierClientV1271.initialize();
         dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.initialize();

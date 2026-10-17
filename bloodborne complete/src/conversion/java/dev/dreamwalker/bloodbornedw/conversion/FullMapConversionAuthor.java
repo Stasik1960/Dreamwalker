@@ -1,15 +1,19 @@
 package dev.dreamwalker.bloodbornedw.conversion;
 
 import com.google.gson.*;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.JsonOps;
 import dev.dreamwalker.bloodbornedw.architecture.SourceConversionScope;
 import dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount;
 import dev.dreamwalker.bloodbornedw.composite.*;
+import dev.dreamwalker.bloodbornedw.composite.mixin.BbChunkFutureInvoker;
 import dev.dreamwalker.bloodbornedw.runtime.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.security.MessageDigest;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.zip.GZIPInputStream;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -25,6 +29,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.*;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.gen.chunk.FlatChunkGenerator;
+import net.minecraft.world.gen.chunk.FlatChunkGeneratorConfig;
 import net.minecraft.util.WorldSavePath;
 
 /** Explicit, separately built importer. No conversion entrypoint ships in the production mod. */
@@ -37,6 +46,52 @@ public final class FullMapConversionAuthor implements ModInitializer {
     private static final String IMPLEMENTED_STYLE = "APPROVED_EXACT_VISIBLE_WITH_ENCLOSED_VANILLA";
     private static final Set<String> IMPLEMENTED_STYLES=Set.of(IMPLEMENTED_STYLE,"APPROVED_EXACT_VISIBLE_AND_HIDDEN_COMPACT");
     private static final Map<MinecraftServer, Job> JOBS = new WeakHashMap<>();
+    private static final ChunkStatus[] LOAD_STAGES = {ChunkStatus.EMPTY, ChunkStatus.STRUCTURE_STARTS,
+            ChunkStatus.STRUCTURE_REFERENCES, ChunkStatus.BIOMES, ChunkStatus.NOISE, ChunkStatus.SURFACE,
+            ChunkStatus.CARVERS, ChunkStatus.FEATURES, ChunkStatus.INITIALIZE_LIGHT, ChunkStatus.LIGHT,
+            ChunkStatus.SPAWN, ChunkStatus.FULL};
+
+    /** Implemented by the conversion add-on only; counters never wait on futures or retain holders. */
+    public interface ChunkControl { ChunkCounts dw$chunkCounts(); }
+    public record ChunkCounts(int loadedWorldChunks, int holders, int readableHolders,
+                              int pendingHolders, int chunksToUnload, int unloadQueue) {
+        public ChunkCounts {
+            require(loadedWorldChunks >= 0 && holders >= 0 && readableHolders >= 0
+                    && pendingHolders >= 0 && chunksToUnload >= 0 && unloadQueue >= 0, "Invalid native chunk counters");
+        }
+        boolean empty() { return loadedWorldChunks == 0 && holders == 0 && readableHolders == 0
+                && pendingHolders == 0 && chunksToUnload == 0 && unloadQueue == 0; }
+    }
+
+    private record Limits(boolean bounded, boolean pauseBeforeRows, long maxRows, long maxTicks,
+                          int checkpointRows, int maxWorkingChunks, int maxLoadedChunks,
+                          int maxHolders, int maxDrainTicks, int measurementHoldTicks, long measurementActiveRows) {
+        static Limits read() {
+            return new Limits(Boolean.getBoolean("dw.conversion.boundedChunks"),
+                    Boolean.getBoolean("dw.conversion.pauseBeforeRows"),
+                    number("maxRows", 0, 0, Long.MAX_VALUE), number("maxTicks", 0, 0, Long.MAX_VALUE),
+                    (int)number("checkpointRows", 128, 1, 1024),
+                    (int)number("maxWorkingChunks", 16, 1, 256),
+                    (int)number("maxLoadedChunks", 128, 9, 4096),
+                    (int)number("maxHolders", 1024, 9, 16384),
+                    (int)number("maxDrainTicks", 2400, 20, 72000),
+                    (int)number("measurementHoldTicks", 0, 0, 12000),
+                    number("measurementActiveRows", 64, 1, Long.MAX_VALUE));
+        }
+        private static long number(String key, long fallback, long minimum, long maximum) {
+            String text = System.getProperty("dw.conversion." + key);
+            long value = text == null ? fallback : Long.parseLong(text);
+            require(value >= minimum && value <= maximum, "Invalid dw.conversion." + key); return value;
+        }
+    }
+    private static final class RowWaiting extends RuntimeException {
+        static final RowWaiting INSTANCE = new RowWaiting();
+        private RowWaiting() { super(null, null, false, false); }
+    }
+    private static final class CapacityDrain extends RuntimeException {
+        static final CapacityDrain INSTANCE = new CapacityDrain();
+        private CapacityDrain() { super(null, null, false, false); }
+    }
 
     @Override public void onInitialize() {
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
@@ -62,14 +117,28 @@ public final class FullMapConversionAuthor implements ModInitializer {
         final Path target, plan, checkpoint, report, errors;
         final String operation, productionSHA, planSHA;
         final boolean fixture;
+        final boolean emptyFlatCompatibility;
+        final boolean staticGrassMasonry;
+        final boolean staticArchitecture;
+        final String[] phases;
+        final Limits limits;
         final Map<ServerWorld, Rules> rules = new LinkedHashMap<>();
         final Map<String,NbtList> originalSourceBlockEntities=new HashMap<>();
         BufferedReader stream;
         JsonObject current;
         ServerWorld ticketWorld;
         final Set<ChunkPos> tickets = new HashSet<>();
+        final Map<ServerWorld,Map<ChunkPos,Integer>> heldTickets = new IdentityHashMap<>();
+        LoadRequest loading;
         int phase;
         long line, committed, alreadyPresent, checkpointCount, started = System.nanoTime();
+        long architectureOwners, architectureCells, existingSourceProtoAdmissions, existingPreFeaturesSourceAdmissions;
+        int peakLoadedWorldChunks, peakHolders, peakReadableHolders;
+        int peakPendingHolders, peakChunksToUnload, peakUnloadQueue;
+        long initialProcessed, ticks, drainStartedTick;
+        boolean draining, initialBoundary = true, measuredStart, measuredActive, measuredDrained;
+        String stopStatus, holdPhase, measurementId;
+        int holdRemaining;
         boolean finished;
 
         Job(MinecraftServer server, JsonObject marker) throws Exception {
@@ -78,7 +147,22 @@ public final class FullMapConversionAuthor implements ModInitializer {
             require(marker.get("explicitConversionAuthorized").getAsBoolean(), "Conversion requires the owner's explicit command");
             require(marker.get("offlinePreparationStatus").getAsString().equals("PASS_DERIVED_COPY_PREPARED"), "Offline source clearing was not verified");
             fixture = marker.get("mode").getAsString().equals("FIXTURE_NATIVE_TEST");
-            require(fixture || marker.get("mode").getAsString().equals("FULL_ORIGINAL_AFTER_USER_COMMAND"), "Unknown conversion mode");
+            emptyFlatCompatibility = marker.get("mode").getAsString().equals("FULL_ORIGINAL_EMPTY_FLAT_COMPATIBILITY");
+            require(emptyFlatCompatibility == Boolean.getBoolean("dw.conversion.emptyFlatCompatibility"), "Temporary empty-flat compatibility requires matching input mode and JVM opt-in");
+            staticGrassMasonry = Boolean.getBoolean("dw.conversion.staticGrassMasonry");
+            require(!staticGrassMasonry || fixture, "Static grass pilot is restricted to an explicit small fixture");
+            staticArchitecture = Boolean.getBoolean("dw.conversion.staticArchitecture");
+            require(!staticArchitecture || fixture, "Static architecture pilot requires an explicitly bounded fixture");
+            require(!staticArchitecture || !staticGrassMasonry, "Architecture pilot must preserve the other family conversion mode");
+            phases = staticArchitecture ? new String[]{PHASES[0], PHASES[1], PHASES[2], "static-architecture-components.jsonl.gz"} : PHASES;
+            limits = Limits.read();
+            require(!staticArchitecture || limits.bounded, "Static architecture requires native bounded chunk loading");
+            require(fixture || emptyFlatCompatibility || marker.get("mode").getAsString().equals("FULL_ORIGINAL_AFTER_USER_COMMAND"), "Unknown conversion mode");
+            require(fixture || limits.bounded, "Full conversion requires -Ddw.conversion.boundedChunks=true");
+            require(!limits.bounded || ConversionChunkControl.active(server) && ConversionChunkControl.spawnPreloadBypassed(server),
+                    "Bounded startup was not confirmed before loading the conversion job");
+            require(!emptyFlatCompatibility || limits.bounded && !fixture && !staticArchitecture && !staticGrassMasonry
+                    && emptyFlatProfile(server.getOverworld()), "Temporary empty-flat compatibility requires the exact reviewed native generator profile");
             operation = UUID.fromString(marker.get("operationId").getAsString()).toString();
             target = server.getSavePath(WorldSavePath.ROOT).toRealPath();
             require(target.equals(Path.of(marker.get("targetWorldPath").getAsString()).toRealPath()), "Marker belongs to another world");
@@ -124,7 +208,10 @@ public final class FullMapConversionAuthor implements ModInitializer {
                         && prepared.get("sourcePlanSha256").getAsString().equals(sourceSHA), "Derived copy/source SQLite plan mismatch");
                 require(prepared.get("runtimeManifestSha256").getAsString().equals(planSHA), "Derived copy was staged against another runtime bundle");
             }
-            for (String name : PHASES) {
+            if (staticArchitecture) require(manifest.has("staticArchitectureCatalogSha256")
+                    && manifest.get("staticArchitectureCatalogSha256").getAsString().equals(StaticArchitectureCatalog.resourceSha256()),
+                    "Static architecture operation belongs to another finite shared catalog");
+            for (String name : phases) {
                 require(manifest.getAsJsonObject("runtimeFiles").has(name), "Missing bounded runtime phase " + name);
                 require(sha(plan.resolve(name)).equals(manifest.getAsJsonObject("runtimeFiles").get(name).getAsString()), "Changed runtime phase " + name);
             }
@@ -146,8 +233,15 @@ public final class FullMapConversionAuthor implements ModInitializer {
                         && previous.get("runtimeManifestSha256").getAsString().equals(planSHA), "Checkpoint belongs to another operation");
                 phase = previous.get("phase").getAsInt(); line = previous.get("line").getAsLong();
                 committed = previous.get("committed").getAsLong(); alreadyPresent = previous.get("alreadyPresent").getAsLong();
+                require(staticGrassMasonry == (previous.has("staticGrassMasonry") && previous.get("staticGrassMasonry").getAsBoolean()),
+                        "Checkpoint static-family mode changed");
+                require(staticArchitecture == (previous.has("staticArchitecture") && previous.get("staticArchitecture").getAsBoolean()),
+                        "Checkpoint static architecture mode changed");
+                architectureOwners = previous.has("architectureOwners") ? previous.get("architectureOwners").getAsLong() : 0;
+                architectureCells = previous.has("architectureCells") ? previous.get("architectureCells").getAsLong() : 0;
             }
-            require(phase >= 0 && phase <= PHASES.length && line >= 0, "Invalid durable cursor");
+            require(phase >= 0 && phase <= phases.length && line >= 0, "Invalid durable cursor");
+            initialProcessed = checkpointCount = committed + alreadyPresent;
             Map<GameRules,Rules> sharedOriginals = new IdentityHashMap<>();
             for (ServerWorld world : server.getWorlds()) {
                 CompositeLedger.enableSharding(world);
@@ -166,16 +260,21 @@ public final class FullMapConversionAuthor implements ModInitializer {
             }
             // Vanilla dimensions share GameRules. Capture ALL originals before
             // freezing any world, including every durable resume record.
+            if (limits.bounded) chunkCounts(); // Validate instrumentation before changing GameRules.
             for (ServerWorld world : rules.keySet()) Rules.freeze(world);
-            if (previous == null) durable("RUNNING");
-            openPhase(); write(report, snapshot("RUNNING", null));
+            if (limits.bounded) {
+                openPhase(); beginDrain();
+            } else {
+                if (previous == null) durable("RUNNING");
+                openPhase(); write(report, snapshot("RUNNING", null));
+            }
         }
 
         void openPhase() throws IOException {
             if (stream != null) stream.close();
             stream = null;
-            if (phase == PHASES.length) return;
-            stream = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(plan.resolve(PHASES[phase])), 65536), StandardCharsets.UTF_8), 65536);
+            if (phase == phases.length) return;
+            stream = new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(plan.resolve(phases[phase])), 65536), StandardCharsets.UTF_8), 65536);
             for (long i = 0; i < line; i++) require(readLine() != null, "Checkpoint is beyond its input phase");
         }
 
@@ -191,11 +290,60 @@ public final class FullMapConversionAuthor implements ModInitializer {
         }
 
         void tick() throws Exception {
+            if (!limits.bounded) { legacyTick(); return; }
+            ticks++;
+            chunkCounts(); // Primitive-only observations, including transient active work.
+            require(server.getPlayerManager().getPlayerList().isEmpty(), "Players cannot enter a partially converted world");
+            if (Files.exists(target.resolve("dw-conversion-stop.request"), LinkOption.NOFOLLOW_LINKS)) stopStatus = "PAUSED_EXPLICIT_STOP";
+            else if (stopStatus == null && (limits.pauseBeforeRows || limits.maxRows > 0 && processedThisRun() >= limits.maxRows
+                    || limits.maxTicks > 0 && ticks >= limits.maxTicks)) stopStatus = "PAUSED_OPERATIONAL_LIMIT";
+            if (holdRemaining > 0) {
+                if (draining) drainStartedTick++; // Measurement holds do not consume the native drain deadline.
+                Path continuation = Path.of("dw-conversion-measurement-continue.json");
+                boolean released = Files.isRegularFile(continuation, LinkOption.NOFOLLOW_LINKS)
+                        && measurementId.equals(parseFile(continuation).get("measurementId").getAsString());
+                if (released) { Files.delete(continuation); holdRemaining = 0; }
+                else holdRemaining--;
+                if (holdRemaining == 0) measurement("END", holdPhase);
+                return;
+            }
+            if (draining) { drain(); return; }
+            if (stopStatus != null || phase == phases.length) {
+                if (stopStatus == null) stopStatus = "PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED";
+                beginDrain(); return;
+            }
+            try { if (loading != null && !loading.advance()) return; }
+            catch (CapacityDrain wait) { beginDrain(); return; }
+            long deadline = System.nanoTime() + 8_000_000L;
+            for (int batch = 0; batch < 16 && System.nanoTime() < deadline; batch++) {
+                if (current == null) {
+                    if (overBudget() || heldChunkCount() >= limits.maxWorkingChunks) { beginDrain(); return; }
+                    String raw = readLine();
+                    if (raw == null) { phase++; line = 0; openPhase(); beginDrain(); return; }
+                    current = JsonParser.parseString(raw).getAsJsonObject();
+                }
+                if (fixture) require(committed + alreadyPresent < 10000, "Fixture mode cannot convert a full original map");
+                boolean exists;
+                try { exists = phase == 3 ? architecture(current) : phase == 2 ? entity(current) : owner(current); }
+                catch (RowWaiting waiting) { return; }
+                catch (CapacityDrain wait) { beginDrain(); return; }
+                requireInitialPrivilegeReleased(current);
+                if (exists) alreadyPresent++; else committed++;
+                line++; current = null; tickets.clear(); ticketWorld = null;
+                if (!measuredActive && processedThisRun() >= limits.measurementActiveRows && limits.measurementHoldTicks > 0) {
+                    measuredActive = true; hold("ACTIVE"); return;
+                }
+                if (limits.maxRows > 0 && processedThisRun() >= limits.maxRows) { stopStatus = "PAUSED_OPERATIONAL_LIMIT"; beginDrain(); return; }
+                if (committed + alreadyPresent - checkpointCount >= limits.checkpointRows) { beginDrain(); return; }
+            }
+        }
+
+        void legacyTick() throws Exception {
             require(server.getPlayerManager().getPlayerList().isEmpty(), "Players cannot enter a partially converted world");
             if (Files.exists(target.resolve("dw-conversion-stop.request"), LinkOption.NOFOLLOW_LINKS)) {
                 durable("PAUSED_EXPLICIT_STOP"); finish("PAUSED_EXPLICIT_STOP"); return;
             }
-            if (phase == PHASES.length) { durable("PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED"); finish("PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED"); return; }
+            if (phase == phases.length) { durable("PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED"); finish("PASS_RUNTIME_CONVERTED_REOPEN_REQUIRED"); return; }
             long deadline = System.nanoTime() + 8_000_000L;
             int batch = 0;
             while (batch++ < 16 && System.nanoTime() < deadline) {
@@ -203,12 +351,203 @@ public final class FullMapConversionAuthor implements ModInitializer {
                 if (raw == null) { phase++; line = 0; durable("RUNNING"); openPhase(); break; }
                 current = JsonParser.parseString(raw).getAsJsonObject();
                 if (fixture) require(committed + alreadyPresent < 10000, "Fixture mode cannot convert a full original map");
-                boolean exists = phase == 2 ? entity(current) : owner(current);
+                boolean exists = phase == 3 ? architecture(current) : phase == 2 ? entity(current) : owner(current);
                 if (exists) alreadyPresent++; else committed++;
                 line++; releaseTickets();
-                require(!SourceConversionScope.initialInstance(UUID.fromString(current.get("instanceUuid").getAsString())), "Initial overlap privilege leaked");
+                requireInitialPrivilegeReleased(current);
                 current = null;
                 if (committed + alreadyPresent - checkpointCount >= 1024) { durable("RUNNING"); break; }
+            }
+        }
+
+        void requireInitialPrivilegeReleased(JsonObject row) {
+            if (phase == 3) {
+                for (JsonElement owner : row.getAsJsonArray("owners"))
+                    require(!SourceConversionScope.initialInstance(UUID.fromString(owner.getAsJsonObject().get("instanceUuid").getAsString())), "Initial overlap privilege leaked");
+            } else {
+                require(!SourceConversionScope.initialInstance(UUID.fromString(row.get("instanceUuid").getAsString())), "Initial overlap privilege leaked");
+            }
+        }
+
+        long processedThisRun() { return committed + alreadyPresent - initialProcessed; }
+
+        Map<ServerWorld,ChunkCounts> chunkCounts() {
+            Map<ServerWorld,ChunkCounts> result = new LinkedHashMap<>();
+            for (ServerWorld world : rules.keySet()) {
+                require((Object)world.getChunkManager() instanceof ChunkControl, "Missing bounded conversion chunk diagnostics");
+                result.put(world, ((ChunkControl)(Object)world.getChunkManager()).dw$chunkCounts());
+            }
+            ChunkCounts observed = totalChunks(result);
+            peakLoadedWorldChunks = Math.max(peakLoadedWorldChunks, observed.loadedWorldChunks);
+            peakHolders = Math.max(peakHolders, observed.holders);
+            peakReadableHolders = Math.max(peakReadableHolders, observed.readableHolders);
+            peakPendingHolders = Math.max(peakPendingHolders, observed.pendingHolders);
+            peakChunksToUnload = Math.max(peakChunksToUnload, observed.chunksToUnload);
+            peakUnloadQueue = Math.max(peakUnloadQueue, observed.unloadQueue);
+            return result;
+        }
+
+        ChunkCounts totalChunks(Map<ServerWorld,ChunkCounts> dimensions) {
+            int loaded = 0, holders = 0, readable = 0, pending = 0, unloading = 0, queue = 0;
+            for (ChunkCounts c : dimensions.values()) {
+                loaded = Math.addExact(loaded, c.loadedWorldChunks); holders = Math.addExact(holders, c.holders);
+                readable = Math.addExact(readable, c.readableHolders); pending = Math.addExact(pending, c.pendingHolders);
+                unloading = Math.addExact(unloading, c.chunksToUnload); queue = Math.addExact(queue, c.unloadQueue);
+            }
+            return new ChunkCounts(loaded, holders, readable, pending, unloading, queue);
+        }
+
+        int heldChunkCount() { return heldTickets.values().stream().mapToInt(Map::size).sum(); }
+
+        boolean overBudget() {
+            ChunkCounts c = totalChunks(chunkCounts());
+            return c.loadedWorldChunks >= limits.maxLoadedChunks || Math.max(c.holders, c.readableHolders) >= limits.maxHolders;
+        }
+
+        void ensureRowBudget() {
+            if (!limits.bounded || !overBudget()) return;
+            if (committed + alreadyPresent > checkpointCount) throw CapacityDrain.INSTANCE;
+            throw new IllegalStateException("One source row exceeds bounded chunk working set before its transaction; "
+                    + "cursor remains at the previous durable row; required object chunks=" + tickets.size());
+        }
+
+        void beginDrain() throws IOException {
+            releaseTickets(); server.save(false, true, true);
+            draining = true; drainStartedTick = ticks;
+            write(report, snapshot("RUNNING_DRAINING_CHUNKS", null));
+        }
+
+        void drain() throws IOException {
+            require(ticks - drainStartedTick <= limits.maxDrainTicks, "Native chunk drain exceeded its bounded wait; no clean checkpoint promoted");
+            if (!totalChunks(chunkCounts()).empty()) return;
+            // Native unloading may flush more dirty shards after the first save.
+            // Flush again only after ALL holder/future/unload references are gone.
+            server.save(false, true, true);
+            require(totalChunks(chunkCounts()).empty(), "Native chunk drain changed during final flush");
+            if (initialBoundary && !measuredStart) {
+                measuredStart = true;
+                if (limits.measurementHoldTicks > 0) { hold("START_EMPTY"); return; }
+            }
+            if (stopStatus != null && !measuredDrained && limits.measurementHoldTicks > 0) {
+                measuredDrained = true; hold("DRAINED"); return;
+            }
+            if (stopStatus != null) {
+                if (stream != null) stream.close(); stream = null;
+                rules.forEach((world, original) -> original.restore(world)); server.save(false, true, true);
+                require(totalChunks(chunkCounts()).empty(), "Clean pause requires zero retained native chunk references");
+                write(checkpoint, snapshot(stopStatus, null)); write(report, snapshot(stopStatus, null));
+                checkpointCount = committed + alreadyPresent; finished = true; server.stop(false); return;
+            }
+            write(checkpoint, snapshot("RUNNING", null)); write(report, snapshot("RUNNING", null));
+            checkpointCount = committed + alreadyPresent; draining = false; initialBoundary = false;
+        }
+
+        void hold(String phase) {
+            holdPhase = phase; holdRemaining = limits.measurementHoldTicks; measurementId = UUID.randomUUID().toString();
+            measurement("START", phase);
+        }
+
+        void measurement(String event, String phase) {
+            JsonObject value = new JsonObject(); value.addProperty("event", event); value.addProperty("phase", phase);
+            value.addProperty("operationId", operation); value.addProperty("measurementId", measurementId);
+            value.addProperty("continueFile", "dw-conversion-measurement-continue.json"); value.addProperty("holdTicks", limits.measurementHoldTicks);
+            value.addProperty("processedThisRun", processedThisRun()); value.add("chunkLifecycle", chunkSnapshot());
+            Runtime runtime = Runtime.getRuntime(); value.addProperty("heapUsedBytesObserved", runtime.totalMemory() - runtime.freeMemory());
+            System.out.println("DW_CONVERSION_MEASUREMENT " + new Gson().toJson(value));
+        }
+
+        JsonObject chunkSnapshot() {
+            var counts = chunkCounts(); JsonObject dimensions = new JsonObject();
+            counts.forEach((world, count) -> dimensions.add(world.getRegistryKey().getValue().toString(), JSON.toJsonTree(count)));
+            JsonObject value = new JsonObject(); value.add("dimensions", dimensions); value.add("totals", JSON.toJsonTree(totalChunks(counts)));
+            value.addProperty("heldDirectTicketChunks", heldChunkCount()); value.addProperty("draining", draining);
+            value.addProperty("loadInFlight", loading != null); value.addProperty("tick", ticks);
+            if (loading != null) {
+                value.addProperty("loadTarget", loading.target.toString()); value.addProperty("loadStage", loading.stageName());
+            }
+            return value;
+        }
+
+        void holdTicket(ServerWorld world, ChunkPos chunk, ChunkStatus status) {
+            int distance = -ChunkStatus.getDistanceFromFull(status); // Native level =33-radius, with no clamp.
+            Map<ChunkPos,Integer> held = heldTickets.computeIfAbsent(world, ignored -> new HashMap<>());
+            Integer previous = held.get(chunk);
+            if (previous != null && previous >= distance) return;
+            if (previous != null) world.getChunkManager().removeTicket(TICKET, chunk, previous, chunk);
+            world.getChunkManager().addTicket(TICKET, chunk, distance, chunk); held.put(chunk, distance);
+        }
+
+        boolean emptyFlatProfile(ServerWorld world) {
+            if (!emptyFlatCompatibility || !world.getRegistryKey().equals(World.OVERWORLD)
+                    || world.getServer().getSaveProperties().getGeneratorOptions().shouldGenerateStructures()
+                    || !(world.getChunkManager().getChunkGenerator() instanceof FlatChunkGenerator flat)) return false;
+            var config = flat.getConfig();
+            if (!config.getLayers().isEmpty() || !config.getLayerBlocks().isEmpty()
+                    || !config.getBiome().matchesKey(BiomeKeys.PLAINS)
+                    || !config.createGenerationSettings(config.getBiome()).getFeatures().isEmpty()) return false;
+            var encoded = FlatChunkGeneratorConfig.CODEC.encodeStart(RegistryOps.of(JsonOps.INSTANCE, world.getRegistryManager()), config)
+                    .result().orElseThrow(() -> new IllegalStateException("Cannot verify native flat configuration"));
+            if (!encoded.isJsonObject()) return false;
+            var document = encoded.getAsJsonObject();
+            if (!document.has("layers") || !document.get("layers").isJsonArray() || !document.getAsJsonArray("layers").isEmpty()) return false;
+            // The pinned native CODEC uses boolean fields with false defaults.
+            // Omitted defaults are false; present strings/numbers are rejected.
+            for (String flag : List.of("features", "lakes")) if (document.has(flag)) {
+                var value = document.get(flag);
+                if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isBoolean() || value.getAsBoolean()) return false;
+            }
+            return true;
+        }
+
+        /** One native future at a time; no get/join, no manual chunk or holder eviction. */
+        final class LoadRequest {
+            final ServerWorld world;
+            final ChunkPos target;
+            final List<ChunkPos> halo = new ArrayList<>();
+            int haloIndex, stage;
+            boolean center;
+            CompletableFuture<Either<Chunk,ChunkHolder.Unloaded>> future;
+            LoadRequest(ServerWorld world, ChunkPos target) {
+                this.world = world; this.target = target;
+                for (int x = target.x - 1; x <= target.x + 1; x++)
+                    for (int z = target.z - 1; z <= target.z + 1; z++) halo.add(new ChunkPos(x, z));
+            }
+            String stageName() { return (center ? "CENTER:" : "HALO:" + haloIndex + ":") + LOAD_STAGES[stage]; }
+            boolean advance() {
+                long deadline = System.nanoTime() + 8_000_000L;
+                while (System.nanoTime() < deadline) {
+                    ChunkPos next = center ? target : halo.get(haloIndex);
+                    ChunkStatus status = LOAD_STAGES[stage];
+                    if (future == null) {
+                        ensureRowBudget(); holdTicket(world, next, status);
+                        future = ((BbChunkFutureInvoker)(Object)world.getChunkManager())
+                                .bloodborneDw$profileChunkFuture(next.x, next.z, status, true);
+                    }
+                    if (!future.isDone()) return false;
+                    Either<Chunk,ChunkHolder.Unloaded> completed = future.getNow(null);
+                    require(completed != null && completed.left().isPresent(), "Native bounded load did not provide " + next + " at " + status);
+                    Chunk actual = completed.left().orElseThrow();
+                    // EMPTY is requested first, before any generation stage.
+                    // Ordinary flat conversion still requires FEATURES.
+                    // The explicit compatibility gate may accept BIOMES only
+                    // with the verified zero-layer/zero-feature native profile;
+                    // native status tasks then preserve existing source states.
+                    boolean full = actual.getStatus().isAtLeast(ChunkStatus.FULL);
+                    require(full || actual.getStatus().isAtLeast(ChunkStatus.FEATURES)
+                                    && world.getChunkManager().getChunkGenerator() instanceof FlatChunkGenerator
+                                    || emptyFlatCompatibility && actual.getStatus().isAtLeast(ChunkStatus.BIOMES) && emptyFlatProfile(world),
+                            "Bounded conversion refuses a missing or unverified source chunk outside the approved generator/status profile: "
+                                    + next + " at " + actual.getStatus());
+                    if (!full && stage == 0) existingSourceProtoAdmissions++;
+                    if (stage == 0 && !actual.getStatus().isAtLeast(ChunkStatus.FEATURES)) existingPreFeaturesSourceAdmissions++;
+                    future = null;
+                    if (!center && status == ChunkStatus.INITIALIZE_LIGHT) {
+                        if (++haloIndex == halo.size()) { center = true; stage = 9; } else stage = 0;
+                    } else if (center && status == ChunkStatus.FULL) {
+                        ensureRowBudget(); loading = null; return true;
+                    } else stage++;
+                }
+                return false;
             }
         }
 
@@ -227,6 +566,17 @@ public final class FullMapConversionAuthor implements ModInitializer {
             require(world.isInBuildLimit(pos) && world.getWorldBorder().contains(pos), "Source object lies outside target build limits");
             require(ticketWorld == null || ticketWorld == world, "Unexpected cross-dimension object"); ticketWorld = world;
             ChunkPos chunk = new ChunkPos(pos);
+            if (limits.bounded) {
+                if (tickets.add(chunk)) require(tickets.size() <= 256, "One source object spans more than 256 chunks");
+                if (world.getChunkManager().getWorldChunk(chunk.x, chunk.z) != null) {
+                    holdTicket(world, chunk, ChunkStatus.FULL); return;
+                }
+                if (loading == null) loading = new LoadRequest(world, chunk);
+                require(loading.world == world && loading.target.equals(chunk), "Unexpected overlapping native chunk request");
+                if (!loading.advance()) throw RowWaiting.INSTANCE;
+                require(world.getChunkManager().getWorldChunk(chunk.x, chunk.z) != null, "Completed native FULL chunk is not accessible");
+                return;
+            }
             if (tickets.add(chunk)) { require(tickets.size() <= 256, "One source object spans more than 256 chunks"); world.getChunkManager().addTicket(TICKET, chunk, 2, chunk); }
             world.getChunk(chunk.x, chunk.z);
         }
@@ -238,7 +588,6 @@ public final class FullMapConversionAuthor implements ModInitializer {
             Map<String,String> properties = new TreeMap<>(); row.getAsJsonObject("properties").entrySet().forEach(e -> properties.put(e.getKey(), e.getValue().getAsString()));
             BlockState state = CompositeData.state(new CellSnapshot.BlockData(id.toString(), properties, new byte[0]));
             require(VerticalMount.isArchitecture(state) && !ImportedCompactBlock.compact(state), "Deferred owner must be an owned architecture state");
-            UUID uuid = UUID.fromString(row.get("instanceUuid").getAsString());
             NbtCompound payload = row.has("payloadSnbt") ? parseNbt(row.get("payloadSnbt").getAsString())
                     : row.has("payload") ? parseNbt(row.get("payload").toString()) : new NbtCompound();
             NbtList originalEntities=originalSourceBlockEntities.get(row.get("dimension").getAsString()+"/"+pos.asLong());
@@ -252,6 +601,9 @@ public final class FullMapConversionAuthor implements ModInitializer {
                 require(originalPosition.equals(pos), "Native model offset original source root differs from imported root");
                 payload = SourceNativeModelOffsetV127.apply(state, payload, row.get("sourceNativeModelOffsetState").getAsString(), originalPosition);
             }
+            if (staticGrassMasonry && StaticGrassMasonryBlock.eligible(state, payload))
+                return staticGrassMasonry(world, pos);
+            UUID uuid = UUID.fromString(row.get("instanceUuid").getAsString());
             if (world.getBlockEntity(pos) instanceof CompositeBlockEntity saved && saved.resident() != null) {
                 // placeInternal canonicalizes a source alias on its FIRST
                 // installation. Replay compares the exact same canonical art
@@ -292,6 +644,7 @@ public final class FullMapConversionAuthor implements ModInitializer {
             Set<dev.dreamwalker.bloodbornedw.runtime.ObjectInstance.Owner> neighbours = new HashSet<>();
             for (var offset : object.cells().keySet()) for (var contribution : CompositeRuntime.contributions(world, CompositeData.pos(object.owner().root().add(offset)))) neighbours.add(contribution.owner());
             for (var neighbour : neighbours) load(world, CompositeData.pos(neighbour.root()));
+            ensureRowBudget();
             final BlockState selected = state; final NbtCompound supplied = payload;
             TransactionCore.Result result = SourceConversionScope.initialInstances(Set.of(uuid), () -> {
                 if (selected.getBlock() instanceof CompositeRootBlock) return CompositeRuntime.place(world, pos, selected, uuid, null, supplied);
@@ -301,6 +654,67 @@ public final class FullMapConversionAuthor implements ModInitializer {
             require(result.outcome() == TransactionCore.Outcome.COMMITTED, "Initial source transaction rejected: " + result.reason());
             require(world.getBlockEntity(pos) instanceof CompositeBlockEntity saved && saved.resident() != null && saved.resident().instanceId().equals(uuid), "Owner identity was not persisted");
             return false;
+        }
+
+        /** One reviewed immutable pose. Guest owners still use the existing ledger and
+         * transaction lifecycle; this native carrier never acquires its own identity. */
+        boolean staticGrassMasonry(ServerWorld world, BlockPos pos) {
+            BlockState nextState = StaticGrassMasonryBlock.state();
+            if (world.getBlockState(pos).equals(nextState)) {
+                require(world.getBlockEntity(pos) == null, "Static grass unexpectedly has a block entity");
+                return true;
+            }
+            require(world.getBlockState(pos).isAir() || world.getBlockState(pos).isOf(CompositeArchitecture.CELL),
+                    "Offline phase did not clear static grass root");
+            for (var contribution : CompositeRuntime.contributions(world, pos))
+                load(world, CompositeData.pos(contribution.owner().root()));
+            ensureRowBudget();
+            var cell = CompositeData.cell(pos);
+            FabricCompositeWorld access = new FabricCompositeWorld(world, Map.of()) {
+                @Override public boolean writeSilently(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell targetCell, CellSnapshot next) {
+                    // This narrowly scoped adapter permits the reviewed AIR/HELPER -> native
+                    // carrier transition. Full typed rollback and guest writes remain in super.
+                    require(targetCell.equals(cell) && next.data().blockId().equals(StaticGrassMasonryBlock.ID.toString()),
+                            "Unexpected static pilot write");
+                    world.setBlockState(pos, nextState, net.minecraft.block.Block.FORCE_STATE | net.minecraft.block.Block.SKIP_DROPS);
+                    return super.writeSilently(targetCell, next);
+                }
+            };
+            CellSnapshot previous = access.read(cell);
+            require(previous.resident() == null && (previous.kind() == CellSnapshot.Kind.AIR || previous.kind() == CellSnapshot.Kind.HELPER),
+                    "Static pilot cannot replace a resident or foreign block");
+            require(CompositeData.nbt(previous.data().blockEntityNbt()).isEmpty(),
+                    "Static pilot cannot discard private helper payload");
+            Map<dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell, CellSnapshot> expected = new TreeMap<>();
+            expected.put(cell, previous);
+            for (var guest : previous.guests()) {
+                CellSnapshot root = access.read(guest.root());
+                require(access.describeRoot(guest, root).filter(object -> object.at(cell) != null).isPresent(),
+                        "Static pilot found a stale guest owner");
+                expected.put(guest.root(), root);
+            }
+            CellSnapshot next = new CellSnapshot(CellSnapshot.Kind.FOREIGN, CompositeData.data(nextState, new NbtCompound()), null, previous.guests());
+            var plan = new TransactionCore.Plan(access.dimensionKey(), expected, Map.of(cell, next), Map.of());
+            var result = CompositeRuntime.execute(access, new TransactionCore.Preparation(plan, null));
+            require(result.outcome() == TransactionCore.Outcome.COMMITTED, "Static source transaction rejected: " + result.reason());
+            require(world.getBlockState(pos).equals(nextState) && world.getBlockEntity(pos) == null,
+                    "Static source was not persisted as a native block");
+            return false;
+        }
+
+        boolean architecture(JsonObject row) {
+            require(staticArchitecture && phase == 3, "Static architecture phase is not enabled");
+            ServerWorld world=world(row);
+            for(var raw:row.getAsJsonArray("cells"))load(world,position(raw.getAsJsonObject()));
+            for(var raw:row.getAsJsonArray("owners"))load(world,position(raw.getAsJsonObject()));
+            ensureRowBudget();
+            var prepared=StaticArchitectureMigration.prepare(world,row);
+            if(!prepared.alreadyPresent()){
+                var result=CompositeRuntime.execute(prepared.access(),new TransactionCore.Preparation(prepared.plan(),null));
+                require(result.outcome()==TransactionCore.Outcome.COMMITTED,"Static architecture transaction rejected: "+result.reason());
+            }
+            architectureOwners+=prepared.owners();architectureCells+=prepared.cells();
+            return prepared.alreadyPresent();
         }
 
         boolean entity(JsonObject row) {
@@ -318,12 +732,16 @@ public final class FullMapConversionAuthor implements ModInitializer {
             Box box = entity.getBoundingBox();
             for (int x = MathHelper.floor(box.minX) >> 4; x <= MathHelper.floor(box.maxX - 1e-7) >> 4; x++)
                 for (int z = MathHelper.floor(box.minZ) >> 4; z <= MathHelper.floor(box.maxZ - 1e-7) >> 4; z++) load(world, new BlockPos(x * 16, pos.getY(), z * 16));
+            ensureRowBudget();
             require(world.spawnEntity(entity), "Converted source entity spawn failed " + id);
             return false;
         }
 
         void releaseTickets() {
-            if (ticketWorld != null) for (ChunkPos chunk : tickets) ticketWorld.getChunkManager().removeTicket(TICKET, chunk, 2, chunk);
+            if (limits.bounded) {
+                heldTickets.forEach((world, held) -> held.forEach((chunk, distance) -> world.getChunkManager().removeTicket(TICKET, chunk, distance, chunk)));
+                heldTickets.clear(); loading = null;
+            } else if (ticketWorld != null) for (ChunkPos chunk : tickets) ticketWorld.getChunkManager().removeTicket(TICKET, chunk, 2, chunk);
             tickets.clear(); ticketWorld = null;
         }
 
@@ -334,6 +752,22 @@ public final class FullMapConversionAuthor implements ModInitializer {
             out.addProperty("targetWorldPath", target.toString()); out.addProperty("originalArchivesWritten", false); out.addProperty("galleryCreated", false);
             out.addProperty("initialOverlapPrivilegeSerialized", false); out.addProperty("elapsedSeconds", (System.nanoTime() - started) / 1_000_000_000d);
             Runtime runtime = Runtime.getRuntime(); out.addProperty("heapUsedBytesObserved", runtime.totalMemory() - runtime.freeMemory()); out.addProperty("heapMaxBytes", runtime.maxMemory());
+            out.addProperty("processedThisRun", processedThisRun()); out.addProperty("boundedChunkLoading", limits.bounded);
+            out.addProperty("staticGrassMasonry", staticGrassMasonry);
+            out.addProperty("staticArchitecture", staticArchitecture);
+            out.addProperty("architectureOwners", architectureOwners);out.addProperty("architectureCells", architectureCells);
+            out.addProperty("existingSourceProtoAdmissions", existingSourceProtoAdmissions);
+            out.addProperty("existingPreFeaturesSourceAdmissions", existingPreFeaturesSourceAdmissions);
+            out.addProperty("emptyFlatCompatibility", emptyFlatCompatibility);
+            out.addProperty("temporaryGeneratorRestorationRequired", emptyFlatCompatibility);
+            out.addProperty("sourceProtoMinimumStatus", emptyFlatCompatibility ? "minecraft:biomes" : "minecraft:features");
+            out.addProperty("phaseCount", phases.length);
+            if (limits.bounded) { out.add("chunkLifecycle", chunkSnapshot()); out.add("boundedChunkLimits", JSON.toJsonTree(limits)); }
+            if (limits.bounded) {
+                out.add("observedNativeChunkHighWater", JSON.toJsonTree(new ChunkCounts(peakLoadedWorldChunks,
+                        peakHolders, peakReadableHolders, peakPendingHolders, peakChunksToUnload, peakUnloadQueue)));
+                out.addProperty("nativeChunkHighWaterDefinition", "Per-job maxima of the six real native totals, sampled at existing diagnostics/budget checks and once per bounded server tick; intervals between observations may be missed. Six primitive counters only; no chunk, holder or future references retained.");
+            }
             JsonObject memory = new JsonObject(); for (ServerWorld world : rules.keySet()) memory.add(world.getRegistryKey().getValue().toString(), JSON.toJsonTree(CompositeLedger.get(world).shardMetrics())); out.add("ownerStorage", memory);
             JsonObject originals = new JsonObject(); rules.forEach((world, saved) -> originals.add(world.getRegistryKey().getValue().toString(), JSON.toJsonTree(saved))); out.add("originalRules", originals);
             if (current != null) out.add("currentSourceRow", current.deepCopy()); if (failure != null) out.addProperty("failure", failure);
@@ -374,5 +808,23 @@ public final class FullMapConversionAuthor implements ModInitializer {
     private static JsonObject parseFile(Path path) throws IOException { require(Files.size(path) <= MAX_LINE, "Oversized conversion metadata"); try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) { return JsonParser.parseReader(reader).getAsJsonObject(); } }
     private static void require(boolean okay, String message) { if (!okay) throw new IllegalStateException(message); }
     private static String sha(Path path) throws Exception { MessageDigest digest = MessageDigest.getInstance("SHA-256"); try (InputStream input = Files.newInputStream(path)) { byte[] buffer = new byte[1024 * 1024]; for (int n; (n = input.read(buffer)) != -1;) digest.update(buffer, 0, n); } return HexFormat.of().formatHex(digest.digest()); }
-    private static void write(Path path, JsonObject value) throws IOException { Path pending = path.resolveSibling(path.getFileName() + ".pending"); Files.writeString(pending, JSON.toJson(value) + "\n", StandardCharsets.UTF_8); try { Files.move(pending, path, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE); } catch (AtomicMoveNotSupportedException e) { Files.move(pending, path, StandardCopyOption.REPLACE_EXISTING); } }
+    private static void write(Path path, JsonObject value) throws IOException {
+        Path pending = path.resolveSibling(path.getFileName() + ".pending");
+        Files.writeString(pending, JSON.toJson(value) + "\n", StandardCharsets.UTF_8);
+        for (int attempt = 0; ; attempt++) {
+            try {
+                Files.move(pending, path, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+                return;
+            } catch (AccessDeniedException denied) {
+                // Antivirus/readers can briefly deny replacement on Windows.
+                // Retain the old complete file and the closed pending file;
+                // never fall back to truncating/copying the durable target.
+                if (attempt >= 7) throw denied;
+                try { Thread.sleep(10); }
+                catch (InterruptedException interrupted) {
+                    Thread.currentThread().interrupt(); denied.addSuppressed(interrupted); throw denied;
+                }
+            }
+        }
+    }
 }

@@ -6,6 +6,7 @@ Root serializes all Java processes. JAVA_HOME17 (or JAVA_HOME) selects Java 17.
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import zipfile
@@ -19,8 +20,10 @@ def main():
     parser.add_argument('--runtime-directory', type=Path)
     parser.add_argument('--prepare-only', action='store_true')
     parser.add_argument('--offline', action='store_true')
+    parser.add_argument('--addon-version', default='1.2.7')
     parser.add_argument('--worldedit-api-jar', type=Path, help='Optional pinned local compile-only WorldEdit API JAR')
     args = parser.parse_args()
+    assert re.fullmatch(r'[0-9A-Za-z.+-]+', args.addon_version), 'Invalid add-on version'
     production = args.production_jar.resolve()
     digest = sha(production)
     assert ordinary(args.output), 'Reparsed add-on preparation destination rejected'
@@ -29,11 +32,14 @@ def main():
     output.mkdir(parents=True)
     resources = output / 'resources'
     resources.mkdir()
-    metadata = {'schemaVersion': 1, 'id': 'dreamwalker_full_conversion_author', 'version': '1.2.7',
+    metadata = {'schemaVersion': 1, 'id': 'dreamwalker_full_conversion_author', 'version': args.addon_version,
                 'name': 'Dreamwalker explicitly enabled full source conversion', 'environment': 'server',
                 'entrypoints': {'main': ['dev.dreamwalker.bloodbornedw.conversion.FullMapConversionAuthor']},
                 'depends': {'minecraft': '1.20.1', 'java': '>=17', 'fabricloader': '>=0.16.10',
                             'fabric-api': '*', 'bloodborne_dw': '*'}}
+    mixins = ROOT / 'src/conversion/resources/dreamwalker_conversion.mixins.json'
+    if mixins.is_file():
+        metadata['mixins'] = ['dreamwalker_conversion.mixins.json']
     (resources / 'fabric.mod.json').write_text(json.dumps(metadata, indent=2) + '\n', encoding='utf8')
     (resources / 'dw-conversion-binding.json').write_text(json.dumps({'schemaVersion': 1, 'productionJarSha256': digest,
                                                                     'disabledWithoutExplicitMarker': True}) + '\n', encoding='utf8')
@@ -41,13 +47,16 @@ def main():
     def literal(path):
         return path.as_posix().replace("'", "\\'")
     init = output / 'v127conversion.init.gradle'
-    init.write_text("""gradle.projectsEvaluated {
- def p=gradle.rootProject
+    init.write_text("""gradle.beforeProject { p -> p.plugins.withId('fabric-loom') {
  p.sourceSets { conversion {
-  java.srcDirs=['src/conversion/java'];resources.srcDirs=['RESOURCES']
+  java.srcDirs=['src/conversion/java'];resources.srcDirs=['RESOURCES','src/conversion/resources']
   compileClasspath += p.sourceSets.main.output + p.sourceSets.main.compileClasspath
   runtimeClasspath += p.sourceSets.main.output + p.sourceSets.main.runtimeClasspath
  } }
+ p.loom.mixin.useLegacyMixinAp.set(false)
+} }
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
  p.configurations.conversionImplementation.extendsFrom(p.configurations.implementation)
  p.configurations.conversionRuntimeOnly.extendsFrom(p.configurations.runtimeOnly)
  p.loom.mods { dreamwalker_full_conversion_author { sourceSet p.sourceSets.conversion } }
@@ -57,17 +66,18 @@ def main():
  } }
  def author=p.tasks.register('v127ConversionJar',Jar) {
   dependsOn p.tasks.named('conversionClasses');from p.sourceSets.conversion.output
-  archiveBaseName='dreamwalker-v127-full-conversion-author';archiveVersion='1.2.7';archiveClassifier='dev'
+  archiveBaseName='dreamwalker-v127-full-conversion-author';archiveVersion='ADDONVERSION';archiveClassifier='dev'
  }
  def remapType=p.tasks.named('remapJar').get().getClass().superclass
  p.tasks.register('remapV127ConversionJar',remapType) {
   dependsOn author;inputFile.set(author.flatMap{it.archiveFile})
   classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath)
-  archiveBaseName='dreamwalker-v127-full-conversion-author';archiveVersion='1.2.7';archiveClassifier=''
+  archiveBaseName='dreamwalker-v127-full-conversion-author';archiveVersion='ADDONVERSION';archiveClassifier=''
   addNestedDependencies=false
+  useMixinAP.set(false)
  }
 } 
-""".replace('RESOURCES', literal(resources)).replace('RUNTIME', literal(runtime)).replace('PRODUCTION', literal(production)), encoding='utf8')
+""".replace('RESOURCES', literal(resources)).replace('RUNTIME', literal(runtime)).replace('PRODUCTION', literal(production)).replace('ADDONVERSION', args.addon_version), encoding='utf8')
     report = {'status': 'PASS_PREPARED_NOT_COMPILED', 'productionJarSha256': digest,
               'initScript': str(init), 'runtimeDirectory': str(runtime), 'worldConversionAttempted': False}
     if not args.prepare_only:
@@ -83,7 +93,7 @@ def main():
         with (output / 'build.log').open('wb') as log:
             code = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                                   env=dict(os.environ, JAVA_HOME=java_home)).returncode
-        addon = ROOT / 'build/libs/dreamwalker-v127-full-conversion-author-1.2.7.jar'
+        addon = ROOT / f'build/libs/dreamwalker-v127-full-conversion-author-{args.addon_version}.jar'
         assert code == 0 and addon.is_file() and sha(production) == digest, 'Author build failed or production changed'
         with zipfile.ZipFile(addon) as archive:
             assert archive.testzip() is None and json.loads(archive.read('fabric.mod.json')) == metadata

@@ -12,7 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShapes;
 
-/** Full world/BE snapshots plus an owner ledger; commits never replace foreign carriers. */
+/** Fresh logical reads; full world/BE rollback snapshots are staged only for a validated write set. */
 public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     private record Original(BlockState state,NbtCompound fullNbt,List<CompositeData.Contribution> contributions,CellSnapshot snapshot){}
     public final ServerWorld world;
@@ -26,7 +26,7 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
     @Override public CellSnapshot read(Cell cell){
         if(!isLoaded(cell))throw new IllegalStateException("Read would load a composite chunk: "+cell);
         BlockPos pos=CompositeData.pos(cell);BlockState state=world.getBlockState(pos);BlockEntity entity=world.getBlockEntity(pos);
-        NbtCompound full=entity==null?new NbtCompound():entity.createNbt();List<CompositeData.Contribution> contributions=CompositeLedger.get(world).at(cell);
+        List<CompositeData.Contribution> contributions=CompositeLedger.get(world).at(cell);
         if(contributions.isEmpty()&&entity instanceof CompositeBlockEntity cached)contributions=cached.contributions();
         Owner resident=dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)&&entity instanceof CompositeBlockEntity cached?cached.resident():null;
         List<Owner> guests=new ArrayList<>();for(var entry:contributions)if(!entry.owner().equals(resident))guests.add(entry.owner());
@@ -35,10 +35,26 @@ public class FabricCompositeWorld implements TransactionCore.WorldAccess {
         boolean markerRoot=dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)&&incoming.keySet().stream().anyMatch(owner->owner.root().equals(cell));
         boolean free=state.isOf(Blocks.AIR)||state.isOf(Blocks.CAVE_AIR)||state.isOf(Blocks.VOID_AIR)||markerRoot;
         Kind kind=resident!=null?Kind.ROOT:state.isOf(CompositeArchitecture.CELL)||free&&!guests.isEmpty()?Kind.HELPER:free?Kind.AIR:Kind.FOREIGN;
-        NbtCompound payload=entity instanceof CompositeBlockEntity cached&&(resident!=null||state.isOf(CompositeArchitecture.CELL))?cached.payload():full;
-        CellSnapshot snapshot=new CellSnapshot(kind,CompositeData.data(state,payload),resident,guests);
-        originals.putIfAbsent(cell,new Original(state,full.copy(),List.copyOf(contributions),snapshot));return snapshot;
+        // Foreign BE contents are still part of every fresh precondition read. Composite carriers
+        // expose only their public functional payload here; their full owner NBT is rollback data.
+        NbtCompound payload=entity instanceof CompositeBlockEntity cached&&(resident!=null||state.isOf(CompositeArchitecture.CELL))?cached.payload():entity==null?new NbtCompound():entity.createNbt();
+        return new CellSnapshot(kind,CompositeData.data(state,payload),resident,guests);
     }
+    @Override public void prepareRollback(Map<Cell,CellSnapshot> expectedWrites){
+        originals.clear();
+        for(var entry:expectedWrites.entrySet()){
+            Cell cell=entry.getKey();
+            if(!isLoaded(cell)||!inBounds(cell)||!entry.getValue().equals(read(cell)))throw new IllegalStateException("Rollback state changed: "+cell);
+            BlockPos pos=CompositeData.pos(cell);BlockState state=world.getBlockState(pos);BlockEntity entity=world.getBlockEntity(pos);
+            // createNbt owns the complete typed compound. Keep it once until commit/rollback ends;
+            // restoration receives a copy so an adapter cannot mutate the saved original.
+            NbtCompound full=entity==null?new NbtCompound():entity.createNbt();
+            List<CompositeData.Contribution> contributions=CompositeLedger.get(world).at(cell);
+            if(contributions.isEmpty()&&entity instanceof CompositeBlockEntity cached)contributions=cached.contributions();
+            originals.put(cell,new Original(state,full,List.copyOf(contributions),entry.getValue()));
+        }
+    }
+    @Override public void releaseRollback(){originals.clear();}
     @Override public Optional<ObjectInstance> describeRoot(Owner owner,CellSnapshot root){
         if(!owner.equals(root.resident()))return Optional.empty();BlockState state=CompositeData.state(root.data());
         if(!dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isArchitecture(state)||!net.minecraft.registry.Registries.BLOCK.getId(state.getBlock()).toString().equals(owner.registryId()))return Optional.empty();

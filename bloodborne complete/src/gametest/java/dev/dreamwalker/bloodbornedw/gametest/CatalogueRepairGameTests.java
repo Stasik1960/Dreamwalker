@@ -329,7 +329,7 @@ public final class CatalogueRepairGameTests implements FabricGameTest {
             var top=new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Box(0,0,0,1,.25,1);
             var lower=CompositeData.contribution(CompositeData.contribution(new CompositeData.Contribution(owner,rootData,new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Footprint(List.of(bottom),List.of(bottom)))));
             var upper=CompositeData.contribution(CompositeData.contribution(new CompositeData.Contribution(owner,rootData,new dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Footprint(List.of(top),List.of(top)))));
-            var saved=own.createNbt();saved.put("payload",legacy);saved.put("owners",CompositeData.contributions(List.of(lower)));own.readNbt(saved);
+            var saved=own.createNbt();saved.remove(dev.dreamwalker.bloodbornedw.composite.CompositeOwnerNbt.KEY);saved.put("payload",legacy);saved.put("owners",CompositeData.contributions(List.of(lower)));own.readNbt(saved);
             w.setBlockState(root.up(),CompositeArchitecture.CELL.getDefaultState(),Block.NOTIFY_ALL);
             ((CompositeBlockEntity)w.getBlockEntity(root.up())).set(null,List.of(upper),new NbtCompound());
             CompositeLedger.get(w).put(CompositeData.cell(root),List.of(lower));CompositeLedger.get(w).put(CompositeData.cell(root.up()),List.of(upper));

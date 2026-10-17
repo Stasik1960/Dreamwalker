@@ -28,6 +28,9 @@ public final class CompositeArchitecture {
         List<Block> carriers=new ArrayList<>(BLOCKS.values());carriers.add(CELL);carriers.addAll(dev.dreamwalker.bloodbornedw.architecture.PrototypeArchitecture.LADDERS);carriers.addAll(dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallArchitecture.blocks());
         carriers.add(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.BARRIER);carriers.add(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.LIGHT);
         CELL_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("composite_cell"),FabricBlockEntityTypeBuilder.create(CompositeBlockEntity::new,carriers.toArray(Block[]::new)).build());
+        StaticGrassMasonryBlock.initialize();
+        StaticArchitectureCatalog.initialize();
+        StaticArchitectureRuntime.initialize();
         dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue.initialize();
         PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->{if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){if(world instanceof ServerWorld server)dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.remove(server,pos,player);return false;}var owner=CompositeRuntime.target(world,pos,player);if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,pos);if(owner==null)return !(state.getBlock() instanceof CompositeRootBlock||state.isOf(CELL))||CompositeRuntime.contributions(world,pos).isEmpty();if(world instanceof ServerWorld server)CompositeRuntime.remove(server,owner,player,!player.getAbilities().creativeMode);return false;});
         UseBlockCallback.EVENT.register((player,world,hand,hit)->{if(world.getBlockState(hit.getBlockPos()).getBlock() instanceof CompositeRootBlock||world.getBlockState(hit.getBlockPos()).isOf(CELL))return ActionResult.PASS;return CompositeRuntime.use(world,hit.getBlockPos(),player);});

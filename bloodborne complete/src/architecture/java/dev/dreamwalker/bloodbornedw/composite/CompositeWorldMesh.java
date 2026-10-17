@@ -169,6 +169,8 @@ public final class CompositeWorldMesh {
             }
             if(actual.getBlock() instanceof InvisibleSourceCarrierV127)return InvisibleSourceCarrierV127.source(actual);
             if(actual.getBlock() instanceof SourceFallbackCarrierV1271)return SourceFallbackCarrierV1271.source(actual);
+            if(actual.getBlock() instanceof StaticGrassMasonryBlock)return net.minecraft.block.Blocks.GRASS_BLOCK.getDefaultState();
+            if(actual.getBlock() instanceof StaticArchitectureBlock)return StaticArchitectureCatalog.recipe(actual).renderCarrier(actual);
             if(actual.getBlock() instanceof CompositeRootBlock block)return ImportedSourceLightingV127.renderCarrier(block.spec,actual);
             return actual;
         }

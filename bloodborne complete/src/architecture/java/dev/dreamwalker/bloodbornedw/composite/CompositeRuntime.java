@@ -21,7 +21,7 @@ public final class CompositeRuntime {
     private static final ThreadLocal<TransactionCore.Result> LAST_RESULT=new ThreadLocal<>();
     private static final Map<ServerWorld,Map<String,Runnable>> PENDING=new WeakHashMap<>();
     private static TransactionCore core;
-    public static TransactionCore core(){if(core==null)core=new TransactionCore(new CellSnapshot(Kind.AIR,CompositeData.data(Blocks.AIR.getDefaultState(),new NbtCompound()),null,List.of()),CompositeData.data(CompositeArchitecture.CELL.getDefaultState(),new NbtCompound()),16);return core;}
+    public static TransactionCore core(){if(core==null)core=new TransactionCore(new CellSnapshot(Kind.AIR,CompositeData.data(Blocks.AIR.getDefaultState(),new NbtCompound()),null,List.of()),CompositeData.data(CompositeArchitecture.CELL.getDefaultState(),new NbtCompound()),32);return core;}
     public static boolean writing(){return WRITING.get()>0;}
     public static boolean baseShape(){return BASE_SHAPE.get();}
     /** Native collision may call the state's outline; suppress owner selection during that call. */
