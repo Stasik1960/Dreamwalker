@@ -5,14 +5,14 @@ GitHub CLI с собственной авторизацией (`gh auth login`),
 скачанные браузером под своим аккаунтом. Секреты прежнего владельца не нужны.
 
 Скачай `Restore-Handoff.ps1` и опубликованный SHA256 манифеста именно из фиксированного
-релиза `dw-city-handoff-20261017`. Не используй `latest` или изменяемую ветку.
+релиза `dw-city-handoff-20261017-r1`. Не используй `latest` или изменяемую ветку.
 Ниже `<SHA256 из релиза>` нужно заменить точным опубликованным значением.
 
 Для доступного по HTTPS релиза:
 
 ```powershell
 pwsh -File .\Restore-Handoff.ps1 `
-  -ManifestUri 'https://github.com/Stasik1960/Dreamwalker/releases/download/dw-city-handoff-20261017/MANIFEST.json' `
+  -ManifestUri 'https://github.com/Stasik1960/Dreamwalker/releases/download/dw-city-handoff-20261017-r1/MANIFEST.json' `
   -ManifestSha256 '<SHA256 из релиза>' `
   -Destination 'D:\Dreamwalker-Handoff-20261017'
 ```
@@ -21,7 +21,7 @@ pwsh -File .\Restore-Handoff.ps1 `
 
 ```powershell
 pwsh -File .\Restore-Handoff.ps1 -UseGh `
-  -Repository 'Stasik1960/Dreamwalker' -Tag 'dw-city-handoff-20261017' `
+  -Repository 'Stasik1960/Dreamwalker' -Tag 'dw-city-handoff-20261017-r1' `
   -ManifestSha256 '<SHA256 из релиза>' `
   -Destination 'D:\Dreamwalker-Handoff-20261017'
 ```

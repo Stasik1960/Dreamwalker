@@ -29,10 +29,15 @@ Set-StrictMode -Version Latest
 function Assert-NoReparse([string]$Path) {
     $candidate=[IO.Path]::GetFullPath($Path)
     while ($candidate) {
-        if (Test-Path -LiteralPath $candidate) {
-            if (((Get-Item -LiteralPath $candidate -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) {
+        try {
+            $attributes=[IO.File]::GetAttributes($candidate)
+            if (($attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0) {
                 throw "Reparse point refused: $candidate"
             }
+        } catch [IO.FileNotFoundException] {
+            # A not-yet-created child is allowed; existing ancestors are still checked.
+        } catch [IO.DirectoryNotFoundException] {
+            # Missing descendants do not skip checks of existing parent directories.
         }
         $parent=[IO.Path]::GetDirectoryName($candidate)
         if ($parent -eq $candidate) { break }; $candidate=$parent
@@ -118,7 +123,7 @@ try {
         }
         elseif ($UseGh) { Get-GhAsset $asset.name $transfer $manifest.repository $manifest.tag }
         else { Invoke-WebRequest -Uri $asset.url -OutFile $archivePath }
-        if ((Get-Item -LiteralPath $archivePath).Length -ne [long]$asset.bytes) { throw "Asset size mismatch: $($asset.name)" }
+        if ([IO.FileInfo]::new($archivePath).Length -ne [long]$asset.bytes) { throw "Asset size mismatch: $($asset.name)" }
         Assert-Hash $archivePath $asset.sha256
         $zip=[IO.Compression.ZipFile]::OpenRead($archivePath)
         try {
@@ -145,7 +150,7 @@ try {
     if ($restored.Count -ne $fileRows.Count) { throw "Package incomplete: $($restored.Count)/$($fileRows.Count) files" }
     foreach ($name in $fileRows.Keys) {
         $target=Join-Path $destinationRoot $name; Assert-NoReparse $target
-        if ((Get-Item -LiteralPath $target).Length -ne [long]$fileRows[$name].bytes) { throw "Extracted size mismatch: $name" }
+        if ([IO.FileInfo]::new($target).Length -ne [long]$fileRows[$name].bytes) { throw "Extracted size mismatch: $name" }
         Assert-Hash $target $fileRows[$name].sha256
     }
     if (Test-Path -LiteralPath (Join-Path $destinationRoot 'MANIFEST.json')) { throw 'Reserved root manifest already exists.' }
