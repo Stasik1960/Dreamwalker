@@ -1,0 +1,713 @@
+{
+  "schema": "dreamwalker-native-client-capture-v1",
+  "productionJarSha256": "6e89e385499c994f1b7c0918e7212c5d57818b4d06585b0527d1915713abe7fa",
+  "captureCase": "reopen",
+  "inputSha256": "4b1d4522d7e187d5a2110956ad72108e7b18372f157415028b721888ee92be41",
+  "expectedFrames": 1,
+  "frames": [
+    {
+      "key": "final_reopen",
+      "fileName": "reopen-final-reopen.png",
+      "camera": [
+        310,
+        132,
+        -656,
+        90,
+        0
+      ],
+      "command": "tp @s 310.000000 132.000000 -656.000000 90.000000 0.000000",
+      "waitTicks": 100,
+      "probePixel": [
+        180,
+        307
+      ],
+      "measureFrameTimes": false,
+      "actualCamera": [
+        310.0,
+        132.0,
+        -656.0,
+        90.0,
+        0.0
+      ],
+      "frameTimes": {
+        "status": "NOT_MEASURED"
+      },
+      "existingRenderCountersAtCapture": {
+        "compositeMesh": {
+          "cachedOwners": 29084,
+          "cachedBytes": 100662848,
+          "cacheByteLimit": 100663296,
+          "lightRevision": 2,
+          "sectionRevisions": 4935,
+          "bakedOwners": 38634,
+          "bakedVertices": 2475632,
+          "batchUploads": 865,
+          "batchDraws": 31251,
+          "batchGpuBytes": 62822528,
+          "batchGpuByteLimit": 201326592,
+          "batchRetainedHits": 1501834
+        },
+        "compositeVisibility": {
+          "scope": "COMPOSITE_OWNER_RENDERED_BAKED_VERTEX_AABB_ONLY",
+          "cacheEntries": 980,
+          "cacheLimit": 2048,
+          "cacheHits": 4110721,
+          "sameFrameModelValidationSkips": 3991349,
+          "cacheMisses": 980,
+          "evictions": 0,
+          "bakeEpochClears": 0,
+          "individualModelChanges": 0,
+          "culledNewDraws": 3823891,
+          "distanceCulledNewDraws": 33260,
+          "visibleNewDraws": 3302356,
+          "failOpenNewDraws": 0,
+          "originalBypasses": 0,
+          "frustumFrameActive": false
+        }
+      },
+      "glRenderer": "NVIDIA GeForce RTX 4070 Ti/PCIe/SSE2",
+      "glVendor": "NVIDIA Corporation",
+      "renderDistance": 12,
+      "simulationDistance": 12,
+      "loadedChunks": 609,
+      "terrainRenderComplete": true,
+      "dayTime": 6000,
+      "lookedAt": "305, 133, -656",
+      "lookedAtState": "Block{minecraft:air}",
+      "pixelRayProbe": {
+        "pixel": [
+          180,
+          307
+        ],
+        "framebuffer": [
+          1280,
+          720
+        ],
+        "verticalFov": 70.0,
+        "start": [
+          310.0,
+          133.61999988555908,
+          -656.0
+        ],
+        "direction": [
+          -0.7434599,
+          0.07591736,
+          -0.6644577
+        ],
+        "end": [
+          214.8371353149414,
+          143.33742237091064,
+          -741.0505828857422
+        ],
+        "maxDistance": 128,
+        "shape": "COLLIDER",
+        "fluid": "NONE",
+        "hitType": "BLOCK",
+        "hitPosition": [
+          296.5732328048261,
+          134.99105539003307,
+          -668.0
+        ],
+        "block": "296, 134, -669",
+        "side": "south",
+        "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+        "resolution": "NATIVE_MODEL_COLLIDER",
+        "nativeModelProbe": {
+          "position": "296, 134, -669",
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d0]",
+          "quads": [
+            {
+              "face": "south",
+              "brightness": [
+                0.8,
+                0.8,
+                0.8,
+                0.8
+              ],
+              "packedLight": [
+                15728640,
+                15728640,
+                15728640,
+                15728640
+              ],
+              "shade": true,
+              "sourceVertices": [
+                0,
+                1065353216,
+                1065353216,
+                -1,
+                1056899088,
+                1051459616,
+                0,
+                0,
+                0,
+                0,
+                1065353216,
+                -1,
+                1056899088,
+                1051590624,
+                0,
+                0,
+                1065353216,
+                0,
+                1065353216,
+                -1,
+                1056964592,
+                1051590624,
+                0,
+                0,
+                1065353216,
+                1065353216,
+                1065353216,
+                -1,
+                1056964592,
+                1051459616,
+                0,
+                0
+              ],
+              "sprite": "bloodborne_dw:block/remaining/source/minecraft/block/andesite",
+              "spriteUv": [
+                0.49804688,
+                0.5,
+                0.3359375,
+                0.33984375
+              ],
+              "spriteSize": [
+                16,
+                16
+              ],
+              "rootRelativeVertices": [
+                [
+                  0.0,
+                  1.0,
+                  1.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  1.0,
+                  0.0,
+                  1.0
+                ],
+                [
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              ],
+              "physicalOutwardCenterCell": "296, 134, -668",
+              "physicalOutwardSky": 15,
+              "physicalOutwardBlock": 0,
+              "exteriorVertices": [
+                {
+                  "rootRelative": [
+                    0.0,
+                    1.0,
+                    1.0
+                  ],
+                  "sampleRootRelative": [
+                    0.005,
+                    0.995,
+                    1.001
+                  ],
+                  "sampleCell": "296, 134, -668",
+                  "brightness": 0.8,
+                  "rgb": [
+                    0.8,
+                    0.8,
+                    0.8
+                  ],
+                  "packedLight": 15728640,
+                  "physicalSky": 15,
+                  "physicalBlock": 0,
+                  "skyVisible": true
+                },
+                {
+                  "rootRelative": [
+                    0.0,
+                    0.0,
+                    1.0
+                  ],
+                  "sampleRootRelative": [
+                    0.005,
+                    0.005,
+                    1.001
+                  ],
+                  "sampleCell": "296, 134, -668",
+                  "brightness": 0.8,
+                  "rgb": [
+                    0.8,
+                    0.8,
+                    0.8
+                  ],
+                  "packedLight": 15728640,
+                  "physicalSky": 15,
+                  "physicalBlock": 0,
+                  "skyVisible": true
+                },
+                {
+                  "rootRelative": [
+                    1.0,
+                    0.0,
+                    1.0
+                  ],
+                  "sampleRootRelative": [
+                    0.995,
+                    0.005,
+                    1.001
+                  ],
+                  "sampleCell": "296, 134, -668",
+                  "brightness": 0.8,
+                  "rgb": [
+                    0.8,
+                    0.8,
+                    0.8
+                  ],
+                  "packedLight": 15728640,
+                  "physicalSky": 15,
+                  "physicalBlock": 0,
+                  "skyVisible": true
+                },
+                {
+                  "rootRelative": [
+                    1.0,
+                    1.0,
+                    1.0
+                  ],
+                  "sampleRootRelative": [
+                    0.995,
+                    0.995,
+                    1.001
+                  ],
+                  "sampleCell": "296, 134, -668",
+                  "brightness": 0.8,
+                  "rgb": [
+                    0.8,
+                    0.8,
+                    0.8
+                  ],
+                  "packedLight": 15728640,
+                  "physicalSky": 15,
+                  "physicalBlock": 0,
+                  "skyVisible": true
+                }
+              ]
+            }
+          ],
+          "renderer": "nativeBlockModelRenderer"
+        }
+      },
+      "staticGeometry": {
+        "hiddenQuads": 259698,
+        "opaquePoses": 134,
+        "closedBoxes": 665,
+        "testedQuads": 1158279,
+        "cachedPoses": 669
+      },
+      "world": "minecraft:overworld",
+      "worldTick": 86296647,
+      "rpStates": [],
+      "settledTicks": 151,
+      "sha256": "2693ac5f523d96ec19da1acc28562684d012535e9a25c9a3a0b68b672418b302",
+      "bytes": 997995,
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "captureMethod": "Minecraft ScreenshotRecorder; last completed framebuffer at END_CLIENT_TICK",
+  "defaultWaitTicks": 40,
+  "status": "CAPTURE_AND_ROUTE_COMPLETE",
+  "captureComplete": true,
+  "capturedFrames": 1,
+  "waitingScreen": "class_434",
+  "preCaptureRecovery": "EXACT_RECIPE38_SERVER_ACK_26_NEIGHBOURS_UNCHANGED",
+  "currentFrame": "final_reopen",
+  "nativeRoute": {
+    "schema": "dreamwalker-static-city-native-route-v1",
+    "mode": "VERIFY_RESTORED_WITH_KNOWN_DOOR_BLOCKER",
+    "physicalMouseKeyboardInput": "NOT_RUN",
+    "scope": "Six fixed positions in the 3x3 pilot chunks; no discovery scan",
+    "ladder": "NOT_CHECKED_NO_LADDER_IN_BOUNDED_ROUTE",
+    "operations": [
+      {
+        "operation": "guarded_pre_capture_recovery_validated_without_repeating_break",
+        "at": [
+          289,
+          128,
+          -656
+        ],
+        "clientWorldTick": 86296652,
+        "detail": {
+          "registryId": "bloodborne_dw:static_architecture_0",
+          "state": "Block{bloodborne_dw:static_architecture_0}[part\u003d38]"
+        }
+      },
+      {
+        "operation": "known_server_door_blocker_preserved_without_repeating_interaction",
+        "at": [
+          284,
+          118,
+          -649
+        ],
+        "clientWorldTick": 86296652,
+        "detail": {
+          "outcome": "REJECTED",
+          "changedCells": 0,
+          "reason": "collision_with_owned_object:Cell[x\u003d285, y\u003d120, z\u003d-649]",
+          "sourceOperation": "door_server_transition_result_after_closed_ack_timeout"
+        }
+      },
+      {
+        "operation": "spectator_mode_requested_before_safe_recovery_teleport",
+        "at": [
+          290,
+          128,
+          -656
+        ],
+        "clientWorldTick": 86296652
+      },
+      {
+        "operation": "safe_recovery_navigation_while_spectator",
+        "at": [
+          290,
+          128,
+          -656
+        ],
+        "clientWorldTick": 86296653
+      },
+      {
+        "operation": "prior_successful_qa_drop_recovery_carried_without_second_deletion",
+        "at": [
+          290,
+          128,
+          -656
+        ],
+        "clientWorldTick": 86296765
+      },
+      {
+        "operation": "survival_and_daytime_requested_after_safe_spectator_teleport",
+        "at": [
+          290,
+          128,
+          -656
+        ],
+        "clientWorldTick": 86296765
+      },
+      {
+        "operation": "fixed_state_and_safe_survival_ready_for_normal_native_shutdown",
+        "at": [
+          290,
+          128,
+          -656
+        ],
+        "clientWorldTick": 86296780,
+        "detail": {
+          "eye": [
+            290.5,
+            129.62000000476837,
+            -655.5
+          ],
+          "yaw": 90.0,
+          "pitch": 66.0,
+          "crosshair": "BLOCK",
+          "hit": [
+            290.0,
+            128.4972520002909,
+            -655.5
+          ],
+          "block": [
+            289,
+            128,
+            -656
+          ],
+          "side": "east",
+          "isOnGround": true,
+          "persistence": "PENDING_NORMAL_INTEGRATED_SERVER_SHUTDOWN_AND_SUBSEQUENT_REOPEN_PROOF"
+        }
+      }
+    ],
+    "status": "PASS_REOPEN_STATE_READY_FOR_NATIVE_SHUTDOWN_WITH_KNOWN_DOOR_BLOCKER",
+    "phase": "WAIT_KNOWN_SURVIVAL",
+    "totalTicks": 36,
+    "stageTicks": 21,
+    "complete": true,
+    "recoveryExpectation": {
+      "root": [
+        289,
+        128,
+        -656
+      ],
+      "rootBefore": "Block{bloodborne_dw:static_architecture_0}[part\u003d38]",
+      "expectedAfter": "minecraft:air",
+      "guardedRestoreCommand": "setblock 289 128 -656 bloodborne_dw:static_architecture_0[part\u003d38] keep",
+      "affectedCellCount": 1,
+      "affectedCells": [
+        {
+          "position": [
+            289,
+            128,
+            -656
+          ],
+          "before": "Block{bloodborne_dw:static_architecture_0}[part\u003d38]",
+          "expectedAfter": "minecraft:air"
+        }
+      ],
+      "unchangedNeighbours": [
+        {
+          "position": [
+            288,
+            127,
+            -657
+          ],
+          "state": "Block{bloodborne_dw:source_snow_height12}[art_bank\u003d0,compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+        },
+        {
+          "position": [
+            288,
+            127,
+            -656
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            288,
+            127,
+            -655
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+        },
+        {
+          "position": [
+            288,
+            128,
+            -657
+          ],
+          "state": "Block{bloodborne_dw:source_bricks_stone_1}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            288,
+            128,
+            -656
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            288,
+            128,
+            -655
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+        },
+        {
+          "position": [
+            288,
+            129,
+            -657
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            288,
+            129,
+            -656
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            288,
+            129,
+            -655
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            289,
+            127,
+            -657
+          ],
+          "state": "Block{bloodborne_dw:source_bricks_stone_1}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            289,
+            127,
+            -656
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            289,
+            127,
+            -655
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d2]"
+        },
+        {
+          "position": [
+            289,
+            128,
+            -657
+          ],
+          "state": "Block{bloodborne_dw:static_architecture_0}[part\u003d47]"
+        },
+        {
+          "position": [
+            289,
+            128,
+            -655
+          ],
+          "state": "Block{bloodborne_dw:static_architecture_0}[part\u003d38]"
+        },
+        {
+          "position": [
+            289,
+            129,
+            -657
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            289,
+            129,
+            -656
+          ],
+          "state": "Block{bloodborne_dw:source_bricks_stone_2}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d10]"
+        },
+        {
+          "position": [
+            289,
+            129,
+            -655
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            290,
+            127,
+            -657
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            290,
+            127,
+            -656
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            290,
+            127,
+            -655
+          ],
+          "state": "Block{bloodborne_dw:source_andesite}[compact\u003dtrue,open\u003dfalse,profile\u003dbase,rotation\u003d0,variant\u003d1]"
+        },
+        {
+          "position": [
+            290,
+            128,
+            -657
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            290,
+            128,
+            -656
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            290,
+            128,
+            -655
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            290,
+            129,
+            -657
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            290,
+            129,
+            -656
+          ],
+          "state": "Block{minecraft:air}"
+        },
+        {
+          "position": [
+            290,
+            129,
+            -655
+          ],
+          "state": "Block{minecraft:air}"
+        }
+      ],
+      "doorInitialOpen": false,
+      "trapdoorInitialOpen": false
+    },
+    "knownDoorBlocker": {
+      "outcome": "REJECTED",
+      "changedCells": 0,
+      "reason": "collision_with_owned_object:Cell[x\u003d285, y\u003d120, z\u003d-649]",
+      "sourceOperation": "door_server_transition_result_after_closed_ack_timeout"
+    },
+    "doorOpenCloseVerified": false,
+    "allFunctionalChecksPassed": false,
+    "qaDropRecovery": {
+      "schemaVersion": 1,
+      "status": "ACK_REMOVED_OR_ALREADY_ABSENT",
+      "sourceBaselineWorldSha256": "2386f97c0a4f43f857787be5687540bfd4e4d99d492b06959909818334abde58",
+      "qaPlayerUuid": "5e8ff009-3f88-325a-99e8-f57614c984d1",
+      "deathPosition": [
+        318,
+        119,
+        -622
+      ],
+      "radius": 8,
+      "drops": [
+        {
+          "uuid": "65d20da3-45f3-41f9-b0fb-531e52161106",
+          "expectedId": "minecraft:black_shulker_box",
+          "expectedCount": 1,
+          "outcome": "REMOVED"
+        },
+        {
+          "uuid": "1daa4267-c1af-4730-ac6b-dc09486ced05",
+          "expectedId": "minecraft:black_shulker_box",
+          "expectedCount": 1,
+          "outcome": "REMOVED"
+        },
+        {
+          "uuid": "a8e3ef71-7724-4b64-95f0-17eb0442bfb1",
+          "expectedId": "minecraft:carved_pumpkin",
+          "expectedCount": 1,
+          "outcome": "REMOVED"
+        }
+      ]
+    },
+    "persistenceProof": "PENDING_NORMAL_INTEGRATED_SERVER_SHUTDOWN_AND_SUBSEQUENT_REOPEN"
+  }
+}

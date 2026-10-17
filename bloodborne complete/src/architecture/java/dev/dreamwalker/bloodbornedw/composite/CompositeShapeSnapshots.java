@@ -53,8 +53,13 @@ public final class CompositeShapeSnapshots {
                 long key=chunk(row.getKey());Map<Cell,CellData> cells=changed.computeIfAbsent(key,ignored->new HashMap<>(next.getOrDefault(key,Map.of())));
                 if(row.getValue().empty())cells.remove(row.getKey());else cells.put(row.getKey(),row.getValue());
             }
-            for(var row:changed.entrySet())if(row.getValue().isEmpty())next.remove(row.getKey());else next.put(row.getKey(),Map.copyOf(row.getValue()));
-            chunks=Map.copyOf(next);pending.clear();
+            // Both maps are private, newly allocated revision data. No writer
+            // retains their mutable reference after publication. Wrapping them
+            // keeps the same immutable snapshot without rebuilding MapN's
+            // linear-probing table: adjacent packed ChunkPos long keys have
+            // heavily colliding hashes (x ^ z), particularly on a city grid.
+            for(var row:changed.entrySet())if(row.getValue().isEmpty())next.remove(row.getKey());else next.put(row.getKey(),Collections.unmodifiableMap(row.getValue()));
+            chunks=Collections.unmodifiableMap(next);pending.clear();
             // A helper or manual decorative root may retain the identical block
             // state while its published instance opacity changes. Recheck those cells,
             // after the complete immutable revision is visible to light workers.
@@ -78,7 +83,7 @@ public final class CompositeShapeSnapshots {
         synchronized void end(World world){if(batchDepth<=0)throw new IllegalStateException("Unbalanced shape publication batch");batchDepth--;flush(world);}
         synchronized void forgetChunk(long key){
             if(batchDepth>0)throw new IllegalStateException("Cannot evict a shape shard during an atomic publication batch");
-            pending.keySet().removeIf(cell->chunk(cell)==key);Map<Long,Map<Cell,CellData>> next=new HashMap<>(chunks);next.remove(key);chunks=Map.copyOf(next);
+            pending.keySet().removeIf(cell->chunk(cell)==key);Map<Long,Map<Cell,CellData>> next=new HashMap<>(chunks);next.remove(key);chunks=Collections.unmodifiableMap(next);
         }
     }
     private static long chunk(Cell cell){return net.minecraft.util.math.ChunkPos.toLong(cell.x()>>4,cell.z()>>4);}

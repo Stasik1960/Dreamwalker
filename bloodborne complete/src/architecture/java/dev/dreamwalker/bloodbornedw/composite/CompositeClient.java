@@ -27,7 +27,7 @@ public final class CompositeClient {
         CompositeVisualBoundsV127.initialize();
         net.fabricmc.fabric.api.resource.ResourceManagerHelper.get(net.minecraft.resource.ResourceType.CLIENT_RESOURCES).registerReloadListener(new net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener(){
             @Override public Identifier getFabricId(){return new Identifier("bloodborne_dw","composite_world_mesh");}
-            @Override public void reload(net.minecraft.resource.ResourceManager manager){CompositeWorldMesh.reload();}
+            @Override public void reload(net.minecraft.resource.ResourceManager manager){CompositeWorldMesh.reload();StaticArchitectureGeometry.reload();}
         });
         net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents.DISCONNECT.register((handler,client)->CompositeWorldMesh.disconnect());
         RemainingSourceTint.initialize();
@@ -45,6 +45,7 @@ public final class CompositeClient {
                 if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(entity.getCachedState())){dev.dreamwalker.bloodbornedw.architecture.mount.NativeMountClient.render(entity,matrices,consumers,light,overlay);return;}
                 if(entity.resident()==null||!(entity.getCachedState().getBlock() instanceof CompositeRootBlock block))return;
                 BlockState renderedState=entity.getCachedState();NbtCompound renderedPayload=entity.sourceRenderPayload();
+                if(CompositeWorldMesh.tryRenderRetained(entity,renderedState,renderedPayload,matrices,consumers,overlay))return;
                 // A saved NEW root may be visible before its distant helper chunk.
                 // Resolve legacy art locally while the atomic server migration waits.
                 if(block.spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(renderedState,renderedPayload)){

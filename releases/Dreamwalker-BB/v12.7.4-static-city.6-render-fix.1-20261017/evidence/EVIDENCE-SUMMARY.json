@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "createdUtc": "2026-10-17T22:29:45.362570+00:00",
+  "gameplayAssessment": {
+    "status": "PARTIAL_FPS_IMPROVEMENT_BARRIERS_REMOVED_NOT_GAMEPLAY_READY",
+    "gameplayVerified": false,
+    "fpsImprovedInAllThreeMatchedViews": true,
+    "lightingFixed": false,
+    "allFunctionalChecksPassed": false,
+    "remainingBlockers": [
+      "4.37-8.19 FPS is below normal gameplay",
+      "black strips remain; cause unconfirmed",
+      "existing door collision blocker prevents verified opening",
+      "ladder climbing not verified on bounded route"
+    ]
+  },
+  "profile": {
+    "scope": "MINIMAL Fabric API + GeckoLib + Dreamwalker; not full modpack",
+    "heapMiB": 10240,
+    "renderDistance": 12,
+    "simulationDistance": 12,
+    "framebuffer": [
+      1280,
+      720
+    ],
+    "fov": 70,
+    "graphics": "fancy",
+    "vsync": false,
+    "frameLimit": 260,
+    "resourcePack": "unchanged original bbmc_v15_resource.zip",
+    "glRenderer": "NVIDIA GeForce RTX 4070 Ti/PCIe/SSE2",
+    "method": "Native flipFrame presentation intervals, approximately20-second windows after terrain completion and settling; background launch with no physical mouse/keyboard input"
+  },
+  "comparison": [
+    {
+      "view": "north_facade",
+      "camera": [
+        288.0,
+        132.0,
+        -678.0,
+        0.0,
+        0.0
+      ],
+      "beforeFps": 3.101973040972441,
+      "afterFps": 8.194532078317787,
+      "beforeAverageMs": 322.37546451612906,
+      "afterAverageMs": 122.03259325153374,
+      "beforeP95Ms": 359.916,
+      "afterP95Ms": 129.269,
+      "loadedChunksBefore": 609,
+      "loadedChunksAfter": 609,
+      "framebufferBefore": "baseline-north_facade.png",
+      "framebufferAfter": "candidate7-north_facade.png"
+    },
+    {
+      "view": "east_facade",
+      "camera": [
+        310.0,
+        132.0,
+        -656.0,
+        90.0,
+        0.0
+      ],
+      "beforeFps": 0.30689896128665506,
+      "afterFps": 5.038885710891665,
+      "beforeAverageMs": 3258.4013833333333,
+      "afterAverageMs": 198.45657500000002,
+      "beforeP95Ms": 3735.2414,
+      "afterP95Ms": 218.693,
+      "loadedChunksBefore": 609,
+      "loadedChunksAfter": 609,
+      "framebufferBefore": "baseline-east_facade.png",
+      "framebufferAfter": "candidate7-east_facade.png"
+    },
+    {
+      "view": "district",
+      "camera": [
+        318.0,
+        167.0,
+        -622.0,
+        138.58,
+        37.68
+      ],
+      "beforeFps": 0.2530276709137901,
+      "afterFps": 4.3677741107720225,
+      "beforeAverageMs": 3952.13692,
+      "afterAverageMs": 228.94956896551724,
+      "beforeP95Ms": 4325.2676,
+      "afterP95Ms": 246.6471,
+      "loadedChunksBefore": 609,
+      "loadedChunksAfter": 609,
+      "framebufferBefore": "baseline-district.png",
+      "framebufferAfter": "candidate7-district.png"
+    }
+  ],
+  "excludedBaselineView": "cornice (camera inside opaque geometry; not lighting/FPS comparison evidence)",
+  "gameSha256": "6e89e385499c994f1b7c0918e7212c5d57818b4d06585b0527d1915713abe7fa",
+  "sourcesSha256": "74892dbfe39566eac32cab6e4bad75a0d8e69214d9d9c59370771c2cc7704cd0",
+  "catalogSha256": "3a9d3325e31818484689e2cc4d22fa63c6168338fa721ee3315935ddee9124f2",
+  "baselineWorldArchiveSha256": "2386f97c0a4f43f857787be5687540bfd4e4d99d492b06959909818334abde58",
+  "baselineCheckpointPreserved": true,
+  "reconversion": false,
+  "preparationRecreated": false,
+  "staticCityMigrationRepeated": false,
+  "sourceBarriersRemoved": 14855,
+  "ambiguousBarrierCandidates": 0,
+  "nativeSaveAndReopen": "COMPLETED_ON_INDEPENDENT_WORKING_COPY_WITH_KNOWN_DOOR_BLOCKER",
+  "finalHostComponent": "Original .6 Data.Player restored after final native shutdown; no subsequent minimal-profile boot, to preserve full-pack inventory",
+  "lighting": {
+    "status": "UNRESOLVED_BLACK_STRIPS_REMAIN",
+    "lightingFixed": false,
+    "view": "east_facade",
+    "pixel": [
+      180,
+      307
+    ],
+    "rgba": [
+      0,
+      0,
+      0,
+      255
+    ],
+    "colliderRayBlock": [
+      296,
+      134,
+      -669
+    ],
+    "colliderRayState": "source_andesite compact=true variant=0 rotation=0",
+    "nativeModelProbe": {
+      "skyLight": 15,
+      "blockLight": 0,
+      "vertexBrightness": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "normal": "south +Z",
+      "uv": "within sprite"
+    },
+    "originalV15Sprite": {
+      "sha256": "8a7c10fe88a7b391159be3da74cc04922f753ff7bf6ec87d6aa100b46aab45d0",
+      "rgbRange": [
+        87,
+        121
+      ],
+      "fullyOpaque": true,
+      "zeroRgbPixels": 0,
+      "currentPngMatchesOriginal": true
+    },
+    "limitation": "COLLIDER ray is not a visible-triangle hit. The probed andesite is not proven to generate the black pixel; protruding geometry can be in front. No lighting/AO/normal/UV cause established.",
+    "textureBrightening": false,
+    "fullbright": false,
+    "globalAoDisabled": false,
+    "savedLightRecalculated": false
+  },
+  "doorBlocker": {
+    "outcome": "REJECTED",
+    "changedCells": 0,
+    "reason": "collision_with_owned_object:Cell[x=285, y=120, z=-649]",
+    "sourceOperation": "door_server_transition_result_after_closed_ack_timeout"
+  },
+  "ladder": "NOT_CHECKED_NO_LADDER_IN_BOUNDED_ROUTE"
+}

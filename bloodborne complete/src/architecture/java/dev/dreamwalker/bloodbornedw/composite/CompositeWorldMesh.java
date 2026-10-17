@@ -35,10 +35,14 @@ public final class CompositeWorldMesh {
     private static long bytes;
     private static long bakedOwners,bakedVertices;
     private static int resources;
-    private record Cached(BlockState state,BlockState originalState,NbtCompound payload,long revision,int resources,int overlay,Mesh mesh,long[] sections,long colorChunk,long colorStamp){
+    static record CacheSignature(BlockState state,BlockState originalState,NbtCompound payload,long revision,int resources,int overlay,long[] sections,long colorChunk,long colorStamp,Box worldBounds){
         boolean current(){if(colorChunk!=Long.MIN_VALUE&&COLORS.getOrDefault(colorChunk,0L)!=colorStamp)return false;for(int i=0;i<sections.length;i+=2)if(SECTIONS.getOrDefault(sections[i],0L)!=sections[i+1])return false;return true;}
+        boolean matches(BlockState rendered,BlockState original,NbtCompound originalPayload,long lightRevision,int resourceRevision,int packedOverlay){return state==rendered&&originalState==original&&payload==originalPayload&&revision==lightRevision&&resources==resourceRevision&&overlay==packedOverlay&&current();}
+        boolean matchesOriginal(BlockState original,NbtCompound originalPayload,long lightRevision,int resourceRevision,int packedOverlay){return originalState==original&&payload==originalPayload&&revision==lightRevision&&resources==resourceRevision&&overlay==packedOverlay&&current();}
     }
-    private record Mesh(float[] vertices,int[] lights,int overlay){long bytes(){return vertices.length*4L+lights.length*4L;}}
+    private record Cached(CacheSignature signature,Mesh mesh){}
+    static record Resolved(Mesh mesh,CacheSignature signature){}
+    static record Mesh(float[] vertices,int[] lights,int overlay){long bytes(){return vertices.length*4L+lights.length*4L;}}
     private CompositeWorldMesh(){}
     public static void changed(){LIGHT_REVISION.incrementAndGet();}
     public static void sectionChanged(long section){SECTIONS.put(section,SECTION_SEQUENCE.incrementAndGet());}
@@ -49,38 +53,45 @@ public final class CompositeWorldMesh {
             sectionChanged(ChunkSectionPos.asLong(chunk.x,y,chunk.z));
     }
     public static void chunkColorsChanged(ChunkPos chunk){for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)COLORS.put(ChunkPos.toLong(chunk.x+x,chunk.z+z),SECTION_SEQUENCE.incrementAndGet());}
-    public static void reload(){resources++;CACHE.clear();bytes=0;changed();}
-    public static void disconnect(){CACHE.clear();SECTIONS.clear();COLORS.clear();bytes=0;world=null;changed();}
+    public static void reload(){resources++;CACHE.clear();bytes=0;CompositeGpuBatch.clear();changed();}
+    public static void disconnect(){CACHE.clear();SECTIONS.clear();COLORS.clear();bytes=0;world=null;CompositeGpuBatch.clear();changed();}
     public static void forgetChunk(ChunkPos pos){
         var it=CACHE.entrySet().iterator();while(it.hasNext()){
-            var entry=it.next();var cached=entry.getValue();boolean affected=new ChunkPos(entry.getKey().getPos()).equals(pos);
-            for(int i=0;!affected&&i<cached.sections.length;i+=2)
-                affected=ChunkSectionPos.unpackX(cached.sections[i])==pos.x&&ChunkSectionPos.unpackZ(cached.sections[i])==pos.z;
+            var entry=it.next();var cached=entry.getValue();boolean affected=new ChunkPos(entry.getKey().getPos()).equals(pos);var sections=cached.signature.sections;
+            for(int i=0;!affected&&i<sections.length;i+=2)
+                affected=ChunkSectionPos.unpackX(sections[i])==pos.x&&ChunkSectionPos.unpackZ(sections[i])==pos.z;
             if(affected){bytes-=cached.mesh.bytes();it.remove();}
         }
         // Eviction also handles an initial dependency captured at stamp zero:
         // deleting a missing version alone would leave zero equal to zero.
         SECTIONS.keySet().removeIf(key->ChunkSectionPos.unpackX(key)==pos.x&&ChunkSectionPos.unpackZ(key)==pos.z);
         for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)COLORS.remove(ChunkPos.toLong(pos.x+x,pos.z+z));
+        CompositeGpuBatch.forgetChunk(pos);
     }
-    public static Map<String,Long> metrics(){return Map.of("cachedOwners",(long)CACHE.size(),"cachedBytes",bytes,"cacheByteLimit",MAX_BYTES,"lightRevision",LIGHT_REVISION.get(),"sectionRevisions",(long)SECTIONS.size(),"bakedOwners",bakedOwners,"bakedVertices",bakedVertices);}
+    public static Map<String,Long> metrics(){var result=new LinkedHashMap<String,Long>();result.put("cachedOwners",(long)CACHE.size());result.put("cachedBytes",bytes);result.put("cacheByteLimit",MAX_BYTES);result.put("lightRevision",LIGHT_REVISION.get());result.put("sectionRevisions",(long)SECTIONS.size());result.put("bakedOwners",bakedOwners);result.put("bakedVertices",bakedVertices);result.put("batchUploads",CompositeGpuBatch.uploads());result.put("batchDraws",CompositeGpuBatch.draws());result.put("batchGpuBytes",CompositeGpuBatch.bytes());result.put("batchGpuByteLimit",CompositeGpuBatch.limit());result.put("batchRetainedHits",CompositeGpuBatch.retainedHits());return Collections.unmodifiableMap(result);}
+
+    /** GPU-retained fast path before legacy alias transformation and model-bound lookup. */
+    static boolean tryRenderRetained(CompositeBlockEntity entity,BlockState originalState,NbtCompound originalPayload,
+                                     MatrixStack matrices,VertexConsumerProvider consumers,int overlay){
+        var client=MinecraftClient.getInstance();if(client.world==null||world!=client.world)return false;
+        long revision=LIGHT_REVISION.get();var signature=CompositeGpuBatch.retainedSignature(entity,originalState,originalPayload,revision,resources,overlay,matrices,consumers);
+        if(signature==null||signature.worldBounds()==null||!(signature.state().getBlock() instanceof CompositeRootBlock block)||block.spec.translucent)return false;
+        var visibility=CompositeVisualBoundsV127.cachedVisibility(entity,signature.worldBounds());
+        if(visibility==CompositeVisualBoundsV127.CachedVisibility.UNKNOWN)return false;
+        if(visibility!=CompositeVisualBoundsV127.CachedVisibility.VISIBLE){CompositeVisualBoundsV127.recordCached(visibility);return true;}
+        if(!CompositeGpuBatch.enqueueRetained(entity,signature.state(),originalState,originalPayload,revision,resources,overlay,matrices,consumers))return false;
+        CompositeVisualBoundsV127.recordCached(visibility);return true;
+    }
 
     static void render(CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload,
                        MatrixStack matrices,VertexConsumerProvider consumers,int overlay){
         var client=MinecraftClient.getInstance();if(client.world==null)return;
-        if(world!=client.world){CACHE.clear();SECTIONS.clear();COLORS.clear();bytes=0;world=client.world;}
+        if(world!=client.world){CACHE.clear();SECTIONS.clear();COLORS.clear();bytes=0;CompositeGpuBatch.clear();world=client.world;}
         long revision=LIGHT_REVISION.get();var known=CACHE.get(entity);
         var originalState=entity.getCachedState();var originalPayload=entity.sourceRenderPayload();
-        if(known==null||known.state!=state||known.originalState!=originalState||known.payload!=originalPayload||known.revision!=revision||known.resources!=resources||known.overlay!=overlay||!known.current()){
-            Map<Long,Long> dependencies=new HashMap<>();var mesh=bake(client,entity,block,state,payload,overlay,dependencies);
-            bakedOwners++;bakedVertices+=mesh.lights.length;
-            if(known!=null)bytes-=known.mesh.bytes();
-            long[] stamps=new long[dependencies.size()*2];int stamp=0;for(var section:dependencies.entrySet()){stamps[stamp++]=section.getKey();stamps[stamp++]=section.getValue();}
-            long colorChunk=RemainingSourceTint.biomeTinted(block)?new ChunkPos(entity.getPos()).toLong():Long.MIN_VALUE;
-            known=new Cached(state,originalState,originalPayload,revision,resources,overlay,mesh,stamps,colorChunk,COLORS.getOrDefault(colorChunk,0L));CACHE.put(entity,known);bytes+=mesh.bytes();
-            var iterator=CACHE.entrySet().iterator();
-            while(bytes>MAX_BYTES&&CACHE.size()>1&&iterator.hasNext()){var old=iterator.next();bytes-=old.getValue().mesh.bytes();iterator.remove();}
-        }
+        if(!block.spec.translucent&&CompositeGpuBatch.enqueueRetained(entity,state,originalState,originalPayload,revision,resources,overlay,matrices,consumers))return;
+        if(known==null||!known.signature.matches(state,originalState,originalPayload,revision,resources,overlay))known=resolve(client,entity,block,state,payload,originalState,originalPayload,revision,overlay,known);
+        if(!block.spec.translucent&&CompositeGpuBatch.enqueue(entity,known.mesh,known.signature,matrices,consumers))return;
         var consumer=consumers.getBuffer(block.spec.translucent?RenderLayer.getTranslucent():RenderLayer.getCutout());
         var position=matrices.peek().getPositionMatrix();var normal=matrices.peek().getNormalMatrix();
         float[] v=known.mesh.vertices;int[] lights=known.mesh.lights;
@@ -104,6 +115,47 @@ public final class CompositeWorldMesh {
                             v[n+3],v[n+4],v[n+5],v[n+6],v[n+7],v[n+8],overlay,lights[i],
                             transformedNx,transformedNy,transformedNz);
         }
+    }
+    /** Rebuild only when a changed section membership requires another upload.
+     * This path never submits a renderer call, so retained lookup cannot recurse. */
+    static Resolved resolveMesh(CompositeBlockEntity entity,CacheSignature expected){
+        var client=MinecraftClient.getInstance();if(client.world==null||world!=client.world||expected==null)return null;
+        if(entity.isRemoved()||client.world.getBlockEntity(entity.getPos())!=entity)return null;
+        BlockState original=entity.getCachedState();NbtCompound originalPayload=entity.sourceRenderPayload();long revision=LIGHT_REVISION.get();
+        if(!expected.matches(expected.state,original,originalPayload,revision,resources,expected.overlay)||!(expected.state.getBlock() instanceof CompositeRootBlock block))return null;
+        var known=CACHE.get(entity);if(known!=null&&known.signature==expected)return new Resolved(known.mesh,known.signature);
+        NbtCompound renderedPayload=originalPayload;
+        if(expected.state!=original){
+            if(!(original.getBlock() instanceof CompositeRootBlock originalBlock)||!originalBlock.spec.simplePhysicalCollision||!ImportedTypeAliases.needsMigration(original,originalPayload))return null;
+            renderedPayload=ImportedTypeAliases.transformPayload(original,originalPayload);
+        }
+        known=resolve(client,entity,block,expected.state,renderedPayload,original,originalPayload,revision,expected.overlay,known);
+        return new Resolved(known.mesh,known.signature);
+    }
+    /** Draw-stage recovery when a section/light revision changed after enqueue.
+     * It shares the normal cache/bake path but never attempts another enqueue. */
+    static Resolved resolveCurrentMesh(CompositeBlockEntity entity,int overlay){
+        var client=MinecraftClient.getInstance();if(client.world==null||world!=client.world||entity==null||entity.isRemoved()||client.world.getBlockEntity(entity.getPos())!=entity)return null;
+        BlockState original=entity.getCachedState();if(!(original.getBlock() instanceof CompositeRootBlock block))return null;
+        NbtCompound originalPayload=entity.sourceRenderPayload(),renderedPayload=originalPayload;BlockState rendered=original;
+        if(block.spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(rendered,renderedPayload)){
+            renderedPayload=ImportedTypeAliases.transformPayload(rendered,renderedPayload);rendered=ImportedTypeAliases.target(rendered);if(!(rendered.getBlock() instanceof CompositeRootBlock target))return null;block=target;
+        }
+        if(block.spec.translucent)return null;
+        long revision=LIGHT_REVISION.get();var known=CACHE.get(entity);
+        if(known==null||!known.signature.matches(rendered,original,originalPayload,revision,resources,overlay))known=resolve(client,entity,block,rendered,renderedPayload,original,originalPayload,revision,overlay,known);
+        return new Resolved(known.mesh,known.signature);
+    }
+    private static Cached resolve(MinecraftClient client,CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload,BlockState originalState,NbtCompound originalPayload,long revision,int overlay,Cached previous){
+        Map<Long,Long> dependencies=new HashMap<>();var mesh=bake(client,entity,block,state,payload,overlay,dependencies);
+        bakedOwners++;bakedVertices+=mesh.lights.length;if(previous!=null)bytes-=previous.mesh.bytes();
+        long[] stamps=new long[dependencies.size()*2];int stamp=0;for(var section:dependencies.entrySet()){stamps[stamp++]=section.getKey();stamps[stamp++]=section.getValue();}
+        long colorChunk=RemainingSourceTint.biomeTinted(block)?new ChunkPos(entity.getPos()).toLong():Long.MIN_VALUE;
+        Box worldBounds;try{worldBounds=CompositeVisualBoundsV127.worldBounds(entity,block,state,payload);}catch(RuntimeException unsupported){worldBounds=null;}
+        var signature=new CacheSignature(state,originalState,originalPayload,revision,resources,overlay,stamps,colorChunk,COLORS.getOrDefault(colorChunk,0L),worldBounds);
+        var known=new Cached(signature,mesh);CACHE.put(entity,known);bytes+=mesh.bytes();
+        var iterator=CACHE.entrySet().iterator();while(bytes>MAX_BYTES&&CACHE.size()>1&&iterator.hasNext()){var old=iterator.next();bytes-=old.getValue().mesh.bytes();iterator.remove();}
+        return known;
     }
     private static Mesh bake(MinecraftClient client,CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload,int overlay,Map<Long,Long> dependencies){
         var recorded=new Recorder(overlay,RemainingSourceTint.color(block,client,entity.getPos()));var matrices=new MatrixStack();var shift=CompositeSourceShift.world(state,payload);

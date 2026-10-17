@@ -92,6 +92,9 @@ public final class FullMapConversionAuthor implements ModInitializer {
 
     @Override public void onInitialize() {
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+            // A cleanup run has its own finite phase and checkpoint. Never let a
+            // stale full-conversion marker start alongside it in the same JVM.
+            if (Files.isRegularFile(Path.of("dw-source-barrier-cleanup-input.json"), LinkOption.NOFOLLOW_LINKS)) return;
             if (!Files.isRegularFile(INPUT, LinkOption.NOFOLLOW_LINKS)) return;
             try { JOBS.put(server, new Job(server, parseFile(INPUT))); }
             catch (Exception failure) { throw new IllegalStateException("Explicit conversion initialization refused", failure); }

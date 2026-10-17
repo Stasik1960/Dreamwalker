@@ -18,7 +18,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.joml.Vector3f;
 
-/** NEW-source visibility only: bounds of the actual emitted baked vertices.
+/** Composite owner visibility: bounds of the actual emitted baked vertices.
  * No physical/selection geometry, owner UUID, coordinates or world enter the cache. */
 public final class CompositeVisualBoundsV127 {
     private static final int LIMIT=2048;
@@ -27,40 +27,63 @@ public final class CompositeVisualBoundsV127 {
         @Override public int hashCode(){return 31*System.identityHashCode(state)+System.identityHashCode(parts);}
         @Override public boolean equals(Object value){return value instanceof Key other&&state==other.state&&parts==other.parts;}
     }
-    private record Entry(List<BakedModel> models,Optional<Box> bounds){}
+    private static final class Entry{
+        final List<BakedModel> models;
+        final Optional<Box> bounds;
+        long validatedFrame;
+        Entry(List<BakedModel> models,Optional<Box> bounds,long validatedFrame){this.models=models;this.bounds=bounds;this.validatedFrame=validatedFrame;}
+    }
     private static final LinkedHashMap<Key,Entry> CACHE=new LinkedHashMap<>(64,.75f,true);
     private static BakedModel bakeEpoch;
     private static World activeWorld;
     private static Frustum activeFrustum;
     private static Vec3d activeCamera;
     private static double activeDistance;
+    private static long frameSequence,activeValidationFrame=-1;
     private static boolean initialized;
-    private static long hits,misses,evictions,epochClears,modelChanges,culled,distanceCulled,visible,failOpen,bypassed;
+    private static long hits,frameValidatedHits,misses,evictions,epochClears,modelChanges,culled,distanceCulled,visible,failOpen,bypassed;
+    enum CachedVisibility{UNKNOWN,DISTANCE_CULLED,FRUSTUM_CULLED,VISIBLE}
     private CompositeVisualBoundsV127(){}
 
     public static void initialize(){
         if(initialized)return;initialized=true;
         // START has no valid frustum. Never carry a prior camera/world into a new frame.
-        WorldRenderEvents.START.register(context->clearFrame());
-        WorldRenderEvents.BEFORE_ENTITIES.register(context->{refreshEpoch();activeWorld=context.world();activeFrustum=context.frustum();activeCamera=context.camera().getPos();activeDistance=(MinecraftClient.getInstance().options.getViewDistance().getValue()+1)*16.0;});
+        WorldRenderEvents.START.register(context->{clearFrame();frameSequence++;});
+        WorldRenderEvents.BEFORE_ENTITIES.register(context->{refreshEpoch();activeValidationFrame=frameSequence;activeWorld=context.world();activeFrustum=context.frustum();activeCamera=context.camera().getPos();activeDistance=(MinecraftClient.getInstance().options.getViewDistance().getValue()+1)*16.0;});
         WorldRenderEvents.END.register(context->clearFrame());
         ClientPlayConnectionEvents.DISCONNECT.register((handler,client)->clear());
     }
-    private static void clearFrame(){activeWorld=null;activeFrustum=null;activeCamera=null;activeDistance=0;}
+    private static void clearFrame(){activeWorld=null;activeFrustum=null;activeCamera=null;activeDistance=0;activeValidationFrame=-1;}
     private static synchronized void clear(){CACHE.clear();bakeEpoch=null;clearFrame();}
     private static synchronized void refreshEpoch(){var epoch=MinecraftClient.getInstance().getBakedModelManager().getMissingModel();if(epoch!=bakeEpoch){if(bakeEpoch!=null)epochClears++;CACHE.clear();bakeEpoch=epoch;}}
-    public static boolean supports(CompositeRootBlock block){return block.spec.simplePhysicalCollision&&block.spec.id.getNamespace().equals("bloodborne_dw")&&block.spec.id.getPath().startsWith("source_");}
+    // CompositeWorldMesh also draws the retained original and functional owners.
+    // They previously bypassed this check despite rendersOutsideBoundingBox=true
+    // and a 1024-block renderer distance. The same exact baked-vertex bounds
+    // apply to them; unknown/custom models still fail open in calculate().
+    public static boolean supports(CompositeRootBlock block){return block.spec.id.getNamespace().equals("bloodborne_dw");}
 
     public static boolean visible(CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload){
         if(!supports(block)){bypassed++;return true;}
         if(activeFrustum==null||activeWorld!=entity.getWorld()){failOpen++;return true;}
         try{
-            var bounds=localBounds(block,state,payload);if(bounds.isEmpty()){failOpen++;return true;}
-            var shift=CompositeSourceShift.world(state,payload);var root=entity.getPos();
-            Box world=bounds.get().offset(root.getX()+shift.x(),root.getY()+entity.mountY()+shift.y(),root.getZ()+shift.z());
-            if(activeCamera!=null&&!withinDistance(world,activeCamera,activeDistance)){distanceCulled++;return false;}
-            boolean result=activeFrustum.isVisible(world);if(result)visible++;else culled++;return result;
+            Box bounds=worldBounds(entity,block,state,payload);CachedVisibility result=cachedVisibility(entity,bounds);
+            if(result==CachedVisibility.UNKNOWN){failOpen++;return true;}recordCached(result);return result==CachedVisibility.VISIBLE;
         }catch(RuntimeException unsupported){failOpen++;return true;}
+    }
+
+    /** Exact cached world box for the same baked-vertex formula used by visible(). */
+    static Box worldBounds(CompositeBlockEntity entity,CompositeRootBlock block,BlockState state,NbtCompound payload){
+        var bounds=localBounds(block,state,payload);if(bounds.isEmpty())return null;
+        var shift=CompositeSourceShift.world(state,payload);var root=entity.getPos();
+        return bounds.get().offset(root.getX()+shift.x(),root.getY()+entity.mountY()+shift.y(),root.getZ()+shift.z());
+    }
+    static CachedVisibility cachedVisibility(CompositeBlockEntity entity,Box bounds){
+        if(bounds==null||activeFrustum==null||activeWorld!=entity.getWorld())return CachedVisibility.UNKNOWN;
+        if(activeCamera!=null&&!withinDistance(bounds,activeCamera,activeDistance))return CachedVisibility.DISTANCE_CULLED;
+        return activeFrustum.isVisible(bounds)?CachedVisibility.VISIBLE:CachedVisibility.FRUSTUM_CULLED;
+    }
+    static void recordCached(CachedVisibility result){
+        switch(result){case DISTANCE_CULLED -> distanceCulled++;case FRUSTUM_CULLED -> culled++;case VISIBLE -> visible++;default -> {}}
     }
 
     /** Compare the closest visual edge, not the installation cell. Tall objects stay visible. */
@@ -73,14 +96,19 @@ public final class CompositeVisualBoundsV127 {
         // The manager object survives reload; its newly baked missing model is the epoch token.
         refreshEpoch();var epoch=bakeEpoch;
         var parts=ImportedStairLegacyArt.selectedParts(block,state,payload);var key=new Key(state,parts);var known=CACHE.get(key);
-        if(known!=null){boolean same=known.models.size()==parts.size();for(int i=0;same&&i<parts.size();i++)same=known.models.get(i)==manager.getModel(model(parts.get(i),state));if(same){hits++;return known.bounds;}modelChanges++;CACHE.remove(key);}
+        if(known!=null){
+            if(activeValidationFrame>=0&&known.validatedFrame==activeValidationFrame){hits++;frameValidatedHits++;return known.bounds;}
+            boolean same=known.models.size()==parts.size();for(int i=0;same&&i<parts.size();i++)same=known.models.get(i)==manager.getModel(model(parts.get(i),state));
+            if(same){known.validatedFrame=activeValidationFrame;hits++;return known.bounds;}modelChanges++;CACHE.remove(key);
+        }
         misses++;var models=new ArrayList<BakedModel>(parts.size());for(var part:parts)models.add(manager.getModel(model(part,state)));
         Optional<Box> result;
         try{result=calculate(block,state,parts,models,epoch);}catch(RuntimeException unsupported){result=Optional.empty();}
         if(CACHE.size()>=LIMIT){var oldest=CACHE.keySet().iterator();oldest.next();oldest.remove();evictions++;}
-        CACHE.put(key,new Entry(List.copyOf(models),result));return result;
+        CACHE.put(key,new Entry(List.copyOf(models),result,activeValidationFrame));return result;
     }
-    private static net.minecraft.util.Identifier model(CompositeSpec.Part part,BlockState state){return state.get(CompositeRootBlock.PROFILE)==CompositeRootBlock.Profile.ALT?part.altModel():part.model();}
+    // Match CompositeWorldMesh.bake, including its selected legacy parts.
+    private static net.minecraft.util.Identifier model(CompositeSpec.Part part,BlockState state){return part.model();}
     private static Optional<Box> calculate(CompositeRootBlock block,BlockState state,List<CompositeSpec.Part> parts,List<BakedModel> models,BakedModel missing){
         if(parts.isEmpty()||parts.size()>4096)return Optional.empty();
         // Only native immutable JSON models. Unknown/custom/dynamic adapters render normally.
@@ -107,5 +135,5 @@ public final class CompositeVisualBoundsV127 {
         return vertices==0?Optional.empty():Optional.of(new Box(minX-EPSILON,minY-EPSILON,minZ-EPSILON,maxX+EPSILON,maxY+EPSILON,maxZ+EPSILON));
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
-    public static synchronized Map<String,Object> snapshot(){var result=new LinkedHashMap<String,Object>();result.put("scope","NEW_SOURCE_RENDERED_BAKED_VERTEX_AABB_ONLY");result.put("cacheEntries",CACHE.size());result.put("cacheLimit",LIMIT);result.put("cacheHits",hits);result.put("cacheMisses",misses);result.put("evictions",evictions);result.put("bakeEpochClears",epochClears);result.put("individualModelChanges",modelChanges);result.put("culledNewDraws",culled);result.put("distanceCulledNewDraws",distanceCulled);result.put("visibleNewDraws",visible);result.put("failOpenNewDraws",failOpen);result.put("originalBypasses",bypassed);result.put("frustumFrameActive",activeFrustum!=null);return Collections.unmodifiableMap(result);}
+    public static synchronized Map<String,Object> snapshot(){var result=new LinkedHashMap<String,Object>();result.put("scope","COMPOSITE_OWNER_RENDERED_BAKED_VERTEX_AABB_ONLY");result.put("cacheEntries",CACHE.size());result.put("cacheLimit",LIMIT);result.put("cacheHits",hits);result.put("sameFrameModelValidationSkips",frameValidatedHits);result.put("cacheMisses",misses);result.put("evictions",evictions);result.put("bakeEpochClears",epochClears);result.put("individualModelChanges",modelChanges);result.put("culledNewDraws",culled);result.put("distanceCulledNewDraws",distanceCulled);result.put("visibleNewDraws",visible);result.put("failOpenNewDraws",failOpen);result.put("originalBypasses",bypassed);result.put("frustumFrameActive",activeFrustum!=null);return Collections.unmodifiableMap(result);}
 }

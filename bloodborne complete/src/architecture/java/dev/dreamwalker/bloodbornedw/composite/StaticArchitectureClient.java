@@ -17,6 +17,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockRenderView;
 import java.util.*;
+import java.util.function.Function;
 
 /** Ordinary chunk-meshed static parts, using the existing shared source models
  * and vanilla light/AO renderer. There is no per-position render cache. */
@@ -32,22 +33,35 @@ public final class StaticArchitectureClient {
         }));
     }
     public static RenderLayer layer(BlockState state){
-        return StaticArchitectureCatalog.recipe(state).translucent()?RenderLayer.getTranslucent():RenderLayer.getCutout();
+        var recipe=StaticArchitectureCatalog.recipe(state);
+        if(recipe.translucent())return RenderLayer.getTranslucent();
+        return recipe.resident()>=0&&StaticArchitectureGeometry.opaque(recipe.fragments().get(recipe.resident()).pose())?RenderLayer.getSolid():RenderLayer.getCutout();
     }
     public static void render(BlockModelRenderer renderer,BlockRenderView world,BlockState state,BlockPos cell,MatrixStack outputMatrices,VertexConsumer vertices,int overlay){
+        renderTo(renderer,world,state,cell,outputMatrices,vertices,overlay);
+    }
+    /** Indigo can initialize the native terrain buffer selected by each proven
+     * quad. Translucent recipes retain one ordered translucent consumer. */
+    public static void renderLayered(BlockModelRenderer renderer,BlockRenderView world,BlockState state,BlockPos cell,MatrixStack outputMatrices,Function<RenderLayer,VertexConsumer> consumerFactory,int overlay){
+        var recipe=StaticArchitectureCatalog.recipe(state);RenderLayer original=layer(state);
+        VertexConsumer output=recipe.translucent()?consumerFactory.apply(RenderLayer.getTranslucent()):new QuadLayerConsumer(consumerFactory,original);
+        renderTo(renderer,world,state,cell,outputMatrices,output,overlay);
+    }
+    private static void renderTo(BlockModelRenderer renderer,BlockRenderView world,BlockState state,BlockPos cell,MatrixStack outputMatrices,VertexConsumer vertices,int overlay){
         var client=MinecraftClient.getInstance();var recipe=StaticArchitectureCatalog.recipe(state);
         for(var fragment:recipe.fragments()){
             // One complete authored model stays in its native root section.
             // Static helper cells contain only their shared physical parts.
             // No newly interpolated lightmap vertices are introduced.
             if(!fragment.origin().equals(dev.dreamwalker.bloodbornedw.runtime.ObjectGeometry.Cell.ORIGIN))continue;
-            StaticArchitectureSectionBounds.root();
+            StaticArchitectureSectionBounds.root(cell,recipe);
             var pose=fragment.pose();var origin=fragment.origin();BlockPos root=cell.add(origin.x(),origin.y(),origin.z());
             var shift=pose.shift().rotate(pose.state().get(CompositeRootBlock.ROTATION));
             MatrixStack source=new MatrixStack();source.translate(shift.x(),pose.mountY()+shift.y(),shift.z());
             rotate(source,.5,.5,.5,-pose.state().get(CompositeRootBlock.ROTATION)*45,false);
             int tint=RemainingSourceTint.color(pose.block(),world,root);
             var output=new SourceTintConsumer(vertices,tint);
+            int partIndex=0;
             for(var part:pose.parts()){
                 source.push();source.translate(part.offset().x()/16,part.offset().y()/16,part.offset().z()/16);
                 rotate(source,part.pivot().x()/16,part.pivot().y()/16,part.pivot().z()/16,-part.yaw(),false);
@@ -57,7 +71,7 @@ public final class StaticArchitectureClient {
                 var carrier=ImportedSourceLightingV127.renderCarrier(pose.block().spec,pose.state());
                 MatrixStack rendered=new MatrixStack();rendered.peek().getPositionMatrix().set(outputMatrices.peek().getPositionMatrix()).mul(source.peek().getPositionMatrix());
                 rendered.peek().getNormalMatrix().set(outputMatrices.peek().getNormalMatrix()).mul(source.peek().getNormalMatrix());
-                var model=client.getBakedModelManager().getModel(part.model());
+                var model=StaticArchitectureGeometry.visible(pose,partIndex++,world,root);
                 if(part.model().getPath().startsWith("remaining/source_emissive/")){
                     renderer.render(rendered.peek(),output,pose.state(),model,((tint>>16)&255)/255f,((tint>>8)&255)/255f,(tint&255)/255f,LightmapTextureManager.MAX_LIGHT_COORDINATE,overlay);
                 }else{
@@ -67,6 +81,28 @@ public final class StaticArchitectureClient {
                 source.pop();
             }
         }
+    }
+    /** Vanilla model rendering reaches quad(). Any unknown streaming primitive
+     * stays on the cell's established layer instead of being guessed opaque. */
+    private static final class QuadLayerConsumer implements VertexConsumer {
+        private final Function<RenderLayer,VertexConsumer> factory;private final VertexConsumer fallback;
+        private VertexConsumer solid,cutout;
+        private QuadLayerConsumer(Function<RenderLayer,VertexConsumer> factory,RenderLayer original){this.factory=factory;fallback=factory.apply(original);}
+        private VertexConsumer solid(){return solid==null?solid=factory.apply(RenderLayer.getSolid()):solid;}
+        private VertexConsumer cutout(){return cutout==null?cutout=factory.apply(RenderLayer.getCutout()):cutout;}
+        @Override public void quad(MatrixStack.Entry matrix,BakedQuad quad,float[] brightness,float r,float g,float b,int[] lights,int overlay,boolean useColor){
+            (StaticArchitectureGeometry.opaqueQuad(quad)?solid():cutout()).quad(matrix,quad,brightness,r,g,b,lights,overlay,useColor);
+        }
+        @Override public void vertex(float x,float y,float z,float r,float g,float b,float a,float u,float v,int overlay,int light,float nx,float ny,float nz){fallback.vertex(x,y,z,r,g,b,a,u,v,overlay,light,nx,ny,nz);}
+        @Override public VertexConsumer vertex(double x,double y,double z){fallback.vertex(x,y,z);return this;}
+        @Override public VertexConsumer color(int r,int g,int b,int a){fallback.color(r,g,b,a);return this;}
+        @Override public VertexConsumer texture(float u,float v){fallback.texture(u,v);return this;}
+        @Override public VertexConsumer overlay(int u,int v){fallback.overlay(u,v);return this;}
+        @Override public VertexConsumer light(int u,int v){fallback.light(u,v);return this;}
+        @Override public VertexConsumer normal(float x,float y,float z){fallback.normal(x,y,z);return this;}
+        @Override public void next(){fallback.next();}
+        @Override public void fixedColor(int r,int g,int b,int a){fallback.fixedColor(r,g,b,a);}
+        @Override public void unfixColor(){fallback.unfixColor();}
     }
     private static void rotate(MatrixStack matrices,double x,double y,double z,double degrees,boolean pitch){if(degrees==0)return;matrices.translate(x,y,z);matrices.multiply((pitch?RotationAxis.POSITIVE_X:RotationAxis.POSITIVE_Y).rotationDegrees((float)degrees));matrices.translate(-x,-y,-z);}
     private static final class SourceTintConsumer implements VertexConsumer {

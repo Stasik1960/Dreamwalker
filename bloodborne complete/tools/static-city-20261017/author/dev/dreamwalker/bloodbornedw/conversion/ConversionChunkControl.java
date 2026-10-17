@@ -12,24 +12,34 @@ import net.minecraft.util.WorldSavePath;
 public final class ConversionChunkControl {
     private static final Map<MinecraftServer,Boolean> VERIFIED = new WeakHashMap<>();
     private static final Set<MinecraftServer> BYPASSED = Collections.newSetFromMap(new WeakHashMap<>());
+    private static final Path CONVERSION_INPUT=Path.of("dw-full-conversion-input.json");
+    private static final Path BARRIER_INPUT=Path.of("dw-source-barrier-cleanup-input.json");
     private ConversionChunkControl() {}
     public static synchronized boolean active(MinecraftServer server) {
         if (!Boolean.getBoolean("dw.conversion.boundedChunks")) return false;
         if (VERIFIED.containsKey(server)) return true;
         try {
-            Path input=ordinary(Path.of("dw-full-conversion-input.json"));
+            boolean barrier=Files.isRegularFile(BARRIER_INPUT,LinkOption.NOFOLLOW_LINKS);
+            Path input=ordinary(barrier?BARRIER_INPUT:CONVERSION_INPUT);
             JsonObject marker=json(input);
-            require(marker.get("schemaVersion").getAsInt()==1 && marker.get("explicitConversionAuthorized").getAsBoolean(),"No explicit conversion authorization");
+            require(marker.get("schemaVersion").getAsInt()==1,"Unknown bounded-operation schema");
             String mode=marker.get("mode").getAsString();
-            require(mode.equals("FULL_ORIGINAL_AFTER_USER_COMMAND")||mode.equals("FIXTURE_NATIVE_TEST")||mode.equals("CITY_STATIC_ARCHITECTURE_AFTER_COMPLETE"),"Unsupported conversion mode");
-            require(marker.get("offlinePreparationStatus").getAsString().equals("PASS_DERIVED_COPY_PREPARED"),"Unprepared copy");
+            if(barrier){
+                require(mode.equals("SOURCE_BARRIER_CLEANUP_AFTER_STATIC_CITY")&&marker.get("explicitBarrierCleanupAuthorized").getAsBoolean(),"No explicit source-barrier cleanup authorization");
+            }else{
+                require(marker.get("explicitConversionAuthorized").getAsBoolean(),"No explicit conversion authorization");
+                require(mode.equals("FULL_ORIGINAL_AFTER_USER_COMMAND")||mode.equals("FIXTURE_NATIVE_TEST")||mode.equals("CITY_STATIC_ARCHITECTURE_AFTER_COMPLETE"),"Unsupported conversion mode");
+                require(marker.get("offlinePreparationStatus").getAsString().equals("PASS_DERIVED_COPY_PREPARED"),"Unprepared copy");
+            }
             Path target=ordinary(server.getSavePath(WorldSavePath.ROOT));
             require(target.equals(ordinary(Path.of(marker.get("targetWorldPath").getAsString()))),"Startup marker belongs to another world");
-            JsonObject prepared=json(ordinary(target.resolve("dw-derived-copy.json")));
             String operation=UUID.fromString(marker.get("operationId").getAsString()).toString();
-            require(prepared.get("operationId").getAsString().equals(operation),"Derived operation mismatch");
-            require(prepared.get("status").getAsString().equals("PASS_DERIVED_COPY_PREPARED"),"Partial derived copy");
-            require(ordinary(Path.of(prepared.get("targetRealPath").getAsString())).equals(target),"Derived target mismatch");
+            if(!barrier){
+                JsonObject prepared=json(ordinary(target.resolve("dw-derived-copy.json")));
+                require(prepared.get("operationId").getAsString().equals(operation),"Derived operation mismatch");
+                require(prepared.get("status").getAsString().equals("PASS_DERIVED_COPY_PREPARED"),"Partial derived copy");
+                require(ordinary(Path.of(prepared.get("targetRealPath").getAsString())).equals(target),"Derived target mismatch");
+            }
             String production=marker.get("productionJarSha256").getAsString();
             Path jar=ordinary(Path.of(System.getProperty("dw.conversion.productionJar","")));
             require(Files.isRegularFile(jar,LinkOption.NOFOLLOW_LINKS)&&sha(jar).equals(production),"Production JAR mismatch");
@@ -38,7 +48,7 @@ public final class ConversionChunkControl {
                 JsonObject binding=JsonParser.parseReader(new InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
                 require(binding.get("productionJarSha256").getAsString().equals(production),"Converter binding mismatch");
             }
-            Path checkpoint=target.resolve(mode.equals("CITY_STATIC_ARCHITECTURE_AFTER_COMPLETE")?"dw-static-architecture-checkpoint.json":"dw-conversion-checkpoint.json");
+            Path checkpoint=target.resolve(barrier?"dw-source-barrier-cleanup-checkpoint.json":mode.equals("CITY_STATIC_ARCHITECTURE_AFTER_COMPLETE")?"dw-static-architecture-checkpoint.json":"dw-conversion-checkpoint.json");
             if(Files.exists(checkpoint,LinkOption.NOFOLLOW_LINKS)){
                 JsonObject cp=json(ordinary(checkpoint));
                 require(cp.get("operationId").getAsString().equals(operation)&&cp.get("productionJarSha256").getAsString().equals(production),"Checkpoint identity mismatch");

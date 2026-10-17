@@ -1,0 +1,156 @@
+{
+  "schema": "dreamwalker-render-fix-interim-results-v1",
+  "measurementProfile": {
+    "memoryGiB": 10,
+    "viewDistance": 12,
+    "simulationDistance": 12,
+    "resolution": "1280x720",
+    "fov": 70,
+    "resourcePack": "same original v15"
+  },
+  "baseline": {
+    "north_facade": {
+      "fps": 3.101973040972441,
+      "averageFrameMs": 322.37546451612906
+    },
+    "cornice": {
+      "fps": 3.5241099338038744,
+      "averageFrameMs": 283.7595928571429
+    },
+    "east_facade": {
+      "fps": 0.30689896128665506,
+      "averageFrameMs": 3258.4013833333333
+    },
+    "district": {
+      "fps": 0.2530276709137901,
+      "averageFrameMs": 3952.13692
+    }
+  },
+  "candidates": [
+    {
+      "candidate": 1,
+      "source": "candidate-capture.json",
+      "frames": {
+        "north_facade": {
+          "fps": 2.9281396415659215,
+          "averageFrameMs": 341.5137672413793
+        },
+        "cornice": {
+          "fps": 3.001401323755336,
+          "averageFrameMs": 333.17770338983047
+        },
+        "east_facade": {
+          "fps": 0.32100330052383563,
+          "averageFrameMs": 3115.2327666666665
+        }
+      },
+      "decision": "No stable FPS gain from exact bounds plus initial used-UV opacity; stopped after three completed matched cameras."
+    },
+    {
+      "candidate": 2,
+      "source": "candidate2-capture.json",
+      "frames": {
+        "north_facade": {
+          "fps": 2.4554585949522156,
+          "averageFrameMs": 407.25590000000005
+        },
+        "east_facade": {
+          "fps": 0.2955494170861114,
+          "averageFrameMs": 3383.5289199999997
+        },
+        "district": {
+          "fps": 0.26876622541702844,
+          "averageFrameMs": 3720.7056
+        }
+      },
+      "decision": "Geometry-only candidate regressed north and left east/district near baseline."
+    },
+    {
+      "candidate": 3,
+      "source": "candidate3-capture.json",
+      "frames": {
+        "north_facade": {
+          "fps": 4.440376991841478,
+          "averageFrameMs": 225.2061034090909
+        },
+        "east_facade": {
+          "fps": 2.9672233070301224,
+          "averageFrameMs": 337.01541694915255
+        },
+        "district": {
+          "fps": 2.873404555353424,
+          "averageFrameMs": 348.0192157894737
+        }
+      },
+      "decision": "Retained GPU batching produced the first causal large east/district improvement; retained for later candidates."
+    },
+    {
+      "candidate": 4,
+      "source": "candidate4-capture.json",
+      "frames": {
+        "north_facade": {
+          "fps": 4.794458607134981,
+          "averageFrameMs": 208.57412315789475
+        },
+        "east_facade": {
+          "fps": 3.1972391768658004,
+          "averageFrameMs": 312.7698444444444
+        },
+        "district": {
+          "fps": 3.1043389034419517,
+          "averageFrameMs": 322.12977741935487
+        }
+      },
+      "decision": "Best completed pre-final matched result; native light probe did not confirm blackening on the probed exterior root."
+    },
+    {
+      "candidate": 5,
+      "source": "candidate5-capture.json",
+      "frames": {
+        "north_facade": {
+          "fps": 3.915829171631089,
+          "averageFrameMs": 255.37375512820515
+        },
+        "east_facade": {
+          "fps": 2.7611391671019687,
+          "averageFrameMs": 362.16935818181815
+        },
+        "district": {
+          "fps": 2.7386689928718226,
+          "averageFrameMs": 365.1408777777778
+        }
+      },
+      "decision": "Per-quad static SOLID routing retained as safe layer correction, but did not improve retained BER throughput."
+    },
+    {
+      "candidate": 6,
+      "source": "candidate6-capture.json",
+      "frames": {
+        "north_facade": {
+          "fps": 4.3066996095801535,
+          "averageFrameMs": 232.19636627906976
+        },
+        "east_facade": {
+          "fps": 2.59473153701731,
+          "averageFrameMs": 385.39632549019603
+        },
+        "district": {
+          "fps": 2.3735480173511005,
+          "averageFrameMs": 421.31020425531915
+        }
+      },
+      "decision": "GPU per-quad SOLID/CUTOUT split rejected: lower matched FPS and extra batch complexity; return to the single retained CUTOUT stream while keeping front-to-back section order."
+    }
+  ],
+  "causalDecisions": [
+    "Keep bounded retained GPU reuse: candidate3 changed east/district from sub-1 FPS to about 3 FPS.",
+    "Reject retained GPU per-quad layer split based on candidate6; it did not improve matched FPS.",
+    "Keep unknown, translucent and special-provider rendering on the fail-open legacy path.",
+    "Candidate7 final FPS, light and reopen evidence remain pending."
+  ],
+  "final": {
+    "fps": "FINAL_FPS",
+    "light": "FINAL_LIGHT",
+    "reopen": "FINAL_REOPEN"
+  }
+}

@@ -24,6 +24,9 @@ dependencies {
 sourceSets {
  main {
   java.srcDirs = ['src/architecture/java', 'src/rp/java']
+  // Match the active source scope of the published .6 JAR. Historical files
+  // remain in Git, but reference APIs removed before that checkpoint.
+  file('tools/static-city-20261017/production-source-excludes.txt').readLines('UTF-8').findAll { it && !it.startsWith('#') }.each { java.exclude it }
   resources.srcDirs = ['src/architecture/resources']
  }
  test { java.srcDirs = ['src/test/java'] }

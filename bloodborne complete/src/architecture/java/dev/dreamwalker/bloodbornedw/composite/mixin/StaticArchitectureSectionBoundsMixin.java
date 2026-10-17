@@ -15,11 +15,9 @@ public abstract class StaticArchitectureSectionBoundsMixin implements StaticArch
     @Shadow public abstract BlockPos getOrigin();
     @Unique private volatile Box dw$staticArchitectureBounds;
     @Unique private volatile boolean dw$staticArchitectureKnown;
-    @Override public void staticArchitectureBounds(BlockPos expectedOrigin,boolean present){
+    @Override public void staticArchitectureBounds(BlockPos expectedOrigin,Box bounds){
         BlockPos actual=getOrigin();if(!actual.equals(expectedOrigin))return;
-        // The catalog's reviewed pose span is limited to this neighbourhood.
-        // Ordinary sections retain their original native bounding box.
-        dw$staticArchitectureBounds=present?new Box(actual.getX()-16,actual.getY()-32,actual.getZ()-16,actual.getX()+32,actual.getY()+48,actual.getZ()+32):null;
+        dw$staticArchitectureBounds=bounds;
         dw$staticArchitectureKnown=true;
     }
     @Inject(method="getBoundingBox",at=@At("RETURN"),cancellable=true)
@@ -31,7 +29,18 @@ public abstract class StaticArchitectureSectionBoundsMixin implements StaticArch
             var client=MinecraftClient.getInstance();var world=client.world;
             if(world!=null&&client.isOnThread()){
                 BlockPos origin=getOrigin();var chunk=world.getChunkManager().getWorldChunk(origin.getX()>>4,origin.getZ()>>4);
-                if(chunk!=null){int index=(origin.getY()>>4)-world.getBottomSectionCoord();var sections=chunk.getSectionArray();boolean present=index>=0&&index<sections.length&&sections[index].hasAny(state->state.getBlock() instanceof StaticArchitectureBlock&&StaticArchitectureCatalog.recipe(state).resident()>=0);staticArchitectureBounds(origin,present);}
+                if(chunk!=null){
+                    int index=(origin.getY()>>4)-world.getBottomSectionCoord();var sections=chunk.getSectionArray();
+                    Box bounds=StaticArchitectureSectionBounds.nativeBox(origin);
+                    if(index>=0&&index<sections.length){var section=sections[index];
+                        if(section.hasAny(state->state.getBlock() instanceof StaticArchitectureBlock&&StaticArchitectureCatalog.recipe(state).resident()>=0))
+                            for(int y=0;y<16;y++)for(int z=0;z<16;z++)for(int x=0;x<16;x++){
+                                var state=section.getBlockState(x,y,z);
+                                if(state.getBlock() instanceof StaticArchitectureBlock)bounds=StaticArchitectureSectionBounds.include(bounds,origin.add(x,y,z),StaticArchitectureCatalog.recipe(state));
+                            }
+                    }
+                    staticArchitectureBounds(origin,bounds);
+                }
             }
         }
         Box bounds=dw$staticArchitectureBounds;if(bounds!=null)result.setReturnValue(bounds);

@@ -25,6 +25,7 @@ public final class StaticArchitectureCatalog {
         private final double mountY;
         private final Map<Cell,Footprint> footprint;
         private final Map<Cell,List<Box>> outline;
+        private final net.minecraft.util.math.Box visualBounds;
         private Pose(JsonObject row){
             key=row.get("key").getAsString();
             Identifier id=new Identifier(row.get("registryId").getAsString());
@@ -44,6 +45,8 @@ public final class StaticArchitectureCatalog {
             if(visual.size()!=2||visual.get(0).getAsJsonArray().size()!=3||visual.get(1).getAsJsonArray().size()!=3)throw new IllegalArgumentException("Reviewed static visual bounds");
             double[] minimum={-16,-32,-16},maximum={17,33,17};
             for(int axis=0;axis<3;axis++){double from=visual.get(0).getAsJsonArray().get(axis).getAsDouble(),to=visual.get(1).getAsJsonArray().get(axis).getAsDouble();if(!Double.isFinite(from)||!Double.isFinite(to)||from>to||from<minimum[axis]||to>maximum[axis])throw new IllegalArgumentException("Static model exceeds its section-culling neighbourhood");}
+            var from=visual.get(0).getAsJsonArray();var to=visual.get(1).getAsJsonArray();
+            visualBounds=new net.minecraft.util.math.Box(from.get(0).getAsDouble(),from.get(1).getAsDouble(),from.get(2).getAsDouble(),to.get(0).getAsDouble(),to.get(1).getAsDouble(),to.get(2).getAsDouble());
             footprint=CompositeSourceShift.footprint(block.spec,state,payload());
             outline=block.spec.simplePhysicalCollision?ImportedSelectionShapes.footprint(block,state,payload()):footprint.entrySet().stream().collect(java.util.stream.Collectors.toUnmodifiableMap(Map.Entry::getKey,e->e.getValue().selection()));
         }
@@ -53,6 +56,8 @@ public final class StaticArchitectureCatalog {
         /** Authored local shift; world shift is obtained by rotating the pose. */
         public CompositeSourceShift.Shift shift(){return shift;}
         public double mountY(){return mountY;}
+        /** Authored geometry bounds already include shift, mount and rotation. */
+        public net.minecraft.util.math.Box visualBounds(){return visualBounds;}
         public Map<Cell,Footprint> footprint(){return footprint;}
         public Map<Cell,List<Box>> outline(){return outline;}
         public List<CompositeSpec.Part> parts(){return block.spec.pose(state).parts();}

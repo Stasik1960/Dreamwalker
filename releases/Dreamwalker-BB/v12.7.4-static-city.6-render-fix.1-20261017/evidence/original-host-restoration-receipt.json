@@ -1,0 +1,43 @@
+{
+  "status": "PASS_ORIGINAL_6_HOST_PLAYER_RESTORED",
+  "utc": "2026-10-17T22:29:43.087195+00:00",
+  "sourceWorldArchiveSha256": "2386f97c0a4f43f857787be5687540bfd4e4d99d492b06959909818334abde58",
+  "restoredPlayerComponentSha256": "cffd5e5ff60057c1bdba6bd92df3cdf4feb27aeab2c74d9387a26204ed31df6c",
+  "originalInventoryEntries": 5,
+  "onlyChangedWorldFile": "level.dat",
+  "onlyChangedComponent": "Data.Player",
+  "blockRegionWrites": 0,
+  "nativeQaDropRecovery": {
+    "schemaVersion": 1,
+    "status": "ACK_REMOVED_OR_ALREADY_ABSENT",
+    "sourceBaselineWorldSha256": "2386f97c0a4f43f857787be5687540bfd4e4d99d492b06959909818334abde58",
+    "qaPlayerUuid": "5e8ff009-3f88-325a-99e8-f57614c984d1",
+    "deathPosition": [
+      318,
+      119,
+      -622
+    ],
+    "radius": 8,
+    "drops": [
+      {
+        "uuid": "65d20da3-45f3-41f9-b0fb-531e52161106",
+        "expectedId": "minecraft:black_shulker_box",
+        "expectedCount": 1,
+        "outcome": "REMOVED"
+      },
+      {
+        "uuid": "1daa4267-c1af-4730-ac6b-dc09486ced05",
+        "expectedId": "minecraft:black_shulker_box",
+        "expectedCount": 1,
+        "outcome": "REMOVED"
+      },
+      {
+        "uuid": "a8e3ef71-7724-4b64-95f0-17eb0442bfb1",
+        "expectedId": "minecraft:carved_pumpkin",
+        "expectedCount": 1,
+        "outcome": "REMOVED"
+      }
+    ]
+  },
+  "reason": "Restore original full-pack player/inventory after minimal-profile QA; final native save/reopen was completed before rollback"
+}

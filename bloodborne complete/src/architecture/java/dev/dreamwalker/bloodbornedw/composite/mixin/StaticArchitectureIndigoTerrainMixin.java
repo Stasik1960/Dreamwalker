@@ -37,8 +37,8 @@ public abstract class StaticArchitectureIndigoTerrainMixin {
             // offset, tint or AO/light processing. Static cells have no
             // native model offset. The source renderer applies its own exact
             // reviewed transforms, source tint, native AO and packed lights.
-            StaticArchitectureClient.render(MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer(),
-                region,state,pos,matrices,chunkInfo.getInitializedBuffer(StaticArchitectureClient.layer(state)),OverlayTexture.DEFAULT_UV);
+            StaticArchitectureClient.renderLayered(MinecraftClient.getInstance().getBlockRenderManager().getModelRenderer(),
+                region,state,pos,matrices,chunkInfo::getInitializedBuffer,OverlayTexture.DEFAULT_UV);
         }
         // Helpers emit no geometry. No already shaded source vertices enter
         // Indigo's second lighting/tint pass, and no model is emitted twice.
