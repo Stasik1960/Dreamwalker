@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_light_blue_carpet",
+  "displayName": "Короткая железная цепь",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/light_blue_carpet",
+              "offset": [
+                0,
+                9.17157,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                3.5,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                12.5,
+                18.0,
+                8.0625
+              ]
+            },
+            {
+              "from": [
+                7.9375,
+                0.0,
+                3.5
+              ],
+              "to": [
+                8.0625,
+                18.0,
+                12.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          3.5,
+          0.0,
+          3.5
+        ],
+        "to": [
+          12.5,
+          18.0,
+          12.5
+        ]
+      },
+      "sourceVariant": "Объёмная декоративная деталь",
+      "sourcePlacementOffset": [
+        0,
+        9.17157,
+        0
+      ],
+      "localOrigin": [
+        0,
+        9.17157,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/light_blue_carpet"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:light_blue_carpet[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

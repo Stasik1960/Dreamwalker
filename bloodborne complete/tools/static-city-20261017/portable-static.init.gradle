@@ -1,0 +1,34 @@
+gradle.beforeProject { p -> p.plugins.withId('fabric-loom') {
+ p.sourceSets {
+  geometryExport { java.srcDirs=['tools/static-city-20261017/geometry-export'];resources.srcDirs=['tools/static-city-20261017/geometry-export/resources'];compileClasspath += p.sourceSets.main.output+p.sourceSets.main.compileClasspath }
+  staticAuthor { java.srcDirs=['tools/static-city-20261017/author'];resources.srcDirs=['tools/static-city-20261017/author/resources'];compileClasspath += p.sourceSets.main.output+p.sourceSets.main.compileClasspath }
+ }
+ p.loom.mixin.useLegacyMixinAp.set(false)
+} }
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ ['geometryExport','staticAuthor'].each { kind ->
+  p.configurations.getByName(kind+'Implementation').extendsFrom(p.configurations.implementation)
+  def src=p.sourceSets.getByName(kind)
+  def pack=p.tasks.register(kind+'Jar',Jar) { dependsOn p.tasks.named(kind+'Classes');from src.output;archiveBaseName='dreamwalker-'+kind;archiveVersion='1.0.0-portable';archiveClassifier='dev' }
+  def remapType=p.tasks.named('remapJar').get().getClass().superclass
+  p.tasks.register('remap'+kind.capitalize()+'Jar',remapType) {
+   dependsOn pack;inputFile.set(pack.flatMap{it.archiveFile});classpath.from(p.sourceSets.main.output,p.sourceSets.main.compileClasspath)
+   archiveBaseName='dreamwalker-'+kind;archiveVersion='1.0.0-portable';archiveClassifier='';addNestedDependencies=false;useMixinAP.set(false)
+  }
+ }
+}
+
+gradle.projectsEvaluated {
+ def p=gradle.rootProject
+ def gameTask=p.tasks.named('remapJar')
+ p.tasks.named('processStaticAuthorResources') {
+  dependsOn gameTask
+  inputs.file(gameTask.flatMap { it.archiveFile }).withPropertyName('boundProductionGame')
+  doFirst {
+   def production=gameTask.get().archiveFile.get().asFile
+   def digest=java.security.MessageDigest.getInstance('SHA-256').digest(production.bytes).encodeHex().toString()
+   new File(p.projectDir,'tools/static-city-20261017/author/resources/dw-conversion-binding.json').text=groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson([schemaVersion:1,productionJarSha256:digest,disabledWithoutExplicitMarker:true]))+'\n'
+  }
+ }
+}

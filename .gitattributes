@@ -20,3 +20,13 @@ releases/Bloodborne-Blocks/repair-test-2/*.zip filter=lfs diff=lfs merge=lfs -te
 releases/Bloodborne-Blocks/repair-test-2/*.jar filter=lfs diff=lfs merge=lfs -text
 releases/Dreamwalker-BB/90009-fix.1/** -text
 releases/Dreamwalker-BB/90009-fix.1/evidence/*.log -diff
+releases/Dreamwalker-BB/v12.7.4-static-city.6-20261017/*.zip filter=lfs diff=lfs merge=lfs -text
+releases/Dreamwalker-BB/v12.7.4-static-city.6-20261017/*.jar filter=lfs diff=lfs merge=lfs -text
+releases/Dreamwalker-BB/v12.7.4-static-city.6-20261017/tools/*.jar filter=lfs diff=lfs merge=lfs -text
+bloodborne[[:space:]]complete/src/architecture/resources/bloodborne_dw/static-architecture-v1274.json filter=lfs diff=lfs merge=lfs -text
+
+# Preserve byte-bound static-city artifacts and resource inputs.
+releases/Dreamwalker-BB/v12.7.4-static-city.6-20261017/** -text
+releases/Dreamwalker-BB/v12.7.4-static-city.6-20261017/evidence/*.log -diff
+"bloodborne complete/src/architecture/resources/**" -text
+"bloodborne complete/src/rp/resources/**" -text

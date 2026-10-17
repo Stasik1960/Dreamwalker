@@ -19,6 +19,8 @@ public class CompositeBlockEntity extends BlockEntity {
     public Owner resident(){return resident;}
     public List<CompositeData.Contribution> contributions(){return contributions;}
     public NbtCompound payload(){return payload.copy();}
+    /** Render-thread NEW-source reader only. Never mutate or retain this owned compound. */
+    NbtCompound sourceRenderPayload(){return payload;}
     public double verticalOffset(){return payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);}
     public double mountY(){return payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);}
     public void set(Owner owner,List<CompositeData.Contribution> entries,NbtCompound extra){resident=owner;contributions=List.copyOf(entries);payload=extra.copy();markDirty();publishShapeSnapshot();}
@@ -27,9 +29,9 @@ public class CompositeBlockEntity extends BlockEntity {
     @Override public void setWorld(net.minecraft.world.World world){super.setWorld(world);publishShapeSnapshot();}
     @Override public void setCachedState(BlockState state){super.setCachedState(state);publishShapeSnapshot();}
     @Override public void markRemoved(){CompositeShapeSnapshots.retired(world,pos,shapePublicationToken);super.markRemoved();}
-    @Override protected void writeNbt(NbtCompound nbt){try{super.writeNbt(nbt);nbt.put("payload",payload.copy());if(resident!=null)nbt.put("resident",CompositeData.owner(resident));nbt.put("owners",CompositeData.contributions(contributions));}catch(RuntimeException failure){diagnosticError("COMPOSITE_SAVE_DATA",failure);throw failure;}}
-    @Override public void readNbt(NbtCompound nbt){try{super.readNbt(nbt);payload=nbt.getCompound("payload").copy();resident=nbt.contains("resident",10)?CompositeData.owner(nbt.getCompound("resident")):dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(getCachedState())?resident:null;contributions=CompositeData.contributions(nbt.getList("owners",10));publishShapeSnapshot();}catch(RuntimeException failure){diagnosticError("COMPOSITE_DATA_CORRUPTION",failure);throw failure;}}
-    private void diagnosticError(String category,RuntimeException failure){dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.error(world instanceof net.minecraft.server.world.ServerWorld server?server:null,dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.type(getCachedState()),resident==null?dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.rootId(pos):resident.instanceId().toString(),pos,category,"Owner contribution or typed payload failed: "+failure.getMessage(),failure);}
+    @Override protected void writeNbt(NbtCompound nbt){try{super.writeNbt(nbt);nbt.put("payload",payload.copy());if(resident!=null)nbt.put("resident",CompositeData.owner(resident));CompositeOwnerNbt.write(nbt,CompositeData.contributions(contributions));}catch(RuntimeException failure){diagnosticError("COMPOSITE_SAVE_DATA",failure);throw failure;}}
+    @Override public void readNbt(NbtCompound nbt){try{super.readNbt(nbt);var owners=CompositeOwnerNbt.read(nbt);payload=nbt.getCompound("payload").copy();resident=nbt.contains("resident",10)?CompositeData.owner(nbt.getCompound("resident")):dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.isNative(getCachedState())?resident:null;contributions=CompositeData.contributions(owners);publishShapeSnapshot();}catch(RuntimeException failure){diagnosticError("COMPOSITE_DATA_CORRUPTION",failure);throw failure;}}
+    private void diagnosticError(String category,RuntimeException failure){dev.dreamwalker.bloodbornedw.DreamwalkerBb.LOG.warn("Owner contribution or typed payload failed: "+failure.getMessage(), failure);}
     @Override public NbtCompound toInitialChunkDataNbt(){return createNbt();}
     @Override public BlockEntityUpdateS2CPacket toUpdatePacket(){return BlockEntityUpdateS2CPacket.create(this);}
 }

@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_crimson_trapdoor_open",
+  "displayName": "Дверная секция · открытая",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/crimson_trapdoor_open",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                32.0,
+                32.0,
+                13.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                3.0
+              ],
+              "to": [
+                32.0,
+                32.0,
+                13.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  3.0
+                ],
+                "to": [
+                  32.0,
+                  32.0,
+                  13.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  13.0,
+                  32.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  3.0
+                ],
+                "to": [
+                  32.0,
+                  32.0,
+                  13.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  3.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  13.0,
+                  32.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -12.50609665,
+                  0.0,
+                  -12.50609665
+                ],
+                "to": [
+                  28.50609665,
+                  32.0,
+                  28.50609665
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          3.0
+        ],
+        "to": [
+          32.0,
+          32.0,
+          13.0
+        ]
+      },
+      "sourceVariant": "Дверная секция · открытая",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/crimson_trapdoor_open"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:crimson_trapdoor[variant:facing=east,half=bottom,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=north,half=bottom,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=south,half=bottom,open=true]",
+        "minecraft:crimson_trapdoor[variant:facing=west,half=bottom,open=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

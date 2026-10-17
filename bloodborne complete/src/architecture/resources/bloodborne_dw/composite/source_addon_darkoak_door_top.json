@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_darkoak_door_top",
+  "displayName": "Каменная скульптура · верхняя форма",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/darkoak_door_top",
+              "offset": [
+                0,
+                7.75,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                -0.5
+              ],
+              "to": [
+                15.5,
+                24.5,
+                16.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                4.0,
+                6.0,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                17.5,
+                -0.5
+              ],
+              "to": [
+                4.0,
+                24.5,
+                16.5
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                5.75,
+                1.5
+              ],
+              "to": [
+                4.0,
+                17.75,
+                14.5
+              ]
+            },
+            {
+              "from": [
+                0.5,
+                19.75,
+                0.0
+              ],
+              "to": [
+                3.5,
+                22.75,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                5.75,
+                0.0
+              ],
+              "to": [
+                3.5,
+                7.75,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                1.5,
+                17.75,
+                0.0
+              ],
+              "to": [
+                3.5,
+                19.75,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                3.5,
+                0.75,
+                0.0
+              ],
+              "to": [
+                6.5,
+                2.75,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                3.5,
+                2.75,
+                0.0
+              ],
+              "to": [
+                12.5,
+                21.75,
+                16.0
+              ]
+            },
+            {
+              "from": [
+                12.5,
+                19.75,
+                0.0
+              ],
+              "to": [
+                15.5,
+                22.75,
+                16.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -0.5
+                ],
+                "to": [
+                  15.5,
+                  24.5,
+                  16.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.08147545,
+                  0.0,
+                  -5.08147545
+                ],
+                "to": [
+                  18.96015511,
+                  24.5,
+                  18.96015511
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.5,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  16.5,
+                  24.5,
+                  15.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.96015511,
+                  0.0,
+                  -5.08147545
+                ],
+                "to": [
+                  21.08147545,
+                  24.5,
+                  18.96015511
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  0.5,
+                  0.0,
+                  -0.5
+                ],
+                "to": [
+                  18.0,
+                  24.5,
+                  16.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.96015511,
+                  0.0,
+                  -2.96015511
+                ],
+                "to": [
+                  21.08147545,
+                  24.5,
+                  21.08147545
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -0.5,
+                  0.0,
+                  0.5
+                ],
+                "to": [
+                  16.5,
+                  24.5,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -5.08147545,
+                  0.0,
+                  -2.96015511
+                ],
+                "to": [
+                  18.96015511,
+                  24.5,
+                  21.08147545
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.0,
+          0.0,
+          -0.5
+        ],
+        "to": [
+          15.5,
+          24.5,
+          16.5
+        ]
+      },
+      "sourceVariant": "Каменная скульптура · верхняя форма",
+      "sourcePlacementOffset": [
+        0,
+        7.75,
+        0
+      ],
+      "localOrigin": [
+        0,
+        7.75,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/darkoak_door_top"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    }
+  ],
+  "source": {
+    "kind": "FINISHED_INDEPENDENT_SCULPTURE",
+    "note": "Source meshes are sculpture forms, not complementary door leaves; map lower forms repeat at +32 rather than lower/upper pairing"
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

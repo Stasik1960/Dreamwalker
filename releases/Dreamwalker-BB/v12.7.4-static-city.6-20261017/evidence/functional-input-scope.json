@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "reason": "EXCLUDED_FUNCTIONAL_INPUT_FAMILY",
+  "behavior": "After exact all-static replay detection and before source-root snapshots or transactions, exclude the whole component when any planned owner belongs to a listed input registry family.",
+  "provenanceResources": [
+    "/bloodborne_dw/imported-assembly-v126.json: recipes[].components[].registryId plus explicitDoorReplacement.oldRegistryId",
+    "/bloodborne_dw/imported-type-aliases-v127.json: mappings[].oldRegistryId (all variants conservatively)"
+  ],
+  "familyCount": 23,
+  "families": [
+    "bloodborne_dw:source_acacia_pressure_plate",
+    "bloodborne_dw:source_addon_gate2_0",
+    "bloodborne_dw:source_addon_gate2_1",
+    "bloodborne_dw:source_addon_log_vertical_0",
+    "bloodborne_dw:source_addon_pilaster_0",
+    "bloodborne_dw:source_addon_pilaster_1",
+    "bloodborne_dw:source_addon_wall_deco_7",
+    "bloodborne_dw:source_blackstone_stairs_top",
+    "bloodborne_dw:source_bricks_bricks_0",
+    "bloodborne_dw:source_crimson_top",
+    "bloodborne_dw:source_dark_oak_trapdoor_top",
+    "bloodborne_dw:source_jungle_pressure_plate",
+    "bloodborne_dw:source_nether_brick_slab",
+    "bloodborne_dw:source_polished_andesite_slab",
+    "bloodborne_dw:source_polished_granite_slab",
+    "bloodborne_dw:source_pressure_plate_window_bottom_4",
+    "bloodborne_dw:source_pressure_plate_window_top_2",
+    "bloodborne_dw:source_red_tulip_2",
+    "bloodborne_dw:source_slabs_prismarine_brick_slab_pbs_04",
+    "bloodborne_dw:source_smooth_quartz_top",
+    "bloodborne_dw:source_snow_height8",
+    "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_left_top2",
+    "bloodborne_dw:source_stairs_waxed_oxidized_cut_copper_stairs_inner_right_top2"
+  ],
+  "writesForExcludedComponent": 0,
+  "unknownMismatchAccepted": false
+}

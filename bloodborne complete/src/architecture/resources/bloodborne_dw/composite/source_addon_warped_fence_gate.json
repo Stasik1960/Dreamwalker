@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_warped_fence_gate",
+  "displayName": "Деревянная арка",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/warped_fence_gate",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -12.9497,
+                0.0,
+                7.9375
+              ],
+              "to": [
+                26.0503,
+                48.0,
+                8.0625
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -12.9497,
+          0.0,
+          7.9375
+        ],
+        "to": [
+          26.0503,
+          48.0,
+          8.0625
+        ]
+      },
+      "sourceVariant": "Секция ворот",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/warped_fence_gate"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:warped_fence_gate[variant:facing=east,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=east,in_wall=false,open=true]",
+        "minecraft:warped_fence_gate[variant:facing=north,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=north,in_wall=false,open=true]",
+        "minecraft:warped_fence_gate[variant:facing=south,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=south,in_wall=false,open=true]",
+        "minecraft:warped_fence_gate[variant:facing=west,in_wall=false,open=false]",
+        "minecraft:warped_fence_gate[variant:facing=west,in_wall=false,open=true]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true,
+  "surfaceDecals": [
+    {
+      "variant": 0,
+      "axis": 2,
+      "value": 0.5,
+      "normal": -1
+    }
+  ]
+}

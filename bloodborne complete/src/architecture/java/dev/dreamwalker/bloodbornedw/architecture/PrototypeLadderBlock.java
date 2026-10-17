@@ -85,15 +85,19 @@ public final class PrototypeLadderBlock extends LadderBlock implements BlockEnti
         if(state.get(SOURCE_CLONE)&&next.isOf(this)&&!next.get(SOURCE_CLONE))world.removeBlockEntity(pos);
     }
     @Override public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state);
+        if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state,context);
+        if(state.get(DIAGONAL)&&!state.get(SOURCE_CLONE)&&!hasBackingMount(state,world,pos,0))return collision[yaw(state)];
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:outline[yaw(state)];
     }
     @Override public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        // Angular sections are decorative/pass-through in every physical context,
+        // including old vertically shifted native owners.
+        if(state.get(DIAGONAL))return VoxelShapes.empty();
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,true,state,context);
-        if(state.get(DIAGONAL)&&context instanceof net.minecraft.block.EntityShapeContext entity&&entity.getEntity() instanceof PlayerEntity
-                &&(state.get(SOURCE_CLONE)||hasBackingMount(state,world,pos,0)))return VoxelShapes.empty();
         return state.get(SOURCE_CLONE)?sourcePhysical[yaw(state)]:collision[yaw(state)];
     }
+    /** Cached simple aiming outline, also used by saved vertically shifted owners. */
+    public VoxelShape ordinaryDiagonalOutline(BlockState state){return collision[yaw(state)];}
     public VoxelShape climbingShape(BlockState state){return sourcePhysical[yaw(state)];}
     @Override public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) { return VoxelShapes.empty(); }
     @Override public BlockState getPlacementState(ItemPlacementContext context) {

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_NATIVE_SOURCE_MODEL_OFFSET_64_CELL_PLAN",
+  "sourceHashes": {
+    "map": "39e83f2941b768fd2ae9f84d8f57dc76aec78bd926dc5e38eab3059251d2bb08",
+    "pack": "29b31e3744af5794ae95ebe4c5474e3b70dfb08c143355bce815c08ceef09a36"
+  },
+  "sourceStates": [
+    "minecraft:azure_bluet",
+    "minecraft:blue_orchid",
+    "minecraft:orange_tulip",
+    "minecraft:poppy",
+    "minecraft:red_tulip"
+  ],
+  "ownerSourceCells": 64,
+  "additionalOwnerSourceCells": 6,
+  "additionalSourceStates": [
+    "minecraft:dandelion"
+  ],
+  "removedSourceCells": 6,
+  "policy": "Disabled full author reads the actual native source BlockState.getModelOffset at exact original XYZ and adds inverse target yaw to existing local SourceShift once. No original V12/model/manual placement settings change; no guessed random hash."
+}

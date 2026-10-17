@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_andesite_stairs_top",
+  "displayName": "Деревянная дверь в кладке",
+  "openable": true,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_frame",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_leaf",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8,
+                0,
+                1
+              ],
+              "to": [
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -5,
+                1,
+                7
+              ],
+              "to": [
+                21,
+                48,
+                9
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8,
+                0,
+                1
+              ],
+              "to": [
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -5,
+                1,
+                7
+              ],
+              "to": [
+                21,
+                48,
+                9
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_frame",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/final_followups/door_90960_leaf",
+              "offset": [
+                0,
+                16.0,
+                0
+              ],
+              "yaw": 90,
+              "pivot": [
+                -5,
+                0,
+                8
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -8,
+                0,
+                1
+              ],
+              "to": [
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -6,
+                1,
+                8
+              ],
+              "to": [
+                -4,
+                48,
+                34
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -8,
+                0,
+                1
+              ],
+              "to": [
+                -2,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                18,
+                0,
+                1
+              ],
+              "to": [
+                24,
+                48,
+                15
+              ]
+            },
+            {
+              "from": [
+                -6,
+                1,
+                8
+              ],
+              "to": [
+                -4,
+                48,
+                34
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.0,
+          0.0,
+          1.0
+        ],
+        "to": [
+          24.0,
+          48.0,
+          15.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · верхняя",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/andesite_stairs_top"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:andesite_stairs[variant:facing=east,half=top,shape=straight]",
+        "minecraft:andesite_stairs[variant:facing=north,half=top,shape=straight]",
+        "minecraft:andesite_stairs[variant:facing=south,half=top,shape=straight]",
+        "minecraft:andesite_stairs[variant:facing=west,half=top,shape=straight]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "User90960: two fixed ordinary frame columns and one hinged wooden leaf; same simple boxes for physical collision and aim. Closed source geometry/offset preserved; only the leaf opens90 degrees.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": false,
+  "functionalDoorPhysics": true
+}

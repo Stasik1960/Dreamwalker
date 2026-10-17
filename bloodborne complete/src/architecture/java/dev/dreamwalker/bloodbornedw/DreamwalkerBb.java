@@ -39,11 +39,18 @@ public final class DreamwalkerBb implements ModInitializer, PreLaunchEntrypoint 
 
     @Override public void onInitialize() {
         rejectStandaloneRp();
-        LOG.info("Dreamwalker BB source-backed prototype checkpoint; final catalog IDs are not frozen");
+        LOG.info("Dreamwalker BB V12: simple BB tool, preserved architecture and RP");
         SourceTechnicalLight.initialize();
+        dev.dreamwalker.bloodbornedw.composite.InvisibleSourceCarrierV127.initialize();
+        dev.dreamwalker.bloodbornedw.composite.SourceFallbackCarrierV1271.initialize();
+        dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.initialize();
         PrototypeArchitecture.initialize();
         PrototypeWallArchitecture.initialize();
-        CompositeArchitecture.initialize("prototype_double_door", "prototype_wood_window", "prototype_thin_window", "prototype_tree", "prototype_roof");
+        dev.dreamwalker.bloodbornedw.tool.BbToolService.initialize();
+        CompositeArchitecture.initialize(dev.dreamwalker.bloodbornedw.architecture.RemainingArchitecture.paths("prototype_double_door", "prototype_wood_window", "prototype_thin_window", "prototype_tree", "prototype_roof"));
+        dev.dreamwalker.bloodbornedw.compat.worldedit.WorldEditSupport.initialize();
+        dev.dreamwalker.bloodbornedw.composite.CompactStateTransitions.optimizeRegistered();
+        dev.dreamwalker.bloodbornedw.composite.OwnedStateEntries.optimizeRegistered();
     }
 
     /** Loader may discard a real standalone candidate because this mod provides its ID. */

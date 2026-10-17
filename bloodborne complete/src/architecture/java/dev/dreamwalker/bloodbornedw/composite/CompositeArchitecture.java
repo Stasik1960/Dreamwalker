@@ -19,28 +19,30 @@ public final class CompositeArchitecture {
     private static final Map<String,CompositeItem> ITEMS=new LinkedHashMap<>();
     public static CompositeCellBlock CELL;
     public static BlockEntityType<CompositeBlockEntity> CELL_ENTITY;
-    public static Item BUILDER;
     private CompositeArchitecture(){}
     public static void initialize(String... paths){
         if(CELL!=null)return;
         CELL=Registry.register(Registries.BLOCK,id("composite_cell"),new CompositeCellBlock());
         List<String> kinds=new ArrayList<>(Arrays.asList(paths));if(kinds.contains(GlazingTypes.WINDOW01)){if(!kinds.contains(GlazingTypes.WINDOW02))kinds.add(GlazingTypes.WINDOW02);if(!kinds.contains(GlazingTypes.WINDOW03))kinds.add(GlazingTypes.WINDOW03);}
-        for(String path:kinds){CompositeSpec spec=CompositeSpec.load(path);CompositeRootBlock block=Registry.register(Registries.BLOCK,spec.id,GlazingTypes.isGlazingPath(path)?new ThinWindowRootBlock(spec):new CompositeRootBlock(spec));BLOCKS.put(spec.id.getPath(),block);ITEMS.put(spec.id.getPath(),Registry.register(Registries.ITEM,spec.id,new CompositeItem(block)));}
+        for(String path:kinds){CompositeSpec spec=CompositeSpec.load(path);CompositeRootBlock block=Registry.register(Registries.BLOCK,spec.id,path.equals("source_original_tree")?new SourceOriginalTreeBlock(spec):GlazingTypes.isGlazingPath(path)?new ThinWindowRootBlock(spec):ImportedStairBlock.isStairPath(path)?ImportedStairBlock.create(spec):ImportedLadderBlock.isLadderPath(path)?new ImportedLadderBlock(spec):ImportedCompactBlock.supports(path)?ImportedCompactBlock.create(spec):ImportedArtworkBlock.isBankedPath(path)?ImportedArtworkBlock.create(spec):path.startsWith("source_")?new ImportedRootBlock(spec):new CompositeRootBlock(spec));BLOCKS.put(spec.id.getPath(),block);ITEMS.put(spec.id.getPath(),Registry.register(Registries.ITEM,spec.id,block instanceof ImportedCompactBlock compact?new ImportedCompactBlock.CompactItem(compact):new CompositeItem(block)));}
         List<Block> carriers=new ArrayList<>(BLOCKS.values());carriers.add(CELL);carriers.addAll(dev.dreamwalker.bloodbornedw.architecture.PrototypeArchitecture.LADDERS);carriers.addAll(dev.dreamwalker.bloodbornedw.architecture.wall.PrototypeWallArchitecture.blocks());
+        carriers.add(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.BARRIER);carriers.add(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.LIGHT);
         CELL_ENTITY=Registry.register(Registries.BLOCK_ENTITY_TYPE,id("composite_cell"),FabricBlockEntityTypeBuilder.create(CompositeBlockEntity::new,carriers.toArray(Block[]::new)).build());
-        BUILDER=Registry.register(Registries.ITEM,id("composite_builder"),new dev.dreamwalker.bloodbornedw.architecture.BuildingTool());
+        StaticGrassMasonryBlock.initialize();
+        StaticArchitectureCatalog.initialize();
+        StaticArchitectureRuntime.initialize();
         dev.dreamwalker.bloodbornedw.debug.UnifiedCreativeCatalogue.initialize();
-        PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->{var owner=CompositeRuntime.target(world,pos,player);if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,pos);if(owner==null)return !(state.getBlock() instanceof CompositeRootBlock||state.isOf(CELL))||CompositeRuntime.contributions(world,pos).isEmpty();if(world instanceof ServerWorld server)CompositeRuntime.remove(server,owner,player,!player.getAbilities().creativeMode);return false;});
+        PlayerBlockBreakEvents.BEFORE.register((world,player,pos,state,entity)->{if(dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.marker(state)){if(world instanceof ServerWorld server)dev.dreamwalker.bloodbornedw.architecture.DwUtilityBlocks.remove(server,pos,player);return false;}var owner=CompositeRuntime.target(world,pos,player);if(owner==null)owner=CompositeRuntime.soleNativeOwner(world,pos);if(owner==null)return !(state.getBlock() instanceof CompositeRootBlock||state.isOf(CELL))||CompositeRuntime.contributions(world,pos).isEmpty();if(world instanceof ServerWorld server)CompositeRuntime.remove(server,owner,player,!player.getAbilities().creativeMode);return false;});
         UseBlockCallback.EVENT.register((player,world,hand,hit)->{if(world.getBlockState(hit.getBlockPos()).getBlock() instanceof CompositeRootBlock||world.getBlockState(hit.getBlockPos()).isOf(CELL))return ActionResult.PASS;return CompositeRuntime.use(world,hit.getBlockPos(),player);});
         ServerTickEvents.END_WORLD_TICK.register(CompositeRuntime::drain);
-        ServerChunkEvents.CHUNK_LOAD.register((world,chunk)->CompositeRuntime.chunkLoaded(world,chunk.getPos()));
+        ServerChunkEvents.CHUNK_LOAD.register(CompositeRuntime::chunkLoaded);
         // Publish saved membership before prepareStartRegion starts asynchronous lighting.
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.LOAD.register((server,world)->CompositeLedger.get(world));
         net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents.UNLOAD.register((server,world)->CompositeShapeSnapshots.forget(world));
         CompositeNetworking.initialize();
+        ImportedStairBlock.initialize();
         dev.dreamwalker.bloodbornedw.link.MechanismLinks.initialize();
         dev.dreamwalker.bloodbornedw.link.CompositeMechanismBridge.initialize();
-        dev.dreamwalker.bloodbornedw.link.MechanismBuilder.initialize();
     }
     public static void initializeClient(){CompositeClient.initialize();}
     public static CompositeRootBlock kindBlock(String path){CompositeRootBlock block=BLOCKS.get(path);if(block==null)throw new IllegalArgumentException("Unknown composite kind "+path);return block;}
@@ -48,3 +50,5 @@ public final class CompositeArchitecture {
     public static Collection<CompositeRootBlock> blocks(){return List.copyOf(BLOCKS.values());}
     public static Identifier id(String path){return new Identifier("bloodborne_dw",path);}
 }
+
+

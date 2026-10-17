@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 /** Selection tests actual loaded RP parts; source entity origins do not define reach. */
 public final class RpObjectSelection {
     private RpObjectSelection() {}
-    /** Minecraft1.20.1 GameRenderer: extended Creative entity ray6, other modes3. Block ray is separate. */
+    /** Server validation ceiling: Creative entity ray 6, other modes 3. Native client caps Creative selection below 5. */
     public static double entityReach(PlayerEntity player){return player.isCreative()?6:3;}
     public static Optional<Vec3d> hit(RpObjectEntity object,Vec3d start,Vec3d end){
         Vec3d nearest=null;double distance=Double.POSITIVE_INFINITY;

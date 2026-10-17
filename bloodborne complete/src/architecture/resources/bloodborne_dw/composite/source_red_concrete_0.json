@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_red_concrete_0",
+  "displayName": "Длинная секция из каменных плит · вариант 1",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/red_concrete_0",
+              "offset": [
+                0,
+                0.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -2.47918,
+                0.0,
+                -15.92082
+              ],
+              "to": [
+                17.52082,
+                16.0,
+                32.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -2.47918,
+                15.0,
+                -0.92082
+              ],
+              "to": [
+                -0.47918,
+                16.0,
+                19.07918
+              ]
+            },
+            {
+              "from": [
+                -1.5,
+                14.0,
+                19.0
+              ],
+              "to": [
+                -0.5,
+                15.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -1.47918,
+                15.0,
+                -15.92082
+              ],
+              "to": [
+                -0.47918,
+                16.0,
+                -0.92082
+              ]
+            },
+            {
+              "from": [
+                -0.5,
+                0.0,
+                19.0
+              ],
+              "to": [
+                15.5,
+                15.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                -0.47918,
+                0.0,
+                -15.92082
+              ],
+              "to": [
+                15.52082,
+                16.0,
+                19.07918
+              ]
+            },
+            {
+              "from": [
+                15.5,
+                14.0,
+                19.0
+              ],
+              "to": [
+                16.5,
+                15.0,
+                32.0
+              ]
+            },
+            {
+              "from": [
+                15.52082,
+                15.0,
+                -15.92082
+              ],
+              "to": [
+                16.52082,
+                16.0,
+                -0.92082
+              ]
+            },
+            {
+              "from": [
+                15.52082,
+                15.0,
+                -0.92082
+              ],
+              "to": [
+                17.52082,
+                16.0,
+                19.07918
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -2.47918,
+                  0.0,
+                  -15.92082
+                ],
+                "to": [
+                  17.52082,
+                  16.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.68807717,
+                  0.0,
+                  -15.61736649
+                ],
+                "to": [
+                  30.93970364,
+                  16.0,
+                  30.98097039
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -2.47918
+                ],
+                "to": [
+                  31.92082,
+                  16.0,
+                  17.52082
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -14.98097039,
+                  0.0,
+                  -15.68807717
+                ],
+                "to": [
+                  31.61736649,
+                  16.0,
+                  30.93970364
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -1.52082,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  18.47918,
+                  16.0,
+                  31.92082
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -14.93970364,
+                  0.0,
+                  -14.98097039
+                ],
+                "to": [
+                  31.68807717,
+                  16.0,
+                  31.61736649
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.92082,
+                  0.0,
+                  -1.52082
+                ],
+                "to": [
+                  32.0,
+                  16.0,
+                  18.47918
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -15.61736649,
+                  0.0,
+                  -14.93970364
+                ],
+                "to": [
+                  30.98097039,
+                  16.0,
+                  31.68807717
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -2.47918,
+          0.0,
+          -15.92082
+        ],
+        "to": [
+          17.52082,
+          16.0,
+          32.0
+        ]
+      },
+      "sourceVariant": "Длинная секция из каменных плит · вариант 1",
+      "sourcePlacementOffset": [
+        0,
+        -0.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/red_concrete_0"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:red_concrete[variant:]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

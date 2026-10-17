@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_COMPLETE_EXPERIMENTAL_STATIC_DATA_MIGRATION_GAMEPLAY_UNVERIFIED",
+  "sourceHandoffRelease": "https://github.com/Stasik1960/Dreamwalker/releases/tag/dw-city-handoff-20261017-r1",
+  "sourceCommit": "581e340b0baa4546635002249ed29ed4264c2855",
+  "sourceCompletedGame4Sha256": "1805b3e922ad246b4f5222aaf83ae0527c458d1624cfaa12e02b139d00faa4e1",
+  "gameSha256": "0bbb429ec6f970ed8c3b4d295852cae1ee92e0030eaa98325bac89c4da1c8e8b",
+  "gameSourcesSha256": "cbfd2e2f3bd67630467f40574020fdd080cbc23965e9ae301a27d8c292b6a076",
+  "authorSha256": "845708d8bc01e758144528bc957686cad3022c09ab65818c72ac12944076ccf6",
+  "catalogSha256": "3a9d3325e31818484689e2cc4d22fa63c6168338fa721ee3315935ddee9124f2",
+  "operationId": "d4081aa1-8073-467c-ab18-3e02f4a32acf",
+  "checkpointSha256": "1f3651d243f742d85f2ad373e26b5525d771929f0e06bfe520273281dab13086",
+  "processedComponents": 1995319,
+  "committedComponents": 1893190,
+  "alreadySavedComponents": 73,
+  "skippedComponents": 102056,
+  "migratedOwners": 1917316,
+  "migratedCells": 2492450,
+  "skippedOwners": 146846,
+  "skippedCells": 605873,
+  "skipReasons": {
+    "EXCLUDED_FUNCTIONAL_INPUT_FAMILY": 1487,
+    "UNSUPPORTED_NATIVE_FOREIGN_CELL": 88431,
+    "UNSUPPORTED_UNSELECTED_OWNER_MEMBERSHIP": 12138
+  },
+  "preparedRootCoveragePercent": 69.59556287977233,
+  "gameplayVerified": false,
+  "knownUnresolvedEdgeCaveat": "Историческое отличие краевой геометрии между BER и статическим мешем не локализовано. Новая клиентская отрисовка, обычное повторное открытие и маршрут по всем районам при 10 ГБ и 12/12 пока не проверены. Этот этап создаёт экспериментальные статические данные, а не подтверждение играбельности.",
+  "artifacts": [
+    {
+      "file": "Dreamwalker-Static-City.6-EXPERIMENTAL-world.zip",
+      "bytes": 357541401,
+      "sha256": "2386f97c0a4f43f857787be5687540bfd4e4d99d492b06959909818334abde58",
+      "role": "completed experimental world; game .6 required"
+    },
+    {
+      "file": "WORLD-MANIFEST.json",
+      "bytes": 4742141,
+      "sha256": "ac617655c67ad852a9405d1140074bc45181ff70e1cac04b50f21e4061b15e61",
+      "role": "world restoration file manifest"
+    },
+    {
+      "file": "PACKAGE-RESTORE-RECEIPT.json",
+      "bytes": 652,
+      "sha256": "d93095bfdf547212c3e93871ba6c9efa970fccebfe30a8c4be463630e71173d6",
+      "role": "one packaging completeness/SHA256/restoration receipt"
+    },
+    {
+      "file": "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-static-city.6.jar",
+      "bytes": 44228042,
+      "sha256": "0bbb429ec6f970ed8c3b4d295852cae1ee92e0030eaa98325bac89c4da1c8e8b",
+      "role": "game mod"
+    },
+    {
+      "file": "dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-static-city.6-sources.jar",
+      "bytes": 11349386,
+      "sha256": "cbfd2e2f3bd67630467f40574020fdd080cbc23965e9ae301a27d8c292b6a076",
+      "role": "game mod sources"
+    },
+    {
+      "file": "tools/dreamwalker-staticAuthor-1.0.0-portable.jar",
+      "bytes": 73175,
+      "sha256": "845708d8bc01e758144528bc957686cad3022c09ab65818c72ac12944076ccf6",
+      "role": "author tool; do not install in game profile"
+    },
+    {
+      "file": "evidence/native-full-result.json",
+      "bytes": 23050,
+      "sha256": "924c3ed91438e54e281295e8c9d843a517ff829956b9f801062015db678abbe1",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/native-full-console.log",
+      "bytes": 8381224,
+      "sha256": "59060aca7cc7296ab37dd91a0f6609b7523fd2cb680b1053fde51b428ac5b1df",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/pilot-result.json",
+      "bytes": 16081,
+      "sha256": "1ff4cf6d979db6e12fa102c07a810323208b980048c1bd86e578b3bc3d7d08af",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/pilot-preservation.json",
+      "bytes": 15049,
+      "sha256": "ea2c41c1fd9f23cee36f8bb248dd47f4c61d51cf3d4c3d5e0f6dc6b244e01eb9",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/selection-proof.json",
+      "bytes": 21263,
+      "sha256": "90e8174a499c0d6b44fccc04698a867cd851a7674310dbfa18a2d62792d3ccca",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/geometry-delta-check.json",
+      "bytes": 169,
+      "sha256": "4d88199285dcb0ab50d7582a9bfb72d933df0e477340a4a9b310fad07a6f0c89",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/game-build-receipt.json",
+      "bytes": 1799,
+      "sha256": "ac861a13b6efd7e7b5b6aba9d740509a43ad505494b895bee2ee2aaac50a4af1",
+      "role": "existing evidence; not a new test"
+    },
+    {
+      "file": "evidence/functional-input-scope.json",
+      "bytes": 1829,
+      "sha256": "7b0d8c1089752ad614031858328d1739caf38cc77f21811158cc1b95bf807461",
+      "role": "existing evidence; not a new test"
+    }
+  ]
+}

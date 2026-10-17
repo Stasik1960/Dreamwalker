@@ -21,20 +21,41 @@ public class CompositeRootBlock extends BlockWithEntity {
     public static final EnumProperty<Profile> PROFILE=EnumProperty.of("profile",Profile.class);
     public enum Profile implements StringIdentifiable{BASE("base"),ALT("alt");private final String name;Profile(String name){this.name=name;}public String asString(){return name;}}
     public final CompositeSpec spec;
-    public CompositeRootBlock(CompositeSpec spec){super(Settings.create().strength(.4F).nonOpaque().dynamicBounds().pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK));this.spec=spec;setDefaultState(getDefaultState().with(ROTATION,0).with(VARIANT,0).with(OPEN,false).with(PROFILE,Profile.BASE));}
+    public CompositeRootBlock(CompositeSpec spec){this(spec,Settings.create().strength(.4F).nonOpaque().dynamicBounds().pistonBehavior(net.minecraft.block.piston.PistonBehavior.BLOCK));}
+    protected CompositeRootBlock(CompositeSpec spec,Settings settings){super(ImportedSourceLightingV127.settings(spec,settings));this.spec=spec;setDefaultState(getDefaultState().with(ROTATION,0).with(VARIANT,0).with(OPEN,false).with(PROFILE,Profile.BASE));}
     @Override protected void appendProperties(StateManager.Builder<Block,BlockState> builder){builder.add(ROTATION,VARIANT,OPEN,PROFILE);}
     @Override public BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new CompositeBlockEntity(pos,state);}
     @Override public BlockRenderType getRenderType(BlockState state){return BlockRenderType.INVISIBLE;}
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,true,state,context);}
     @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context){return CompositeRuntime.cellShape(world,pos,false,state,context);}
     @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos){return VoxelShapes.empty();}
-    @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return 0;}
+    @Override public int getOpacity(BlockState state,BlockView world,BlockPos pos){return spec.id.getPath().startsWith("source_")&&CompositeShapeSnapshots.decorativePlacement(world,pos)?CompositeShapeSnapshots.sourceCarrierOpacity(world,pos):ImportedSourceLightingV127.opacity(spec,state,0);}
+    @Override public net.minecraft.fluid.FluidState getFluidState(BlockState state){return ImportedSourceLightingV127.fluid(spec,state,super.getFluidState(state));}
     @Override public boolean isTransparent(BlockState state,BlockView world,BlockPos pos){return true;}
     @Override public ItemStack getPickStack(BlockView world,BlockPos pos,BlockState state){return CompositeRuntime.defaultPick(world,pos,state);}
     @Override public List<ItemStack> getDroppedStacks(BlockState state,net.minecraft.loot.context.LootContextParameterSet.Builder builder){var entity=builder.getOptional(net.minecraft.loot.context.LootContextParameters.BLOCK_ENTITY);return List.of(art(state,entity instanceof CompositeBlockEntity own?own.payload():new NbtCompound()));}
-    @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){return CompositeRuntime.use(world,pos,player);}
+    @Override public ActionResult onUse(BlockState state,World world,BlockPos pos,PlayerEntity player,Hand hand,BlockHitResult hit){ActionResult artwork=ImportedArtworkStates.use(this,state,world,pos,player,hand);return artwork==ActionResult.PASS?CompositeRuntime.use(world,pos,player):artwork;}
     @Override public BlockState rotate(BlockState state,BlockRotation rotation){return state.with(ROTATION,Math.floorMod(state.get(ROTATION)+switch(rotation){case CLOCKWISE_90->2;case CLOCKWISE_180->4;case COUNTERCLOCKWISE_90->6;default->0;},8));}
     @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){if(!state.isOf(next.getBlock())&&!CompositeRuntime.writing()&&world instanceof ServerWorld server)CompositeRuntime.scheduleCleanup(server,pos);super.onStateReplaced(state,world,pos,next,moved);}
     @Override public BlockState getStateForNeighborUpdate(BlockState state,net.minecraft.util.math.Direction side,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos){if(world instanceof ServerWorld server&&(spec.requiredSupport||this instanceof ThinWindowRootBlock))CompositeRuntime.scheduleSupport(server,pos);return state;}
-    public ItemStack art(BlockState state,NbtCompound payload){ItemStack stack=new ItemStack(asItem());NbtCompound tag=stack.getOrCreateSubNbt("BlockStateTag");tag.putString("variant",Integer.toString(state.get(VARIANT)));tag.putString("profile",state.get(PROFILE).asString());tag.putString("open",Boolean.toString(state.get(OPEN)));return stack;}
+    public ItemStack art(BlockState state,NbtCompound payload){
+        if(ImportedSourcePartsV127.part(state))return art(ImportedSourcePartsV127.installation(state),ImportedTypeAliases.markPayload(null));
+        if(spec.simplePhysicalCollision&&ImportedTypeAliases.needsMigration(state,payload)){
+            NbtCompound converted=ImportedTypeAliases.transformPayload(state,payload);BlockState next=ImportedTypeAliases.target(state);
+            return ((CompositeRootBlock)next.getBlock()).art(next,converted);
+        }
+        ItemStack stack=new ItemStack(asItem());NbtCompound tag=stack.getOrCreateSubNbt("BlockStateTag");tag.putString("variant",Integer.toString(state.get(VARIANT)));tag.putString("profile",state.get(PROFILE).asString());tag.putString("open",Boolean.toString(state.get(OPEN)));
+        if(spec.simplePhysicalCollision){
+            for(var entry:state.getEntries().entrySet())if(!java.util.Set.of("rotation","variant","profile","open").contains(entry.getKey().getName()))tag.putString(entry.getKey().getName(),artName(entry.getKey(),entry.getValue()));
+            if(payload.getInt(ImportedTypeAliases.VERSION_KEY)>=ImportedTypeAliases.VERSION){
+                stack.getOrCreateNbt().putInt(ImportedTypeAliases.VERSION_KEY,ImportedTypeAliases.VERSION);
+                if(this instanceof ImportedStairBlock)ImportedTypeAliases.readLegacyStairArt(payload).ifPresent(key->stack.getOrCreateNbt().putString(ImportedStairLegacyArt.KEY,key));
+                CompositeSourceShift.Shift shift=CompositeSourceShift.local(payload);
+                if(shift.x()!=0||shift.y()!=0||shift.z()!=0){net.minecraft.nbt.NbtList artShift=new net.minecraft.nbt.NbtList();artShift.add(net.minecraft.nbt.NbtDouble.of(shift.x()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.y()));artShift.add(net.minecraft.nbt.NbtDouble.of(shift.z()));stack.getOrCreateNbt().put(ImportedTypeAliases.SHIFT_ART_KEY,artShift);}
+            }
+            return ImportedAssemblyV126.canonicalStack(ImportedTypeAliases.canonicalStack(stack));
+        }
+        return stack;
+    }
+    @SuppressWarnings({"rawtypes","unchecked"})private static String artName(Property property,Comparable value){return property.name(value);}
 }

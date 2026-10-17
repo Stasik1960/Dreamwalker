@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stripped_birch_wood",
+  "displayName": "Сухая ветка",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stripped_birch_wood",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                7.9375,
+                0.0,
+                -16.0
+              ],
+              "to": [
+                8.0625,
+                48.0,
+                32.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          7.9375,
+          0.0,
+          -16.0
+        ],
+        "to": [
+          8.0625,
+          48.0,
+          32.0
+        ]
+      },
+      "sourceVariant": "Редкие сухие ветви",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stripped_birch_wood"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:stripped_birch_wood[variant:axis=x]",
+        "minecraft:stripped_birch_wood[variant:axis=x]",
+        "minecraft:stripped_birch_wood[variant:axis=y]",
+        "minecraft:stripped_birch_wood[variant:axis=z]",
+        "minecraft:stripped_birch_wood[variant:axis=z]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true,
+  "surfaceDecals": [
+    {
+      "variant": 0,
+      "axis": 0,
+      "value": 0.5,
+      "normal": 1
+    }
+  ]
+}

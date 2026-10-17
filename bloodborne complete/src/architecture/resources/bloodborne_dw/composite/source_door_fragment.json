@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_door_fragment",
+  "displayName": "Часть портала",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/aca_door_2",
+              "offset": [
+                0.0,
+                -0.0,
+                3.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                16.0,
+                2.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                16.0,
+                2.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/aca_door_2",
+              "offset": [
+                0.0,
+                -0.0,
+                3.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                16.0,
+                2.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                16.0,
+                2.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          32.0,
+          16.0,
+          2.0
+        ]
+      },
+      "sourcePlacementOffset": [
+        0.0,
+        -0.0,
+        3.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/aca_door_2"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceVariant": "Вершина портала"
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/aca_door_1",
+              "offset": [
+                0.0,
+                16.0,
+                3.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                2.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                2.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/aca_door_1",
+              "offset": [
+                0.0,
+                16.0,
+                3.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                2.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                0.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                2.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          0.0
+        ],
+        "to": [
+          32.0,
+          48.0,
+          2.0
+        ]
+      },
+      "sourcePlacementOffset": [
+        0.0,
+        16.0,
+        3.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/aca_door_1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceVariant": "Низ портала"
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/compatibility/minecraft/block/addon/iron_door_top",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                10.92861291,
+                0.0,
+                -2.84062043
+              ],
+              "to": [
+                20.04131128,
+                48.0,
+                19.15937957
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/compatibility/minecraft/block/addon/iron_door_top",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 180,
+              "pitch": 0
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                10.92861291,
+                0.0,
+                -2.84062043
+              ],
+              "to": [
+                20.04131128,
+                48.0,
+                19.15937957
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          10.92861291,
+          0.0,
+          -2.84062043
+        ],
+        "to": [
+          20.04131128,
+          48.0,
+          19.15937957
+        ]
+      },
+      "sourcePlacementOffset": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/iron_door_top",
+          "y": 180
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceVariant": "Исходная верхняя часть железной двери",
+      "hiddenSourceCompatibility": true
+    }
+  ],
+  "simplePhysicalCollision": true,
+  "source": {
+    "kind": "USER_APPROVED_SEPARATE_DOOR_FRAGMENTS",
+    "protectedWholeId": "90001",
+    "retiredNumberNeverReused": "90479"
+  },
+  "sourcePolicy": "One installing item, two meaningful source part states. This is a fixed building part, no opening mechanism. Whole source pairs still map to unchanged90001."
+}

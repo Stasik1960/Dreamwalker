@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.*;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -41,8 +42,13 @@ public final class MechanismLinks {
     public static void loaded(RpObjectEntity entity){
         if(!(entity.getWorld() instanceof ServerWorld world))return;MechanismState state=MechanismState.get(world.getServer());
         if(entity.isMechanism()){
-            if(!entity.links().isEmpty()||state.levers.containsKey(entity.getUuid()))lever(state,entity);for(UUID id:entity.links()){
+            // Persisted bindings are authoritative after the first import. An old
+            // entity Links list must not restore a pair removed while unloaded.
+            boolean firstImport=!state.levers.containsKey(entity.getUuid());
+            var persisted=(!entity.links().isEmpty()||!firstImport)?lever(state,entity):null;
+            for(UUID id:entity.links()){
                 Entity target=world.getEntity(id);TargetRef ref=target instanceof RpObjectEntity rp?TargetRef.rp(rp):new TargetRef(Kind.RP,world.getRegistryKey().getValue().toString(),id,entity.getBlockPos().asLong(),"");
+                if(!firstImport&&persisted!=null&&!persisted.targets.contains(ref.key())){entity.removeLink(id);continue;}
                 if(!(target instanceof RpObjectEntity rp)||rp.canBeLinked())link(entity,ref);
             }
         }
@@ -53,6 +59,13 @@ public final class MechanismLinks {
         }
     }
     public static boolean linkRp(RpObjectEntity source,RpObjectEntity target){return target.canBeLinked()&&source.getWorld()==target.getWorld()&&link(source,TargetRef.rp(target));}
+    public static boolean linkLevers(ServerPlayerEntity player,List<UUID> levers,UUID target){for(ServerWorld world:player.getServer().getWorlds())if(world.getEntity(target) instanceof RpObjectEntity rp)return linkLevers(player,levers,TargetRef.rp(rp));return false;}
+    public static boolean linkLevers(ServerPlayerEntity player,List<UUID> levers,TargetRef target){return MechanismGroups.link(player,levers,target);}
+    /** True consumes this interaction, including an already-activated lever's silent no-op. */
+    public static boolean useLinkedLever(RpObjectEntity source,ServerPlayerEntity player){return MechanismGroups.use(source,player);}
+    public static Set<UUID> groupMembers(MinecraftServer server,UUID member){Set<UUID> members=new LinkedHashSet<>();members.add(member);int previous;do{previous=members.size();MechanismGroups.expandMembers(server,members);MechanismRules.expandMembers(server,members);}while(previous!=members.size());return members.size()==1&&!MechanismGroups.contains(server,member)&&MechanismRules.list(server).stream().noneMatch(r->r.sources.containsKey(member)||r.targets.values().stream().anyMatch(t->t.instance().equals(member)))?Set.of():Set.copyOf(members);}
+    public static boolean removeWholeGroup(MinecraftServer server,UUID member){Set<UUID> members=groupMembers(server,member);if(members.isEmpty())return false;boolean changed=MechanismGroups.removeMembers(server,members);return MechanismRules.removeMembers(server,members)||changed;}
+    static void importBarrier(MinecraftServer server,RpObjectEntity source){lever(MechanismState.get(server),source);}
     public static boolean unlinkRp(RpObjectEntity source,UUID target){return unlink(source,new TargetRef(Kind.RP,source.getWorld().getRegistryKey().getValue().toString(),target,0,"").key());}
     public static boolean link(RpObjectEntity source,TargetRef ref){
         if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism()||!ref.dimension().equals(world.getRegistryKey().getValue().toString()))return false;
@@ -63,12 +76,20 @@ public final class MechanismLinks {
         MechanismState.Target target=state.targets.computeIfAbsent(ref.key(),k->new MechanismState.Target(ref));
         target.pulseOnly=current.pulseOnly()||ref.kind()==Kind.RP&&ref.registryId().equals("wood_gate");
         if(!target.known&&current.availability()==Availability.LOADED){target.desired=current.open();target.known=true;}
-        lever.targets.add(ref.key());state.markDirty();MechanismRules.legacyLinked(source,ref);event(world,ref,"link_create",Map.of("sourceLever",source.getUuid().toString()),Map.of("desired",target.desired,"pending",target.pending),"COMMITTED","");return true;
+        lever.targets.add(ref.key());state.markDirty();MechanismRules.legacyLinked(source,ref);return true;
     }
-    public static boolean unlink(RpObjectEntity source,String key){if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism())return false;MechanismState state=MechanismState.get(world.getServer());MechanismState.Lever lever=state.levers.get(source.getUuid());if(lever==null||!lever.targets.remove(key))return false;MechanismState.Target target=state.targets.get(key);if(target!=null)event(world,target.ref,"link_remove",Map.of("sourceLever",source.getUuid().toString()),Map.of(),"COMMITTED","");pruneUnused(state,key);state.markDirty();MechanismRules.legacyUnlinked(source,key);return true;}
+    public static boolean unlink(RpObjectEntity source,String key){if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism())return false;MechanismState state=MechanismState.get(world.getServer());MechanismState.Lever lever=state.levers.get(source.getUuid());if(lever==null||!lever.targets.remove(key))return false;pruneUnused(state,key);state.markDirty();MechanismRules.legacyUnlinked(source,key);return true;}
+    /** Keep imported entity bindings consistent when a saved rule removes a pair. */
+    static void forgetLegacyPair(MinecraftServer server,TargetRef source,String key){
+        if(MechanismRules.list(server).stream().anyMatch(r->r.sources.containsKey(source.instance())&&r.targets.containsKey(key)))return;
+        MechanismState state=MechanismState.get(server);var lever=state.levers.get(source.instance());
+        if(lever!=null&&lever.targets.remove(key)){pruneUnused(state,key);state.markDirty();}
+        ServerWorld world=world(server,source.dimension());Entity entity=world==null?null:world.getEntity(source.instance());
+        if(entity instanceof RpObjectEntity rp&&rp.isMechanism())for(UUID target:rp.links())if(new TargetRef(Kind.RP,source.dimension(),target,0,"").key().equals(key))rp.removeLink(target);
+    }
     /** Called once when the existing 70 tick RP lever delay expires. */
     public static void pulse(RpObjectEntity source){
-        if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism())return;loaded(source);MechanismRules.pulse(source);
+        if(!(source.getWorld() instanceof ServerWorld world)||!source.isMechanism()||MechanismGroups.contains(world.getServer(),source.getUuid()))return;loaded(source);MechanismRules.pulse(source);
     }
     public static void noteInitiator(RpObjectEntity source,net.minecraft.server.network.ServerPlayerEntity player){MechanismRules.noteInitiator(source,player);}
     public static boolean applyEffect(MinecraftServer server,TargetRef ref,boolean open,boolean pulse){
@@ -77,7 +98,7 @@ public final class MechanismLinks {
         return !pulse&&architecture!=null&&architecture.apply(world,ref,open);
     }
     public static int retryPending(MinecraftServer server,int limit){
-        if(limit<=0)return 0;int delivered=MechanismRules.retry(server,limit);MechanismState state=MechanismState.get(server);List<MechanismState.Target> pending=state.targets.values().stream().filter(t->t.pending).toList();if(pending.isEmpty()){RETRY_OFFSET.remove(server);return delivered;}
+        if(limit<=0)return 0;MechanismGroups.retry(server);int delivered=MechanismRules.retry(server,limit);MechanismState state=MechanismState.get(server);List<MechanismState.Target> pending=state.targets.values().stream().filter(t->t.pending).toList();if(pending.isEmpty()){RETRY_OFFSET.remove(server);return delivered;}
         int start=Math.floorMod(RETRY_OFFSET.getOrDefault(server,0),pending.size()),count=Math.min(limit,pending.size());for(int i=0;i<count;i++)apply(server,state,pending.get((start+i)%pending.size()));RETRY_OFFSET.put(server,(start+count)%pending.size());return count;
     }
     private static void apply(MinecraftServer server,MechanismState state,MechanismState.Target target){
@@ -86,12 +107,10 @@ public final class MechanismLinks {
         ServerWorld world=world(server,target.ref.dimension());boolean accepted;
         if(target.ref.kind()==Kind.RP){Entity entity=world.getEntity(target.ref.instance());accepted=entity instanceof RpObjectEntity rp&&(target.pulseOnly?target.pendingPulses>0&&rp.pulseFromMechanism():rp.setOpen(target.desired));}
         else accepted=architecture!=null&&architecture.apply(world,target.ref,target.desired);
-        event(world,target.ref,"link_effect",Map.of("open",status.open()),Map.of("desired",target.desired,"pulseOnly",target.pulseOnly,"pendingPulses",target.pendingPulses),accepted?"COMMITTED":"DEFERRED",accepted?"Actual target accepted effect":"Target deferred desired effect; pending retained");
         if(accepted){if(target.pulseOnly)target.pendingPulses--;target.pending=target.pulseOnly&&target.pendingPulses>0;pruneUnused(state,target.ref.key());state.markDirty();}
     }
     public static Status inspect(MinecraftServer server,TargetRef ref){
-        ServerWorld world=world(server,ref.dimension());boolean sample=dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.enabled(world)&&dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.shouldSample(world,typeId(ref),ref.instance().toString(),BlockPos.fromLong(ref.root()),"mechanism_target_lookup");long began=sample?System.nanoTime():0;
-        try{return inspectStatus(world,ref);}finally{if(sample)dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.measured(world,typeId(ref),ref.instance().toString(),BlockPos.fromLong(ref.root()),"mechanism_target_lookup",System.nanoTime()-began);}
+        return inspectStatus(world(server,ref.dimension()),ref);
     }
     private static Status inspectStatus(ServerWorld world,TargetRef ref){
         if(world==null)return new Status(Availability.UNLOADED,false,false);
@@ -101,19 +120,14 @@ public final class MechanismLinks {
         if(!(entity instanceof RpObjectEntity rp)||!rp.canBeLinked()||!ref.registryId().isEmpty()&&!ref.registryId().equals(rp.assetId()))return new Status(Availability.STALE,false,false);
         return new Status(Availability.LOADED,rp.isOpen(),rp.isLocked(),rp.isPulseOnlyMechanism());
     }
-    public static List<TargetRef> targets(RpObjectEntity source){if(!(source.getWorld() instanceof ServerWorld world))return List.of();loaded(source);MechanismState state=MechanismState.get(world.getServer());MechanismState.Lever lever=state.levers.get(source.getUuid());return MechanismRules.list(world.getServer()).stream().filter(r->r.sources.containsKey(source.getUuid())).flatMap(r->r.targets.values().stream()).distinct().toList();}
+    public static List<TargetRef> targets(RpObjectEntity source){if(!(source.getWorld() instanceof ServerWorld world))return List.of();loaded(source);List<TargetRef> out=new ArrayList<>(MechanismGroups.targets(world.getServer(),source.getUuid()));MechanismRules.list(world.getServer()).stream().filter(r->r.sources.containsKey(source.getUuid())).flatMap(r->r.targets.values().stream()).distinct().forEach(out::add);return List.copyOf(out);}
     public record SourceRef(UUID instance,String dimension,long root,String asset){}
-    public static List<SourceRef> sources(MinecraftServer server,TargetRef target){return MechanismRules.list(server).stream().filter(r->r.targets.containsKey(target.key())).flatMap(r->r.sources.values().stream()).distinct().map(ref->new SourceRef(ref.instance(),ref.dimension(),ref.root(),ref.registryId())).toList();}
-    public static boolean pending(MinecraftServer server,TargetRef ref){MechanismState.Target target=MechanismState.get(server).targets.get(ref.key());return target!=null&&target.pending||MechanismRules.pending(server,ref);}
-    public static void removed(RpObjectEntity entity){if(!(entity.getWorld() instanceof ServerWorld world))return;MechanismRules.removed(world.getServer(),TargetRef.rp(entity));MechanismState state=MechanismState.get(world.getServer());MechanismState.Lever lever=state.levers.remove(entity.getUuid());if(lever!=null)for(String key:lever.targets)pruneUnused(state,key);forgetTarget(state,TargetRef.rp(entity).key());state.markDirty();}
-    public static void removedArchitecture(MinecraftServer server,TargetRef ref){MechanismRules.removed(server,ref);forgetTarget(MechanismState.get(server),ref.key());}
+    public static List<SourceRef> sources(MinecraftServer server,TargetRef target){List<TargetRef> refs=new ArrayList<>(MechanismGroups.sources(server,target));MechanismRules.list(server).stream().filter(r->r.targets.containsKey(target.key())).flatMap(r->r.sources.values().stream()).distinct().forEach(refs::add);return refs.stream().map(ref->new SourceRef(ref.instance(),ref.dimension(),ref.root(),ref.registryId())).distinct().toList();}
+    public static boolean pending(MinecraftServer server,TargetRef ref){MechanismState.Target target=MechanismState.get(server).targets.get(ref.key());return target!=null&&target.pending||MechanismRules.pending(server,ref)||MechanismGroups.pending(server,ref);}
+    public static void removed(RpObjectEntity entity){if(!(entity.getWorld() instanceof ServerWorld world))return;removeWholeGroup(world.getServer(),entity.getUuid());MechanismRules.removed(world.getServer(),TargetRef.rp(entity));MechanismState state=MechanismState.get(world.getServer());MechanismState.Lever lever=state.levers.remove(entity.getUuid());if(lever!=null)for(String key:lever.targets)pruneUnused(state,key);forgetTarget(state,TargetRef.rp(entity).key());state.markDirty();}
+    public static void removedArchitecture(MinecraftServer server,TargetRef ref){removeWholeGroup(server,ref.instance());MechanismRules.removed(server,ref);forgetTarget(MechanismState.get(server),ref.key());dev.dreamwalker.bloodbornedw.tool.ToolCommands.remove(server,dev.dreamwalker.bloodbornedw.tool.ToolTarget.mechanism(ref));}
     private static MechanismState.Lever lever(MechanismState state,RpObjectEntity source){if(!state.levers.containsKey(source.getUuid())&&state.levers.size()>=MechanismState.LIMIT)return null;return state.levers.computeIfAbsent(source.getUuid(),id->{state.markDirty();return new MechanismState.Lever(id,source.getWorld().getRegistryKey().getValue().toString(),source.getBlockPos().asLong(),source.assetId());});}
     private static void pruneUnused(MechanismState state,String key){MechanismState.Target target=state.targets.get(key);if(target!=null&&!target.pending&&state.levers.values().stream().noneMatch(lever->lever.targets.contains(key)))state.targets.remove(key);}
     private static void forgetTarget(MechanismState state,String key){state.targets.remove(key);for(MechanismState.Lever lever:state.levers.values())lever.targets.remove(key);if(state.removed.size()<MechanismState.LIMIT)state.removed.add(key);state.markDirty();}
     private static ServerWorld world(MinecraftServer server,String dimension){return server.getWorld(RegistryKey.of(RegistryKeys.WORLD,new Identifier(dimension)));}
-    private static void event(ServerWorld world,TargetRef ref,String action,Map<String,Object> before,Map<String,Object> after,String result,String reason){
-        if(!dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.enabled(world))return;String type=typeId(ref);BlockPos root=BlockPos.fromLong(ref.root());if(ref.kind()==Kind.ARCHITECTURE&&world.isChunkLoaded(root)){var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(world.getBlockState(root));if(entry!=null)type=entry.temporaryId();}dev.dreamwalker.bloodbornedw.diagnostics.DwDiagnostics.record(world,type,ref.instance().toString(),root,action,before,after,result,reason);
-    }
-    private static String typeId(TargetRef ref){Identifier registry=Identifier.tryParse(ref.kind()==Kind.RP?"bloodborne_rp:"+(ref.registryId().isEmpty()?"unknown":ref.registryId()):ref.registryId());if(registry==null)return "UNASSIGNED";var entry=dev.dreamwalker.bloodbornedw.debug.DebugCatalogue.entry(registry);return entry==null?"UNASSIGNED":entry.temporaryId();}
-    public static Map<String,Object> diagnosticsMetrics(ServerWorld world){MechanismState state=MechanismState.observed(world.getServer());return state==null?Map.of("status","NOT_MEASURED_GRAPH_NOT_LOADED"):Map.of("levers",state.levers.size(),"targets",state.targets.size(),"pendingTargets",state.targets.values().stream().filter(t->t.pending).count(),"pendingPulseEffects",state.targets.values().stream().mapToLong(t->t.pendingPulses).sum(),"pendingImports",IMPORT_PENDING.getOrDefault(world.getServer(),Set.of()).size(),"scope","server-wide loaded persistent mechanism graph; no load triggered");}
 }

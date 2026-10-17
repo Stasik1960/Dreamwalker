@@ -1,0 +1,745 @@
+{
+  "status": "PASS_BOUNDED_STATIC_PILOT_TYPED_PRESERVATION",
+  "checkerSha256": "64e3ab487337d19960208419d1459bfe05fe09204474cfa23fb3216c632ba3bc",
+  "javaLaunched": false,
+  "worldWritten": false,
+  "baselineWorld": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\checkpoints\\completed-v4-20261017\\world",
+  "candidateWorld": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city\\world",
+  "operationId": "d4081aa1-8073-467c-ab18-3e02f4a32acf",
+  "pilotCheckpointSha256": "2675ce10d9829b2277dd24af1edd64eef468240b0276636cb9c3a2e166d61e23",
+  "planManifestSha256": "973627cd58931e1daa769560dcc09475adb42d1f4c39ac9e8684a54c10e2b7a2",
+  "catalogSha256": "3a9d3325e31818484689e2cc4d22fa63c6168338fa721ee3315935ddee9124f2",
+  "componentStreamSha256": "b8b42901b09d281a99ad84a8a7c7b1728518214ae3e1b1658b442ca2f7af57e9",
+  "componentCounts": {
+    "committed": 120,
+    "architectureSkipped": 8
+  },
+  "committedStaticCells": 251,
+  "selectedOwnersRemoved": 134,
+  "selectedOwnerRoots": {
+    "96e3b810-d82c-5647-ad00-a557ea7063fc": [
+      279,
+      108,
+      -672
+    ],
+    "970f5285-76b0-55b5-a09c-308bdabdd588": [
+      280,
+      108,
+      -672
+    ],
+    "36e71e0f-ce6c-5a7a-a44b-1acc3e69081b": [
+      273,
+      103,
+      -669
+    ],
+    "c22dd8d3-e0e2-5624-bb2b-50e0fa8a43da": [
+      273,
+      103,
+      -667
+    ],
+    "c98a0203-09d5-5eee-bb84-0392ba3ff0c1": [
+      273,
+      103,
+      -665
+    ],
+    "5998b40c-6132-5000-8cf4-d6d5418d58da": [
+      273,
+      101,
+      -671
+    ],
+    "da0c7e37-4a8f-5d3a-b8ca-7bfba67d080b": [
+      283,
+      101,
+      -671
+    ],
+    "8a4bc268-79c4-55b5-b9f2-ee1d9ccdac39": [
+      273,
+      101,
+      -663
+    ],
+    "a011c030-2bcb-571b-9128-5fedadfc6a76": [
+      283,
+      101,
+      -663
+    ],
+    "1af61159-0fbd-5eac-8cc3-798e93d16cb2": [
+      273,
+      105,
+      -671
+    ],
+    "c8915da1-c437-5e79-9c2c-8258e004c664": [
+      283,
+      105,
+      -671
+    ],
+    "9a9ac305-faef-591a-9fbb-46aebf8c6d46": [
+      273,
+      105,
+      -663
+    ],
+    "23679142-fb38-5ff4-904f-64c401800f93": [
+      283,
+      105,
+      -663
+    ],
+    "db8ebf02-ce55-5eaf-af64-c63d4dae061f": [
+      273,
+      102,
+      -671
+    ],
+    "5e074dfe-f57b-5b4d-a401-8dc834876155": [
+      283,
+      102,
+      -671
+    ],
+    "45a12228-cac2-5994-b6e1-9126d3b3e632": [
+      273,
+      102,
+      -663
+    ],
+    "fa6547a8-9a82-56aa-b71a-fb09509a1a97": [
+      283,
+      102,
+      -663
+    ],
+    "84232e03-891d-540c-84ce-44d90980b7a8": [
+      273,
+      103,
+      -671
+    ],
+    "624a94c2-96f0-5ff4-b461-ffbec106e03c": [
+      283,
+      103,
+      -671
+    ],
+    "af2f5dd4-cb67-5bff-b627-6c7d338ae293": [
+      273,
+      103,
+      -663
+    ],
+    "1ddcb593-6216-5a54-90bb-69a4ac771636": [
+      283,
+      103,
+      -663
+    ],
+    "3b86f92d-3033-5332-a585-73efc4771a26": [
+      273,
+      104,
+      -671
+    ],
+    "6a5d06d3-58ca-5110-91b5-1620f0efb4d8": [
+      283,
+      104,
+      -671
+    ],
+    "f63b9867-3f64-5d29-9218-0fd9c6c6a32b": [
+      273,
+      104,
+      -663
+    ],
+    "9e8218b1-35cc-57e4-bf9a-e54c3f4724cb": [
+      283,
+      104,
+      -663
+    ],
+    "01836083-43f7-5ffa-9b2f-27d3a24913ba": [
+      273,
+      106,
+      -671
+    ],
+    "bd40d5d5-5a33-5344-813b-00258b5ca2ef": [
+      283,
+      106,
+      -671
+    ],
+    "aa5539ff-3810-5ca3-a9fa-c8833ed84c16": [
+      273,
+      106,
+      -663
+    ],
+    "dba6556f-1818-5aab-a10d-38b34b9e5240": [
+      283,
+      106,
+      -663
+    ],
+    "b09d553a-c4f8-5ed7-936e-9a6230b8dfaa": [
+      273,
+      107,
+      -671
+    ],
+    "f8a3dd8f-5c4f-5c31-88b9-4f555da17829": [
+      283,
+      107,
+      -671
+    ],
+    "de44c0b4-0f27-5e6e-8c33-25ccd320f67f": [
+      273,
+      107,
+      -663
+    ],
+    "42de2279-f11b-5e37-97d6-8fae6985989c": [
+      283,
+      107,
+      -663
+    ],
+    "9ef77e82-1566-5754-84a1-d41b460861f2": [
+      273,
+      108,
+      -671
+    ],
+    "c53f8501-95ef-59f0-a01c-2393b1208cb1": [
+      283,
+      108,
+      -671
+    ],
+    "d7965e4a-57c8-5bba-a2e2-f74bb13e4b3f": [
+      284,
+      108,
+      -671
+    ],
+    "2095a314-4315-56de-b21c-c8b43ed64c3e": [
+      273,
+      108,
+      -663
+    ],
+    "050e2d8c-41d0-5702-9fb7-6dc9dfcd0cb2": [
+      283,
+      108,
+      -663
+    ],
+    "5f8a00e4-3dbe-5169-b857-e00eccb612b6": [
+      273,
+      109,
+      -671
+    ],
+    "2cd61905-64cf-5c60-9e92-e6892edf7703": [
+      283,
+      109,
+      -671
+    ],
+    "e9909671-b88b-5280-812a-0e27f1bdd705": [
+      273,
+      109,
+      -663
+    ],
+    "9fbcf9b7-bb77-5877-bd6c-92fd1f016689": [
+      283,
+      109,
+      -663
+    ],
+    "cb6f709c-9127-55c1-b7e4-2dc55914be1f": [
+      273,
+      110,
+      -671
+    ],
+    "98f110f7-f0c6-5c2e-ab5f-289da852b69f": [
+      283,
+      110,
+      -671
+    ],
+    "7f7279c6-04f0-57d4-8e17-917f0805e3af": [
+      273,
+      110,
+      -663
+    ],
+    "5156a342-2ad3-5530-b7be-2bea4be28337": [
+      283,
+      110,
+      -663
+    ],
+    "77851e56-5e7c-5c34-b567-b9accbe88b53": [
+      275,
+      103,
+      -671
+    ],
+    "4a22c759-5ee8-54b8-b7f5-f72eaf87e458": [
+      278,
+      103,
+      -671
+    ],
+    "3dbdde66-18a3-52fd-ac40-e83b57fd4f18": [
+      281,
+      103,
+      -671
+    ],
+    "fb5e112e-3dcc-5af6-a499-d58f064753d3": [
+      275,
+      103,
+      -663
+    ],
+    "95dd920e-ec8b-5a2d-828f-d21469ab6de3": [
+      278,
+      103,
+      -663
+    ],
+    "8fed6926-3a64-56e4-a4d3-e612af8af3a5": [
+      281,
+      103,
+      -663
+    ],
+    "ecd2a5a9-ae77-56b0-bd1b-e719d43b2198": [
+      278,
+      105,
+      -671
+    ],
+    "6e921d01-2129-5b77-871a-e633895c2e0b": [
+      278,
+      105,
+      -663
+    ],
+    "355396ac-d73c-583e-aa62-2b5653b3bbc2": [
+      283,
+      103,
+      -669
+    ],
+    "e6ed672f-b9a4-5cb4-99db-035ac3dee144": [
+      283,
+      103,
+      -667
+    ],
+    "80b05711-b624-50e0-93f6-1043b44c8e44": [
+      283,
+      103,
+      -665
+    ],
+    "b9605690-9328-5ef7-83c8-3e64d8a3e9c2": [
+      276,
+      103,
+      -672
+    ],
+    "a0c13b53-737d-587b-abd4-36bed094662e": [
+      283,
+      103,
+      -672
+    ],
+    "f58611d6-654d-542d-ba2a-e3c73747d9ed": [
+      277,
+      103,
+      -672
+    ],
+    "9b63900f-974f-5eed-bf3f-87e20f50e4e0": [
+      284,
+      103,
+      -672
+    ],
+    "fb948895-37e5-511e-96e3-22fda8dff5f9": [
+      281,
+      108,
+      -672
+    ],
+    "afebd3cf-d2c5-50eb-984f-5e9a411c6660": [
+      276,
+      107,
+      -671
+    ],
+    "7945c1a4-c11a-5459-badc-0ce167c0264f": [
+      276,
+      107,
+      -663
+    ],
+    "460471b2-0956-5212-817c-fac458c21408": [
+      280,
+      107,
+      -671
+    ],
+    "4ee2c72f-6a90-5215-8871-0fbea774065a": [
+      280,
+      107,
+      -663
+    ],
+    "79254143-ba5f-54e2-97e5-595744b436dc": [
+      278,
+      107,
+      -669
+    ],
+    "c4c5a4d6-3307-5189-b76c-a6b3f63e6e74": [
+      280,
+      109,
+      -672
+    ],
+    "3a8830a3-f8a3-5c7f-8227-ee85bb78b038": [
+      278,
+      107,
+      -665
+    ],
+    "71c23a50-053f-593f-a5a9-b3115246ebbd": [
+      285,
+      122,
+      -661
+    ],
+    "bfa3e3cb-3e61-597b-85bd-6423d2fb05ec": [
+      286,
+      122,
+      -661
+    ],
+    "d08e5729-3a3e-53f1-9e34-7270399d7886": [
+      287,
+      126,
+      -661
+    ],
+    "b017a8b9-c387-5301-8338-acefd5c854d5": [
+      275,
+      127,
+      -670
+    ],
+    "a1ac074d-9fa7-5038-af56-4f150b801974": [
+      278,
+      127,
+      -670
+    ],
+    "967a5480-56a7-5383-b8d4-6a6f430d5d88": [
+      279,
+      127,
+      -670
+    ],
+    "4ebab52c-e080-51bf-8960-bdab1dcb8f8e": [
+      278,
+      126,
+      -659
+    ],
+    "beec3c91-f00c-53b4-a34c-345056b83e9b": [
+      278,
+      126,
+      -657
+    ],
+    "91b77c1f-9102-55bd-866b-1316fb7f5f34": [
+      274,
+      127,
+      -667
+    ],
+    "2a8f2c91-96f5-5d0e-b668-c6ad808a74ff": [
+      278,
+      126,
+      -660
+    ],
+    "07444d33-fdce-5de4-a226-36e2b8f78eab": [
+      274,
+      127,
+      -665
+    ],
+    "d7514a3e-c4ab-5cc5-944b-62356349de3c": [
+      275,
+      127,
+      -664
+    ],
+    "404fcf26-f1b9-570b-8762-5c47e17ff4c9": [
+      277,
+      127,
+      -664
+    ],
+    "aff61fa1-ec4b-555e-97cf-522d7e90cd9f": [
+      278,
+      127,
+      -664
+    ],
+    "054a0bc3-7f50-53dd-a7b5-0ee8bf4522e1": [
+      279,
+      127,
+      -664
+    ],
+    "dcabba7d-e21c-5f5b-a190-bcad5950e798": [
+      281,
+      127,
+      -664
+    ],
+    "8d4a2923-2ccd-5577-b9da-6d3c31bc4b03": [
+      273,
+      112,
+      -671
+    ],
+    "8fa0c36b-12ed-58ea-81a7-072fd0a49785": [
+      283,
+      112,
+      -671
+    ],
+    "ff515a0c-5dad-5c6a-b3de-a130944e5bc3": [
+      273,
+      112,
+      -663
+    ],
+    "0bc2fd2f-63b2-53cd-abe6-35cab8dddb34": [
+      283,
+      112,
+      -663
+    ],
+    "5f884cd3-8a84-565b-a022-458a71fa8dec": [
+      276,
+      120,
+      -670
+    ],
+    "b333879f-4dd0-5dab-ad51-b616091be14e": [
+      280,
+      120,
+      -670
+    ],
+    "63dbfeb6-8748-5279-8c44-3634ccdbef4a": [
+      274,
+      120,
+      -668
+    ],
+    "1f82b039-56c2-52f4-9dea-6271adfe2775": [
+      282,
+      120,
+      -668
+    ],
+    "764143a8-4da6-556f-b543-89a6d5c897db": [
+      274,
+      120,
+      -666
+    ],
+    "9028ccfd-62fd-56a4-a561-165c376f50c6": [
+      282,
+      120,
+      -666
+    ],
+    "b4b8b056-c122-59b6-8acc-b9a5f1257b2b": [
+      276,
+      120,
+      -664
+    ],
+    "622b8787-e7fb-5543-90c1-cda2f1ad7316": [
+      280,
+      120,
+      -664
+    ],
+    "0241ca02-0c7d-5bb6-81e4-aa56207ee476": [
+      282,
+      115,
+      -671
+    ],
+    "d89881f7-c875-50ae-946f-36ff675ecd9d": [
+      273,
+      119,
+      -671
+    ],
+    "3b4fafc6-74d4-54f4-a398-7b5911ec5ded": [
+      273,
+      116,
+      -671
+    ],
+    "95bc567f-28c9-58c9-8643-cd41a590a7af": [
+      283,
+      116,
+      -671
+    ],
+    "c2a3170a-c14a-5c1b-a9d1-4c02a7f173cc": [
+      273,
+      116,
+      -663
+    ],
+    "e1cab694-b2f1-5a00-80c0-937249313d79": [
+      274,
+      118,
+      -670
+    ],
+    "ceef77e9-1d4a-5323-bab7-9a6813b649a3": [
+      282,
+      118,
+      -670
+    ],
+    "0627491b-23fe-528c-a450-c8708dbf6905": [
+      274,
+      118,
+      -664
+    ],
+    "2667f485-b68f-5a55-b74d-e5ac4ca56a9b": [
+      282,
+      118,
+      -664
+    ],
+    "da71db83-2da8-56b7-9784-86481ff6fd5a": [
+      274,
+      119,
+      -670
+    ],
+    "22322bb3-2a87-5896-860c-e40cfc44899e": [
+      282,
+      119,
+      -670
+    ],
+    "3a93f288-329e-5056-818e-83e07b2aecc2": [
+      274,
+      119,
+      -664
+    ],
+    "4a80837f-fba0-5760-810b-ed14d181699d": [
+      282,
+      119,
+      -664
+    ],
+    "7f5e89b2-f7ce-5689-b5ee-08686499a05a": [
+      274,
+      121,
+      -670
+    ],
+    "bd611941-e8b8-5e47-9b8a-a14e35a10dcd": [
+      274,
+      122,
+      -670
+    ],
+    "d6473338-0e5f-5967-a039-0dbd588e0ee0": [
+      273,
+      121,
+      -671
+    ],
+    "dfe560bc-ef39-5eb1-93c4-b7ec3ef993b3": [
+      274,
+      120,
+      -670
+    ],
+    "5c7d0043-791f-54d5-9a72-08db934856bd": [
+      283,
+      120,
+      -672
+    ],
+    "72864153-286f-50c6-8b49-272f71e9746d": [
+      282,
+      121,
+      -670
+    ],
+    "7b3245d0-6e46-532f-9ef1-d8660c086724": [
+      282,
+      120,
+      -670
+    ],
+    "ac324ad7-067d-549c-bf99-1af65054ee5b": [
+      283,
+      121,
+      -671
+    ],
+    "f9a8058c-39ab-5a8f-86e4-fd333a9e2788": [
+      282,
+      122,
+      -670
+    ],
+    "21b2173d-f981-524c-9aa6-4f58df88d7dc": [
+      273,
+      121,
+      -663
+    ],
+    "47273fff-88d9-5e66-88fd-c159727c6dd7": [
+      274,
+      121,
+      -664
+    ],
+    "6485e2da-9a96-5077-80fc-1cfdfd68c86c": [
+      274,
+      122,
+      -664
+    ],
+    "88509f9b-2d91-5557-b205-37e1e44e5f16": [
+      274,
+      120,
+      -664
+    ],
+    "169ed9bc-330f-5fe7-98f7-d1f5249f992e": [
+      282,
+      122,
+      -664
+    ],
+    "18411e9d-e6d8-5332-8802-160662f61560": [
+      282,
+      121,
+      -664
+    ],
+    "a2e4bea8-c693-53c6-98dc-7ecab33d458f": [
+      283,
+      121,
+      -663
+    ],
+    "c390ab6e-d630-5af9-9ddd-e32064bc0c1c": [
+      282,
+      120,
+      -664
+    ],
+    "64479aab-6482-5849-aea3-87067cdb1410": [
+      274,
+      123,
+      -670
+    ],
+    "dc86c304-b254-5a4e-949a-6804408ed181": [
+      282,
+      123,
+      -670
+    ],
+    "95128a9c-2ad8-5baf-a9df-6f5cf3c51376": [
+      274,
+      123,
+      -664
+    ],
+    "bbc3b124-fb4a-5741-ae49-304c332bb138": [
+      282,
+      123,
+      -664
+    ],
+    "0a6eb21f-0723-589c-a971-984ac85e8132": [
+      274,
+      124,
+      -670
+    ],
+    "c9a9e2ad-819b-566f-95c3-94b141399985": [
+      282,
+      124,
+      -670
+    ],
+    "cad84689-6b57-5630-93c8-92f9c064cffd": [
+      274,
+      124,
+      -664
+    ]
+  },
+  "affectedChunks": 1,
+  "affectedChunkCoordinates": [
+    [
+      17,
+      -42
+    ]
+  ],
+  "affectedChunkCountsBefore": {
+    "blockEntities": 1922,
+    "blockEntityOwners": 1957
+  },
+  "affectedChunkCountsAfter": {
+    "blockEntities": 1671,
+    "blockEntityOwners": 1691
+  },
+  "affectedLedgerCountsBefore": {
+    "owners": 1227,
+    "cells": 2058,
+    "memberships": 1090
+  },
+  "affectedLedgerCountsAfter": {
+    "owners": 1093,
+    "cells": 1807,
+    "memberships": 1090
+  },
+  "ledgerVerificationCounts": {
+    "changedShardsTypedVerified": 1
+  },
+  "ledgerMetadataPins": {
+    "before": {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\checkpoints\\completed-v4-20261017\\world\\data\\bloodborne_dw_composite_owners.dat",
+      "sha256": "f6273e56bea5ad0a5d3342dfc939b152c3c3d8540773a4b19c341a9f043ff5e2"
+    },
+    "after": {
+      "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city\\world\\data\\bloodborne_dw_composite_owners.dat",
+      "sha256": "f6273e56bea5ad0a5d3342dfc939b152c3c3d8540773a4b19c341a9f043ff5e2"
+    }
+  },
+  "expectedStaticStatesHaveNoBlockEntity": true,
+  "selectedOwnerMembershipAbsent": true,
+  "unselectedStatesTypedBlockEntitiesAndDecodedLedgerExact": true,
+  "ownerDataV1": {
+    "decodedReadOnly": true,
+    "canonicalField": "owners",
+    "rawBaselineAndCandidateUnmodified": true
+  },
+  "scope": {
+    "components": 128,
+    "onlyDirectAnvilSlots": true,
+    "onlyAffectedOwnerShards": true,
+    "wholeWorldScan": false,
+    "wholeWorldRehash": false,
+    "gameplayClaim": false
+  }
+}

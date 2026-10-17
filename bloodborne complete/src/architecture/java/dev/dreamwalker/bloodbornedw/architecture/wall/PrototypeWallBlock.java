@@ -39,7 +39,6 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     public static final EnumProperty<Profile> PROFILE=EnumProperty.of("profile",Profile.class);
     public static final EnumProperty<Connections> CONNECTIONS=EnumProperty.of("connections",Connections.class);
     private static final WallGeometry geometry=new WallGeometry();
-    public static int diagnosticJunctionCacheSize(){return WallStackGeometry.cacheSize();}
     /** Legacy item predicate/authoring helper only: no shared height property exists. */
     public enum Course implements StringIdentifiable { LOW("low"),TALL("tall"); private final String name;Course(String name){this.name=name;}public String asString(){return name;} }
     public enum Profile implements StringIdentifiable { BASE("base"),ALT("alt");private final String name;Profile(String name){this.name=name;}public String asString(){return name;} }
@@ -71,10 +70,6 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     @Override public net.minecraft.block.entity.BlockEntity createBlockEntity(BlockPos pos,BlockState state){return new dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity(pos,state);}
     @Override public void onStateReplaced(BlockState state,World world,BlockPos pos,BlockState next,boolean moved){if(!state.isOf(next.getBlock())&&world instanceof net.minecraft.server.world.ServerWorld server&&!dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.writing())dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.scheduleCleanup(server,pos);super.onStateReplaced(state,world,pos,next,moved);}
     @Override public VoxelShape getCollisionShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context) {
-        World measuredWorld=!dev.dreamwalker.bloodbornedw.composite.CompositeShapeSnapshots.worker(world)&&world instanceof World value?value:null;long started=measuredWorld==null?0:dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.begin(measuredWorld,true);
-        try{return collisionInternal(state,world,pos,context);}finally{if(started!=0)dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.finish(measuredWorld,state,dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.rootId(pos),pos,"architecture.native_wall_collision",started);}
-    }
-    private VoxelShape collisionInternal(BlockState state,BlockView world,BlockPos pos,ShapeContext context){
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,true,state);
         VoxelShape raw=rawCollision(state);if(world==null||pos==null)return raw;
         // Lighting has no safe neighbor FULL future. The native raw guard is
@@ -102,8 +97,6 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     }
     @Override public VoxelShape getOutlineShape(BlockState state,BlockView world,BlockPos pos,ShapeContext context) {
         if(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.shifted(world,pos))return dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.baseShape()?VoxelShapes.empty():dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.cellShape(world,pos,false,state,context);
-        state=canonicalForm(state);
-        if(context instanceof net.minecraft.block.EntityShapeContext actor&&actor.getEntity() instanceof net.minecraft.entity.player.PlayerEntity player&&dev.dreamwalker.bloodbornedw.architecture.BuildingTool.isHeld(player))return geometry.outline(sideCode(state),state.get(POST),state.get(ROTATION));
         return getCollisionShape(state,world,pos,context);
     }
     @Override public VoxelShape getCullingShape(BlockState state,BlockView world,BlockPos pos) { return VoxelShapes.empty(); }
@@ -127,10 +120,6 @@ public class PrototypeWallBlock extends WallBlock implements net.minecraft.block
     }
     @Override public BlockState getStateForNeighborUpdate(BlockState state,Direction direction,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos) {
         if(world instanceof net.minecraft.server.world.ServerWorld server&&!dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.writing()&&dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.loadedEntity(world,pos) instanceof dev.dreamwalker.bloodbornedw.composite.CompositeBlockEntity own&&!own.contributions().isEmpty())dev.dreamwalker.bloodbornedw.composite.CompositeRuntime.refreshNative(server,pos);
-        World measuredWorld=world instanceof World value?value:null;long started=measuredWorld==null?0:dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.begin(measuredWorld,true);
-        try{return neighborInternal(state,direction,neighbor,world,pos,neighborPos);}finally{if(started!=0)dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.finish(measuredWorld,state,dev.dreamwalker.bloodbornedw.diagnostics.ArchitectureDiagnostics.rootId(pos),pos,"architecture.native_wall_neighbor_update",started);}
-    }
-    private BlockState neighborInternal(BlockState state,Direction direction,BlockState neighbor,WorldAccess world,BlockPos pos,BlockPos neighborPos){
         // Native AUTO updates already schedule water ticks. MANUAL still needs it.
         if(state.get(CONNECTIONS)==Connections.MANUAL&&state.get(WATERLOGGED))world.scheduleFluidTick(pos,Fluids.WATER,Fluids.WATER.getTickRate(world));
         if(direction==Direction.DOWN&&(!(world instanceof World loaded)||loaded.isChunkLoaded(pos.down()))&&!canPlaceAt(state,world,pos))

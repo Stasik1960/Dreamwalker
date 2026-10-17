@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_acacia_wood",
+  "displayName": "Ажурное навершие",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/acacia_wood",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                6.5
+              ],
+              "to": [
+                32.0,
+                48.0,
+                9.5
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                9.0
+              ]
+            },
+            {
+              "from": [
+                4.5,
+                33.0,
+                6.5
+              ],
+              "to": [
+                11.5,
+                48.0,
+                9.5
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  6.5
+                ],
+                "to": [
+                  32.0,
+                  48.0,
+                  9.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.5,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  9.5,
+                  48.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  6.5
+                ],
+                "to": [
+                  32.0,
+                  48.0,
+                  9.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  6.5,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  9.5,
+                  48.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  48.0,
+                  25.67766953
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          6.5
+        ],
+        "to": [
+          32.0,
+          48.0,
+          9.5
+        ]
+      },
+      "sourceVariant": "Ажурное завершение ограды",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/acacia_wood"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:acacia_wood[variant:axis=x]",
+        "minecraft:acacia_wood[variant:axis=y]",
+        "minecraft:acacia_wood[variant:axis=z]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

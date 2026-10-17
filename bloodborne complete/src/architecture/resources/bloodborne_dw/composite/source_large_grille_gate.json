@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_large_grille_gate",
+  "displayName": "Высокая железная ограда",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_bottom",
+              "offset": [
+                0,
+                13.0,
+                0
+              ]
+            },
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_top",
+              "offset": [
+                0,
+                61.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                93.0,
+                9.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                93.0,
+                9.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  7.0
+                ],
+                "to": [
+                  32.0,
+                  93.0,
+                  9.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  93.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  7.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  9.0,
+                  93.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  93.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  7.0
+                ],
+                "to": [
+                  32.0,
+                  93.0,
+                  9.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  93.0,
+                  25.67766953
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  7.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  9.0,
+                  93.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.67766953,
+                  0.0,
+                  -9.67766953
+                ],
+                "to": [
+                  25.67766953,
+                  93.0,
+                  25.67766953
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          7.0
+        ],
+        "to": [
+          32.0,
+          93.0,
+          9.0
+        ]
+      },
+      "sourceVariant": "Большие решётчатые ворота",
+      "sourcePlacementOffset": [
+        0,
+        13.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        13.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/gate_bottom"
+        },
+        {
+          "model": "minecraft:block/addon/gate_top",
+          "offset": [
+            0,
+            48,
+            0
+          ]
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": []
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_top",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                9.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_top",
+              "offset": [
+                0.0,
+                16.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                48.0,
+                9.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          7.0
+        ],
+        "to": [
+          32.0,
+          48.0,
+          9.0
+        ]
+      },
+      "sourcePlacementOffset": [
+        0.0,
+        16.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/gate_top"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "v127SourceOnlyCompatibilityPart": true,
+      "sourceVariant": "Сохранённая неполная исходная часть"
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_bottom",
+              "offset": [
+                0.0,
+                13.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                45.0,
+                9.0
+              ]
+            }
+          ]
+        },
+        "open": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/gate_bottom",
+              "offset": [
+                0.0,
+                13.0,
+                0.0
+              ],
+              "yaw": 0,
+              "pitch": 0
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                7.0
+              ],
+              "to": [
+                32.0,
+                45.0,
+                9.0
+              ]
+            }
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          7.0
+        ],
+        "to": [
+          32.0,
+          45.0,
+          9.0
+        ]
+      },
+      "sourcePlacementOffset": [
+        0.0,
+        13.0,
+        0.0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/gate_bottom"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "v127SourceOnlyCompatibilityPart": true,
+      "sourceVariant": "Сохранённая неполная исходная часть"
+    }
+  ],
+  "source": {
+    "kind": "SOURCE_MAP_MATCHED_GATE_PAIR",
+    "matches": [
+      {
+        "lowerState": "minecraft:stripped_jungle_log[axis=x]",
+        "upperState": "minecraft:stripped_acacia_log[axis=x]",
+        "offset": [
+          0,
+          48,
+          0
+        ],
+        "occurrences": 9,
+        "example": {
+          "dimension": "minecraft:overworld",
+          "lower": [
+            -8,
+            82,
+            -172
+          ],
+          "upper": [
+            -8,
+            85,
+            -172
+          ]
+        }
+      }
+    ]
+  },
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

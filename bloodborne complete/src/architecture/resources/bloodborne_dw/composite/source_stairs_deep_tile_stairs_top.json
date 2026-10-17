@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_deep_tile_stairs_top",
+  "displayName": "Узкое прямоугольное окно",
+  "openable": false,
+  "layer": "translucent",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/deep_tile_stairs_top",
+              "offset": [
+                0,
+                16.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -4.5,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                20.5,
+                48.0,
+                0.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -4.5,
+                0.0,
+                -2.0
+              ],
+              "to": [
+                20.5,
+                48.0,
+                0.0
+              ]
+            },
+            {
+              "from": [
+                -3.0,
+                0.0,
+                -0.8125
+              ],
+              "to": [
+                19.0,
+                32.0,
+                -0.6875
+              ]
+            },
+            {
+              "from": [
+                -2.0,
+                32.0,
+                -0.8125
+              ],
+              "to": [
+                18.0,
+                45.0,
+                -0.6875
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -4.5,
+                  0.0,
+                  -2.0
+                ],
+                "to": [
+                  20.5,
+                  48.0,
+                  0.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.81801948,
+                  0.0,
+                  -7.90990258
+                ],
+                "to": [
+                  23.90990258,
+                  48.0,
+                  11.18198052
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  16.0,
+                  0.0,
+                  -4.5
+                ],
+                "to": [
+                  18.0,
+                  48.0,
+                  20.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.81801948,
+                  0.0,
+                  4.81801948
+                ],
+                "to": [
+                  23.90990258,
+                  48.0,
+                  23.90990258
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -4.5,
+                  0.0,
+                  16.0
+                ],
+                "to": [
+                  20.5,
+                  48.0,
+                  18.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.90990258,
+                  0.0,
+                  4.81801948
+                ],
+                "to": [
+                  11.18198052,
+                  48.0,
+                  23.90990258
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -2.0,
+                  0.0,
+                  -4.5
+                ],
+                "to": [
+                  0.0,
+                  48.0,
+                  20.5
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -7.90990258,
+                  0.0,
+                  -7.90990258
+                ],
+                "to": [
+                  11.18198052,
+                  48.0,
+                  11.18198052
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -4.5,
+          0.0,
+          -2.0
+        ],
+        "to": [
+          20.5,
+          48.0,
+          0.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · верхняя",
+      "sourcePlacementOffset": [
+        0,
+        16.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        16.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/deep_tile_stairs_top"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:deepslate_tile_stairs[variant:facing=east,half=top,shape=straight]",
+        "minecraft:deepslate_tile_stairs[variant:facing=north,half=top,shape=straight]",
+        "minecraft:deepslate_tile_stairs[variant:facing=south,half=top,shape=straight]",
+        "minecraft:deepslate_tile_stairs[variant:facing=west,half=top,shape=straight]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

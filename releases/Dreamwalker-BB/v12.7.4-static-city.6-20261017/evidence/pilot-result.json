@@ -1,0 +1,418 @@
+{
+  "status": "PASS_BOUNDED_EXPERIMENTAL_STATIC_PILOT_GAMEPLAY_UNVERIFIED",
+  "mode": "pilot",
+  "command": [
+    "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\.build-tools\\bloodborne-jdk17\\jdk-17.0.20.1+1\\bin\\java.exe",
+    "-Xmx10240M",
+    "-XX:+ExitOnOutOfMemoryError",
+    "-Ddw.conversion.productionJar=C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\source\\build\\libs\\dreamwalker-bb-fabric-1.20.1-0.1.0-v12.7.4-owner32-static-city.6.jar",
+    "-Ddw.conversion.boundedChunks=true",
+    "-Ddw.conversion.maxTicks=12000",
+    "-Ddw.conversion.pauseBeforeRows=false",
+    "-Ddw.conversion.checkpointRows=32",
+    "-Ddw.conversion.maxWorkingChunks=16",
+    "-Ddw.conversion.maxLoadedChunks=768",
+    "-Ddw.conversion.maxHolders=1024",
+    "-Ddw.conversion.maxDrainTicks=2400",
+    "-Ddw.conversion.measurementHoldTicks=0",
+    "-Ddw.conversion.staticGrassMasonry=false",
+    "-Ddw.conversion.staticArchitecture=true",
+    "-Ddw.conversion.maxRows=128",
+    "-jar",
+    "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city\\world\\.dw-static-runtime\\fabric-server-launch.jar",
+    "nogui",
+    "--universe",
+    "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city",
+    "--world",
+    "world"
+  ],
+  "operationId": "d4081aa1-8073-467c-ab18-3e02f4a32acf",
+  "boundedProperties": {
+    "boundedChunks": "true",
+    "maxTicks": "12000",
+    "pauseBeforeRows": "false",
+    "checkpointRows": "32",
+    "maxWorkingChunks": "16",
+    "maxLoadedChunks": "768",
+    "maxHolders": "1024",
+    "maxDrainTicks": "2400",
+    "measurementHoldTicks": "0",
+    "staticGrassMasonry": "false",
+    "staticArchitecture": "true",
+    "maxRows": "128"
+  },
+  "heapMaxMiB": 10240,
+  "timeoutSeconds": 1800,
+  "forcedGc": false,
+  "memorySampler": false,
+  "gameplayVerified": false,
+  "knownUnresolvedEdgeCaveat": "Историческое отличие краевой геометрии между BER и статическим мешем не локализовано. Новая клиентская отрисовка, обычное повторное открытие и маршрут по всем районам при 10 ГБ и 12/12 пока не проверены. Этот этап создаёт экспериментальные статические данные, а не подтверждение играбельности.",
+  "pid": 24892,
+  "checkpoint": {
+    "schemaVersion": 1,
+    "status": "PAUSED_OPERATIONAL_LIMIT",
+    "operationId": "d4081aa1-8073-467c-ab18-3e02f4a32acf",
+    "productionJarSha256": "0bbb429ec6f970ed8c3b4d295852cae1ee92e0030eaa98325bac89c4da1c8e8b",
+    "runtimeManifestSha256": "973627cd58931e1daa769560dcc09475adb42d1f4c39ac9e8684a54c10e2b7a2",
+    "phase": 3,
+    "line": 128,
+    "committed": 120,
+    "alreadyPresent": 0,
+    "targetWorldPath": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city\\world",
+    "originalArchivesWritten": false,
+    "galleryCreated": false,
+    "initialOverlapPrivilegeSerialized": false,
+    "elapsedSeconds": 21.2498906,
+    "heapUsedBytesObserved": 6411151944,
+    "heapMaxBytes": 10737418240,
+    "processedThisRun": 128,
+    "boundedChunkLoading": true,
+    "staticGrassMasonry": false,
+    "staticArchitecture": true,
+    "architectureOwners": 134,
+    "architectureCells": 251,
+    "cityStaticArchitecture": true,
+    "architectureSkipped": 8,
+    "architectureSkippedOwners": 12,
+    "architectureSkippedCells": 32,
+    "architectureSkipReasons": {
+      "UNSUPPORTED_NATIVE_FOREIGN_CELL": 8
+    },
+    "existingSourceProtoAdmissions": 0,
+    "sourceProtoMinimumStatus": "minecraft:features",
+    "phaseCount": 4,
+    "chunkLifecycle": {
+      "dimensions": {
+        "minecraft:overworld": {
+          "loadedWorldChunks": 0,
+          "holders": 0,
+          "readableHolders": 0,
+          "pendingHolders": 0,
+          "chunksToUnload": 0,
+          "unloadQueue": 0
+        },
+        "minecraft:the_end": {
+          "loadedWorldChunks": 0,
+          "holders": 0,
+          "readableHolders": 0,
+          "pendingHolders": 0,
+          "chunksToUnload": 0,
+          "unloadQueue": 0
+        },
+        "minecraft:the_nether": {
+          "loadedWorldChunks": 0,
+          "holders": 0,
+          "readableHolders": 0,
+          "pendingHolders": 0,
+          "chunksToUnload": 0,
+          "unloadQueue": 0
+        }
+      },
+      "totals": {
+        "loadedWorldChunks": 0,
+        "holders": 0,
+        "readableHolders": 0,
+        "pendingHolders": 0,
+        "chunksToUnload": 0,
+        "unloadQueue": 0
+      },
+      "heldDirectTicketChunks": 0,
+      "draining": true,
+      "loadInFlight": false,
+      "tick": 427
+    },
+    "boundedChunkLimits": {
+      "bounded": true,
+      "pauseBeforeRows": false,
+      "maxRows": 128,
+      "maxTicks": 12000,
+      "checkpointRows": 32,
+      "maxWorkingChunks": 16,
+      "maxLoadedChunks": 768,
+      "maxHolders": 1024,
+      "maxDrainTicks": 2400,
+      "measurementHoldTicks": 0,
+      "measurementActiveRows": 64
+    },
+    "observedNativeChunkHighWater": {
+      "loadedWorldChunks": 529,
+      "holders": 700,
+      "readableHolders": 700,
+      "pendingHolders": 529,
+      "chunksToUnload": 650,
+      "unloadQueue": 650
+    },
+    "nativeChunkHighWaterDefinition": "Per-job maxima of the six real native totals, sampled at existing diagnostics/budget checks and once per bounded server tick; intervals between observations may be missed. Six primitive counters only; no chunk, holder or future references retained.",
+    "ownerStorage": {
+      "minecraft:overworld": {
+        "uniqueSharedShapes": 0,
+        "savedMembershipCellReferences": 0,
+        "cachedOwnerShards": 0,
+        "knownOwnerShards": 25020,
+        "uniqueSharedRootData": 0,
+        "maxCachedOwnerShards": -1,
+        "cachedOwnerCells": 0,
+        "ownerShardWrites": 4,
+        "byteMetricScope": "Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately",
+        "typedPayloadBytesWithoutSharing": 0,
+        "shardedOwnerMode": true,
+        "contributionReferences": 0,
+        "uniqueSharedOwners": 0,
+        "cachePolicy": "Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release",
+        "ownerShardReads": 28,
+        "typedPayloadBytesWithSharing": 0
+      },
+      "minecraft:the_end": {
+        "uniqueSharedShapes": 0,
+        "savedMembershipCellReferences": 0,
+        "cachedOwnerShards": 0,
+        "knownOwnerShards": 0,
+        "uniqueSharedRootData": 0,
+        "maxCachedOwnerShards": -1,
+        "cachedOwnerCells": 0,
+        "ownerShardWrites": 0,
+        "byteMetricScope": "Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately",
+        "typedPayloadBytesWithoutSharing": 0,
+        "shardedOwnerMode": true,
+        "contributionReferences": 0,
+        "uniqueSharedOwners": 0,
+        "cachePolicy": "Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release",
+        "ownerShardReads": 0,
+        "typedPayloadBytesWithSharing": 0
+      },
+      "minecraft:the_nether": {
+        "uniqueSharedShapes": 0,
+        "savedMembershipCellReferences": 0,
+        "cachedOwnerShards": 0,
+        "knownOwnerShards": 0,
+        "uniqueSharedRootData": 0,
+        "maxCachedOwnerShards": -1,
+        "cachedOwnerCells": 0,
+        "ownerShardWrites": 0,
+        "byteMetricScope": "Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately",
+        "typedPayloadBytesWithoutSharing": 0,
+        "shardedOwnerMode": true,
+        "contributionReferences": 0,
+        "uniqueSharedOwners": 0,
+        "cachePolicy": "Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release",
+        "ownerShardReads": 0,
+        "typedPayloadBytesWithSharing": 0
+      }
+    },
+    "originalRules": {
+      "minecraft:overworld": {
+        "daylight": false,
+        "spawning": false,
+        "fire": true,
+        "weather": false,
+        "randomTicks": 0
+      },
+      "minecraft:the_end": {
+        "daylight": false,
+        "spawning": false,
+        "fire": true,
+        "weather": false,
+        "randomTicks": 0
+      },
+      "minecraft:the_nether": {
+        "daylight": false,
+        "spawning": false,
+        "fire": true,
+        "weather": false,
+        "randomTicks": 0
+      }
+    }
+  },
+  "nativeResult": {
+    "schemaVersion": 1,
+    "status": "PAUSED_OPERATIONAL_LIMIT",
+    "operationId": "d4081aa1-8073-467c-ab18-3e02f4a32acf",
+    "productionJarSha256": "0bbb429ec6f970ed8c3b4d295852cae1ee92e0030eaa98325bac89c4da1c8e8b",
+    "runtimeManifestSha256": "973627cd58931e1daa769560dcc09475adb42d1f4c39ac9e8684a54c10e2b7a2",
+    "phase": 3,
+    "line": 128,
+    "committed": 120,
+    "alreadyPresent": 0,
+    "targetWorldPath": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city\\world",
+    "originalArchivesWritten": false,
+    "galleryCreated": false,
+    "initialOverlapPrivilegeSerialized": false,
+    "elapsedSeconds": 21.2520155,
+    "heapUsedBytesObserved": 6411151944,
+    "heapMaxBytes": 10737418240,
+    "processedThisRun": 128,
+    "boundedChunkLoading": true,
+    "staticGrassMasonry": false,
+    "staticArchitecture": true,
+    "architectureOwners": 134,
+    "architectureCells": 251,
+    "cityStaticArchitecture": true,
+    "architectureSkipped": 8,
+    "architectureSkippedOwners": 12,
+    "architectureSkippedCells": 32,
+    "architectureSkipReasons": {
+      "UNSUPPORTED_NATIVE_FOREIGN_CELL": 8
+    },
+    "existingSourceProtoAdmissions": 0,
+    "sourceProtoMinimumStatus": "minecraft:features",
+    "phaseCount": 4,
+    "chunkLifecycle": {
+      "dimensions": {
+        "minecraft:overworld": {
+          "loadedWorldChunks": 0,
+          "holders": 0,
+          "readableHolders": 0,
+          "pendingHolders": 0,
+          "chunksToUnload": 0,
+          "unloadQueue": 0
+        },
+        "minecraft:the_end": {
+          "loadedWorldChunks": 0,
+          "holders": 0,
+          "readableHolders": 0,
+          "pendingHolders": 0,
+          "chunksToUnload": 0,
+          "unloadQueue": 0
+        },
+        "minecraft:the_nether": {
+          "loadedWorldChunks": 0,
+          "holders": 0,
+          "readableHolders": 0,
+          "pendingHolders": 0,
+          "chunksToUnload": 0,
+          "unloadQueue": 0
+        }
+      },
+      "totals": {
+        "loadedWorldChunks": 0,
+        "holders": 0,
+        "readableHolders": 0,
+        "pendingHolders": 0,
+        "chunksToUnload": 0,
+        "unloadQueue": 0
+      },
+      "heldDirectTicketChunks": 0,
+      "draining": true,
+      "loadInFlight": false,
+      "tick": 427
+    },
+    "boundedChunkLimits": {
+      "bounded": true,
+      "pauseBeforeRows": false,
+      "maxRows": 128,
+      "maxTicks": 12000,
+      "checkpointRows": 32,
+      "maxWorkingChunks": 16,
+      "maxLoadedChunks": 768,
+      "maxHolders": 1024,
+      "maxDrainTicks": 2400,
+      "measurementHoldTicks": 0,
+      "measurementActiveRows": 64
+    },
+    "observedNativeChunkHighWater": {
+      "loadedWorldChunks": 529,
+      "holders": 700,
+      "readableHolders": 700,
+      "pendingHolders": 529,
+      "chunksToUnload": 650,
+      "unloadQueue": 650
+    },
+    "nativeChunkHighWaterDefinition": "Per-job maxima of the six real native totals, sampled at existing diagnostics/budget checks and once per bounded server tick; intervals between observations may be missed. Six primitive counters only; no chunk, holder or future references retained.",
+    "ownerStorage": {
+      "minecraft:overworld": {
+        "uniqueSharedShapes": 0,
+        "savedMembershipCellReferences": 0,
+        "cachedOwnerShards": 0,
+        "knownOwnerShards": 25020,
+        "uniqueSharedRootData": 0,
+        "maxCachedOwnerShards": -1,
+        "cachedOwnerCells": 0,
+        "ownerShardWrites": 4,
+        "byteMetricScope": "Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately",
+        "typedPayloadBytesWithoutSharing": 0,
+        "shardedOwnerMode": true,
+        "contributionReferences": 0,
+        "uniqueSharedOwners": 0,
+        "cachePolicy": "Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release",
+        "ownerShardReads": 28,
+        "typedPayloadBytesWithSharing": 0
+      },
+      "minecraft:the_end": {
+        "uniqueSharedShapes": 0,
+        "savedMembershipCellReferences": 0,
+        "cachedOwnerShards": 0,
+        "knownOwnerShards": 0,
+        "uniqueSharedRootData": 0,
+        "maxCachedOwnerShards": -1,
+        "cachedOwnerCells": 0,
+        "ownerShardWrites": 0,
+        "byteMetricScope": "Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately",
+        "typedPayloadBytesWithoutSharing": 0,
+        "shardedOwnerMode": true,
+        "contributionReferences": 0,
+        "uniqueSharedOwners": 0,
+        "cachePolicy": "Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release",
+        "ownerShardReads": 0,
+        "typedPayloadBytesWithSharing": 0
+      },
+      "minecraft:the_nether": {
+        "uniqueSharedShapes": 0,
+        "savedMembershipCellReferences": 0,
+        "cachedOwnerShards": 0,
+        "knownOwnerShards": 0,
+        "uniqueSharedRootData": 0,
+        "maxCachedOwnerShards": -1,
+        "cachedOwnerCells": 0,
+        "ownerShardWrites": 0,
+        "byteMetricScope": "Exact typed payload array bytes, not a claim about total JVM heap; owner/shape/rootData sharing verified separately",
+        "typedPayloadBytesWithoutSharing": 0,
+        "shardedOwnerMode": true,
+        "contributionReferences": 0,
+        "uniqueSharedOwners": 0,
+        "cachePolicy": "Loaded indexed owner chunks only; unloaded inspections are transient and unload flushes dirty state before release",
+        "ownerShardReads": 0,
+        "typedPayloadBytesWithSharing": 0
+      }
+    },
+    "originalRules": {
+      "minecraft:overworld": {
+        "daylight": false,
+        "spawning": false,
+        "fire": true,
+        "weather": false,
+        "randomTicks": 0
+      },
+      "minecraft:the_end": {
+        "daylight": false,
+        "spawning": false,
+        "fire": true,
+        "weather": false,
+        "randomTicks": 0
+      },
+      "minecraft:the_nether": {
+        "daylight": false,
+        "spawning": false,
+        "fire": true,
+        "weather": false,
+        "randomTicks": 0
+      }
+    }
+  },
+  "processedComponentDelta": 128,
+  "counterDeltas": {
+    "committed": 120,
+    "alreadyPresent": 0,
+    "architectureSkipped": 8,
+    "architectureOwners": 134,
+    "architectureCells": 251
+  },
+  "pilotCheckpointSha256": "2675ce10d9829b2277dd24af1edd64eef468240b0276636cb9c3a2e166d61e23",
+  "console": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\New project\\Dreamwalker-Handoff-20261017-r1\\.handoff-local\\work\\static-city\\pilot-evidence\\console.log",
+    "bytes": 24889,
+    "sha256": "f340d88de5bb40ad5d6ae2e5b05c9ad3655faa99c1b099802677aafb4c1a0c11"
+  },
+  "ordinaryGameReopenRequired": true,
+  "exitCode": 0,
+  "seconds": 178.70299999999997
+}

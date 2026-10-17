@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "revision": "V12.2",
+  "numberPolicy": "Numbers remain reserved forever; do not reuse or restore on source reimport.",
+  "objects": [
+    {
+      "path": "source_jungle_trapdoor_bottom",
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_bottom",
+      "reservedNumber": "93148",
+      "variants": [
+        0
+      ],
+      "reason": "USER_REQUEST_REMOVE_ALL_PREVIOUS_RED_DAMAGED_OBJECTS",
+      "sourceIssues": [
+        {
+          "model": "minecraft:block/jungle_trapdoor_bottom",
+          "texture": "block/texture",
+          "type": "MISSING_TEXTURE"
+        }
+      ],
+      "offered": false
+    },
+    {
+      "path": "source_jungle_trapdoor_open",
+      "registryId": "bloodborne_dw:source_jungle_trapdoor_open",
+      "reservedNumber": "93149",
+      "variants": [
+        0,
+        1
+      ],
+      "reason": "USER_REQUEST_REMOVE_ALL_PREVIOUS_RED_DAMAGED_OBJECTS",
+      "sourceIssues": [
+        {
+          "model": "minecraft:block/jungle_trapdoor_open",
+          "texture": "block/texture",
+          "type": "MISSING_TEXTURE"
+        }
+      ],
+      "offered": false
+    }
+  ],
+  "diagnosticOnlyPathsNeverRegistered": 57
+}

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_addon_button_12",
+  "displayName": "Напольная декоративная пластина · вариант 13",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/addon/button_12",
+              "offset": [
+                0,
+                -0.75,
+                0
+              ]
+            }
+          ],
+          "collision": [],
+          "selection": [
+            {
+              "from": [
+                -8.5,
+                -0.0625,
+                -4.0
+              ],
+              "to": [
+                24.5,
+                0.0625,
+                20.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -8.5,
+          -0.0625,
+          -4.0
+        ],
+        "to": [
+          24.5,
+          0.0625,
+          20.0
+        ]
+      },
+      "sourceVariant": "Напольная декоративная пластина · вариант 13",
+      "sourcePlacementOffset": [
+        0,
+        -0.75,
+        0
+      ],
+      "localOrigin": [
+        0,
+        -0.75,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/addon/button_12"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:spruce_button[variant:face=floor,facing=east,powered=false]",
+        "minecraft:spruce_button[variant:face=floor,facing=west,powered=false]",
+        "minecraft:spruce_button[variant:face=floor,facing=north,powered=false]",
+        "minecraft:spruce_button[variant:face=floor,facing=south,powered=false]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

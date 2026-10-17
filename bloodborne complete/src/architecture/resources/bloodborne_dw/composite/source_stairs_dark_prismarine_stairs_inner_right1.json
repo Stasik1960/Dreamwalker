@@ -1,0 +1,601 @@
+{
+  "schemaVersion": 1,
+  "units": 16,
+  "id": "bloodborne_dw:source_stairs_dark_prismarine_stairs_inner_right1",
+  "displayName": "Серый каменный бортик",
+  "openable": false,
+  "layer": "cutout",
+  "support": {
+    "required": false
+  },
+  "essentialMask": [
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "variants": [
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_inner_right1",
+              "offset": [
+                0,
+                2.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                29.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                10.0
+              ],
+              "to": [
+                32.0,
+                9.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                17.9375,
+                -12.0
+              ],
+              "to": [
+                32.0,
+                18.0625,
+                6.0
+              ]
+            },
+            {
+              "from": [
+                -12.25,
+                7.0,
+                4.0
+              ],
+              "to": [
+                -7.0,
+                18.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -12.0,
+                0.0,
+                7.05
+              ],
+              "to": [
+                -11.3,
+                9.0,
+                12.75
+              ]
+            },
+            {
+              "from": [
+                -11.0,
+                6.0,
+                6.0
+              ],
+              "to": [
+                -1.0,
+                20.0,
+                29.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                6.5,
+                6.0
+              ],
+              "to": [
+                7.0,
+                18.5,
+                26.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                7.0,
+                6.0
+              ],
+              "to": [
+                17.0,
+                18.0,
+                24.0
+              ]
+            },
+            {
+              "from": [
+                17.0,
+                6.0,
+                6.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                28.0
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  4.0
+                ],
+                "to": [
+                  32.0,
+                  20.0,
+                  29.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -20.28427125,
+                  0.0,
+                  -9.14733944
+                ],
+                "to": [
+                  26.38477631,
+                  20.0,
+                  39.11269837
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  12.0,
+                  20.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -23.11269837,
+                  0.0,
+                  -20.28427125
+                ],
+                "to": [
+                  25.14733944,
+                  20.0,
+                  26.38477631
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -13.0
+                ],
+                "to": [
+                  32.0,
+                  20.0,
+                  12.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -10.38477631,
+                  0.0,
+                  -23.11269837
+                ],
+                "to": [
+                  36.28427125,
+                  20.0,
+                  25.14733944
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  29.0,
+                  20.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.14733944,
+                  0.0,
+                  -10.38477631
+                ],
+                "to": [
+                  39.11269837,
+                  20.0,
+                  36.28427125
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          -12.0
+        ],
+        "to": [
+          32.0,
+          20.0,
+          29.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внутренний угол, правая",
+      "sourcePlacementOffset": [
+        0,
+        2.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        2.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/dark_prismarine_stairs_inner_right1"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dark_prismarine_stairs[variant:facing=north,half=top,shape=inner_right]",
+        "minecraft:dark_prismarine_stairs[variant:facing=east,half=top,shape=inner_right]"
+      ]
+    },
+    {
+      "poses": {
+        "closed": {
+          "parts": [
+            {
+              "model": "bloodborne_dw:remaining/source/minecraft/block/stairs/dark_prismarine_stairs_outer_right",
+              "offset": [
+                0,
+                2.0,
+                0
+              ]
+            }
+          ],
+          "collision": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                4.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                29.0
+              ]
+            }
+          ],
+          "selection": [
+            {
+              "from": [
+                -16.0,
+                0.0,
+                10.0
+              ],
+              "to": [
+                32.0,
+                9.0,
+                18.0
+              ]
+            },
+            {
+              "from": [
+                -16.0,
+                17.9375,
+                -12.0
+              ],
+              "to": [
+                32.0,
+                18.0625,
+                6.0
+              ]
+            },
+            {
+              "from": [
+                -12.25,
+                7.0,
+                4.0
+              ],
+              "to": [
+                -7.0,
+                18.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                -12.0,
+                0.0,
+                7.05
+              ],
+              "to": [
+                -11.3,
+                9.0,
+                12.75
+              ]
+            },
+            {
+              "from": [
+                -11.0,
+                6.0,
+                6.0
+              ],
+              "to": [
+                -1.0,
+                20.0,
+                29.0
+              ]
+            },
+            {
+              "from": [
+                -1.0,
+                6.5,
+                6.0
+              ],
+              "to": [
+                7.0,
+                18.5,
+                26.0
+              ]
+            },
+            {
+              "from": [
+                7.0,
+                7.0,
+                6.0
+              ],
+              "to": [
+                17.0,
+                18.0,
+                24.0
+              ]
+            },
+            {
+              "from": [
+                17.0,
+                6.0,
+                6.0
+              ],
+              "to": [
+                32.0,
+                20.0,
+                29.0
+              ]
+            },
+            {
+              "from": [
+                27.0,
+                7.0,
+                4.0
+              ],
+              "to": [
+                28.25,
+                18.0,
+                17.0
+              ]
+            },
+            {
+              "from": [
+                27.3,
+                0.0,
+                7.05
+              ],
+              "to": [
+                28.0,
+                9.0,
+                12.75
+              ]
+            }
+          ],
+          "simpleCollisionByRotation": [
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  4.0
+                ],
+                "to": [
+                  32.0,
+                  20.0,
+                  29.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -20.28427125,
+                  0.0,
+                  -9.14733944
+                ],
+                "to": [
+                  26.38477631,
+                  20.0,
+                  39.81980515
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -13.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  12.0,
+                  20.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -23.81980515,
+                  0.0,
+                  -20.28427125
+                ],
+                "to": [
+                  25.14733944,
+                  20.0,
+                  26.38477631
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -16.0,
+                  0.0,
+                  -13.0
+                ],
+                "to": [
+                  32.0,
+                  20.0,
+                  12.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -10.38477631,
+                  0.0,
+                  -23.81980515
+                ],
+                "to": [
+                  36.28427125,
+                  20.0,
+                  25.14733944
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  4.0,
+                  0.0,
+                  -16.0
+                ],
+                "to": [
+                  29.0,
+                  20.0,
+                  32.0
+                ]
+              }
+            ],
+            [
+              {
+                "from": [
+                  -9.14733944,
+                  0.0,
+                  -10.38477631
+                ],
+                "to": [
+                  39.81980515,
+                  20.0,
+                  36.28427125
+                ]
+              }
+            ]
+          ]
+        }
+      },
+      "visibleBounds": {
+        "from": [
+          -16.0,
+          0.0,
+          -12.0
+        ],
+        "to": [
+          32.0,
+          20.0,
+          29.0
+        ]
+      },
+      "sourceVariant": "Ступенчатый модуль · внешний угол, правая",
+      "sourcePlacementOffset": [
+        0,
+        2.0,
+        0
+      ],
+      "localOrigin": [
+        0,
+        2.0,
+        0
+      ],
+      "sourceClosedApplications": [
+        {
+          "model": "minecraft:block/stairs/dark_prismarine_stairs_outer_right"
+        }
+      ],
+      "sourceOpenApplications": [],
+      "sourceStateRefs": [
+        "minecraft:dark_prismarine_stairs[variant:facing=south,half=top,shape=outer_right]",
+        "minecraft:dark_prismarine_stairs[variant:facing=west,half=top,shape=outer_right]",
+        "minecraft:dark_prismarine_stairs[variant:facing=north,half=top,shape=outer_right]",
+        "minecraft:dark_prismarine_stairs[variant:facing=east,half=top,shape=outer_right]"
+      ]
+    }
+  ],
+  "source": {},
+  "anchorPolicy": "floor",
+  "collisionPolicy": "simple-imported-physical-v1: one ordinary bounded cuboid by default; reviewed doorway/arch, stair/landing and ladder exceptions use at most three useful boxes; passable source planes stay passable. Eight orientations use a few ordinary AABBs bounded by the actual transformed visual vertices, never strips or a second expanded rotated AABB. Six root-cell-face overflows strictly smaller than 0.5 blocks are cropped independently after instance yaw, vertical mount and SourceShift; long extents are retained. Selection and visuals unchanged. Not authored Collision Studio data.",
+  "geometryPolicy": "Source element coordinates, face UV, rotations, display, textures and parent inheritance unchanged; only dependency namespace remapped.",
+  "simplePhysicalCollision": true
+}

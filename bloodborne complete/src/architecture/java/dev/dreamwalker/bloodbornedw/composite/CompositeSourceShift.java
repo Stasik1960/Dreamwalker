@@ -25,15 +25,22 @@ public final class CompositeSourceShift {
     }
     public static Shift world(BlockState state,NbtCompound payload){return local(payload).rotate(state.get(CompositeRootBlock.ROTATION));}
     public static Map<Cell,Footprint> footprint(CompositeSpec spec,BlockState state,NbtCompound payload){
+        return ImportedWholeSourceOpticsV127.footprint(spec,state,payload,physicalFootprint(spec,state,payload));
+    }
+    private static Map<Cell,Footprint> physicalFootprint(CompositeSpec spec,BlockState state,NbtCompound payload){
+        if(ImportedFullMapCollisionV127.supports(spec,state)){Shift shift=world(state,payload);double offset=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedFullMapCollisionV127.footprint(spec,state,offset,shift.x,shift.y,shift.z);}
+        if(ImportedCollisionV126.supports(spec)){Shift shift=world(state,payload);double offset=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedCollisionV126.footprint(spec,state,offset,shift.x,shift.y,shift.z);}
+        if(ImportedCollisionV125.supports(spec)){Shift shift=world(state,payload);double offset=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);return ImportedCollisionV125.footprint(spec,state,offset,shift.x,shift.y,shift.z);}
         Shift local=local(payload);double mount=payload.getDouble("MountY")+payload.getDouble(dev.dreamwalker.bloodbornedw.architecture.mount.VerticalMount.KEY);
         if(local.x==0&&local.y==0&&local.z==0)return spec.footprint(state,mount);
-        Key key=new Key(spec,state.get(CompositeRootBlock.VARIANT),state.get(CompositeRootBlock.OPEN),state.get(CompositeRootBlock.ROTATION),mount,ThinWindowRootBlock.mount(state).asString(),local);
+        Key key=new Key(spec,CompositeSpec.poseVariant(state),state.get(CompositeRootBlock.OPEN),state.get(CompositeRootBlock.ROTATION),mount,ThinWindowRootBlock.mount(state).asString(),local);
         Map<Cell,Footprint> known=CACHE.get(key);if(known!=null)return known;
         Shift shift=world(state,payload);TreeMap<Cell,List<Box>> collision=new TreeMap<>(),selection=new TreeMap<>();
         for(var entry:spec.footprint(state,mount).entrySet()){
-            distribute(entry.getKey(),entry.getValue().collision(),shift,collision);
+            if(!spec.simplePhysicalCollision)distribute(entry.getKey(),entry.getValue().collision(),shift,collision);
             distribute(entry.getKey(),entry.getValue().selection(),shift,selection);
         }
+        if(spec.simplePhysicalCollision)collision.putAll(spec.simplePhysicalFootprint(state,mount,shift.x,shift.y,shift.z));
         TreeSet<Cell> cells=new TreeSet<>(collision.keySet());cells.addAll(selection.keySet());cells.add(Cell.ORIGIN);
         if(cells.size()>4096)throw new IllegalArgumentException("Source-shift cell budget exceeded");
         TreeMap<Cell,Footprint> result=new TreeMap<>();for(Cell cell:cells)result.put(cell,new Footprint(List.copyOf(collision.getOrDefault(cell,List.of())),List.copyOf(selection.getOrDefault(cell,List.of()))));

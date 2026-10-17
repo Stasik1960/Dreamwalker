@@ -1,0 +1,78 @@
+{
+  "parent": "bloodborne_dw:remaining/source/minecraft/block/cobbled_deepslate_wall_side",
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        0
+      ],
+      "to": [
+        11,
+        14,
+        8
+      ],
+      "faces": {
+        "down": {
+          "texture": "#wall",
+          "cullface": "down",
+          "uv": [
+            8.0,
+            5.0,
+            16.0,
+            11.0
+          ],
+          "rotation": 90
+        },
+        "up": {
+          "texture": "#wall",
+          "uv": [
+            8.0,
+            5.0,
+            16.0,
+            11.0
+          ],
+          "rotation": 270
+        },
+        "north": {
+          "texture": "#wall",
+          "cullface": "north",
+          "uv": [
+            5.0,
+            2.0,
+            11.0,
+            16.0
+          ],
+          "rotation": 0
+        },
+        "west": {
+          "texture": "#wall",
+          "uv": [
+            0.0,
+            2.0,
+            8.0,
+            16.0
+          ],
+          "rotation": 0
+        },
+        "east": {
+          "texture": "#wall",
+          "uv": [
+            8.0,
+            2.0,
+            16.0,
+            16.0
+          ],
+          "rotation": 0
+        }
+      },
+      "__comment": "wall"
+    }
+  ],
+  "sourceUvlockApplication": {
+    "x": 0,
+    "y": 90,
+    "uvlock": true
+  },
+  "sourceUvlockPolicy": "Private face UV/rotation wrapper; original source elements and PNG bytes remain preserved in parent."
+}
